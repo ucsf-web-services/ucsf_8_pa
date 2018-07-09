@@ -1,20 +1,19 @@
-version: 1.2.0
-variables:
-  global:
-    SLACK_HOSTNAME: "uctech.slack.com"
-    SLACK_USERNAME: ericg-ucsf
-    SLACK_TOKEN:
-      secure: xoxp-11736434384-13327773589-217827125606-ccf786cfe7e9be80cac5fa1f2fa662cb
-    SLACK_CHANNEL: "#ucsf-webservices"
+version: 1.0.0
 services:
-    - php: 
-        version: 5.6
-    - mysql: 
-        version: 5.6
+  - mysql
 events:
   build:
     steps:
-      - build:
+      - setup:
           type: script
           script:
+            - set -x
             - composer install -v
+      - install:
+          type: script
+          script:
+            - set -x
+            - mysql -u root -proot -e 'CREATE DATABASE drupal;'
+            - cd docroot
+            # Install sitefarm_seed
+            - ../bin/drush site-install sitefarm_seed --yes --account-pass=admin --db-url=mysql://root:root@127.0.0.1/drupal
