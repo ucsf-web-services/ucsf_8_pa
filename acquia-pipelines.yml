@@ -1,4 +1,4 @@
-version: 1.0.0
+version: 1.2.0
 variables:
   global:
     SLACK_HOSTNAME: "uctech.slack.com"
@@ -17,6 +17,4 @@ events:
       - build:
           type: script
           script:
-            - echo "Building UCSF Drupal 8 code"
             - composer install -v
-            - composer drupal:scaffold
