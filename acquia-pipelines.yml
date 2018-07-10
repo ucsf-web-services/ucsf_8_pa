@@ -8,12 +8,17 @@ events:
           type: script
           script:
             - set -x
-            - composer install -v
+            - composer install -vvv
       - install:
           type: script
           script:
             - set -x
             - mysql -u root -proot -e 'CREATE DATABASE drupal;'
             - cd docroot
-            # Install sitefarm_seed
-            - ../bin/drush site-install sitefarm_seed --yes --account-pass=admin --db-url=mysql://root:root@127.0.0.1/drupal
+            - drush site-install sitefarm_seed --yes --account-pass=admin --db-url=mysql://root:root@127.0.0.1/drupal
+fail-on-build:
+    steps:
+      - runonfailure:
+          type: script
+          script:
+            - "echo 'This is simple echo from fail-on-build event'"
