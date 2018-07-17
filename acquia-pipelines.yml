@@ -7,12 +7,12 @@ events:
       - setup:
           type: script
           script:
-            - set -x
+            - set +e
             - composer install -vvv
       - install:
           type: script
           script:
-            - set -x
+            - set +e
             - mysql -u root -proot -e 'CREATE DATABASE drupal;'
             - cd docroot
             - drush site-install sitefarm_seed --yes --account-pass=admin --db-url=mysql://root:root@127.0.0.1/drupal
