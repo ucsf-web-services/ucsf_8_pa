@@ -1,18 +1,17 @@
 version: 1.0.0
 services:
   - mysql
+  - php
 events:
   build:
     steps:
       - setup:
           type: script
           script:
-            - set -x
-            - composer install -vvv
+            - composer install -v
       - install:
           type: script
           script:
-            - set -x
             - mysql -u root -proot -e 'CREATE DATABASE drupal;'
             - cd docroot
             - drush site-install sitefarm_seed --yes --account-pass=admin --db-url=mysql://root:root@127.0.0.1/drupal
