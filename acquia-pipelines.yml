@@ -1,24 +1,22 @@
 version: 1.0.0
 services:
   - mysql
+variables:
+  global:
+cde-databases:
+  - giving
 events:
   build:
     steps:
       - setup:
           type: script
           script:
-            - set +e
+            - set -x
             - composer install -vvv
       - install:
           type: script
           script:
-            - set +e
+            - set -x
             - mysql -u root -proot -e 'CREATE DATABASE drupal;'
             - cd docroot
-            - drush site-install sitefarm_seed --yes --account-pass=admin --db-url=mysql://root:root@127.0.0.1/drupal
-fail-on-build:
-    steps:
-      - runonfailure:
-          type: script
-          script:
-            - "echo 'This is simple echo from fail-on-build event'"
+            - ../bin/drush site-install sitefarm_seed --yes --account-pass=admin --db-url=mysql://root:root@127.0.0.1/drupal
