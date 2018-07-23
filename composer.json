@@ -23,10 +23,11 @@
     "require": {
         "composer/installers": "^1.5",
         "oomphinc/composer-installers-extender": "^1.1",
-        "wikimedia/composer-merge-plugin": "^1.4",
+        "wikimedia/composer-merge-plugin": "^1.4.1",
         "cweagans/composer-patches": "^1.6",
         "drupal/core" : "^8.5.5",
-        "drupal-composer/drupal-scaffold": "dev-master"
+        "drupal-composer/drupal-scaffold": "dev-master",
+        "ucdavis/sitefarm_seed": "dev-probo"
     },
     "require-dev": {
         "drupal/console" : "^1.8",
@@ -66,6 +67,15 @@
               "2644468-88 - Multiple image upload breaks image dimensions" :
               "https://www.drupal.org/files/issues/2644468-88.patch"
             }
+        },
+        "merge-plugin": {
+            "include": [
+                "docroot/profiles/contrib/sitefarm_seed/composer.json"
+            ],
+            "replace": false,
+            "merge-extra": true,
+            "merge-extra-deep": false,
+            "merge-scripts": true
         }
     },
     "repositories": {
@@ -76,6 +86,10 @@
         "1": {
             "type": "composer",
             "url": "https://asset-packagist.org"
+        },
+        "ucdavis": {
+            "type": "vcs",
+            "url": "https://github.com/ucdavis/sitefarm_seed.git"
         }
     }
 }
