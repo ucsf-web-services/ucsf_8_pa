@@ -1,32 +1,117 @@
 {
-    "name": "acquia/acquia-ra-composer",
-    "description": "Project json for Acquia Remote Administration Composer builds",
+    "name": "drupal/drupal",
+    "description": "UCSF.edu rebuild project using Drupal 8",
     "type": "project",
-    "license": "MIT",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "University of California, San Francisco",
+            "email": "copyright@ucsf.edu",
+            "role": "Copyright Owner"
+        },
+        {
+            "name": "Eric Guerin",
+            "email": "eric.guerin@ucsf.edu",
+            "role": "Developer"
+        },
+        {
+            "name": "Jayson Jaynes",
+            "email": "jason.jaynes@ucsf.edu",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "composer/installers": "^1.5",
+        "oomphinc/composer-installers-extender": "^1.1",
+        "wikimedia/composer-merge-plugin": "^1.4",
+        "cweagans/composer-patches": "^1.6",
+        "drupal/core" : "^8.5.5",
+        "drupal-composer/drupal-scaffold": "dev-master",
+        "ucdavis/sitefarm_seed": "dev-probo",
+        "drupal/acquia_lift": "~3.0",
+        "drupal/acquia_connector": "^1.12",
+        "drupal/acquia_contenthub": "^1.25",
+        "drupal/layout_plugin": "^1.0",
+        "drush/drush": "^9.3.0"
+    },
+    "require-dev": {
+        "drupal/search_kint": "^1.0",
+        "drupal/console" : "^1.8",
+        "drupal/devel": "^1.2"
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "config": {
+        "preferred-install": "dist",
+        "autoloader-suffix": "Drupal8",
+        "vendor-dir": "docroot/vendor"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+            "cp -a docroot/profiles/contrib/sitefarm_seed/libraries/. docroot/libraries/"
+        ],
+        "post-update-cmd": [
+            "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+            "cp -a docroot/profiles/contrib/sitefarm_seed/libraries/. docroot/libraries/"
+        ]
+    },
+    "extra": {
+        "merge-plugin": {
+            "include": [
+                "docroot/profiles/contrib/sitefarm_seed/composer.json"
+            ],
+            "replace": false,
+            "merge-extra": true,
+            "merge-extra-deep": false,
+            "merge-scripts": true
+        },
+        "installer-types": [
+            "drupal-custom-module",
+            "drupal-custom-theme",
+            "drupal-library",
+            "bower-asset",
+            "npm-asset"
+        ],
+        "installer-paths": {
+            "docroot/core": ["type:drupal-core"],
+            "docroot/modules/contrib/{$name}": ["type:drupal-module"],
+            "docroot/modules/custom/{$name}": ["type:drupal-custom-module"],
+            "docroot/profiles/contrib/{$name}": ["type:drupal-profile"],
+            "docroot/profiles/custom/{$name}": ["type:drupal-custom-profile"],
+            "docroot/themes/contrib/{$name}": ["type:drupal-theme"],
+            "docroot/themes/custom/{$name}": ["type:drupal-custom-theme"],
+            "docroot/drush/contrib/{$name}": ["type:drupal-drush"],
+            "docroot/libraries/{$name}": [
+                "type:bower-asset",
+                "type:npm-asset",
+                "type:drupal-library"
+            ]
+        },
+        "enable-patching": true,
+        "patches" : {
+            "drupal/core" : {
+              "2644468-88 - Multiple image upload breaks image dimensions" :
+              "https://www.drupal.org/files/issues/2644468-88.patch"
+            }
+        }
+    },
     "repositories": {
+        "0": {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        "1": {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },
+        "ucdavis": {
+            "type": "vcs",
+            "url": "https://github.com/ucdavis/sitefarm_seed.git"
+        },
         "drupal": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         }
-    },
-    "require": {
-        "drupal-composer/drupal-scaffold": "^2.0.0",
-        "drupal/core": "^8.5.5",
-        "composer/installers": "^1.0"
-    },
-    "conflict": {
-        "drupal/core": "7.*"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "extra": {
-        "installer-paths": {
-            "docroot/core": ["type:drupal-core"],
-            "docroot/modules/contrib/{$name}": ["type:drupal-module"],
-            "docroot/profiles/contrib/{$name}": ["type:drupal-profile"],
-            "docroot/themes/contrib/{$name}": ["type:drupal-theme"],
-            "docroot/libraries/{$name}": ["type:drupal-library"]
-        },
-        "enable-patching": true
     }
 }
