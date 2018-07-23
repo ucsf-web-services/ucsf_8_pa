@@ -1,6 +1,6 @@
 {
-    "name": "drupal/drupal",
-    "description": "UCSF.edu rebuild project using Drupal 8",
+    "name": "ucsf-web-services/ucsf_8_pa",
+    "description": "UCSF.edu Public Affairs Drupal 8 Migration",
     "type": "project",
     "license": "GPL-2.0+",
     "authors": [
@@ -27,15 +27,8 @@
         "cweagans/composer-patches": "^1.6",
         "drupal/core" : "^8.5.5",
         "drupal-composer/drupal-scaffold": "dev-master",
-        "ucdavis/sitefarm_seed": "dev-probo",
-        "drupal/acquia_lift": "~3.0",
-        "drupal/acquia_connector": "^1.12",
-        "drupal/acquia_contenthub": "^1.25",
-        "drupal/layout_plugin": "^1.0",
-        "drush/drush": "^9.3.0"
     },
     "require-dev": {
-        "drupal/search_kint": "^1.0",
         "drupal/console" : "^1.8",
         "drupal/devel": "^1.2"
     },
@@ -43,29 +36,8 @@
     "minimum-stability": "dev",
     "config": {
         "preferred-install": "dist",
-        "autoloader-suffix": "Drupal8",
-        "vendor-dir": "docroot/vendor"
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-            "cp -a docroot/profiles/contrib/sitefarm_seed/libraries/. docroot/libraries/"
-        ],
-        "post-update-cmd": [
-            "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-            "cp -a docroot/profiles/contrib/sitefarm_seed/libraries/. docroot/libraries/"
-        ]
     },
     "extra": {
-        "merge-plugin": {
-            "include": [
-                "docroot/profiles/contrib/sitefarm_seed/composer.json"
-            ],
-            "replace": false,
-            "merge-extra": true,
-            "merge-extra-deep": false,
-            "merge-scripts": true
-        },
         "installer-types": [
             "drupal-custom-module",
             "drupal-custom-theme",
@@ -97,21 +69,13 @@
         }
     },
     "repositories": {
-        "0": {
+        "drupal": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
         "1": {
             "type": "composer",
             "url": "https://asset-packagist.org"
-        },
-        "ucdavis": {
-            "type": "vcs",
-            "url": "https://github.com/ucdavis/sitefarm_seed.git"
-        },
-        "drupal": {
-            "type": "composer",
-            "url": "https://packages.drupal.org/8"
         }
     }
 }
