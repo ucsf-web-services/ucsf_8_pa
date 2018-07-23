@@ -26,8 +26,7 @@
         "wikimedia/composer-merge-plugin": "^1.4.1",
         "cweagans/composer-patches": "^1.6",
         "drupal/core" : "^8.5.5",
-        "drupal-composer/drupal-scaffold": "dev-master",
-        "ucdavis/sitefarm_seed": "dev-probo"
+        "drupal-composer/drupal-scaffold": "dev-master"
     },
     "require-dev": {
         "drupal/console" : "^1.8",
@@ -69,13 +68,10 @@
             }
         },
         "merge-plugin": {
-            "include": [
-                "docroot/profiles/contrib/sitefarm_seed/composer.json"
-            ],
             "replace": false,
-            "merge-extra": true,
+            "merge-extra": false,
             "merge-extra-deep": false,
-            "merge-scripts": true
+            "merge-scripts": false
         }
     },
     "repositories": {
