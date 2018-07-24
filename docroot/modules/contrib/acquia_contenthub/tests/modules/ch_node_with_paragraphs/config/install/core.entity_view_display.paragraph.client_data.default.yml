@@ -1,0 +1,47 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.client_data.field_client_email
+    - field.field.paragraph.client_data.field_client_location
+    - field.field.paragraph.client_data.field_client_name
+    - field.field.paragraph.client_data.field_client_tags
+    - paragraphs.paragraphs_type.client_data
+  module:
+    - entity_reference_revisions
+id: paragraph.client_data.default
+targetEntityType: paragraph
+bundle: client_data
+mode: default
+content:
+  field_client_email:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+  field_client_location:
+    type: entity_reference_revisions_entity_view
+    weight: 3
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+  field_client_name:
+    weight: 0
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_client_tags:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+hidden:
+  created: true
+  uid: true

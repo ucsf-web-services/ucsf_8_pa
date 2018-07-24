@@ -1,0 +1,52 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.client_data.field_client_email
+    - field.field.paragraph.client_data.field_client_location
+    - field.field.paragraph.client_data.field_client_name
+    - field.field.paragraph.client_data.field_client_tags
+    - paragraphs.paragraphs_type.client_data
+  module:
+    - paragraphs
+id: paragraph.client_data.default
+targetEntityType: paragraph
+bundle: client_data
+mode: default
+content:
+  field_client_email:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+  field_client_location:
+    type: entity_reference_paragraphs
+    weight: 3
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+  field_client_name:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_client_tags:
+    weight: 1
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+hidden:
+  created: true
+  status: true
+  uid: true

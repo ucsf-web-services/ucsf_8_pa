@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ch_node_with_paragraphs.body
+    - node.type.ch_node_with_paragraphs
+  module:
+    - text
+    - user
+id: node.ch_node_with_paragraphs.teaser
+targetEntityType: node
+bundle: ch_node_with_paragraphs
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+  links:
+    weight: 100
+hidden: {  }

@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.addresses.field_address
+    - field.field.paragraph.addresses.field_address_type
+    - paragraphs.paragraphs_type.addresses
+id: paragraph.addresses.default
+targetEntityType: paragraph
+bundle: addresses
+mode: default
+content:
+  field_address:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_address_type:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+hidden:
+  created: true
+  status: true
+  uid: true

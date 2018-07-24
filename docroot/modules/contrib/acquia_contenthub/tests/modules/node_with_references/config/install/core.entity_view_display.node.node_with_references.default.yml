@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.node_with_references.body
+    - field.field.node.node_with_references.field_reference
+    - node.type.node_with_references
+  module:
+    - text
+    - user
+id: node.node_with_references.default
+targetEntityType: node
+bundle: node_with_references
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+  field_reference:
+    weight: 102
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  links:
+    weight: 100
+hidden: {  }

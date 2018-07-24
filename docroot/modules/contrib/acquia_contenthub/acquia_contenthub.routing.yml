@@ -1,0 +1,96 @@
+acquia_contenthub.admin_settings:
+  path: '/admin/config/services/acquia-contenthub'
+  defaults:
+    _form: '\Drupal\acquia_contenthub\Form\ContentHubSettingsForm'
+    _title: 'Acquia Content Hub Settings'
+  requirements:
+    _permission: 'administer acquia content hub'
+
+acquia_contenthub.webhooks_settings:
+  path: '/admin/config/services/acquia-contenthub/webhooks'
+  defaults:
+    _form: '\Drupal\acquia_contenthub\Form\WebhooksSettingsForm'
+    _title: 'Webhooks'
+  requirements:
+    _permission: 'administer acquia content hub'
+
+acquia_contenthub.webhook:
+  path: 'acquia-contenthub/webhook'
+  defaults:
+    _controller: 'Drupal\acquia_contenthub\Controller\ContentHubWebhookController::receiveWebhook'
+  requirements:
+    # HMAC signature verification is performed in the controller, see validateWebhookSignature().
+    _access: 'TRUE'
+
+acquia_contenthub.entity_config:
+  path: '/admin/config/services/acquia-contenthub/configuration'
+  defaults:
+    _form: '\Drupal\acquia_contenthub\Form\EntityConfigSettingsForm'
+    _title: 'Entity Configuration'
+  requirements:
+    _permission: 'administer acquia content hub'
+
+acquia_contenthub.re_export:
+  path: '/admin/config/services/acquia-contenthub/re-export'
+  defaults:
+    _form: '\Drupal\acquia_contenthub\Form\ReExportEntitiesForm'
+    _title: 'Re-export'
+  requirements:
+    _permission: 'administer acquia content hub'
+
+acquia_contenthub.acquia_contenthub_cdf.entity:
+  path: '/acquia-contenthub/{uuid}'
+  methods:
+    - POST
+  defaults:
+    _controller: 'Drupal\acquia_contenthub\Controller\ContentHubEntityImportController::importEntity'
+  requirements:
+    _permission: 'administer acquia content hub'
+    _access_rest_csrf: 'TRUE'
+  options:
+    _auth: ['cookie']
+
+acquia_contenthub.content_entity_display.entity:
+  path: '/acquia-contenthub/display/{entity_type}/{entity_id}/{view_mode_name}'
+  defaults:
+    _controller: '\Drupal\acquia_contenthub\Controller\ContentEntityDisplayController::viewEntityViewMode'
+  requirements:
+    _contenthub_access : 'TRUE'
+    entity_type: \w+ #word
+    entity_id: \d+ #digit
+    view_mode_name: \w+ #word
+
+acquia_contenthub.acquia_contenthub_bulk_cdf:
+  path: '/acquia-contenthub/bulk-upload'
+  methods:
+    - GET
+  defaults:
+    _controller: '\Drupal\acquia_contenthub\Controller\ContentHubEntityExportController::getDrupalEntities'
+  requirements:
+    _contenthub_access : 'TRUE'
+
+route_callbacks:
+  - 'acquia_contenthub.resource_routes:routes'
+
+acquia_contenthub.import_queue:
+  path: '/admin/config/services/acquia-contenthub/import-queue'
+  defaults:
+    _form: '\Drupal\acquia_contenthub\Form\ContentHubImportQueueForm'
+    _title: 'Import Queue'
+  requirements:
+    _permission: 'administer acquia content hub'
+
+acquia_contenthub.import_queue_batch:
+  path: '/admin/config/services/acquia-contenthub/import-process'
+  defaults:
+    _controller: '\Drupal\acquia_contenthub\Controller\ContentHubImportQueue::process'
+  requirements:
+    _permission: 'administer acquia content hub'
+
+acquia_contenthub.export_queue:
+  path: '/admin/config/services/acquia-contenthub/export-queue'
+  defaults:
+    _form: '\Drupal\acquia_contenthub\Form\ContentHubExportQueueForm'
+    _title: 'Export Queue'
+  requirements:
+    _permission: 'administer acquia content hub'

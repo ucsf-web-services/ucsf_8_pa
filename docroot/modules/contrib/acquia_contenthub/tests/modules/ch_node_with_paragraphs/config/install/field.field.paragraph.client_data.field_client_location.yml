@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_client_location
+    - paragraphs.paragraphs_type.addresses
+    - paragraphs.paragraphs_type.client_data
+  module:
+    - entity_reference_revisions
+id: paragraph.client_data.field_client_location
+field_name: field_client_location
+entity_type: paragraph
+bundle: client_data
+label: 'Client Location'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      addresses: addresses
+    target_bundles_drag_drop:
+      addresses:
+        enabled: true
+        weight: 4
+      client_data:
+        weight: 5
+        enabled: false
+      para1:
+        weight: 6
+        enabled: false
+field_type: entity_reference_revisions

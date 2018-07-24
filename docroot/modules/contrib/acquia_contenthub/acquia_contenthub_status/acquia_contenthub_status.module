@@ -1,0 +1,137 @@
+<?php
+
+/**
+ * @file
+ * Handles imported entities updates and status.
+ */
+
+use Drupal\Component\Utility\Html;
+
+/**
+ * Implements hook_mail().
+ */
+function acquia_contenthub_status_mail($key, &$message, $params) {
+  $options = [
+    'langcode' => $message['langcode'],
+  ];
+
+  $config = \Drupal::config('system.site');
+  $variables['@site_name'] = $config->get('name');
+
+  switch ($key) {
+    case 'notify':
+      $message['from'] = \Drupal::config('system.site')->get('mail');
+      $message['subject'] = t('Acquia Content Hub notification from @site_name', $variables, $options);
+      $message['body'][] = Html::escape($params['message']);
+      break;
+  }
+}
+
+/**
+ * Function to send email notification.
+ *
+ * Description for $outdated array:
+ * array[uuid]
+ *        ['diff'] - Difference in minutes
+ *        ['local_timestamp'] - Date for local entity
+ *        ['remote_timestamp'] - Last event date for this entity in Content Hub.
+ *
+ * @param array $outdated
+ *   Array of outdated entities. See above.
+ */
+function acquia_contenthub_status_notify(array $outdated) {
+  $config = \Drupal::config('acquia_contenthub_status.settings');
+  $mailManager = \Drupal::service('plugin.manager.mail');
+  $module = 'acquia_contenthub_status';
+  $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+  $key = 'notify';
+  $send_to = $config->get('notify_emails');
+
+  $params['message'] = _acquia_contenthub_status_message($outdated);
+
+  $send = TRUE;
+
+  foreach ($send_to as $to) {
+    $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
+  }
+}
+
+/**
+ * Helper function to generate notification message.
+ *
+ * Description for $outdated array:
+ * array[uuid]
+ *        ['diff'] - Difference in minutes
+ *        ['local_timestamp'] - Date for local entity
+ *        ['remote_timestamp'] - Last event date for this entity in Content Hub.
+ *
+ * @param array $outdated
+ *   Array of outdated entities. See above.
+ * @param string $key
+ *   Flag to clarify message.
+ *
+ * @return \Drupal\Core\StringTranslation\TranslatableMarkup|string
+ *   Just notification message.
+ */
+function _acquia_contenthub_status_message(array $outdated, $key = 'mail') {
+
+  $config = \Drupal::config('system.site');
+
+  $variables = [
+    '@count' => count($outdated),
+    '@site_name' => $config->get('name'),
+  ];
+
+  switch ($key) {
+    case 'log':
+      $text = t('Content Hub Status detected @count outdated entities:', $variables);
+      foreach ($outdated as $uuid => $row) {
+        $text .= "\r\nUUID: " . $uuid . ' Outdated: ' . $row['diff'] . ' min.';
+      }
+      break;
+
+    case 'mail':
+    default:
+      $text = t('Hello. We detected @count outdated entities on your site @site_name. Please see logs for more information.', $variables);
+  }
+
+  return $text;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function acquia_contenthub_status_cron() {
+
+  // Last time of call this method.
+  $last_run = \Drupal::state()->get('acquia_contenthub_status.last_run');
+  $last_run_date = !empty($last_run) ? $last_run->format(DateTime::ISO8601) : NULL;
+
+  /*
+   * @var \Drupal\acquia_contenthub_status\StatusService
+   */
+  $statusService = \Drupal::service('acquia_contenthub_status.status');
+  $result = $statusService->checkImported($last_run_date);
+
+  // We have to use UTC due to Plexus using it.
+  $utc = new DateTimeZone('UTC');
+  $time_now = new DateTime('now', $utc);
+
+  // Update DateTime variable in state storage.
+  \Drupal::state()->set('acquia_contenthub_status.last_run', $time_now);
+
+  // Looks like we have outdated content.
+  if (count($result) > 0) {
+    $config = \Drupal::config('acquia_contenthub_status.settings');
+    $send_notification = $config->get('send_notification');
+
+    if ($send_notification) {
+      acquia_contenthub_status_notify($result);
+    }
+
+    \Drupal::logger('acquia_contenthub_status')->warning(
+      _acquia_contenthub_status_message($result, 'log')
+    );
+  }
+}
