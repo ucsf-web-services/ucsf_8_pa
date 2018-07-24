@@ -118,8 +118,8 @@ class PhotoswipeFieldFormatter extends FormatterBase {
       $summary[] = $this->t('Node image style: Original image');
     }
 
-    if (isset($image_styles[$settings['photoswipe_node_style_first']])) {
-      $summary[] = $this->t('Node image style of first image: @style', ['@style' => $image_styles[$settings['photoswipe_node_style_first']]]);
+    if (isset($image_styles[$this->getSetting('photoswipe_node_style_first')])) {
+      $summary[] = $this->t('Node image style of first image: @style', ['@style' => $image_styles[$this->getSetting('photoswipe_node_style_first')]]);
     }
     elseif ($this->getSetting('photoswipe_node_style_first') == 'hide') {
       $summary[] = $this->t('Node image style of first image: Hide');
