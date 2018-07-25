@@ -209,11 +209,13 @@
     "scripts": {
         "post-install-cmd": [
             "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-            "cp -a docroot/profiles/contrib/sitefarm_seed/libraries/. docroot/libraries/"
+            "cp -a docroot/profiles/contrib/sitefarm_seed/libraries/. docroot/libraries/",
+            "@renamelibraries"
         ],
         "post-update-cmd": [
             "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-            "cp -a docroot/profiles/contrib/sitefarm_seed/libraries/. docroot/libraries/"
+            "cp -a docroot/profiles/contrib/sitefarm_seed/libraries/. docroot/libraries/",
+            "@renamelibraries"
         ],
         "rmvendor" : "rm -rf vendor/*",
         "rmprofiles" : "rm -rf docroot/profiles/contrib/*",
@@ -221,6 +223,12 @@
             "@rmvendor",
             "@rmprofiles",
             "@composer clear-cache"
+        ],
+        "renamelibraries" : [
+          "rm -rf docroot/libraries/slick docroot/libraries/colorbox docroot/libraries/chosen",
+          "cp -a docroot/libraries/slick-carousel docroot/libraries/slick",
+          "cp -a docroot/libraries/jquery-colorbox docroot/libraries/colorbox",
+          "cp -a docroot/libraries/chosen-js docroot/libraries/chosen"
         ]
     }
 }
