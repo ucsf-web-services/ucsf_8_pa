@@ -278,7 +278,7 @@ $config_directories = array();
  *   service requires the install profile use the 'install_profile' container
  *   parameter. Functional code can use \Drupal::installProfile().
  */
- # $settings['install_profile'] = 'sitefarm_seed';
+$settings['install_profile'] = 'sitefarm_seed';
 
 /**
  * Salt for one-time login links, cancel links, form tokens, etc.
@@ -803,4 +803,4 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
 }
 
-$settings['install_profile'] = 'sitefarm_seed';
+
