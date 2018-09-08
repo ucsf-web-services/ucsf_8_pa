@@ -20,8 +20,9 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\geofield\GeoPHP\GeoPHPInterface;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\geofield_map\Services\GoogleMapsService;
 use Drupal\Core\Render\Markup;
-use Drupal\geofield_map\MarkerIconService;
+use Drupal\geofield_map\Services\MarkerIconService;
 
 /**
  * Plugin implementation of the 'geofield_google_map' formatter.
@@ -101,9 +102,16 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
   protected $renderer;
 
   /**
+   * The geofieldMapGoogleMaps service.
+   *
+   * @var \Drupal\geofield_map\Services\GoogleMapsService
+   */
+  protected $googleMapsService;
+
+  /**
    * The Icon Managed File Service.
    *
-   * @var \Drupal\geofield_map\MarkerIconService
+   * @var \Drupal\geofield_map\Services\MarkerIconService
    */
   protected $markerIcon;
 
@@ -140,7 +148,9 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
    *   The The geoPhpWrapper.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The Renderer service.
-   * @param \Drupal\geofield_map\MarkerIconService $marker_icon_service
+   * @param \Drupal\geofield_map\Services\GoogleMapsService $google_maps_service
+   *   The Google Maps service.
+   * @param \Drupal\geofield_map\Services\MarkerIconService $marker_icon_service
    *   The Marker Icon Service.
    */
   public function __construct(
@@ -159,6 +169,7 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
     EntityFieldManagerInterface $entity_field_manager,
     GeoPHPInterface $geophp_wrapper,
     RendererInterface $renderer,
+    GoogleMapsService $google_maps_service,
     MarkerIconService $marker_icon_service
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
@@ -169,6 +180,7 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
     $this->entityFieldManager = $entity_field_manager;
     $this->geoPhpWrapper = $geophp_wrapper;
     $this->renderer = $renderer;
+    $this->googleMapsService = $google_maps_service;
     $this->markerIcon = $marker_icon_service;
   }
 
@@ -192,6 +204,7 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
       $container->get('entity_field.manager'),
       $container->get('geofield.geophp'),
       $container->get('renderer'),
+      $container->get('geofield_map.google_maps'),
       $container->get('geofield_map.marker_icon')
     );
   }
@@ -625,8 +638,11 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
       'data' => [],
     ];
 
-    $description_field = isset($map_settings['map_marker_and_infowindow']['infowindow_field']) ? $map_settings['map_marker_and_infowindow']['infowindow_field'] : NULL;
     $description = [];
+    $description_field = isset($map_settings['map_marker_and_infowindow']['infowindow_field']) ? $map_settings['map_marker_and_infowindow']['infowindow_field'] : NULL;
+    /* @var \Drupal\Core\Field\FieldItemList $description_field_entity */
+    $description_field_entity = $entity->$description_field;
+
     // Render the entity with the selected view mode.
     if (isset($description_field) && $description_field === '#rendered_entity' && is_object($entity)) {
       $build = $this->entityTypeManager->getViewBuilder($entity_type)->view($entity, $map_settings['map_marker_and_infowindow']['view_mode']);
@@ -634,15 +650,14 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
     }
     // Normal rendering via fields.
     elseif (isset($description_field)) {
-      $description_field_name = strtolower($map_settings['map_marker_and_infowindow']['infowindow_field']);
-
       if ($map_settings['map_marker_and_infowindow']['infowindow_field'] === 'title') {
         $description[] = $entity->label();
       }
-      elseif (isset($entity->$description_field_name)) {
-        foreach ($entity->$description_field_name->getValue() as $value) {
+      elseif (isset($entity->$description_field)) {
+        $description_field_cardinality = $description_field_entity->getFieldDefinition()->getFieldStorageDefinition()->getCardinality();
+        foreach ($description_field_entity->getValue() as $value) {
           $description[] = isset($value['value']) ? $value['value'] : '';
-          if ($map_settings['map_marker_and_infowindow']['multivalue_split'] == FALSE) {
+          if ($description_field_cardinality == 1 || $map_settings['map_marker_and_infowindow']['multivalue_split'] == FALSE) {
             break;
           }
         }

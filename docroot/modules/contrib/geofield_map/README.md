@@ -135,6 +135,7 @@ Icon, valid for all the Map Markers;
 View filtered Entity Types/Bundles;
 *   Taxonomy Term, allows the definition of different Marker Icons based on 
 Taxonomy Terms reference field in View;
+*   List Type Field, allows the definition of different Marker Icons based on List (Options) Type fields in View;
 
 As Drupal 8 Plugin system based, the Geofield MapThemers Plugin and Legend 
 block system is fully extendable and overridable. You, as D8 developer, are 

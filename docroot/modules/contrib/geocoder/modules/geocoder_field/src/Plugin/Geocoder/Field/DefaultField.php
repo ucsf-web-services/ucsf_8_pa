@@ -188,16 +188,16 @@ class DefaultField extends PluginBase implements GeocoderFieldPluginInterface, C
       '#states' => $invisible_state,
     ];
 
-    // Set a default empty array value for geocode_field.
+    // Set a default empty value for geocode_field.
     $element['geocode_field'] = [
       '#type' => 'value',
-      '#value' => [],
+      '#value' => '',
     ];
 
-    // Set a default empty array value for reverse_geocode_field.
+    // Set a default empty value for reverse_geocode_field.
     $element['reverse_geocode_field'] = [
       '#type' => 'value',
-      '#value' => [],
+      '#value' => '',
     ];
 
     // Get the field options for geocode and reverse geocode source fields.

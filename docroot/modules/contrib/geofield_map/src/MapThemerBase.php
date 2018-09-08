@@ -7,8 +7,9 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\geofield_map\Services\MarkerIconService;
 
 /**
  * A base class for MapThemer plugins.
@@ -48,7 +49,7 @@ abstract class MapThemerBase extends PluginBase implements MapThemerInterface, C
   /**
    * The Icon Managed File Service.
    *
-   * @var \Drupal\geofield_map\MarkerIconService
+   * @var \Drupal\geofield_map\Services\MarkerIconService
    */
   protected $markerIcon;
 
@@ -116,7 +117,7 @@ abstract class MapThemerBase extends PluginBase implements MapThemerInterface, C
    *   The renderer.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager
    *   The entity manager.
-   * @param \Drupal\geofield_map\MarkerIconService $marker_icon_service
+   * @param \Drupal\geofield_map\Services\MarkerIconService $marker_icon_service
    *   The Marker Icon Service.
    */
   public function __construct(

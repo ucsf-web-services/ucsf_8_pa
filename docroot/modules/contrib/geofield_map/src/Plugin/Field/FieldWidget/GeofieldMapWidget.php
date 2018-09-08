@@ -357,7 +357,12 @@ class GeofieldMapWidget extends GeofieldLatLonWidget implements ContainerFactory
       '#title' => $this->t('Map type'),
       '#default_value' => $this->getSetting('map_type_leaflet'),
       '#options' => $this->leafletTileManager->getLeafletTilesLayersOptions(),
-      '#description' => $this->currentUser->hasPermission('configure geofield_map') ? $this->t('Choose one among all the Leaflet Tiles Plugins defined for the Geofield Map module (@see LeafletTileLayerPlugin).<br>You can add your one into your custom module as a new LeafletTileLayer Plugin. (Free Leaflet Tile Layers definitions are available from <a href="@free_leaflet_tiles_link" target="_blank">this link.</a>)', ['@free_leaflet_tiles_link' => 'http://leaflet-extras.github.io/leaflet-providers/preview/index.html']) : '',
+      '#description' => $this->currentUser->hasPermission('configure geofield_map') ? $this->t('Choose one among all the Leaflet Tiles Plugins defined for the Geofield Map module (@see LeafletTileLayerPlugin).<br>You can add your one into your custom module as a new LeafletTileLayer Plugin. (Free Leaflet Tile Layers definitions are available from @free_leaflet_tiles_link).', [
+        '@free_leaflet_tiles_link' => $this->link->generate($this->t('leaflet-extras/leaflet-providers'), Url::fromUri('http://leaflet-extras.github.io/leaflet-providers/preview/index.html', [
+          'absolute' => TRUE,
+          'attributes' => ['target' => 'blank'],
+        ])),
+      ]) : '',
       '#states' => [
         'visible' => [
           ':input[name="fields[' . $this->fieldDefinition->getName() . '][settings_edit_form][settings][map_library]"]' => ['value' => 'leaflet'],
@@ -476,7 +481,7 @@ class GeofieldMapWidget extends GeofieldLatLonWidget implements ContainerFactory
     $elements['geoaddress_field'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Geoaddressed Field'),
-      '#description' => $this->t('If a not null Google Maps API Key is set, it is possible to choose the Entity Title, or a "string" type field (among the content type ones), to sync and populate with the Search / Reverse Geocoded Address.<br><strong> Note: In case of a multivalue Geofield, this is run just from the first Geofield Map</strong>'),
+      '#description' => $this->t('If a not null Google Maps API Key is set, it is possible to choose the Entity Title, or a "string" type field (among the content type ones), to sync and populate with the Search / Reverse Geocoded Address.'),
       '#states' => [
         'invisible' => [
           ':input[name="fields[' . $this->fieldDefinition->getName() . '][settings_edit_form][settings][map_google_api_key]"]' => ['value' => ''],
@@ -486,7 +491,7 @@ class GeofieldMapWidget extends GeofieldLatLonWidget implements ContainerFactory
     $elements['geoaddress_field']['field'] = [
       '#type' => 'select',
       '#title' => $this->t('Choose an existing field where to store the Searched / Reverse Geocoded Address'),
-      '#description' => $this->t('Choose among the title and the text fields of this entity type, if available'),
+      '#description' => $this->t('Choose among the title and the simple string fields (un-formatted text fields) of this bundle/entity type, if available.'),
       '#options' => $string_fields_options,
       '#default_value' => $this->getSetting('geoaddress_field')['field'],
     ];

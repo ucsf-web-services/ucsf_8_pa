@@ -43,31 +43,13 @@ trait GeofieldMapFieldTrait {
   protected $customMapStylePlaceholder = '[{"elementType":"geometry","stylers":[{"color":"#1d2c4d"}]},{"elementType":"labels.text.fill","stylers":[{"color":"#8ec3b9"}]},{"elementType":"labels.text.stroke","stylers":[{"color":"#1a3646"}]},{"featureType":"administrative.country","elementType":"geometry.stroke","stylers":[{"color":"#4b6878"}]},{"featureType":"administrative.province","elementType":"geometry.stroke","stylers":[{"color":"#4b6878"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#0e1626"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#4e6d70"}]}]';
 
   /**
-   * The Link generator Service.
-   *
-   * @var \Drupal\Core\Utility\LinkGeneratorInterface $this->link
-   */
-
-  /**
-   * Get the GMap Api Key from the geofield_map settings/configuration.
+   * Get the GMap Api Key from the geofield_map.google_maps service.
    *
    * @return string
    *   The GMap Api Key
    */
   private function getGmapApiKey() {
-    /* @var \Drupal\Core\Config\ConfigFactoryInterface $config */
-    $config = $this->config;
-    $geofield_map_settings = $config->getEditable('geofield_map.settings');
-    $gmap_api_key = $geofield_map_settings->get('gmap_api_key');
-
-    // In the first release of Geofield_Map the google_api_key was stored in
-    // the specific Field Widget settings.
-    // So we try and copy into the geofield_map.settings config, in the case.
-    if (method_exists(get_class($this), 'getSetting') && !empty($this->getSetting('map_google_api_key')) && empty($gmap_api_key)) {
-      $gmap_api_key = $this->getSetting('map_google_api_key');
-      $geofield_map_settings->set('gmap_api_key', $gmap_api_key)->save();
-    }
-    return $gmap_api_key;
+    return \Drupal::service('geofield_map.google_maps')->getGmapApiKey();
   }
 
   /**
@@ -230,8 +212,15 @@ trait GeofieldMapFieldTrait {
    *   The map settings.
    */
   protected function preProcessMapSettings(array &$map_settings) {
+    /* @var \Drupal\Core\Config\ConfigFactoryInterface $config */
+    $config = $this->config;
+    $geofield_map_settings = $config->getEditable('geofield_map.settings');
+
     // Set the gmap_api_key as map settings.
     $map_settings['gmap_api_key'] = $this->getGmapApiKey();
+
+    // Geofield Map Google Maps and Geocoder Settings.
+    $map_settings['gmap_api_localization'] = $this->googleMapsService->getGmapApiLocalization($geofield_map_settings->get('gmap_api_localization'));
 
     // Transform into simple array values the map_type_control_options_type_ids.
     $map_settings['map_controls']['map_type_control_options_type_ids'] = array_keys(array_filter($map_settings['map_controls']['map_type_control_options_type_ids'], function ($value) {
@@ -269,7 +258,7 @@ trait GeofieldMapFieldTrait {
       if (is_a($item, '\Drupal\geofield\Plugin\Field\FieldType\GeofieldItem') && isset($item->value)) {
         $geometry = $this->geoPhpWrapper->load($item->value);
       }
-      elseif (preg_match('/^(POINT).*\(.*.*\)$/', $item)) {
+      elseif (preg_match('/^(POINT|LINESTRING|POLYGON|MULTIPOINT|MULTILINESTRING|MULTIPOLYGON|GEOMETRYCOLLECTION).*\(.*.*\)$/', $item)) {
         $geometry = $this->geoPhpWrapper->load($item);
       }
       if (isset($geometry)) {
@@ -756,7 +745,7 @@ trait GeofieldMapFieldTrait {
       ];
     }
     else {
-      $elements['map_marker_and_infowindow']['multivalue_split']['#description'] = $this->t('If checked, each field value will be split into each matching infowindow /geofield , following the same progressive order<br>(The Multiple Field settings from the View Display will be used otherwise)');
+      $elements['map_marker_and_infowindow']['multivalue_split']['#description'] = $this->t('If checked, each field value will be split into each matching infowindow /geofield value (as simple text), following the same progressive order. Note: No rewrite, links or replacements patterns might be applied.<br>(The Multiple Field settings from the View Display will be used otherwise).');
       $elements['map_marker_and_infowindow']['multivalue_split']['#states'] = [
         'visible' => [
           ':input[name="style_options[map_marker_and_infowindow][infowindow_field]"]' => $multivalue_fields_states,

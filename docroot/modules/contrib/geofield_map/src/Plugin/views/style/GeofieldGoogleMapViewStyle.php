@@ -19,6 +19,7 @@ use Drupal\Core\Utility\LinkGeneratorInterface;
 use Drupal\geofield\GeoPHP\GeoPHPInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\geofield_map\Services\GoogleMapsService;
 use Drupal\geofield_map\MapThemerPluginManager;
 use Drupal\Component\Plugin\Exception\PluginException;
 use Drupal\views\Plugin\views\PluginBase;
@@ -124,6 +125,13 @@ class GeofieldGoogleMapViewStyle extends DefaultStyle implements ContainerFactor
   protected $renderer;
 
   /**
+   * The geofieldMapGoogleMaps service.
+   *
+   * @var \Drupal\geofield_map\Services\GoogleMapsService
+   */
+  protected $googleMapsService;
+
+  /**
    * The list of fields added to the view.
    *
    * @var array
@@ -169,6 +177,8 @@ class GeofieldGoogleMapViewStyle extends DefaultStyle implements ContainerFactor
    *   Current user service.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The Renderer service.
+   * @param \Drupal\geofield_map\Services\GoogleMapsService $google_maps_service
+   *   The Google Maps service.
    * @param \Drupal\geofield_map\MapThemerPluginManager $map_themer_manager
    *   The mapThemerManager service.
    */
@@ -184,6 +194,7 @@ class GeofieldGoogleMapViewStyle extends DefaultStyle implements ContainerFactor
     GeoPHPInterface $geophp_wrapper,
     AccountInterface $current_user,
     RendererInterface $renderer,
+    GoogleMapsService $google_maps_service,
     MapThemerPluginManager $map_themer_manager
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -196,6 +207,7 @@ class GeofieldGoogleMapViewStyle extends DefaultStyle implements ContainerFactor
     $this->geoPhpWrapper = $geophp_wrapper;
     $this->currentUser = $current_user;
     $this->renderer = $renderer;
+    $this->googleMapsService = $google_maps_service;
     $this->mapThemerManager = $map_themer_manager;
   }
 
@@ -215,6 +227,7 @@ class GeofieldGoogleMapViewStyle extends DefaultStyle implements ContainerFactor
       $container->get('geofield.geophp'),
       $container->get('current_user'),
       $container->get('renderer'),
+      $container->get('geofield_map.google_maps'),
       $container->get('plugin.manager.geofield_map.themer')
     );
   }
@@ -520,12 +533,19 @@ class GeofieldGoogleMapViewStyle extends DefaultStyle implements ContainerFactor
 
         // In case the result is not null.
         if (!empty($geofield_value)) {
+
+          // In case _entity is null, it might probably be the search_api case.
+          // @see https://www.drupal.org/project/geofield_map/issues/2994026
+          // @TODO better verify and face this cases duality.
+          $entity = $result->_entity ?: $result->_object->getValue();
+
           // If it is a single value field, transform into an array.
           $geofield_value = is_array($geofield_value) ? $geofield_value : [$geofield_value];
 
-          $description_field = isset($map_settings['map_marker_and_infowindow']['infowindow_field']) ? $map_settings['map_marker_and_infowindow']['infowindow_field'] : NULL;
           $description = [];
-          $entity = $result->_entity;
+          $description_field = isset($map_settings['map_marker_and_infowindow']['infowindow_field']) ? $map_settings['map_marker_and_infowindow']['infowindow_field'] : NULL;
+          /* @var \Drupal\Core\Field\FieldItemList $description_field_entity */
+          $description_field_entity = $entity->$description_field;
 
           // Render the entity with the selected view mode.
           if (isset($description_field) && $description_field === '#rendered_entity' && is_object($result)) {
@@ -539,6 +559,7 @@ class GeofieldGoogleMapViewStyle extends DefaultStyle implements ContainerFactor
               '***LANGUAGE_entity_default***' => 'DefaultLanguageRenderer',
             ];
             if (isset($dynamic_renderers[$rendering_language])) {
+              /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
               $langcode = $entity->language()->getId();
             }
             else {
@@ -556,15 +577,15 @@ class GeofieldGoogleMapViewStyle extends DefaultStyle implements ContainerFactor
           }
           // Normal rendering via fields.
           elseif (isset($description_field)) {
-            $description_field_name = strtolower($map_settings['map_marker_and_infowindow']['infowindow_field']);
-            if (isset($entity->$description_field_name)) {
-              // Check if the entity has a $description_field_name field.
-              foreach ($entity->$description_field_name->getValue() as $value) {
-                if ($map_settings['map_marker_and_infowindow']['multivalue_split'] == FALSE) {
+            // Check if the entity has a $description_field field.
+            if (isset($description_field_entity)) {
+              $description_field_cardinality = $description_field_entity->getFieldDefinition()->getFieldStorageDefinition()->getCardinality();
+              foreach ($description_field_entity->getValue() as $value) {
+                if ($description_field_cardinality == 1 || $map_settings['map_marker_and_infowindow']['multivalue_split'] == FALSE) {
                   $description[] = $this->rendered_fields[$id][$description_field];
                   break;
                 }
-                $description[] = isset($value['value']) ? $value['value'] : '';
+                $description[] = isset($value['value']) ? $value['value'] : NULL;
               }
             }
             // Else get the views field value.

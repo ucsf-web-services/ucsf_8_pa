@@ -11,7 +11,7 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\geofield_map\MarkerIconService;
+use Drupal\geofield_map\Services\MarkerIconService;
 use Drupal\Core\Entity\EntityInterface;
 
 /**
@@ -56,7 +56,7 @@ class EntityTypeThemer extends MapThemerBase {
    *   The renderer.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager
    *   The entity manager.
-   * @param \Drupal\geofield_map\MarkerIconService $marker_icon_service
+   * @param \Drupal\geofield_map\Services\MarkerIconService $marker_icon_service
    *   The Marker Icon Service.
    * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
    *   The entity type bundle info.

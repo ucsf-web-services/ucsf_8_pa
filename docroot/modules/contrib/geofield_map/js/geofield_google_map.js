@@ -44,6 +44,21 @@
     maps_api_loading: false,
 
     /**
+     * Returns the re-coded google maps api language parameter, from html lang attribute.
+     */
+    googleMapsLanguage: function (html_language) {
+      switch (html_language) {
+        case 'zh-hans':
+          html_language = 'zh-CN'
+          break;
+        case 'zh-hant':
+          html_language = 'zh-TW'
+          break;
+      }
+      return html_language;
+    },
+
+    /**
      * Provides the callback that is called when maps loads.
      */
     googleCallback: function () {
@@ -70,6 +85,7 @@
     // Lead Google Maps library.
     loadGoogle: function (mapid, gmap_api_key, callback) {
       var self = this;
+      var html_language = $('html').attr("lang") ? $('html').attr("lang") : 'en'
 
       // Add the callback.
       self.addCallback(callback);
@@ -84,7 +100,7 @@
         // Google maps isn't loaded so lazy load google maps.
 
         // Default script path.
-        var scriptPath = '//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false';
+        var scriptPath = self.map_data[mapid]['gmap_api_localization'] + '?v=3.exp&sensor=false&libraries=places&language=' + self.googleMapsLanguage(html_language);
 
         // If a Google API key is set, use it.
         if (typeof gmap_api_key !== 'undefined' && gmap_api_key !== null) {

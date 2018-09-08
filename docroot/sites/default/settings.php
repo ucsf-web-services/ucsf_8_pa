@@ -751,7 +751,11 @@ $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
  * will allow the site to run off of all variants of example.com and
  * example.org, with all subdomains included.
  */
-
+$settings['trusted_host_patterns'] = array(
+   '^uscf\.edu$',
+   '^.+\.ucsf8\.edu$',
+   '^.+\.ucsf\.edu$',
+);
 /**
  * The default list of directories that will be ignored by Drupal's file API.
  *
@@ -762,10 +766,10 @@ $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
  * @see file_scan_directory()
  * @see \Drupal\Core\Extension\ExtensionDiscovery::scanDirectory()
  */
-$settings['file_scan_ignore_directories'] = [
+$settings['file_scan_ignore_directories'] = array(
   'node_modules',
   'bower_components',
-];
+);
 
 /**
  * The default number of entities to update in a batch process.

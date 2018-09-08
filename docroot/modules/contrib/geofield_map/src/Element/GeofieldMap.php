@@ -62,6 +62,12 @@ class GeofieldMap extends GeofieldElementBase {
    */
   public static function latLonProcess(array &$element, FormStateInterface $form_state, array &$complete_form) {
 
+    /* @var \Drupal\Core\Config\ConfigFactoryInterface $config */
+    $config = \Drupal::configFactory();
+    $geofield_map_settings = $config->get('geofield_map.settings');
+    /** @var \Drupal\geofield_map\Services\GoogleMapsService $google_maps_service */
+    $google_maps_service = \Drupal::service('geofield_map.google_maps');
+
     // Conditionally use the Leaflet library from the D8 Module, if enabled.
     if ($element['#map_library'] == 'leaflet') {
       $element['#attached']['library'][] = \Drupal::moduleHandler()->moduleExists('leaflet') ? 'leaflet/leaflet' : 'geofield_map/leaflet';
@@ -114,7 +120,7 @@ class GeofieldMap extends GeofieldElementBase {
     }
 
     $element['map']['geofield_map'] = [
-      '#theme' => 'geofield_google_map',
+      '#theme' => 'geofield_map_widget',
       '#mapid' => $mapid,
       '#width' => isset($element['#map_dimensions']['width']) ? $element['#map_dimensions']['width'] : '100%',
       '#height' => isset($element['#map_dimensions']['height']) ? $element['#map_dimensions']['height'] : '450px',
@@ -165,30 +171,38 @@ class GeofieldMap extends GeofieldElementBase {
     $element['lon']['#attributes']['id'] = 'lon-' . $element['#id'];
 
     $address_field_exists = FALSE;
-    // Geoaddress Field Settings (now limited to the first delta value)
-    if ($element['#delta'] == 0) {
-      if (!empty($element['#geoaddress_field']['field'])) {
-        $address_field_name = $element['#geoaddress_field']['field'];
-        $parents = array_slice($element['#array_parents'], 0, -4);
-        $parents[] = $address_field_name;
+    if (!empty($element['#geoaddress_field']['field'])) {
+      $address_field_name = $element['#geoaddress_field']['field'];
+      $parents = array_slice($element['#array_parents'], 0, -4);
+      $parents[] = $address_field_name;
 
-        $address_field = NestedArray::getValue($complete_form, $parents, $address_field_exists);
-        if ($address_field_exists) {
-          $address_field['widget'][$element['#delta']]['value']['#description'] = (string) t('This value will be synchronized with the Geofield Map Reverse-Geocoded value.');
-          if ($element['#geoaddress_field']['hidden']) {
-            $address_field['#attributes']['class'][] = 'geofield_map_geoaddress_field_hidden';
-          }
-          if ($element['#geoaddress_field']['disabled']) {
-            $address_field['widget'][$element['#delta']]['value']['#attributes']['readonly'] = 'readonly';
-            $address_field['widget'][$element['#delta']]['value']['#description'] = (string) t('This field is readonly. It will be synchronized with the Geofield Map Reverse-Geocoded value.');
-          }
-          // Ensure the geoaddress_field has got an #id, otherwise generate it.
-          if (!isset($address_field['widget'][$element['#delta']]['value']['#id'])) {
-            $address_field['widget'][$element['#delta']]['value']['#id'] = $element['#geoaddress_field']['field'] . '-0';
-          }
-          NestedArray::setValue($complete_form, $parents, $address_field);
+      $address_field = NestedArray::getValue($complete_form, $parents, $address_field_exists);
+
+      // Geoaddress Field Settings.
+      if ($address_field_exists && ($address_field['widget']['#cardinality'] == '-1' || $address_field['widget']['#cardinality'] > $element['#delta'])) {
+
+        if ($element['#delta'] > 0 && !isset($address_field['widget'][$element['#delta']])) {
+          $address_field['widget'][$element['#delta']] = $address_field['widget'][$element['#delta'] - 1];
+          $address_field['widget'][$element['#delta']]['#delta'] = $element['#delta'];
+          $address_field['widget'][$element['#delta']]['_weight']['#default_value'] = $element['#delta'];
+          $address_field['widget'][$element['#delta']]['value']['#default_value'] = NULL;
         }
+
+        $address_field['widget'][$element['#delta']]['value']['#description'] = (string) t('This value will be synchronized with the Geofield Map Reverse-Geocoded value.');
+        if ($element['#geoaddress_field']['hidden']) {
+          $address_field['#attributes']['class'][] = 'geofield_map_geoaddress_field_hidden';
+        }
+        if ($element['#geoaddress_field']['disabled']) {
+          $address_field['widget'][$element['#delta']]['value']['#attributes']['readonly'] = 'readonly';
+          $address_field['widget'][$element['#delta']]['value']['#description'] = (string) t('This field is readonly. It will be synchronized with the Geofield Map Reverse-Geocoded value.');
+        }
+
+        // Re-Generate the geoaddress_field #id.
+        $address_field['widget'][$element['#delta']]['value']['#id'] = $element['#geoaddress_field']['field'] . '-' . $element['#delta'];
+
+        NestedArray::setValue($complete_form, $parents, $address_field);
       }
+
     }
 
     // Attach Geofield Map Libraries.
@@ -204,7 +218,6 @@ class GeofieldMap extends GeofieldElementBase {
     $settings[$mapid] = [
       'entity_operation' => $entity_operation,
       'id' => $element['#id'],
-      'gmap_api_key' => $element['#gmap_api_key'] && strlen($element['#gmap_api_key']) > 0 ? $element['#gmap_api_key'] : NULL,
       'name' => $element['#name'],
       'lat' => floatval($element['lat']['#default_value']),
       'lng' => floatval($element['lon']['#default_value']),
@@ -215,8 +228,7 @@ class GeofieldMap extends GeofieldElementBase {
       'latid' => $element['lat']['#attributes']['id'],
       'lngid' => $element['lon']['#attributes']['id'],
       'searchid' => isset($element['map']['geocode']) ? $element['map']['geocode']['#attributes']['id'] : NULL,
-      'geoaddress_field' => $address_field_exists ? $element['#geoaddress_field']['field'] : NULL,
-      'geoaddress_field_id' => $address_field_exists ? $address_field['widget'][0]['value']['#id'] : NULL,
+      'geoaddress_field_id' => $address_field_exists && isset($address_field['widget'][$element['#delta']]['value']['#id']) ? $address_field['widget'][$element['#delta']]['value']['#id'] : NULL,
       'mapid' => $mapid,
       'widget' => TRUE,
       'gmap_places' => $element['#gmap_places'],
@@ -230,6 +242,13 @@ class GeofieldMap extends GeofieldElementBase {
       'click_to_find_marker' => $element['#click_to_find_marker'] ? TRUE : FALSE,
       'click_to_place_marker_id' => $element['#click_to_place_marker'] ? $element['map']['actions']['click_to_place_marker']['#attributes']['id'] : NULL,
       'click_to_place_marker' => $element['#click_to_place_marker'] ? TRUE : FALSE,
+      // Geofield Map Google Maps and Geocoder Settings.
+      'gmap_api_localization' => $google_maps_service->getGmapApiLocalization($geofield_map_settings->get('gmap_api_localization')),
+      'gmap_api_key' => $element['#gmap_api_key'] && strlen($element['#gmap_api_key']) > 0 ? $element['#gmap_api_key'] : NULL,
+      'geocoder' => !empty($geofield_map_settings->get('geocoder')) ? $geofield_map_settings->get('geocoder') : [],
+      'geocode_cache' => [
+        'clientside' => !empty($geofield_map_settings->get('geocoder.caching.clientside')) ? $geofield_map_settings->get('geocoder.caching.clientside') : 'session_storage',
+      ],
     ];
 
     $element['#attached']['drupalSettings'] = [

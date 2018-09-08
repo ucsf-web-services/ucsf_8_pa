@@ -21,7 +21,7 @@ function datetime_field_views_data(FieldStorageConfigInterface $field_storage) {
  * views plugins. Modules defining new datetime-based fields may use this
  * function to simplify Views integration.
  *
- * @param FieldStorageConfigInterface $field_storage
+ * @param \Drupal\field\FieldStorageConfigInterface $field_storage
  *   The field storage config entity.
  * @param array $data
  *   Field view data or views_field_default_views_data($field_storage) if empty.
@@ -37,7 +37,7 @@ function datetime_field_views_data(FieldStorageConfigInterface $field_storage) {
 function datetime_type_field_views_data_helper(FieldStorageConfigInterface $field_storage, array $data, $column_name) {
   // @todo This code only covers configurable fields, handle base table fields
   //   in https://www.drupal.org/node/2489476.
-  $data = (empty($data)) ? views_field_default_views_data($field_storage) : $data;
+  $data = empty($data) ? views_field_default_views_data($field_storage) : $data;
   foreach ($data as $table_name => $table_data) {
     // Set the 'datetime' filter type.
     $data[$table_name][$field_storage->getName() . '_' . $column_name]['filter']['id'] = 'datetime';
@@ -57,7 +57,7 @@ function datetime_type_field_views_data_helper(FieldStorageConfigInterface $fiel
       'full_date' => t('Date in the form of CCYYMMDD.'),
     ];
     foreach ($arguments as $argument_type => $help_text) {
-      $column_name_text = $column_name !== $field_storage->getMainPropertyName() ? ':' . $column_name : '';
+      $column_name_text = $column_name === $field_storage->getMainPropertyName() ? '' : ':' . $column_name;
       $data[$table_name][$field_storage->getName() . '_' . $column_name . '_' . $argument_type] = [
         'title' => t('@label@column (@argument)', [
           '@label' => $field_storage->getLabel(),

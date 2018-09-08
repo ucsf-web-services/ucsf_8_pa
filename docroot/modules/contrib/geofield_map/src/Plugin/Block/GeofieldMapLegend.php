@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\geofield_map\MapThemerPluginManager;
-use Drupal\geofield_map\MarkerIconService;
+use Drupal\geofield_map\Services\MarkerIconService;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\views\Views;
@@ -73,7 +73,7 @@ class GeofieldMapLegend extends BlockBase implements ContainerFactoryPluginInter
   /**
    * The Icon Managed File Service.
    *
-   * @var \Drupal\geofield_map\MarkerIconService
+   * @var \Drupal\geofield_map\Services\MarkerIconService
    */
   protected $markerIcon;
 
@@ -96,7 +96,7 @@ class GeofieldMapLegend extends BlockBase implements ContainerFactoryPluginInter
    *   The Renderer service.
    * @param \Drupal\geofield_map\MapThemerPluginManager $map_themer_manager
    *   The mapThemerManager service.
-   * @param \Drupal\geofield_map\MarkerIconService $marker_icon_service
+   * @param \Drupal\geofield_map\Services\MarkerIconService $marker_icon_service
    *   The Marker Icon Service.
    */
   public function __construct(

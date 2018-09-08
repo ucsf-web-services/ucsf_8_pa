@@ -12,7 +12,7 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\geofield_map\MarkerIconService;
+use Drupal\geofield_map\Services\MarkerIconService;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
@@ -68,7 +68,7 @@ class TaxonomyTermThemer extends MapThemerBase {
    *   The renderer.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager
    *   The entity manager.
-   * @param \Drupal\geofield_map\MarkerIconService $marker_icon_service
+   * @param \Drupal\geofield_map\Services\MarkerIconService $marker_icon_service
    *   The Marker Icon Service.
    * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
    *   The entity type bundle info.
@@ -142,7 +142,7 @@ class TaxonomyTermThemer extends MapThemerBase {
         $target_bundles = $this->config->get('field.field.' . $entity_type . '.' . $bundle . '.' . $field_id)->get('settings.handler_settings.target_bundles');
         $target_bundles = is_array($target_bundles) ? array_keys($target_bundles) : [];
         if (!empty($target_bundles)) {
-          $taxonomy_ref_fields[$field_id]['target_bundles'] = array_merge($taxonomy_ref_fields[$field_id]['target_bundles'], $target_bundles);
+          $taxonomy_ref_fields[$field_id]['target_bundles'] = array_unique(array_merge($taxonomy_ref_fields[$field_id]['target_bundles'], $target_bundles));
         }
       }
     }
@@ -183,7 +183,7 @@ class TaxonomyTermThemer extends MapThemerBase {
       $element['taxonomy_field'] = [
         '#type' => 'html_tag',
         '#tag' => 'div',
-        '#value' => $this->t('At least a Taxonomy Term reference field should be added to the View to use this Map Theming option.'),
+        '#value' => $this->t('At least a Taxonomy Term reference field (<u>with a cardinality of 1</u>) should be added to the View to use this Map Theming option.'),
         '#attributes' => [
           'class' => ['geofield-map-warning'],
         ],
@@ -193,7 +193,7 @@ class TaxonomyTermThemer extends MapThemerBase {
       $element['taxonomy_field'] = [
         '#type' => 'select',
         '#title' => $this->t('Taxonomy Field'),
-        '#description' => $this->t('Chose the Taxonomy Field to base the Map Theming upon.'),
+        '#description' => $this->t('Chose the Taxonomy Term reference field to base the Map Theming upon <br>(only the ones <u>with a cardinality of 1</u> are available for theming).'),
         '#options' => array_combine(array_keys($taxonomy_ref_fields), array_keys($taxonomy_ref_fields)),
         '#default_value' => !empty($default_element['taxonomy_field']) ? $default_element['taxonomy_field'] : array_shift(array_keys($taxonomy_ref_fields)),
       ];
@@ -270,7 +270,6 @@ class TaxonomyTermThemer extends MapThemerBase {
             ],
             'weight' => [
               '#type' => 'weight',
-              '#title' => $this->t('Weight for @bundle', ['@bundle' => $bundle]),
               '#title_display' => 'invisible',
               '#default_value' => isset($default_element['fields'][$k]['terms'][$tid]['weight']) ? $default_element['fields'][$k]['terms'][$tid]['weight'] : $i,
               '#delta' => 20,

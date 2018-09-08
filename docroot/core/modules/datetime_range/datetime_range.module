@@ -38,7 +38,7 @@ function datetime_range_help($route_name, RouteMatchInterface $route_match) {
  * deprecated and must be converted before 9.0.0, when this updating layer will
  * be removed.
  *
- * @deprecated in Drupal 8.4.x and will be removed before 9.0.0.
+ * @deprecated in Drupal 8.5.x and will be removed before 9.0.0.
  *
  * @see https://www.drupal.org/node/2857691
  */
@@ -64,7 +64,7 @@ function datetime_range_view_presave(ViewEntityInterface $view) {
 
           if ($field_configuration->get('type') === 'daterange') {
 
-            // Set entity_type and field_name if missing.
+            // Set entity_type if missing.
             if (!isset($filter['entity_type'])) {
               $filter['entity_type'] = $filter_views_data['entity_type'];
             }
@@ -118,7 +118,7 @@ function datetime_range_view_presave(ViewEntityInterface $view) {
             $filter['value'] = $datetime_value;
             $filter['operator'] = $operator;
             $changed = TRUE;
-            @trigger_error('Use of string filters for datetime_range fields is deprecated. Use the datetime filters instead.', E_USER_DEPRECATED);
+            @trigger_error('Use of string filters for datetime_range fields is deprecated. Use the datetime filters instead. See https://www.drupal.org/node/2857691', E_USER_DEPRECATED);
           }
         }
       }
@@ -139,7 +139,7 @@ function datetime_range_view_presave(ViewEntityInterface $view) {
 
           if ($field_configuration->get('type') === 'daterange') {
 
-            // Set entity_type and field_name if missing.
+            // Set entity_type if missing.
             if (!isset($sort['entity_type'])) {
               $sort['entity_type'] = $sort_views_data['entity_type'];
             }
@@ -147,7 +147,7 @@ function datetime_range_view_presave(ViewEntityInterface $view) {
             // Set datetime plugin_id.
             $sort['plugin_id'] = 'datetime';
             $changed = TRUE;
-            @trigger_error('Use of standard sort handlers for datetime_range fields is deprecated. Use the datetime sort handlers instead.', E_USER_DEPRECATED);
+            @trigger_error('Use of standard sort handlers for datetime_range fields is deprecated. Use the datetime sort handlers instead. See https://www.drupal.org/node/2857691', E_USER_DEPRECATED);
           }
         }
       }

@@ -48,6 +48,21 @@
     maps_api_loading: false,
 
     /**
+     * Returns the re-coded google maps api language parameter, from html lang attribute.
+     */
+    googleMapsLanguage: function (html_language) {
+      switch (html_language) {
+        case 'zh-hans':
+          html_language = 'zh-CN'
+          break;
+        case 'zh-hant':
+          html_language = 'zh-TW'
+          break;
+      }
+      return html_language;
+    },
+
+    /**
      * Provides the callback that is called when maps loads.
      */
     googleCallback: function () {
@@ -74,6 +89,7 @@
     // Lead Google Maps library.
     loadGoogle: function (mapid, callback) {
       var self = this;
+      var html_language = $('html').attr("lang") ? $('html').attr("lang") : 'en'
 
       // Add the callback.
       self.addCallback(callback);
@@ -88,7 +104,7 @@
         // Google maps isn't loaded so lazy load google maps.
 
         // Default script path.
-        var scriptPath = '//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places';
+        var scriptPath = self.map_data[mapid]['gmap_api_localization'] + '?v=3.exp&sensor=false&libraries=places&language=' + self.googleMapsLanguage(html_language);
 
         // If a Google API key is set, use it.
         if (typeof self.map_data[mapid]['gmap_api_key'] !== 'undefined' && self.map_data[mapid]['gmap_api_key'] !== null) {
@@ -171,15 +187,65 @@
       }
     },
 
+    // Set the Reverse Geocode result into the Client Side Storage.
+    set_reverse_geocode_storage: function (mapid, latlng, address) {
+      var self = this;
+      var storage_type = self.map_data[mapid].geocode_cache.clientside;
+      switch (storage_type) {
+        case 'session_storage':
+          sessionStorage.setItem('Drupal.geofield_map.reverse_geocode.' + latlng, address)
+          break;
+        case 'local_storage':
+          localStorage.setItem('Drupal.geofield_map.reverse_geocode.' + latlng, address)
+          break;
+      }
+    },
+
+    // Get the Reverse Geocode result from Client Side Storage.
+    get_reverse_geocode_storage: function (mapid, latlng) {
+      var self = this;
+      var result;
+      var storage_type = self.map_data[mapid].geocode_cache.clientside;
+      switch (storage_type) {
+        case 'session_storage':
+          result = sessionStorage.getItem('Drupal.geofield_map.reverse_geocode.' + latlng)
+          break;
+        case 'local_storage':
+          result = localStorage.getItem('Drupal.geofield_map.reverse_geocode.' + latlng)
+          break;
+        default:
+          result = null;
+      }
+      return result;
+    },
+
     // Reverse geocode.
     reverse_geocode: function (mapid, position) {
       var self = this;
-      if (self.geocoder) {
+      var latlng;
+      switch (self.map_data[mapid].map_library) {
+        case 'leaflet':
+          latlng = position.lat.toFixed(6) + ',' + position.lng.toFixed(6);
+          break;
+        default:
+          latlng = position.lat().toFixed(6) + ',' + position.lng().toFixed(6);
+      }
+      // Check the result from the chosen client side storage, and use it eventually.
+      var reverse_geocode_storage = self.get_reverse_geocode_storage(mapid, latlng);
+      if (localStorage && self.map_data[mapid].geocode_cache.clientside && self.map_data[mapid].geocode_cache.clientside !== '_none_' && reverse_geocode_storage !== null) {
+        self.map_data[mapid].search.val(reverse_geocode_storage);
+        self.setGeoaddressField(mapid, reverse_geocode_storage);
+      }
+      else if (self.geocoder) {
         self.geocoder.geocode({latLng: position}, function (results, status) {
           if (status === google.maps.GeocoderStatus.OK && results[0]) {
             if (self.map_data[mapid].search) {
               self.map_data[mapid].search.val(results[0].formatted_address);
-              self.setGeoaddressField(mapid, self.map_data[mapid].search.val());
+              self.setGeoaddressField(mapid, results[0].formatted_address);
+            }
+            // Set the result into the chosen client side storage.
+            if (localStorage && self.map_data[mapid].geocode_cache.clientside && self.map_data[mapid].geocode_cache.clientside !== '_none_') {
+              self.set_reverse_geocode_storage(mapid, latlng, results[0].formatted_address);
             }
           }
         });
@@ -443,16 +509,16 @@
             self.map_data[params.mapid].search.autocomplete({
               // This bit uses the geocoder to fetch address values.
               source: function (request, response) {
-                self.geocoder.geocode({address: request.term}, function (results, status) {
-                  response($.map(results, function (item) {
-                    return {
-                      // the value property is needed to be passed to the select.
-                      value: item.formatted_address,
-                      latitude: item.geometry.location.lat(),
-                      longitude: item.geometry.location.lng()
-                    };
-                  }));
-                });
+                  self.geocoder.geocode({address: request.term}, function (results, status) {
+                    response($.map(results, function (item) {
+                      return {
+                        // the value property is needed to be passed to the select.
+                        value: item.formatted_address,
+                        latitude: item.geometry.location.lat(),
+                        longitude: item.geometry.location.lng()
+                      };
+                    }));
+                  });
               },
               // This bit is executed upon selection of an address.
               select: function (event, ui) {
@@ -577,18 +643,15 @@
         });
 
         // Set default search field value (just to the first geofield_map).
-        if (params.mapid === self.firstMapId && self.map_data[params.mapid].search && params.geoaddress_field_id !== null && !!self.map_data[params.mapid].geoaddress_field.val()) {
+        if (self.map_data[params.mapid].search && params.geoaddress_field_id !== null && !!self.map_data[params.mapid].geoaddress_field.val()) {
           // Copy from the geoaddress_field.val
           self.map_data[params.mapid].search.val(self.map_data[params.mapid].geoaddress_field.val());
         }
         // If the coordinates are valid, provide a Gmap Reverse Geocode.
-        else if (self.map_data[params.mapid].search && (params.lat > 0 && params.lng > 0)) {
-          // Sets as Reverse geocode from the Google Map Geofield Coordinates.
-          var gmapPosition = new google.maps.LatLng(params.lat, params.lng);
-          // The follwoing will work only if a google geocoder has been defined.
-          self.reverse_geocode(params.mapid, gmapPosition);
+        else if (self.map_data[params.mapid].search && (Math.abs(params.lat) > 0 && Math.abs(params.lng) > 0)) {
+          // The following will work only if a google geocoder has been defined.
+          self.reverse_geocode(params.mapid, position);
         }
-
       }
     }
   };

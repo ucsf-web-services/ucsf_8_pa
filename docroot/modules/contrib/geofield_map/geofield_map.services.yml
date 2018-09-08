@@ -8,5 +8,9 @@ services:
     arguments: ['@container.namespaces', '@cache.discovery', '@module_handler', '@config.factory', '@string_translation', '@entity_type.manager']
 
   geofield_map.marker_icon:
-      class: Drupal\geofield_map\MarkerIconService
+      class: Drupal\geofield_map\Services\MarkerIconService
       arguments: ['@config.factory', '@string_translation', '@entity_type.manager', '@module_handler', '@link_generator']
+
+  geofield_map.google_maps:
+    class: Drupal\geofield_map\Services\GoogleMapsService
+    arguments: ['@config.factory', '@language_manager', '@request_stack']
