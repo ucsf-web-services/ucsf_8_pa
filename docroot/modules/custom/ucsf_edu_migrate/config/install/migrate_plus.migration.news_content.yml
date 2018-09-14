@@ -41,10 +41,10 @@ source:
       name: subtitle
       label: 'news subtitle'
       selector: Subtitle
-    -
-      name: body
-      label: 'news body'
-      selector: body
+#    -
+#      name: body
+#      label: 'news body'
+#      selector: body
     -
       name: areas_tax
       label: 'news primary area tax'
@@ -108,8 +108,13 @@ process:
   
   title: news_title
   
-  body: body
-
+  body: 
+    -
+      plugin: testingbase
+      source: pid
+      para_type: author
+      field: pid
+  
   field_areas:
     -
       plugin: skip_on_empty
@@ -177,30 +182,22 @@ process:
       source: author_type_tax_id
       message: 'there was an empty field'
   
-  field_author_byline:
-    -  
-     plugin: iterator
-     source: pid
-     process: 
-       temporary_ids:
-         plugin: migration_lookup
-         migration: author_paragraph
-         source: nid
-       
-       target_id:
-         -
-           plugin: extract
-           source: '@temporary_ids'
-           index:
-             - 0
-           
-       target_revision_id:
-         -
-           plugin: extract
-           source: '@temporary_ids'
-           index:
-             - 1
-
+#  field_author_byline: 
+#    plugin: mds_paragraph
+#    source: pid
+#    type: author
+#    plugin: sub_process
+#    source: pid
+#    process:
+#      target_id:
+#        plugin: migration_lookup
+#        migration: author_paragraph
+#        source: pid
+#    - 
+#      target_id: 1714
+#    -
+#      target_revision_id: 2489  
+    
 #  field_author_byline/field_author_byline_target_id:
 #    -
 #      plugin: default_value
