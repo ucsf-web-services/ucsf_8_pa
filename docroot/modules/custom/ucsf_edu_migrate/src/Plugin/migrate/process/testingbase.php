@@ -36,12 +36,22 @@ class testingbase extends ProcessPluginBase {
     public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property){
         // If the $value field which is the source value is a string add hello world to the end of it.
         $paragraph = Paragraph::create(['type' => $this->configuration['para_type']]);
-        $paragraph->save();
-        //print_r($paragraph);
-        print_r($this->configuration);
-        if (is_string($value)) {
-            return $value . 'hello world';
+        $fields = $paragraph->getFieldDefinitions();
+        //$paragraph->set($this->configuration['destination'], $this->configuration['source']); 
+        //$fields = \Drupal::service('entity_field.manager')->getFieldDefinitions('node', 'article'); 
+        //print_r($fields); 
+        $dest = $this->configuration['destination'][0];
+        foreach($dest as $source => $field) {
+            print_r($source."\n");
+            print_r($field."\n");
+            $value = $row->getSourceProperty($field);
+            $paragraph->set($source,$value);
+            print_r($value."\n");
         }
-        return null;
+        print_r($this->configuration);
+        print_r("space\n");
+        print_r($value."\n");
+        $paragraph->save();
+        return $paragraph;
     }
 }

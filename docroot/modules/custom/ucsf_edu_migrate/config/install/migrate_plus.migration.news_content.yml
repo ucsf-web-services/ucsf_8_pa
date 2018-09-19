@@ -16,7 +16,7 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: public://news.xml
+  urls: http://local.ucsf.edu/newsxml
   item_selector: /nodes/node
   
 # unique identifier needs to be an integer 
@@ -41,10 +41,10 @@ source:
       name: subtitle
       label: 'news subtitle'
       selector: Subtitle
-#    -
-#      name: body
-#      label: 'news body'
-#      selector: body
+    -
+      name: body
+      label: 'news body'
+      selector: body
     -
       name: areas_tax
       label: 'news primary area tax'
@@ -108,12 +108,7 @@ process:
   
   title: news_title
   
-  body: 
-    -
-      plugin: testingbase
-      source: pid
-      para_type: author
-      field: pid
+  body: body
   
   field_areas:
     -
@@ -182,7 +177,23 @@ process:
       source: author_type_tax_id
       message: 'there was an empty field'
   
-#  field_author_byline: 
+  field_author_byline: 
+    -
+      plugin: testingbase
+      source: pid
+      para_type: author
+      field: pid
+      destination: 
+        -
+          field_a_author: author
+          field_test_num: article_type_tax 
+      otherfield:
+        -
+          somefiled: loc_tax
+          someotherfield: topics_tax
+              
+      'dest/field1': topics_tax
+      'dest/field2': author_type_tax_id  
 #    plugin: mds_paragraph
 #    source: pid
 #    type: author
