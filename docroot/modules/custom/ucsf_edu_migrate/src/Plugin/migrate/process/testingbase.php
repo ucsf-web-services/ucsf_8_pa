@@ -7,7 +7,8 @@ use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
 use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
-
+use Drupal\Core\Entity;
+    
 /**
  * Returns an href url string from the source string if link markup exists.
  *
@@ -18,8 +19,10 @@ use Drupal\paragraphs\Entity\Paragraph;
  *   field_your_field_name:
  *     -
  *       plugin: your_plugin_name
- *       source: some_source_value
+ *       source: some_source_value(useless)
  *       para_type: paragraph_type
+ *       fields:
+ *
  * @endcode
  *
  * This adds a string to the end of a value.
@@ -40,17 +43,18 @@ class testingbase extends ProcessPluginBase {
         //$paragraph->set($this->configuration['destination'], $this->configuration['source']); 
         //$fields = \Drupal::service('entity_field.manager')->getFieldDefinitions('node', 'article'); 
         //print_r($fields); 
-        $dest = $this->configuration['destination'][0];
+        foreach($paragraph->getFields() as $test){
+        }
+        $dest = $this->configuration['fields'][0];
         foreach($dest as $source => $field) {
-            print_r($source."\n");
-            print_r($field."\n");
+            //print_r($paragraph->getFieldDefinition()."\n");
+            //print_r($field->getType()."\n");
+            
             $value = $row->getSourceProperty($field);
             $paragraph->set($source,$value);
-            print_r($value."\n");
         }
-        print_r($this->configuration);
-        print_r("space\n");
-        print_r($value."\n");
+        //print_r($this->configuration);
+        //print_r($value."\n");
         $paragraph->save();
         return $paragraph;
     }

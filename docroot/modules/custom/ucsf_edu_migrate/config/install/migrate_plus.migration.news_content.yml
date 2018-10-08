@@ -81,8 +81,31 @@ source:
       name: pid
       label: 'paragraph id'
       selector: pid
+    -
+      name: gallery
+      label: 'gallery id'
+      selector: gallery
+    -
+      name: hbox
+      label: 'news headline box'
+      selector: headline_box  
+    -
+      name: tags_tax
+      label: 'news tags tax'
+      selector: Tags
+    -
+      name: exclude_tax
+      label: 'news exclude tax'
+      selector: exclude   
+    -
+      name: featured_image
+      label: 'path to the featured image'
+      selector: featured_image
+    -
+      name: bool_explore
+      label: 'boolean for explore ucsf news'
+      selector: bool_explore
       
-    
   constants:
     file_directory: public://
 
@@ -108,7 +131,10 @@ process:
   
   title: news_title
   
-  body: body
+  body/value: body
+  body/format:
+    plugin: default_value
+    default_value: full_html
   
   field_areas:
     -
@@ -176,49 +202,73 @@ process:
       method: process
       source: author_type_tax_id
       message: 'there was an empty field'
+      
+  field_tags:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: tags_tax
+      message: 'there was an empty field'
   
+  field_exclude:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: exclude_tax
+      message: 'there was an empty field' 
+    -
+      plugin: explode
+      source: exclude_tax
+      delimiter: , 
+    -
+      plugin: entity_generate  
+      source: exclude_tax
+      entity_type: taxonomy_term
+  
+#  HEADLINE BOX TBD DESTINATION FIELD: hbox
+
+#  BOOLEAN EXLPORE TBD DESTINATION FIELD: bool_expore  
+  
+#  FEATURED IMAGE TBD DESTINATION FILED:
+#   -
+#     plugin: skip_on_empty
+#     method: process
+#     source: featured_image
+#     message: 'there was an empty field'
+#   -
+#     plugin: file_copy
+#     source:
+#       - featured_image
+#       - '@destination_path'
+#   -
+#     plugin: entity_generate
+#
+# destination_basename:
+#   plugin: callback
+#   callable: basename
+#   source: featured_image
+# destination_path:
+#   plugin: concat
+#   source:
+#     - 'constants/file_directory'
+#     - '@destination_basename'
+      
   field_author_byline: 
     -
       plugin: testingbase
-      source: pid
       para_type: author
-      field: pid
-      destination: 
+      fields: 
         -
           field_a_author: author
-          field_test_num: article_type_tax 
-      otherfield:
-        -
-          somefiled: loc_tax
-          someotherfield: topics_tax
+  
+#  field_featured_image_video:
+#    -
+#      plugin: testingbase
+#      para_type: gallery
+#      fields:
+#        -
+#          target_id: gallery
               
-      'dest/field1': topics_tax
-      'dest/field2': author_type_tax_id  
-#    plugin: mds_paragraph
-#    source: pid
-#    type: author
-#    plugin: sub_process
-#    source: pid
-#    process:
-#      target_id:
-#        plugin: migration_lookup
-#        migration: author_paragraph
-#        source: pid
-#    - 
-#      target_id: 1714
-#    -
-#      target_revision_id: 2489  
-    
-#  field_author_byline/field_author_byline_target_id:
-#    -
-#      plugin: default_value
-#      default_value: 1714
-# 
-#  field_author_byline/field_author_byline_target_id:
-#    -
-#      plugin: default_value
-#      default_value: 2489
-        
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value
   # (the 'style' field from the source database in this case) to the destination
