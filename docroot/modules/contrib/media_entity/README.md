@@ -1,7 +1,7 @@
 # Upgrade path from Media Entity to Media (core)
 
 This version of Media Entity is intended **only** to be used as a bridge to
-move to the new "Media" module included in Drupal core (>= 8.4.0). While the
+move to the new "Media" module included in Drupal core (>= 8.6.0). While the
 storage of media entities is the same, some aspects of the API have changed.
 Because of that, if you have an existing site using Media Entity 1.x, you need
 to follow the upgrade path indicated below in order to move to Media in core.
@@ -10,7 +10,7 @@ to follow the upgrade path indicated below in order to move to Media in core.
 1. Backup your code and your database
 2. Test that you can successfully roll-back from the backup!
 3. Upgrade the codebase with:
-  - Core: >= **8.4.x**
+  - Core: >= **8.6.x**
   - Media Entity: **8.x-2.x**
   - All media entity providers: **8.x-2.x** (or use patches from #2860796: Plan for
   contributed modules with Media Entity API in core). Note that the modules

@@ -792,6 +792,7 @@ if (file_exists('/var/www/site-php')) {
 }
 
 $config_directories['vcs'] = $app_root . '/../config/' . basename($site_path);
+$config_directories['sync'] = $app_root . '/sites/default/sync';
 
 
 /**

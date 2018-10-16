@@ -49,13 +49,13 @@ class CliService {
 
     module_load_install('media_entity');
 
-    // This update only makes sense with core >= 8.4.x.
+    // This update only makes sense with core >= 8.6.x.
     $version = explode('.', \Drupal::VERSION);
-    if ($version[1] < 4) {
-      $checks['errors'][] = $this->t('The Media Entity 2.x upgrade path only works with Drupal core >= 8.4.x');
+    if ($version[1] < 6) {
+      $checks['errors'][] = $this->t('The Media Entity 2.x upgrade path only works with Drupal core >= 8.6.x');
     }
     else {
-      $checks['passes'][] = $this->t('Drupal core is the correct version (>= 8.4.0). [@version detected]', ['@version' => \Drupal::VERSION]);
+      $checks['passes'][] = $this->t('Drupal core is the correct version (>= 8.6.0). [@version detected]', ['@version' => \Drupal::VERSION]);
     }
 
     // This update can't proceed if there already is an enabled module called
@@ -97,15 +97,6 @@ class CliService {
       else {
         $checks['passes'][] = $this->t('The "Media Entity Generic" module is available.');
       }
-    }
-
-    // Actions now live in the contributed media_entity_actions, until generic
-    // entity actions are part of Drupal core (2916740).
-    if (!isset($module_data['media_entity_actions']) && !file_exists(\Drupal::root() . '/core/modules/media/src/Plugin/Action/PublishMedia.php')) {
-      $checks['errors'][] = $this->t('Media Actions (for example, for bulk operations) have been moved into a separate "Media Entity Actions" module. You need to download this module to your codebase before continuing.');
-    }
-    else {
-      $checks['passes'][] = $this->t('The "Media Entity Actions" module is available.');
     }
 
     // EXIF image handling was dropped from the patch that moved ME + MEI into

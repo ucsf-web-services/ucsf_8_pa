@@ -194,7 +194,7 @@ function media_entity_requirements($phase) {
   if ($phase == 'install') {
     $requirements['media_entity_update_only'] = [
       'title' => t('Media entity'),
-      'description' => t('This branch of Media Entity is intended for site upgrades only. Please use the 1.x branch or Drupal core >= 8.4.x if you are building a new site.'),
+      'description' => t('This branch of Media Entity is intended for site upgrades only. Please use the 1.x branch or Drupal core >= 8.6.x if you are building a new site.'),
       'severity' => REQUIREMENT_ERROR,
     ];
   }
@@ -354,12 +354,6 @@ function media_entity_update_8201() {
   if (isset($module_data['media_entity_generic'])) {
     $install[] = 'media_entity_generic';
   }
-  // Install media_entity_actions, if not enabled yet. Actions were not included
-  // in Media core, so we need this module to fill that gap until generic entity
-  // actions are part of core, likely in 8.5.x.
-  if (isset($module_data['media_entity_actions'])) {
-    $install[] = 'media_entity_actions';
-  }
 
   // EXIF image handling was dropped from the patch that moved ME + MEI into
   // core. Enable "Media Entity Image EXIF" if needed, which fills in that gap.
@@ -466,6 +460,22 @@ function media_entity_update_8201() {
 
   // Update any views that use the entity:media_bundle argument validator.
   _media_entity_update_views();
+
+  // Update media action plugins.
+  $old_new_action_id_map = [
+    'media_delete_action' => 'entity:delete_action:media',
+    'media_publish_action' => 'entity:publish_action:media',
+    'media_unpublish_action' => 'entity:unpublish_action:media',
+    'media_save_action' => 'entity:save_action:media',
+  ];
+  /** @var \Drupal\system\Entity\Action[] $actions */
+  $actions = \Drupal::entityTypeManager()->getStorage('action')->loadMultiple();
+  foreach ($actions as $action) {
+    if (isset($old_new_action_id_map[$action->getPlugin()->getPluginId()])) {
+      $action->setPlugin($old_new_action_id_map[$action->getPlugin()->getPluginId()]);
+      $action->save();
+    }
+  }
 
   /** @var \Drupal\user\Entity\Role $role */
   foreach (Role::loadMultiple() as $role) {
