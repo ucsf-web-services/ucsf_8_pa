@@ -1,0 +1,62 @@
+uuid: 0cb0a511-ed0b-436e-899b-698bd2e8b5a5
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.media_assets_library
+    - field.field.paragraph.promotional.field_image_media
+    - field.field.paragraph.promotional.field_promo_image
+    - field.field.paragraph.promotional.field_promo_text
+    - field.field.paragraph.promotional.field_textbox_background_color
+    - field.field.paragraph.promotional.field_title
+    - paragraphs.paragraphs_type.promotional
+  module:
+    - entity_browser
+    - text
+id: paragraph.promotional.default
+targetEntityType: paragraph
+bundle: promotional
+mode: default
+content:
+  field_image_media:
+    weight: 1
+    settings:
+      entity_browser: media_assets_library
+      field_widget_display: rendered_entity
+      field_widget_edit: true
+      field_widget_remove: true
+      open: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: default
+      field_widget_replace: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_promo_text:
+    weight: 2
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_textbox_background_color:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_title:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  field_promo_image: true
+  status: true
+  uid: true

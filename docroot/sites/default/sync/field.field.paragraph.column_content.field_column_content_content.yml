@@ -1,0 +1,125 @@
+uuid: 1c039fb6-9cf1-4ce6-8e7a-58111f1ad158
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_column_content_content
+    - paragraphs.paragraphs_type.block
+    - paragraphs.paragraphs_type.blockquote
+    - paragraphs.paragraphs_type.column_content
+    - paragraphs.paragraphs_type.gallery
+    - paragraphs.paragraphs_type.image
+    - paragraphs.paragraphs_type.menu
+    - paragraphs.paragraphs_type.promotional
+    - paragraphs.paragraphs_type.related_content
+    - paragraphs.paragraphs_type.text_block
+    - paragraphs.paragraphs_type.view
+  module:
+    - entity_reference_revisions
+id: paragraph.column_content.field_column_content_content
+field_name: field_column_content_content
+entity_type: paragraph
+bundle: column_content
+label: Content
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      text_block: text_block
+      image: image
+      blockquote: blockquote
+      related_content: related_content
+      view: view
+      menu: menu
+      block: block
+      gallery: gallery
+      promotional: promotional
+    target_bundles_drag_drop:
+      text_block:
+        enabled: true
+        weight: -23
+      image:
+        enabled: true
+        weight: -22
+      blockquote:
+        enabled: true
+        weight: -21
+      related_content:
+        enabled: true
+        weight: -20
+      column_content:
+        weight: -19
+        enabled: false
+      author:
+        weight: -18
+        enabled: false
+      authors:
+        weight: -17
+        enabled: false
+      custom_author:
+        weight: -16
+        enabled: false
+      column_wrapper:
+        weight: -15
+        enabled: false
+      featured_image:
+        weight: -14
+        enabled: false
+      featured_video:
+        weight: -13
+        enabled: false
+      view:
+        enabled: true
+        weight: 25
+      menu:
+        enabled: true
+        weight: 26
+      block:
+        enabled: true
+        weight: 27
+      featured_card_image:
+        weight: 32
+        enabled: false
+      gallery:
+        enabled: true
+        weight: 35
+      gallery_item:
+        weight: 36
+        enabled: false
+      related_external_link:
+        weight: 39
+        enabled: false
+      related_internal_link:
+        weight: 40
+        enabled: false
+      related_links:
+        weight: 41
+        enabled: false
+      promotional:
+        enabled: true
+        weight: 42
+      source:
+        weight: 42
+        enabled: false
+      three_column_25_25_50:
+        weight: 44
+        enabled: false
+      three_column_25_50_25:
+        weight: 45
+        enabled: false
+      three_column_50_25_25:
+        weight: 46
+        enabled: false
+      two_column_content_row_25_75:
+        weight: 47
+        enabled: false
+      two_column_content_row_75_25:
+        weight: 48
+        enabled: false
+field_type: entity_reference_revisions

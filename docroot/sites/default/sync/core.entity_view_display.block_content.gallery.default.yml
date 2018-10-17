@@ -1,0 +1,33 @@
+uuid: b6ffccb6-e130-405b-ad18-f2d07a40106d
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.gallery
+    - field.field.block_content.gallery.body
+    - field.field.block_content.gallery.field_gallery_item
+  module:
+    - entity_reference_revisions
+    - text
+id: block_content.gallery.default
+targetEntityType: block_content
+bundle: gallery
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_gallery_item:
+    type: entity_reference_revisions_entity_view
+    weight: 1
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+hidden: {  }

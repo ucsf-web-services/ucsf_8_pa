@@ -1,0 +1,119 @@
+uuid: 2bbf6fee-cdd4-4298-b417-3c45e2b44540
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_content_row
+    - paragraphs.paragraphs_type.column_wrapper
+    - paragraphs.paragraphs_type.three_column_25_25_50
+    - paragraphs.paragraphs_type.three_column_25_50_25
+    - paragraphs.paragraphs_type.three_column_50_25_25
+    - paragraphs.paragraphs_type.two_column_content_row_25_75
+    - paragraphs.paragraphs_type.two_column_content_row_75_25
+    - taxonomy.vocabulary.topics
+  module:
+    - entity_reference_revisions
+id: taxonomy_term.topics.field_content_row
+field_name: field_content_row
+entity_type: taxonomy_term
+bundle: topics
+label: 'Content Row'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      column_wrapper: column_wrapper
+      three_column_25_25_50: three_column_25_25_50
+      three_column_25_50_25: three_column_25_50_25
+      three_column_50_25_25: three_column_50_25_25
+      two_column_content_row_25_75: two_column_content_row_25_75
+      two_column_content_row_75_25: two_column_content_row_75_25
+    target_bundles_drag_drop:
+      author:
+        weight: 28
+        enabled: false
+      authors:
+        weight: 29
+        enabled: false
+      block:
+        weight: 30
+        enabled: false
+      blockquote:
+        weight: 31
+        enabled: false
+      column_content:
+        weight: 32
+        enabled: false
+      column_wrapper:
+        enabled: true
+        weight: 33
+      custom_author:
+        weight: 34
+        enabled: false
+      featured_card_image:
+        weight: 35
+        enabled: false
+      featured_image:
+        weight: 36
+        enabled: false
+      featured_video:
+        weight: 37
+        enabled: false
+      gallery:
+        weight: 38
+        enabled: false
+      gallery_item:
+        weight: 39
+        enabled: false
+      image:
+        weight: 40
+        enabled: false
+      menu:
+        weight: 41
+        enabled: false
+      promotional:
+        weight: 42
+        enabled: false
+      related_content:
+        weight: 43
+        enabled: false
+      related_external_link:
+        weight: 44
+        enabled: false
+      related_internal_link:
+        weight: 45
+        enabled: false
+      related_links:
+        weight: 46
+        enabled: false
+      source:
+        weight: 47
+        enabled: false
+      text_block:
+        weight: 48
+        enabled: false
+      three_column_25_25_50:
+        enabled: true
+        weight: 49
+      three_column_25_50_25:
+        enabled: true
+        weight: 50
+      three_column_50_25_25:
+        enabled: true
+        weight: 51
+      two_column_content_row_25_75:
+        enabled: true
+        weight: 52
+      two_column_content_row_75_25:
+        enabled: true
+        weight: 53
+      view:
+        weight: 54
+        enabled: false
+field_type: entity_reference_revisions

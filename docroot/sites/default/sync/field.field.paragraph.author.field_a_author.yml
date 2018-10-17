@@ -1,0 +1,28 @@
+uuid: 55592e19-d623-4d23-a5c8-62e8412922ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_a_author
+    - node.type.author
+    - paragraphs.paragraphs_type.author
+id: paragraph.author.field_a_author
+field_name: field_a_author
+entity_type: paragraph
+bundle: author
+label: Author
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      author: author
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
