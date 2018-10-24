@@ -810,4 +810,6 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
 }
 
+ini_set('memory_limit', '256MB');
+
 
