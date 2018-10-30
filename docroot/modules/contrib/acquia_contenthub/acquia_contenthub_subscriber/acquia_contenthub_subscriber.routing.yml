@@ -1,0 +1,40 @@
+acquia_contenthub_subscriber.discovery:
+  path: '/admin/content/acquia-contenthub'
+  defaults:
+    _controller: '\Drupal\acquia_contenthub_subscriber\Controller\ContentHubSubscriberController::loadDiscovery'
+  requirements:
+    _permission: 'administer acquia content hub'
+  options:
+    _admin_route: TRUE
+
+entity.contenthub_filter.collection:
+  path: '/admin/config/services/acquia-contenthub/contenthub_filter'
+  defaults:
+    _entity_list: 'contenthub_filter'
+    _title: 'Manage Content Hub Filters'
+  requirements:
+    _permission: 'administer acquia content hub'
+
+entity.contenthub_filter.add_form:
+  path: '/admin/config/services/acquia-contenthub/contenthub_filter/add'
+  defaults:
+    _entity_form: 'contenthub_filter.add'
+    _title: 'Add contenthub_filter'
+  requirements:
+    _permission: 'administer acquia content hub'
+
+entity.contenthub_filter.edit_form:
+  path: '/admin/config/services/acquia-contenthub/contenthub_filter/{contenthub_filter}'
+  defaults:
+    _entity_form: 'contenthub_filter.edit'
+    _title: 'Edit contenthub_filter'
+  requirements:
+    _permission: 'administer acquia content hub'
+
+entity.contenthub_filter.delete_form:
+  path: '/admin/config/services/acquia-contenthub/contenthub_filter/{contenthub_filter}/delete'
+  defaults:
+    _entity_form: 'contenthub_filter.delete'
+    _title: 'Delete contenthub_filter'
+  requirements:
+    _permission: 'administer acquia content hub'

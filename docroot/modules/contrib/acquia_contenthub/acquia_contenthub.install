@@ -1,0 +1,249 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the acquia_contenthub module.
+ */
+
+use Drupal\Core\Config\Entity\ConfigEntityType;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the database tables used by this module.
+ *
+ * @see hook_schema()
+ *
+ * @ingroup acquia_contenthub
+ */
+function acquia_contenthub_schema() {
+  $schema['acquia_contenthub_entities_tracking'] = [
+    'fields' => [
+      'entity_type' => [
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'entity_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'entity_uuid' => [
+        'type' => 'char',
+        'length' => 36,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'status_export' => [
+        'description' => 'The status of an exported entity.',
+        'type' => 'varchar',
+        'default' => '',
+        'not null' => TRUE,
+        'length' => 36,
+      ],
+      'status_import' => [
+        'description' => 'The status of an imported entity.',
+        'type' => 'varchar',
+        'length' => 36,
+        'default' => '',
+        'not null' => TRUE,
+      ],
+      'modified' => [
+        'description' => 'The CDF entity\'s modified field.',
+        'type' => 'varchar',
+        'default' => '',
+        'not null' => TRUE,
+        'length' => 36,
+      ],
+      'origin' => [
+        'type' => 'char',
+        'length' => 36,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+    ],
+    'indexes' => [
+      'origin' => ['origin'],
+    ],
+    'unique keys' => [
+      'entity' => ['entity_type', 'entity_id'],
+      'entity_uuid' => ['entity_uuid'],
+    ],
+  ];
+  return $schema;
+}
+
+/**
+ * @defgroup updates-8.2.x-config-entities
+ * @{
+ * Update functions to Configuration Entities.
+ */
+
+/**
+ * Install the Content Hub config entity type and fix old settings-based config.
+ *
+ * @see acquia_contenthub_post_update_create_acquia_contenthub_entity_config_entities()
+ */
+function acquia_contenthub_update_8201() {
+  \Drupal::entityDefinitionUpdateManager()->installEntityType(new ConfigEntityType([
+    'id' => 'acquia_contenthub_entity_config',
+    'label' => new TranslatableMarkup('Acquia Content Hub Entity configuration'),
+    'config_prefix' => 'acquia_contenthub',
+    'admin_permission' => 'Administer Acquia Content Hub',
+    'label_callback' => 'getLabelFromPlugin',
+    'entity_keys' => ['id' => 'id'],
+    'config_export' => [
+      'id',
+      'bundles',
+    ],
+  ]));
+
+  // Saving entity_config simple configuration for later processing.
+  \Drupal::state()->set('acquia_contenthub_update_8201_entity_config', \Drupal::config('acquia_contenthub.entity_config')->get('entities'));
+  \Drupal::configFactory()->getEditable('acquia_contenthub.entity_config')
+    ->clear('entities')
+    ->save();
+
+  // Saving preview_image_config simple configuration for later processing and
+  // getting rid of it.
+  \Drupal::state()->set('acquia_contenthub_update_8201_preview_image_config', \Drupal::config('acquia_contenthub.preview_image_config')->get('node'));
+  \Drupal::configFactory()->getEditable('acquia_contenthub.preview_image_config')->delete();
+}
+
+/**
+ * @} End of "defgroup updates-8.2.x-config-entities".
+ */
+
+/**
+ * @defgroup updates-8.2.x-update-entities-tracking-table
+ * @{
+ * Update functions to Entities Tracking Table.
+ */
+
+/**
+ * Updates the Entities Tracking Table to include exported entities.
+ */
+function acquia_contenthub_update_8202() {
+  define('ACQUIA_CONTENTHUB_ENTITY_TRACKING_TABLE', 'acquia_contenthub_entities_tracking');
+  $schema = Database::getConnection()->schema();
+
+  // Rename Table.
+  $schema->renameTable('acquia_contenthub_imported_entities', ACQUIA_CONTENTHUB_ENTITY_TRACKING_TABLE);
+
+  // Add/Change fields.
+  $spec = [
+    'description' => 'The status of an exported entity.',
+    'type' => 'varchar',
+    'default' => '',
+    'not null' => TRUE,
+    'length' => 36,
+  ];
+  $schema->addField(ACQUIA_CONTENTHUB_ENTITY_TRACKING_TABLE, 'status_export', $spec);
+
+  $spec = [
+    'description' => 'The status of an imported entity.',
+    'type' => 'varchar',
+    'length' => 36,
+    'default' => '',
+    'not null' => TRUE,
+  ];
+  $schema->changeField(ACQUIA_CONTENTHUB_ENTITY_TRACKING_TABLE, 'auto_update', 'status_import', $spec);
+
+  $spec = [
+    'description' => 'The CDF entity\'s modified field.',
+    'type' => 'varchar',
+    'default' => '',
+    'not null' => TRUE,
+    'length' => 36,
+  ];
+  $schema->addField(ACQUIA_CONTENTHUB_ENTITY_TRACKING_TABLE, 'modified', $spec);
+
+  // Updating data in the table.
+  Database::getConnection()->update(ACQUIA_CONTENTHUB_ENTITY_TRACKING_TABLE)
+    ->fields([
+      'status_import' => 'AUTO_UPDATE_ENABLED',
+    ])
+    ->condition('status_import', 'ENABLED', '=')
+    ->execute();
+  Database::getConnection()->update(ACQUIA_CONTENTHUB_ENTITY_TRACKING_TABLE)
+    ->fields([
+      'status_import' => 'AUTO_UPDATE_DISABLED',
+    ])
+    ->condition('status_import', 'DISABLED', '=')
+    ->execute();
+}
+
+/**
+ * @} End of "defgroup updates-8.2.x-update-entities-tracking-table".
+ */
+
+/**
+ * Set default values for empty keys in acquia_contenthub.entity_config.
+ */
+function acquia_contenthub_update_8203() {
+  $config = \Drupal::configFactory()->getEditable('acquia_contenthub.entity_config');
+  if (!$config->get('use_block_content_view_builder')) {
+    $config->set('use_block_content_view_builder', FALSE);
+  }
+  if (!$config->get('user_role')) {
+    $config->set('user_role', 'anonymous');
+  }
+  $config->save();
+}
+
+/**
+ * Set default values for import queue in acquia_contenthub.entity_config.
+ */
+function acquia_contenthub_update_8302() {
+  $config = \Drupal::configFactory()->getEditable('acquia_contenthub.entity_config');
+  if (!$config->get('import_with_queue')) {
+    $config->set('import_with_queue', FALSE);
+  }
+  if (!$config->get('import_queue_batch_size')) {
+    $config->set('import_queue_batch_size', 1);
+  }
+  if (!$config->get('import_queue_wait_time')) {
+    $config->set('import_queue_wait_time', 3);
+  }
+  $config->save();
+}
+
+/**
+ * Remove shared_secret config variable.
+ */
+function acquia_contenthub_update_8303() {
+  $config = \Drupal::configFactory()->getEditable('acquia_contenthub.admin_settings');
+  $config->clear('shared_secret')->save();
+}
+
+/**
+ * Set default export queue parameters in acquia_contenthub.entity_config.
+ */
+function acquia_contenthub_update_8401() {
+  $config = \Drupal::configFactory()->getEditable('acquia_contenthub.entity_config');
+  if (!$config->get('export_queue_nodes_per_item')) {
+    $config->set('export_queue_nodes_per_item', 1);
+  }
+  if (!$config->get('export_queue_batch_size')) {
+    $config->set('export_queue_batch_size', 1);
+  }
+  if (!$config->get('export_queue_waiting_time')) {
+    $config->set('export_queue_waiting_time', 3);
+  }
+  $config->save();
+}
+
+/**
+ * Remove crop entities from contenthub entity configuration.
+ */
+function acquia_contenthub_update_8402() {
+  $entity = \Drupal::entityTypeManager()->getStorage('acquia_contenthub_entity_config')->load('crop');
+  if ($entity) {
+    $entity->delete();
+  }
+}

@@ -9,10 +9,5 @@ events:
       - setup:
           type: script
           script:
-            - composer install -v
-      - install:
-          type: script
-          script:
-            - mysql -u root -proot -e 'CREATE DATABASE drupal;'
-            - cd docroot
-            - drush site-install sitefarm_seed --yes --account-pass=admin --db-url=mysql://root:root@127.0.0.1/drupal
+            - echo "completed"
+      

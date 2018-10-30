@@ -1,0 +1,46 @@
+uuid: 8eb2be6f-ac4f-4a82-b0b7-520972c676f2
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.media_assets_library
+    - field.field.paragraph.featured_image.field_image
+    - field.field.paragraph.featured_image.field_image_caption
+    - field.field.paragraph.featured_image.field_image_media
+    - paragraphs.paragraphs_type.featured_image
+  module:
+    - entity_browser
+    - text
+id: paragraph.featured_image.default
+targetEntityType: paragraph
+bundle: featured_image
+mode: default
+content:
+  field_image_caption:
+    weight: 1
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_image_media:
+    weight: 0
+    settings:
+      entity_browser: media_assets_library
+      field_widget_display: rendered_entity
+      field_widget_edit: true
+      field_widget_remove: true
+      open: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: default
+      field_widget_replace: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+hidden:
+  created: true
+  field_image: true
+  status: true
+  uid: true

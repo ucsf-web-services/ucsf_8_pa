@@ -1,0 +1,214 @@
+<?php
+
+/**
+ * @file
+ * Contains acquia_contenthub.module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function acquia_contenthub_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.acquia_contenthub':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Some info about Acquia Content Hub') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function acquia_contenthub_entity_insert(EntityInterface $entity) {
+  /** @var \Drupal\acquia_contenthub\EntityManager $entity_manager */
+  $entity_manager = \Drupal::service('acquia_contenthub.entity_manager');
+  $entity_manager->enqueueCandidateEntity($entity);
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function acquia_contenthub_entity_update(EntityInterface $entity) {
+  /** @var \Drupal\acquia_contenthub\EntityManager $entity_manager */
+  $entity_manager = \Drupal::service('acquia_contenthub.entity_manager');
+  $entity_manager->enqueueCandidateEntity($entity);
+
+  /** @var \Drupal\acquia_contenthub\ImportEntityManager $import_entity_manager */
+  $import_entity_manager = \Drupal::service('acquia_contenthub.import_entity_manager');
+  $import_entity_manager->entityUpdate($entity);
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function acquia_contenthub_entity_delete(EntityInterface $entity) {
+  /** @var \Drupal\acquia_contenthub\EntityManager $entity_manager */
+  $entity_manager = \Drupal::service('acquia_contenthub.entity_manager');
+  $entity_manager->enqueueCandidateEntity($entity, FALSE);
+
+  /** @var \Drupal\acquia_contenthub\ImportEntityManager $import_entity_manager */
+  $import_entity_manager = \Drupal::service('acquia_contenthub.import_entity_manager');
+  $import_entity_manager->entityDelete($entity);
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function acquia_contenthub_entity_presave(EntityInterface $entity) {
+  /** @var \Drupal\acquia_contenthub\ImportEntityManager $import_entity_manager */
+  $import_entity_manager = \Drupal::service('acquia_contenthub.import_entity_manager');
+  $import_entity_manager->entityPresave($entity);
+}
+
+/**
+ * Process all candidate entities and insert/update/delete on Content Hub.
+ */
+function acquia_contenthub_bulk_export() {
+  /** @var \Drupal\acquia_contenthub\EntityManager $entity_manager */
+  $entity_manager = \Drupal::service('acquia_contenthub.entity_manager');
+  $entity_manager->bulkExport();
+  $candidate_entities = $entity_manager->getExportCandidateEntities();
+
+  /** @var \Drupal\acquia_contenthub\Controller\ContentHubEntityExportController $export_controller */
+  $export_controller = \Drupal::service('acquia_contenthub.acquia_contenthub_export_entities');
+
+  // Export Entities.
+  $use_export_queue = $export_controller->exportEntities($candidate_entities);
+
+  // If we are using the export queue, then always process the first item of the
+  // queue.
+  if ($use_export_queue) {
+    /** @var \Drupal\acquia_contenthub\Controller\ContentHubExportQueueController $export_queue */
+    $export_queue = \Drupal::service('acquia_contenthub.acquia_contenthub_export_queue');
+    $context = [];
+    $export_queue->batchProcess(1, $context);
+  }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function acquia_contenthub_form_node_form_alter(&$form, $form_state) {
+  /* @var Drupal\Core\Entity\FieldableEntityInterface $node */
+  $node = $form_state->getFormObject()->getEntity();
+  $node_form_service = \Drupal::service('acquia_contenthub.form.node_form');
+  $node_form = $node_form_service->getForm($node);
+
+  if (!$node_form) {
+    return;
+  }
+
+  // Attach node form.
+  $form['acquia_contenthub'] = $node_form;
+  // Attach submit handler.
+  $submit_handler_name = 'acquia_contenthub_form_node_form_submit';
+  $node_form_service->attachSubmitHandler($form['actions'], $submit_handler_name);
+}
+
+/**
+ * Submit handler for the node form with acquia contenthub options.
+ *
+ * @see acquia_contenthub_form_node_form_alter()
+ */
+function acquia_contenthub_form_node_form_submit($form, FormStateInterface $form_state) {
+  $node_form_service = \Drupal::service('acquia_contenthub.form.node_form');
+  $node_form_service->saveSettings($form_state);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function acquia_contenthub_form_node_type_form_alter(array &$form, FormStateInterface &$form_state) {
+  $node_type = $form_state->getFormObject()->getEntity()->id();
+
+  /** @var \Drupal\acquia_contenthub\EntityManager $entity_manager */
+  $entity_manager = \Drupal::service('acquia_contenthub.entity_manager');
+  /** @var \Drupal\acquia_contenthub\Entity\ContentHubEntityTypeConfig $entity_type_config */
+  $entity_type_config = $entity_manager->getContentHubEntityTypeConfigurationEntity('node');
+
+  // Only enable selection of preview images for entities that have been
+  // previously selected to work with Acquia Content Hub.
+  if (!empty($entity_type_config) && $entity_type_config->isEnableIndex($node_type)) {
+    $form['acquia_contenthub'] = \Drupal::service('acquia_contenthub.form.node_type_preview_image_form')->getForm($node_type);
+    $form['actions']['submit']['#submit'][] = 'acquia_contenthub_form_node_type_form_submit';
+  }
+}
+
+/**
+ * Submit handler for the node type form with acquia contenthub options.
+ *
+ * @see acquia_contenthub_form_node_type_form_alter()
+ */
+function acquia_contenthub_form_node_type_form_submit(array $form, FormStateInterface &$form_state) {
+  $node_type = $form_state->getFormObject()->getEntity()->id();
+  $settings = $form_state->getValue('acquia_contenthub');
+  \Drupal::service('acquia_contenthub.form.node_type_preview_image_form')->saveSettings($node_type, $settings);
+}
+
+/**
+ * Implements hook_theme().
+ */
+function acquia_contenthub_theme($existing, $type, $theme, $path) {
+  // Normally theme suggestion templates are only picked up when they are in
+  // themes. We explicitly define theme suggestions here so that the templates
+  // in the templates folder are picked up.
+  return [
+    'html__acquia_contenthub' => [
+      'template' => 'html--acquia-contenthub',
+      'render element' => 'html',
+      'preprocess functions' => ['template_preprocess_html'],
+    ],
+    'page__acquia_contenthub' => [
+      'template' => 'page--acquia-contenthub',
+      'render element' => 'page',
+      'preprocess functions' => ['template_preprocess_page'],
+    ],
+    'region__content__acquia_contenthub' => [
+      'template' => 'region--content--acquia-contenthub',
+      'render element' => 'elements',
+      'preprocess functions' => ['template_preprocess_region'],
+    ],
+    'block__block_content__acquia_contenthub' => [
+      'render element' => 'elements',
+      'base hook' => 'block',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function acquia_contenthub_theme_suggestions_region(array $variables) {
+  if ($variables['elements']['#region'] === 'content' && \Drupal::routeMatch()->getRouteName() === 'acquia_contenthub.content_entity_display.entity') {
+    return ['region__content__acquia_contenthub'];
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * Provides block_content templates:
+ *  - block__block_content__acquia_contenthub
+ *  - block__block_content__BLOCK_UUID__acquia_contenthub.
+ *
+ * @see block_theme_suggestions_block()
+ */
+function acquia_contenthub_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  if ($variables['elements']['#configuration']['provider'] === 'block_content' && \Drupal::routeMatch()->getRouteName() === 'acquia_contenthub.content_entity_display.entity') {
+    // We can safely explode on : because we know the Block plugin type manager
+    // enforces that delimiter for all derivatives.
+    // Example value: block_content:12345678-9abc-0123-4567-000000000000.
+    $parts = explode(':', $variables['elements']['#plugin_id']);
+    $suggestion = 'block';
+    foreach ($parts as $part) {
+      $suggestion .= '__' . strtr($part, '-', '_');
+      $suggestions[] = $suggestion . '__acquia_contenthub';
+    }
+  }
+}

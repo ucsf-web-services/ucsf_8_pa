@@ -1,0 +1,262 @@
+$view = new view();
+$view->name = 'topics_tax_xml';
+$view->description = '';
+$view->tag = 'default';
+$view->base_table = 'taxonomy_term_data';
+$view->human_name = 'Topics Tax xml';
+$view->core = 7;
+$view->api_version = '3.0';
+$view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+/* Display: Master */
+$handler = $view->new_display('default', 'Master', 'default');
+$handler->display->display_options['title'] = 'Topics Tax xml';
+$handler->display->display_options['use_more_always'] = FALSE;
+$handler->display->display_options['access']['type'] = 'perm';
+$handler->display->display_options['cache']['type'] = 'none';
+$handler->display->display_options['query']['type'] = 'views_query';
+$handler->display->display_options['exposed_form']['type'] = 'basic';
+$handler->display->display_options['pager']['type'] = 'full';
+$handler->display->display_options['pager']['options']['items_per_page'] = '10';
+$handler->display->display_options['style_plugin'] = 'default';
+$handler->display->display_options['row_plugin'] = 'fields';
+/* Relationship: Taxonomy term: Parent term */
+$handler->display->display_options['relationships']['parent']['id'] = 'parent';
+$handler->display->display_options['relationships']['parent']['table'] = 'taxonomy_term_hierarchy';
+$handler->display->display_options['relationships']['parent']['field'] = 'parent';
+/* Field: Taxonomy term: Name */
+$handler->display->display_options['fields']['name']['id'] = 'name';
+$handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+$handler->display->display_options['fields']['name']['field'] = 'name';
+$handler->display->display_options['fields']['name']['label'] = 'title';
+$handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
+$handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+/* Field: Taxonomy term: Term ID */
+$handler->display->display_options['fields']['tid']['id'] = 'tid';
+$handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
+$handler->display->display_options['fields']['tid']['field'] = 'tid';
+$handler->display->display_options['fields']['tid']['alter']['alter_text'] = TRUE;
+$handler->display->display_options['fields']['tid']['alter']['text'] = '[tid]';
+$handler->display->display_options['fields']['tid']['separator'] = '';
+/* Field: Taxonomy term: Term description */
+$handler->display->display_options['fields']['description']['id'] = 'description';
+$handler->display->display_options['fields']['description']['table'] = 'taxonomy_term_data';
+$handler->display->display_options['fields']['description']['field'] = 'description';
+$handler->display->display_options['fields']['description']['label'] = 'description';
+/* Field: Taxonomy term: Rendered Taxonomy term */
+$handler->display->display_options['fields']['rendered_entity']['id'] = 'rendered_entity';
+$handler->display->display_options['fields']['rendered_entity']['table'] = 'views_entity_taxonomy_term';
+$handler->display->display_options['fields']['rendered_entity']['field'] = 'rendered_entity';
+$handler->display->display_options['fields']['rendered_entity']['relationship'] = 'parent';
+$handler->display->display_options['fields']['rendered_entity']['label'] = 'Parent_id';
+$handler->display->display_options['fields']['rendered_entity']['empty'] = '0';
+$handler->display->display_options['fields']['rendered_entity']['empty_zero'] = TRUE;
+$handler->display->display_options['fields']['rendered_entity']['hide_alter_empty'] = FALSE;
+$handler->display->display_options['fields']['rendered_entity']['link_to_entity'] = 0;
+$handler->display->display_options['fields']['rendered_entity']['display'] = 'id';
+$handler->display->display_options['fields']['rendered_entity']['view_mode'] = 'full';
+$handler->display->display_options['fields']['rendered_entity']['bypass_access'] = 0;
+/* Sort criterion: Taxonomy term: Term ID */
+$handler->display->display_options['sorts']['tid']['id'] = 'tid';
+$handler->display->display_options['sorts']['tid']['table'] = 'taxonomy_term_data';
+$handler->display->display_options['sorts']['tid']['field'] = 'tid';
+/* Contextual filter: Taxonomy term: Term ID */
+$handler->display->display_options['arguments']['tid']['id'] = 'tid';
+$handler->display->display_options['arguments']['tid']['table'] = 'taxonomy_term_data';
+$handler->display->display_options['arguments']['tid']['field'] = 'tid';
+$handler->display->display_options['arguments']['tid']['default_argument_type'] = 'fixed';
+$handler->display->display_options['arguments']['tid']['summary']['number_of_records'] = '0';
+$handler->display->display_options['arguments']['tid']['summary']['format'] = 'default_summary';
+$handler->display->display_options['arguments']['tid']['summary_options']['items_per_page'] = '25';
+/* Filter criterion: Taxonomy vocabulary: Machine name */
+$handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
+$handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['value'] = array(
+  'topics' => 'topics',
+);
+
+/* Display: Page */
+$handler = $view->new_display('page', 'Page', 'page');
+$handler->display->display_options['path'] = 'topics-tax-xml';
+
+/* Display: Data export topics */
+$handler = $view->new_display('views_data_export', 'Data export topics', 'views_data_export_1');
+$handler->display->display_options['pager']['type'] = 'none';
+$handler->display->display_options['pager']['options']['offset'] = '0';
+$handler->display->display_options['style_plugin'] = 'views_data_export_xml';
+$handler->display->display_options['style_options']['provide_file'] = 1;
+$handler->display->display_options['style_options']['parent_sort'] = 0;
+$handler->display->display_options['style_options']['transform'] = 1;
+$handler->display->display_options['style_options']['transform_type'] = 'underline';
+$handler->display->display_options['style_options']['root_node'] = 'taxonomy';
+$handler->display->display_options['style_options']['item_node'] = 'terms';
+$handler->display->display_options['defaults']['filter_groups'] = FALSE;
+$handler->display->display_options['defaults']['filters'] = FALSE;
+/* Filter criterion: Taxonomy vocabulary: Machine name */
+$handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
+$handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['value'] = array(
+  'beats' => 'beats',
+  'topics' => 'topics',
+);
+$handler->display->display_options['path'] = 'topicsxml';
+
+/* Display: Data export areas */
+$handler = $view->new_display('views_data_export', 'Data export areas', 'views_data_export_2');
+$handler->display->display_options['pager']['type'] = 'none';
+$handler->display->display_options['pager']['options']['offset'] = '0';
+$handler->display->display_options['style_plugin'] = 'views_data_export_xml';
+$handler->display->display_options['style_options']['provide_file'] = 1;
+$handler->display->display_options['style_options']['parent_sort'] = 0;
+$handler->display->display_options['style_options']['transform'] = 1;
+$handler->display->display_options['style_options']['transform_type'] = 'underline';
+$handler->display->display_options['style_options']['root_node'] = 'taxonomy';
+$handler->display->display_options['style_options']['item_node'] = 'terms';
+$handler->display->display_options['defaults']['filter_groups'] = FALSE;
+$handler->display->display_options['defaults']['filters'] = FALSE;
+/* Filter criterion: Taxonomy vocabulary: Machine name */
+$handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
+$handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['value'] = array(
+  'areas' => 'areas',
+  'ucsfpa_primary_area' => 'ucsfpa_primary_area',
+);
+$handler->display->display_options['path'] = 'areasxml';
+
+/* Display: Data export organizations */
+$handler = $view->new_display('views_data_export', 'Data export organizations', 'views_data_export_3');
+$handler->display->display_options['pager']['type'] = 'none';
+$handler->display->display_options['pager']['options']['offset'] = '0';
+$handler->display->display_options['style_plugin'] = 'views_data_export_xml';
+$handler->display->display_options['style_options']['provide_file'] = 1;
+$handler->display->display_options['style_options']['parent_sort'] = 0;
+$handler->display->display_options['style_options']['transform'] = 1;
+$handler->display->display_options['style_options']['transform_type'] = 'underline';
+$handler->display->display_options['style_options']['root_node'] = 'taxonomy';
+$handler->display->display_options['style_options']['item_node'] = 'terms';
+$handler->display->display_options['defaults']['filter_groups'] = FALSE;
+$handler->display->display_options['defaults']['filters'] = FALSE;
+/* Filter criterion: Taxonomy vocabulary: Machine name */
+$handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
+$handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['value'] = array(
+  'organizations' => 'organizations',
+);
+$handler->display->display_options['path'] = 'organizationsxml';
+
+/* Display: Data export locations */
+$handler = $view->new_display('views_data_export', 'Data export locations', 'views_data_export_4');
+$handler->display->display_options['defaults']['title'] = FALSE;
+$handler->display->display_options['title'] = 'Locations Tax xml';
+$handler->display->display_options['pager']['type'] = 'some';
+$handler->display->display_options['pager']['options']['offset'] = '0';
+$handler->display->display_options['style_plugin'] = 'views_data_export_xml';
+$handler->display->display_options['style_options']['provide_file'] = 1;
+$handler->display->display_options['style_options']['parent_sort'] = 0;
+$handler->display->display_options['style_options']['transform'] = 1;
+$handler->display->display_options['style_options']['transform_type'] = 'underline';
+$handler->display->display_options['style_options']['root_node'] = 'taxonomy';
+$handler->display->display_options['style_options']['item_node'] = 'terms';
+$handler->display->display_options['defaults']['footer'] = FALSE;
+$handler->display->display_options['defaults']['filter_groups'] = FALSE;
+$handler->display->display_options['defaults']['filters'] = FALSE;
+/* Filter criterion: Taxonomy vocabulary: Machine name */
+$handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
+$handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['value'] = array(
+  'locations' => 'locations',
+);
+$handler->display->display_options['path'] = 'locationsxml';
+$handler->display->display_options['sitename_title'] = 0;
+
+/* Display: Data export article */
+$handler = $view->new_display('views_data_export', 'Data export article', 'views_data_export_5');
+$handler->display->display_options['defaults']['title'] = FALSE;
+$handler->display->display_options['title'] = 'Article Type Tax xml';
+$handler->display->display_options['pager']['type'] = 'some';
+$handler->display->display_options['pager']['options']['offset'] = '0';
+$handler->display->display_options['style_plugin'] = 'views_data_export_xml';
+$handler->display->display_options['style_options']['provide_file'] = 1;
+$handler->display->display_options['style_options']['parent_sort'] = 0;
+$handler->display->display_options['style_options']['transform'] = 1;
+$handler->display->display_options['style_options']['transform_type'] = 'underline';
+$handler->display->display_options['style_options']['root_node'] = 'taxonomy';
+$handler->display->display_options['style_options']['item_node'] = 'terms';
+$handler->display->display_options['defaults']['footer'] = FALSE;
+$handler->display->display_options['defaults']['filter_groups'] = FALSE;
+$handler->display->display_options['defaults']['filters'] = FALSE;
+/* Filter criterion: Taxonomy vocabulary: Machine name */
+$handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
+$handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['value'] = array(
+  'article_type' => 'article_type',
+);
+$handler->display->display_options['path'] = 'article_type_xml';
+$handler->display->display_options['sitename_title'] = 0;
+
+/* Display: Data export author type */
+$handler = $view->new_display('views_data_export', 'Data export author type', 'views_data_export_6');
+$handler->display->display_options['defaults']['title'] = FALSE;
+$handler->display->display_options['title'] = 'Author Type Tax xml';
+$handler->display->display_options['pager']['type'] = 'none';
+$handler->display->display_options['pager']['options']['offset'] = '0';
+$handler->display->display_options['style_plugin'] = 'views_data_export_xml';
+$handler->display->display_options['style_options']['provide_file'] = 1;
+$handler->display->display_options['style_options']['parent_sort'] = 0;
+$handler->display->display_options['style_options']['transform'] = 1;
+$handler->display->display_options['style_options']['transform_type'] = 'underline';
+$handler->display->display_options['style_options']['root_node'] = 'taxonomy';
+$handler->display->display_options['style_options']['item_node'] = 'terms';
+$handler->display->display_options['defaults']['footer'] = FALSE;
+$handler->display->display_options['defaults']['filter_groups'] = FALSE;
+$handler->display->display_options['defaults']['filters'] = FALSE;
+/* Filter criterion: Taxonomy vocabulary: Machine name */
+$handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
+$handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
+$handler->display->display_options['filters']['machine_name']['value'] = array(
+  'author_type' => 'author_type',
+);
+$handler->display->display_options['path'] = 'author_type_xml';
+$handler->display->display_options['sitename_title'] = 0;
+
+/* Display: Data export topics page */
+$handler = $view->new_display('views_data_export', 'Data export topics page', 'views_data_export_7');
+$handler->display->display_options['pager']['type'] = 'some';
+$handler->display->display_options['style_plugin'] = 'views_data_export_xml';
+$handler->display->display_options['style_options']['provide_file'] = 1;
+$handler->display->display_options['style_options']['parent_sort'] = 0;
+$handler->display->display_options['style_options']['transform'] = 1;
+$handler->display->display_options['style_options']['root_node'] = 'taxonomy';
+$handler->display->display_options['style_options']['item_node'] = 'terms';
+$handler->display->display_options['style_options']['no_entity_encode'] = array(
+  'name' => 'name',
+);
+$handler->display->display_options['defaults']['fields'] = FALSE;
+/* Field: Taxonomy term: Name */
+$handler->display->display_options['fields']['name']['id'] = 'name';
+$handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+$handler->display->display_options['fields']['name']['field'] = 'name';
+$handler->display->display_options['fields']['name']['label'] = 'title';
+$handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
+$handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+/* Field: Taxonomy term: Term ID */
+$handler->display->display_options['fields']['tid']['id'] = 'tid';
+$handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
+$handler->display->display_options['fields']['tid']['field'] = 'tid';
+$handler->display->display_options['fields']['tid']['label'] = 'tid';
+$handler->display->display_options['fields']['tid']['alter']['alter_text'] = TRUE;
+$handler->display->display_options['fields']['tid']['alter']['text'] = '[tid]';
+$handler->display->display_options['fields']['tid']['separator'] = '';
+/* Field: Taxonomy term: Term description */
+$handler->display->display_options['fields']['description']['id'] = 'description';
+$handler->display->display_options['fields']['description']['table'] = 'taxonomy_term_data';
+$handler->display->display_options['fields']['description']['field'] = 'description';
+$handler->display->display_options['fields']['description']['label'] = 'description';
+$handler->display->display_options['path'] = 'topicspagexml';

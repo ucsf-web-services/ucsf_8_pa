@@ -1,0 +1,136 @@
+$view = new view();
+$view->name = 'custom_author_xml';
+$view->description = '';
+$view->tag = 'default';
+$view->base_table = 'node';
+$view->human_name = 'Custom author xml';
+$view->core = 7;
+$view->api_version = '3.0';
+$view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+/* Display: Master */
+$handler = $view->new_display('default', 'Master', 'default');
+$handler->display->display_options['title'] = 'Custom author xml';
+$handler->display->display_options['use_more_always'] = FALSE;
+$handler->display->display_options['access']['type'] = 'perm';
+$handler->display->display_options['cache']['type'] = 'none';
+$handler->display->display_options['query']['type'] = 'views_query';
+$handler->display->display_options['query']['options']['distinct'] = TRUE;
+$handler->display->display_options['query']['options']['pure_distinct'] = TRUE;
+$handler->display->display_options['exposed_form']['type'] = 'basic';
+$handler->display->display_options['pager']['type'] = 'full';
+$handler->display->display_options['pager']['options']['items_per_page'] = '0';
+$handler->display->display_options['pager']['options']['offset'] = '0';
+$handler->display->display_options['pager']['options']['id'] = '0';
+$handler->display->display_options['pager']['options']['quantity'] = '9';
+$handler->display->display_options['style_plugin'] = 'default';
+$handler->display->display_options['row_plugin'] = 'fields';
+/* Field: Content: Custom Byline */
+$handler->display->display_options['fields']['field_author_custom']['id'] = 'field_author_custom';
+$handler->display->display_options['fields']['field_author_custom']['table'] = 'field_data_field_author_custom';
+$handler->display->display_options['fields']['field_author_custom']['field'] = 'field_author_custom';
+$handler->display->display_options['fields']['field_author_custom']['label'] = 'byline';
+$handler->display->display_options['fields']['field_author_custom']['element_label_colon'] = FALSE;
+/* Sort criterion: Content: Custom Byline (field_author_custom) */
+$handler->display->display_options['sorts']['field_author_custom_value']['id'] = 'field_author_custom_value';
+$handler->display->display_options['sorts']['field_author_custom_value']['table'] = 'field_data_field_author_custom';
+$handler->display->display_options['sorts']['field_author_custom_value']['field'] = 'field_author_custom_value';
+/* Filter criterion: Content: Published */
+$handler->display->display_options['filters']['status']['id'] = 'status';
+$handler->display->display_options['filters']['status']['table'] = 'node';
+$handler->display->display_options['filters']['status']['field'] = 'status';
+$handler->display->display_options['filters']['status']['value'] = 1;
+$handler->display->display_options['filters']['status']['group'] = 1;
+$handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+/* Filter criterion: Content: Type */
+$handler->display->display_options['filters']['type']['id'] = 'type';
+$handler->display->display_options['filters']['type']['table'] = 'node';
+$handler->display->display_options['filters']['type']['field'] = 'type';
+$handler->display->display_options['filters']['type']['value'] = array(
+  'news' => 'news',
+);
+/* Filter criterion: Content: Custom Byline (field_author_custom) */
+$handler->display->display_options['filters']['field_author_custom_value']['id'] = 'field_author_custom_value';
+$handler->display->display_options['filters']['field_author_custom_value']['table'] = 'field_data_field_author_custom';
+$handler->display->display_options['filters']['field_author_custom_value']['field'] = 'field_author_custom_value';
+$handler->display->display_options['filters']['field_author_custom_value']['operator'] = 'not empty';
+
+/* Display: Page */
+$handler = $view->new_display('page', 'Page', 'page');
+$handler->display->display_options['defaults']['fields'] = FALSE;
+/* Field: Content: Custom Byline */
+$handler->display->display_options['fields']['field_author_custom']['id'] = 'field_author_custom';
+$handler->display->display_options['fields']['field_author_custom']['table'] = 'field_data_field_author_custom';
+$handler->display->display_options['fields']['field_author_custom']['field'] = 'field_author_custom';
+$handler->display->display_options['fields']['field_author_custom']['label'] = 'byline';
+$handler->display->display_options['fields']['field_author_custom']['element_label_colon'] = FALSE;
+/* Field: Content: Title */
+$handler->display->display_options['fields']['title']['id'] = 'title';
+$handler->display->display_options['fields']['title']['table'] = 'node';
+$handler->display->display_options['fields']['title']['field'] = 'title';
+$handler->display->display_options['path'] = 'custom-author-xml';
+
+/* Display: Data export */
+$handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+$handler->display->display_options['pager']['type'] = 'some';
+$handler->display->display_options['pager']['options']['items_per_page'] = '0';
+$handler->display->display_options['pager']['options']['offset'] = '0';
+$handler->display->display_options['style_plugin'] = 'views_data_export_xml';
+$handler->display->display_options['style_options']['provide_file'] = 1;
+$handler->display->display_options['style_options']['parent_sort'] = 0;
+$handler->display->display_options['style_options']['transform'] = 1;
+$handler->display->display_options['style_options']['root_node'] = 'taxonomy';
+$handler->display->display_options['style_options']['item_node'] = 'terms';
+$handler->display->display_options['path'] = 'cusbylinexml';
+
+/* Display: Data export topics page */
+$handler = $view->new_display('views_data_export', 'Data export topics page', 'views_data_export_2');
+$handler->display->display_options['defaults']['title'] = FALSE;
+$handler->display->display_options['title'] = 'Tags content xml';
+$handler->display->display_options['pager']['type'] = 'some';
+$handler->display->display_options['style_plugin'] = 'views_data_export_xml';
+$handler->display->display_options['style_options']['provide_file'] = 1;
+$handler->display->display_options['style_options']['parent_sort'] = 0;
+$handler->display->display_options['style_options']['transform'] = 1;
+$handler->display->display_options['style_options']['root_node'] = 'taxonomy';
+$handler->display->display_options['style_options']['item_node'] = 'terms';
+$handler->display->display_options['defaults']['relationships'] = FALSE;
+/* Relationship: Field: Image (field_image:fid) */
+$handler->display->display_options['relationships']['field_image_fid_1']['id'] = 'field_image_fid_1';
+$handler->display->display_options['relationships']['field_image_fid_1']['table'] = 'field_data_field_image';
+$handler->display->display_options['relationships']['field_image_fid_1']['field'] = 'field_image_fid';
+$handler->display->display_options['relationships']['field_image_fid_1']['required'] = TRUE;
+$handler->display->display_options['defaults']['fields'] = FALSE;
+/* Field: Content: Title */
+$handler->display->display_options['fields']['title']['id'] = 'title';
+$handler->display->display_options['fields']['title']['table'] = 'node';
+$handler->display->display_options['fields']['title']['field'] = 'title';
+$handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+/* Field: Content: Nid */
+$handler->display->display_options['fields']['nid']['id'] = 'nid';
+$handler->display->display_options['fields']['nid']['table'] = 'node';
+$handler->display->display_options['fields']['nid']['field'] = 'nid';
+/* Field: File: Path */
+$handler->display->display_options['fields']['uri']['id'] = 'uri';
+$handler->display->display_options['fields']['uri']['table'] = 'file_managed';
+$handler->display->display_options['fields']['uri']['field'] = 'uri';
+$handler->display->display_options['fields']['uri']['relationship'] = 'field_image_fid';
+$handler->display->display_options['fields']['uri']['file_download_path'] = TRUE;
+$handler->display->display_options['defaults']['filter_groups'] = FALSE;
+$handler->display->display_options['defaults']['filters'] = FALSE;
+/* Filter criterion: Content: Published */
+$handler->display->display_options['filters']['status']['id'] = 'status';
+$handler->display->display_options['filters']['status']['table'] = 'node';
+$handler->display->display_options['filters']['status']['field'] = 'status';
+$handler->display->display_options['filters']['status']['value'] = 1;
+$handler->display->display_options['filters']['status']['group'] = 1;
+$handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+/* Filter criterion: Content: Type */
+$handler->display->display_options['filters']['type']['id'] = 'type';
+$handler->display->display_options['filters']['type']['table'] = 'node';
+$handler->display->display_options['filters']['type']['field'] = 'type';
+$handler->display->display_options['filters']['type']['value'] = array(
+  'topic_page' => 'topic_page',
+);
+$handler->display->display_options['path'] = 'tagstaxxml';
+$handler->display->display_options['sitename_title'] = 0;

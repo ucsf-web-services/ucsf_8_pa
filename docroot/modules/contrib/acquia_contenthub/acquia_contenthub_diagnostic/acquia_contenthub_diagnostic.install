@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function acquia_contenthub_diagnostic_requirements($phase) {
+  $requirements = [];
+
+  if ($phase == 'runtime') {
+    $severities = [];
+
+    /** @var \Drupal\acquia_contenthub_diagnostic\ContentHubRequirementManager $plugin_manager */
+    $plugin_manager = \Drupal::service('plugin.manager.acquia_contenthub_requirement');
+    foreach ($plugin_manager->createInstanceMultiple() as $id => $requirement) {
+      $severities[] = $requirement->severity();
+      if ($requirement->severity() > REQUIREMENT_OK) {
+        $requirements["acquia_contenthub_diagnostic_{$id}"] = [
+          'title' => t('Content Hub: @requirement_title', [
+            '@requirement_title' => $requirement->title(),
+          ]),
+          'value' => $requirement->value(),
+          'description' => $requirement->description(),
+          'severity' => $requirement->severity(),
+        ];
+      }
+    }
+
+    $greatest_severity = max($severities);
+    $severity_counts = array_count_values($severities);
+    $requirements['acquia_contenthub_diagnostic'] = [
+      'title' => t('Content Hub'),
+      'value' => ($greatest_severity > REQUIREMENT_OK) ? t('Detected @error_count errors and @warning_count warnings', [
+        '@warning_count' => @$severity_counts[REQUIREMENT_WARNING] ?: 0,
+        '@error_count' => @$severity_counts[REQUIREMENT_ERROR] ?: 0,
+      ]) : t('No problems detected'),
+      'severity' => $greatest_severity,
+    ];
+  }
+
+  return $requirements;
+}

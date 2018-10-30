@@ -1,0 +1,35 @@
+<blockquote class="blockquote {{ color_class }}">
+    <div class="blockquote--content">
+      {#{% set body %}
+        {{ content.field_blockquote_body  }}
+      {% endset %}
+
+      {{ body |striptags }}#}
+
+      {{ content.field_blockquote_body }}
+    </div>
+
+    {% if content.field_blockquote_source_org|render is not empty or content.field_blockquote_source|render is not empty %}
+      <footer>
+        {% if content.field_blockquote_source|render is not empty %}
+          <cite class="blockquote--title">
+            {% set source %}
+            {{ content.field_blockquote_source }}
+            {% endset %}
+
+            {{ source |striptags }}
+          </cite>
+        {% endif %}
+
+        {% if content.field_blockquote_source_org|render is not empty %}
+          <div class="blockquote--source">
+            {% set org %}
+            {{ content.field_blockquote_source_org }}
+            {% endset %}
+
+            {{ org |striptags }}
+          </div>
+        {% endif %}
+      </footer>
+    {% endif %}
+</blockquote>
