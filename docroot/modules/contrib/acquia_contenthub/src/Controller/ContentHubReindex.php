@@ -183,13 +183,15 @@ class ContentHubReindex extends ControllerBase {
    *
    * @param string $entity_type_id
    *   The Entity type.
+   * @param string $bundle_id
+   *   The Entity bundle.
    *
    * @return bool
    *   TRUE if subscription can be re-indexed, FALSE otherwise.
    */
-  public function setExportedEntitiesToReindex($entity_type_id = NULL) {
+  public function setExportedEntitiesToReindex($entity_type_id = NULL, $bundle_id = NULL) {
     // Set exported entities with the REINDEX flag.
-    $this->contentHubEntitiesTracking->setExportedEntitiesForReindex($entity_type_id);
+    $this->contentHubEntitiesTracking->setExportedEntitiesForReindex($entity_type_id, $bundle_id);
 
     // Collect all entities that were flagged for REINDEX.
     $entities = $this->contentHubEntitiesTracking->getEntitiesToReindex();
@@ -340,7 +342,7 @@ class ContentHubReindex extends ControllerBase {
       'operations' => [
         ['\Drupal\acquia_contenthub\Controller\ContentHubReindex::reExportEntities', [$batch_size]],
       ],
-      'finished' => '\Drupal\acquia_contenthub\Commands\AcquiaContenthubCommands::reexportFinished',
+      'finished' => 'acquia_contenthub_reexport_finished',
     ];
     batch_set($batch);
   }

@@ -129,7 +129,7 @@ class SitemapSettingsForm extends ConfigFormBase {
     }
 
     // Build list of menus.
-    $menus = Menu::loadMultiple();
+    $menus = $this->getMenus();
     $menu_options = array();
     foreach ($menus as $id => $menu) {
       $menu_options[$id] = $menu->label();
@@ -146,7 +146,7 @@ class SitemapSettingsForm extends ConfigFormBase {
     // Build list of vocabularies.
     if ($this->moduleHandler->moduleExists('taxonomy')) {
       $vocab_options = array();
-      $vocabularies = Vocabulary::loadMultiple();
+      $vocabularies = $this->getVocabularies();
       foreach ($vocabularies as $vocabulary) {
         $vocab_options[$vocabulary->id()] = $vocabulary->label();
         $sitemap_ordering['vocabularies_' . $vocabulary->id()] = $vocabulary->label();
@@ -411,6 +411,24 @@ class SitemapSettingsForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames() {
     return ['sitemap.settings'];
+  }
+
+  /**
+   * Helper function to get all menus.
+   *
+   * @return \Drupal\Core\Entity\EntityInterface[]|\Drupal\system\Entity\Menu[]
+   */
+  protected function getMenus() {
+    return Menu::loadMultiple();
+  }
+
+  /**
+   * Helper function to get all vocabularies.
+   *
+   * @return \Drupal\Core\Entity\EntityInterface[]|\Drupal\taxonomy\Entity\Vocabulary[]
+   */
+  protected function getVocabularies() {
+    return Vocabulary::loadMultiple();
   }
 
 }

@@ -160,12 +160,10 @@ class MigrationExecuteForm extends FormBase {
       $force = 0;
     }
 
-    $migration_name = \Drupal::routeMatch()->getParameter('migration');
-
-    if ($migration_name) {
-
-      /** @var \Drupal\migrate\Plugin\MigrationInterface $migration */
-      $migration = $this->migrationPluginManager->createInstance($migration_name);
+    $migration = \Drupal::routeMatch()->getParameter('migration');
+    if ($migration) {
+      /** @var \Drupal\migrate\Plugin\MigrationInterface $migration_plugin */
+      $migration_plugin = $this->migrationPluginManager->createInstance($migration->id(), $migration->toArray());
       $migrateMessage = new MigrateMessage();
 
       switch ($operation) {
@@ -177,7 +175,7 @@ class MigrationExecuteForm extends FormBase {
             'force' => $force,
           ];
 
-          $executable = new MigrateBatchExecutable($migration, $migrateMessage, $options);
+          $executable = new MigrateBatchExecutable($migration_plugin, $migrateMessage, $options);
           $executable->batchImport();
 
           break;
@@ -190,20 +188,20 @@ class MigrationExecuteForm extends FormBase {
             'force' => $force,
           ];
 
-          $executable = new MigrateBatchExecutable($migration, $migrateMessage, $options);
+          $executable = new MigrateBatchExecutable($migration_plugin, $migrateMessage, $options);
           $executable->rollback();
 
           break;
 
         case 'stop':
 
-          $migration->interruptMigration(MigrationInterface::RESULT_STOPPED);
+          $migration_plugin->interruptMigration(MigrationInterface::RESULT_STOPPED);
 
           break;
 
         case 'reset':
 
-          $migration->setStatus(MigrationInterface::STATUS_IDLE);
+          $migration_plugin->setStatus(MigrationInterface::STATUS_IDLE);
 
           break;
 

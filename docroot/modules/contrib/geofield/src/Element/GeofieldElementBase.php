@@ -76,7 +76,11 @@ abstract class GeofieldElementBase extends FormElement {
           $form_state->setError($element[$key], t('@title: @component_title is not numeric.', ['@title' => $error_label, '@component_title' => $component['title']]));
         }
         elseif (abs($element[$key]['#value']) > $component['range']) {
-          $form_state->setError($element[$key], t('@title: @component_title is out of bounds.', ['@title' => $error_label, '@component_title' => $component['title']]));
+          $form_state->setError($element[$key], t('@title: @component_title is out of bounds (@bounds).', [
+            '@title' => $error_label,
+            '@component_title' => $component['title'],
+            '@bounds' => '+/- ' . $component['range'],
+          ]));
         }
       }
       if ($element[$key]['#value'] == '') {

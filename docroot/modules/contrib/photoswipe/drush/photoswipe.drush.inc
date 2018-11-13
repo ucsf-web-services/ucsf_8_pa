@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Drush integration for PhotoSwipe.
+ *   Drush integration for PhotoSwipe.
  */
 
 /**
@@ -15,19 +15,18 @@ define('PHOTOSWIPE_DOWNLOAD_PREFIX', 'PhotoSwipe-');
  * Implements hook_drush_command().
  */
 function photoswipe_drush_command() {
-  $items = [];
+  $items = array();
 
-  // The key in the $items array is the name of the command.
-  $items['photoswipe-plugin'] = [
+  // the key in the $items array is the name of the command.
+  $items['photoswipe-plugin'] = array(
     'callback' => 'drush_photoswipe_plugin',
     'description' => dt('Download and install the PhotoSwipe plugin.'),
-  // No bootstrap.
-    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
-    'arguments' => [
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH, // No bootstrap.
+    'arguments' => array(
       'path' => dt('Optional. A path where to install the PhotoSwipe plugin. If omitted Drush will use the default location.'),
-    ],
-    'aliases' => ['photoswipeplugin'],
-  ];
+    ),
+    'aliases' => array('photoswipeplugin'),
+  );
 
   return $items;
 }
@@ -67,26 +66,26 @@ function drush_photoswipe_plugin() {
   // Create the path if it does not exist.
   if (!is_dir($path)) {
     drush_op('mkdir', $path);
-    drush_log(dt('Directory @path was created', ['@path' => $path]), 'notice');
+    drush_log(dt('Directory @path was created', array('@path' => $path)), 'notice');
   }
 
   // Set the directory to the download location.
   $olddir = getcwd();
   chdir($path);
 
-  // Download the zip archive.
+  // Download the zip archive
   if ($filepath = drush_download_file(PHOTOSWIPE_DOWNLOAD_URL)) {
     $filename = basename($filepath);
     $dirname = PHOTOSWIPE_DOWNLOAD_PREFIX . ltrim(basename($filepath, '.zip'), 'v');
 
-    // Remove any existing PhotoSwipe plugin directory.
+    // Remove any existing PhotoSwipe plugin directory
     if (is_dir($dirname) || is_dir('photoswipe')) {
       drush_delete_dir($dirname, TRUE);
       drush_delete_dir('photoswipe', TRUE);
-      drush_log(dt('A existing PhotoSwipe plugin was deleted from @path', ['@path' => $path]), 'notice');
+      drush_log(dt('A existing PhotoSwipe plugin was deleted from @path', array('@path' => $path)), 'notice');
     }
 
-    // Decompress the zip archive.
+    // Decompress the zip archive
     drush_tarball_extract($filename);
 
     // Change the directory name to "photoswipe" if needed.
@@ -97,10 +96,10 @@ function drush_photoswipe_plugin() {
   }
 
   if (is_dir($dirname)) {
-    drush_log(dt('PhotoSwipe plugin has been installed in @path', ['@path' => $path]), 'success');
+    drush_log(dt('PhotoSwipe plugin has been installed in @path', array('@path' => $path)), 'success');
   }
   else {
-    drush_log(dt('Drush was unable to install the PhotoSwipe plugin to @path', ['@path' => $path]), 'error');
+    drush_log(dt('Drush was unable to install the PhotoSwipe plugin to @path', array('@path' => $path)), 'error');
   }
 
   // Set working directory back to the previous working directory.

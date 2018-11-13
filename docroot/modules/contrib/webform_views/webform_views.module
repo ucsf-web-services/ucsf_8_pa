@@ -61,6 +61,12 @@ function webform_views_webform_element_info_alter(array &$elements) {
     elseif (is_subclass_of($v['class'], \Drupal\webform\Plugin\WebformElementEntityReferenceInterface::class)) {
       $views_handler = \Drupal\webform_views\WebformElementViews\WebformEntityReferenceViews::class;
     }
+    elseif (is_subclass_of($v['class'], \Drupal\webform\Plugin\WebformElement\WebformOtherInterface::class)) {
+      $views_handler = \Drupal\webform_views\WebformElementViews\WebformSelectOtherViews::class;
+    }
+    elseif (is_subclass_of($v['class'], \Drupal\webform\Plugin\WebformElement\WebformComputedBase::class)) {
+      $views_handler = \Drupal\webform_views\WebformElementViews\WebformComputed::class;
+    }
 
     switch ($k) {
       case 'select':
@@ -69,6 +75,10 @@ function webform_views_webform_element_info_alter(array &$elements) {
 
       case 'checkbox':
         $views_handler = \Drupal\webform_views\WebformElementViews\WebformCheckboxViews::class;
+        break;
+
+      case 'checkboxes':
+        $views_handler = \Drupal\webform_views\WebformElementViews\WebformCheckboxesViews::class;
         break;
 
       case 'radios':
@@ -85,6 +95,15 @@ function webform_views_webform_element_info_alter(array &$elements) {
 
       case 'hidden':
         $views_handler = \Drupal\webform_views\WebformElementViews\WebformHiddenViews::class;
+        break;
+
+      case 'webform_entity_select':
+      case 'webform_term_select':
+        $views_handler = \Drupal\webform_views\WebformElementViews\WebformEntityReferenceSelectViews::class;
+        break;
+
+      case 'webform_term_checkboxes':
+        $views_handler = \Drupal\webform_views\WebformElementViews\WebformTermCheckboxesViews::class;
         break;
 
       default:
@@ -155,12 +174,18 @@ function webform_views_applicable_views() {
     $executable->setDisplay($display_id);
     $menu = $executable->display_handler->getOption('menu');
 
+    $contains_webform_id_in_path = explode('/', $executable->getPath());
+    $contains_webform_id_in_path = (bool) \Drupal::entityQuery('webform')
+      ->condition(\Drupal::entityTypeManager()->getDefinition('webform')->getKey('id'), $contains_webform_id_in_path, 'IN')
+      ->count()
+      ->execute();
+
     // TODO: in theory we should do a more intensive analysis than just
     // comparing the base entity type of the view. For example, what if
     // relationships are used and thus webform submission is introduced into the
     // view while the base entity type may be different. Though hardly we will
     // see such use cases in real world practice.
-    if ($executable->getBaseEntityType() && $executable->getBaseEntityType()->id() == 'webform_submission' && in_array($menu['type'], ['tab', 'default tab'])) {
+    if ($executable->getBaseEntityType() && $executable->getBaseEntityType()->id() == 'webform_submission' && in_array($menu['type'], ['tab', 'default tab']) && $contains_webform_id_in_path) {
       $return[] = [$view_id, $display_id, $executable->display_handler->getPath()];
     }
   }

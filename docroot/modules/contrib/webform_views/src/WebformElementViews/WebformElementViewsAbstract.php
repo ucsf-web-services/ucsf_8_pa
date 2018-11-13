@@ -71,8 +71,8 @@ abstract class WebformElementViewsAbstract implements WebformElementViewsInterfa
     // {webform_submission}.
     $data[$table_alias]['table']['join'][$this->entityType->getBaseTable()] = [
       'table' => 'webform_submission_data',
-      'field' => 'sid',
-      'left_field' => 'sid',
+      'field' => $this->entityType->getKey('id'),
+      'left_field' => $this->entityType->getKey('id'),
       'extra' => [
         ['field' => 'name', 'value' => $element['#webform_key']],
       ],
@@ -104,7 +104,7 @@ abstract class WebformElementViewsAbstract implements WebformElementViewsInterfa
     return [
       'field' => [
         'id' => 'webform_submission_field',
-        'real field' => $this->entityType->getKey('id'),
+        'real field' => 'value',
         'click sortable' => !$element_plugin->isContainer($element) && !$element_plugin->hasMultipleValues($element),
         'multiple' => $element_plugin->hasMultipleValues($element),
       ],

@@ -4,9 +4,9 @@ namespace Drush\Commands\core;
 use Drush\Commands\DrushCommands;
 use Drush\Drush;
 use Drush\SiteAlias\LegacyAliasConverter;
-use Drush\SiteAlias\SiteAliasFileDiscovery;
-use Drush\SiteAlias\SiteAliasManagerAwareInterface;
-use Drush\SiteAlias\SiteAliasManagerAwareTrait;
+use Consolidation\SiteAlias\SiteAliasFileDiscovery;
+use Consolidation\SiteAlias\SiteAliasManagerAwareInterface;
+use Consolidation\SiteAlias\SiteAliasManagerAwareTrait;
 use Consolidation\OutputFormatters\StructuredData\ListDataFromKeys;
 use Drush\Utils\StringUtils;
 use Symfony\Component\Console\Input\Input;
@@ -115,10 +115,10 @@ class SiteCommands extends DrushCommands implements SiteAliasManagerAwareInterfa
      */
     public function siteAlias($site = null, $options = ['format' => 'yaml'])
     {
-        // Check to see if the user provided a specification that matches
+        // First check to see if the user provided a specification that matches
         // multiple sites.
         $aliasList = $this->siteAliasManager()->getMultiple($site);
-        if (is_array($aliasList)) {
+        if (is_array($aliasList) && !empty($aliasList)) {
             return new ListDataFromKeys($this->siteAliasExportList($aliasList, $options));
         }
 

@@ -214,8 +214,7 @@ class GeofieldMap extends GeofieldElementBase {
     $entityForm = $form_state->getBuildInfo()['callback_object'];
     $entity_operation = method_exists($entityForm, 'getOperation') ? $entityForm->getOperation() : 'any';
 
-    // Geofield Map Element specific mapid settings.
-    $settings[$mapid] = [
+    $map_settings = [
       'entity_operation' => $entity_operation,
       'id' => $element['#id'],
       'name' => $element['#name'],
@@ -251,9 +250,16 @@ class GeofieldMap extends GeofieldElementBase {
       ],
     ];
 
+    // Allow other modules to add/alter the geofield map element settings.
+    \Drupal::moduleHandler()->alter('geofield_map_latlon_element', $map_settings, $complete_form, $form_state->getValues());
+
+    // Geofield Map Element specific mapid settings.
+    $settings[$mapid] = $map_settings;
+
     $element['#attached']['drupalSettings'] = [
       'geofield_map' => $settings,
     ];
+
 
     return $element;
   }

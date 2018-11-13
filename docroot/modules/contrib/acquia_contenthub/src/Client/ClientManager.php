@@ -307,6 +307,7 @@ class ClientManager implements ClientManagerInterface {
         case 'createEntity':
         case 'createEntities':
         case 'readEntity':
+        case 'readEntities':
         case 'updateEntities':
         case 'deleteEntity':
         case 'listEntities':

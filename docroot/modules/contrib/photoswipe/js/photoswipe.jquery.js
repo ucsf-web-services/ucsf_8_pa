@@ -14,19 +14,6 @@
     attach: function (context, settings) {
       this.photoSwipeOptions = settings.photoswipe ? settings.photoswipe.options : {};
 
-      // First ensure all photoswipe photos are in a photoswipe-gallery wrapper:
-      var $imagesWithoutGalleries = $('a.photoswipe', context).filter(function(elem) {
-        return !$(this).parents('.photoswipe-gallery').length;
-      });
-      if ($imagesWithoutGalleries.length) {
-        // We have no galleries just individual images.
-        $imagesWithoutGalleries.each(function(index) {
-          $imageLink = $(this);
-          // Add the wrapper and indicate that it's an automatic fallback:
-          $imageLink.wrap('<span class="photoswipe-gallery photoswipe-gallery--fallback-wrapper"></span>');
-        });
-      }
-
       var $galleries = $('.photoswipe-gallery', context);
       if ($galleries.length) {
         // if body haven't special container for show photoswipe gallery append it.
@@ -35,12 +22,24 @@
         }
 
         // loop through all gallery elements and bind events
-        $galleries.once('photoswipe').each(function (index) {
+        $galleries.each( function (index) {
           var $gallery = $(this);
           $gallery.attr('data-pswp-uid', index + 1);
-          // Definitely prevent doble event binding on AJAX
-          $gallery.off('click', Drupal.behaviors.photoswipe.onThumbnailsClick);
           $gallery.on('click', Drupal.behaviors.photoswipe.onThumbnailsClick);
+        });
+      }
+      var $imagesWithoutGalleries = $('a.photoswipe', context).filter(function(elem) {
+        return !$(this).parents('.photoswipe-gallery').length;
+      });
+      if ($imagesWithoutGalleries.length) {
+        // We have no galleries just individual images.
+        $imagesWithoutGalleries.each(function(index) {
+          $imageLink = $(this);
+          $imageLink.wrap('<span class="photoswipe-gallery"></span>');
+          var $gallery = $imageLink.parent();
+          $gallery.attr('data-pswp-uid', index + 1);
+          $gallery.on('click', Drupal.behaviors.photoswipe.onThumbnailsClick);
+          $galleries.push($gallery);
         });
       }
 
@@ -58,25 +57,27 @@
      */
     onThumbnailsClick: function(e) {
       e = e || window.event;
+      e.preventDefault ? e.preventDefault() : e.returnValue = false;
+
       var $clickedGallery = $(this);
+
       var eTarget = e.target || e.srcElement;
       var $eTarget = $(eTarget);
 
       // find root element of slide
-      var $clickedListItem = $eTarget.closest('.photoswipe');
-      if (!$clickedListItem) {
+      var clickedListItem = $eTarget.closest('.photoswipe');
+
+      if (!clickedListItem) {
         return;
       }
 
       // get the index of the clicked element
-      var index = $clickedGallery.find('.photoswipe').index($clickedListItem);
+      index = clickedListItem.index('.photoswipe');
       if (index >= 0) {
-        e.preventDefault ? e.preventDefault() : e.returnValue = false;
         // open PhotoSwipe if valid index found
         Drupal.behaviors.photoswipe.openPhotoSwipe(index, $clickedGallery);
-        // Only prevent default when clicking on a photoswipe image.
-        return false;
       }
+      return false;
     },
     /**
      * Code taken from http://photoswipe.com/documentation/getting-started.html

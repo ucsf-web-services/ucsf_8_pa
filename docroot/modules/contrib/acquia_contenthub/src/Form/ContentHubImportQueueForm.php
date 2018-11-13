@@ -58,7 +58,7 @@ class ContentHubImportQueueForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('acquia_contenthub.entity_config');
+    $config = $this->configFactory->get('acquia_contenthub.entity_config');
 
     $form['description'] = [
       '#markup' => $this->t('Instruct the content hub module to manage content syndication with a queue.'),

@@ -63,7 +63,7 @@ class NodeFormTest extends WebTestBase {
     // Form should have option, and default to "enabled".
     $node_edit_url = 'node/' . $this->article->id() . '/edit';
     $this->drupalGet($node_edit_url);
-    $this->assertNoText(t('This content has been modified.'));
+    $this->assertNoText(t('This syndicated content has been modified locally, therefore it is no longer automatically synchronized to its original content.'));
     $this->assertFieldChecked('edit-acquia-contenthub-auto-update', 'Automatic updates is enabled by default');
 
     // Don't edit anything, save.
@@ -71,7 +71,7 @@ class NodeFormTest extends WebTestBase {
 
     // Option should still be set to "enabled".
     $this->drupalGet($node_edit_url);
-    $this->assertNoText(t('This content has been modified.'));
+    $this->assertNoText(t('This syndicated content has been modified locally, therefore it is no longer automatically synchronized to its original content.'));
     $this->assertFieldChecked('edit-acquia-contenthub-auto-update', 'Automatic updates is enabled by default');
 
     // Edit title.
@@ -81,7 +81,7 @@ class NodeFormTest extends WebTestBase {
 
     // Option should now set to "disabled, as having local changes".
     $this->drupalGet($node_edit_url);
-    $this->assertText(t('This content has been modified.'));
+    $this->assertText(t('This syndicated content has been modified locally, therefore it is no longer automatically synchronized to its original content.'));
     $this->assertNoFieldChecked('edit-acquia-contenthub-auto-update', 'Automatic updates is enabled by default');
   }
 

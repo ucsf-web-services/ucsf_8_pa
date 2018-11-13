@@ -609,20 +609,23 @@ class ImportEntityManager {
         foreach ($languages as $language) {
           $entity = $entity->getTranslation($language->getId());
           $path = $entity->get('path')->first()->getValue();
-          if (empty($path['pid'])) {
-            $raw_path = $alias_manager->getPathByAlias($path['alias'], $path['langcode']);
-            if ($raw_path) {
-              $query = \Drupal::database()->select('url_alias', 'ua')
-                ->fields('ua', ['pid']);
-              $query->condition('ua.source', $raw_path);
-              $alias = $query->execute()->fetchObject();
-              if ($alias->pid) {
-                $path['pid'] = $alias->pid;
-                $path['source'] = $raw_path;
-                $entity->set('path', [$path]);
-              }
-            }
+          if (!empty($path['pid']) || !isset($path['alias'])) {
+            continue;
           }
+          $raw_path = $alias_manager->getPathByAlias($path['alias'], $path['langcode']);
+          if (!$raw_path) {
+            continue;
+          }
+          $query = \Drupal::database()->select('url_alias', 'ua')
+            ->fields('ua', ['pid']);
+          $query->condition('ua.source', $raw_path);
+          $alias = $query->execute()->fetchObject();
+          if (!isset($alias->pid)) {
+            continue;
+          }
+          $path['pid'] = $alias->pid;
+          $path['source'] = $raw_path;
+          $entity->set('path', [$path]);
         }
       }
 

@@ -31,6 +31,7 @@ use Drupal\Core\Language\LanguageInterface;
 use Drupal\taxonomy\Entity\Vocabulary;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\acquia_contenthub\ContentHubEntityLinkFieldHandler;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * Converts the Drupal entity object to a Acquia Content Hub CDF array.
@@ -145,24 +146,6 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
   protected $translationManager;
 
   /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('config.factory'),
-      $container->get('acquia_contenthub.normalizer.content_entity_view_modes_extractor'),
-      $container->get('module_handler'),
-      $container->get('entity.repository'),
-      $container->get('http_kernel.basic'),
-      $container->get('renderer'),
-      $container->get('acquia_contenthub.entity_manager'),
-      $container->get('entity_type.manager'),
-      $container->get('acquia_contenthub.internal_request'),
-      $container->get('language_manager')
-    );
-  }
-
-  /**
    * Constructs an ContentEntityNormalizer object.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -204,6 +187,10 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
     if ($this->moduleHandler->moduleExists('content_translation')) {
       $this->translationManager = \Drupal::getContainer()->get("content_translation.manager");
     }
+  }
+
+  protected function getSerializer() {
+    return \Drupal::service('serializer');
   }
 
   /**
@@ -416,7 +403,7 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
 
       // Get the plain version of the field in regular json.
       if ($name === 'metatag') {
-        $serialized_field = $this->serializer->normalize($field, 'json', $context);
+        $serialized_field = $this->getSerializer()->normalize($field, 'json', $context);
       }
       else {
         $serialized_field = $field->getValue();
@@ -1059,6 +1046,7 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
 
         // Do not send revisions.
         'revision_uid',
+        'revision_user',
         'revision_translation_affected',
         'revision_timestamp',
 
@@ -1180,9 +1168,16 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
 
       // Set the content_translation source of whatever the default langcode says.
       $values['content_translation_source'] = $content_translation_source['value'][$default_langcode][0];
+      if (empty($values['content_translation_source'])) {
+        unset($values['content_translation_source']);
+        // Set the default langcode of the parent entity.
+        $values['default_langcode'] = $default_langcode == $this->languageManager->getDefaultLanguage()->getId();
+      }
+      else {
+        // Set the default langcode of the parent entity.
+        $values['default_langcode'] = $default_langcode;
+      }
 
-      // Set the default langcode of the parent entity.
-      $values['default_langcode'] = $default_langcode;
       // Special treatment according to entity types.
       switch ($entity_type) {
         case 'node':
@@ -1196,7 +1191,7 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
 
           // Check if Workbench Moderation is enabled.
           $workbench_moderation_enabled = \Drupal::moduleHandler()->moduleExists('workbench_moderation');
-          if ($workbench_moderation_enabled) {
+          if ($values['status'] && $workbench_moderation_enabled) {
             $values['moderation_state'] = 'published';
           }
           break;
@@ -1290,30 +1285,34 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
       $contenthub_entity->removeAttribute('default_langcode');
     }
 
-
     $entity = $source_entity;
     foreach ($langcodes as $langcode) {
+      // If this language exist in incoming data but is not supported in the
+      // importing site, don't import the data under this language.
+      if (!$this->languageManager->getLanguage($langcode)) {
+        continue;
+      }
       // Make sure the entity language is one of the language contained in the
       // Content Hub Entity.
       if ($source_entity->hasTranslation($langcode)) {
         $localized_entity = $source_entity->getTranslation($langcode);
         $entity = $this->addFieldsToDrupalEntity($localized_entity, $contenthub_entity, $langcode, $context);
+        continue;
       }
-      else {
-        if ($langcode == LanguageInterface::LANGCODE_NOT_SPECIFIED || $langcode == LanguageInterface::LANGCODE_NOT_APPLICABLE) {
-          $entity = $this->addFieldsToDrupalEntity($source_entity, $contenthub_entity, $langcode, $context);
-        }
-        else {
-          $localized_entity = $source_entity->addTranslation($langcode, $source_entity->toArray());
-          $localized_entity->content_translation_source = $content_translation_source['value'][$langcode][0];
 
-          // Grab status for the language.
-          $status = $contenthub_entity->getAttribute('status') ? $contenthub_entity->getAttribute('status')['value'][$langcode] : 0;
-          $localized_entity->status = $status ? $status : 0;
-
-          $entity = $this->addFieldsToDrupalEntity($localized_entity, $contenthub_entity, $langcode, $context);
-        }
+      if ($langcode == LanguageInterface::LANGCODE_NOT_SPECIFIED || $langcode == LanguageInterface::LANGCODE_NOT_APPLICABLE) {
+        $entity = $this->addFieldsToDrupalEntity($source_entity, $contenthub_entity, $langcode, $context);
+        continue;
       }
+
+      $localized_entity = $source_entity->addTranslation($langcode, $source_entity->toArray());
+      $localized_entity->content_translation_source = $content_translation_source['value'][$langcode][0];
+
+      // Grab status for the language.
+      $status = $contenthub_entity->getAttribute('status') ? $contenthub_entity->getAttribute('status')['value'][$langcode] : 0;
+      $localized_entity->status = $status ? $status : 0;
+
+      $entity = $this->addFieldsToDrupalEntity($localized_entity, $contenthub_entity, $langcode, $context);
     }
 
     // Allow other modules to intercept and do changes to the Drupal entity

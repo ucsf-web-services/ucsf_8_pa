@@ -39,12 +39,13 @@ class DrushConfig extends ConfigOverlay
     public function cache()
     {
         $candidates = [
+            $this->get('drush.paths.cache-directory'),
             Path::join($this->home(), '.drush/cache'),
             Path::join($this->tmp(), 'drush-' . $this->user() . '/cache'),
         ];
 
         $fs = new Filesystem();
-        foreach ($candidates as $candidate) {
+        foreach (array_filter($candidates) as $candidate) {
             try {
                 $fs->mkdir($candidate);
                 return $candidate;

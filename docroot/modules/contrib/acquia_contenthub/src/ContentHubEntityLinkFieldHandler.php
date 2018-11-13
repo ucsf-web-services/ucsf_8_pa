@@ -2,6 +2,7 @@
 
 namespace Drupal\acquia_contenthub;
 
+use Drupal\Component\Uuid\Uuid;
 use Drupal\Core\Field\FieldItemListInterface;
 
 /**
@@ -69,8 +70,8 @@ class ContentHubEntityLinkFieldHandler {
     foreach ($items as $key => $item) {
       if (isset($link_entities[$key])) {
         $uri = $item['uri'];
-        $link_parts = explode('/', $uri);
-        $items[$key]['uri'] = $link_parts[0] . '/' . $link_entities[$key]->uuid();
+        $link_parts = pathinfo($uri);
+        $items[$key]['uri'] = $link_parts['dirname'] . '/' . $link_entities[$key]->uuid();
       }
     }
     return $items;
@@ -86,12 +87,29 @@ class ContentHubEntityLinkFieldHandler {
    *   An array of a value item with IDs if dependency exists, NULL otherwise.
    */
   public function denormalizeItem(array $item) {
-    $uuid = $this->getDependentEntityUuid($item);
-    if (!empty($uuid)) {
-      $entity_type_id = $this->field->getFieldDefinition()->getFieldStorageDefinition()->getTargetEntityTypeId();
-      $entities = \Drupal::entityTypeManager()->getStorage($entity_type_id)
-        ->loadByProperties(['uuid' => $uuid]);
-      $entity = $entities ? reset($entities) : NULL;
+    $entity_info = $this->getDependentEntityInfo($item);
+    if (!empty($entity_info)) {
+      list($entity_type_id, $uuid) = $entity_info;
+      if (strpos($item['uri'], 'entity:') !== FALSE) {
+        $entities = \Drupal::entityTypeManager()->getStorage($entity_type_id)
+          ->loadByProperties(['uuid' => $uuid]);
+        $entity = $entities ? reset($entities) : NULL;
+      }
+      elseif (strpos($item['uri'], 'internal:') !== FALSE) {
+        $path = pathinfo($item['uri']);
+        $entity_type_id = NULL;
+        if (substr($path['dirname'], -4) == 'node') {
+          $entity_type_id = 'node';
+        }
+        elseif (substr($path['dirname'], -13) == 'taxonomy/term') {
+          $entity_type_id = 'taxonomy_term';
+        }
+        if ($entity_type_id) {
+          $entities = \Drupal::entityTypeManager()->getStorage($entity_type_id)
+            ->loadByProperties(['uuid' => $uuid]);
+          $entity = $entities ? reset($entities) : NULL;
+        }
+      }
       if ($entity) {
         $item['uri'] = str_replace($entity->uuid(), $entity->id(), $item['uri']);
       }
@@ -120,27 +138,66 @@ class ContentHubEntityLinkFieldHandler {
           $referenced_entities[$key] = $ref_entity;
         }
       }
+      elseif (strpos($uri, 'internal:') !== FALSE) {
+        $link_path = str_replace('internal:', '', $uri);
+        $path = pathinfo($link_path);
+        switch ($path['dirname']) {
+          case '/node':
+            $nid = $path['filename'];
+            if (is_numeric($nid)) {
+              if ($ref_entity = \Drupal::entityTypeManager()->getStorage('node')->load($nid)) {
+                $referenced_entities[$key] = $ref_entity;
+              }
+            }
+            break;
+
+          case '/taxonomy/term':
+            $tid = $path['filename'];
+            if (is_numeric($tid)) {
+              if ($ref_entity = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid)) {
+                $referenced_entities[$key] = $ref_entity;
+              }
+            }
+            break;
+        }
+      }
     }
     return $referenced_entities;
   }
 
   /**
-   * Get Dependent entity UUID from the field value item.
+   * Get Dependent entity type id and UUID from the field value item.
    *
    * @param string $item
    *   The field value item.
    *
    * @return string|null
-   *   The Dependent Entity UUID if it matches pattern, NULL otherwise.
+   *   If it matches pattern, returns dependent entity type and UUID; otherwise NULL.
    */
-  public function getDependentEntityUuid($item) {
-    $item_uri = isset($item['uri']) ? $item['uri'] : '';
-    if (preg_match('/entity:([a-zA-Z_\-]*)\/[a-f0-9]{8}\-[a-f0-9]{4}\-4[a-f0-9]{3}\-(8|9|a|b)[a-f0-9]{3}\-[a-f0-9]{12}/', $item_uri, $m)) {
-      preg_match('/[a-f0-9]{8}\-[a-f0-9]{4}\-4[a-f0-9]{3}\-(8|9|a|b)[a-f0-9]{3}\-[a-f0-9]{12}/', $item_uri, $match);
-      $uuid = $match[0];
-      return $uuid;
+  public function getDependentEntityInfo($item) {
+    if (!isset($item['uri'])) {
+      return NULL;
     }
-    return NULL;
+
+    $uri_array = explode(':', $item['uri']);
+    $allowed_types = [
+      'entity',
+      'internal',
+    ];
+
+    if (!in_array($uri_array[0], $allowed_types)) {
+      return NULL;
+    }
+
+    $entity_array = explode('/', $uri_array[1]);
+    $uuid = array_pop($entity_array);
+
+    if (!Uuid::isValid($uuid)) {
+      return NULL;
+    }
+
+    $entity_type = implode('_', $entity_array);
+    return [$entity_type, $uuid];
   }
 
 }

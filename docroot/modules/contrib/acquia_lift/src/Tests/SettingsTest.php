@@ -104,11 +104,10 @@ class SettingsTest extends WebTestBase {
     $edit += $this->convertToPostFormSettings($visibility_settings, 'visibility');
     $edit += $this->convertToPostFormSettings($advanced_settings, 'advanced');
     $edit_settings_count = count($edit);
-    $expect_settings_count = 20;
+    $expect_settings_count = 21;
 
-    // Post the edits and assert that options are saved.
+    // Post the edits.
     $this->drupalPostForm('admin/config/services/acquia-lift', $edit, t('Save configuration'));
-    $this->assertText(t('The configuration options have been saved.'));
 
     // Assert error messages are set for required fields and unreachable URLs.
     $this->assertText(t('The Acquia Lift module requires a valid Account ID, Site ID, and Assets URL to complete activation.'));
@@ -140,6 +139,8 @@ class SettingsTest extends WebTestBase {
     $this->assertRaw('node page', '[testMetatagsAndScriptTag]: page_type metatag value is loaded on the node page.');
     $this->assertRaw('acquia_lift:account_id', '[testMetatagsAndScriptTag]: account_id metatag is loaded on the node page.');
     $this->assertRaw('AccountId1', '[testMetatagsAndScriptTag]: account_id metatag value is loaded on the node page.');
+    $this->assertRaw('acquia_lift:bootstrapMode', '[testMetatagsAndScriptTag]: bootstrap mode metatag is loaded on the node page.');
+    $this->assertRaw('manual', '[testMetatagsAndScriptTag]: bootstrap mode metatag value is loaded on the node page.');
     $this->assertRaw('acquia_lift:contentReplacementMode', '[testMetatagsAndScriptTag]: content replacement mode metatag is loaded on the node page.');
     $this->assertRaw('customized', '[testMetatagsAndScriptTag]: content replacement mode metatag value is loaded on the node page.');
     $this->assertRaw('acquia_lift:contentOrigin', '[testMetatagsAndScriptTag]: content origin metatag is loaded on the node page.');

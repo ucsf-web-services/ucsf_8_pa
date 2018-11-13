@@ -19,7 +19,6 @@ interface PhotoswipeAssetsManagerInterface {
    * Are photoswipe assets attached to this page in this request?.
    *
    * @return bool
-   *   Whether photoswipe assets attached to this page or not.
    */
   public function isAttached();
 

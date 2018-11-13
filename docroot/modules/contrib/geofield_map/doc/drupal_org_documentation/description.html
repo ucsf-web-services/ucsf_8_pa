@@ -1,4 +1,4 @@
-<h3><strong>Geofield Map</strong></h3> is an advanced, complete and easy-to-use Geo Mapping solution for Drupal 8, based on and fully compatible with the <a href="https://www.drupal.org/project/geofield" title="Geofield" target="_blank">Geofield</a> module, that <strong>lets you manage the Geofield with an interactive Map both in back-end and in the front-end.</strong>
+<strong>Geofield Map</strong> is an advanced, complete and easy-to-use Geo Mapping solution for Drupal 8, based on and fully compatible with the <a href="https://www.drupal.org/project/geofield" title="Geofield" target="_blank">Geofield</a> module, that <strong>lets you manage the Geofield with an interactive Map both in back-end and in the front-end.</strong>
 
 It represents the perfect solution to:
 <ul>
@@ -8,7 +8,8 @@ It represents the perfect solution to:
   <li>implement advanced front-end Google Maps with Marker Icon & Infowindow advanced customizations, custom Google Map Styles and Marker Clustering capabilities;</li>
 </ul>
 
-<h3>Note:</h3> From 8.x-2.11 release the module implements <strong><u>support for Google Maps Api Localization in China.</u></strong>
+<h2><strong>WARNING:<br><u>UPDATE TO Geofield Map 8.x-2.16 (and above ...) IS HIGHLY RECOMMENDED </u> for correct working with Drupal 8.6 core</strong></h2>
+Drupal Core 8.6 introduced a regression in the #states APIs, that affects Geofield Map up to 8.x-2.15 version.<a href="https://www.drupal.org/project/geofield_map/issues/3007221"><br>Refer to this specific issue for more information</a>.</u></strong>
 
 <hr>
 <h4>Geofield Map 2.x. What's New</h4>
@@ -110,7 +111,12 @@ Both in Geofield Map Formatter and in the Geofield Map View style it is possible
 <h4><strong>Notes & Warnings</strong></h4>
 <ul>
   <li>The Geofield Map module depends from the <a href="https://www.drupal.org/project/geofield" title="Geofield" target="_blank">Geofield</a> module;</li>
-  <li>A valid <u>Gmap Api Key is needed</u> for Google Maps rendering, and for any Geocoding and Reverse Geocoding functionalities, as actually based on the Google Geocoder;</li>
-  <li>Although in mind, there is no <u>Leaflet Map library support</u> at the moment for the Geofield Map Formatter and the  Map Views Plugin. Please refer to the <a href="https://www.drupal.org/project/leaflet" title="Leaflet" target="_blank">Leaflet</a> and the <a href="https://www.drupal.org/project/leaflet_markercluster" title="Leaflet Markercluster" target="_blank">Leaflet Markercluster</a> modules for Leaflet front-end mapping of Drupal 8 Geofields;</li>
+  <li>A unique <u>Gmap Api Key</u> is required for both Google Mapping and Geocoding operations, all performed client-side by js.<br>
+    <a href="https://developers.google.com/maps/documentation/javascript/get-api-key#key-restrictions" target="_blank">It might/should be restricted using the Website Domain / HTTP referrers method</a>;</li>
 </ul>
-<br>
+
+<h4><strong>Roadmap / Planned evolution</strong></h4>
+<ul>
+  <li>Full integration with <a href="https://www.drupal.org/project/geocoder" title="Geocoder" target="_blank">Geocoder</a> module;</li>
+  <li><u>Leaflet Map library</u> support for the Geofield Map Formatter and the  Map Views Plugin. Now please refer to the <a href="https://www.drupal.org/project/leaflet" title="Leaflet" target="_blank">Leaflet</a> and the <a href="https://www.drupal.org/project/leaflet_markercluster" title="Leaflet Markercluster" target="_blank">Leaflet Markercluster</a> modules for Leaflet front-end mapping of Drupal 8 Geofields;</li>
+</ul>

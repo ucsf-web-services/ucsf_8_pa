@@ -109,6 +109,13 @@ class SubPathautoKernelTest extends KernelTestBase {
     \Drupal::currentUser()->setAccount($admin_user);
     $processed = $this->sut->processOutbound('/node/1/edit');
     $this->assertEquals('/kittens/edit', $processed);
+
+    // Check that alias is converted for absolute paths. The Redirect module,
+    // for instance, requests an absolute path when it checks if a redirection
+    // is needed.
+    $options = ['absolute' => TRUE];
+    $processed = $this->sut->processOutbound('/node/1/edit', $options);
+    $this->assertEquals('/kittens/edit', $processed);
   }
 
 }

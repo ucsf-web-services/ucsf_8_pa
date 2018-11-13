@@ -7,6 +7,8 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
+use Drupal\migrate_plus\Entity\MigrationGroupInterface;
+use Drupal\migrate_plus\Entity\MigrationInterface as MigratePlusMigrationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -71,21 +73,19 @@ class MessageController extends ControllerBase {
    *
    * Messages are truncated at 56 chars.
    *
-   * @param string $migration_group
-   *   Machine name of the migration's group.
-   *
-   * @param string $migration
-   *   Machine name of the migration.
+   * @param \Drupal\migrate_plus\Entity\MigrationGroupInterface $migration_group
+   *   The migration group.
+   * @param \Drupal\migrate_plus\Entity\MigrationInterface $migration
+   *   The $migration.
    *
    * @return array
    *   A render array as expected by drupal_render().
    */
-  public function overview($migration_group, $migration) {
+  public function overview(MigrationGroupInterface $migration_group, MigratePlusMigrationInterface $migration) {
     $rows = [];
     $classes = static::getLogLevelClassMap();
-    /** @var \Drupal\migrate\Plugin\MigrationInterface $migration */
-    $migration = $this->migrationPluginManager->createInstance($migration);
-    $source_id_field_names = array_keys($migration->getSourcePlugin()->getIds());
+    $migration_plugin = $this->migrationPluginManager->createInstance($migration->id(), $migration->toArray());
+    $source_id_field_names = array_keys($migration_plugin->getSourcePlugin()->getIds());
     $column_number = 1;
     foreach ($source_id_field_names as $source_id_field_name) {
       $header[] = [
@@ -104,8 +104,8 @@ class MessageController extends ControllerBase {
       'field' => 'message',
     ];
 
-    $message_table = $migration->getIdMap()->messageTableName();
-    $map_table = $migration->getIdMap()->mapTableName();
+    $message_table = $migration_plugin->getIdMap()->messageTableName();
+    $map_table = $migration_plugin->getIdMap()->mapTableName();
     $query = $this->database->select($message_table, 'msg')
       ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
       ->extend('\Drupal\Core\Database\Query\TableSortExtender');

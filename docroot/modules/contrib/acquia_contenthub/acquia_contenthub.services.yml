@@ -54,20 +54,26 @@ services:
     tags:
       - { name: service_collector, call: addMiddleware, tag: contenthub_middleware }
 
+  # Normalizer Proxy to the Seralization Normalizer
   acquia_contenthub.normalizer.entity.acquia_contenthub_cdf:
     class: Drupal\acquia_contenthub\Normalizer\ContentEntityCdfNormalizer
     arguments: ['@config.factory', '@acquia_contenthub.normalizer.content_entity_view_modes_extractor', '@module_handler', '@entity.repository', '@http_kernel.basic', '@renderer', '@acquia_contenthub.entity_manager', '@entity_type.manager', '@acquia_contenthub.internal_request', '@language_manager']
+
+  # Serialization Providers
+  serializer.normalizer.acquia_contenthub_cdf.acquia_contenthub:
+    class: Drupal\acquia_contenthub\Normalizer\NormalizerWrapper
+    arguments: ['@acquia_contenthub.normalizer.entity.acquia_contenthub_cdf']
     tags:
-      - { name: normalizer, priority: 10 }
+    - { name: normalizer, priority: 10, format: acquia_contenthub_cdf }
+
+  serializer.encoder.acquia_contenthub_cdf.acquia_contenthub:
+    class: Drupal\acquia_contenthub\Encoder\ContentHubCdfEncoder
+    tags:
+    - { name: encoder, priority: 10, format: acquia_contenthub_cdf }
 
   acquia_contenthub.normalizer.content_entity_view_modes_extractor:
     class: Drupal\acquia_contenthub\Normalizer\ContentEntityViewModesExtractor
     arguments: ['@current_user', '@entity_display.repository', '@entity_type.manager', '@renderer', '@http_kernel.basic', '@account_switcher', '@acquia_contenthub.acquia_contenthub_subscription', '@config.factory', '@plugin.manager.block', '@request_stack']
-
-  acquia_contenthub.encoder.acquia_contenthub_cdf:
-    class: Drupal\acquia_contenthub\Encoder\ContentHubCdfEncoder
-    tags:
-      - { name: encoder, priority: 10, format: acquia_contenthub_cdf }
 
   acquia_contenthub.export_queue_message:
     class: Drupal\acquia_contenthub\EventSubscriber\ContentHubExportQueueMessageSubscriber
@@ -119,8 +125,8 @@ services:
     class: Drupal\acquia_contenthub\Form\NodeTypePreviewImageForm
     arguments: ['@acquia_contenthub.entity_manager', '@entity_type.manager', '@entity_field.manager']
 
-  acquia_contenthub.form.node_form:
-    class: Drupal\acquia_contenthub\Form\NodeForm
+  acquia_contenthub.form.entity_form:
+    class: Drupal\acquia_contenthub\Form\EntityForm
     arguments: ['@current_user', '@acquia_contenthub.acquia_contenthub_entities_tracking']
 
   acquia_contenthub.queue.database.memory_limit:
