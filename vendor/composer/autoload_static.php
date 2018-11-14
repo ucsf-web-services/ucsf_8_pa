@@ -92,6 +92,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'Symfony\\Cmf\\Component\\Routing\\' => 30,
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
             'Stecman\\Component\\Symfony\\Console\\BashCompletion\\' => 49,
+            'SelfUpdate\\' => 11,
         ),
         'R' => 
         array (
@@ -158,6 +159,8 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         ),
         'C' => 
         array (
+            'Curl\\' => 5,
+            'Consolidation\\SiteAlias\\' => 24,
             'Consolidation\\OutputFormatters\\' => 31,
             'Consolidation\\Log\\' => 18,
             'Consolidation\\Config\\' => 21,
@@ -166,6 +169,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'Composer\\Installers\\' => 20,
             'CommerceGuys\\Addressing\\' => 24,
             'Cheppers\\GatherContent\\' => 23,
+            'ChapterThree\\AppleNewsAPI\\' => 26,
         ),
         'B' => 
         array (
@@ -333,6 +337,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/stecman/symfony-console-completion/src',
         ),
+        'SelfUpdate\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/consolidation/self-update/src',
+        ),
         'Robo\\' => 
         array (
             0 => __DIR__ . '/..' . '/consolidation/robo/src',
@@ -465,6 +473,14 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
         ),
+        'Curl\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl',
+        ),
+        'Consolidation\\SiteAlias\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/consolidation/site-alias/src',
+        ),
         'Consolidation\\OutputFormatters\\' => 
         array (
             0 => __DIR__ . '/..' . '/consolidation/output-formatters/src',
@@ -496,6 +512,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'Cheppers\\GatherContent\\' => 
         array (
             0 => __DIR__ . '/..' . '/cheppers/gathercontent-client/src',
+        ),
+        'ChapterThree\\AppleNewsAPI\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chapter-three/apple-news-api/src',
         ),
         'Behat\\Mink\\Driver\\' => 
         array (

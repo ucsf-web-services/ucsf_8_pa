@@ -95,6 +95,15 @@ class MenuLinkContentId extends ArgumentDefaultPluginBase implements CacheableDe
   /**
    * {@inheritdoc}
    */
+  protected function defineOptions() {
+    $options = parent::defineOptions();
+    $options['menu'] = ['default' => 'main'];
+    return $options;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     $options = [];
     /** @var \Drupal\system\Entity\Menu[] $menus */
@@ -103,11 +112,16 @@ class MenuLinkContentId extends ArgumentDefaultPluginBase implements CacheableDe
       $options[$menu->id()] = $menu->label();
     }
 
+    $default = $this->options['menu'];
+    if (!isset($options[$default])) {
+      $default = isset($options['main']) ? 'main' : '';
+    }
+
     $form['menu'] = [
       '#type' => 'select',
       '#title' => $this->t('Menu'),
       '#options' => $options,
-      '#default_value' => isset($options['main']) ? 'main' : '',
+      '#default_value' => $default,
     ];
   }
 

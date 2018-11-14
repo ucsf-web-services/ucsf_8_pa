@@ -472,7 +472,7 @@ class EntityManager {
    *   True if it can be parsed, False if it not a suitable entity for sending
    *   to content hub.
    */
-  private function isEligibleEntity(EntityInterface $entity) {
+  public function isEligibleEntity(EntityInterface $entity) {
     // Early return, if already sync'ing.
     if (!empty($entity->__contenthub_entity_syncing)) {
       return FALSE;

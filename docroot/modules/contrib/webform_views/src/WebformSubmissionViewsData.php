@@ -164,27 +164,28 @@ class WebformSubmissionViewsData extends WebformSubmissionViewsDataBase {
     ];
 
     // There is no general way to add a relationship to an entity where webform
-    // submission has been submitted to, so we just cover the most common case here -
-    // the case when the source is a node.
-    $node_definition = $this->entityManager->getDefinition('node');
+    // submission has been submitted to, so we just cover the most common case
+    // here - the case when the source is a node.
+    if ($this->entityManager->hasDefinition('node')) {
+      $node_definition = $this->entityManager->getDefinition('node');
 
-    $data[$base_table]['entity_id'] = [
-      'title' => $this->t('Submitted to: Content'),
-      'help' => $this->t('Content (node) which webform submission is submitted to.'),
-      'relationship' => [
-        'base' => $node_definition->getDataTable(),
-        'base field' => $node_definition->getKey('id'),
-        'id' => 'standard',
-        'label' => $this->t('Submitted to: Content'),
-        'extra' => [
-          ['left_field' => 'entity_type', 'value' => 'node'],
+      $data[$base_table]['entity_id'] += [
+        'relationship' => [
+          'base' => $node_definition->getDataTable(),
+          'base field' => $node_definition->getKey('id'),
+          'id' => 'standard',
+          'label' => $this->t('Submitted to: Content'),
+          'title' => $this->t('Submitted to: Content'),
+          'extra' => [
+            ['left_field' => 'entity_type', 'value' => 'node'],
+          ],
         ],
-      ],
-    ];
+      ];
+    }
 
     // Add relationship from user to webform submissions he has submitted.
-    $user_definition = $this->entityManager->getDefinition('user');
-    if ($user_definition->getDataTable()) {
+    $user_definition = $this->entityManager->hasDefinition('user') ? $this->entityManager->getDefinition('user') : FALSE;
+    if ($user_definition && $user_definition->getDataTable()) {
       $data[$user_definition->getDataTable()]['webform_submission'] = [
         'title' => $this->t('Webform submission'),
         'help' => $this->t('Webform submission(-s) the user has submitted.'),

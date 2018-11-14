@@ -285,7 +285,9 @@ class ContentHubEntityDependency {
 
               // Check for the existence of Link Fields that might link to
               // other entities (which should be considered dependencies).
-              if ($uuid = ContentHubEntityLinkFieldHandler::load()->getDependentEntityUuid($field)) {
+              $entity_info = ContentHubEntityLinkFieldHandler::load()->getDependentEntityInfo($field);
+              if (!empty($entity_info)) {
+                $uuid = $entity_info[1];
                 $dependencies[] = $uuid;
               }
             }

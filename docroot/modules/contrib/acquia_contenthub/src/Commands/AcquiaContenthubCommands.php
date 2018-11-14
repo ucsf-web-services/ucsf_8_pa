@@ -3,6 +3,7 @@
 namespace Drupal\acquia_contenthub\Commands;
 
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
+use Drupal\acquia_contenthub\ContentHubEntitiesTracking;
 use Drush\Commands\DrushCommands;
 use Drupal\Component\Uuid\Uuid;
 use Drupal\Core\Form\FormState;
@@ -133,11 +134,11 @@ class AcquiaContenthubCommands extends DrushCommands {
     $local_entity = $entity_repository->loadEntityByUuid($entity_type, $uuid);
     $local_cdf = $serializer->normalize($local_entity, 'acquia_contenthub_cdf');
     if (!$local_cdf) {
-      // basic structure we'll reference for the diff.
+      // Basic structure we'll reference for the diff.
       $local_cdf = [
         'entities' => [
-          []
-        ]
+          [],
+        ],
       ];
     }
     else {
@@ -161,7 +162,9 @@ class AcquiaContenthubCommands extends DrushCommands {
   /**
    * List entities from the Content Hub using the listEntities() method.
    *
-   * @param array $options An associative array of options whose values come from cli, aliases, config, etc.
+   * @param array $options
+   *   An associative array of options whose values come from cli, aliases, config, etc.
+   *
    * @option limit
    *   The number of entities to be listed
    * @option start
@@ -180,7 +183,7 @@ class AcquiaContenthubCommands extends DrushCommands {
    * @command acquia:contenthub-list
    * @aliases ach-list,acquia-contenthub-list
    */
-  public function contenthubList(array $options = ['limit' => null, 'start' => null, 'origin' => null, 'language' => null, 'attributes' => null, 'type' => null, 'filters' => null]) {
+  public function contenthubList(array $options = ['limit' => NULL, 'start' => NULL, 'origin' => NULL, 'language' => NULL, 'attributes' => NULL, 'type' => NULL, 'filters' => NULL]) {
     /** @var \Drupal\acquia_contenthub\Client\ClientManager $client_manager */
     $client_manager = \Drupal::service('acquia_contenthub.client_manager');
     $client = $client_manager->getConnection();
@@ -266,7 +269,7 @@ class AcquiaContenthubCommands extends DrushCommands {
   }
 
   /**
-   * Deletes a single entity from the Content Hub
+   * Deletes a single entity from the Content Hub.
    *
    * @param $uuid
    *   Entity's UUID
@@ -404,7 +407,7 @@ class AcquiaContenthubCommands extends DrushCommands {
   }
 
   /**
-   * Reindexes all entities in Content Hub
+   * Reindexes all entities in Content Hub.
    *
    * @param $api
    *   API Key
@@ -457,7 +460,7 @@ class AcquiaContenthubCommands extends DrushCommands {
   }
 
   /**
-   * View Historic entity logs from Content Hub
+   * View Historic entity logs from Content Hub.
    *
    * @param $api
    *   API Key
@@ -466,6 +469,7 @@ class AcquiaContenthubCommands extends DrushCommands {
    * @param array $options
    *
    * @throws \Exception
+   *
    * @internal param array $request_options An associative array of options
    *   whose values come from cli, aliases, config, etc.
    *
@@ -486,9 +490,10 @@ class AcquiaContenthubCommands extends DrushCommands {
    *   request_id: Request ID
    *   id: ID
    * @aliases ach-logs,acquia-contenthub-logs
+   *
    * @return \Consolidation\OutputFormatters\StructuredData\RowsOfFields
    */
-  public function contenthubLogs($api, $secret, array $options = ['query' => null, 'size' => null, 'from' => null]) {
+  public function contenthubLogs($api, $secret, array $options = ['query' => NULL, 'size' => NULL, 'from' => NULL]) {
     /** @var \Drupal\acquia_contenthub\Client\ClientManager $client_manager */
     $client_manager = \Drupal::service('acquia_contenthub.client_manager');
 
@@ -564,7 +569,7 @@ class AcquiaContenthubCommands extends DrushCommands {
   }
 
   /**
-   * Shows Elastic Search field mappings from Content Hub
+   * Shows Elastic Search field mappings from Content Hub.
    *
    * @command acquia:contenthub-mapping
    * @aliases ach-mapping,acquia-contenthub-mapping
@@ -589,8 +594,7 @@ class AcquiaContenthubCommands extends DrushCommands {
   }
 
   /**
-   * Regenerates the Shared Secret used for Webhook Verification
-   *
+   * Regenerates the Shared Secret used for Webhook Verification.
    *
    * @command acquia:contenthub-regenerate-secret
    * @aliases ach-regsec,acquia-contenthub-regenerate-secret
@@ -622,8 +626,7 @@ class AcquiaContenthubCommands extends DrushCommands {
   }
 
   /**
-   * Updates the Shared Secret used for Webhook Verification
-   *
+   * Updates the Shared Secret used for Webhook Verification.
    *
    * @command acquia:contenthub-update-secret
    * @aliases ach-upsec,acquia-contenthub-update-secret
@@ -712,16 +715,18 @@ class AcquiaContenthubCommands extends DrushCommands {
    *
    * @param $op
    *   The operation to use. Options are: register, unregister, list.
-   * @param array $options An associative array of options whose values come from cli, aliases, config, etc.
+   * @param array $options
+   *   An associative array of options whose values come from cli, aliases, config, etc.
    *
    * @throws \Exception
+   *
    * @option webhook_url
    *   The webhook URL to register or unregister.
    *
    * @command acquia:contenthub-webhooks
    * @aliases ach-wh,acquia-contenthub-webhooks
    */
-  public function contenthubWebhooks($op, array $options = ['webhook_url' => null]) {
+  public function contenthubWebhooks($op, array $options = ['webhook_url' => NULL]) {
     $config_factory = \Drupal::configFactory();
     /** @var \Drupal\acquia_contenthub\Client\ClientManager $client_manager */
     $client_manager = \Drupal::service('acquia_contenthub.client_manager');
@@ -786,17 +791,25 @@ class AcquiaContenthubCommands extends DrushCommands {
    *   Secret Key
    *
    * @throws \Exception
+   *
+   * @option bundle
+   *   The Entity Bundle.
+   *
    * @command acquia:contenthub-reset-entities
    * @aliases ach-reset,acquia-contenthub-reset-entities
    */
-  public function contenthubResetEntities($entity_type, $api, $secret) {
+  public function contenthubResetEntities($entity_type, $api, $secret, array $options = ['bundle' => NULL]) {
     if (empty($entity_type)) {
       throw new \Exception(dt('You need to provide at least the entity type of the entities you want to reset.'), LogLevel::CANCEL);
     }
+
+    // Defining the bundle.
+    $bundle = $options['bundle'];
+
     /** @var \Drupal\acquia_contenthub\Client\ClientManager $client_manager */
     $client_manager = \Drupal::service('acquia_contenthub.client_manager');
 
-    $warning_message = "Are you sure you want to remotely DELETE entities of type '%s', REINDEX subscription and RE-EXPORT deleted entities in this Content Hub Subscription?\n" .
+    $warning_message = "Are you sure you want to remotely DELETE entities of type = %s %s, REINDEX subscription and RE-EXPORT deleted entities in this Content Hub Subscription?\n" .
       "*************************************************************************************\n" .
       "PROCEED WITH CAUTION. THIS ACTION WILL REBUILD THE ELASTIC SEARCH INDEX IN YOUR CONTENT HUB SUBSCRIPTION.\n" .
       "This command will rebuild your index from the data currently stored in Content Hub. Make sure to first 'unpublish' all the entities that contain undesired\n" .
@@ -805,7 +818,8 @@ class AcquiaContenthubCommands extends DrushCommands {
     For more information, check https://docs.acquia.com/content-hub.\n" .
       "*************************************************************************************\n" .
       "Are you sure you want to proceed?\n";
-    $warning_message = sprintf($warning_message, $entity_type);
+    $warning_bundle = sprintf("and bundle = %s", $bundle);
+    $warning_message = sprintf($warning_message, $entity_type, $warning_bundle);
     if ($this->io()->confirm($warning_message)) {
       // If API/Secret Keys have been given, reset the connection to use those
       // keys instead of the ones set in the configuration.
@@ -859,7 +873,7 @@ class AcquiaContenthubCommands extends DrushCommands {
             }
 
             // Delete entities and reindex subscription.
-            $success = $reindex->setExportedEntitiesToReindex($entity_type);
+            $success = $reindex->setExportedEntitiesToReindex($entity_type, $bundle);
             if ($success && $reindex->isReindexSent()) {
               $this->output()->writeln("Your Subscription is being re-indexed. All clients who have registered to received webhooks will be notified with a reindex webhook when the process has been completed.\n");
             }
@@ -867,8 +881,12 @@ class AcquiaContenthubCommands extends DrushCommands {
               throw new \Exception(dt("Error trying to re-index your subscription. You might require elevated keys to perform this operation."));
             }
             elseif (!$success && $reindex->isReindexNone()) {
-              throw new \Exception(dt("You are trying to reset entities of type = '@entity_type' but none of them have been exported.", [
+              $bundle_msg = empty($bundle) ? '' : dt("and bundle = @bundle", [
+                '@bundle' => $bundle,
+              ]);
+              throw new \Exception(dt("You are trying to reset entities of type = '@entity_type' @bundle_msg but none of them have been exported.", [
                 '@entity_type' => $entity_type,
+                '@bundle_msg' => $bundle_msg,
               ]));
             }
           }
@@ -881,19 +899,6 @@ class AcquiaContenthubCommands extends DrushCommands {
         throw new \Exception(dt('Error trying to connect to the Content Hub. Make sure this site is registered to Content hub.'));
       }
     }
-  }
-
-  public static function reexportFinished($success, $results, $operations) {
-    if ($success) {
-      $message = \Drupal::translation()->formatPlural(count($results), 'One entity processed.', '@count entities processed.');
-      /** @var \Drupal\acquia_contenthub\Controller\ContentHubReindex $reindex */
-      $reindex = \Drupal::service('acquia_contenthub.acquia_contenthub_reindex');
-      $reindex->setReindexStateNone();
-    }
-    else {
-      $message = t('Finished with an error.');
-    }
-    drupal_set_message($message);
   }
 
   /**
@@ -916,6 +921,97 @@ class AcquiaContenthubCommands extends DrushCommands {
       }
     }
     return $normalized_data;
+  }
+
+  /**
+   * Checks published entities and republishes them to Content Hub.
+   *
+   * @param string $entity_type_id
+   *   The Entity Type.
+   * @param array $options
+   *   The options array.
+   *
+   * @throws \Exception
+   *
+   * @internal param array $request_options An associative array of options
+   *   whose values come from cli, aliases, config, etc.
+   *
+   * @option publish
+   *   1 if set to republish entities, 0 (or false) if we just want to print.
+   * @option status
+   *   The status of the entities to audit, defaults to EXPORTED if not given.
+   *
+   * @command acquia:contenthub-audit-publisher
+   * @aliases ach-ap,ach-audit-publisher
+   */
+  public function contenthubAuditPublisher($entity_type_id = NULL, array $options = ['publish' => NULL, 'status' => ContentHubEntitiesTracking::EXPORTED]) {
+    // Obtaining the query.
+    $publish = $options["publish"];
+    $status = $options["status"];
+    if ($publish) {
+      $warning_message = dt('Are you sure you want to republish entities to Content Hub?');
+      if ($this->io()->confirm($warning_message) == FALSE) {
+        throw new \Exception(dt('Command aborted by user.'));
+      }
+    }
+
+    /** @var \Drupal\acquia_contenthub\ContentHubEntitiesTracking $entities_tracking */
+    $entities_tracking = \Drupal::getContainer()->get('acquia_contenthub.acquia_contenthub_entities_tracking');
+    switch ($status) {
+      case ContentHubEntitiesTracking::EXPORTED:
+        $entities = $entities_tracking->getPublishedEntities($entity_type_id);
+        break;
+
+      case ContentHubEntitiesTracking::INITIATED:
+        $entities = $entities_tracking->getInitiatedEntities($entity_type_id);
+        break;
+
+      case ContentHubEntitiesTracking::REINDEX:
+        $entities = $entities_tracking->getEntitiesToReindex($entity_type_id);
+        break;
+
+      case ContentHubEntitiesTracking::QUEUED:
+        // If we want to queue "queued" entities, then we have to make sure the
+        // export queue is empty or we might be re-queuing entities that already
+        // are in the queue.
+        /** @var \Drupal\Core\Queue\QueueInterface $queue */
+        $queue = \Drupal::getContainer()->get('queue')->get('acquia_contenthub_export_queue');
+        if ($queue->numberOfItems() > 0) {
+          throw new \Exception(dt('You cannot audit queued entities when the queue is not empty because you run the risk of re-queuing the same entities. Please retry when the queue is empty.'));
+        }
+        $entities = $entities_tracking->getQueuedEntities($entity_type_id);
+        break;
+
+      default:
+        throw new \Exception(dt('You can only use the following values for status: EXPORTED, INITIATED, REINDEX, QUEUED.'));
+    }
+
+    $this->output->writeln(dt('Auditing entities with export status = @status...', [
+      '@status' => $status,
+    ]));
+
+    // Creating the batch process.
+    $operations = [];
+    $chunks = array_chunk($entities, 50);
+    foreach ($chunks as $chunk) {
+      $operations[] = [
+        'acquia_contenthub_audit_publisher',
+        [$chunk, $publish],
+      ];
+    }
+
+    // Setting up batch process.
+    $batch = [
+      'title' => dt("Checks published entities with Content Hub for correct status"),
+      'operations' => $operations,
+      'finished' => 'acquia_contenthub_audit_publisher_finished',
+    ];
+
+    // Batch processing.
+    batch_set($batch);
+
+    // Start the batch process.
+    drush_backend_batch_process();
   }
 
 }

@@ -7,6 +7,8 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\ElementInfoManagerInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 use Drupal\views\Plugin\views\filter\StringFilter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -35,6 +37,13 @@ class WebformSubmissionFieldFilter extends StringFilter {
   protected $elementInfoManager;
 
   /**
+   * The route match service.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  protected $routeMatch;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -43,18 +52,20 @@ class WebformSubmissionFieldFilter extends StringFilter {
       $plugin_id,
       $plugin_definition,
       $container->get('entity_type.manager'),
-      $container->get('plugin.manager.element_info')
+      $container->get('plugin.manager.element_info'),
+      $container->get('current_route_match')
     );
   }
 
   /**
    * WebformSubmissionFieldFilter constructor.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, ElementInfoManagerInterface $element_info_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, ElementInfoManagerInterface $element_info_manager, RouteMatchInterface $route_match) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
     $this->entityTypeManager = $entity_type_manager;
     $this->elementInfoManager = $element_info_manager;
+    $this->routeMatch = $route_match;
   }
 
   /**
@@ -87,7 +98,7 @@ class WebformSubmissionFieldFilter extends StringFilter {
         $parents = [];
       }
       $operator = NestedArray::getValue($form_state->getUserInput(), $parents);
-      if (!$operator || !isset($this->operators()[$operator])) {
+      if (!$operator || is_array($operator) || !isset($this->operators()[$operator])) {
         $operator = $this->operator;
       }
 
@@ -101,6 +112,19 @@ class WebformSubmissionFieldFilter extends StringFilter {
           'callback' => [self::class, 'ajaxValueForm'],
           'wrapper' => 'this-will-be-set-up-in-process',
         ];
+
+        // When just adding the filter the ajax URL is wrong. So we hard code it
+        // here in that case.
+        if ($this->routeMatch->getRouteName() == 'views_ui.form_add_handler') {
+          $ajax_url = Url::fromRoute('views_ui.form_handler', [
+            'js' => $this->routeMatch->getRawParameter('js'),
+            'view' => $this->routeMatch->getRawParameter('view'),
+            'display_id' => $this->routeMatch->getRawParameter('display_id'),
+            'type' => $this->routeMatch->getRawParameter('type'),
+            'id' => $this->options['id'],
+          ]);
+          $form['operator']['#ajax']['url'] = $ajax_url;
+        }
         $form['operator']['#process'] = $process;
       }
       else {
@@ -120,9 +144,7 @@ class WebformSubmissionFieldFilter extends StringFilter {
    * {@inheritdoc}
    */
   public function valueForm(&$form, FormStateInterface $form_state) {
-    $webform = $this->entityTypeManager->getStorage('webform')->load($this->definition['webform_id']);
-
-    $element = $webform->getElementInitialized($this->definition['webform_submission_field']);
+    $element = $this->getWebformElement();
     $element['#default_value'] = $this->value;
     $element['#required'] = FALSE;
 
@@ -263,4 +285,16 @@ class WebformSubmissionFieldFilter extends StringFilter {
 
     return $this->elementInfoManager->getInfoProperty($element['#type'], $property, $default);
   }
+
+  /**
+   * Retrieve webform element on which this filter is set up.
+   *
+   * @return array
+   *   Webform element on which this filter is set up
+   */
+  protected function getWebformElement() {
+    $webform = $this->entityTypeManager->getStorage('webform')->load($this->definition['webform_id']);
+    return $webform->getElementInitialized($this->definition['webform_submission_field']);
+  }
+
 }

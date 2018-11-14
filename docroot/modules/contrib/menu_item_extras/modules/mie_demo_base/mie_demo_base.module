@@ -57,7 +57,7 @@ function mie_demo_base_preprocess(&$variables, $hook, &$info) {
     $menu_link_content = $variables['elements']['#menu_link_content'];
     $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 
-    if (substr($info['theme path'], 0, 7) != 'themes/') {
+    if (substr($info['theme path'], 0, 7) !== 'themes/' && $menu_link_content->getMenuName() === 'mie-demo-base-menu') {
       $info['theme path'] = $module_path;
       $info['path'] = $module_path . '/templates';
       $info['template'] = 'menu-link-content--' . $menu_link_content->getMenuName() . '--' . $sanitized_view_mode;

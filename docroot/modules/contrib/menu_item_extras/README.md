@@ -1,10 +1,3 @@
-**8.x-1.x** [![Build Status](
-https://travis-ci.org/bogdan-hepting/menu_item_extras.svg?branch=8.x-1.x
-)](https://travis-ci.org/bogdan-hepting/menu_item_extras)
-
-**8.x-2.x** [![Build Status](
-https://travis-ci.org/bogdan-hepting/menu_item_extras.svg?branch=8.x-2.x
-)](https://travis-ci.org/bogdan-hepting/menu_item_extras)
 
 # CONTENTS OF THIS FILE
   
@@ -49,9 +42,17 @@ This module requires the following modules:
 2. Uninstall as a normal module.
 
 ## FAQ
+1. How to get a field value in the template?
 
-TBD.
+ You can use entity parameter which is passed to the `menu-levels.html.twig`
+```
+    {% if item.entity.field_test.value == '1' %}
+      {{ rendered_content }}
+    {% endif %}
+```
 
+2. Support for REST API
+We do not support it out of the box, check the issue https://www.drupal.org/project/menu_item_extras/issues/2959787
 ## MAINTAINERS
 
 - Andriy Khomych(andriy.khomych) https://www.drupal.org/u/andriy-khomych

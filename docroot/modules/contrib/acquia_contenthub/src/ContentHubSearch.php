@@ -179,13 +179,14 @@ class ContentHubSearch {
         // For Search Term (Keyword).
         case 'search_term':
           if (!empty($value)) {
-            $query['query']['bool']['must'][] = [
-              'match' => [
-                '_all' => "*{$value}*",
-              ],
-            ];
-          }
-          break;
+            $keywordQuery = $this->getQueryFromString($value);
+            if ($keywordQuery != false) {
+              $query['query']['bool']['must'][] = [
+                $keywordQuery,
+              ];
+            }
+           }
+           break;
 
         // For entity types.
         case 'entity_types':
@@ -239,10 +240,9 @@ class ContentHubSearch {
           ];
           $tags = explode(',', $value);
           foreach ($tags as $tag) {
-            $tags_bool_queries['bool']['should'][] = [
-              'match' => [
-                '_all' => $tag,
-              ],
+            $keywordQuery = $this->getQueryFromString($tag);
+            $tags_bool_queries['bool']['should'] = [
+              $keywordQuery
             ];
           }
           $query['query']['bool']['must'][] = $tags_bool_queries;
@@ -288,6 +288,39 @@ class ContentHubSearch {
     }
 
     return $this->executeSearchQuery($query);
+  }
+
+   /**
+    * Breaks the query string into individual alphanumeric components.
+    * This deals with uuids, so that each component of a uuid is AND'd
+    * it also deals with any other characters in the search query that are not
+    * alphanumeric and treats them as delimeters - ignoring them
+    *
+    * @param string $queryString
+    *   The search value to be passed to the query
+    *
+    * @return array
+    *   An Elastic Search query segment that can be inserted into the main query
+    */
+  private function getQueryFromString($queryString) {
+     $query = [
+      'bool' => [
+        'must' => [],
+      ],
+    ];
+
+    // explode the search term into parts, ignore any that are null/empty
+    $queryStringTokens = preg_split("/[^a-zA-Z\d:]+/",$queryString);
+    foreach ($queryStringTokens as $token) {
+      if (strlen($token) != 0) {
+        $query['bool']['must'][] = [
+          'match' => [
+            '_all' => "*{$token}*",
+          ],
+        ];
+      }
+    }
+    return $query;
   }
 
   /**

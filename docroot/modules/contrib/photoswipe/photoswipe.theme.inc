@@ -11,14 +11,14 @@ use Drupal\image\Entity\ImageStyle;
 /**
  * Prepares variables for a Photoswipe image field formatter.
  *
- * @param array $variables
+ * @param $variables
  *   An associative array containing:
  *   - item: An ImageItem object.
  *   - display_settings: optional image styles.
  *
  * @ingroup themeable
  */
-function template_preprocess_photoswipe_image_formatter(array &$variables) {
+function template_preprocess_photoswipe_image_formatter(&$variables) {
   $item = $variables['item'];
   $settings = $variables['display_settings'];
   $node = $item->getParent()->getParent()->getValue();
@@ -32,76 +32,54 @@ function template_preprocess_photoswipe_image_formatter(array &$variables) {
   if (empty($title) && !empty($item->field_file_image_title_text[Language::LANGCODE_NOT_SPECIFIED])) {
     $title = $item->field_file_image_title_text[Language::LANGCODE_NOT_SPECIFIED][0]['value'];
   }
-  $image = [
+  $image = array(
     '#theme' => 'image_style',
     '#uri' => $uri,
     '#alt' => $alt,
     '#title' => $title,
     '#attributes' => $item->_attributes,
     '#style_name' => $settings['photoswipe_node_style'],
-  ];
+  );
 
-  if (isset($variables['delta']) && $variables['delta'] === 0 && !empty($settings['photoswipe_node_style_first'])) {
-    $image['#style_name'] = $settings['photoswipe_node_style_first'];
+  $dimensions = array();
+  if (isset($item->width) && isset($item->height)) {
+    $image['#width'] = $dimensions['width'] = $item->width;
+    $image['#height'] = $dimensions['height'] = $item->height;
   }
 
-  // The image.factory service will check if our image is valid.
-  $image_file = \Drupal::service('image.factory')->get($uri);
-  if ($image_file->isValid()) {
-    $image_width = $image_file->getWidth();
-    $image_height = $image_file->getHeight();
-  }
-  else {
-    $image_width = $image_height = NULL;
-  }
-
-  $dimensions = [];
-  if (!empty($image_width) && !empty($image_height)) {
-    $image['#width'] = $dimensions['width'] = $image_width;
-    $image['#height'] = $dimensions['height'] = $image_height;
-  }
-
-  // Create the path to the image that will show in Photoswipe.
+  // Create the path to the image that will show in Photoswipe
   if ($style_name = $settings['photoswipe_image_style']) {
-    // Load the image style.
+    // Load the image style
     $style = ImageStyle::load($style_name);
 
-    // Fetch the Image style path from the Image URI.
+    // Fetch the Image style path from the Image URI
     $path = $style->buildUrl($uri);
 
-    // Set the dimensions.
+    // Set the dimensions
     $style->transformDimensions($dimensions, $uri);
   }
   else {
     $path = file_create_url($uri);
   }
 
-  // Render as a standard image if an image style is not given.
+  // Render as a standard image if an image style is not given
   if (empty($image['#style_name'])) {
     $image['#theme'] = 'image';
   }
 
-  // Set Caption for this image.
+  // Set Caption for this image
   if (isset($settings['photoswipe_caption'])) {
     $caption_setting = $settings['photoswipe_caption'];
     switch ($caption_setting) {
       case 'alt':
         $caption = $alt;
         break;
-
       case 'title':
         $caption = $title;
         break;
-
       case 'node_title':
-        if (!empty($node->title)) {
-          $caption = $node->title->value;
-        }
-        else {
-          $caption = $alt;
-        }
+        $caption = $node->title->value;
         break;
-
       default:
         $field_view = $node->{$caption_setting}->view();
         $field_view['#view_mode'] = ($settings['photoswipe_view_mode']) ? $settings['photoswipe_view_mode'] : 'default';
@@ -115,9 +93,9 @@ function template_preprocess_photoswipe_image_formatter(array &$variables) {
 
   $variables['image'] = $image;
   $variables['path'] = $path;
-  $variables['attributes'] = [
+  $variables['attributes'] = array(
     'class' => 'photoswipe',
     'data-size' => $dimensions['width'] . 'x' . $dimensions['height'],
     'data-overlay-title' => $caption,
-  ];
+  );
 }

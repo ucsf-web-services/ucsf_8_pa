@@ -17,9 +17,9 @@ INSTALLATION
   Unarchive it into your "libraries" directory (e.g. /libraries).
   You may need to create the "libraries" directory first.
   Rename it to "photoswipe" (lower case).
-  NB: Relying on libraries module to locate 'photoswipe' folder allows you to
-  place it in a site specific (e.g. sites/mysite/libraries) or default folder
-  (e.g.sites/all/libraries). Site-specific versions are selected preferentially.
+  NB: Relying on libraries module to locate 'photoswipe' folder allows you to place
+  it in a site specific (e.g. sites/mysite/libraries) or default folder
+  (e.g. sites/all/libraries). Site-specific versions are selected preferentially.
 
 3. Enable the PhotoSwipe module.
 
