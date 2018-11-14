@@ -1,0 +1,35 @@
+{% set layout_modifiers = [] %}
+
+{% set main_base_class = main_base_class|default('main') %}
+{% set main_modifiers = [] %}
+
+{% set main_content_base_class = main_content_base_class|default('main-content page_narrow') %}
+{% set main_content_modifiers = [] %}
+
+<div class="main-article">
+  <div {{ bem('layout-container', (layout_modifiers)) }}>
+    {% block page_universal_header %}
+      {% include "@organisms/site/universal-header/universal-header.twig" %}
+    {% endblock %}
+
+    {% block page_header %}
+      {% include "@organisms/site/site-header/site-header.twig" %}
+    {% endblock %}
+
+    {% block page_system %}
+    {% endblock %}
+
+    <main role="main" {{ bem(main_base_class, (main_modifiers), main_blockname) }}>
+      <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+
+      <div {{ bem(main_content_base_class, (main_content_modifiers), main_content_blockname) }}>
+        {% block page_content %}{% endblock %}
+      </div>
+
+    </main>
+
+    {% block page_footer %}
+      {% include "@organisms/site/site-footer/site-footer.twig" %}
+    {% endblock %}
+  </div>
+</div>

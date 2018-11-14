@@ -14,24 +14,24 @@
 
   @include breakpoint($main-menu-medium) {
     border-bottom: none;
-    color: $gray-dark;
+    color: $gray-blue;
     display: inline-block;
-    font-size: 1.1rem;
-    padding: $space $space-double $space $space;
+    font-size: $font-size-sm;
+    padding: $space 0;
+    margin: 0 $space-triple;
     text-transform: none;
     position: relative;
     width: auto;
+    font-family: $font-helvetica-neue-light;
+    font-weight: 500;
+    height: $space-octuple;
 
     &.active,
     &:active,
     &:hover {
-      color: $gray-lighter;
-    }
-
-    &::after {
-      color: $white;
-      display: inline-block;
-      content: ">";
+      color: $gray-blue !important;
+      background: $white;
+      border-bottom: 2px solid $blue;
     }
 
     &--sub::after {

@@ -1,0 +1,18 @@
+<header class="article-header">
+  <ul class="article-header__byline">
+    <li class="article-header__{{ area }}">{{ area }}</li>
+    <li class="article-header__date">{{ date }}</li>
+  </ul>
+
+  <h1 {{ bem(heading_base_class, (heading_modifiers), heading_blockname) }}>
+      {{ heading }}
+  </h1>
+  {% if subheading %}
+  <p class="article-header__subheading">
+    {{ subheading }}
+  </p>
+  {% endif %}
+  <p class="article-header__author">
+    By {{ author }}
+  </p>
+</header>

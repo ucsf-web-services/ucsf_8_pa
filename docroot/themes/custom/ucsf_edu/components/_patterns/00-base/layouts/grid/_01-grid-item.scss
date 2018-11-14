@@ -34,20 +34,39 @@
 }
 
 .grid__item {
-  @include grid-item;
-
-  // With Columns
-  .grid--columns-2 & {
-    @include grid-item(2);
-  }
-
-  .grid--columns-3 & {
-    @include grid-item(3);
-  }
-
   // Pattern Lab Specific
   .grid--pl & {
     background-color: rgba(0, 0, 0, 0.2);
     min-height: 100px;
+  }
+}
+
+@include medium {
+  .grid-four {
+    .grid__item-one {
+      grid-column: 1 / span 3;
+    }
+
+    .grid__item-two {
+      grid-column: 4 / span 3;
+    }
+
+    .grid__item-three {
+      grid-column: 7 / span 3;
+    }
+
+    .grid__item-four {
+      grid-column: 10 / span 3;
+    }
+  }
+
+  .grid-two {
+    .grid__item-one {
+      grid-column: 1 / span 6;
+    }
+
+    .grid__item-two {
+      grid-column: 7 / span 6;
+    }
   }
 }

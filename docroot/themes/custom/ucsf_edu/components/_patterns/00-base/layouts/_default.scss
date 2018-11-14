@@ -8,7 +8,8 @@ $main-width: calc(100% - (#{$sidebar-width} + #{$gutter}));
 
 .header,
 .main,
-.footer {
+.footer,
+.universal-header {
   @include wrapper;
 
   margin-bottom: 4em;
@@ -46,6 +47,20 @@ $main-width: calc(100% - (#{$sidebar-width} + #{$gutter}));
   }
 }
 
+.main-article {
+  background: $background-gray;
+}
+
+.page_narrow {
+  max-width: $page-narrow;
+  background: $white;
+  margin: $space-decuple;
+  padding: $space-decuple 8%;
+
+  &.article-medium {
+    margin-top: -24%;
+  }
+}
 //
 // Layout Using CSS Grid (NO IE11 support)
 // Remove Flexbox code above and uncomment this section to use CSS Grid.
