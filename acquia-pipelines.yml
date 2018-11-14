@@ -1,4 +1,4 @@
-version: 1.0.1
+version: 1.0.2
 services:
   - mysql
 variables:
@@ -9,6 +9,4 @@ events:
       - setup:
           type: script
           script:
-            - git submodule sync
-            - git submodule update --init
             - echo "completed"
