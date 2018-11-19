@@ -21,10 +21,59 @@ body {
 }
 
 .blockquote {
-  font-style: italic;
-  border-left: solid 3px $color-border;
-  margin-left: 1em;
-  padding-left: 1em;
+  float: left;
+  width: 130%;
+  position: relative;
+  left: -270px;
+  padding-top: 40px;
+
+  .blockquote-image {
+    float: left;
+    position: relative;
+    top: -32px;
+    margin-right: $space-decuple;
+  }
+
+  .blockquote-content {
+    background: $background-gray;
+    padding: 110px;
+    margin-right: -100px;
+
+    .blockquote-content__text {
+      @include heading-two;
+      font-size: 31px;
+
+      @include medium {
+        font-size: 40px;
+      }
+    }
+
+    .blockquote-content__cite {
+      @include eyebrow;
+    }
+  }
+
+  &:after {
+    content: ' ';
+    clear: both;
+  }
+
+  &.blockquote-half-left {
+    width: 50%;
+    left: auto;
+    margin-left: -230px;
+    padding-top: 0;
+    margin-right: 80px;
+
+    .blockquote-content {
+      padding: 56px;
+      margin-right: auto;
+
+      .blockquote-content__text {
+        margin-top: 0;
+      }
+    }
+  }
 }
 
 .hr {

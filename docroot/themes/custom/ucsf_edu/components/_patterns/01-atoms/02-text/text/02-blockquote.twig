@@ -17,7 +17,17 @@
 <blockquote
   {{ bem(blockquote_base_class, (blockquote_modifiers), blockquote_blockname) }}
 >
-  {% block blockquote_content %}
-    {{ blockquote_content }}
-  {% endblock %}
+  {% include "@atoms/04-images/00-image/figure.twig" with {
+    img_src: '../../images/blockquote/elysa-marco.jpg',
+    img_alt: 'Elysa Marco',
+    image_figure_base_class: 'blockquote-image',
+    } %}
+  <div class="blockquote-content">
+    {% block blockquote_content %}
+      <p class="blockquote-content__text">{{ blockquote_content }}</p>
+    {% endblock %}
+    <footer>
+    <cite class="blockquote-content__cite">Elysa Marco, MD</cite>
+    </footer>
+  </div>
 </blockquote>

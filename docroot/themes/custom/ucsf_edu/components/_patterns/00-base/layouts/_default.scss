@@ -22,7 +22,7 @@ $main-width: calc(100% - (#{$sidebar-width} + #{$gutter}));
 
 .main {
   @include large {
-    display: flex;
+    //display: flex;
   }
 }
 
@@ -54,13 +54,41 @@ $main-width: calc(100% - (#{$sidebar-width} + #{$gutter}));
 .page_narrow {
   max-width: $page-narrow;
   background: $white;
-  margin: $space-decuple;
+  margin: $space-decuple auto;
   padding: $space-decuple 8%;
+  position: relative;
 
   &.article-medium {
     margin-top: -24%;
   }
 }
+
+.article-feature {
+  margin-top: 0;
+
+  .article-header {
+    margin-top: -420px;
+    background: #fff;
+    margin-left: -230px;
+    padding: 56px 56px 0 120px;
+    width: 166%;
+
+    h1 {
+      font-size: 82px;
+    }
+
+    .article-header__subheading {
+      width: 64%;
+      margin: 0
+    }
+
+    .article-header__author {
+      margin-top: 1rem;
+      border-bottom: none;
+    }
+  }
+}
+
 //
 // Layout Using CSS Grid (NO IE11 support)
 // Remove Flexbox code above and uncomment this section to use CSS Grid.
