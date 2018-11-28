@@ -1,14 +1,10 @@
-/*.article-header {
-  padding: 80px 8%;
-  margin: -80px -8%;
-  padding-bottom: 0;
-  margin-bottom: 0;
-}*/
 .article-header__byline {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: $font-size-sm;
+  font-size: $font-size-xsm;
+  font-family: $font-helvetica-neue-roman;
+  font-weight: 500;
 
   li {
     display: inline-block;
@@ -23,7 +19,7 @@
       height: 12px;
       width: 12px;
       background: $teal;
-      margin-right: 10px;
+      margin-right: $space;
     }
   }
 
@@ -44,7 +40,7 @@
 
 .article-header__subheading {
   font-size: 20px;
-  line-height: 1.2;
+  line-height: 1.6;
   color: $gray-blue;
 
   @include medium {
@@ -53,18 +49,20 @@
 }
 
 .article-header__author {
-  font-size: $font-size-sm;
+  font-size: $font-size-xsm;
+  font-family: $font-helvetica-neue-roman;
+  font-weight: 500;
   color: $gray-blue;
   width: 64%;
-  padding-bottom: $space-triple;
-  margin-bottom: $space-quadruple;
+  margin-top: $space;
+  margin-bottom: $space-four;
   border-bottom: 1px solid $gray-lighter;
 }
 
 h1 {
   font-size: 28px;
   line-height: 1.2;
-  margin: $space-double 0;
+  margin: $space 0;
 
   @include medium {
     font-size: 56px;
@@ -74,6 +72,7 @@ h1 {
 h2 {
   font-size: 24px;
   line-height: 1.2;
+  margin-top: $space-seven;
 
   @include medium {
     font-size: 36px;
@@ -104,6 +103,9 @@ h2 {
     color: $gray-blue;
     padding-top: $space-double;
     padding-left: 230px;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    line-height: 1.6em;
   }
 }
 
@@ -122,25 +124,26 @@ h2 {
     color: $gray-blue;
     padding-top: $space-double;
     padding-right: 305px;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    line-height: 1.6em;
   }
 }
 
-.article-full-width {
-  width: 128%;
-  margin-left: -115px;
-  margin-right: -115px;
-  height: 100%;
+.video.article-full-width {
+  //width: 128%;
+  margin: $space-ten;
+  margin-left: -24%;
+  margin-right: -24%;
+  padding-bottom: 79%;
+  //height: 100%;
 }
 
 .full-bleed-image {
   width: 157%;
   margin-left: -230px;
   margin-right: -230px;
-  height: 100%;
-
-  .full-bleed-image__image {
-
-  }
+  //height: 100%;
 
   .full-bleed-image__caption {
     font-size: $font-size-xsm;
@@ -148,6 +151,9 @@ h2 {
     padding-top: $space-double;
     padding-left: 230px;
     padding-right: 230px;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    line-height: 1.6em;
   }
 }
 

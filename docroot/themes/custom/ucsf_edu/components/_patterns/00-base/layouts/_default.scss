@@ -9,7 +9,8 @@ $main-width: calc(100% - (#{$sidebar-width} + #{$gutter}));
 .header,
 .main,
 .footer,
-.universal-header {
+.universal-header,
+.footer-bottom {
   @include wrapper;
 
   margin-bottom: 4em;
@@ -33,59 +34,6 @@ $main-width: calc(100% - (#{$sidebar-width} + #{$gutter}));
     order: 2;
     width: $sidebar-width;
     margin-bottom: 0;
-  }
-}
-
-.main-content {
-  width: 100%;
-
-  @include large {
-    &--with-sidebar {
-      margin-right: $gutter;
-      width: $main-width;
-    }
-  }
-}
-
-.main-article {
-  background: $background-gray;
-}
-
-.page_narrow {
-  max-width: $page-narrow;
-  background: $white;
-  margin: $space-decuple auto;
-  padding: $space-decuple 8%;
-  position: relative;
-
-  &.article-medium {
-    margin-top: -24%;
-  }
-}
-
-.article-feature {
-  margin-top: 0;
-
-  .article-header {
-    margin-top: -418px;
-    background: #fff;
-    margin-left: -230px;
-    padding: 56px 56px 0 120px;
-    width: 166%;
-
-    h1 {
-      font-size: 82px;
-    }
-
-    .article-header__subheading {
-      width: 64%;
-      margin: 0
-    }
-
-    .article-header__author {
-      margin-top: 1rem;
-      border-bottom: none;
-    }
   }
 }
 

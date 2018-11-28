@@ -3,7 +3,6 @@
   color: $white;
   font-size: $font-size-xsm;
   font-family: $font-helvetica-neue-roman;
-  height: 38px;
 
   a {
     color: $white;
@@ -11,17 +10,19 @@
 }
 
 .universal-header {
-  @include grid;
+  @include grid-two;
+
+  margin-bottom: 0;
   max-width: $xl;
 
   .universal-header__title {
-    grid-column: 1 / span 3;
     margin: 0;
+    padding: $space 0;
   }
 
   .universal-header__give {
-    grid-column: 11 / span 2;
-    height: 38px;
+    padding: $space auto;
+    min-width: $space-nineteen;
     border: none;
     background: $blue;
     color: $white;

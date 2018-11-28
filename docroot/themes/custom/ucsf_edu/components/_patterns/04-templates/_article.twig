@@ -3,7 +3,7 @@
 {% set main_base_class = main_base_class|default('main') %}
 {% set main_modifiers = [] %}
 
-{% set main_content_base_class = main_content_base_class|default('main-content page_narrow') %}
+{% set main_content_base_class = main_content_base_class|default('main-content') %}
 {% set main_content_modifiers = [] %}
 
 <div class="main-article">
@@ -23,7 +23,9 @@
       <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
 
       <div {{ bem(main_content_base_class, (main_content_modifiers), main_content_blockname) }}>
-        {% block page_content %}{% endblock %}
+        <div class="page_narrow">
+          {% block page_content %}{% endblock %}
+        </div>
       </div>
 
     </main>

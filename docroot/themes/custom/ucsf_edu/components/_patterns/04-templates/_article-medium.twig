@@ -3,7 +3,7 @@
 {% set main_base_class = main_base_class|default('main') %}
 {% set main_modifiers = [] %}
 
-{% set main_content_base_class = main_content_base_class|default('main-content page_narrow article-medium') %}
+{% set main_content_base_class = main_content_base_class|default('main-content') %}
 {% set main_content_modifiers = [] %}
 
 <div class="main-article">
@@ -29,7 +29,9 @@
       } %}
 
       <div {{ bem(main_content_base_class, (main_content_modifiers), main_content_blockname) }}>
-        {% block page_content %}{% endblock %}
+        <div class="page_narrow article-medium">
+          {% block page_content %}{% endblock %}
+        </div>
       </div>
 
     </main>

@@ -1,17 +1,50 @@
-@mixin grid {
-  //display: flex;
-  //flex-wrap: wrap;
+@mixin grid-base {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-gap: 5%;
-  grid-row-gap: 40px;
-  justify-content: stretch;
+  grid-row-gap: 0;
+}
+
+@mixin grid {
+  @include grid-base;
 
   @include medium {
     grid-template-columns: repeat(12, 1fr);
   }
 }
 
+@mixin grid-two {
+  @include grid-base;
+
+  @include medium {
+    grid-template-columns: repeat(2, 1fr);
+
+    *:last-child {
+      justify-self: end;
+    }
+  }
+}
+
+@mixin grid-four {
+  @include grid-base;
+
+  @include medium {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 .grid {
   @include grid;
+}
+
+.grid-four {
+  @include grid-four;
+}
+
+.grid-two {
+  @include grid-two;
+}
+
+.main {
+  //@include grid;
 }

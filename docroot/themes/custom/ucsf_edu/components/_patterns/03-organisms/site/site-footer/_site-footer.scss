@@ -1,48 +1,56 @@
 .footer-region {
-  background: $navy;
+  background: $dark-navy;
   color: $white;
-  padding: $space-double 0;
+  font-size: $font-size-xsm;
 
   a {
     color: $white;
+    text-decoration: none;
   }
 }
 
 .footer {
+  @include grid-four;
+
   clear: both;
   margin-bottom: 0;
   padding-top: $space-decuple;
-  font-size: $font-size-xsm;
+  max-width: $xl;
 
   h2 {
     @include eyebrow;
 
     color: $white;
+    margin-top: 0;
+    margin-bottom: $space-three;
   }
 
-  .grid__item {
-    ul {
-      list-style: none;
-      margin-left: 0;
-      padding: 0;
+  ul {
+    list-style: none;
+    margin-left: 0;
+    padding: 0;
+    margin-bottom: 0;
 
-      li {
-        margin-top: $space;
-
-        a {
-          text-decoration: none;
-        }
-      }
+    li {
+      margin-top: $space;
     }
+  }
+
+  *:last-child {
+    align-self: end;
   }
 }
 
 .footer-logo {
   width: 100px;
-  margin-bottom: $space-quadruple;
+  margin-bottom: $space-five;
 }
 
 .follow {
+  h2 {
+    margin-bottom: $space;
+  }
+
   ul {
     margin-left: 0;
     margin-top: $space;
@@ -52,10 +60,12 @@
 
     li {
       display: inline-block;
-      margin-right: 10px;
 
       a {
         font-size: 24px;
+        display: inline-block;
+        padding: 0;
+        padding-right: $space-three;
 
         .indent-text {
           position: absolute;
@@ -68,18 +78,21 @@
 }
 
 .footer-bottom {
+  @include grid-two;
+
   border-top: 1px solid $gray-blue;
   margin-top: $space-decuple;
   padding-top: $space-double;
+  max-width: $xl;
+  padding-bottom: $space-three;
+  margin-bottom: 0;
 
   p {
     margin: 0;
-    margin-top: $space;
   }
 
   ul {
     list-style: none;
-    float: right;
     margin: 0;
     padding: 0;
 

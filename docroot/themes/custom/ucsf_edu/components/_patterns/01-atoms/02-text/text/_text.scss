@@ -7,11 +7,11 @@
 @mixin body-copy {
   font-family: $font-body;
   font-size: 18px;
-  line-height: 1.6em;
+  line-height: 1.8em;
 }
 
 body {
-  color: $gray;
+  color: $navy;
 
   @include body-copy;
 }
@@ -31,29 +31,41 @@ body {
     float: left;
     position: relative;
     top: -32px;
-    margin-right: $space-decuple;
+    margin-right: $space-twenty;
   }
 
   .blockquote-content {
     background: $background-gray;
-    padding: 110px;
-    margin-right: -100px;
+    padding: $space-seven $space-ten;
+    margin-right: -$space-nine;
 
     .blockquote-content__text {
       @include heading-two;
+
       font-size: 31px;
+      line-height: 1.2em;
 
       @include medium {
         font-size: 40px;
+      }
+
+      &::before {
+        content: '“ ';
+        display: inline-block;
+        margin-left: -$space-three;
+        padding-right: $space;
+        font-family: $font-granjon;
       }
     }
 
     .blockquote-content__cite {
       @include eyebrow;
+
+      font-style: normal;
     }
   }
 
-  &:after {
+  &::after {
     content: ' ';
     clear: both;
   }

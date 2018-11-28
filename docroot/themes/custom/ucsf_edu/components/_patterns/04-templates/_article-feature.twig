@@ -3,7 +3,7 @@
 {% set main_base_class = main_base_class|default('main') %}
 {% set main_modifiers = [] %}
 
-{% set main_content_base_class = main_content_base_class|default('main-content page_narrow article-feature') %}
+{% set main_content_base_class = main_content_base_class|default('main-content') %}
 {% set main_content_modifiers = [] %}
 
 <div class="main-article">
@@ -22,14 +22,26 @@
     <main role="main" {{ bem(main_base_class, (main_modifiers), main_blockname) }}>
       <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
 
+      <div class="article-feature-banner">
       {% include "@atoms/04-images/00-image/figure.twig" with {
         img_src: '../../images/article/building.jpg',
         img_alt: 'Mother with Child',
-        image_figure_base_class: 'article-feature-banner',
+        image_figure_base_class: 'article-feature-banner-image',
       } %}
 
+      {% include "@organisms/title/basic-article-title.twig" with {
+        area: 'Research',
+        date: 'Sept. 18, 2018',
+        heading: 'Streets of Pain: The Opioid Epidemic',
+        subheading: 'Daniel Ciccarone, MD, MPH, is leading a nationwide study that aims to better understand the scope of the opioid crisis in America.',
+        author: 'Kate Vidinsky',
+      } %}
+      </div>
+
       <div {{ bem(main_content_base_class, (main_content_modifiers), main_content_blockname) }}>
-        {% block page_content %}{% endblock %}
+        <div class="page_narrow article-feature">
+          {% block page_content %}{% endblock %}
+        </div>
       </div>
 
     </main>
