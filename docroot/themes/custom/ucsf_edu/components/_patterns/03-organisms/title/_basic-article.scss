@@ -18,7 +18,7 @@
       display: inline-block;
       height: 12px;
       width: 12px;
-      background: $teal;
+      background: $print-teal;
       margin-right: $space;
       vertical-align: middle;
       margin-bottom: 3px;
@@ -31,8 +31,8 @@
     &::before {
       content: ' ';
       display: inline-block;
-      height: 5px;
-      width: 5px;
+      height: 3px;
+      width: 3px;
       background: $gray-blue;
       margin: 0 10px 3px 7px;
       border-radius: 50%;
@@ -58,7 +58,7 @@
   color: $gray-blue;
   width: 64%;
   margin-top: $space;
-  margin-bottom: $space-four;
+  margin-bottom: 0;
   padding-bottom: $space-four;
   border-bottom: 1px solid $gray-lighter;
 
@@ -114,7 +114,7 @@ h2 {
     font-size: $font-size-xsm;
     color: $gray-blue;
     padding-top: $space-double;
-    padding-left: 45%;
+    padding-left: 42.5%;
     font-family: $font-helvetica-neue-roman;
     font-weight: 500;
     line-height: 1.6em;
@@ -143,25 +143,30 @@ h2 {
 }
 
 .video.article-full-width {
-  //width: 128%;
-  margin: $space-ten;
-  margin-left: -9.5%;
-  margin-right: -9.5%;
-  padding-bottom: 63%;
-  //height: 100%;
+  grid-column: 3 / -3;
+  margin: 0;
+  padding-bottom: 53%;
+}
+
+.article-full-width__space {
+  content: ' ';
+  display: block;
+  background: $white;
+  grid-column: 3 / -3;
+  height: $space-five;
 }
 
 .full-bleed-image {
   margin: $space-ten;
-  margin-left: -20%;
-  margin-right: -20%;
+  margin-left: -25%;
+  margin-right: -25%;
 
   .full-bleed-image__caption {
     font-size: $font-size-xsm;
     color: $gray-blue;
     padding-top: $space-double;
-    padding-left: 15%;
-    padding-right: 15%;
+    padding-left: 17%;
+    padding-right: 17%;
     font-family: $font-helvetica-neue-roman;
     font-weight: 500;
     line-height: 1.6em;
@@ -173,7 +178,7 @@ h2 {
   background: $background-gray;
   margin: 10%;
   margin-top: 0;
-  margin-left: -15%;
+  margin-left: -20%;
   margin-bottom: $space-quadruple;
   width: 50%;
   padding: 80px 10%;

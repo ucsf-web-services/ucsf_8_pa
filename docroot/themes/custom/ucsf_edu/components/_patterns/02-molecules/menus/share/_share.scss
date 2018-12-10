@@ -1,14 +1,16 @@
 .article-meta-share {
+  grid-column: 2 / 3;
+  grid-row: 2;
   list-style: none;
   margin: 0;
-  padding: 0;
-  font-size: 24px;
-  float: left;
+  padding: 0 40%;
+  font-size: 26px;
+  //float: left;
   width: 0;
-  margin-left: -16%;
+  //margin-left: -16%;
 
   li {
-    margin-bottom: 5px;
+    margin-bottom: $space;
 
     a {
       color: $gray-blue;
@@ -20,8 +22,15 @@
       }
 
       .fa-print {
-        font-size: 22px;
+        font-size: 24px;
       }
     }
+  }
+}
+
+.article-feature-content {
+  .article-meta-share {
+    grid-row: 1;
+    margin-top: $space-ten;
   }
 }

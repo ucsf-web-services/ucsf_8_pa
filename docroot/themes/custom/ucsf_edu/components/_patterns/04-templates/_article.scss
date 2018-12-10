@@ -3,24 +3,43 @@
 
   .main-content {
     @include grid-fifteen;
+
+    grid-template-rows: auto auto;
   }
 }
 
 .page_narrow {
   //width: $page-narrow;
   background: $white;
-  margin-top: $space-decuple;
-  padding: 80px 8%;
+  //margin-top: $space-decuple;
+  padding: 0 11%;
   position: relative;
   grid-column: 3 / -3;
 
-  &.article-medium {
-    margin-top: -32%;
-  }
-
-  &.article-feature {
+  > :first-child {
+    padding-top: $space-four;
     margin-top: 0;
-    padding-top: $space-quintuple;
+  }
+}
+
+.article-feature-content > .page_narrow {
+  padding-top: $space-six;
+}
+
+.article-feature-content > .page_narrow ~ .page_narrow {
+  padding-top: 0;
+}
+
+.article-header {
+  grid-column: 3 / -3;
+  grid-row: 1;
+  background: $white;
+  margin-top: $space-decuple;
+  padding: $space-decuple 11%;
+  padding-bottom: 0;
+
+  &.article-medium-header {
+    margin-top: -32%;
   }
 }
 

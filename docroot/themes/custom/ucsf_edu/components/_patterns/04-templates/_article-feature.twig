@@ -3,7 +3,7 @@
 {% set main_base_class = main_base_class|default('main') %}
 {% set main_modifiers = [] %}
 
-{% set main_content_base_class = main_content_base_class|default('main-content') %}
+{% set main_content_base_class = main_content_base_class|default('main-content article-feature-content') %}
 {% set main_content_modifiers = [] %}
 
 <div class="main-article">
@@ -30,6 +30,7 @@
       } %}
 
       {% include "@organisms/title/basic-article-title.twig" with {
+        heading_class: 'article-feature-header',
         area: 'Research',
         date: 'Sept. 18, 2018',
         heading: 'Streets of Pain: The Opioid Epidemic',
@@ -39,9 +40,7 @@
       </div>
 
       <div {{ bem(main_content_base_class, (main_content_modifiers), main_content_blockname) }}>
-        <div class="page_narrow article-feature">
           {% block page_content %}{% endblock %}
-        </div>
       </div>
 
     </main>
