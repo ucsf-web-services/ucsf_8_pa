@@ -105,7 +105,11 @@ source:
       name: bool_explore
       label: 'boolean for explore ucsf news'
       selector: bool_explore
-      
+    -
+      name: cus_author
+      label: 'the custom byline for the ucsf news'
+      selector: Custom-Byline
+  
   constants:
     file_directory: public://
 
@@ -253,14 +257,67 @@ process:
 #     - 'constants/file_directory'
 #     - '@destination_basename'
       
+#  field_author_byline: 
+#    -
+#      plugin: testingbase
+#      para_type: author
+#      fields: 
+#        -
+#          field_a_author: author
+  
+  lookupval: 
+    -
+      plugin: skip_on_empty
+      method: process
+      source: cus_author
+      message: 'there was an empty field' 
+    -
+      plugin: data_condense
+      source: cus_author
+ 
+  cus_author_val:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: cus_author
+      message: 'there was an empty field' 
+    -
+      plugin: data_lookup
+      source: '@lookupval'
+      file: public://authormap.csv
+  
   field_author_byline: 
     -
+      plugin: skip_on_empty
+      method: process
+      source: cus_author
+      message: 'there was an empty field' 
+    -
       plugin: testingbase
-      para_type: author
+      para_type: custom_author
       fields: 
         -
-          field_a_author: author
+          field_c_author: '@cus_author_val'
   
+  field_featured_image_video:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: gallery
+      message: 'there was an empty field'
+    -
+      plugin: testingbase
+      para_type: gallery
+      fields: 
+        -
+#          field_gallery_items/target_id: gallery
+#          field_gallery_items/target_revision_id: gallery       
+      csv:
+        - 
+          string: 'gallery'
+          string: '0'
+          pid:  'pid'
+          source: gallery
 #  field_featured_image_video:
 #    -
 #      plugin: testingbase

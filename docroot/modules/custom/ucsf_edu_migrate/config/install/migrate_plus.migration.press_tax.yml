@@ -6,7 +6,7 @@
 id: press_tax
 
 # A human-friendly description of the migration.
-label: Migreate the content into the tags taxnomy into the new ucsf.edu website
+label: Migreate the media source into the source taxnomy in the new ucsf.edu website
 
 # The machine name of the group containing this migration (which contains shared
 # configuration to be merged with our own configuration here).
@@ -16,7 +16,7 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls:  http://ucsfpa1dev.prod.acquia-sites.com/mediacoveragexml
+  urls: http://ucsfpa1dev.prod.acquia-sites.com/mediacoveragexml
   item_selector: /nodes/node
   fields:
     -
@@ -59,8 +59,18 @@ process:
       method: process
       source: tax_title
       message: 'there was an empty field'
+      
+  lookupval:
+    -
+      plugin: data_condense
+      source: tax_title
   
-
+  tid:
+    -
+      plugin: data_lookup
+      source: '@lookupval'
+      file: public://media_name_map.csv
+      
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value
   # (the 'style' field from the source database in this case) to the destination

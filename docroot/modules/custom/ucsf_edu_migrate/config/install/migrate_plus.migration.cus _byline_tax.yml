@@ -51,6 +51,16 @@ process:
   
   name: tax_title
   
+  lookupval: 
+    -
+      plugin: data_condense
+      source: tax_title
+  
+  tid:
+    -
+      plugin: data_lookup
+      source: '@lookupval'
+      file: public://authormap.csv
       
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value

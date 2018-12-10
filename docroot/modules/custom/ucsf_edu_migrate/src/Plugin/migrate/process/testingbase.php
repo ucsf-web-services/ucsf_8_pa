@@ -22,7 +22,11 @@ use Drupal\Core\Entity;
  *       source: some_source_value(useless)
  *       para_type: paragraph_type
  *       fields:
- *
+ *         -
+ *           field_a: source
+ *           field_b: source
+ *       csv:
+ *       
  * @endcode
  *
  * This adds a string to the end of a value.
@@ -41,21 +45,35 @@ class testingbase extends ProcessPluginBase {
         $paragraph = Paragraph::create(['type' => $this->configuration['para_type']]);
         $fields = $paragraph->getFieldDefinitions();
         //$paragraph->set($this->configuration['destination'], $this->configuration['source']); 
-        //$fields = \Drupal::service('entity_field.manager')->getFieldDefinitions('node', 'article'); 
-        //print_r($fields); 
+        //$fields = \Drupal::service('entity_field.manager')->getFieldDefinitions('node', 'article');  
         foreach($paragraph->getFields() as $test){
         }
         $dest = $this->configuration['fields'][0];
-        foreach($dest as $source => $field) {
-            //print_r($paragraph->getFieldDefinition()."\n");
-            //print_r($field->getType()."\n");
+        print_r($dest);
+        $value;
+        if(!empty($dest)){
+            foreach($dest as $source => $field) {
+                //print_r($paragraph->getFieldDefinition()."\n");
+                //print_r($field->getType()."\n");
             
-            $value = $row->getSourceProperty($field);
-            $paragraph->set($source,$value);
+                $value = $row->getSourceProperty($field);
+                if ($field[0] == '@') {
+                    $field = substr($field, 1);
+                    $value = $row->getDestinationProperty($field);
+                }
+                //print_r('"'.$value.'"'."\n");
+                $paragraph->set($source,$value);
+            
+            }
         }
         //print_r($this->configuration);
         //print_r($value."\n");
         $paragraph->save();
+        if(!empty($this->configuration['csv'])){
+            $line = "gallery," . 0 . "," .$paragraph->id(). "," .$paragraph->id(). "," . "en," . 0 . "," .$value.",".$value."\n";
+            file_put_contents("public://gallery.csv",$line,FILE_APPEND);
+            print_r($paragraph->id()."\n");
+        }
         return $paragraph;
     }
 }
