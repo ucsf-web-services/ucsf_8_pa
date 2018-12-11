@@ -16,14 +16,14 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: http://ucsfpa1dev.prod.acquia-sites.com/authorxml
+  urls: http://ucsfpa1dev.prod.acquia-sites.com/aboutxml
   item_selector: /nodes/node
-  
-# unique identifier needs to be an integer 
+
+# unique identifier needs to be an integer
   ids:
     nid:
       type: integer
-  
+
   fields:
     -
       name: nid
@@ -49,7 +49,7 @@ source:
       name: image
       label: 'image for the about pages'
       selector: image
-      
+
   constants:
     file_directory: public://
 
@@ -62,7 +62,7 @@ source:
 # destination plugin is implemented in Drupal itself.
 destination:
   plugin: entity:node
-  
+
   default_bundle: article
 
 # Here's the meat of the migration - the processing pipeline. This describes how
@@ -72,22 +72,22 @@ process:
   type:
     plugin: default_value
     default_value: article
-  
+
   title: title
-  
+
   nid: nid
-      
-  field_topics: 
+
+  field_topics:
     -
       plugin: skip_on_empty
       method: process
       source: topics_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: topics_tax
       delimiter: ','
-    
+
   body/value: body
   body/format:
     plugin: default_value
@@ -139,9 +139,9 @@ process:
 #   plugin: concat
 #   source:
 #     - 'constants/file_directory'
-#     - '@destination_basename'  
-  
-  
+#     - '@destination_basename'
+
+
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value
   # (the 'style' field from the source database in this case) to the destination

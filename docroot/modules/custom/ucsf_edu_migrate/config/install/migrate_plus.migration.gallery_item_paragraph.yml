@@ -18,12 +18,12 @@ source:
   data_parser_plugin: xml
   urls: http://ucsfpa1dev.prod.acquia-sites.com/galleryitemxml
   item_selector: /nodes/node
-  
-# unique identifier needs to be an integer 
+
+# unique identifier needs to be an integer
   ids:
     nid:
       type: integer
-  
+
   fields:
     -
       name: nid
@@ -45,7 +45,7 @@ source:
       name: title
       label: 'The title text of the image'
       selector: title
-      
+
   constants:
     file_directory: public://
 
@@ -58,46 +58,47 @@ source:
 # destination plugin is implemented in Drupal itself.
 destination:
   plugin: entity:media
-  
+
   default_bundle: image
 
 # Here's the meat of the migration - the processing pipeline. This describes how
 # each destination field is to be populated based on the source data. For each
 # destination field, one or more process plugins may be invoked.
 process:
-  
+
   destination_basename:
     plugin: callback
     callable: basename
     source: path
+
   destination_path:
     plugin: concat
     source:
       - 'constants/file_directory'
       - '@destination_basename'
-      
-  field_media_image: 
-    -
-      plugin: skip_on_empty
-      method: process
-      source: path
-      message: 'there was an empty field'
-    -
-      plugin: file_copy
-      source:
-        - path
-        - '@destination_path'
-    -
-      plugin: entity_generate
-  
+
+#  field_media_image:
+#    -
+#      plugin: skip_on_empty
+#      method: process
+#      source: path
+#      message: 'there was an empty field'
+#    -
+#      plugin: file_copy
+#      source:
+#        - path
+#        - '@destination_path'
+#    -
+#      plugin: entity_generate
+
   name: title
 #  field_media_tags: path
-  
+
   field_media_image/alt: alt
   mid: nid
   vid: nid
-  target_id: nid
-      
+#  target_id: nid
+
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value
   # (the 'style' field from the source database in this case) to the destination

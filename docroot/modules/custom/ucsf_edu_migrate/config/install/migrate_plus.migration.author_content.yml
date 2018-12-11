@@ -18,12 +18,12 @@ source:
   data_parser_plugin: xml
   urls: http://ucsfpa1dev.prod.acquia-sites.com/authorxml
   item_selector: /nodes/node
-  
-# unique identifier needs to be an integer 
+
+# unique identifier needs to be an integer
   ids:
     nid:
       type: integer
-  
+
   fields:
     -
       name: nid
@@ -73,7 +73,7 @@ source:
       name: author_image
       label: 'source url of the author profile image'
       selector: Image
-    
+
   constants:
     file_directory: public://
 
@@ -86,7 +86,7 @@ source:
 # destination plugin is implemented in Drupal itself.
 destination:
   plugin: entity:node
-  
+
   default_bundle: author
 
 # Here's the meat of the migration - the processing pipeline. This describes how
@@ -96,45 +96,48 @@ process:
   type:
     plugin: default_value
     default_value: author
-  
+
   title: author_title
-  
+
   nid: nid
-  
-  body: author_bio
-  
+
+  body/value: author_bio
+  body/format:
+    plugin: default_value
+    default_value: full_html
+
   field_first_name: author_first_name
-  
+
   field_last_name: author_last_name
-  
+
   field_job_title: author_job_title
-  
+
   field_author_type:
     -
       plugin: skip_on_empty
       method: process
       source: author_type_tax_id
       message: 'there was an empty field'
-      
-  field_topics: 
+
+  field_topics:
     -
       plugin: skip_on_empty
       method: process
       source: beats_tax_id
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: beats_tax_id
       delimiter: ','
-    
-      
-      
+
+
+
   field_phone: author_phone
-  
+
   field_twitter_handle: author_twitter_handle
-  
+
   field_email: author_email
-  
+
   destination_basename:
     plugin: callback
     callable: basename
@@ -144,7 +147,7 @@ process:
     source:
       - 'constants/file_directory'
       - '@destination_basename'
-  
+
   field_author_image:
     -
       plugin: skip_on_empty
@@ -158,7 +161,7 @@ process:
         - '@destination_path'
     -
       plugin: entity_generate
-      
+
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value
   # (the 'style' field from the source database in this case) to the destination
