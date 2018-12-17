@@ -4,7 +4,6 @@ namespace Drupal\ucsf_google_search\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 /**
  * Provides a 'Search' block.
@@ -23,11 +22,9 @@ class ucsf_google_search_block extends BlockBase {
 
     $markup = <<<MARKUP
         <div class="form-search-block-div">
-
           <div class="search-box-container">
             <gcse:searchbox enableAutoComplete="true"></gcse:searchbox>
           </div>
-
           <div id="cse">
             <gcse:searchresults queryParameterName="gcsearch"></gcse:searchresults>
           </div>
