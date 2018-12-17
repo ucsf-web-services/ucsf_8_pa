@@ -1,18 +1,28 @@
 <header class="article-header {{ heading_class }}">
+{% if area or date %}
   <ul class="article-header__byline">
+  {% if area %}
     <li class="article-header__{{ area }}">{{ area }}</li>
+  {% endif %}
+  {% if date %}
     <li class="article-header__date">{{ date }}</li>
+  {% endif %}
   </ul>
+{% endif %}
 
   <h1>
       {{ heading }}
   </h1>
+
   {% if subheading %}
   <p class="article-header__subheading">
     {{ subheading }}
   </p>
   {% endif %}
-  <p class="article-header__author">
+
+  {% if author %}
+  <p class="article-header__author what">
     By <a href="#">{{ author }}</a>
   </p>
+  {% endif %}
 </header>

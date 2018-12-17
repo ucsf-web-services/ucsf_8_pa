@@ -29,3 +29,88 @@
   background-color: $gray-lightest;
   padding: 1em;
 }
+
+.news-row-card {
+  list-style: none;
+  padding-left: 0;
+}
+
+.card-row {
+  @include grid-base;
+
+  @include medium {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  margin-bottom: $space-ten;
+
+  .card-row__image {
+    grid-column: 1 / 2;
+    display: block;
+    position: relative;
+
+    &::after {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: white;
+      width: $space-five;
+      height: $space-five;
+    }
+
+    img {
+      max-height: 275px;
+    }
+  }
+
+  .card-row__copy {
+    grid-column: 2 / 3;
+    padding-left: 5%;
+  }
+
+  h2 {
+    @include heading-three;
+
+    margin-top: 0;
+    margin-bottom: $space-two;
+  }
+
+  .card-row__body {
+    margin-bottom: 1rem;
+    margin-top: 0;
+  }
+}
+
+.news-trending {
+  list-style: none;
+  counter-reset: item;
+
+  li {
+    counter-increment: item;
+    margin-bottom: 5px;
+
+    &::before {
+      @include heading-three;
+
+      content: counter(item) '.';
+      margin-left: -$space-five;
+      float: left;
+      font-size: 28px;
+    }
+  }
+
+  .card-row {
+    .card-row__image {
+      grid-column: 2 / 3;
+      grid-row: 1;
+    }
+
+    .card-row__copy {
+      grid-column: 1 / 2;
+      grid-row: 1;
+      padding-right: 5%;
+      padding-left: 0;
+    }
+  }
+}

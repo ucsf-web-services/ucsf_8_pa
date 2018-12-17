@@ -1,7 +1,17 @@
-$breadcrumb-active: #bbb;
+$breadcrumb-active: $gray-blue;
+
+.breadcrumb-region {
+  //background-image: linear-gradient($near-white, $white);
+  box-shadow: inset 0 0 10px $near-white;
+  background: $white;
+}
 
 .breadcrumb {
   @include list-reset;
+
+  margin: 0 auto;
+  max-width: $xl;
+  font-family: $font-helvetica-neue-roman;
 }
 
 .breadcrumb__item,
@@ -9,20 +19,23 @@ $breadcrumb-active: #bbb;
 .breadcrumb__link:link,
 .breadcrumb__link:visited,
 .breadcrumb__link:focus {
-  color: $gray-light;
+  color: $navy;
   text-decoration: none;
 }
 
 .breadcrumb__link:hover {
-  color: $gray;
+  color: $navy;
+  text-decoration: underline;
 }
 
 .breadcrumb__item {
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: $font-size-xsm;
 
   &::after {
-    content: "/";
+    content: ">";
+    display: inline-block;
+    margin: 0 4px;
   }
 
   &:last-child {

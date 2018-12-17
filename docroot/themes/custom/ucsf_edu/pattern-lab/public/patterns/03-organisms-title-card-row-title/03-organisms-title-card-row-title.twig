@@ -1,0 +1,17 @@
+<header class="news-card {{ heading_class }}">
+  <ul class="news-card__byline">
+  {% if card_area %}
+    <li class="news-card__{{ area }}">{{ card_area }}</li>
+  {% endif %}
+  {% if card_source %}
+    <li class="news-card__source">{{ card_source }}</li>
+  {% endif %}
+  {% if card_date %}
+    <li class="news-card__date">{{ card_date }}</li>
+  {% endif %}
+  </ul>
+
+  <h2>
+      {{ card_heading }}
+  </h2>
+</header>
