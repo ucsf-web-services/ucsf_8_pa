@@ -9,7 +9,7 @@ var gulp = require('gulp-help')(require('gulp'));
 var localConfig = {};
 
 try {
-  localConfig = require('./local.gulp-config');
+  localConfig = require('./ucsf_edu.gulp-config');
 }
 catch (e) {
   if (e.code !== 'MODULE_NOT_FOUND') {
