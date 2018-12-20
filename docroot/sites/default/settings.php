@@ -754,7 +754,7 @@ $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
  * example.org, with all subdomains included.
  */
 $settings['trusted_host_patterns'] = array(
-   '^uscf\.edu$',
+   '^ucsf\.edu$',
    '^.+\.ucsf8\.edu$',
    '^.+\.ucsf\.edu$',
 );
@@ -791,8 +791,8 @@ if (file_exists('/var/www/site-php')) {
   require '/var/www/site-php/ucsfpa1/ucsfpa8-settings.inc';
 }
 
-$config_directories['vcs'] = $app_root . '/../config/' . basename($site_path);
-$config_directories['sync'] = $app_root . '/sites/default/sync';
+$config_directories['vcs'] = $app_root . '/../config/' . basename($site_path) . '/sync';
+$config_directories['sync'] = $app_root . '/sites/default/files/sync';
 
 
 /**
@@ -809,7 +809,3 @@ $config_directories['sync'] = $app_root . '/sites/default/sync';
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
 }
-
-//ini_set('memory_limit', '256MB');
-
-
