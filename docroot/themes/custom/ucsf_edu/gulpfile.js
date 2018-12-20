@@ -4,6 +4,7 @@
 'use strict';
 
 // General
+var gh_deploy = require('gulp-gh-pages');
 var gulp = require('gulp-help')(require('gulp'));
 var localConfig = {};
 
@@ -16,3 +17,8 @@ catch (e) {
   }
 }
 require('emulsify-gulp')(gulp, localConfig);
+
+gulp.task('gh_deploy', function () {
+  return gulp.src("./pattern-lab/public/**/*")
+    .pipe(gh_deploy())
+});
