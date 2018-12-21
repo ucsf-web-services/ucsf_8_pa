@@ -1,0 +1,50 @@
+uuid: 01b97593-8a7c-4225-8b38-b5508c9783ee
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - ucsf_edu_migrate
+_core:
+  default_config_hash: 46LTUPLTuKjfs3M4EXTzNKx6reUDQbGB-SE5-Vm-qt0
+id: cus_byline_tax
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: taxnomy
+label: 'Migreate the custom byline taxnomy into the new ucsf.edu website'
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  urls: 'http://ucsfpa1dev.prod.acquia-sites.com/cusbylinexml'
+  item_selector: /taxonomy/terms
+  fields:
+    -
+      name: tax_title
+      label: 'tax title'
+      selector: byline
+  constants:
+    file_directory: 'public://'
+  ids:
+    tax_title:
+      type: string
+process:
+  type:
+    plugin: default_value
+    default_value: custom_authors
+  name: tax_title
+  lookupval:
+    -
+      plugin: data_condense
+      source: tax_title
+  tid:
+    -
+      plugin: data_lookup
+      source: '@lookupval'
+      file: 'public://authormap.csv'
+destination:
+  plugin: 'entity:taxonomy_term'
+  default_bundle: custom_authors
+migration_dependencies: {  }

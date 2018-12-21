@@ -1,0 +1,52 @@
+uuid: 7bb2783d-3c35-4faa-8ad9-cfac178dd8a6
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.library
+  module:
+    - entity_browser_entity_form
+    - views
+name: file_browser
+label: 'File Browser'
+display: iframe
+display_configuration:
+  width: '650'
+  height: '500'
+  link_text: 'Insert File'
+  auto_open: true
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  97588656-af8d-4be6-9c20-ce5163ee0bba:
+    settings:
+      entity_type: media
+      bundle: file
+      form_mode: default
+      submit_text: 'Save entity'
+    uuid: 97588656-af8d-4be6-9c20-ce5163ee0bba
+    weight: -10
+    label: Upload
+    id: entity_form
+  f92450bd-f9da-4184-902e-b1ae20212919:
+    settings:
+      view: library
+      view_display: entity_browser_6
+      submit_text: 'Insert File'
+      auto_select: false
+    uuid: f92450bd-f9da-4184-902e-b1ae20212919
+    weight: -9
+    label: 'My Library'
+    id: view
+  0fb67d1f-13a3-4d8e-9477-94a1c6370710:
+    settings:
+      view: library
+      view_display: entity_browser_5
+      submit_text: 'Insert File'
+      auto_select: false
+    uuid: 0fb67d1f-13a3-4d8e-9477-94a1c6370710
+    weight: -8
+    label: Library
+    id: view

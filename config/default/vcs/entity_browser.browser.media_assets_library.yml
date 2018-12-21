@@ -1,0 +1,52 @@
+uuid: 5059cfd9-7650-499e-bef4-b78844555de7
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.library
+  module:
+    - entity_browser_entity_form
+    - views
+name: media_assets_library
+label: 'Media Assets Library'
+display: iframe
+display_configuration:
+  width: 100%
+  height: '500'
+  link_text: 'Insert Image'
+  auto_open: true
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  8d39082a-df78-4ffc-91c6-f3f6924c42cb:
+    settings:
+      view: library
+      view_display: entity_browser_1
+      submit_text: 'Insert Image'
+      auto_select: false
+    uuid: 8d39082a-df78-4ffc-91c6-f3f6924c42cb
+    weight: -8
+    label: Library
+    id: view
+  457c857a-21f0-4096-877f-fa72417c6608:
+    settings:
+      view: library
+      view_display: entity_browser_2
+      submit_text: 'Insert Image'
+      auto_select: false
+    uuid: 457c857a-21f0-4096-877f-fa72417c6608
+    weight: -9
+    label: 'My Library'
+    id: view
+  9d5c79ef-f070-4fdc-8d63-7ced7ee26590:
+    settings:
+      entity_type: media
+      bundle: image
+      form_mode: default
+      submit_text: 'Save Image'
+    uuid: 9d5c79ef-f070-4fdc-8d63-7ced7ee26590
+    weight: -10
+    label: Upload
+    id: entity_form

@@ -1,0 +1,25 @@
+uuid: 9fbeea55-7e60-45fb-8926-8e0c5050f6b0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.author.field_a_author
+    - paragraphs.paragraphs_type.author
+id: paragraph.author.default
+targetEntityType: paragraph
+bundle: author
+mode: default
+content:
+  field_a_author:
+    weight: 0
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true
