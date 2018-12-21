@@ -85,3 +85,7 @@ See [Drupal Usage](https://github.com/fourkitchens/ucsf_edu/wiki/Drupal-Usage)
 #### Gulp Configuration
 
 See [Gulp Config](https://github.com/fourkitchens/ucsf_edu/wiki/Gulp-Config)
+
+
+#### To deploy to Github Pages
+`gulp gh_deploy`
