@@ -1,0 +1,28 @@
+uuid: 9c915324-6c9e-4c66-80dc-87dbc8f2202b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_banner_image
+    - media.type.image
+    - node.type.article
+id: node.article.field_banner_image
+field_name: field_banner_image
+entity_type: node
+bundle: article
+label: 'Banner Image'
+description: 'Images need to be 2880px x 1560px for retina screens'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

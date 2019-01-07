@@ -5,18 +5,18 @@ dependencies:
   config:
     - field.storage.node.field_content_panel
     - node.type.article
-    - paragraphs.paragraphs_type.column_wrapper
-    - paragraphs.paragraphs_type.three_column_50_25_25
-    - paragraphs.paragraphs_type.two_column_content_row_25_75
-    - paragraphs.paragraphs_type.two_column_content_row_75_25
+    - paragraphs.paragraphs_type.blockquote
+    - paragraphs.paragraphs_type.featured_video
+    - paragraphs.paragraphs_type.gallery
+    - paragraphs.paragraphs_type.text_block
   module:
     - entity_reference_revisions
 id: node.article.field_content_panel
 field_name: field_content_panel
 entity_type: node
 bundle: article
-label: 'Content Row'
-description: ''
+label: 'Full-Width Video, Full-Bleed Blockquote, Gallery, and Text Block'
+description: 'Add Full-Width Video, Full-Bleed Blockquote, Gallery. To continue content, add a Text Block'
 required: false
 translatable: false
 default_value: {  }
@@ -26,72 +26,84 @@ settings:
   handler_settings:
     negate: 0
     target_bundles:
-      column_wrapper: column_wrapper
-      three_column_50_25_25: three_column_50_25_25
-      two_column_content_row_25_75: two_column_content_row_25_75
-      two_column_content_row_75_25: two_column_content_row_75_25
+      blockquote: blockquote
+      featured_video: featured_video
+      gallery: gallery
+      text_block: text_block
     target_bundles_drag_drop:
       author:
-        weight: 9
-        enabled: false
-      authors:
-        weight: 10
+        weight: -51
         enabled: false
       blockquote:
-        weight: 11
-        enabled: false
-      column_content:
-        weight: 12
-        enabled: false
-      column_wrapper:
         enabled: true
-        weight: 13
-      custom_author:
-        weight: 14
-        enabled: false
-      image:
-        weight: 15
-        enabled: false
-      text_block:
-        weight: 16
-        enabled: false
-      featured_card_image:
-        weight: 28
-        enabled: false
-      featured_image:
-        weight: 29
-        enabled: false
+        weight: -50
       featured_video:
-        weight: 30
-        enabled: false
+        enabled: true
+        weight: -49
       gallery:
-        weight: 31
+        enabled: true
+        weight: -48
+      text_block:
+        enabled: true
+        weight: -47
+      column_content:
+        weight: -46
         enabled: false
       gallery_item:
-        weight: 32
+        weight: -45
+        enabled: false
+      column_wrapper:
+        weight: -44
+        enabled: false
+      custom_author:
+        weight: -43
+        enabled: false
+      image:
+        weight: -42
+        enabled: false
+      block:
+        weight: -41
+        enabled: false
+      featured_card_image:
+        weight: -40
+        enabled: false
+      featured_image:
+        weight: -39
         enabled: false
       related_content:
-        weight: 34
+        weight: -38
         enabled: false
       related_external_link:
-        weight: 35
-        enabled: false
-      related_internal_link:
-        weight: 36
-        enabled: false
-      related_links:
-        weight: 37
+        weight: -37
         enabled: false
       source:
-        weight: 38
+        weight: -36
+        enabled: false
+      location:
+        weight: -35
+        enabled: false
+      menu:
+        weight: -34
+        enabled: false
+      promotional:
+        weight: -33
         enabled: false
       three_column_50_25_25:
-        enabled: true
-        weight: 40
+        weight: -32
+        enabled: false
       two_column_content_row_25_75:
-        enabled: true
-        weight: 41
+        weight: -31
+        enabled: false
       two_column_content_row_75_25:
-        enabled: true
-        weight: 42
+        weight: -30
+        enabled: false
+      three_column_25_25_50:
+        weight: -29
+        enabled: false
+      three_column_25_50_25:
+        weight: -28
+        enabled: false
+      view:
+        weight: -27
+        enabled: false
 field_type: entity_reference_revisions

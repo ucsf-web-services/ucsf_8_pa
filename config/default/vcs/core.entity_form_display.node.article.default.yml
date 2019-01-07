@@ -5,30 +5,40 @@ dependencies:
   config:
     - field.field.node.article.body
     - field.field.node.article.comment
+    - field.field.node.article.field_ankle_cta
     - field.field.node.article.field_apple_news_title
     - field.field.node.article.field_areas
     - field.field.node.article.field_article_type
+    - field.field.node.article.field_author
     - field.field.node.article.field_author_byline
+    - field.field.node.article.field_banner_image
+    - field.field.node.article.field_banner_layout
+    - field.field.node.article.field_card_image
     - field.field.node.article.field_content_panel
+    - field.field.node.article.field_custom_author
     - field.field.node.article.field_date
+    - field.field.node.article.field_date_and_time
     - field.field.node.article.field_exclude
     - field.field.node.article.field_external_url
     - field.field.node.article.field_facebook_description
     - field.field.node.article.field_facebook_image
     - field.field.node.article.field_facebook_title
     - field.field.node.article.field_featured_image_video
+    - field.field.node.article.field_hide_article
     - field.field.node.article.field_include
     - field.field.node.article.field_locations
     - field.field.node.article.field_meta_tags
     - field.field.node.article.field_organizations
     - field.field.node.article.field_people
     - field.field.node.article.field_primary_area
-    - field.field.node.article.field_related_articles
+    - field.field.node.article.field_recommended_article
     - field.field.node.article.field_related_sidebar_content
     - field.field.node.article.field_short_title
     - field.field.node.article.field_sidebar_content
+    - field.field.node.article.field_source
     - field.field.node.article.field_sub_title
     - field.field.node.article.field_tags
+    - field.field.node.article.field_textured_background_image
     - field.field.node.article.field_topics
     - field.field.node.article.field_twitter_description
     - field.field.node.article.field_twitter_image
@@ -52,7 +62,6 @@ third_party_settings:
     group_sub:
       children:
         - field_short_title
-        - field_sub
         - field_sub_title
       parent_name: ''
       weight: 3
@@ -67,8 +76,10 @@ third_party_settings:
       region: content
     group_byline:
       children:
-        - field_date
-        - field_author_byline
+        - field_date_and_time
+        - field_author
+        - field_custom_author
+        - field_source
       parent_name: ''
       weight: 4
       format_type: details
@@ -81,16 +92,20 @@ third_party_settings:
       region: content
     group_feat:
       children:
-        - field_featured_image_video
+        - field_banner_layout
+        - field_banner_image
+        - field_card_image
+        - field_textured_background_image
       parent_name: ''
       weight: 5
       format_type: details
       format_settings:
+        label: 'Banner, Card, and Background Images'
+        required_fields: true
         id: ''
         classes: ''
         open: false
-        required_fields: true
-      label: 'Featured Image/Video'
+      label: 'Banner, Card, and Background Images'
       region: content
     group_ma:
       children:
@@ -118,6 +133,7 @@ third_party_settings:
         - field_tags
         - field_exclude
         - field_include
+        - field_hide_article
       parent_name: ''
       weight: 7
       format_type: details
@@ -150,21 +166,21 @@ third_party_settings:
       region: content
     group_r:
       children:
-        - field_related_articles
+        - field_recommended_article
       parent_name: ''
-      weight: 10
+      weight: 9
       format_type: details
       format_settings:
+        label: 'Recommended Reading'
+        required_fields: true
         id: ''
         classes: ''
         open: false
-        required_fields: true
-      label: 'Related Content'
+      label: 'Recommended Reading'
       region: content
-    group_sidebar:
+    group_ankle_ctas:
       children:
-        - field_sidebar_content
-        - field_related_sidebar_content
+        - field_ankle_cta
       parent_name: ''
       weight: 11
       format_type: details
@@ -173,8 +189,7 @@ third_party_settings:
         classes: ''
         open: false
         required_fields: true
-      label: Sidebar
-      region: content
+      label: 'Ankle CTAs'
 _core:
   default_config_hash: vPb_yvhA-xuNoV_yOmOwYxGuHNRIH1CoMK2qi7BSga0
 id: node.article.default
@@ -193,10 +208,19 @@ content:
     third_party_settings: {  }
   created:
     type: datetime_timestamp
-    weight: 13
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_ankle_cta:
+    weight: 22
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   field_apple_news_title:
     weight: 41
     settings:
@@ -217,40 +241,75 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
-  field_author_byline:
-    type: entity_reference_paragraphs
-    weight: 4
+  field_author:
+    weight: 8
     settings:
-      title: Author
-      title_plural: Authors
-      edit_mode: open
-      add_mode: button
-      form_display_mode: default
-      default_paragraph_type: _none
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_banner_image:
+    weight: 23
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_banner_layout:
+    weight: 22
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_card_image:
+    weight: 24
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
     region: content
   field_content_panel:
     type: paragraphs
     weight: 37
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
+      title: 'Content Row'
+      title_plural: 'Content Rows'
       edit_mode: closed
       closed_mode: preview
       autocollapse: none
+      closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: _none
+      features:
+        duplicate: duplicate
+        collapse_edit_all: collapse_edit_all
+        add_above: '0'
     third_party_settings: {  }
     region: content
-  field_date:
-    weight: 3
+  field_custom_author:
+    weight: 9
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_date_and_time:
+    weight: 7
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_exclude:
-    weight: 22
+    weight: 21
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
@@ -305,32 +364,27 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_featured_image_video:
-    type: entity_reference_paragraphs
-    weight: 4
+  field_hide_article:
+    weight: 23
     settings:
-      title: Image/Video
-      title_plural: Images/Videos
-      edit_mode: closed
-      add_mode: button
-      form_display_mode: default
-      default_paragraph_type: _none
+      display_label: true
     third_party_settings: {  }
+    type: boolean_checkbox
     region: content
   field_include:
-    weight: 23
+    weight: 22
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
     region: content
   field_locations:
-    weight: 18
+    weight: 17
     settings: {  }
     third_party_settings: {  }
     type: chosen_select
     region: content
   field_meta_tags:
-    weight: 22
+    weight: 21
     settings: {  }
     third_party_settings: {  }
     type: metatag_firehose
@@ -342,7 +396,7 @@ content:
     type: chosen_select
     region: content
   field_people:
-    weight: 19
+    weight: 18
     settings: {  }
     third_party_settings: {  }
     type: chosen_select
@@ -353,23 +407,14 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
-  field_related_articles:
-    weight: 37
-    settings: {  }
-    third_party_settings: {  }
-    type: chosen_select
-    region: content
-  field_related_sidebar_content:
-    type: entity_reference_paragraphs
-    weight: 41
+  field_recommended_article:
+    weight: 48
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: closed
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: _none
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
+    type: entity_reference_autocomplete
     region: content
   field_short_title:
     weight: 17
@@ -379,17 +424,14 @@ content:
     third_party_settings: {  }
     type: text_textfield
     region: content
-  field_sidebar_content:
-    type: entity_reference_paragraphs
-    weight: 39
+  field_source:
+    weight: 10
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: closed
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: _none
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
+    type: entity_reference_autocomplete
     region: content
   field_sub_title:
     weight: 19
@@ -400,7 +442,7 @@ content:
     type: text_textfield
     region: content
   field_tags:
-    weight: 21
+    weight: 20
     settings:
       match_operator: CONTAINS
       size: 60
@@ -408,8 +450,17 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete_tags
     region: content
+  field_textured_background_image:
+    weight: 25
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   field_topics:
-    weight: 20
+    weight: 19
     settings: {  }
     third_party_settings: {  }
     type: chosen_select
@@ -440,7 +491,7 @@ content:
     region: content
   path:
     type: path
-    weight: 16
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -448,17 +499,17 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 14
+    weight: 13
     region: content
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 20
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   scheduler_settings:
-    weight: 18
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -466,14 +517,14 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 17
+    weight: 16
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 15
+    weight: 14
     region: content
     third_party_settings: {  }
   title:
@@ -486,7 +537,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 12
+    weight: 10
     region: content
     settings:
       match_operator: CONTAINS
@@ -495,14 +546,19 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 19
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 21
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
   comment: true
+  field_author_byline: true
+  field_date: true
+  field_featured_image_video: true
+  field_related_sidebar_content: true
+  field_sidebar_content: true

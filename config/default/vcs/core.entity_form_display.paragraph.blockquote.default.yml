@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.blockquote.field_blockquote_body
+    - field.field.paragraph.blockquote.field_blockquote_image
     - field.field.paragraph.blockquote.field_blockquote_source
     - field.field.paragraph.blockquote.field_blockquote_source_org
     - paragraphs.paragraphs_type.blockquote
@@ -21,6 +22,15 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea
+    region: content
+  field_blockquote_image:
+    weight: 3
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
     region: content
   field_blockquote_source:
     weight: 1

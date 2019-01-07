@@ -1,0 +1,45 @@
+uuid: 1e7efdc9-53f4-46cf-a356-14e85772845d
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.ankle_cta
+    - field.field.block_content.ankle_cta.body
+    - field.field.block_content.ankle_cta.field_ankle_cta_link
+    - field.field.block_content.ankle_cta.field_ankle_cta_link_icon
+  module:
+    - link
+    - text
+id: block_content.ankle_cta.default
+targetEntityType: block_content
+bundle: ankle_cta
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_ankle_cta_link:
+    weight: 3
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_ankle_cta_link_icon:
+    weight: 2
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+hidden: {  }
