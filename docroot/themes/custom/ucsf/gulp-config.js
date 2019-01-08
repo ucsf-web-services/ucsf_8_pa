@@ -48,10 +48,10 @@ module.exports = {
       enabled: true,
       type: 'default',
       src: [
-        'icons/**/*.svg'
+        'sprite/**/*.svg'
       ],
       dest: './assets/images',
-      destName: 'icons.svg'
+      destName: 'sprite.svg'
     },
     patternLab: {
       enabled: false,
