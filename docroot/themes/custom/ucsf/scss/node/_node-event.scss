@@ -1,0 +1,131 @@
+.event--container {
+  display: flex;
+  flex-direction: row;
+  .event-details {
+    margin: 0 21px;
+    @include breakpoint($narrow-screen) {
+      margin: 0 0 0 45px;
+    }
+
+    > h3 {
+      margin-bottom: 12px;
+    }
+
+    // only in full.
+    .important_links ul {
+      @include ul-item-list-reset;
+      padding: 0;
+      li {
+
+        @include breakpoint($narrow-screen) {
+          display: inline-block;
+          margin-right: 37px;
+        }
+        a {
+          @include fs-text-link-orange;
+
+        }
+
+        // fields icons customization.
+        .field--name-field-directions {
+          @include fa-icon-before('\f3c5');
+        }
+        .field--name-field-rsvp {
+          @include fa-icon-before('\f14a')
+        }
+        .field--name-field-website {
+          @include fa-icon-before('\f35d')
+        }
+
+      }
+    }
+
+
+  }
+  .event-date-range {
+    @include fs-h3;
+    color: $c-orange;
+  }
+  .event-location {
+    font-family: $ff-serif;
+    font-style: italic;
+    font-size: 21px;
+    line-height: 32px;
+    letter-spacing: 0;
+  }
+}
+
+.big-date {
+  position: relative;
+  max-width: 90px;
+  max-height: 95px;
+  top: 12px;
+
+  @include breakpoint($mobile-screen-only) {
+    display: none;
+  }
+
+  .slash {
+    width: 79px;
+    height: 88px;
+  }
+  .big-date-month {
+    position: absolute;
+    bottom: 11px;
+    left: 0;
+    font-family: $ff-serif;
+    color: $c-textgrey;
+    font-size: 25px;
+    line-height: 32px;
+  }
+  .big-date-day {
+    position: absolute;
+    top: -11px;
+    right: -20px;
+    font-family: $ff-serif;
+    font-size: 70px;
+    line-height: 60px;
+    letter-spacing: 0;
+    color: $c-grey-slate;
+  }
+}
+
+.event--header--full {
+  background: $c-grey-lighter;
+  .event--container {
+    padding: 20px 21px;
+
+    @include breakpoint($narrow-screen) {
+      padding: 47px 0 51px;
+      width: susy-span(10 wide of 12 wide);
+      margin-left: susy-span(1 wide of 12 wide);
+    }
+    .event-details {
+      margin: 0;
+      @include breakpoint($narrow-screen) {
+        margin: 0 0 0 45px;
+      }
+    }
+  }
+  .big-date {
+    top: 34px;
+  }
+}
+
+.node--type-event.node--view-mode-full {
+  .node__content {
+    @include padding-container-mobile-desktop;
+  }
+  // Fields
+  .field--name-field-speakers {
+    .field__label {
+      @include fs-sub-category;
+      padding-bottom: 5px;
+      border-bottom: 1px solid $c-beige;
+      margin-bottom: 10px;
+      @include breakpoint($narrow-screen) {
+        margin-bottom: 36px;
+      }
+    }
+  }
+}

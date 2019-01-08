@@ -1,0 +1,43 @@
+ul.c3-social {
+  padding: 0;
+
+  @include ul-item-list-reset;
+
+  li {
+    display: inline-block;
+    margin-right: 20px;
+
+    @include breakpoint($medium-screen) {
+      margin-right: 30px;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.c3-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  background-size: contain !important;
+  background-position-x: center !important;
+  background-position-y: center !important;
+
+  &.fb-icon {
+    background: url('../../images/social/fb.svg') no-repeat;
+  }
+
+  &.fb-twitter {
+    background: url('../../images/social/twitter.svg') no-repeat;
+  }
+
+  &.fb-linkedin {
+    background: url('../../images/social/linkedin.svg') no-repeat;
+  }
+
+  &.fb-vimeo {
+    background: url('../../images/social/vimeo.svg') no-repeat;
+  }
+}

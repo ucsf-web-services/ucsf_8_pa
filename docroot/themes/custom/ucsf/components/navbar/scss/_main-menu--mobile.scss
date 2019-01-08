@@ -1,0 +1,117 @@
+@include breakpoint($mobile-screen-only) {
+
+  // Main menu navigation mobile styles.
+  .ohm-navbar__main-menu--container {
+
+    ul.menu {
+      font-size: 14px;
+      font-weight: $fw-bold;
+      line-height: 1.3;
+      display: block;
+      list-style: none;
+      margin-top: 0;
+      padding: 0;
+      margin-bottom: 0;
+
+      > li {
+        border-bottom: 1px solid $c-beige;
+      }
+
+      li {
+        // todo: remove the following
+        &.expanded {
+          border-bottom: 0;
+        }
+
+        &.expandable {
+          position: relative;
+
+          a.ohm-mobile-toggle {
+            position: absolute;
+            top: 8px;
+            right: 23px;
+            width: 32px;
+            height: 47px;
+            display: block;
+            cursor: pointer;
+          }
+        }
+
+        &.menu-item--active-trail {
+          position: relative;
+
+          &::before {
+            display: block;
+            content: ' ';
+            background: $c-orange;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            height: 47px;
+            width: 8px;
+          }
+        }
+        // Parent item
+        a:first-child {
+          width: 100%;
+          display: block;
+          padding: 14.5px 23px;
+          text-transform: uppercase;
+        }
+        // children
+        ul.menu {
+          display: none;
+          border: 1px solid $c-beige;
+          border-width: 1px 0;
+
+          li {
+            border: 0;
+            &.menu-item--active-trail {
+              &::before {
+                display: none;
+              }
+            }
+            // Last children
+            a {
+              border: 0;
+              padding: 8px 56px 8px 34px;
+              text-transform: capitalize;
+
+              &:hover {
+                background: $c-grey-lighter;
+                text-decoration: none;
+              }
+
+              &.is-active {
+                background: $c-grey-lighter;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Mobile toggler for main navigation.
+  .ohm-mobile-toggle {
+    position: relative;
+
+    .open {
+      pointer-events: none;
+      position: absolute;
+      background: url("../images/navbar/plus.svg") no-repeat;
+      background-size: contain;
+      height: 32px;
+      width: 32px;
+      display: block;
+      top: 0;
+      left: 0;
+    }
+
+    .expanded & .open {
+      background: url("../images/navbar/minus.svg") no-repeat;
+      background-position-y: 18px;
+    }
+  }
+}

@@ -1,0 +1,149 @@
+
+// Sticky Footer
+//------------------------------------------------------------------------------
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
+}
+
+main[role="main"] {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+// Container
+// @see @mixin container in _mixins.scss.
+//------------------------------------------------------------------------------
+
+.ohm-container {
+  @include container;
+}
+
+// Row
+//
+// @example
+//   <div class="ohm-container">
+//     <div class="row">
+//        Default only centers and clearfixes, and no width applied, so contents
+//        span the full with grid, when used within a container.
+//     </div>
+//     <div class="row row--narrow">
+//       Use for pages with narrow layouts that span 10/12 columns of the main
+//       grid. Padding equal to 1 column + 1 gutter (using "wide") is added to
+//       the left and right to have this affect without applying width directly.
+//     </div>
+//   </div>
+//------------------------------------------------------------------------------
+
+.row {
+  @include clearfix;
+  margin: 0 auto;
+}
+
+.row--narrow {
+  // Grid doesn't kick in until $narrow-screen, so these are manual. If you need
+  // to override this and remove padding, consider adding .no-padding or
+  // .no-padding--mobile (below).
+  padding-left: 22px;
+  padding-right: 22px;
+
+  @include breakpoint($narrow-screen) {
+    padding-left: susy-span(1 wide);
+    padding-right: susy-span(1 wide);
+  }
+}
+
+// Padding on mobile only.
+.padding-mobile {
+  padding-left: 22px;
+  padding-right: 22px;
+
+  @include breakpoint($narrow-screen) {
+    padding: 0;
+  }
+}
+
+// No Padding
+//
+// .no-padding
+//   Remove padding globally.
+//
+// .no-padding--mobile
+//   Remove padding for mobile screens only.
+//
+// @example
+//   <div class="row row--narrow no-padding--mobile">
+//     Removes padding on mobile screens which originated from .row--narrow.
+//   </div>
+//------------------------------------------------------------------------------
+
+.no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.no-padding--mobile {
+  @include breakpoint($mobile-screen-only) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+// Layouts
+// @see @mixin container in _mixins.scss.
+//------------------------------------------------------------------------------
+
+// Center
+[data-layout="center"] {
+  @include breakpoint($narrow-screen) {
+    width: susy-span(6 narrow of 12 narrow);
+  }
+}
+
+// Sidebar
+[data-layout="sidebar"] {
+  @include grid-layout-sidebar;
+}
+
+// Two column
+[data-layout="two"] {
+  @include grid-layout-two;
+
+  &[data-gutters] {
+    @include grid-layout-two(true);
+  }
+}
+
+// Three column
+[data-layout="three"] {
+  @include grid-layout-three;
+
+  &[data-gutters] {
+    @include grid-layout-three(true);
+  }
+}
+
+// Four column
+[data-layout="four"] {
+  @include grid-layout-four;
+
+  &[data-gutters] {
+    @include grid-layout-four(true);
+  }
+}
+
+// Odd layouts.
+
+.project--full--layout-23-61-16 {
+
+  @include grid-layout-23-61-16(false);
+
+  padding: 20px 21px;
+
+  @include breakpoint($narrow-screen) {
+    padding: 68px 0;
+  }
+}

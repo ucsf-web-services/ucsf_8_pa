@@ -1,0 +1,61 @@
+.view-ohm-events {
+
+  .views-exposed-form {
+    text-align: right;
+  }
+
+  .form--inline .form-item-category {
+    float: none;
+
+    div {
+      display: inline-block;
+    }
+  }
+
+  label[for="edit-category"] {
+    @include fs-display-title-orange;
+  }
+
+  .bef-links >  div {
+    border-right: 1px solid $c-orange;
+    font-size: 14px;
+    font-weight: $fw-medium;
+    line-height: 24px;
+    padding: 0 12px;
+
+    &:last-child {
+      border: 0;
+    }
+  }
+
+  .bef-link-active a {
+    background: $c-grey-lighter;
+    border-radius: 6px;
+    padding: 3px 10px;
+  }
+
+  .views-row {
+    @include clearfix;
+    border-top: 1px solid $c-beige;
+    padding: 16px 0;
+  }
+
+  .event--container {
+    @include breakpoint($narrow-screen) {
+      float: left;
+      width: calc(100% - 381px);
+    }
+  }
+
+  .field--name-field-callout {
+    background: url('../images/sliced-bgs/gray-light-bottom-left-square.svg') no-repeat $c-grey-lighter; // @todo Comp is slightly different. This will do for now. 
+    background-position-x: left;
+    background-position-y: bottom;
+    padding: 40px 30px;
+
+    @include breakpoint($narrow-screen) {
+      float: left;
+      width: 381px;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+<div class="background-diagonal-wrapper background-diagonal-{{ modifier }}">
+  <svg class="background-diagonal-svg" width="458" height="259" viewBox="0 0 458 259"
+       xmlns="http://www.w3.org/2000/svg">
+    <g class="path-1" fill="none" fill-rule="evenodd">
+      <g class="path-2" transform="translate(-942)" fill="#333" fill-rule="nonzero">
+        <path d="M942.113.516l258.063 258.062h199.117V.516z"/>
+      </g>
+    </g>
+  </svg>
+  <div class="footer">
+    <div class="footer__container ohm-container">
+      <div class="footer--left">
+        <a href="{{ ohm_advisors_url }}"><span class="ohm-advisors-logo"></span></a>
+      </div>
+      <div class="footer--center">
+        {{ center }}
+      </div>
+      <div class="footer--right">
+        {% include '@evolve/footer/social_media.twig' with {
+          facebook: 'facebook.com',
+          twitter: 'twitter.com',
+          vimeo: 'viewo.com',
+          linkedin: 'linkedin.com',
+          external: 1
+        } %}
+        {{ right }}
+      </div>
+    </div>
+    <div class="footer__copyright">
+      <div class="footer__copyright--container ohm-container">
+        {% if copyright %}
+          {{ copyright }}
+        {% else %}
+          <ul>
+            <li><a href="{{ copy_url }}">{{ "2018 All rights reserved." }}</a></li>
+            <li>{{ "|" }}</li>
+            <li><a href="{{ terms_url }}">{{ "Terms & Privacy" }}</a></li>
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+.block-page-title-block {
+  background: $c-grey-light;
+  margin-bottom: 10px;
+  padding-top: 16px;
+
+ .page-node-type-location &,
+ .page-node-type-award &,
+ .page-node-type-quote & {
+    background: none;
+  }
+
+  h1,
+  .slash {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  h1 {
+    margin-left: -8px;
+  }
+
+  .slash {
+    display: none;
+
+    @include breakpoint($narrow-screen) {
+      display: inline-block;
+      height: 51px;
+      padding-top: 14px;
+      width: 51px;
+    }
+  }
+}

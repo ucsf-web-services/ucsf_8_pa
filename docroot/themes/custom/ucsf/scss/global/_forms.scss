@@ -1,0 +1,48 @@
+// Default form & webform styles.
+// Default form.
+form button {
+  @include button-base;
+}
+
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+select {
+  appearance: none;
+  border: 1px solid $c-grey-input-border;
+  border-radius: 0;
+  box-sizing: border-box;
+  height: 42px;
+  padding: 9px 37px 9px 17px;
+}
+
+input[type="submit"] {
+  @include button-base;
+}
+
+select {
+  @include background-image('arrow-down.svg', right 19px center, $c-white);
+}
+
+textarea {
+  border: 1px solid $c-grey-input-border;
+}
+
+// Webform styles.
+.webform-submission-form {
+  label {
+    @include fs-h4;
+    display: block;
+  }
+
+  input[type="search"],
+  input[type="submit"],
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  select,
+  textarea {
+    border: 1px solid $c-grey-input-border-webform;
+  }
+}

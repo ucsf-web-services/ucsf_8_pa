@@ -1,0 +1,29 @@
+.header {
+  @include clearfix;
+
+  ul {
+    @include ul-menu;
+  }
+
+  a {
+    @include link-colors($c-textgrey);
+  }
+
+  // Expanded Mobile Nav
+  .is-open--mobile-nav & {
+    background: #fff;
+    color: $c-textgrey;
+
+    a {
+      @include link-colors($c-textgrey);
+    }
+  }
+
+  .block {
+    float: left;
+
+    @include breakpoint($mobile-screen-only) {
+      float: none;
+    }
+  }
+}

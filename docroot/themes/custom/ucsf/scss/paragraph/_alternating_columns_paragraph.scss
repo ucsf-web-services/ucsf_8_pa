@@ -1,0 +1,72 @@
+.paragraph--columns-alternating .ohm-container {
+  @include padding-container-mobile-desktop;
+  .field--name-field-columns {
+
+    .paragraph--column {
+      // Fields styles.
+      .field--name-field-display-title {
+        @include fs-h1;
+        text-transform: initial;
+        color: $c-textgrey;
+        padding-bottom: 19px;
+        text-align: left;
+      }
+    }
+
+    .field__item {
+      overflow: auto;
+      &.odd {
+
+        padding: 20px 0;
+        @include breakpoint($narrow-screen) {
+          padding: 50px 0;
+        }
+
+        .paragraph--column .alternating-container {
+
+          // Media on the right.
+          > div {
+            &:first-child {
+              @include breakpoint($narrow-screen) {
+                float: right;
+              }
+            }
+            &:last-child {
+              @include breakpoint($narrow-screen) {
+                float: left;
+                padding-right: susy-gutter();
+                padding-left: susy-span(1 wide of 12 wide);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .field__item .paragraph--column .alternating-container {
+      @include clearfix-before;
+
+      // Media on the left.
+      > div {
+        &:first-child {
+          @include breakpoint($narrow-screen) {
+            width: susy-span(6 wide of 12 wider);
+            float: left;
+          }
+        }
+        &:last-child {
+          @include breakpoint($narrow-screen) {
+            width: susy-span(6 wider of 12 wider);
+            float: right;
+            padding-left: susy-gutter();
+            padding-right: susy-span(1 wide of 12 wide);
+          }
+        }
+      }
+
+      .paragraph--column {
+
+      } // todo remove the fucking ohm container
+    }
+  }
+}

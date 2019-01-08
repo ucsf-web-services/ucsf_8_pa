@@ -1,0 +1,71 @@
+.paragraph--people {
+  @include padding-container-mobile-desktop;
+}
+
+.paragraph--people {
+  &.slideshow {
+    background: url("../images/sliced-bgs/gray-dark-slider-bottom-left.svg") no-repeat $c-grey-slate;
+    background-position-x: left;
+    background-position-y: bottom;
+    background-size: contain;
+    padding-bottom: 0 !important;
+  }
+}
+
+.node--person-slide {
+  .node--person-slide--container {
+    @include clearfix;
+
+    .node--person-slide--photo {
+      @include breakpoint($narrow-screen) {
+        width: susy-span(6 narrow of 12 narrow);
+        padding: 0 susy-span(1 narrow of 12 narrow);
+        float: left;
+      }
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+    .node--person-slide--info {
+
+      padding-bottom: 30px;
+      @include breakpoint($narrow-screen) {
+        width: susy-span(5 narrow of 12 narrow);
+        float: left;
+        padding-bottom: 50px;
+        padding-top: 50px;
+      }
+
+      // fields.
+      .name {
+        @include fs-h1-hero-default;
+        color: $c-white;
+      }
+      .job-title {
+        font-size: 14px;
+        line-height: 22px;
+        letter-spacing: 0;
+        color: $c-white;
+        font-weight: $fw-book;
+        @include breakpoint($narrow-screen) {
+          margin-bottom: 17px;
+        }
+      }
+      .body-text {
+        color: $c-white;
+        font-size: 17px;
+        line-height: 27px;
+        letter-spacing: 0;
+      }
+      .cta {
+        color: $c-white;
+        @include breakpoint($narrow-screen) {
+          margin-top: 20px;
+          display: table;
+        }
+      }
+
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+
+{% if rows %}
+
+  {% set data_widow_count = rows|length is divisible by(4) ? '':  rows|length % 4 %}
+
+  <div class="row" data-layout="{{ data_layout_count }}" {{ data_gutters ? 'data-gutters' }}>
+    {% for row in rows %}
+      {% set row_classes = [
+        default_row_class ? 'column',
+      ] %}
+      <div{{ row.attributes.addClass(row_classes) }} >
+        {{- row.content -}}
+      </div>
+    {% endfor %}
+
+    {% if data_widow %}
+      <div class="column" {{ data_widow_count ? 'data-widow=data-widow-' ~ data_widow_count }}></div>
+    {% endif %}
+  </div>
+{% endif %}

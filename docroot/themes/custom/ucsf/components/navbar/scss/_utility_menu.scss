@@ -1,0 +1,64 @@
+.ohm-navbar__utility--container {
+
+  ul.menu {
+    line-height: 1;
+
+    @include breakpoint($mobile-screen-only) {
+      font-weight: $fw-book;
+      padding: 15px 23px 0;
+    }
+
+    li {
+      list-style: none;
+
+      @include breakpoint($narrow-screen) {
+        display: inline-block;
+      }
+
+      a {
+        font-size: 14px;
+        font-weight: $fw-medium;
+        padding: 5px 0;
+        margin: 0 8px;
+        display: block;
+        position: relative;
+        text-transform: uppercase;
+
+        .has-hero-home & {
+          @include breakpoint($mobile-screen-only) {
+            @include link-colors($c-textgrey, $c-orange);
+          }
+          @include breakpoint($narrow-screen) {
+            @include link-colors($c-white);
+          }
+        }
+
+        @include breakpoint($narrow-screen) {
+          padding: 5px 4.5px;
+          margin: 0 4.5px;
+        }
+
+        @include breakpoint($large-screen) {
+          padding: 5px 10px;
+          margin: 0 10px;
+        }
+
+        &:hover {
+          @include utility-menu-underline;
+          text-decoration: none;
+          position: relative;
+        }
+
+        @include breakpoint($mobile-screen-only) {
+          padding: 8px 0;
+          margin: 0;
+        }
+
+        @include breakpoint($narrow-screen) {
+          font-size: 12px;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+<nav class="ohm-navbar">
+  <div class="ohm-navbar__container">
+    {% block content %}
+      {% if branding %}
+        <div class="ohm-navbar__branding--container">
+          {{ branding }}
+        </div>
+      {% endif %}
+      <div class="ohm-navbar__toggler" data-show-below-narrow="true">
+        <span class="ohm-hamburger-menu">
+            <span class="text">
+              {{ "MENU"|t }}
+            </span>
+            <span class="burger-container">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </span>
+        </span>
+
+      </div>
+      {% if main_menu %}
+        <div class="ohm-navbar__main-menu--container" data-hide-below-narrow="true">
+          {{ main_menu }}
+        </div>
+      {% endif %}
+      {% if utility_menu %}
+        <div class="ohm-navbar__utility--container" data-hide-below-narrow="true">
+          {{ utility_menu }}
+        </div>
+      {% endif %}
+      {% if search %}
+        <div class="ohm-navbar__search--container" data-hide-below-narrow="true">
+          {{ search }}
+        </div>
+      {% endif %}
+    {% endblock %}
+  </div>
+</nav>

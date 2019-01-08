@@ -1,0 +1,156 @@
+.paragraph--quote.paragraph--view-mode--default {
+  background: url("../images/sliced-bgs/gray-light-bottom-left-square.svg") no-repeat $c-grey-lighter;
+  background-position-x: left;
+  background-position-y: bottom;
+
+  .field--name-field-display-title {
+    background: $c-white;
+  }
+
+  .quote--container {
+    padding: 60px 21px 20px 21px;
+    @include breakpoint($narrow-screen) {
+      padding: 100px 0 70px 0;
+      width: 815px;
+      margin: 0 auto;
+    }
+    &.has_image {
+      min-height: 395px;
+
+      @include breakpoint($narrow-screen) {
+        width: 80%;
+        display: table;
+        vertical-align: bottom;
+        padding-bottom: 0;
+        padding-top: 0;
+        .quote,
+        .quoter {
+          position: relative;
+          top: 50px;
+        }
+        .quoter {
+          padding-bottom: 100px;
+        }
+      }
+
+      > div:nth-child(1) {
+        @include breakpoint($narrow-screen) {
+          display: table-cell;
+          min-width: 325px;
+          margin-right: 65px;
+          position: relative;
+          vertical-align: bottom;
+        }
+      }
+
+      > div:nth-child(2) {
+        @include breakpoint($narrow-screen) {
+          display: table-cell;
+          vertical-align: middle;
+        }
+      }
+
+      img {
+        padding-bottom: 50px;
+
+        @include breakpoint($narrow-screen) {
+          padding-bottom: 0;
+        }
+      }
+    }
+
+    .quote {
+      @include fs-pull-quote;
+      position: relative;
+
+      // quote icon.
+      &::before {
+        position: absolute;
+        content: '';
+        background: url('../images/quote.svg') no-repeat;
+        height: 24px;
+        width: 32px;
+        top: -35px;
+        left: 0;
+      }
+    }
+    .quoter {
+      .name {
+        @include fs-h4;
+      }
+      .position {
+        @include fs-job-title;
+      }
+    }
+  }
+}
+
+.quote-slider,
+.people-slideshow {
+  &.slick-initialized.slick-dotted {
+    margin-bottom: 0;
+  }
+  .slick-dots {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    li {
+      width: 14px;
+      button {
+        background: $c-grey-medium;
+        height: 14px;
+        width: 14px;
+
+        // @todo This would not be needed if we removed slick-theme.css
+        &::before {
+          content: none;
+        }
+      }
+      &.slick-active {
+        button {
+          background: $c-orange;
+        }
+      }
+    }
+  }
+  .slick-prev,
+  .slick-next {
+    width: 48px;
+    height: 48px;
+    background: $c-grey-light;
+    &:hover {
+      background: $c-grey-medium;
+    }
+  }
+  .slick-prev {
+    left: 20px;
+    @include fa-icon-before('\f060', $c-white);
+    &::before {
+      margin-right: 0;
+    }
+  }
+  .slick-next {
+    right: 20px;
+    @include fa-icon-before('\f061', $c-white);
+    &::before {
+      margin-right: 0;
+    }
+  }
+  .slick-list {
+    max-height: initial;
+  }
+}
+
+.people-slideshow {
+  &.slick-initialized.slick-dotted {
+    .slick-prev,
+    .slick-next {
+      width: 48px;
+      height: 48px;
+      background: $c-grey-charcoal;
+      &:hover {
+        background: $c-grey-medium;
+      }
+    }
+  }
+}

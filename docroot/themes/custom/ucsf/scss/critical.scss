@@ -1,0 +1,44 @@
+body.loaded .loader {
+  max-height: 0;
+  overflow-y: hidden;
+  z-index: -90;
+}
+
+body:not(.loaded) *:not(.loader, .loader .loader-inner) {
+  display: none;
+}
+
+body:not(.loaded) .loader {
+  background-color: #f9f9fa;
+  bottom: 0;
+  display: block;
+  height: 100%;
+  overflow-y: hidden;
+  position: absolute;
+  top: 0;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  width: 100%;
+  z-index: 99999999;
+}
+
+body .loader .loader-inner {
+  -ms-flex-line-pack: center;
+  align-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}

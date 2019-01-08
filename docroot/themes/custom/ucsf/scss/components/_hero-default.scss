@@ -1,0 +1,162 @@
+.hero-default {
+  min-height: 150px;
+  position: relative;
+
+  @include breakpoint($narrow-screen) {
+    background: $c-textgrey;
+    overflow: hidden;
+  }
+
+  &::before {
+    pointer-events: none;
+    @include breakpoint($narrow-screen) {
+      @include background-image-overlay;
+    }
+  }
+
+  h1 {
+    @include fs-h1;
+    line-height: 40px;
+    margin-bottom: 0;
+
+    @include breakpoint($narrow-screen) {
+      @include fs-h1-hero-default;
+
+      bottom: 30px;
+      margin: 0 auto;
+      position: absolute;
+      z-index: z(galaxy);
+
+      span,
+      svg {
+        display: inline-block;
+        vertical-align: top;
+      }
+    }
+
+    span {
+      @include breakpoint($narrow-screen) {
+        max-width: 840px;
+      }
+
+      @include breakpoint($large-screen) {
+        margin-left: -8px;
+        max-width: 1100px;
+      }
+    }
+  }
+
+
+
+  .slash {
+    display: none;
+
+    @include breakpoint($narrow-screen) {
+      display: inline-block;
+      height: 51px;
+      width: 51px;
+    }
+  }
+
+  .field--name-field-hero {
+    margin-bottom: 25px;
+
+    @include breakpoint($narrow-screen) {
+      margin-bottom: 0;
+    }
+  }
+
+  img {
+    @include breakpoint($narrow-screen) {
+      min-height: 550px;
+      width: 100%;
+    }
+  }
+
+  .slick-dots {
+    margin-bottom: 0;
+
+    button {
+      appearance: none;
+      border: 0;
+    }
+  }
+}
+
+// @todo When there is a hero and a quote on the same page the dots get messed up.
+// This code contains fixes but ideally all the sliders would be
+// using the same base libraries and css. This is to reconcile slick-theme.css and _slick.scss. Would prefer to delete slick-theme.css entirely.
+// @todo prev and next buttons are still messed up.
+.hero-default {
+
+  .slick-dotted.slick-slider {
+    margin-bottom: 0;
+  }
+
+  .slick-dots {
+    position: relative;
+    bottom: 5px;
+    text-align: right;
+    width: auto;
+
+    @include breakpoint($narrow-screen) {
+      position: absolute;
+    }
+
+    li {
+      height: 30px;
+      margin: 0;
+      width: auto;
+
+      &.slick-active button{
+        background: $c-orange;
+
+        &:before {
+          content: none;
+        }
+      }
+
+      button {
+        background: $c-grey-medium;
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        margin: 5px;
+      }
+    }
+  }
+
+  // Previous and Next buttons. Copied from _slick.scss
+  .slick-next,
+  .slick-prev {
+    background-color: rgba(0, 0, 0, 0.15);
+    background-image: none;
+    border: 0;
+    border-radius: 48px;
+    color: #fff;
+    font-size: 15px;
+    height: 48px;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    width: 48px;
+    z-index: 400;
+
+    &::before {
+      content: none;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.25);
+      color: $c-grey-slate;
+    }
+  }
+
+  .slick-prev {
+    left: 10px;
+  }
+
+  .slick-next {
+    right: 10px;
+  }
+}

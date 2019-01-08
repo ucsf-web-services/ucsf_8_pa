@@ -1,0 +1,121 @@
+
+// Person
+// type: teaser
+.person__teaser {
+  margin-bottom: 30px;
+
+  .person__teaser__container {
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    @include clearfix;
+
+    .left {
+      @include breakpoint($tiny-screen) {
+        width: 130px;
+        float: left;
+      }
+    }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      @include breakpoint($tiny-screen) {
+        width: calc(100% - 130px);
+        float: right;
+      }
+    }
+
+    .person__photo {
+      img {
+        height: 120px;
+        width: 120px;
+        border-radius: 50%;
+      }
+    }
+
+    .person__name {
+      @include fs-h4;
+    }
+
+    .person__job_title {
+      @include fs-job-title;
+    }
+  }
+
+  a:hover .person__job_title {
+    color: $c-textgrey;
+  }
+}
+
+// Person.
+// view mode full
+.node--type-person.node--view-mode-full {
+  .node--person-hero {
+    background: $c-grey-light;
+  }
+  .node--person-hero--container {
+    @include container;
+
+    padding: 20px 21px;
+
+    @include breakpoint($narrow-screen) {
+      padding: 0;
+      margin-left: susy-span(1 wide of 12 wide);
+    }
+
+    .node--person-hero--photo {
+      @include breakpoint($narrow-screen) {
+        width: susy-span(3 wide of 12 wide);
+        float: left;
+      }
+    }
+
+    .node--person-hero--info {
+      @include breakpoint($narrow-screen) {
+        width: susy-span(4 wide of 12 wide);
+        float: left;
+        margin-left: susy-gutter();
+      }
+
+      .name {
+        font-size: 36px;
+        line-height: 45px;
+        letter-spacing: 0;
+        color: $c-textgrey;
+        padding-top: 20px;
+        @include breakpoint($narrow-screen) {
+          margin-top: 63px;
+        }
+      }
+      .job-title {
+        line-height: 27px;
+      }
+
+
+    }
+
+  }
+
+  .field--name-body {
+    padding: 20px 21px;
+    @include breakpoint($narrow-screen) {
+      margin-left: susy-span(2 wide of 12 narrow);
+      width: susy-span(8 of 12 narrow);
+      padding: 57px 0 51px;
+    }
+  }
+
+  .social-icons {
+    margin-bottom: 0;
+    @include breakpoint($narrow-screen) {
+      margin-top: 83px;
+    }
+    ul.social-icons__list li {
+      margin-right: 24px;
+    }
+  }
+}

@@ -1,0 +1,92 @@
+// Colors
+//------------------------------------------------------------------------------
+
+$c-orange: #e87d1d;
+$c-red: #8a1f03;
+$c-gold: #eeb111;
+$c-textgrey: #333;
+$c-grey-charcoal: #4c4c4f;
+$c-grey-slate: #555559;
+$c-grey-medium: #808184;
+$c-beige: #c9c8c7;
+$c-grey-light: #dedede;
+$c-grey-lighter: #eee;
+$c-grey-input-border: #d1d1d1;
+$c-grey-input-border-webform: #979797;
+$c-white: #fff;
+
+// Font Families
+//------------------------------------------------------------------------------
+
+$ff-sans: "Gotham SSm A", "Gotham SSm B", Helvetica, sans-serif;
+$ff-serif: adobe-garamond-pro, serif;
+
+// Font Weights
+//------------------------------------------------------------------------------
+
+$fw-light: 200;
+$fw-book: 300; // Theme default.
+$fw-medium: 500;
+$fw-bold: 700;
+
+// Grid
+//------------------------------------------------------------------------------
+
+$grid-container: 1400px;
+$grid-columns: 12;
+$grid-column-gap: 33.818181818px; // ((1400-(34*2))-(80*12))/11 = 33.818181818
+$grid-row-gap: 40px;
+$grid-gutter: $grid-row-gap $grid-column-gap;
+$grid-gutter-susy: $grid-column-gap;
+
+// Grid Debugging
+//------------------------------------------------------------------------------
+
+// Setting $grid-debug to true shows the grid lines via @page-container.
+$grid-debug: false;
+// Setting $grid-disable disables grid to test fallbacks.
+$grid-disable: false;
+
+// Susy Layouts
+//------------------------------------------------------------------------------
+
+$susy: (
+  'svg-grid-colors': hsl(180, 50%, 80%),
+  'columns': susy-repeat($grid-columns),
+  'gutters': $grid-gutter-susy,
+  'container-spread': 'wider'
+);
+$susy-narrow: (
+  'columns': susy-repeat(($grid-columns - 2)),
+  'gutters': $grid-gutter-susy,
+  'container-spread': 'narrow'
+);
+$susy-two: (
+  'columns': susy-repeat(2),
+  'gutters': 0,
+  'container-spread': 'narrow'
+);
+$susy-three: (
+  'columns': susy-repeat(3),
+  'gutters': 0,
+  'container-spread': 'narrow'
+);
+$susy-four: (
+  'columns': susy-repeat(4),
+  'gutters': 0,
+  'container-spread': 'narrow'
+);
+
+// Z-indices
+//------------------------------------------------------------------------------
+
+$z-index: (
+  core: -10,
+  crust: 0,
+  atmosphere: 100,
+  stratosphere: 200,
+  solar-system: 300,
+  galaxy: 400,
+  footer: 500,
+  dropdown: 600,
+);

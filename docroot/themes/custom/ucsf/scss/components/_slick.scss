@@ -1,0 +1,86 @@
+.slick-track > .field__item {
+  border-left: 2px solid $c-white;
+  line-height: 1;
+}
+
+.slick-list {
+  max-height: 550px;
+}
+
+.slick-next,
+.slick-prev {
+  background-color: rgba(0, 0, 0, 0.15);
+  background-image: none;
+  border: 0;
+  border-radius: 48px;
+  color: $c-white;
+  font-size: 15px;
+  height: 48px;
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  width: 48px;
+  z-index: z(galaxy);
+
+  &:after {
+    content: none;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+    color: $c-grey-slate;
+  }
+}
+
+.slick-next {
+  @include transition;
+
+  right: 10px;
+}
+
+.slick-prev {
+  left: 10px;
+}
+
+.slick-dots {
+  padding-right: 6px;
+  text-align: right;
+
+  @include breakpoint($narrow-screen) {
+    bottom: 5px;
+    position: absolute;
+    right: 10px;
+    z-index: z(galaxy);
+  }
+
+  li {
+    display: inline-block;
+  }
+
+  button {
+    @include transition;
+
+    background: $c-grey-medium;
+    border-radius: 8px;
+    height: 8px;
+    margin: 5px;
+    overflow: hidden;
+    padding: 0;
+    text-indent: -999px;
+    width: 8px;
+
+    @include breakpoint($narrow-screen) {
+      border-radius: 14px;
+      height: 14px;
+      width: 14px;
+    }
+
+    &:hover {
+      background: $c-orange;
+    }
+  }
+
+  .slick-active button {
+    background: $c-orange;
+  }
+}

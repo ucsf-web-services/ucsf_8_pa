@@ -1,0 +1,127 @@
+// Search
+.search-block-form {
+  position: relative;
+
+  @include breakpoint($mobile-screen-only) {
+    background: #f5f5f5;
+  }
+
+  input {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0;
+    background: #fff;
+    height: auto;
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid $c-textgrey;
+
+    @include breakpoint($narrow-screen) {
+      border: 0;
+      border-bottom: 2px solid $c-textgrey;
+      border-radius: 0;
+      margin-bottom: 4px;
+      width: calc(100% - 10px);
+      padding: 5px;
+    }
+
+    &::placeholder {
+      color: $c-beige;
+    }
+
+    .has-hero-home & {
+      background: transparent;
+      border-bottom: 2px solid $c-white;
+    }
+  }
+
+  .form-actions input {
+    display: none;
+  }
+
+  i {
+    position: absolute;
+    top: 5px;
+    right: 4px;
+    font-size: 20px;
+
+    .has-hero-home & {
+      color: #fff;
+
+      @include breakpoint($mobile-screen-only) {
+        color: #54585a;
+      }
+    }
+
+    // IE Specific media query.
+    @media all and (-ms-high-contrast: none) {
+      font-size: 15px;
+    }
+  }
+}
+
+.form-type-search {
+  display: block;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: url(../../images/navbar/search-icon-large.svg) no-repeat;
+    width: 27px;
+    height: 27px;
+    top: -5px;
+    right: 6px;
+
+    .is-open--mobile-nav & {
+      background: url(../../images/navbar/search-icon-large-orange.svg) no-repeat;
+      width: 22px;
+      height: 22px;
+      top: -2px;
+      right: 12px;
+    }
+
+    @include breakpoint($narrow-screen) {
+      background: url(../../images/navbar/search-icon-small.svg) no-repeat;
+      width: 23px;
+      height: 27px;
+      top: 2px;
+      right: 0;
+
+    }
+  }
+
+  ::-webkit-input-placeholder,
+  ::-moz-placeholder,
+  :-moz-placeholder,
+  :-ms-input-placeholder {
+    color: #a8b0b4;
+    font-size: 14px;
+    opacity: 1;
+
+    .has-hero-home & {
+      color: #fff;
+
+      @include breakpoint($mobile-screen-only) {
+        color: #a8b0b4;
+      }
+    }
+  }
+}
+
+// Overrides for the frontpage.
+.path-frontpage {
+  .form-type-search {
+    &::after {
+      background: url(../../images/navbar/search-icon-large.svg) no-repeat;
+      .is-open--mobile-nav & {
+        background: url(../../images/navbar/search-icon-large-orange.svg) no-repeat;
+      }
+      @include breakpoint($narrow-screen) {
+        background: url(../../images/navbar/search-icon-small-white.svg) no-repeat;
+      }
+    }
+  }
+}

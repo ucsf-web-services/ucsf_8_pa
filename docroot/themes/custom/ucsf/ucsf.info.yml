@@ -1,0 +1,34 @@
+name: UCSF Theme
+type: theme
+base theme: classy
+description: 'Theme for UCSF. Based on Classy.'
+core: 8.x
+
+libraries:
+  - core/drupal
+  - core/jquery
+  - ucsf/global
+  - ucsf/fontawesome
+
+stylesheets-remove:
+  - '@classy/css/components/menu.css'
+  - '@classy/css/components/pager.css'
+  - '@stable/css/filter/filter.caption.css'
+  - core/assets/vendor/jquery.ui/themes/base/accordion.css
+  - core/assets/vendor/jquery.ui/themes/base/theme.css
+
+regions:
+  header: "Header - Logo, Main Mobile Menu"
+  content: "Content"
+  content_bottom: "Content Bottom"
+  footer: "Footer"
+  highlighted: "Highlighted"
+  help: "Help"
+
+component-libraries:
+  theme:
+    paths:
+      - components
+
+ckeditor_stylesheets:
+  - assets/css/style.css

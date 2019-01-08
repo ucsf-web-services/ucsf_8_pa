@@ -1,0 +1,697 @@
+@mixin background-image($file-name, $position, $color) {
+  background: url('/themes/custom/evolve/assets/images/#{$file-name}') no-repeat $position $color;
+}
+
+// Hero-default, expertise teaser, project teaser.
+@mixin background-image-overlay {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), #000);
+  content: ' ';
+  height: 100%;
+  left: 0;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: z(solar-system);
+}
+
+@mixin background-image-overlay-hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+@mixin button-base {
+  @include background-image('cta/cta-triangle.svg', right 18px center, $c-white);
+  @include fs-cta;
+  border: 1px solid $c-grey-input-border;
+  border-radius: 0;
+  display: inline-block;
+  height: 45px;
+  line-height: 15px;
+  padding: 15px 45px 17px 30px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: $c-grey-lighter;
+  }
+}
+
+@mixin clearfix {
+  &::after {
+    clear: both;
+    content: " ";
+    display: table;
+  }
+}
+
+@mixin clearfix-before {
+  &::before {
+    clear: both;
+    content: " ";
+    display: table;
+  }
+}
+
+@mixin clearreset {
+  &::after {
+    clear: none;
+    content: none;
+    display: inherit;
+  }
+}
+
+// Link mixin
+// @param {color} $normal - normal color
+// @param {color} $hover  - hover
+// @param {color} $active - active
+// @param {color} $focus - focus
+@mixin link-colors($normal, $hover: false, $active: false, $visited: false, $focus: false) {
+  &:link {
+    color: $normal;
+  }
+
+  @if $visited {
+    &:visited,
+    &:link:visited {
+      color: $visited;
+    }
+  }
+
+  @else {
+    &:visited,
+    &:link:visited {
+      color: $normal;
+    }
+  }
+
+  @if $focus {
+    &:focus {
+      color: $focus;
+    }
+  }
+
+  @else {
+    &:focus {
+      color: $normal;
+    }
+  }
+
+  @if $hover {
+    &.active:hover,
+    &.is-active:hover,
+    &.active-trail:hover,
+    &.visited:hover,
+    &:hover {
+      color: $hover;
+    }
+  }
+
+  @if $active {
+    &.is-active,
+    &:active,
+    &.active-trail {
+      color: $active;
+    }
+  }
+
+  @else {
+    &.is-active,
+    &:active,
+    &.active-trail {
+      color: $normal;
+    }
+  }
+}
+
+@mixin link-text {
+  @include link-colors($c-textgrey, $c-orange);
+  text-decoration: none;
+}
+
+@mixin tables {
+  .table-wrapper-responsive {
+    overflow: scroll;
+
+    @include breakpoint($narrow-screen) {
+      overflow: auto;
+    }
+  }
+
+  // Tables
+  table,
+  td,
+  th {
+    border: 1px solid $c-beige;
+  }
+
+  table {
+    margin-bottom: 50px;
+    width: 100%;
+  }
+
+  th,
+  .table-header {
+    font-size: 15px;
+    line-height: 18px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  td,
+  th {
+    padding: 6px;
+    vertical-align: top;
+  }
+}
+
+@mixin transition {
+  transition: .2s all;
+}
+
+// Normal List Styles
+@mixin ul-text {
+  ul,
+  ol {
+    li {
+      line-height: 22px;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+// Remove all ul-styling from .item-list.
+@mixin ul-item-list-reset {
+  margin: 0;
+
+  ul {
+    margin: 0 0 13px 0;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  ul,
+  li {
+    line-height: inherit;
+    list-style: none;
+    padding: 0;
+  }
+}
+
+// Apply to <ul> tag.
+@mixin ul-menu {
+  &.menu {
+    list-style: none;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-top: -1px;
+    padding-left: 0;
+
+    li {
+      list-style: none;
+    }
+  }
+}
+
+@mixin visually-hidden {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  overflow: hidden;
+  height: 1px;
+  width: 1px;
+  word-wrap: normal;
+}
+
+// Container
+//
+// Use for page-level containers, where you want to constrain the container to
+// the site grid. The padding applied here is for the grid itself. For example,
+// $grid-container is 1400px, and the padding adjusts the inner width to 1332px.
+//
+// @example
+//   .ohm-container {
+//     @include container;
+//   }
+//------------------------------------------------------------------------------
+
+@mixin container {
+  @include clearfix;
+
+  margin: 0 auto;
+  max-width: $grid-container;
+
+  @include breakpoint($narrow-screen) {
+    padding: 0 susy-gutter();
+
+    // @see _variables.scss for $grid-debug, which is a global boolean.
+    @if $grid-debug {
+      background: susy-svg-grid() no-repeat scroll;
+    }
+  }
+}
+
+// Grid Container
+//
+// Provides the display properties and fallbacks required for CSS grid. This is
+// use within the grid-layout mixin, but could be used directly as well.
+//------------------------------------------------------------------------------
+
+@mixin grid-container($grid: 'default') {
+  // Fallback for IE
+  @supports (display: flex) {
+    @include breakpoint($narrow-screen) {
+      align-items: stretch;
+      display: flex;
+      flex-flow: row wrap;
+    }
+  }
+
+  @if not $grid-disable {
+    @supports (display: grid) {
+      @include breakpoint($narrow-screen) {
+        display: grid;
+        grid-gap: $grid-gutter;
+      }
+    }
+  }
+}
+
+// Grid Layout Two
+//
+// This mixin provides a 2 equal column layout, with or without gutters.
+// The following markup structure is already styled, so applying the classes and
+// data attributes shown would work.
+//
+// @see global/_layout.scss
+// @see tools/_variables.scss
+//
+// @example
+//   <div class="ohm-container">
+//     ...
+//     <div data-layout="two" class="row">...</div>
+//     <div data-layout="two" class="row row--narrow">...</div>
+//     <div data-layout="two" data-gutters="false" class="row row--narrow">...</div>
+//     ...
+//   </div>
+//------------------------------------------------------------------------------
+
+@mixin grid-layout-two($gutters: false) {
+  @include grid-container;
+
+  @include breakpoint($narrow-screen) {
+    $layout: $susy-two;
+
+    @if $gutters {
+      $layout: map-merge($susy-two, ('gutters': $grid-gutter-susy));
+    }
+
+    > * {
+      width: susy-span(1, $layout);
+    }
+
+    > *:nth-child(odd) {
+      clear: left;
+      float: left;
+
+      @if $gutters {
+        margin-right: susy-gutter($layout);
+      }
+
+      @else {
+        margin-right: 0;
+      }
+    }
+
+    > *:nth-child(even) {
+      clear: right;
+      float: right;
+      margin-right: 0;
+    }
+  }
+
+  @if not $grid-disable {
+    @supports (display: grid) {
+      @include breakpoint($narrow-screen) {
+        grid-template-columns: repeat(2, 1fr);
+
+        @if $gutters {
+          grid-gap: $grid-gutter;
+        }
+
+        @else {
+          grid-gap: 0;
+        }
+
+        > * {
+          grid-column: auto / span 1;
+          margin-right: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Grid Layout Three
+//
+// This mixin provides a 3 equal column layout, with or without gutters.
+// The following markup structure is already styled, so applying the classes and
+// data attributes shown would work.
+//
+// @see global/_layout.scss
+// @see tools/_variables.scss
+//
+// @example
+//   <div class="ohm-container">
+//     ...
+//     <div data-layout="three" class="row">...</div>
+//     <div data-layout="three" class="row row--narrow">...</div>
+//     <div data-layout="three" data-gutters="false" class="row row--narrow">...</div>
+//     ...
+//   </div>
+//------------------------------------------------------------------------------
+
+@mixin grid-layout-three($gutters: false) {
+  @include grid-container;
+
+  @include breakpoint($narrow-screen) {
+    $layout: $susy-three;
+
+    @if $gutters {
+      $layout: map-merge($susy-three, ('gutters': $grid-gutter-susy));
+    }
+
+    // Fallback
+    > * {
+      float: left;
+      width: susy-span(1, $layout);
+    }
+
+    > *:nth-child(3n + 1),
+    > *:nth-child(3n + 2) {
+      @if $gutters {
+        margin-right: susy-gutter($layout);
+      }
+
+      @else {
+        margin-right: 0;
+      }
+    }
+
+    > *:nth-child(3n + 1) {
+      clear: left;
+    }
+
+    > *:nth-child(3n + 3) {
+      margin-right: 0;
+      clear: right;
+    }
+  }
+
+  @if not $grid-disable {
+    @supports (display: grid) {
+      @include breakpoint($narrow-screen) {
+        grid-template-columns: repeat(3, 1fr);
+
+        @if $gutters {
+          grid-gap: $grid-gutter;
+        }
+
+        @else {
+          grid-gap: 0;
+        }
+
+        > * {
+          grid-column: auto / span 1;
+          margin-right: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Grid Layout Four
+//
+// This mixin provides a 4 equal column layout, with or without gutters.
+// The following markup structure is already styled, so applying the classes and
+// data attributes shown would work.
+//
+// @see global/_layout.scss
+// @see tools/_variables.scss
+//
+// @example
+//   <div class="ohm-container">
+//     ...
+//     <div data-layout="four" class="row">...</div>
+//     <div data-layout="four" class="row row--narrow">...</div>
+//     <div data-layout="four" data-gutters="false" class="row row--narrow">...</div>
+//     ...
+//   </div>
+//------------------------------------------------------------------------------
+
+@mixin grid-layout-four($gutters: false) {
+  @include grid-container;
+
+  @include breakpoint($narrow-screen) {
+    $layout: $susy-four;
+
+    @if $gutters {
+      $layout: map-merge($susy-four, ('gutters': $grid-gutter-susy));
+    }
+
+    // Fallback
+    > * {
+      float: left;
+      width: susy-span(1, $layout);
+    }
+
+    > *:nth-child(4n + 1),
+    > *:nth-child(4n + 2),
+    > *:nth-child(4n + 3) {
+      @if $gutters {
+        margin-right: susy-gutter($layout);
+      }
+
+      @else {
+        margin-right: 0;
+      }
+    }
+
+    > *:nth-child(4n + 1) {
+      clear: left;
+    }
+
+    > *:nth-child(4n + 4) {
+      clear: right;
+      margin-right: 0;
+    }
+  }
+
+  @if not $grid-disable {
+    @supports (display: grid) {
+      @include breakpoint($narrow-screen) {
+        grid-template-columns: repeat(4, 1fr);
+
+        @if $gutters {
+          grid-gap: $grid-gutter;
+        }
+
+        @else {
+          grid-gap: 0;
+        }
+
+        > * {
+          grid-column: auto / span 1;
+          margin-right: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Grid Layout Sidebar
+//
+// This mixin provides a 2 column sidebar layout, as designed for Insights node.
+// The following markup structure is already styled, so applying the classes and
+// data attributes shown would work.
+//
+// @see global/_layout.scss
+// @see tools/_variables.scss
+//
+// @example
+//   <div class="ohm-container">
+//     ...
+//     <div class="row" data-layout="sidebar">...</div>
+//     <div class="row row--narrow" data-layout="sidebar">...</div>
+//     ...
+//   </div>
+//------------------------------------------------------------------------------
+
+@mixin grid-layout-sidebar() {
+  @include grid-container;
+
+  @include breakpoint($narrow-screen) {
+    // Fallback
+    > *:nth-child(odd) {
+      float: left;
+      margin-right: susy-span(1);
+      width: susy-span(7 wide);
+    }
+
+    &.row--narrow > *:nth-child(odd) {
+      margin-right: susy-span(1, $susy-narrow);
+      width: susy-span(6 wide, $susy-narrow);
+    }
+
+    > *:nth-child(even) {
+      float: right;
+      margin-left: auto;
+      margin-right: 0;
+      width: susy-span(4);
+    }
+
+    &.row--narrow > *:nth-child(even) {
+      width: susy-span(3, $susy-narrow);
+    }
+  }
+
+  @if not $grid-disable {
+    @supports (display: grid) {
+      @include breakpoint($narrow-screen) {
+        grid-template-columns: repeat(($grid-columns), 1fr);
+
+        &.row--narrow {
+          // There are 10 columns to work with in .row-narrow.
+          grid-template-columns: repeat(($grid-columns - 2), 1fr);
+        }
+
+        > *:nth-child(odd) {
+          grid-column: 1 / span 7;
+        }
+
+        &[data-push-left] > *:nth-child(odd) {
+          grid-column-start: 2;
+        }
+
+        &.row--narrow > *:nth-child(odd) {
+          grid-column: 1 / span 6;
+        }
+
+        > *:nth-child(even) {
+          grid-column: 9 / span 4;
+        }
+
+        &.row--narrow > *:nth-child(even) {
+          grid-column: 8 / span 3;
+        }
+
+        // Reset problematic fallback code.
+        > *:nth-child(odd),
+        > *:nth-child(even),
+        &.row--narrow > *:nth-child(odd),
+        &.row--narrow > *:nth-child(even) {
+          margin-left: 0;
+          margin-right: 0;
+          width: auto;
+        }
+      }
+    }
+  }
+}
+
+
+// This is an odd layout that applies to the Project pages in full mode.
+// the elements inside doesn't stick to a grid.
+// percentages were used for the child elements which are three.
+// first column has 23%
+// second column has 61%
+// third column has 16%
+// display grid was used only for ordering the elements in mobile.
+// cheers.
+@mixin grid-layout-23-61-16($gutters: false) {
+
+  @include breakpoint($narrow-screen) {
+    $layout: $susy-three;
+
+    @if $gutters {
+      $layout: map-merge($susy-three, ('gutters': $grid-gutter-susy));
+    }
+
+    // Fallback
+    > * {
+      float: left;
+      width: susy-span(1, $layout);
+    }
+
+    > *:nth-child(3n + 1),
+    > *:nth-child(3n + 2) {
+      @if $gutters {
+        margin-right: susy-gutter($layout);
+      }
+
+      @else {
+        margin-right: 0;
+      }
+    }
+
+    > *:nth-child(3n + 1) {
+      width: 23%;
+      clear: left;
+      padding-left: 72px;
+      padding-right: susy-gutter();
+    }
+
+    > *:nth-child(3n + 2) {
+      width: 61%;
+      padding-right: 64px;
+    }
+
+    > *:nth-child(3n + 3) {
+      width: 16%;
+      margin-right: 0;
+      clear: right;
+      padding-right: 59px;
+    }
+  }
+
+  @if not $grid-disable {
+    @supports (display: grid) {
+      @include breakpoint($mobile-screen-only) {
+        display: flex;
+        flex-direction: column;
+
+        > *:nth-child(3n + 1) {
+          order: 2;
+        }
+
+        > *:nth-child(3n + 2) {
+          order: 1;
+        }
+
+        > *:nth-child(3n + 3) {
+          order: 3;
+        }
+      }
+    }
+  }
+}
+
+@mixin padding-container-mobile-desktop {
+  padding: 20px 21px;
+  @include breakpoint($narrow-screen) {
+    padding: 43px 0 47px;
+  }
+}
+// use the fordward slash if f is present.
+@mixin fa-icon-before($icon-code: '', $color: $c-orange) {
+  &::before {
+    margin-right: 5px;
+    color: $color;
+    content: '#{$icon-code}';
+    font-family: 'Font Awesome 5 Free';
+  }
+}

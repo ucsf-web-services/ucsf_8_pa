@@ -1,0 +1,35 @@
+.paragraph--columns-2.paragraph--view-mode--default {
+  @include padding-container-mobile-desktop;
+  background: url("../images/sliced-bgs/gray-light-slider-bottom-left.svg") no-repeat $c-grey-lighter;
+  background-position-x: left;
+  background-position-y: bottom;
+  background-size: contain;
+
+  .columns-container {
+    @supports (display: flex) {
+      @include breakpoint($narrow-screen) {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+    // fields.
+    .field--name-field-column-left {
+      @include breakpoint($narrow-screen) {
+        width: susy-span(5 narrow of 12 narrow);
+        margin-left: susy-span(1 wide of 12 wide);
+        float: left;
+        @supports (display: flex) {
+          margin-right: susy-gutter();
+        }
+      }
+    }
+    .field--name-field-column-right {
+      @include breakpoint($narrow-screen) {
+        width: susy-span(5 narrow of 12 narrow);
+        margin-right: susy-span(1 wide of 12 wide);
+        float: right;
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+.pager {
+  @include clearfix-before;
+  padding-bottom: 47px;
+  padding-left: 0;
+}
+
+.pager__items {
+  display: table;
+  float: none;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+.pager__item {
+  display: inline-block;
+  padding: 0;
+
+  // Default.
+  a {
+    @include link-colors($c-textgrey, $c-white, $c-white);
+    border-radius: 36px;
+    display: block;
+    float: left;
+    font-size: 16px;
+    height: 36px;
+    line-height: 36px;
+    margin: 0 6px;
+    text-align: center;
+    width: 36px;
+
+    &:hover {
+      background: $c-orange;
+      font-weight: $fw-bold;
+      text-decoration: none;
+    }
+  }
+
+  // Active link.
+  &.is-active {
+    a {
+      @include link-colors($c-white);
+      background: $c-orange;
+      font-weight: $fw-bold;
+
+      &:hover {
+        //background: none;
+      }
+    }
+  }
+
+  // Pagers.
+  &.pager__item--first,
+  &.pager__item--previous,
+  &.pager__item--next,
+  &.pager__item--last {
+    a {
+      @include link-colors($c-orange, $c-white);
+
+      &:hover {
+        border: 0;
+        text-decoration: none;
+      }
+    }
+  }
+}
