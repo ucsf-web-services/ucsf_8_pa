@@ -41,14 +41,7 @@
     <css-placeholder token="{{ placeholder_token }}">
       <js-placeholder token="{{ placeholder_token }}">
         </head>
-<body{{ attributes.addClass(body_classes).setAttribute('onload', 'document.body.className += \' loaded\'') }}>
-<div class="loader">
-  <div class="loader-inner">
-    {# Use the src here. JavaScript is embedded and needed data is stripped
-    from dist version via SVGO. #}
-    {% include active_theme_path() ~ '/assets/images/loader.svg' %}
-  </div>
-</div>
+<body{{ attributes.addClass(body_classes) }}>
 {#
   Keyboard navigation/accessibility link to main content section in
   page.html.twig.

@@ -49,38 +49,22 @@
 <div {{ attributes.addClass('page') }}>
 
   <header role="banner" class="header">
-    {% block header %}
-      {{ page.header }}
-    {% endblock header %}
+    {{ page.header }}
   </header>
 
-  {% block help %}
+  <div class="help">
     {{ page.highlighted }}
     {{ page.help }}
-  {% endblock help %}
+  </div>
 
   <main role="main">
     <a id="main-content" tabindex="-1"></a>
     {# link is in html.html.twig #}
-
-    {% block main_wrapper %}
-      <div class="ohm-container">
-        {% block main %}
-          {% block content %} {{ page.content }} {% endblock content %}
-        {% endblock main %}
-      </div>
-    {% endblock main_wrapper %}
+    {{ page.content }}
   </main>
 
-  {% block content_bottom %}
-    {{ page.content_bottom }}
-  {% endblock content_bottom %}
-
   <footer role="contentinfo" class="footer">
-    {% block footer %}
-      {{ page.footer }}
-      {{ copyright }}
-    {% endblock footer %}
+    {{ page.footer }}
   </footer>
 
 </div>{# /.page #}

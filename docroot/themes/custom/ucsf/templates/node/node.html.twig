@@ -72,33 +72,25 @@
 #}
 {%
   set classes = [
-    'node--type-' ~ node.bundle|clean_class,
-    view_mode ? 'node--type-' ~ node.bundle|clean_class ~ '--' ~ view_mode|clean_class,
-    not node.isPublished() ? 'node--unpublished',
-    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
-  ]
+  'node--type-' ~ node.bundle|clean_class,
+  view_mode ? 'node--type-' ~ node.bundle|clean_class ~ '--' ~ view_mode|clean_class,
+  not node.isPublished() ? 'node--unpublished',
+  view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+]
 %}
 {{ attach_library('classy/node') }}
 <article{{ attributes.addClass(classes) }}>
+
   {{ title_prefix }}
-  {% block title %}
-    {% if not page %}
-      <h2{{ title_attributes }}>
-        <a href="{{ url }}" rel="bookmark">{{ label }}</a>
-      </h2>
-    {% endif %}
-  {% endblock title %}
+  {% if not page %}
+    <h2{{ title_attributes }}>
+      <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+    </h2>
+  {% endif %}
   {{ title_suffix }}
 
-  {% block hero %}
-  {%  endblock hero %}
-
-  {% block secondary_nav %}
-  {%  endblock secondary_nav %}
-
   <div{{ content_attributes.addClass('node__content') }}>
-    {% block content %}
-      {{ content }}
-    {% endblock content %}
+    {{ content }}
   </div>
+
 </article>
