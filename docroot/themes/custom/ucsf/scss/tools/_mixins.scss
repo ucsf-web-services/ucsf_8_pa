@@ -2,6 +2,18 @@
   background: url('/themes/custom/evolve/assets/images/#{$file-name}') no-repeat $position $color;
 }
 
+@mixin button-base {
+  border: 0;
+  border-radius: 0;
+  display: inline-block;
+  height: 45px;
+  line-height: 15px;
+  padding: 15px 45px 17px 30px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
 @mixin clearfix {
   &::after {
     clear: both;
@@ -27,7 +39,7 @@
 }
 
 // use the fordward slash if f is present.
-@mixin fa-icon-before($icon-code: '', $color: $c-orange) {
+@mixin fa-icon-before($icon-code: '', $color: $c-blue) {
   &::before {
     margin-right: 5px;
     color: $color;
@@ -100,15 +112,19 @@
 }
 
 @mixin link-text {
-  @include link-colors($c-textgrey, $c-orange);
+  @include link-colors($c-blue);
   text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 @mixin tables {
   .table-wrapper-responsive {
     overflow: scroll;
 
-    @include breakpoint($bp-narrow-screen) {
+    @include breakpoint($bp-narrow) {
       overflow: auto;
     }
   }

@@ -3,17 +3,8 @@
 }
 
 body {
-  color: $c-textgrey;
-  font-family: $ff-sans;
-  font-size: 15px;
-  font-weight: 300;
-  line-height: 27px;
+  @include fs-body;
   margin: 0;
-
-  @include breakpoint($bp-narrow-screen) {
-    font-size: 17px;
-    line-height: 25px;
-  }
 }
 
 // h1-h6
@@ -21,17 +12,18 @@ h1 {
   @include fs-h1;
 }
 
-h2 {
-  @include fs-h2;
-}
-
-h3 {
-  @include fs-h3;
-}
-
-h4 {
-  @include fs-h4;
-}
+/* @todo Determine base header styles. */
+//h2 {
+//  @include fs-h2;
+//}
+//
+//h3 {
+//  @include fs-h3;
+//}
+//
+//h4 {
+//  @include fs-h4;
+//}
 
 h5 {
   font-size: 17px;
@@ -62,12 +54,8 @@ a {
   }
 
   .text-formatted & {
-    @include link-colors($c-orange, $c-textgrey);
+    @include link-colors($c-blue);
   }
-}
-
-.cta-directions { // Apply to a tag.
-  @include fs-cta-directions;
 }
 
 // Image Styles
@@ -92,7 +80,7 @@ blockquote {
     margin-bottom: 6px;
   }
 
-  @include breakpoint($bp-narrow-screen) {
+  @include breakpoint($bp-narrow) {
     margin: 30px 120px;
   }
 }

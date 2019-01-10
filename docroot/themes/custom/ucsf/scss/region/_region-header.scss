@@ -1,32 +1,33 @@
 .universal-header-region {
+  @include clearfix;
   @include fs-universal-header;
   background: $c-navy;
   color: $c-white;
-
   a {
     color: $c-white;
   }
 }
 
 .universal-header {
-  @include grid-two;
-
   margin-bottom: 0;
-  max-width: $xl;
+  vertical-align: middle;
 
   .universal-header__title {
+    display: inline-block;
     margin: 0;
-    padding: $space 0;
+    padding: $space 0 $space $space;
     line-height: 1.2;
+    width: calc(100% - 157px);
   }
 
   .universal-header__give {
+    display: inline-block;
     padding: $space 0;
     padding-top: 10px;
     min-width: $space-nineteen;
     border: none;
-    background: $blue;
-    color: $white;
-    cursor: pointer;
+    background: $c-blue;
+    color: $c-white;
+    width: $space-nineteen;
   }
 }

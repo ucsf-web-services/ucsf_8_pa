@@ -3,7 +3,7 @@
   ul.menu {
     line-height: 1;
 
-    @include breakpoint($mobile-screen-only) {
+    @include breakpoint($bp-until-narrow) {
       font-weight: $fw-book;
       padding: 15px 23px 0;
     }
@@ -11,7 +11,7 @@
     li {
       list-style: none;
 
-      @include breakpoint($bp-narrow-screen) {
+      @include breakpoint($bp-narrow) {
         display: inline-block;
       }
 
@@ -25,15 +25,15 @@
         text-transform: uppercase;
 
         .has-hero-home & {
-          @include breakpoint($mobile-screen-only) {
+          @include breakpoint($bp-until-narrow) {
             @include link-colors($c-textgrey, $c-orange);
           }
-          @include breakpoint($bp-narrow-screen) {
+          @include breakpoint($bp-narrow) {
             @include link-colors($c-white);
           }
         }
 
-        @include breakpoint($bp-narrow-screen) {
+        @include breakpoint($bp-narrow) {
           padding: 5px 4.5px;
           margin: 0 4.5px;
         }
@@ -49,12 +49,12 @@
           position: relative;
         }
 
-        @include breakpoint($mobile-screen-only) {
+        @include breakpoint($bp-until-narrow) {
           padding: 8px 0;
           margin: 0;
         }
 
-        @include breakpoint($bp-narrow-screen) {
+        @include breakpoint($bp-narrow) {
           font-size: 12px;
           text-transform: uppercase;
         }

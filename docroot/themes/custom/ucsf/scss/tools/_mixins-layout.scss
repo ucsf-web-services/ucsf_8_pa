@@ -16,7 +16,7 @@
   margin: 0 auto;
   max-width: $grid-container;
 
-  @include breakpoint($bp-narrow-screen) {
+  @include breakpoint($bp-narrow) {
     padding: 0 susy-gutter();
 
     // @see _variables.scss for $grid-debug, which is a global boolean.
@@ -35,7 +35,7 @@
 @mixin grid-container($grid: 'default') {
   // Fallback for IE
   @supports (display: flex) {
-    @include breakpoint($bp-narrow-screen) {
+    @include breakpoint($bp-narrow) {
       align-items: stretch;
       display: flex;
       flex-flow: row wrap;
@@ -44,7 +44,7 @@
 
   @if not $grid-disable {
     @supports (display: grid) {
-      @include breakpoint($bp-narrow-screen) {
+      @include breakpoint($bp-narrow) {
         display: grid;
         grid-gap: $grid-gutter;
       }
@@ -74,7 +74,7 @@
 @mixin grid-layout-two($gutters: false) {
   @include grid-container;
 
-  @include breakpoint($bp-narrow-screen) {
+  @include breakpoint($bp-narrow) {
     $layout: $susy-two;
 
     @if $gutters {
@@ -107,7 +107,7 @@
 
   @if not $grid-disable {
     @supports (display: grid) {
-      @include breakpoint($bp-narrow-screen) {
+      @include breakpoint($bp-narrow) {
         grid-template-columns: repeat(2, 1fr);
 
         @if $gutters {
@@ -150,7 +150,7 @@
 @mixin grid-layout-three($gutters: false) {
   @include grid-container;
 
-  @include breakpoint($bp-narrow-screen) {
+  @include breakpoint($bp-narrow) {
     $layout: $susy-three;
 
     @if $gutters {
@@ -186,7 +186,7 @@
 
   @if not $grid-disable {
     @supports (display: grid) {
-      @include breakpoint($bp-narrow-screen) {
+      @include breakpoint($bp-narrow) {
         grid-template-columns: repeat(3, 1fr);
 
         @if $gutters {
@@ -229,7 +229,7 @@
 @mixin grid-layout-four($gutters: false) {
   @include grid-container;
 
-  @include breakpoint($bp-narrow-screen) {
+  @include breakpoint($bp-narrow) {
     $layout: $susy-four;
 
     @if $gutters {
@@ -266,7 +266,7 @@
 
   @if not $grid-disable {
     @supports (display: grid) {
-      @include breakpoint($bp-narrow-screen) {
+      @include breakpoint($bp-narrow) {
         grid-template-columns: repeat(4, 1fr);
 
         @if $gutters {
@@ -308,7 +308,7 @@
 @mixin grid-layout-sidebar() {
   @include grid-container;
 
-  @include breakpoint($bp-narrow-screen) {
+  @include breakpoint($bp-narrow) {
     // Fallback
     > *:nth-child(odd) {
       float: left;
@@ -335,7 +335,7 @@
 
   @if not $grid-disable {
     @supports (display: grid) {
-      @include breakpoint($bp-narrow-screen) {
+      @include breakpoint($bp-narrow) {
         grid-template-columns: repeat(($grid-columns), 1fr);
 
         &.row--narrow {
@@ -388,7 +388,7 @@
 // cheers.
 @mixin grid-layout-23-61-16($gutters: false) {
 
-  @include breakpoint($bp-narrow-screen) {
+  @include breakpoint($bp-narrow) {
     $layout: $susy-three;
 
     @if $gutters {
@@ -434,7 +434,7 @@
 
   @if not $grid-disable {
     @supports (display: grid) {
-      @include breakpoint($mobile-screen-only) {
+      @include breakpoint($bp-until-narrow) {
         display: flex;
         flex-direction: column;
 
@@ -456,7 +456,7 @@
 
 @mixin padding-container-mobile-desktop {
   padding: 20px 21px;
-  @include breakpoint($bp-narrow-screen) {
+  @include breakpoint($bp-narrow) {
     padding: 43px 0 47px;
   }
 }

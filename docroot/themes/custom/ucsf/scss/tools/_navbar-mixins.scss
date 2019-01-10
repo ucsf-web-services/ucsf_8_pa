@@ -1,4 +1,4 @@
-$desktop: $bp-narrow-screen;
+$desktop: $bp-narrow;
 
 @mixin dropdown { // Apply to .menu-item--expanded
   position: relative;
@@ -99,11 +99,11 @@ $desktop: $bp-narrow-screen;
     background: $c-orange;
     position: absolute;
 
-    @include breakpoint($mobile-screen-only) {
+    @include breakpoint($bp-until-narrow) {
       display: none;
     }
 
-    @include breakpoint($bp-narrow-screen) {
+    @include breakpoint($bp-narrow) {
       height: 3px;
       bottom: 12px;
       left: 6.5px;
@@ -130,11 +130,11 @@ $desktop: $bp-narrow-screen;
     background: $c-orange;
     position: absolute;
 
-    @include breakpoint($mobile-screen-only) {
+    @include breakpoint($bp-until-narrow) {
       display: none;
     }
 
-    @include breakpoint($bp-narrow-screen) {
+    @include breakpoint($bp-narrow) {
       height: 3px;
       bottom: -5px;
       left: 6.5px;

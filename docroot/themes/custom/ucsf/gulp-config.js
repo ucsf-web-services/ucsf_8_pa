@@ -65,7 +65,7 @@ module.exports = {
     enabled: true,
     baseDir: './',
     startPath: '',
-    domain: 'http://ohmci.local',
+    domain: 'http://ucsf-main.local',
     startupBehavior: false,
     ui: false,
   }

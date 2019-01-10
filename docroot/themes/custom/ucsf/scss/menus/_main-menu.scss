@@ -5,7 +5,7 @@
   font-size: 14px;
   line-height: 1.2;
 
-  @include breakpoint($bp-narrow-screen) {
+  @include breakpoint($bp-narrow) {
     // 28px in between logo and menu - 9px left padding/margin on link.
     margin-left: 19px;
     height: auto;
@@ -28,7 +28,7 @@
   }
 
   li {
-    @include breakpoint($bp-narrow-screen) {
+    @include breakpoint($bp-narrow) {
       display: inline-block;
     }
   }
@@ -36,7 +36,7 @@
 
   // Level One Links
   > ul {
-    @include breakpoint($bp-narrow-screen) {
+    @include breakpoint($bp-narrow) {
       left: auto;
       position: relative;
       top: auto;
@@ -59,7 +59,7 @@
       position: relative;
       white-space: nowrap;
 
-      @include breakpoint($bp-narrow-screen) {
+      @include breakpoint($bp-narrow) {
         // 18px in between each:
         // 4.5px padding + 4.5px margin on each side.
         padding: 20px 4.5px;
@@ -102,21 +102,21 @@
     font-weight: $fw-book;
   }
   .menu-item--expanded {
-    @include breakpoint($bp-narrow-screen) {
+    @include breakpoint($bp-narrow) {
       @include dropdown;
     }
 
   }
 
   .user-logged-in & .login {
-    @include breakpoint($bp-narrow-screen) {
+    @include breakpoint($bp-narrow) {
       display: none;
     }
   }
 }
 
 
-@include breakpoint($bp-narrow-screen) {
+@include breakpoint($bp-narrow) {
   a.ohm-mobile-toggle {
     display: none !important;
     padding: 0 !important;
