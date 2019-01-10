@@ -108,7 +108,7 @@
   .table-wrapper-responsive {
     overflow: scroll;
 
-    @include breakpoint($narrow-screen) {
+    @include breakpoint($bp-narrow-screen) {
       overflow: auto;
     }
   }
@@ -197,14 +197,4 @@
   height: 1px;
   width: 1px;
   word-wrap: normal;
-}
-
-@z-index z($unit: base) {
-  @if map-has-key($z-index, $unit) {
-    @return map-get($z-index, $unit);
-  }
-
-  @else {
-    @warn 'There is no z index #{$unit}';
-  }
 }
