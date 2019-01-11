@@ -214,3 +214,21 @@
   width: 1px;
   word-wrap: normal;
 }
+
+/// Mixin - Wrapper
+/// Outer container mixin for large screens
+@mixin wrapper($container-max-width: $bp-full, $outer-container-break: $bp-small, $v-margin: 0, $v-padding: 0, $h-padding: $space, $h-padding-large: $h-padding) {
+  max-width: #{$container-max-width};
+  width: 100%;
+  margin: #{$v-margin} auto;
+  padding: #{$v-padding} #{$h-padding};
+
+  @include breakpoint($outer-container-break) {
+    padding: #{$v-padding} #{$h-padding-large};
+  }
+
+  @include breakpoint($container-max-width) {
+    padding-left: calc(#{$h-padding-large} + calc(-50vw + calc(#{$container-max-width} / 2)));
+    padding-right: calc(#{$h-padding-large} + calc(-50vw + calc(#{$container-max-width} / 2)));
+  }
+}

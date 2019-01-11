@@ -2,22 +2,26 @@
   @include clearfix;
   @include fs-universal-header;
   background: $c-navy;
-  color: $c-white;
+
   a {
     color: $c-white;
   }
 }
 
 .universal-header {
+  @include grid-two;
+  @include wrapper;
   margin-bottom: 0;
-  max-width: $bp-header;
+  max-width: $bp-xl;
   vertical-align: middle;
 
   .universal-header__title {
-    display: inline-block;
     margin: 0;
     padding: $space 0 $space $space;
-    width: calc(100% - 157px);
+
+    @include breakpoint($bp-medium) {
+      display: inline-block;
+    }
   }
 
   .universal-header__give {
@@ -28,6 +32,5 @@
     border: none;
     background: $c-blue;
     color: $c-white;
-    width: $space-nineteen;
   }
 }
