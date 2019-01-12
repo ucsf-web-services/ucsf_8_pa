@@ -1,0 +1,16 @@
+{% if node.field_banner_layout.value == 'large' %}
+  {% include '@theme/banner/banner-large.twig' %}
+{% else %}
+  {% include '@theme/banner/banner-medium.twig' %}
+{% endif %}
+
+<div class="main-content article-feature-content narrow-page">
+
+  <div class="page_narrow">
+    {{ content.body }}
+  </div>
+
+  <div class="tags-menu-region">
+    {{ content.tags }}
+  </div>
+</div>
