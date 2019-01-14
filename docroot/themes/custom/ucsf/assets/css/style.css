@@ -4122,6 +4122,9 @@ blockquote {
     blockquote {
       margin: 30px 120px; } }
 
+figure {
+  margin: 0; }
+
 .marker {
   background: black;
   color: white;
@@ -4148,6 +4151,35 @@ ul {
 
 .svgsprite {
   display: none; }
+
+.header,
+.main,
+.footer,
+.universal-header,
+.footer-bottom,
+.breadcrumb {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 8px;
+  margin-bottom: 4em; }
+  @media (min-width: 480px) {
+    .header,
+    .main,
+    .footer,
+    .universal-header,
+    .footer-bottom,
+    .breadcrumb {
+      padding: 0 8px; } }
+  @media (min-width: 1440px) {
+    .header,
+    .main,
+    .footer,
+    .universal-header,
+    .footer-bottom,
+    .breadcrumb {
+      padding-left: calc(8px + calc(-50vw + calc(1440px / 2)));
+      padding-right: calc(8px + calc(-50vw + calc(1440px / 2))); } }
 
 form button {
   border: 0;
@@ -4867,10 +4899,6 @@ h2 {
   grid-template-columns: repeat(1, 1fr);
   grid-gap: 5%;
   grid-row-gap: 0;
-  max-width: 1440px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 8px;
   margin-bottom: 0;
   max-width: 1280px;
   vertical-align: middle; }
@@ -4879,13 +4907,6 @@ h2 {
       grid-template-columns: repeat(2, 1fr); }
       .universal-header *:last-child {
         justify-self: end; } }
-  @media (min-width: 480px) {
-    .universal-header {
-      padding: 0 8px; } }
-  @media (min-width: 1440px) {
-    .universal-header {
-      padding-left: calc(8px + calc(-50vw + calc(1440px / 2)));
-      padding-right: calc(8px + calc(-50vw + calc(1440px / 2))); } }
   .universal-header .universal-header__title {
     margin: 0;
     padding: 8px 0 8px 8px; }
