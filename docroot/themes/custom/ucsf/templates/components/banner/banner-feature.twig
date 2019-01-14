@@ -6,19 +6,15 @@
   <header class="article-header article-feature-header">
     <ul class="article-header__byline">
       <li class="article-header__Research">{{ content.field_primary_area }}</li>
-      <li class="article-header__date">{{ content.field_date }}</li>
+      <li class="article-header__date">{{ content.field_date_and_time }}</li>
     </ul>
 
-    <h1>
-      {{ label }}
-    </h1>
+    <h1>{{ label }}</h1>
 
     <p class="article-header__subheading">
       {{ content.field_sub_title }}
     </p>
 
-    <div class="article-header__author what">
-      {{ "By"|t }} {{ content.field_author }}
-    </div>
+      {% include '@theme/banner/banner-author.twig' %}
   </header>
 </div>
