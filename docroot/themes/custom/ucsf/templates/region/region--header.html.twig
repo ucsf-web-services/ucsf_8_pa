@@ -6,5 +6,16 @@
       <button class="universal-header__give">Give to UCSF</button>
     </div>
   </div>
-  {{ content }}
+  <div class="header-region">
+    <header class="header" role="banner">
+      <figure class="logo">
+        <a class="logo__link" href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home">
+          <picture class="logo__image">
+            <img class="logo__img" src="/{{ directory ~ '/logo.svg' }}" alt="{{ 'Home'|t }}">
+          </picture>
+        </a>
+      </figure>
+      {{ content }}
+    </header>
+  </div>
 {% endblock content %}

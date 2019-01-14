@@ -48,9 +48,11 @@
 
 <div {{ attributes.addClass('page') }}>
 
-  <header role="banner" class="header">
-    {{ page.header }}
-  </header>
+  {{ page.header }}
+
+  {% block breadcrumbs %}
+    {{ page.breadcrumbs }}
+  {% endblock breadcrumbs %}
 
   <div class="help">
     {{ page.highlighted }}

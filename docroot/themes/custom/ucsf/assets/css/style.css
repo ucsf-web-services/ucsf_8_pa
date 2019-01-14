@@ -4204,19 +4204,30 @@ textarea {
 .webform-submission-form textarea {
   border: 1px solid #333; }
 
-.header::after {
-  clear: both;
-  content: " ";
-  display: table; }
+.header-region {
+  background: #fff;
+  padding-top: 24px;
+  -webkit-box-shadow: 0 12px 12px -4px rgba(0, 0, 0, 0.02);
+          box-shadow: 0 12px 12px -4px rgba(0, 0, 0, 0.02); }
 
-.header ul.menu {
-  list-style: none;
-  margin-bottom: 0;
-  margin-left: 0;
-  margin-top: -1px;
-  padding-left: 0; }
-  .header ul.menu li {
-    list-style: none; }
+.header {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 5%;
+  grid-row-gap: 0;
+  max-width: 1280px;
+  margin-bottom: 0; }
+  @media (min-width: 600px) {
+    .header {
+      grid-template-columns: repeat(2, 1fr); }
+      .header *:last-child {
+        justify-self: end; } }
+
+.logo {
+  width: 83px;
+  height: 40px;
+  margin-bottom: 24px;
+  grid-column: 1 / span 2; }
 
 .social-icons {
   margin-bottom: 30px; }
