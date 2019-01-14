@@ -19,15 +19,17 @@
     {% block page_system %}
     {% endblock %}
 
-    <main role="main" {{ bem(main_base_class, (main_modifiers), main_blockname) }}>
-      <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+    <div class="author-page-wrapper">
+      <main role="main" {{ bem(main_base_class, (main_modifiers), main_blockname) }}>
+        <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
 
-      <div {{ bem(main_content_base_class, (main_content_modifiers), main_content_blockname) }}>
-          {% block page_content %}{% endblock %}
-      </div>
+        <div {{ bem(main_content_base_class, (main_content_modifiers), main_content_blockname) }}>
+            {% block page_content %}{% endblock %}
+        </div>
 
-    </main>
-
+      </main>
+    </div>
+    
     {% block page_footer %}
       {% include "@organisms/site/site-footer/site-footer.twig" %}
     {% endblock %}

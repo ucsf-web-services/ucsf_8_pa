@@ -1,34 +1,32 @@
-@mixin button($bg:$black, $color:$white, $hoverBg: $gray, $hoverColor: $white) {
-  background-color: $bg;
-  border: none;
-  color: $color;
+@mixin button {
+  background-color: transparent;
+  color: $navy;
+  border: 1px solid $navy;
+  border-radius: $space-four;
   cursor: pointer;
   line-height: 1.4;
-  padding: 0.5em 1em;
+  padding: 0.75em 1.5em;
   display: inline-block;
   text-decoration: none;
   text-align: center;
-  text-transform: uppercase;
-
-  &:visited {
-    color: $color;
-  }
+  font-family: $font-helvetica-neue-medium;
 
   &:hover {
-    background-color: $hoverBg;
+    background-color: $blue;
+    color: $white;
+    border-color: $blue;
   }
 }
 
 @mixin button-alt {
-  @include button($gray, $white, $black);
+  @include button;
 
-  font-weight: 600;
-  font-size: 0.7rem;
-  padding: 0.4em 0.6em 0.3em;
+  border-color: $blue;
+  color: $blue;
 }
 
 @mixin button-alt-2 {
-  @include button($gray-lightest, $black, $gray-lighter);
+  @include button;
 
   font-size: 0.8rem;
   font-weight: 600;
