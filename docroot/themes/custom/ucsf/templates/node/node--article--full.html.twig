@@ -4,13 +4,14 @@
   {% include '@theme/banner/banner-medium.twig' %}
 {% endif %}
 
-<div class="main-content article-feature-content narrow-page">
+<div class="main-content article-{{ node.field_banner_layout.value }}-header narrow-page">
 
   <div class="page_narrow">
     {{ content.body }}
   </div>
 
   <div class="tags-menu-region">
-    {{ content.tags }}
+    <h3 class="tags-menu__title">{{ "Tags"|t }}</h3>
+    {{ content.field_tags }}
   </div>
 </div>
