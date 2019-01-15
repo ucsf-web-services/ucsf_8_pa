@@ -18,7 +18,9 @@
  *   - in_active_trail: TRUE if the link is in the active trail.
  */
 #}
+
 {% import _self as menus %}
+
 
 {#
   We call a macro which calls itself to render the full tree.
@@ -30,14 +32,14 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes.addClass('menu') }}>
+      <ul{{ attributes.addClass('main-menu') }}>
     {% else %}
-      <ul class="menu">
+      <ul class="main-menu">
     {% endif %}
     {% for item in items %}
       {%
         set classes = [
-          'menu-item',
+          'main-menu__item',
           item.is_expanded ? 'menu-item--expanded',
           item.is_collapsed ? 'menu-item--collapsed',
           item.in_active_trail ? 'menu-item--active-trail',
