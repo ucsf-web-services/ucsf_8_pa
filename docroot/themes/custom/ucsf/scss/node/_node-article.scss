@@ -362,7 +362,7 @@ h2 {
   padding-top: $space-quadruple;
 }
 
-.field-tags { // .tags-menu
+.tags-menu-region .field { // .tags-menu
   margin: 0;
   padding: 0;
   list-style: none;
@@ -382,12 +382,16 @@ h2 {
       margin: 0 10px 3px 7px;
       border-radius: 50%;
     }
+  }
 
-    &:first-child {
-      &::before {
-        display: none;
-      }
+  &.field-topics .field__item:first-child {
+    &::before {
+      display: none;
     }
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 }
 
