@@ -18,12 +18,12 @@ source:
   data_parser_plugin: xml
   urls: http://ucsfpa1dev.prod.acquia-sites.com/newsxml
   item_selector: /nodes/node
-  
-# unique identifier needs to be an integer 
+
+# unique identifier needs to be an integer
   ids:
     nid:
       type: integer
-  
+
   fields:
     -
       name: nid
@@ -88,7 +88,7 @@ source:
     -
       name: hbox
       label: 'news headline box'
-      selector: headline_box  
+      selector: headline_box
     -
       name: tags_tax
       label: 'news tags tax'
@@ -96,7 +96,7 @@ source:
     -
       name: exclude_tax
       label: 'news exclude tax'
-      selector: exclude   
+      selector: exclude
     -
       name: featured_image
       label: 'path to the featured image'
@@ -109,7 +109,7 @@ source:
       name: cus_author
       label: 'the custom byline for the ucsf news'
       selector: Custom-Byline
-  
+
   constants:
     file_directory: public://
 
@@ -122,7 +122,7 @@ source:
 # destination plugin is implemented in Drupal itself.
 destination:
   plugin: entity:node
-  
+
   default_bundle: article
 
 # Here's the meat of the migration - the processing pipeline. This describes how
@@ -132,14 +132,14 @@ process:
   type:
     plugin: default_value
     default_value: article
-  
+
   title: news_title
-  
+
   body/value: body
   body/format:
     plugin: default_value
     default_value: full_html
-  
+
   field_areas:
     -
       plugin: skip_on_empty
@@ -150,23 +150,23 @@ process:
       plugin: explode
       source: areas_tax
       delimiter: ','
-      
+
   field_article_type:
     -
       plugin: skip_on_empty
       method: process
       source: article_type_tax
       message: 'there was an empty field'
-      
-  field_sub_title: subtitle  
-  
+
+  field_sub_title: subtitle
+
   field_locations:
     -
       plugin: skip_on_empty
       method: process
       source: loc_tax
-      message: 'there was an empty field' 
-  
+      message: 'there was an empty field'
+
   field_organizations:
     -
       plugin: skip_on_empty
@@ -176,63 +176,64 @@ process:
     -
       plugin: explode
       source: orgs_tax
-      delimiter: ','     
-  
+      delimiter: ','
+
   field_people:
     -
       plugin: skip_on_empty
       method: process
       source: people_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: people_tax
-      delimiter: ',' 
-  
+      delimiter: ','
+
   field_topics:
     -
       plugin: skip_on_empty
       method: process
       source: topics_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: topics_tax
-      delimiter: ',' 
-  
+      delimiter: ','
+
   field_author_type:
     -
       plugin: skip_on_empty
       method: process
       source: author_type_tax_id
       message: 'there was an empty field'
-      
+
   field_tags:
     -
       plugin: skip_on_empty
       method: process
       source: tags_tax
       message: 'there was an empty field'
-  
+
   field_exclude:
     -
       plugin: skip_on_empty
       method: process
       source: exclude_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: exclude_tax
-      delimiter: ',' 
+      delimiter: ','
     -
-      plugin: entity_generate  
+      plugin: entity_generate
       source: exclude_tax
       entity_type: taxonomy_term
-  
+
+
 #  HEADLINE BOX TBD DESTINATION FIELD: hbox
 
-#  BOOLEAN EXLPORE TBD DESTINATION FIELD: bool_expore  
-  
+#  BOOLEAN EXLPORE TBD DESTINATION FIELD: bool_expore
+
 #  FEATURED IMAGE TBD DESTINATION FILED:
 #   -
 #     plugin: skip_on_empty
@@ -256,49 +257,53 @@ process:
 #   source:
 #     - 'constants/file_directory'
 #     - '@destination_basename'
-      
-#  field_author_byline: 
+
+#  field_author_byline:
 #    -
 #      plugin: testingbase
 #      para_type: author
-#      fields: 
+#      fields:
 #        -
 #          field_a_author: author
-  
-  lookupval: 
+
+  field_author: author
+
+  field_custom_author: cus_author
+
+  lookupval:
     -
       plugin: skip_on_empty
       method: process
       source: cus_author
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: data_condense
       source: cus_author
- 
+
   cus_author_val:
     -
       plugin: skip_on_empty
       method: process
       source: cus_author
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: data_lookup
       source: '@lookupval'
       file: public://authormap.csv
-  
-  field_author_byline: 
+
+  field_author_byline:
     -
       plugin: skip_on_empty
       method: process
       source: cus_author
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: testingbase
       para_type: custom_author
-      fields: 
+      fields:
         -
           field_c_author: '@cus_author_val'
-  
+
   field_featured_image_video:
     -
       plugin: skip_on_empty
@@ -308,12 +313,12 @@ process:
     -
       plugin: testingbase
       para_type: gallery
-      fields: 
+      fields:
         -
 #          field_gallery_items/target_id: gallery
-#          field_gallery_items/target_revision_id: gallery       
+#          field_gallery_items/target_revision_id: gallery
       csv:
-        - 
+        -
           string: 'gallery'
           string: '0'
           pid:  'pid'
@@ -325,7 +330,7 @@ process:
 #      fields:
 #        -
 #          target_id: gallery
-              
+
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value
   # (the 'style' field from the source database in this case) to the destination
