@@ -3,56 +3,44 @@
 # destination fields), and write it to Drupal.
 
 # The machine name for a migration, used to uniquely identify it.
-id: about_content
+id: people_tax
 
 # A human-friendly description of the migration.
-label: Migrate the news package content type into the new ucsf.edu website
+label: Migreate the organizations taxnomy into the new ucsf.edu website
 
 # The machine name of the group containing this migration (which contains shared
 # configuration to be merged with our own configuration here).
-migration_group: content_import
+migration_group: taxnomy
 
 source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: http://ucsfpa1dev.prod.acquia-sites.com/aboutxml
-  item_selector: /nodes/node
-
-# unique identifier needs to be an integer
-  ids:
-    nid:
-      type: integer
-
+  urls: http://ucsfpa1dev.prod.acquia-sites.com/peoplexml
+  item_selector: /taxonomy/terms
   fields:
     -
-      name: nid
-      label: 'node id'
-      selector: Nid
-    -
-      name: title
-      label: 'author node title'
+      name: tax_title
+      label: 'tax title'
       selector: title
     -
-      name: topics_tax
-      label: 'media coverage topic taxonomy reference'
-      selector: Topics
+      name: tax_id
+      label: 'tax ID'
+      selector: Term_ID
     -
-      name: body
-      label: 'body of the news package'
-      selector: Body
+      name: tax_description
+      label: 'tax description'
+      selector: description
     -
-      name: in_file
-      label: 'the file insert for the about pages'
-      selector: insert-files
-    -
-      name: image
-      label: 'image for the about pages'
-      selector: image
+      name: tax_parent
+      label: 'tax parent'
+      selector: Parent_id
 
   constants:
     file_directory: public://
-
+  ids:
+    tax_id:
+      type: integer
 
 # Every migration must also have a destination plugin, which handles writing
 # the migrated data in the appropriate form for that particular kind of data.
@@ -61,9 +49,9 @@ source:
 # Unlike the source plugin (which is specific to our particular scenario), this
 # destination plugin is implemented in Drupal itself.
 destination:
-  plugin: entity:node
+  plugin: entity:taxonomy_term
 
-  default_bundle: page
+  default_bundle: people
 
 # Here's the meat of the migration - the processing pipeline. This describes how
 # each destination field is to be populated based on the source data. For each
@@ -71,76 +59,23 @@ destination:
 process:
   type:
     plugin: default_value
-    default_value: page
+    default_value: people
 
-  title: title
+  name: tax_title
 
-  nid: nid
+  tid: tax_id
 
-  field_topics:
+  description/value: tax_description
+
+  parent:
     -
-      plugin: skip_on_empty
-      method: process
-      source: topics_tax
-      message: 'there was an empty field'
+      plugin: migration_lookup
+      migration: location_tax
+      source: tax_parent
+
     -
-      plugin: explode
-      source: topics_tax
-      delimiter: ','
-
-  body/value: body
-  body/format:
-    plugin: default_value
-    default_value: full_html
-
-  field_image:
-    -
-      plugin: skip_on_empty
-      method: process
-      source: in_file
-      message: 'there was an empty field'
-    -
-      plugin: file_copy
-      source:
-        - in_file
-        - '@destination_path'
-    -
-      plugin: entity_generate
-
-  destination_basename:
-    plugin: callback
-    callable: basename
-    source: in_file
-  destination_path:
-    plugin: concat
-    source:
-      - 'constants/file_directory'
-      - '@destination_basename'
-
-#  INLINE FILE TBD DESTINATION FILED:
-#   -
-#     plugin: skip_on_empty
-#     method: process
-#     source: in_file
-#     message: 'there was an empty field'
-#   -
-#     plugin: file_copy
-#     source:
-#       - in_file
-#       - '@destination_path'
-#   -
-#     plugin: entity_generate
-#
-# destination_basename:
-#   plugin: callback
-#   callable: basename
-#   source: in_file
-# destination_path:
-#   plugin: concat
-#   source:
-#     - 'constants/file_directory'
-#     - '@destination_basename'
-
+      plugin: default_value
+      default_value: 0
 
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value

@@ -49,7 +49,7 @@ class testingbase extends ProcessPluginBase {
         foreach($paragraph->getFields() as $test){
         }
         $dest = $this->configuration['fields'][0];
-        print_r($dest);
+        //print_r($dest);
         $value;
         if(!empty($dest)){
             foreach($dest as $source => $field) {
@@ -71,8 +71,8 @@ class testingbase extends ProcessPluginBase {
         $paragraph->save();
         if(!empty($this->configuration['csv'])){
             $line = "gallery," . 0 . "," .$paragraph->id(). "," .$paragraph->id(). "," . "en," . 0 . "," .$value.",".$value."\n";
-            file_put_contents("public://gallery.csv",$line,FILE_APPEND);
-            print_r($paragraph->id()."\n");
+            file_put_contents("public://paragraph_field_gallery_items.csv",$line,FILE_APPEND);
+            //print_r($paragraph->id()."\n");
         }
         return $paragraph;
     }
