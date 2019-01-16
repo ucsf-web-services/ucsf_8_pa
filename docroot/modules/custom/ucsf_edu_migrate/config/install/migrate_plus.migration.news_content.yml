@@ -266,9 +266,19 @@ process:
 #        -
 #          field_a_author: author
 
-  field_author: author
+  field_author:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: author
+      message: 'there was an empty field'
 
-  field_custom_author: cus_author
+  field_custom_author:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: cus_author
+      message: 'there was an empty field'
 
   lookupval:
     -
