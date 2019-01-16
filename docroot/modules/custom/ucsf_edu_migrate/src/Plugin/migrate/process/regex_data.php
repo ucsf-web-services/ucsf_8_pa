@@ -18,8 +18,8 @@ use Drupal\Core\Entity;
  * process:
  *   field_your_field_name:
  *     -
- *       plugin: data_lookup
- *       source: some_source_value
+ *       plugin: regex_data
+ *       source: some_regex_value
  *
  * @endcode
  *
@@ -28,11 +28,11 @@ use Drupal\Core\Entity;
  * @see \Drupal\migrate\Plugin\MigrateProcessInterface
  *
  * @MigrateProcessPlugin(
- *   id = "data_condense"
+ *   id = "regex_data"
  * )
  */
 
-class data_condense extends ProcessPluginBase {
+class regex_data extends ProcessPluginBase {
 
     public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property){
         // If the $value field which is the source value is a string add hello world to the end of it.
