@@ -10,16 +10,27 @@
 </div>
 <div class="article-header__author">
   {{ "By"|t }}
-  {% set authors = content.field_author['#items'] %}
-  {% set authors = authors|merge(content.field_custom_author['#items']) %}
+
+  {# Merge field_author with field_custom_author. #}
+  {% if content.field_author['#items'] %}
+    {% set authors = content.field_author['#items'] %}
+  {% else %}
+    {% set authors = [] %}
+  {% endif %}
+  {% if content.field_custom_author['#items'] %}
+    {% set authors = authors|merge(content.field_custom_author['#items']) %}
+  {% endif %}
+
+  {# Output each author with proper separator. #}
   {%- for author in authors -%}
     {%- if loop.first -%}
       {%- include '@theme/banner/banner-author.twig' -%}
-    {%- elseif loop.last and loop.length == 2 -%} and
-      {%- include '@theme/banner/banner-author.twig' -%}
-    {%- elseif loop.last -%}, and
-      {%- include '@theme/banner/banner-author.twig' -%}
-    {%- else -%}, {%- include '@theme/banner/banner-author.twig' -%}
+    {%- elseif loop.last and loop.length == 2 -%}
+      {%- include '@theme/banner/banner-author.twig' with {separator: ' and '} -%}
+    {%- elseif loop.last -%}
+      {%- include '@theme/banner/banner-author.twig'  with {separator: ', and '}-%}
+    {%- else -%}
+      {%- include '@theme/banner/banner-author.twig' with {separator: ', '}-%}
     {%- endif -%}
   {%- endfor -%}
 </div>

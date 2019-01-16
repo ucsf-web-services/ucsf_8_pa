@@ -1,6 +1,6 @@
-{% if author.entity.entitytypeid == 'node' %}
+{%- if author.entity.entitytypeid == 'node' -%}
   {% set path = path('entity.node.canonical', {'node': author.entity.id})  %}
-{% elseif author.entity.entitytypeid == 'taxonomy_term' %}
+{%- elseif author.entity.entitytypeid == 'taxonomy_term' -%}
   {% set path = path('entity.taxonomy_term.canonical', { 'taxonomy_term': author.entity.id}) %}
-{% endif %}
-<a href="{{ path }}">{{ author.entity.label }}</a>
+{%- endif -%}
+{{ separator }}<a href="{{ path }}">{{ author.entity.label }}</a>{# No new line at end of file is intentionl. #}
