@@ -25,6 +25,14 @@
   }
 }
 
+@mixin grid-three {
+  @include grid-base;
+
+  @include medium {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @mixin grid-four {
   @include grid-base;
 
@@ -39,6 +47,33 @@
   @include medium {
     grid-template-columns: repeat(15, 1fr);
     grid-gap: 0;
+  }
+}
+
+@mixin grid-sixteen {
+  @include grid-base;
+
+  @include medium {
+    grid-template-columns: repeat(16, 1fr);
+    grid-gap: 0;
+  }
+}
+
+@mixin grid-eighteen {
+  @include grid-base;
+
+  @include medium {
+    grid-template-columns: repeat(18, 1fr);
+    grid-gap: 0;
+  }
+}
+
+@mixin grid-twenty {
+  @include grid-base;
+
+  @include medium {
+    grid-template-columns: repeat(20, 1fr);
+    grid-gap: 2%;
   }
 }
 
