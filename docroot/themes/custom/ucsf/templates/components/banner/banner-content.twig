@@ -9,5 +9,17 @@
   {{ content.field_sub_title }}
 </div>
 <div class="article-header__author">
-  {{ "By"|t }} {{ content.field_author }}
+  {{ "By"|t }}
+  {% set authors = content.field_author['#items'] %}
+  {% set authors = authors|merge(content.field_custom_author['#items']) %}
+  {%- for author in authors -%}
+    {%- if loop.first -%}
+      {%- include '@theme/banner/banner-author.twig' -%}
+    {%- elseif loop.last and loop.length == 2 -%} and
+      {%- include '@theme/banner/banner-author.twig' -%}
+    {%- elseif loop.last -%}, and
+      {%- include '@theme/banner/banner-author.twig' -%}
+    {%- else -%}, {%- include '@theme/banner/banner-author.twig' -%}
+    {%- endif -%}
+  {%- endfor -%}
 </div>
