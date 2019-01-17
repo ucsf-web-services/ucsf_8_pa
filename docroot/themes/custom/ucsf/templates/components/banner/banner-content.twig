@@ -9,7 +9,6 @@
   {{ content.field_sub_title }}
 </div>
 <div class="article-header__author">
-  {{ "By"|t }}
 
   {# Merge field_author with field_custom_author. #}
   {% if content.field_author['#items'] %}
@@ -19,6 +18,10 @@
   {% endif %}
   {% if content.field_custom_author['#items'] %}
     {% set authors = authors|merge(content.field_custom_author['#items']) %}
+  {% endif %}
+
+  {% if authors %}
+    {{ "By"|t }}
   {% endif %}
 
   {# Output each author with proper separator. #}
