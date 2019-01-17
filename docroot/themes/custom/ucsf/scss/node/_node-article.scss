@@ -172,25 +172,25 @@
 
   .article-header__date {
     color: $gray-blue;
-
-    &::before {
-      content: ' ';
-      display: inline-block;
-      height: 3px;
-      width: 3px;
-      background: $gray-blue;
-      margin: 0 10px 3px 7px;
-      border-radius: 50%;
-    }
   }
 }
 
-@each $area, $color in $areas {
-  [data-primary-area="#{$area}"] {
+[data-primary-area^="pa-"] + .article-header__date::before {
+  content: ' ';
+  display: inline-block;
+  height: 3px;
+  width: 3px;
+  background: $gray-blue;
+  margin: 0 10px 3px 7px;
+  border-radius: 50%;
+}
+
+@each $area, $color, $color2 in $areas {
+  [data-primary-area="pa-#{$area}"] {
     color: $color;
 
     &::before {
-      background: $color;
+      background: $color2;
     }
   }
 }

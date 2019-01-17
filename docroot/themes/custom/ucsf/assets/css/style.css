@@ -4707,29 +4707,35 @@ textarea {
     margin-bottom: 3px; }
   .article-header__byline .article-header__date {
     color: #506380; }
-    .article-header__byline .article-header__date::before {
-      content: ' ';
-      display: inline-block;
-      height: 3px;
-      width: 3px;
-      background: #506380;
-      margin: 0 10px 3px 7px;
-      border-radius: 50%; }
 
-[data-primary-area="about"] {
+[data-primary-area^="pa-"] + .article-header__date::before {
+  content: ' ';
+  display: inline-block;
+  height: 3px;
+  width: 3px;
+  background: #506380;
+  margin: 0 10px 3px 7px;
+  border-radius: 50%; }
+
+[data-primary-area="pa-about"] {
   color: #007cbe; }
-  [data-primary-area="about"]::before {
-    background: #007cbe; }
+  [data-primary-area="pa-about"]::before {
+    background: #178ccb; }
 
-[data-primary-area="research"] {
+[data-primary-area="pa-patient-care"] {
+  color: #058488; }
+  [data-primary-area="pa-patient-care"]::before {
+    background: #18a3ac; }
+
+[data-primary-area="pa-research"] {
   color: #007cbe; }
-  [data-primary-area="research"]::before {
-    background: #007cbe; }
+  [data-primary-area="pa-research"]::before {
+    background: #178ccb; }
 
-[data-primary-area="news-center"] {
-  color: #716fb2; }
-  [data-primary-area="news-center"]::before {
-    background: #716fb2; }
+[data-primary-area="pa-news-center"] {
+  color: #eb093c; }
+  [data-primary-area="pa-news-center"]::before {
+    background: #ec1848; }
 
 .basic-header__subheading,
 .field-sub-title {
