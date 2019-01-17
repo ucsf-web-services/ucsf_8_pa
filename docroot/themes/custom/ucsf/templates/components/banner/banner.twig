@@ -5,7 +5,10 @@
 {% endif %}
 
 <div class="main-content narrow-page">
-  <header class="article-header {{ layout == 'medium' ? 'article-medium-header' }}">
+  {% if layout == 'medium' and content.field_banner_image|render != '' %}
+   {% set class= 'article-medium-header' %}
+  {% endif %}
+  <header class="article-header {{ class }}">
     {% include '@theme/banner/banner-content.twig' %}
   </header>
   {% include "@theme/share/share.twig" %}
