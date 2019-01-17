@@ -1,11 +1,8 @@
-{# @todo Can be easily converted to 1 template.#}
 {% if node.field_banner_layout.value == 'feature' %}
   {% include '@theme/banner/banner-feature.twig' %}
 {% else %}
   {% include '@theme/banner/banner-medium.twig' %}
 {% endif %}
-
-<div class="main-content article-{{ node.field_banner_layout.value }}-header narrow-page">
 
   <div class="page_narrow">
     {{ content.body }}
