@@ -1,0 +1,11 @@
+{% if layout == 'medium' %}
+  <figure class="article-medium-banner">
+    {{ content.field_banner_image }}
+  </figure>
+{% endif %}
+
+<div class="main-content narrow-page">
+  <header class="article-header {{ layout == 'medium' ? 'article-medium-header' }}">
+    {% include '@theme/banner/banner-content.twig' %}
+  </header>
+  {% include "@theme/share/share.twig" %}
