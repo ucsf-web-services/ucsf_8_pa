@@ -2,6 +2,7 @@
 
 namespace Drupal\applenews\Controller;
 
+use Drupal\applenews\ApplenewsManager;
 use Drupal\applenews\ApplenewsPreviewBuilder;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Controller\ControllerBase;
@@ -40,6 +41,13 @@ class ApplenewsPreviewController extends ControllerBase {
   protected $previewBuilder;
 
   /**
+   * Apple News Manager.
+   *
+   * @var \Drupal\applenews\ApplenewsManager
+   */
+  protected $applenewsManager;
+
+  /**
    * ApplenewsPreviewController constructor.
    *
    * @param \Psr\Log\LoggerInterface $logger
@@ -48,11 +56,14 @@ class ApplenewsPreviewController extends ControllerBase {
    *   Serializer object.
    * @param \Drupal\applenews\ApplenewsPreviewBuilder $preview_builder
    *   Preview builder object.
+   * @param \Drupal\applenews\ApplenewsManager $manager
+   *   Apple news manager.
    */
-  public function __construct(LoggerInterface $logger, Serializer $serializer, ApplenewsPreviewBuilder $preview_builder) {
+  public function __construct(LoggerInterface $logger, Serializer $serializer, ApplenewsPreviewBuilder $preview_builder, ApplenewsManager $manager) {
     $this->logger = $logger;
     $this->serializer = $serializer;
     $this->previewBuilder = $preview_builder;
+    $this->applenewsManager = $manager;
   }
 
   /**
@@ -62,7 +73,8 @@ class ApplenewsPreviewController extends ControllerBase {
     return new static(
       $container->get('logger.channel.applenews'),
       $container->get('serializer'),
-      $container->get('applenews.preview_builder')
+      $container->get('applenews.preview_builder'),
+      $container->get('applenews.manager')
     );
   }
 
@@ -82,14 +94,12 @@ class ApplenewsPreviewController extends ControllerBase {
    *   Response object.
    */
   public function preview($entity_type, EntityInterface $entity, $revision_id, $template_id) {
-    $context['template_id'] = $template_id;
     $filename = NULL;
     $entity_archive = TRUE;
     $entity_id = $entity->id();
-    $entity_ids = [$entity_id];
 
-    $data = $this->getDataArray($entity, $context);
-    $this->exportToFile($entity_id, $entity_ids, $filename, $entity_archive, $data);
+    $data = $this->getDataArray($entity, $template_id);
+    $this->export($entity_id, $filename, $entity_archive, $data);
     $archive_path = $this->exportFilePath($entity_id);
     $archive = $archive_path . '.zip';
 
@@ -106,18 +116,17 @@ class ApplenewsPreviewController extends ControllerBase {
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   Entity article attached to.
-   * @param array $context
-   *   An array of context.
+   * @param string $template_id
+   *   String template ID.
    *
    * @return array
    *   An array of article data.
    */
-  protected function getDataArray(EntityInterface $entity, array $context) {
-    /** @var \ChapterThree\AppleNewsAPI\Document $document */
-    $document = $this->serializer->normalize($entity, 'applenews', $context);
+  protected function getDataArray(EntityInterface $entity, $template_id) {
+    $document = $this->applenewsManager->getDocumentDataFromEntity($entity, $template_id);
 
     return [
-      'json' => Json::encode($document),
+      'json' => $document,
       'files' => [],
     ];
   }
@@ -127,6 +136,34 @@ class ApplenewsPreviewController extends ControllerBase {
    *
    * @param int $entity_id
    *   Entity ID.
+   * @param string $filename
+   *   String filename.
+   * @param string $entity_archive
+   *   String path.
+   * @param array $data
+   *   An array of article dta.
+   *
+   * @return null|string
+   *   URL of the archive file if available, NULL otherwise.
+   */
+  protected function export($entity_id, $filename, $entity_archive, array $data) {
+    $preview = $this->previewBuilder->setEntity($entity_id, $filename, $entity_archive, $data);
+
+    $file_url = $preview->getArchiveFilePath();
+    $preview->toFile();
+      try {
+        $preview->archive([$entity_id]);
+      }
+      catch (\Exception $e) {
+        $this->logger->error('Could not create archive: @err', ['@err' => $e->getMessage()]);
+        return NULL;
+      }
+      return $file_url;
+  }
+
+  /**
+   * Export articles to file.
+   *
    * @param array $entity_ids
    *   An array of entity IDs.
    * @param string $filename
@@ -136,33 +173,21 @@ class ApplenewsPreviewController extends ControllerBase {
    * @param array $data
    *   An array of article dta.
    *
-   * @return int|null|string
-   *   NULL if successful. URL for group of entities.
+   * @return null|string
+   *   URL of the archive file if available, NULL otherwise.
    */
-  protected function exportToFile($entity_id, array $entity_ids, $filename, $entity_archive, array $data) {
-    $preview = $this->previewBuilder->setEntity($entity_id, $filename, $entity_archive, $data);
+  protected function exportMultiple(array $entity_ids, $filename, $entity_archive, array $data) {
+    $preview = $this->previewBuilder->setEntity(NULL, $filename, $entity_archive, $data);
 
-    if (!empty($entity_id)) {
-      $preview->toFile();
-      try {
-        $preview->archive($entity_ids);
-      }
-      catch (\Exception $e) {
-        $this->logger->error('Could not create archive: @err', ['@err' => $e->getMessage()]);
-      }
+    $file_url = $preview->getArchiveFilePath();
+    try {
+      $preview->archive($entity_ids);
+    }
+    catch (\Exception $e) {
+      $this->logger->error('Could not create archive: @err', ['@err' => $e->getMessage()]);
       return NULL;
     }
-    else {
-      $file_url = $preview->getArchiveFilePath();
-      try {
-        $preview->archive($entity_ids);
-      }
-      catch (\Exception $e) {
-        $this->logger->error('Could not create archive: @err', ['@err' => $e->getMessage()]);
-        return NULL;
-      }
-      return $file_url;
-    }
+    return $file_url;
   }
 
   /**
