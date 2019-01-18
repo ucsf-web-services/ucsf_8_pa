@@ -12,7 +12,6 @@ use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Session\AccountSwitcherInterface;
 use Drupal\Core\Url;
-use Drupal\image\Entity\ImageStyle;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Drupal\acquia_contenthub\ContentHubSubscription;
@@ -338,7 +337,7 @@ class ContentEntityViewModesExtractor implements ContentEntityViewModesExtractor
     // Render View Mode.
     $entity_type_id = $object->getEntityTypeId();
     $use_block_content_view_builder = $this->config->get('acquia_contenthub.entity_config')->get('use_block_content_view_builder');
-    if ($entity_type_id === 'block_content' && !$use_block_content_view_builder) {
+    if ($entity_type_id === 'block_content' && $use_block_content_view_builder) {
       $build = $this->getBlockMinimalBuildArray($object, $view_mode);
     }
     else {

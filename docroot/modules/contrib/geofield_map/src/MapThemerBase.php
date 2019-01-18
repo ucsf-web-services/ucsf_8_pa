@@ -72,6 +72,55 @@ abstract class MapThemerBase extends PluginBase implements MapThemerInterface, C
   }
 
   /**
+   * Returns the default Legend Header.
+   *
+   * @param array $configuration
+   *   The Legend configuration.
+   *
+   * @return array
+   *   The DefaultLegendIcon render array.
+   */
+  protected function defaultLegendHeader(array $configuration) {
+
+    $legend_default_settings = $this->defaultSettings('legend');
+
+    return [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => ['geofield-map-legend', $legend_default_settings['class']],
+      ],
+      'table' => [
+        '#type' => 'table',
+        '#caption' => isset($configuration['legend_caption']) ? $configuration['legend_caption'] : '',
+        '#header' => [
+          isset($configuration['values_label']) ? $configuration['values_label'] : '',
+          isset($configuration['markers_label']) ? $configuration['markers_label'] : '',
+        ],
+      ],
+    ];
+  }
+
+  /**
+   * Returns the default Legend Footer.
+   *
+   * @param array $configuration
+   *   The Legend configuration.
+   *
+   * @return array
+   *   The DefaultLegendIcon render array.
+   */
+  protected function defaultLegendFooter(array $configuration) {
+    return [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#value' => isset($configuration['legend_notes']) ? $configuration['legend_notes'] : '',
+      '#attributes' => [
+        'class' => ['notes'],
+      ],
+    ];
+  }
+
+  /**
    * Generate Label Alias Help Message.
    *
    * @return array

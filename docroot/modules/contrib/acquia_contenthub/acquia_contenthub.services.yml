@@ -132,3 +132,7 @@ services:
   acquia_contenthub.queue.database.memory_limit:
     class: Drupal\acquia_contenthub\Queue\MemoryLimitDatabaseQueueFactory
     arguments: ['@database']
+  acquia_contenthub.account_switcher.decorator:
+    class: Drupal\acquia_contenthub\AccountSwitcherDecorator
+    decorates: account_switcher
+    arguments: ['@current_user', '@session_handler.write_safe']

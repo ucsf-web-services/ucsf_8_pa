@@ -52,7 +52,12 @@ function acquia_contenthub_subscriber_acquia_contenthub_process_webhook_alter($w
       continue;
     }
 
-    $import_entity_manager->import($asset['uuid']);
+    // Determine the author UUID for the nodes to be created.
+    // We will use administrator as author in these cases.
+    $uid = 1;
+    $user = \Drupal\user\Entity\User::load($uid);
+    $author = $user->uuid();
+    $import_entity_manager->import($asset['uuid'], TRUE, $author);
   }
 }
 

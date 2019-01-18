@@ -10,6 +10,7 @@ use Drupal\Core\Queue\QueueWorkerManagerInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Queue\SuspendQueueException;
 use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Core\Queue\RequeueException;
 
 /**
  * Implements an Export Queue Controller for Content Hub.
@@ -106,6 +107,14 @@ class ContentHubExportQueueController extends ControllerBase {
   }
 
   /**
+   *  Execute the delete function for the ACH Export Queue.
+   */
+  public function purgeQueue() {
+    $queue = $this->queueFactory->get('acquia_contenthub_export_queue');
+    $queue->deleteQueue();
+  }
+
+  /**
    * Obtains the Queue waiting time in seconds.
    *
    * @return int
@@ -187,20 +196,21 @@ class ContentHubExportQueueController extends ControllerBase {
           }
 
           // Process item.
-          $entities_processed = $queue_worker->processItem($item->data);
+          try {
+            $entities_processed = $queue_worker->processItem($item->data);
+          }
+          catch (RequeueException $ex) {
+            $entities_processed = FALSE;
+          }
           if ($entities_processed == FALSE) {
-            // If Plexus could not process the item, release it so it can be
-            // processed again later.
-            $queue->releaseItem($item);
-
             // Indicate that the item could not be processed.
             if ($entities_processed === FALSE) {
-              $message = new TranslatableMarkup('There was an error processing entities: @entities and their dependencies. The item has been sent back to the queue to be processed again later.', [
+              $message = new TranslatableMarkup('There was an error processing entities: @entities and their dependencies. The item has been sent back to the queue to be processed again later. Check your logs for more info.', [
                 '@entities' => implode(',', $entities_list),
               ]);
             }
             else {
-              $message = new TranslatableMarkup('No processing was done for entities: @entities and their dependencies. The item has been sent back to the queue to be processed again later.', [
+              $message = new TranslatableMarkup('No processing was done for entities: @entities and their dependencies. The item has been sent back to the queue to be processed again later. Check your logs for more info.', [
                 '@entities' => implode(',', $entities_list),
               ]);
             }

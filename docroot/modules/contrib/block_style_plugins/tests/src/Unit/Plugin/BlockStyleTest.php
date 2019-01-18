@@ -95,26 +95,26 @@ class BlockStyleTest extends UnitTestCase {
   }
 
   /**
-   * Tests the defaultStyles method.
+   * Tests the defaultConfiguration method.
    *
-   * @see ::defaultStyles()
+   * @see ::defaultConfiguration()
    */
-  public function testDefaultStyles() {
+  public function testDefaultConfiguration() {
     $expected = [
       'test_field' => 'default text',
       'second_field' => 1,
     ];
-    $default = $this->plugin->defaultStyles();
+    $default = $this->plugin->defaultConfiguration();
 
     $this->assertArrayEquals($expected, $default);
   }
 
   /**
-   * Tests the formElements method.
+   * Tests the buildConfigurationForm method.
    *
-   * @see ::formElements()
+   * @see ::buildConfigurationForm()
    */
-  public function testFormElements() {
+  public function testBuildConfigurationForm() {
     $expected = [
       'test_field' => [
         '#type' => 'textfield',
@@ -135,12 +135,12 @@ class BlockStyleTest extends UnitTestCase {
 
     // Use reflection to alter the protected $this->plugin->styles.
     $reflectionObject = new \ReflectionObject($this->plugin);
-    $property = $reflectionObject->getProperty('styles');
+    $property = $reflectionObject->getProperty('configuration');
     $property->setAccessible(TRUE);
     $property->setValue($this->plugin, ['third_field' => 'user set value']);
 
     $form = [];
-    $return = $this->plugin->formElements($form, $this->formState->reveal());
+    $return = $this->plugin->buildConfigurationForm($form, $this->formState->reveal());
 
     $this->assertArrayEquals($expected, $return);
   }

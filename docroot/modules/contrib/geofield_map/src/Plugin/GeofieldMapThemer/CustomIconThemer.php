@@ -22,8 +22,11 @@ use Drupal\Core\Render\Markup;
  *   type = "single_value",
  *   context = {"ViewStyle"},
  *   defaultSettings = {
- *    "values" = NULL
- *   },
+ *    "values" = {},
+ *    "legend" = {
+ *      "class" = "custom-icon",
+ *     },
+ *   }
  * )
  */
 class CustomIconThemer extends MapThemerBase {
@@ -82,6 +85,7 @@ class CustomIconThemer extends MapThemerBase {
    * {@inheritdoc}
    */
   public function getLegend(array $map_theming_values, array $configuration = []) {
+    $legend = $this->defaultLegendHeader($configuration);
 
     // Get the icon image style, as result of the Legend configuration.
     $image_style = isset($configuration['markers_image_style']) ? $configuration['markers_image_style'] : 'none';
@@ -90,21 +94,9 @@ class CustomIconThemer extends MapThemerBase {
       $image_style = isset($map_theming_values['image_style']) ? $map_theming_values['image_style'] : 'none';
     }
 
-    $legend = [
-      '#type' => 'table',
-      '#header' => [
-        isset($configuration['values_label']) ? $configuration['values_label'] : $this->t('Type'),
-        isset($configuration['markers_label']) ? $configuration['markers_label'] : $this->t('Marker'),
-      ],
-      '#caption' => isset($configuration['legend_notes']) ? $configuration['legend_notes'] : '',
-      '#attributes' => [
-        'class' => ['geofield-map-legend', 'custom-icon'],
-      ],
-    ];
-
     $fid = (integer) !empty($map_theming_values['icon_file']['fids']) ? $map_theming_values['icon_file']['fids'][0] : NULL;
 
-    $legend['custom-icon'] = [
+    $legend['table']['custom-icon'] = [
       'value' => [
         '#type' => 'container',
         'label' => [
@@ -120,6 +112,13 @@ class CustomIconThemer extends MapThemerBase {
         '#attributes' => [
           'class' => ['marker'],
         ],
+      ],
+    ];
+
+    $legend['notes'] = [
+      '#markup' => isset($configuration['legend_notes']) ? $configuration['legend_notes'] : '',
+      '#attributes' => [
+        'class' => ['notes'],
       ],
     ];
 

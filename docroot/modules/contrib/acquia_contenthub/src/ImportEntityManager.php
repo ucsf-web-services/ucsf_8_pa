@@ -508,7 +508,7 @@ class ImportEntityManager {
    * @param array $dependencies
    *   An array of ContentHubEntityDependency objects.
    *
-   * @return bool|null
+   * @return \Symfony\Component\HttpFoundation\JsonResponse|null
    *   The Drupal entity being created.
    */
   private function importRemoteEntityDependencies(ContentHubEntityDependency $contenthub_entity, array &$dependencies) {
@@ -525,9 +525,15 @@ class ImportEntityManager {
       }
     }
 
+    // Check already imported entity, that auto import is available or not.
+    $trackingEntity = $this->contentHubEntitiesTracking->loadImportedByUuid($contenthub_entity->getRawEntity()->getUuid());
+    if ($trackingEntity && $trackingEntity->isAutoUpdateDisabled()) {
+      return new JsonResponse(NULL);
+    }
+
     // Now that we have created all its pre-dependencies, create the current
     // Drupal entity.
-    $entity = $this->importRemoteEntityNoDependencies($contenthub_entity);
+    $response = $this->importRemoteEntityNoDependencies($contenthub_entity);
 
     // Create post-dependencies.
     foreach ($contenthub_entity->getDependencyChain() as $uuid) {
@@ -537,7 +543,7 @@ class ImportEntityManager {
         $this->importRemoteEntityDependencies($content_hub_entity_dependency, $dependencies);
       }
     }
-    return $entity;
+    return $response;
   }
 
   /**
@@ -612,7 +618,7 @@ class ImportEntityManager {
           if (!empty($path['pid']) || !isset($path['alias'])) {
             continue;
           }
-          $raw_path = $alias_manager->getPathByAlias($path['alias'], $path['langcode']);
+          $raw_path = $entity->id() ? '/' . $entity->toUrl()->getInternalPath() : $alias_manager->getPathByAlias($path['alias'], $path['langcode']);
           if (!$raw_path) {
             continue;
           }
@@ -626,6 +632,23 @@ class ImportEntityManager {
           $path['pid'] = $alias->pid;
           $path['source'] = $raw_path;
           $entity->set('path', [$path]);
+        }
+      }
+      // Check if there exists a local "redirect" entity with the same hash.
+      if ($entity->getEntityTypeId() === 'redirect' && $entity->getHash()) {
+        /** @var \Drupal\redirect\Entity\Redirect $local_redirect_entity */
+        $local_redirect_entity = reset(\Drupal::entityTypeManager()->getStorage('redirect')->loadByProperties(['hash' => $entity->getHash()]));
+        if ($local_redirect_entity && $local_redirect_entity->uuid() !== $entity->uuid()) {
+          $this->loggerFactory->get('acquia_contenthub')
+            ->debug('An existing redirect entity with the same "hash" was found and overwritten by the one coming from Content Hub. Old UUID = "%old_uuid", New UUID = "%new_uuid", source = "%source", old destination = "%old_destination", new destination = "%new_destination".', [
+              '%old_uuid' => $local_redirect_entity->uuid(),
+              '%new_uuid' => $entity->uuid(),
+              '%source' => $local_redirect_entity->getSourceUrl(),
+              '%old_destination' => $local_redirect_entity->getRedirectUrl()
+                ->toUriString(),
+              '%new_destination' => $entity->getRedirectUrl()->toUriString(),
+            ]);
+          $local_redirect_entity->delete();
         }
       }
 
@@ -658,17 +681,27 @@ class ImportEntityManager {
           $renderUser = new ContentHubUserSession($role->id());
           $accountSwitcher->switchTo($renderUser);
           try {
-            /** @var \Drupal\pathauto\PathautoGenerator $path_generator */
-            $path_generator = \Drupal::service('pathauto.generator');
-            $op = $is_new_entity ? 'insert' : 'update';
-            $path_generator->createEntityAlias($entity, $op);
+            /** @var \Drupal\pathauto\AliasStorageHelperInterface $alias_storage_helper */
+            $alias_storage_helper = \Drupal::service('pathauto.alias_storage_helper');
+            $languages = $entity->getTranslationLanguages();
+            foreach ($languages as $language) {
+              $entity = $entity->getTranslation($language->getId());
+              if ($entity && $entity->hasField('path')) {
+                $path = $entity->get('path')->getValue();
+                if ($path = reset($path)) {
+                  $path['source'] = empty($path['source']) ? '/' . $entity->toUrl()->getInternalPath() : $path['source'];
+                  $path['language'] = isset($path['langcode']) ? $path['langcode'] : $language->getId();
+                  $alias_storage_helper->save($path);
+                }
+              }
+            }
           }
           catch (\Exception $e) {
             $this->loggerFactory->get('acquia_contenthub')
-              ->debug('Could not generate path alias for (!entity_type, !entity_id). Error message: !message', [
-                '!entity_type' => $entity->getEntityTypeId(),
-                '!entity_id' => $entity->id(),
-                '!message' => $e->getMessage(),
+              ->debug('Could not generate path alias for (%entity_type, %entity_id). Error message: %message', [
+                '%entity_type' => $entity->getEntityTypeId(),
+                '%entity_id' => $entity->id(),
+                '%message' => $e->getMessage(),
               ]);
           }
           $accountSwitcher->switchBack();
@@ -743,6 +776,8 @@ class ImportEntityManager {
    *
    * @return bool
    *   TRUE if entity is new, FALSE otherwise.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   private function trackImportedEntity(ContentHubEntityDependency $contenthub_entity) {
     $cdf = (array) $contenthub_entity->getRawEntity();
@@ -778,6 +813,8 @@ class ImportEntityManager {
       '%type' => $cdf['type'],
       '%uuid' => $cdf['uuid'],
     ]);
+
+    return FALSE;
   }
 
   /**

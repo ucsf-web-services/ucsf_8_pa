@@ -142,7 +142,7 @@ class MigrationListBuilder extends ConfigEntityListBuilder implements EntityHand
     try {
       /** @var \Drupal\migrate\Plugin\MigrationInterface $migration */
       $migration = $this->migrationPluginManager->createInstance($migration_entity->id());
-      $migration_group = $migration->get('migration_group');
+      $migration_group = $migration_entity->get('migration_group');
       if (!$migration_group) {
         $migration_group = 'default';
       }

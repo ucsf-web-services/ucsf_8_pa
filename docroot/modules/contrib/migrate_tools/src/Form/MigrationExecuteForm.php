@@ -67,24 +67,24 @@ class MigrationExecuteForm extends FormBase {
     // Build the 'Update options' form.
     $form = [
       '#type' => 'fieldset',
-      '#title' => t('Operations'),
+      '#title' => $this->t('Operations'),
     ];
     $options = [
-      'import' => t('Import'),
-      'rollback' => t('Rollback'),
-      'stop' => t('Stop'),
-      'reset' => t('Reset'),
+      'import' => $this->t('Import'),
+      'rollback' => $this->t('Rollback'),
+      'stop' => $this->t('Stop'),
+      'reset' => $this->t('Reset'),
     ];
     $form['operation'] = [
       '#type' => 'select',
-      '#title' => t('Choose an operation to run'),
+      '#title' => $this->t('Choose an operation to run'),
       '#options' => $options,
       '#default_value' => 'import',
       '#required' => TRUE,
     ];
     $form['submit'] = [
       '#type' => 'submit',
-      '#value' => t('Execute'),
+      '#value' => $this->t('Execute'),
     ];
     $definitions = [];
     $definitions[] = $this->t('Import: Imports all previously unprocessed records from the source, plus any records marked for update, into destination Drupal objects.');
@@ -100,26 +100,31 @@ class MigrationExecuteForm extends FormBase {
 
     $form['options'] = [
       '#type' => 'fieldset',
-      '#title' => t('Options'),
+      '#title' => $this->t('Options'),
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
     ];
     $form['options']['update'] = [
       '#type' => 'checkbox',
-      '#title' => t('Update'),
-      '#description' => t('Check this box to update all previously-imported content
+      '#title' => $this->t('Update'),
+      '#description' => $this->t('Check this box to update all previously-imported content
       in addition to importing new content. Leave unchecked to only import
       new content'),
     ];
     $form['options']['force'] = [
       '#type' => 'checkbox',
-      '#title' => t('Ignore dependencies'),
-      '#description' => t('Check this box to ignore dependencies when running imports
+      '#title' => $this->t('Ignore dependencies'),
+      '#description' => $this->t('Check this box to ignore dependencies when running imports
       - all tasks will run whether or not their dependent tasks have
       completed.'),
     ];
-    // @TODO: Limit is not working. Perhaps because of batch? See
-    // https://www.drupal.org/project/migrate_tools/issues/2924298.
+    $form['options']['limit'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Limit to:'),
+      '#size' => 10,
+      '#description' => $this->t('Set a limit of how many items to process for each migration task.'),
+    ];
+
     return $form;
   }
 

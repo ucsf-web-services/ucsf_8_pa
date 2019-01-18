@@ -32,8 +32,11 @@ use Drupal\Core\Ajax\ReplaceCommand;
  *   type = "key_value",
  *   context = {"ViewStyle"},
  *   defaultSettings = {
- *    "values": {}
- *   },
+ *    "values" = {},
+ *    "legend" = {
+ *      "class" = "option",
+ *     },
+ *   }
  * )
  */
 class ListFieldThemer extends MapThemerBase {
@@ -154,7 +157,9 @@ class ListFieldThemer extends MapThemerBase {
     }
 
     // Define a default list_field.
-    $default_list_field = !empty($default_element['list_field']) ? $default_element['list_field'] : array_shift(array_keys($list_fields));
+    $keys = array_keys($list_fields);
+    $fallback_list_field = array_shift($keys);
+    $default_list_field = !empty($default_element['list_field']) ? $default_element['list_field'] : $fallback_list_field;
 
     // Get the eventual ajax user input of the specific list field.
     $user_input = $form_state->getUserInput();
@@ -335,17 +340,7 @@ class ListFieldThemer extends MapThemerBase {
    * {@inheritdoc}
    */
   public function getLegend(array $map_theming_values, array $configuration = []) {
-    $legend = [
-      '#type' => 'table',
-      '#header' => [
-        isset($configuration['values_label']) ? $configuration['values_label'] : $this->t('Option'),
-        isset($configuration['markers_label']) ? $configuration['markers_label'] : $this->t('Marker/Icon'),
-      ],
-      '#caption' => isset($configuration['legend_caption']) ? $configuration['legend_caption'] : '',
-      '#attributes' => [
-        'class' => ['geofield-map-legend', 'option'],
-      ],
-    ];
+    $legend = $this->defaultLegendHeader($configuration);
 
     $list_field = $map_theming_values['list_field'];
 
@@ -367,7 +362,7 @@ class ListFieldThemer extends MapThemerBase {
         continue;
       }
       $label = isset($value['label']) ? $value['label'] : $key;
-      $legend[$key] = [
+      $legend['table'][$key] = [
         'value' => [
           '#type' => 'container',
           'label' => [
@@ -386,6 +381,8 @@ class ListFieldThemer extends MapThemerBase {
         ],
       ];
     }
+
+    $legend['notes'] = $this->defaultLegendFooter($configuration);
 
     return $legend;
   }
