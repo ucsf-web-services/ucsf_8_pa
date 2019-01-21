@@ -58,9 +58,9 @@ class ClientManager implements ClientManagerInterface {
   protected $config;
 
   /**
-   * The Service collector for middlewares
+   * The Service collector for middlewares.
    *
-   * @var MiddlewareCollector
+   * @var \Drupal\acquia_contenthub\Middleware\MiddlewareCollector
    */
   protected $collector;
 
@@ -73,7 +73,7 @@ class ClientManager implements ClientManagerInterface {
    *   The config factory.
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
    *   The language manager.
-   * @param MiddlewareCollector $collector
+   * @param \Drupal\acquia_contenthub\Middleware\MiddlewareCollector $collector
    *   The middleware.
    */
   public function __construct(LoggerChannelFactoryInterface $logger_factory, ConfigFactoryInterface $config_factory, LanguageManagerInterface $language_manager, MiddlewareCollector $collector) {
@@ -184,7 +184,6 @@ class ClientManager implements ClientManagerInterface {
         'defaultLanguageId' => $this->languageManager->getDefaultLanguage()->getId(),
       ],
     ], $config);
-
 
     $this->client = new ContentHub($origin, $this->collector->getMiddlewares(), $config);
   }
@@ -306,6 +305,7 @@ class ClientManager implements ClientManagerInterface {
         case 'getClientByName':
         case 'createEntity':
         case 'createEntities':
+        case 'putEntities':
         case 'readEntity':
         case 'readEntities':
         case 'updateEntities':

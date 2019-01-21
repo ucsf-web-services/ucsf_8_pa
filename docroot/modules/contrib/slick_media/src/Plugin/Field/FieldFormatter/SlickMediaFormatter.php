@@ -61,6 +61,7 @@ class SlickMediaFormatter extends SlickEntityReferenceFormatterBase {
 
     // Sets dimensions once to reduce method ::transformDimensions() calls.
     // @todo: A more flexible way to also support paragraphs at one go.
+    $entities = array_values($entities);
     if (!empty($settings['image_style']) && ($entities[0]->getEntityTypeId() == 'media')) {
       $fields = $entities[0]->getFields();
 

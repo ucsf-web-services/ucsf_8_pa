@@ -34,8 +34,11 @@ use Drupal\Core\Ajax\ReplaceCommand;
  *   type = "key_value",
  *   context = {"ViewStyle"},
  *   defaultSettings = {
- *    "values": {}
- *   },
+ *    "values" = {},
+ *    "legend" = {
+ *      "class" = "taxonomy-term",
+ *     },
+ *   }
  * )
  */
 class TaxonomyTermThemer extends MapThemerBase {
@@ -186,7 +189,9 @@ class TaxonomyTermThemer extends MapThemerBase {
     }
 
     // Define a default taxonomy_field.
-    $default_taxonomy_field = !empty($default_element['taxonomy_field']) ? $default_element['taxonomy_field'] : array_shift(array_keys($taxonomy_ref_fields));
+    $keys = array_keys($taxonomy_ref_fields);
+    $fallback_taxonomy_field = array_shift($keys);
+    $default_taxonomy_field = !empty($default_element['taxonomy_field']) ? $default_element['taxonomy_field'] : $fallback_taxonomy_field;
 
     // Get the eventual ajax user input of the specific taxonomy field.
     $user_input = $form_state->getUserInput();
@@ -366,17 +371,7 @@ class TaxonomyTermThemer extends MapThemerBase {
    * {@inheritdoc}
    */
   public function getLegend(array $map_theming_values, array $configuration = []) {
-    $legend = [
-      '#type' => 'table',
-      '#header' => [
-        isset($configuration['values_label']) ? $configuration['values_label'] : $this->t('Term'),
-        isset($configuration['markers_label']) ? $configuration['markers_label'] : $this->t('Marker/Icon'),
-      ],
-      '#caption' => isset($configuration['legend_caption']) ? $configuration['legend_caption'] : '',
-      '#attributes' => [
-        'class' => ['geofield-map-legend', 'taxonomy-term'],
-      ],
-    ];
+    $legend = $this->defaultLegendHeader($configuration);
 
     $taxonomy_field = $map_theming_values['taxonomy_field'];
 
@@ -398,7 +393,7 @@ class TaxonomyTermThemer extends MapThemerBase {
         continue;
       }
       $label = isset($term['label']) ? $term['label'] : $vid;
-      $legend[$vid] = [
+      $legend['table'][$vid] = [
         'value' => [
           '#type' => 'container',
           'label' => [
@@ -417,6 +412,8 @@ class TaxonomyTermThemer extends MapThemerBase {
         ],
       ];
     }
+
+    $legend['notes'] = $this->defaultLegendFooter($configuration);
 
     return $legend;
   }

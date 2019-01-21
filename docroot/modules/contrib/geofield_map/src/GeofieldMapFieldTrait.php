@@ -302,7 +302,7 @@ trait GeofieldMapFieldTrait {
       ]);
     }
     else {
-      $map_google_api_key_value = $this->t("<span class='geofield-map-warning'>Gmap Api Key missing.<br>Google Maps functionality may not be available. </span>@settings_page_link", [
+      $map_google_api_key_value = $this->t("<span class='geofield-map-warning'>Gmap Api Key missing - @settings_page_link<br>Google Maps functionalities not available. </span>", [
         '@settings_page_link' => $this->link->generate($this->t('Set it in the Geofield Map Configuration Page'), Url::fromRoute('geofield_map.settings', [], [
           'query' => [
             'destination' => Url::fromRoute('<current>')
@@ -736,7 +736,7 @@ trait GeofieldMapFieldTrait {
       $elements['map_marker_and_infowindow']['infowindow_field'] = [
         '#type' => 'select',
         '#title' => $this->t('Marker Infowindow Content from'),
-        '#description' => $this->t('Choose an existing string/text type field from which populate the Marker Infowindow'),
+        '#description' => $this->t('Choose an existing string/text type field from which populate the Marker Infowindow.'),
         '#options' => $info_window_source_options,
         '#default_value' => $settings['map_marker_and_infowindow']['infowindow_field'],
       ];

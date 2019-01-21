@@ -28,8 +28,11 @@ use Drupal\Core\Entity\EntityInterface;
  *   type = "key_value",
  *   context = {"ViewStyle"},
  *   defaultSettings = {
- *    "values": {}
- *   },
+ *    "values" = {},
+ *    "legend" = {
+ *      "class" = "entity-type",
+ *     },
+ *   }
  * )
  */
 class EntityTypeThemer extends MapThemerBase {
@@ -212,17 +215,7 @@ class EntityTypeThemer extends MapThemerBase {
    * {@inheritdoc}
    */
   public function getLegend(array $map_theming_values, array $configuration = []) {
-    $legend = [
-      '#type' => 'table',
-      '#header' => [
-        isset($configuration['values_label']) ? $configuration['values_label'] : $this->t('Type/Bundle'),
-        isset($configuration['markers_label']) ? $configuration['markers_label'] : $this->t('Marker'),
-      ],
-      '#caption' => isset($configuration['legend_notes']) ? $configuration['legend_notes'] : '',
-      '#attributes' => [
-        'class' => ['geofield-map-legend', 'entity-type'],
-      ],
-    ];
+    $legend = $this->defaultLegendHeader($configuration);
 
     foreach ($map_theming_values as $bundle => $value) {
 
@@ -240,7 +233,7 @@ class EntityTypeThemer extends MapThemerBase {
         continue;
       }
       $label = isset($value['label']) ? $value['label'] : $bundle;
-      $legend[$bundle] = [
+      $legend['table'][$bundle] = [
         'value' => [
           '#type' => 'container',
           'label' => [
@@ -259,6 +252,8 @@ class EntityTypeThemer extends MapThemerBase {
         ],
       ];
     }
+
+    $legend['notes'] = $this->defaultLegendFooter($configuration);
 
     return $legend;
   }

@@ -81,14 +81,6 @@ function acquia_contenthub_bulk_export() {
   // Export Entities.
   $use_export_queue = $export_controller->exportEntities($candidate_entities);
 
-  // If we are using the export queue, then always process the first item of the
-  // queue.
-  if ($use_export_queue) {
-    /** @var \Drupal\acquia_contenthub\Controller\ContentHubExportQueueController $export_queue */
-    $export_queue = \Drupal::service('acquia_contenthub.acquia_contenthub_export_queue');
-    $context = [];
-    $export_queue->batchProcess(1, $context);
-  }
 }
 
 /**

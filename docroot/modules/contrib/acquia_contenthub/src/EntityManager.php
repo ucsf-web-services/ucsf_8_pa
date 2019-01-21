@@ -2,6 +2,7 @@
 
 namespace Drupal\acquia_contenthub;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\file\FileInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -79,8 +80,8 @@ class EntityManager {
    * @var array
    */
   private $candidateEntities = [
-    SELF::EXPORT => [],
-    SELF::UNEXPORT => [],
+    self::EXPORT => [],
+    self::UNEXPORT => [],
   ];
 
   /**
@@ -138,7 +139,7 @@ class EntityManager {
    *   The list of candidate entities of a specific action.
    */
   public function getExportCandidateEntities() {
-    return $this->candidateEntities[SELF::EXPORT];
+    return $this->candidateEntities[self::EXPORT];
   }
 
   /**
@@ -204,7 +205,7 @@ class EntityManager {
     // Enqueue unexport and export entities separately.
     $this->enqueueQualifiedEntities($unexporting_entities, FALSE);
     $this->enqueueQualifiedEntities($exporting_entities, TRUE);
-    $action = $do_export ? SELF::EXPORT : SELF::UNEXPORT;
+    $action = $do_export ? self::EXPORT : self::UNEXPORT;
     $this->candidateEntities[$action][$entity->uuid()] = $entity;
   }
 
@@ -242,7 +243,7 @@ class EntityManager {
     }
     $referenced_entities = $paragraph->referencedEntities();
     $this->enqueueQualifiedEntities($referenced_entities, $do_export);
-    $action = $do_export ? SELF::EXPORT : SELF::UNEXPORT;
+    $action = $do_export ? self::EXPORT : self::UNEXPORT;
     $this->candidateEntities[$action][$paragraph->uuid()] = $paragraph;
   }
 
@@ -284,14 +285,37 @@ class EntityManager {
    * @param string $resource_url
    *   The Resource Url.
    *
-   * @return bool
-   *   Returns the response.
+   * @return bool|mixed
+   *   Returns the response or FALSE otherwise.
    */
   public function updateRemoteEntities($resource_url) {
-    if ($response = $this->clientManager->createRequest('updateEntities', [$resource_url])) {
-      $response = json_decode($response->getBody(), TRUE);
+    $response = $this->clientManager->createRequest('updateEntities', [$resource_url]);
+    if (method_exists($response, 'getBody')) {
+      $response = Json::decode($response->getBody());
     }
-    return empty($response['success']) ? FALSE : TRUE;
+
+    return $response;
+  }
+
+  /**
+   * PUT entities for update to Content Hub, without site callback.
+   *
+   * @param array $entities
+   *   An array of entities.
+   *
+   * @return bool
+   *   TRUE if request succeeds, FALSE otherwise.
+   */
+  public function putRemoteEntities($entities) {
+    if (!isset($entities['entities'])) {
+      $entities = [
+        'entities' => $entities,
+      ];
+    }
+    if ($response = $this->clientManager->createRequest('putEntities', [$entities])) {
+      $response = Json::decode($response->getBody());
+    }
+    return !empty($response['success']);
   }
 
   /**
@@ -306,10 +330,10 @@ class EntityManager {
    * Delete entities from Content Hub that are explicitly un-exported.
    */
   private function unexportCandidateEntities() {
-    $candidate_entites = $this->candidateEntities[SELF::UNEXPORT];
+    $candidate_entites = $this->candidateEntities[self::UNEXPORT];
     foreach ($candidate_entites as $uuid => $candidate_entity) {
       $this->deleteRemoteEntity($candidate_entity);
-      unset($this->candidateEntities[SELF::UNEXPORT][$uuid]);
+      unset($this->candidateEntities[self::UNEXPORT][$uuid]);
     }
   }
 
@@ -317,13 +341,13 @@ class EntityManager {
    * Delete entities from Content Hub that are disqualified of exporting.
    */
   private function unexportDisqualifiedExportCandidateEntities() {
-    $candidate_entites = $this->candidateEntities[SELF::EXPORT];
+    $candidate_entites = $this->candidateEntities[self::EXPORT];
     foreach ($candidate_entites as $uuid => $candidate_entity) {
       $root_ancestor_entity = $this->findRootAncestorEntity($candidate_entity);
       // If root ancestor is not published, delete the current entity.
       if ($root_ancestor_entity instanceof NodeInterface && !$this->isPublished($root_ancestor_entity)) {
-        $this->candidateEntities[SELF::UNEXPORT][$uuid] = $candidate_entity;
-        unset($this->candidateEntities[SELF::EXPORT][$uuid]);
+        $this->candidateEntities[self::UNEXPORT][$uuid] = $candidate_entity;
+        unset($this->candidateEntities[self::EXPORT][$uuid]);
       }
     }
   }
@@ -351,12 +375,12 @@ class EntityManager {
 
     $resource_url = $this->getResourceUrl($entity);
     $args = [
-      '%type' => $entity->getEntityTypeId(),
-      '%uuid' => $entity->uuid(),
-      '%id' => $entity->id(),
+      '@type' => $entity->getEntityTypeId(),
+      '@uuid' => $entity->uuid(),
+      '@id' => $entity->id(),
     ];
     if (!$resource_url) {
-      $this->loggerFactory->get('acquia_contenthub')->error('Error trying to form a unique resource Url for %type with uuid %uuid and id %id', $args);
+      $this->loggerFactory->get('acquia_contenthub')->error('Error trying to form a unique resource Url for @type with uuid @uuid and id @id', $args);
       return;
     }
 
@@ -364,26 +388,40 @@ class EntityManager {
       $uuid = $entity->uuid();
       $response = $client->deleteEntity($uuid);
       $args = [
-        '%uuid' => $uuid,
-        '%type' => $entity->getEntityTypeId(),
-        '%id' => $entity->id(),
+        '@uuid' => $uuid,
+        '@type' => $entity->getEntityTypeId(),
+        '@id' => $entity->id(),
       ];
-      $this->loggerFactory->get('acquia_contenthub')->debug('Deleting remote entity with UUID = %uuid (%type, %id)', $args);
+
+      $log_msg = 'Deleting remote entity with UUID = @uuid (@type, @id)';
+      $contents = Json::decode($response->getBody()->getContents());
+      if (isset($contents['request_id'])) {
+        $log_msg .= ' (Request ID: @request_id.)';
+        $args += [
+          '@request_id' => $contents['request_id'],
+        ];
+      }
+      $this->loggerFactory->get('acquia_contenthub')->debug($log_msg, $args);
+
       $exported_entity = $this->contentHubEntitiesTracking->loadExportedByUuid($uuid);
       if ($exported_entity) {
         $exported_entity->delete();
       }
     }
     catch (RequestException $e) {
-      $args['%error'] = $e->getMessage();
-      $this->loggerFactory->get('acquia_contenthub')->error('Error trying to post the resource url for %type with uuid %uuid and id %id with a response from the API: %error', $args);
+      $args['@error'] = $e->getMessage();
+      $this->loggerFactory->get('acquia_contenthub')->error('Error trying to post the resource url for @type with uuid @uuid and id @id with a response from the API: @error', $args);
+      return;
+    }
+    catch (\RuntimeException $e) {
+      $this->loggerFactory->get('acquia_contenthub')->error('Error trying to read response contents: @error', $e->getMessage() . $e->getTraceAsString());
       return;
     }
 
     // Make sure it is within the 2XX range. Expected response is a 202.
     $status_code = $response->getStatusCode();
     if (substr($status_code, 0, 2) !== '20') {
-      $this->loggerFactory->get('acquia_contenthub')->error('Error trying to post the resource url for %type with uuid %uuid and id %id: Response status code was not 20X as expected.', $args);
+      $this->loggerFactory->get('acquia_contenthub')->error('Error trying to post the resource url for @type with uuid @uuid and id @id: Response status code was not 20X as expected.', $args);
     }
   }
 
@@ -499,6 +537,25 @@ class EntityManager {
       return FALSE;
     }
 
+    $tracking_entity = $this->contentHubEntitiesTracking->loadExportedByUuid($entity->uuid());
+
+    if ($tracking_entity) {
+      $entity_origin = $tracking_entity->getOrigin();
+      $site_origin = $this->contentHubEntitiesTracking->getSiteOrigin();
+
+      if ($entity_origin !== $site_origin) {
+        $this->loggerFactory
+          ->get('acquia_contenthub')
+          ->warning('Site origin id (@site) and origin id in the tracking table (@entity) does not match',
+          [
+            '@entity' => $entity_origin,
+            '@site' => $site_origin,
+          ]);
+
+        return FALSE;
+      }
+    }
+
     // If the entity has been imported before, then it didn't originate from
     // this site and shouldn't be exported.
     $entity_id = $entity->id();
@@ -514,11 +571,11 @@ class EntityManager {
         // We can use this pool of failed entities to display a message to the
         // user about the entities that failed to export.
         // $args = [
-        // '%type' => $entity_type_id,
-        // '%uuid' => $uuid,
+        // '@type' => $entity_type_id,
+        // '@uuid' => $uuid,
         // ];
-        // $message = new FormattableMarkup('Cannot export %type entity with
-        // UUID = %uuid to Content Hub because it was previously imported
+        // $message = new FormattableMarkup('Cannot export @type entity with
+        // UUID = @uuid to Content Hub because it was previously imported
         // (did not originate from this site).', $args);
         // $this->loggerFactory->get('acquia_contenthub')->error($message);
       }

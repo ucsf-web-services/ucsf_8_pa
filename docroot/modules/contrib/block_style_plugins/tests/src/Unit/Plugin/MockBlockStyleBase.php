@@ -17,7 +17,7 @@ class MockBlockStyleBase extends BlockStyleBase {
   /**
    * {@inheritdoc}
    */
-  public function defaultStyles() {
+  public function defaultConfiguration() {
     return [
       'sample_class' => '',
       'sample_checkbox' => FALSE,

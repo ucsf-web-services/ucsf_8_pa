@@ -656,7 +656,7 @@ class SpiController extends ControllerBase {
    *   1 if the super user has a weak name, 0 otherwise.
    */
   private function getSuperName() {
-    $result = db_query("SELECT name FROM {users_field_data} WHERE uid = 1 AND (name LIKE '%admin%' OR name LIKE '%root%')")->fetchAll();
+    $result = db_query("SELECT name FROM {users_field_data} WHERE uid = 1 AND (name LIKE '%admin%' OR name LIKE '%root%') AND CHAR_LENGTH(name) < 15")->fetchAll();
     return (int) $result;
   }
 
@@ -1038,7 +1038,7 @@ class SpiController extends ControllerBase {
         if (!empty($response['body']['spi_error'])) {
           $message_type = $response['body']['spi_error'];
         }
-        drupal_set_message(Html::escape($nspi_message), $message_type);
+        drupal_set_message(Html::escape($nspi_message), (string) $message_type);
       }
     }
 

@@ -24,6 +24,11 @@ use Drush\Log\LogLevel;
 class AcquiaContenthubCommands extends DrushCommands {
 
   /**
+   * Size of the chunk being processed at once.
+   */
+  const BATCH_PROCESS_CHUNK_SIZE = 50;
+
+  /**
    * Prints the CDF from a local source (drupal site)
    *
    * @param $entity_type
@@ -489,6 +494,7 @@ class AcquiaContenthubCommands extends DrushCommands {
    *   status: Status
    *   request_id: Request ID
    *   id: ID
+   *   message: Message
    * @aliases ach-logs,acquia-contenthub-logs
    *
    * @return \Consolidation\OutputFormatters\StructuredData\RowsOfFields
@@ -553,6 +559,7 @@ class AcquiaContenthubCommands extends DrushCommands {
             'status' => strtoupper($log['_source']['status']),
             'request_id' => $log['_source']['request_id'],
             'id' => $log['_source']['id'],
+            'message' => $log['_source']['message'],
           ];
         }
       }
@@ -992,7 +999,7 @@ class AcquiaContenthubCommands extends DrushCommands {
 
     // Creating the batch process.
     $operations = [];
-    $chunks = array_chunk($entities, 50);
+    $chunks = array_chunk($entities, static::BATCH_PROCESS_CHUNK_SIZE);
     foreach ($chunks as $chunk) {
       $operations[] = [
         'acquia_contenthub_audit_publisher',

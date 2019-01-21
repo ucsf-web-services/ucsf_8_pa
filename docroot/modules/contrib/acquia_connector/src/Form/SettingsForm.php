@@ -189,7 +189,7 @@ class SettingsForm extends ConfigFormBase {
       $help_url = \Drupal::url('help.page', array('name' => 'acquia_connector'));
     }
     else {
-      $help_url = Url::fromUri('https://docs.acquia.com/network/install')->getUri();
+      $help_url = Url::fromUri('https://docs.acquia.com/acquia-cloud/insight/install/')->getUri();
     }
 
     if (!empty($identifier) && !empty($key)) {

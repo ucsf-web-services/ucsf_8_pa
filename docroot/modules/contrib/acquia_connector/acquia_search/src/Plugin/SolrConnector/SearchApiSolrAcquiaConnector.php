@@ -174,7 +174,7 @@ class SearchApiSolrAcquiaConnector extends SolrConnectorPluginBase {
       $plugin = new SearchSubscriber();
       $this->solr->registerPlugin('acquia_solr_search_subscriber', $plugin);
       // Don't use curl.
-      $this->solr->setAdapter('Solarium\Core\Client\Adapter\Http');
+      $this->solr->setAdapter('Solarium\Core\Client\Adapter\Guzzle');
     }
   }
 

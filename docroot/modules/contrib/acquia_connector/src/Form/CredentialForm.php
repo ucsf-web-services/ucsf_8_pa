@@ -67,7 +67,8 @@ class CredentialForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     $storage = new Storage();
-    $form['#prefix'] = $this->t('Enter your <a href=":net">identifier and key</a> from your subscriptions overview or <a href=":url">log in</a> to connect your site to the Acquia Subscription.', array(':net' => Url::fromUri('https://insight.acquia.com/subscriptions')->getUri(), ':url' => \Drupal::url('acquia_connector.setup')));
+    $form['#prefix'] = $this->t('Enter your product keys from your <a href=":net">application overview</a> or <a href=":url">log in</a> to connect your site to Acquia Insight.', array(':net' => Url::fromUri('https://cloud.acquia.com')->getUri(), ':url' => \Drupal::url('acquia_connector.setup')));
+
     $form['acquia_identifier'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Identifier'),

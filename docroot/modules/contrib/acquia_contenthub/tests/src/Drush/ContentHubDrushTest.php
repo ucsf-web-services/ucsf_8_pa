@@ -89,6 +89,7 @@ if (class_exists('Unish\CommandUnishTestCase')) {
       $this->assertContains('ID', $output);
       $this->assertContains('Request ID', $output);
       $this->assertContains('Status', $output);
+      $this->assertContains('Message', $output);
 
       // Execute ach-mapping command.
       $this->drush('ach-mapping', [], $this->siteOptions, NULL, NULL, self::EXIT_SUCCESS);

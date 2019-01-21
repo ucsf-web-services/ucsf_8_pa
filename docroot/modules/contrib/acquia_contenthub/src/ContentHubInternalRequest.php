@@ -147,17 +147,13 @@ class ContentHubInternalRequest {
       $bulk_cdf = [];
     }
 
-    // Restore user account.
-    try {
-      $this->accountSwitcher->switchBack();
-    }
-    catch (\RuntimeException $e) {
-      // If it is not possible to switch accounts, just log a message about it.
-      $this->loggerFactory->get('acquia_contenthub')->debug("Not able to switch back from Content Hub user's account because it was never changed. Current user ID: %id", [
-        '%id' => \Drupal::currentUser()->id(),
-      ]);
-    }
+    $this->accountSwitcher->switchBack();
 
+    // Test to make sure CDF returned an entities array.
+    if (isset($bulk_cdf['message'])) {
+      $this->loggerFactory->get('acquia_contenthub')->debug('Exception: %msg', ['%msg' => $bulk_cdf['message']]);
+      $bulk_cdf = [];
+    }
     // Return CDF.
     return empty($bulk_cdf) ? ['entities' => []] : $bulk_cdf;
   }

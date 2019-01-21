@@ -266,13 +266,9 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
       $created = date('c');
     }
 
-    // Required Modified field.
-    if ($entity->hasField('changed') && $entity->get('changed')) {
-      $modified = date('c', $entity->get('changed')->getValue()[0]['value']);
-    }
-    else {
-      $modified = date('c');
-    }
+    // Modified date in the CDF will correspond to the time when the entity was
+    // modified in Content Hub, not in Drupal.
+    $modified = date('c');
 
     // Base Root Path.
     $base_root = $this->getBaseRoot();
@@ -476,6 +472,7 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
           $referenced_entities = $field->referencedEntities();
         }
 
+        $values[$langcode] = [];
         foreach ($referenced_entities as $key => $referenced_entity) {
           // In the case of images/files, etc... we need to add the assets.
           $file_types = [
@@ -853,8 +850,11 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
         // Try to map it to a known field type.
         $field_type = $field->getFieldDefinition()->getType();
         $settings = $field->getFieldDefinition()->getSettings();
-        $value = $attribute['value'][$langcode];
+        $value = isset($attribute['value'][$langcode]) ? $attribute['value'][$langcode] : NULL;
         $field->setValue([]);
+        if ($value === NULL) {
+          continue;
+        }
         $field->setLangcode($langcode);
 
         if ($field instanceof EntityReferenceFieldItemListInterface) {
@@ -1146,6 +1146,12 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
       }
       else {
         $default_langcode = $this->languageManager->getDefaultLanguage()->getId();
+        if ($langcode = $contenthub_entity->getAttribute('langcode')) {
+          $langcodes = $langcode['value'];
+          if (!in_array($default_langcode, $langcodes)) {
+            $default_langcode = reset($langcodes);
+          }
+        }
       }
     }
     // Default Langcode is only used for initial entity creation. Remove now.
@@ -1393,8 +1399,8 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
       if (!file_prepare_directory($filepath, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
         // Log that directory could not be created.
         \Drupal::logger('acquia_contenthub')
-          ->error('Cannot create files subdirectory "!dir". Please check filesystem permissions.', [
-            '!dir' => $filepath,
+          ->error('Cannot create files subdirectory "@dir". Please check filesystem permissions.', [
+            '@dir' => $filepath,
           ]);
         $file_uri = NULL;
       }

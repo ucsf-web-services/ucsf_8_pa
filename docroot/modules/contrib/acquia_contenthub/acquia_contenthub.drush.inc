@@ -156,6 +156,7 @@ function acquia_contenthub_drush_command() {
         'status',
         'request_id',
         'id',
+        'message',
       ],
       'field-labels' => [
         'timestamp' => dt('Timestamp'),
@@ -165,6 +166,7 @@ function acquia_contenthub_drush_command() {
         'status' => dt('Status'),
         'request_id' => dt('Request ID'),
         'id' => dt('ID'),
+        'message' => dt('Message'),
       ],
       'output-data-type' => 'format-table',
     ],
@@ -260,6 +262,11 @@ function acquia_contenthub_drush_command() {
     ],
     'required-arguments' => 0,
     'aliases' => ['ach-audit-publisher', 'ach-ap'],
+  ];
+
+  $items['acquia-contenthub-watchdog-queue-sizes'] = [
+    'description' => dt("Log the size of the export and import queues to Drupal watchdog."),
+    'bootstrap' => DRUSH_BOOTSTRAP_MAX,
   ];
 
   return $items;
@@ -778,6 +785,7 @@ function drush_acquia_contenthub_logs($api = NULL, $secret = NULL) {
           'status' => strtoupper($log['_source']['status']),
           'request_id' => $log['_source']['request_id'],
           'id' => $log['_source']['id'],
+          'message' => $log['_source']['message'],
         ];
       }
     }
@@ -1179,4 +1187,19 @@ function drush_acquia_contenthub_audit_publisher($entity_type_id = NULL) {
   // Start the batch process.
   drush_backend_batch_process();
 
+}
+
+/**
+ * Log size of our queues to Drupal watchdog.
+ */
+function drush_acquia_contenthub_watchdog_queue_sizes() {
+  $queue = drush_queue_get_class();
+  $sizes = '';
+  foreach (['acquia_contenthub_export_queue', 'acquia_contenthub_import_queue'] as $name) {
+    $sizes .= $name . '=' . $queue->getQueue($name)->numberOfItems() . ";";
+  }
+  $logger = \Drupal::getContainer()->get('logger.factory');
+  $logger->get('acquia_contenthub')->debug('Content Hub queues size tracking: %sizes', [
+    '%sizes' => $sizes,
+  ]);
 }

@@ -110,7 +110,7 @@ class AcquiaConnectorModuleTest extends WebTestBase {
         return 'Account not found';
 
       case 'id-key':
-        return 'Enter your identifier and key from your subscriptions overview or log in to connect your site to the Acquia Subscription.';
+        return 'Enter your product keys from your application overview or log in to connect your site to Acquia Insight.';
 
       case 'enter-key':
         return 'Network key';
