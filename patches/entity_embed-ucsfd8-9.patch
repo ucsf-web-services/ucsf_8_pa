@@ -1,7 +1,7 @@
-diff --git a/docroot/modules/contrib/entity_embed/js/plugins/drupalentity/plugin.js b/docroot/modules/contrib/entity_embed/js/plugins/drupalentity/plugin.js
+diff --git a/js/plugins/drupalentity/plugin.js b/js/plugins/drupalentity/plugin.js
 index b8a5090c9..578a7841a 100644
---- a/docroot/modules/contrib/entity_embed/js/plugins/drupalentity/plugin.js
-+++ b/docroot/modules/contrib/entity_embed/js/plugins/drupalentity/plugin.js
+--- a/js/plugins/drupalentity/plugin.js
++++ b/js/plugins/drupalentity/plugin.js
 @@ -62,6 +62,11 @@
              var entityElement = editor.document.createElement('drupal-entity');
              var attributes = values.attributes;
@@ -14,10 +14,10 @@ index b8a5090c9..578a7841a 100644
                entityElement.setAttribute(key, attributes[key]);
              }
  
-diff --git a/docroot/modules/contrib/entity_embed/src/Form/EntityEmbedDialog.php b/docroot/modules/contrib/entity_embed/src/Form/EntityEmbedDialog.php
+diff --git a/src/Form/EntityEmbedDialog.php b/src/Form/EntityEmbedDialog.php
 index ae0194b38..70e876385 100644
---- a/docroot/modules/contrib/entity_embed/src/Form/EntityEmbedDialog.php
-+++ b/docroot/modules/contrib/entity_embed/src/Form/EntityEmbedDialog.php
+--- a/src/Form/EntityEmbedDialog.php
++++ b/src/Form/EntityEmbedDialog.php
 @@ -445,12 +445,15 @@ public function buildEmbedStep(array $form, FormStateInterface $form_state) {
      if ($editor->getFilterFormat()->filters('filter_align')->status) {
        $form['attributes']['data-align'] = array(
