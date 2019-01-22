@@ -114,13 +114,13 @@ class ContentHubExportQueueControllerTest extends UnitTestCase {
    */
   public function testEnqueueExportEntities() {
     $queued_items = [
-      $this->createQueueItem('node', 1),
-      $this->createQueueItem('node', 2),
-      $this->createQueueItem('node', 3),
-      $this->createQueueItem('node', 4),
-      $this->createQueueItem('node', 5),
-      $this->createQueueItem('node', 6),
-      $this->createQueueItem('node', 7),
+      $this->createQueueItem('node', 1, '00000000-0000-0000-0000-000000000000'),
+      $this->createQueueItem('node', 2, '00000000-0000-1111-0000-000000000000'),
+      $this->createQueueItem('node', 3, '00000000-0000-2222-0000-000000000000'),
+      $this->createQueueItem('node', 4, '00000000-0000-3333-0000-000000000000'),
+      $this->createQueueItem('node', 5, '00000000-0000-4444-0000-000000000000'),
+      $this->createQueueItem('node', 6, '00000000-0000-5555-0000-000000000000'),
+      $this->createQueueItem('node', 7, '00000000-0000-6666-0000-000000000000'),
     ];
     // Defining the queue.
     $queue = $this->getMock('Drupal\Core\Queue\QueueInterface');
@@ -247,16 +247,19 @@ class ContentHubExportQueueControllerTest extends UnitTestCase {
    *   The entity type.
    * @param string $entity_id
    *   The entity ID.
+   * @param string $entity_uuid
+   *   The entity UUID.
    *
    * @return object
    *   The queue item.
    */
-  protected function createQueueItem($entity_type, $entity_id) {
+  protected function createQueueItem($entity_type, $entity_id, $entity_uuid) {
     return (object) [
       'data' => [
         0 => [
           'entity_type' => $entity_type,
           'entity_id' => $entity_id,
+          'entity_uuid' => $entity_uuid,
         ],
       ],
     ];

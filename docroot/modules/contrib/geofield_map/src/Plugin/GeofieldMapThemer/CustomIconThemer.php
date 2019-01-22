@@ -55,12 +55,28 @@ class CustomIconThemer extends MapThemerBase {
         '#title' => t('Image style'),
         '#options' => $this->markerIcon->getImageStyleOptions(),
         '#default_value' => isset($default_element['image_style']) ? $default_element['image_style'] : 'geofield_map_default_icon_style',
+        '#states' => [
+          'visible' => [
+            ':input[name="style_options[map_marker_and_infowindow][theming][geofieldmap_custom_icon][values][icon_file][is_svg]"]' => ['checked' => FALSE],
+          ],
+        ],
+      ],
+      'image_style_svg' => [
+        '#type' => 'container',
+        'warning' => [
+          '#markup' => $this->t("Image style cannot apply to SVG Files,<br>SVG natural dimension will be applied."),
+        ],
+        '#states' => [
+          'invisible' => [
+            ':input[name="style_options[map_marker_and_infowindow][theming][geofieldmap_custom_icon][values][icon_file][is_svg]"]' => ['checked' => FALSE],
+          ],
+        ],
       ],
       'label_alias' => [
         '#type' => 'textfield',
         '#title' => t('Label alias'),
         '#default_value' => isset($default_element['label_alias']) ? $default_element['label_alias'] : '',
-        '#description' => $this->t('If not empty, this will be used in the legend as label alias.'),
+        '#description' => $this->t('If not empty, this will be used in the legend.'),
         '#size' => 20,
       ],
     ];

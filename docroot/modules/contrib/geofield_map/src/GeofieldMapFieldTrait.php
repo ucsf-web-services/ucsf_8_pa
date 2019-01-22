@@ -674,6 +674,14 @@ trait GeofieldMapFieldTrait {
       '#weight' => -10,
     ];
 
+    // Add SVG UI file support.
+    $elements['map_marker_and_infowindow']['icon_image_path']['#description'] .= !$this->moduleHandler->moduleExists('svg_image') ? '<br>' . $this->t('SVG Files support is disabled. Enabled it with @svg_image_link', [
+      '@svg_image_link' => $this->link->generate('SVG Image Module', Url::fromUri('https://www.drupal.org/project/svg_image', [
+        'absolute' => TRUE,
+        'attributes' => ['target' => 'blank'],
+      ])),
+    ]) : '<br>' . $this->t('SVG Files support enabled.');
+
     $multivalue_fields_states = [];
 
     $infowindow_fields_options = [];

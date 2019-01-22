@@ -285,12 +285,6 @@ class ContentHubEntityExportControllerTest extends UnitTestCase {
    */
   public function testExportEntities() {
     $candidate_entities = $this->getSampleCandidateEntities();
-
-    $this->contentEntityCdfNormalizer
-      ->expects($this::exactly(6))
-      ->method('getReferencedFields')
-      ->willReturn($this->getSampleCandidateReferencedEntities());
-
     $this->contentHubInternalRequest
       ->method('getEntityCdfByInternalRequest')
       ->willReturn($this->getEntities());
@@ -322,6 +316,12 @@ class ContentHubEntityExportControllerTest extends UnitTestCase {
     $this->contentHubEntitiesTracking
       ->method('setExportedEntity')
       ->willReturn($contentHubEntitiesTracking);
+
+    $this->contentHubExportQueueController->expects($this->once())
+      ->method('enqueueExportEntities')
+      ->willReturnCallback(function ($candidate_entities) {
+        return $candidate_entities;
+      });
 
     $actual_result = $this->contentHubEntityExportController->exportEntities($candidate_entities);
     $this->assertEquals(TRUE, $actual_result);

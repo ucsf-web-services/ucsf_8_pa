@@ -122,11 +122,11 @@ class ContentEntityNormalizerTest extends UnitTestCase {
   protected $entityTypeManager;
 
   /**
-   * The account switcher service.
+   * Logger.
    *
-   * @var \Drupal\acquia_contenthub\ContentHubInternalRequest
+   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface|\PHPUnit_Framework_MockObject_MockObject
    */
-  protected $internalRequest;
+  private $loggerFactory;
 
   /**
    * The Language Manager.
@@ -162,7 +162,7 @@ class ContentEntityNormalizerTest extends UnitTestCase {
         return NULL;
       });
 
-    $this->internalRequest = $this->getMockBuilder('Drupal\acquia_contenthub\ContentHubInternalRequest')
+    $this->loggerFactory = $this->getMockBuilder('Drupal\Core\Logger\LoggerChannelFactoryInterface')
       ->disableOriginalConstructor()
       ->getMock();
 
@@ -186,7 +186,7 @@ class ContentEntityNormalizerTest extends UnitTestCase {
 
     $this->userContext = new ContentHubUserSession(AccountInterface::ANONYMOUS_ROLE);
 
-    $this->contentEntityNormalizer = new ContentEntityCdfNormalizer($this->configFactory, $this->contentEntityViewModesExtractor, $this->moduleHandler, $this->entityRepository, $this->kernel, $this->renderer, $this->entityManager, $this->entityTypeManager, $this->internalRequest, $this->languageManager);
+    $this->contentEntityNormalizer = new ContentEntityCdfNormalizer($this->configFactory, $this->contentEntityViewModesExtractor, $this->moduleHandler, $this->entityRepository, $this->kernel, $this->renderer, $this->entityManager, $this->entityTypeManager, $this->loggerFactory, $this->languageManager);
   }
 
   /**

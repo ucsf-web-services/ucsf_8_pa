@@ -12,7 +12,7 @@ use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Serialization\Json;
-use Drupal\acquia_contenthub\Normalizer\NormalizerWrapper;
+use Drupal\acquia_contenthub\Normalizer\ContentEntityCdfNormalizer;
 use Drupal\Core\Queue\RequeueException;
 
 /**
@@ -46,7 +46,7 @@ abstract class ContentHubExportQueueBase extends QueueWorkerBase implements Cont
   /**
    * The CDF Normalizer.
    *
-   * @var \Drupal\acquia_contenthub\Normalizer\NormalizerWrapper
+   * @var \Drupal\acquia_contenthub\Normalizer\ContentEntityCdfNormalizer
    */
   protected $cdfNormalizer;
 
@@ -67,7 +67,7 @@ abstract class ContentHubExportQueueBase extends QueueWorkerBase implements Cont
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityManager $entity_manager, ContentHubEntityExportController $acquia_contenthub_export_controller, ContentHubExportQueueController $export_queue_controller, NormalizerWrapper $cdf_normalizer, EntityTypeManagerInterface $entity_type_manager, LoggerChannelFactoryInterface $logger_channel_factory) {
+  public function __construct(EntityManager $entity_manager, ContentHubEntityExportController $acquia_contenthub_export_controller, ContentHubExportQueueController $export_queue_controller, ContentEntityCdfNormalizer $cdf_normalizer, EntityTypeManagerInterface $entity_type_manager, LoggerChannelFactoryInterface $logger_channel_factory) {
     $this->entityManager = $entity_manager;
     $this->exportController = $acquia_contenthub_export_controller;
     $this->exportQueueController = $export_queue_controller;
@@ -89,8 +89,8 @@ abstract class ContentHubExportQueueBase extends QueueWorkerBase implements Cont
     /** @var \Drupal\acquia_contenthub\Controller\ContentHubExportQueueController $export_queue_controller */
     $export_queue_controller = $container->get('acquia_contenthub.acquia_contenthub_export_queue');
 
-    /** @var \Drupal\acquia_contenthub\Normalizer\NormalizerWrapper $cdf_normalizer */
-    $cdf_normalizer = \Drupal::service('serializer.normalizer.acquia_contenthub_cdf.acquia_contenthub');
+    /** @var \Drupal\acquia_contenthub\Normalizer\ContentEntityCdfNormalizer $cdf_normalizer */
+    $cdf_normalizer = \Drupal::service('acquia_contenthub.normalizer.entity.acquia_contenthub_cdf');
 
     /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager */
     $entity_type_manager = $container->get('entity_type.manager');

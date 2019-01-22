@@ -528,7 +528,7 @@ class GeofieldGoogleMapViewStyle extends DefaultStyle implements ContainerFactor
 
       // Hide the icon_image_path element, with prefix/suffix (as hidden would
       // hide just the textfield and not label/title and description wrappers).
-      $form['map_marker_and_infowindow']['icon_image_path']['#prefix'] = '<div id="icon-image-path" class="hidden">';
+      $form['map_marker_and_infowindow']['icon_image_path']['#prefix'] = '<div id="icon-image-path" class="visually-hidden">';
       $form['map_marker_and_infowindow']['icon_image_path']['#suffix'] = '</div>';
     }
 

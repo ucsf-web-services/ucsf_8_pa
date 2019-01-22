@@ -31,7 +31,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'a16312f9300fed4a097923eacb0ba814' => __DIR__ . '/..' . '/igorw/get-in/src/get_in.php',
         '5a12a5271c58108e0aa33355e6ac54ea' => __DIR__ . '/..' . '/drupal/console-core/src/functions.php',
-        '952683d815ff0a7bf322b93c0be7e4e4' => __DIR__ . '/..' . '/chi-teck/drupal-code-generator/src/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -90,11 +89,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'Symfony\\Cmf\\Component\\Routing\\' => 30,
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
             'Stecman\\Component\\Symfony\\Console\\BashCompletion\\' => 49,
-            'SelfUpdate\\' => 11,
-        ),
-        'R' => 
-        array (
-            'Robo\\' => 5,
         ),
         'P' => 
         array (
@@ -112,10 +106,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             'Masterminds\\' => 12,
         ),
-        'L' => 
-        array (
-            'League\\Container\\' => 17,
-        ),
         'J' => 
         array (
             'JakubOnderka\\PhpConsoleHighlighter\\' => 35,
@@ -131,8 +121,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
-            'Grasmash\\YamlExpander\\' => 22,
-            'Grasmash\\Expander\\' => 18,
             'Goutte\\' => 7,
         ),
         'E' => 
@@ -148,7 +136,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'Drupal\\Console\\' => 15,
             'Drupal\\Component\\' => 17,
             'DrupalComposer\\DrupalScaffold\\' => 30,
-            'DrupalCodeGenerator\\' => 20,
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
@@ -156,10 +143,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'C' => 
         array (
             'Curl\\' => 5,
-            'Consolidation\\SiteAlias\\' => 24,
             'Consolidation\\OutputFormatters\\' => 31,
-            'Consolidation\\Log\\' => 18,
-            'Consolidation\\Config\\' => 21,
             'Consolidation\\AnnotatedCommand\\' => 31,
             'Composer\\Semver\\' => 16,
             'Composer\\Installers\\' => 20,
@@ -333,14 +317,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/stecman/symfony-console-completion/src',
         ),
-        'SelfUpdate\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/consolidation/self-update/src',
-        ),
-        'Robo\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/consolidation/robo/src',
-        ),
         'Psy\\' => 
         array (
             0 => __DIR__ . '/..' . '/psy/psysh/src',
@@ -369,10 +345,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
         ),
-        'League\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/league/container/src',
-        ),
         'JakubOnderka\\PhpConsoleHighlighter\\' => 
         array (
             0 => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src',
@@ -400,14 +372,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
-        ),
-        'Grasmash\\YamlExpander\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/grasmash/yaml-expander/src',
-        ),
-        'Grasmash\\Expander\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/grasmash/expander/src',
         ),
         'Goutte\\' => 
         array (
@@ -445,10 +409,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/drupal-composer/drupal-scaffold/src',
         ),
-        'DrupalCodeGenerator\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/chi-teck/drupal-code-generator/src',
-        ),
         'Doctrine\\Common\\Cache\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
@@ -465,21 +425,9 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl',
         ),
-        'Consolidation\\SiteAlias\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/consolidation/site-alias/src',
-        ),
         'Consolidation\\OutputFormatters\\' => 
         array (
             0 => __DIR__ . '/..' . '/consolidation/output-formatters/src',
-        ),
-        'Consolidation\\Log\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/consolidation/log/src',
-        ),
-        'Consolidation\\Config\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/consolidation/config/src',
         ),
         'Consolidation\\AnnotatedCommand\\' => 
         array (
@@ -546,10 +494,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         ),
         'S' => 
         array (
-            'Sunra\\PhpSimple\\HtmlDomParser' => 
-            array (
-                0 => __DIR__ . '/..' . '/sunra/php-simple-html-dom-parser/Src',
-            ),
             'Stack' => 
             array (
                 0 => __DIR__ . '/..' . '/stack/builder/src',
@@ -557,6 +501,13 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'Solarium\\' => 
             array (
                 0 => __DIR__ . '/..' . '/solarium/solarium/library',
+            ),
+        ),
+        'K' => 
+        array (
+            'KubAT\\PhpSimple\\HtmlDomParser' => 
+            array (
+                0 => __DIR__ . '/..' . '/kub-at/php-simple-html-dom-parser/src',
             ),
         ),
         'H' => 

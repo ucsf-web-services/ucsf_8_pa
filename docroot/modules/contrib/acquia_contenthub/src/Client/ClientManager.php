@@ -623,6 +623,7 @@ class ClientManager implements ClientManagerInterface {
         break;
 
       case 'Exception':
+      default:
         if (isset($exception_messages['Exception'])) {
           $msg = $exception_messages['Exception'];
         }
