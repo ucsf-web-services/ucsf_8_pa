@@ -445,12 +445,15 @@ class EntityEmbedDialog extends FormBase {
     if ($editor->getFilterFormat()->filters('filter_align')->status) {
       $form['attributes']['data-align'] = array(
         '#title' => $this->t('Align'),
-        '#type' => 'radios',
+        '#type' => 'select',
         '#options' => array(
           '' => $this->t('None'),
           'left' => $this->t('Left'),
           'center' => $this->t('Center'),
           'right' => $this->t('Right'),
+          'bleed-left' => $this->t('Bleed-Left'),
+          'bleed-right' => $this->t('Bleed-Right'),
+          'bleed-full' => $this->t('Bleed-Full'),
         ),
         '#default_value' => isset($entity_element['data-align']) ? $entity_element['data-align'] : '',
         '#wrapper_attributes' => array('class' => array('container-inline')),
@@ -463,7 +466,7 @@ class EntityEmbedDialog extends FormBase {
     if ($editor->getFilterFormat()->filters('filter_caption')->status) {
       $form['attributes']['data-caption'] = array(
         '#title' => $this->t('Caption'),
-        '#type' => 'textfield',
+        '#type' => 'text_format', //textfield or text_format
         '#default_value' => isset($entity_element['data-caption']) ? Html::decodeEntities($entity_element['data-caption']) : '',
         '#element_validate' => array('::escapeValue'),
       );
@@ -493,7 +496,7 @@ class EntityEmbedDialog extends FormBase {
         'event' => 'click',
       ),
     );
-
+    //kpr($form);
     return $form;
   }
 
