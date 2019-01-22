@@ -62,11 +62,6 @@
             var entityElement = editor.document.createElement('drupal-entity');
             var attributes = values.attributes;
             for (var key in attributes) {
-              if (key == 'data-caption') {
-                if (typeof attributes[key] === 'object') {
-                  attributes[key] = attributes[key].value;
-                }
-              }
               entityElement.setAttribute(key, attributes[key]);
             }
 
