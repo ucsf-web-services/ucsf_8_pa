@@ -7,7 +7,7 @@ CKEDITOR.plugins.add( 'timestamp', {
                 editor.insertHtml( 'The current date and time is: <em>' + now.toString() + '</em>' );
             }
         });
-        editor.ui.addButton( 'Timestamp', {
+        editor.ui.addButton( 'timestamp', {
             label: 'Insert Timestamp',
             command: 'insertTimestamp',
             toolbar: 'insert'
