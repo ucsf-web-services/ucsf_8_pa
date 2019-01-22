@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains \Drupal\ckeditor_ucsf_plugin\Plugin\CKEditorPlugin\timestamp.
+ * Contains \Drupal\ckeditor_test\Plugin\CKEditorPlugin\timestamp.
  */
 
-namespace Drupal\ckeditor_ucsf_plugin\Plugin\CKEditorPlugin;
+namespace Drupal\ckeditor_test\Plugin\CKEditorPlugin;
 
 use Drupal\ckeditor\CKEditorPluginBase;
 use Drupal\editor\Entity\Editor;
@@ -16,7 +16,8 @@ use Drupal\editor\Entity\Editor;
  *
  * @CKEditorPlugin(
  *   id = "timestamp",
- *   label = @Translation("timestamp")
+ *   label = @Translation("timestamp"),
+ *   module = "ckeditor_test"
  * )
  */
 class timestamp extends CKEditorPluginBase {
