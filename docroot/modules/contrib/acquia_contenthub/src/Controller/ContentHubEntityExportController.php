@@ -15,6 +15,7 @@ use Drupal\acquia_contenthub\ContentHubEntitiesTracking;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\acquia_contenthub\EntityManager;
+use Drupal\Component\Serialization\Json;
 
 /**
  * Controller for Content Hub Export Entities using bulk upload.
@@ -161,87 +162,52 @@ class ContentHubEntityExportController extends ControllerBase {
       // these entities are taken again when collecting dependencies.
       // Dependencies are not exported if they have an entry in the tracking
       // table that says that they have been previously "exported".
-      foreach ($candidate_entities as $candidate_entity) {
-        $this->queueExportedEntity($candidate_entity);
+      $queued_entities = $this->exportQueueController->enqueueExportEntities($candidate_entities);
+      foreach ($queued_entities as $queued_entity) {
+        $this->queueExportedEntity($queued_entity);
       }
-    }
-
-    // Verify that the collected entities are not already included within the
-    // the references of other collected entities.
-    $uuids = array_keys($candidate_entities);
-    foreach ($candidate_entities as $candidate_entity) {
-      // @TODO skip taxonomy terms because their parents will not be added to
-      // the queue here and won't get processed in the normalizer (LAT-1345).
-      if ($candidate_entity->getEntityTypeId() === 'taxonomy_term') {
-        continue;
-      }
-
-      // Get referenced entities.
-      $referenced_entities = $this->entityCdfNormalizer->getReferencedFields($candidate_entity);
-
-      // If entities are included as references then delete them from the
-      // collected entities array. They will be processed as dependencies.
-      foreach ($referenced_entities as $referenced_entity) {
-        if (in_array($referenced_entity->uuid(), $uuids)) {
-          unset($candidate_entities[$referenced_entity->uuid()]);
-        }
-      }
-    }
-
-    // Process the collected entities now that the list has been optimized.
-    if ($this->exportQueueEnabled) {
-      $this->exportQueueController->enqueueExportEntities($candidate_entities);
       return TRUE;
     }
-    else {
-      $exported_entities = [];
-      $bulk_url_array = [];
-      foreach ($candidate_entities as $candidate_entity) {
-        $entity_type = $candidate_entity->getEntityTypeId();
-        $entity_id = $candidate_entity->id();
-        $bulk_url_array[$entity_type][$entity_id] = $entity_id;
-        $exported_entity = $this->internalRequest->getEntityCdfByInternalRequest($entity_type, $entity_id);
-        $exported_entities = array_merge($exported_entities, $exported_entity['entities']);
+    $exported_entities = [];
+    $bulk_url_array = [];
+    foreach ($candidate_entities as $candidate_entity) {
+      $entity_type = $candidate_entity->getEntityTypeId();
+      $entity_id = $candidate_entity->id();
+      $bulk_url_array[$entity_type][$entity_id] = $entity_id;
+      $context['query_params']['include_references'] = 'true';
+      $exported_entity = $this->entityCdfNormalizer->normalize($candidate_entity, 'acquia_contenthub_cdf', $context);
+      $exported_entity['entities'] = is_array($exported_entity['entities']) ? $exported_entity['entities'] : [];
+      foreach ($exported_entity['entities'] as $key => $ch_entity) {
+        $exported_entity['entities'][$key] = Json::decode($ch_entity->json());
       }
-      // Eliminate duplicates.
-      $exported_cdfs = [];
-      foreach ($exported_entities as $cdf) {
-        $exported_cdfs[$cdf['uuid']] = $cdf;
-      }
+      $exported_entities = array_merge($exported_entities, $exported_entity['entities']);
+    }
+    // Eliminate duplicates.
+    $exported_cdfs = [];
+    foreach ($exported_entities as $cdf) {
+      $exported_cdfs[$cdf['uuid']] = $cdf;
+    }
 
-      // Now implode parameters.
-      foreach ($bulk_url_array as $entity_type => $entities) {
-        $bulk_url_array[$entity_type] = implode(',', $entities);
-      }
-      $resource_url = $this->entityManager->getBulkResourceUrl($bulk_url_array);
-
-      // @TODO This logic should be reviewed later on. We are just saving the
-      // exported entities and not using this information to optimize the export
-      // yet.
-      // Setting up INITIATED status to all tracked exported entities.
-      foreach ($exported_cdfs as $exported_entity) {
-        // Obtaining the entity ID from the entity.
-        $this->trackExportedEntity($exported_entity);
-      }
-
-      $log_msg = 'Drupal sending export request to Content Hub for UUIDs @uuids.';
-      $context = ['@uuids' => implode(', ', array_keys($exported_cdfs))];
-
-      // @TODO: If we are not able to set export status for entities then we are
-      // not exporting entities. Check these lines for media entities.
-      if (!empty($exported_cdfs)) {
-        $response = $this->entityManager->updateRemoteEntities($resource_url);
-        if (isset($response['request_id'])) {
-          $log_msg .= ' (Request ID: @request_id.)';
-          $context += ['@request_id' => $response['request_id']];
+    // Now implode parameters.
+    foreach ($bulk_url_array as $entity_type => $entities) {
+      $bulk_url_array[$entity_type] = implode(',', $entities);
+    }
+    $resource_url = $this->entityManager->getBulkResourceUrl($bulk_url_array);
+    if (!empty($exported_cdfs)) {
+      if ($this->entityManager->updateRemoteEntities($resource_url) !== FALSE) {
+        // Setting up INITIATED status to all tracked exported entities.
+        foreach ($exported_cdfs as $exported_entity) {
+          // Obtaining the entity ID from the entity.
+          $this->trackExportedEntity($exported_entity);
         }
       }
-
-      // Log list of UUIDs being exported.
-      $this->loggerFactory->get('acquia_contenthub')->debug($log_msg, $context);
-
-      return FALSE;
     }
+
+    // Log list of UUIDs being exported.
+    $log_message = 'Drupal sending export request to Content Hub for UUIDs @uuids.';
+    $context = ['@uuids' => implode(', ', array_keys($exported_cdfs))];
+    $this->loggerFactory->get('acquia_contenthub')->debug($log_message, $context);
+    return FALSE;
   }
 
   /**

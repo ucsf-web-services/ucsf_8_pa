@@ -18,7 +18,7 @@ use Drupal\Core\Utility\LinkGeneratorInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\geofield\GeoPHP\GeoPHPInterface;
 use Drupal\geofield\WktGeneratorInterface;
-use Drupal\geofield_map\leafletTileLayer\LeafletTileLayerPluginManager;
+use Drupal\geofield_map\LeafletTileLayerPluginManager;
 use Drupal\Core\Session\AccountInterface;
 
 /**
@@ -82,7 +82,7 @@ class GeofieldMapWidget extends GeofieldLatLonWidget implements ContainerFactory
   /**
    * The LeafletTileLayer Manager service.
    *
-   * @var \Drupal\geofield_map\leafletTileLayer\LeafletTileLayerPluginManager
+   * @var \Drupal\geofield_map\LeafletTileLayerPluginManager
    */
   protected $leafletTileManager;
 
@@ -144,7 +144,7 @@ class GeofieldMapWidget extends GeofieldLatLonWidget implements ContainerFactory
    *   The Entity Field Manager.
    * @param \Drupal\Core\Utility\LinkGeneratorInterface $link_generator
    *   The Link Generator service.
-   * @param \Drupal\geofield_map\leafletTileLayer\LeafletTileLayerPluginManager $leaflet_tile_manager
+   * @param \Drupal\geofield_map\LeafletTileLayerPluginManager $leaflet_tile_manager
    *   The LeafletTileLayer Manager service.
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The Current User.

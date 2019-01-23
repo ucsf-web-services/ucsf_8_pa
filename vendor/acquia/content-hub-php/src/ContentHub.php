@@ -172,6 +172,28 @@ class ContentHub extends Client
     }
 
     /**
+     * Sends request to synchronously update entities.
+     *
+     * The CDF is sent in the payload.
+     *
+     * @param array $entities
+     *   An array of entities.
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     *
+     * @throws \GuzzleHttp\Exception\RequestException
+     */
+    public function putEntities($entities) {
+        $body = json_encode([
+          'data' => $entities
+        ]);
+        $endpoint = "/{$this->api_version}/entities";
+        $request = new Request('PUT', $endpoint, [], $body);
+        $response = $this->send($request);
+        return $response;
+    }
+
+    /**
      * Returns an entity by UUID.
      *
      * @param  string                               $uuid
@@ -190,6 +212,50 @@ class ContentHub extends Client
         ];
         $translatedData = $this->adapter->translate($data['data']['data'], $config);
         return new Entity($translatedData);
+    }
+
+    /**
+     * Obtains a group of entities, given UUIDs.
+     *
+     * @param array $uuids
+     *   An array of UUIDs.
+     *
+     * @return \Acquia\ContentHubClient\Entity[]
+     *   An array of Content Hub Entity objects keyed by UUID.
+     */
+    public function readEntities(array $uuids)
+    {
+        $url = "/{$this->api_version}/_search";
+        $chunks = array_chunk($uuids, 50);
+        $objects = [];
+        foreach ($chunks as $chunk) {
+            $query = [
+                'size' => 50,
+                'query' => [
+                    'constant_score' => [
+                        'filter' => [
+                            'terms' => [
+                                'uuid' => $chunk,
+                            ],
+                        ],
+                    ],
+                ],
+            ];
+            $body = json_encode((array) $query);
+            $request = new Request('GET', $url, [], $body);
+            $results = $this->getResponseJson($request);
+            if (is_array($results) && isset($results['hits']['total']) && $results['hits']['total'] > 0) {
+                foreach ($results['hits']['hits'] as $key => $item) {
+                    $entity = $item['_source']['data'];
+                    $config = [
+                        'dataType' => 'Entity',
+                    ];
+                    $translatedData = $this->adapter->translate($entity, $config);
+                    $objects[$entity['uuid']] = new Entity($translatedData);
+                }
+            }
+        }
+        return $objects;
     }
 
     /**

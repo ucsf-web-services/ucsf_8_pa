@@ -10,7 +10,6 @@ use Drupal\Core\Queue\QueueWorkerManagerInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Queue\SuspendQueueException;
 use Drupal\Component\Utility\SafeMarkup;
-use Drupal\Core\Queue\RequeueException;
 
 /**
  * Implements an Export Queue Controller for Content Hub.
@@ -68,18 +67,26 @@ class ContentHubExportQueueController extends ControllerBase {
    *
    * @param \Drupal\Core\Entity\ContentEntityInterface[] $candidate_entities
    *   An array of entities (uuid, entity object) to be exported to Content Hub.
+   *
+   * @return \Drupal\Core\Entity\ContentEntityInterface[]
+   *   An array of successfully queued entities (uuid, entity object).
    */
   public function enqueueExportEntities(array $candidate_entities) {
+    $queued_entities = [];
     // The collected entities are clean now and should all be processed.
     $exported_entities = [];
     foreach ($candidate_entities as $candidate_entity) {
       $entity_type = $candidate_entity->getEntityTypeId();
       $entity_id = $candidate_entity->id();
+      $entity_uuid = $candidate_entity->uuid();
       $exported_entities[] = [
         'entity_type' => $entity_type,
         'entity_id' => $entity_id,
+        'entity_uuid' => $entity_uuid,
       ];
+      $queued_entities[$entity_uuid] = $candidate_entity;
     }
+    unset($candidate_entities);
 
     // Obtain the export queue.
     $queue = $this->queueFactory->get('acquia_contenthub_export_queue');
@@ -89,10 +96,30 @@ class ContentHubExportQueueController extends ControllerBase {
     $entities_per_item = $entities_per_item ?: 1;
     $chunks = array_chunk($exported_entities, $entities_per_item);
     foreach ($chunks as $entities_chunk) {
+      $uuids = [];
+      foreach ($entities_chunk as $entity_chunk) {
+        $uuids[] = $entity_chunk['entity_uuid'];
+        unset($entity_chunk['entity_uuid']);
+      }
       $item = new \stdClass();
       $item->data = $entities_chunk;
-      $queue->createItem($item);
+      if ($queue->createItem($item) === FALSE) {
+        $messages = [];
+        foreach ($uuids as $uuid) {
+          $message = new TranslatableMarkup('(Type = @type, ID = @id, UUID = @uuid)', [
+            '@type' => $queued_entities[$uuid]->getEntityTypeId(),
+            '@id' => $queued_entities[$uuid]->id(),
+            '@uuid' => $uuid,
+          ]);
+          $messages[] = $message->jsonSerialize();
+          unset($queued_entities[$uuid]);
+        }
+        \Drupal::logger('acquia_contenthub')->debug('There was an error trying to enqueue the following entities for export: @entities.', [
+          '@entities' => implode(', ', $messages),
+        ]);
+      }
     }
+    return $queued_entities;
   }
 
   /**
@@ -107,7 +134,7 @@ class ContentHubExportQueueController extends ControllerBase {
   }
 
   /**
-   *  Execute the delete function for the ACH Export Queue.
+   * Execute the delete function for the ACH Export Queue.
    */
   public function purgeQueue() {
     $queue = $this->queueFactory->get('acquia_contenthub_export_queue');

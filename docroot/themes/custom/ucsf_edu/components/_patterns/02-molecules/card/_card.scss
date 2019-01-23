@@ -123,7 +123,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: auto;
-  grid-gap: 6%;
+  grid-gap: 5%;
   grid-row-gap: 0;
   margin-top: $space-ten;
 
@@ -156,7 +156,6 @@
   h2 {
     @include heading-three;
 
-    font-family: $font-helvetica-neue-light;
     margin: 0;
     margin-top: $space;
     line-height: 1.2;
@@ -216,15 +215,26 @@
     background-repeat: no-repeat;
     background-position: center center;
     margin-bottom: $space-nine;
+    display: flex;
 
     a {
       padding: $space-eight $space-five;
+      align-self: center;
     }
 
     &::after {
       background: transparent;
     }
+
+    .promo-list__card-more {
+      margin-bottom: 0;
+      margin-top: 4px;
+    }
   }
+}
+
+.homepage .promo-list__card.promo-list__card-two a {
+  align-self: flex-end;
 }
 
 .promo-list__card-title {
@@ -248,6 +258,8 @@
 .promo-list__card-more {
   font-family: $font-helvetica-neue-medium;
   margin: 1em 0;
+  line-height: 1;
+  margin-bottom: $space-three;
 
   a {
     color: $white;
@@ -263,6 +275,10 @@
     background-size: 14px 10px;
     color: $white;
   }
+}
+
+.promo-list__card-two .promo-list__card-more {
+  line-height: 1.8em;
 }
 
 .overlay-purple,
@@ -367,6 +383,7 @@
 .event-card__content {
   float: right;
   width: 75%;
+  letter-spacing: 0.2px;
 }
 
 .event-card__title {
@@ -374,7 +391,8 @@
   font-size: $font-size;
   font-family: $font-helvetica-neue-medium;
   margin-bottom: $space;
-  line-height: 1.2;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
 
   a {
     text-decoration: none;
@@ -424,7 +442,7 @@
   font-size: $font-size-bg;
   font-family: $font-helvetica-neue-light;
   color: $gray-blue;
-  box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
 
   &::-webkit-input-placeholder {
     color: $gray-blue;
@@ -463,7 +481,7 @@
 .home-search__presearch-links {
   list-style: none;
   margin: 0;
-  margin-top: $space-three;
+  margin-top: $space-two;
   padding: 0;
   font-family: $font-helvetica-neue-medium;
 
@@ -487,7 +505,7 @@
     text-align: left;
     margin-left: auto;
     margin-right: auto;
-    max-width: 825px;
+    max-width: 840px;
     display: flex;
     justify-content: flex-start;
   }
@@ -517,7 +535,7 @@
   @include heading;
 
   margin: 0 auto;
-  margin-bottom: $space-three;
+  margin-bottom: $space-two;
   padding-top: $space-ten;
   max-width: $xl;
 }
@@ -556,7 +574,7 @@
 
   grid-column: 1/2;
   margin: 0;
-  margin-bottom: $space-two;
+  margin-bottom: $space-three;
 }
 
 .twitter__follow {
@@ -623,7 +641,7 @@
   grid-row: 2/-1;
   content: ' ';
   background: $white;
-  height: 100px;
+  height: 96px;
   align-self: end;
   margin-bottom: -38px;
 }
@@ -650,15 +668,16 @@
   a {
     display: block;
     position: absolute;
-    bottom: -56px;
+    bottom: -60px;
     left: 0;
     background: $white;
-    width: 230px;
+    width: 220px;
     height: 100px;
-    padding: 10px;
+    padding: $space-two;
     color: $navy;
     text-decoration: none;
     font-family: $font-helvetica-neue-medium;
+    line-height: 1.4;
 
     &:hover {
       color: $blue;
@@ -689,6 +708,16 @@
 
   a {
     color: $white;
+
+    &.link--cta {
+      background: url(../images/cta-arrow-white.svg) right center no-repeat transparent;
+      background-size: 14px 10px;
+    }
+
+    span {
+      margin-right: 4px;
+      display: inline-block;
+    }
   }
 }
 

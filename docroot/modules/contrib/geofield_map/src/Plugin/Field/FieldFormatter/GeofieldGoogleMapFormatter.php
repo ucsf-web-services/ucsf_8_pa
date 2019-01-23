@@ -311,6 +311,22 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
         '#title' => t('Image style'),
         '#options' => $this->markerIcon->getImageStyleOptions(),
         '#default_value' => isset($settings['map_marker_and_infowindow']['icon_file_wrapper']['image_style']) ? $settings['map_marker_and_infowindow']['icon_file_wrapper']['image_style'] : 'geofield_map_default_icon_style',
+        '#states' => [
+          'visible' => [
+            ':input[name="fields[field_geofield][settings_edit_form][settings][map_marker_and_infowindow][icon_file_wrapper][icon_file][is_svg]"]' => ['checked' => FALSE],
+          ],
+        ],
+      ],
+      'image_style_svg' => [
+        '#type' => 'container',
+        'warning' => [
+          '#markup' => $this->t("Image style cannot apply to SVG Files,<br>SVG natural dimension will be applied."),
+        ],
+        '#states' => [
+          'invisible' => [
+            ':input[name="fields[field_geofield][settings_edit_form][settings][map_marker_and_infowindow][icon_file_wrapper][icon_file][is_svg]"]' => ['checked' => FALSE],
+          ],
+        ],
       ],
       '#weight' => $elements['map_marker_and_infowindow']['icon_image_mode']['#weight'] + 1,
     ];
@@ -320,7 +336,8 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
     }
 
     if ($selected_icon_image_mode != 'icon_image_path') {
-      $elements['map_marker_and_infowindow']['icon_image_path']['#attributes']['class'] = ['hidden'];
+      $elements['map_marker_and_infowindow']['icon_image_path']['#prefix'] = '<div id="icon-image-path" class="visually-hidden">';
+      $elements['map_marker_and_infowindow']['icon_image_path']['#suffix'] = '</div>';
     }
 
     return $elements + parent::settingsForm($form, $form_state);

@@ -57,7 +57,7 @@ services:
   # Normalizer Proxy to the Seralization Normalizer
   acquia_contenthub.normalizer.entity.acquia_contenthub_cdf:
     class: Drupal\acquia_contenthub\Normalizer\ContentEntityCdfNormalizer
-    arguments: ['@config.factory', '@acquia_contenthub.normalizer.content_entity_view_modes_extractor', '@module_handler', '@entity.repository', '@http_kernel.basic', '@renderer', '@acquia_contenthub.entity_manager', '@entity_type.manager', '@acquia_contenthub.internal_request', '@language_manager']
+    arguments: ['@config.factory', '@acquia_contenthub.normalizer.content_entity_view_modes_extractor', '@module_handler', '@entity.repository', '@http_kernel.basic', '@renderer', '@acquia_contenthub.entity_manager', '@entity_type.manager', '@logger.factory', '@language_manager']
 
   # Serialization Providers
   serializer.normalizer.acquia_contenthub_cdf.acquia_contenthub:

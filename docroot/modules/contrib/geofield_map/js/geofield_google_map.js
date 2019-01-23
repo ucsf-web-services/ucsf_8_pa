@@ -46,10 +46,10 @@
     googleMapsLanguage: function (html_language) {
       switch (html_language) {
         case 'zh-hans':
-          html_language = 'zh-CN'
+          html_language = 'zh-CN';
           break;
         case 'zh-hant':
-          html_language = 'zh-TW'
+          html_language = 'zh-TW';
           break;
       }
       return html_language;
@@ -82,7 +82,7 @@
     // Lead Google Maps library.
     loadGoogle: function (mapid, gmap_api_key, callback) {
       var self = this;
-      var html_language = $('html').attr("lang") ? $('html').attr("lang") : 'en'
+      var html_language = $('html').attr("lang") ? $('html').attr("lang") : 'en';
 
       // Add the callback.
       self.addCallback(callback);

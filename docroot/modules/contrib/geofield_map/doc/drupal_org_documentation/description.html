@@ -8,9 +8,6 @@ It represents the perfect solution to:
   <li>implement advanced front-end Google Maps with Marker Icon & Infowindow advanced customizations, custom Google Map Styles and Marker Clustering capabilities;</li>
 </ul>
 
-<h2><strong>WARNING:<br><u>UPDATE TO Geofield Map 8.x-2.16 (and above ...) IS HIGHLY RECOMMENDED </u> for correct working with Drupal 8.6 core</strong></h2>
-Drupal Core 8.6 introduced a regression in the #states APIs, that affects Geofield Map up to 8.x-2.15 version.<a href="https://www.drupal.org/project/geofield_map/issues/3007221"><br>Refer to this specific issue for more information</a>.</u></strong>
-
 <hr>
 <h4>Geofield Map 2.x. What's New</h4>
 <h3><strong>Dynamic Map Theming & Contextual Legends.</strong></h3>
@@ -101,22 +98,24 @@ Both in Geofield Map Formatter and in the Geofield Map View style it is possible
 <p>As Drupal 8 Plugin system based, the Geofield MapThemers Plugin and Legend block system is fully extendable and overridable.
   You, as D8 developer, are free to override and extend the existing ones, or create your custom MapThemer based on your specific needs and logics.</p>
 
-<h4>How to use.</h4>
+<b>New: </b><u>SVG Image files are now supported for Marker Icons, via the <a href="https://www.drupal.org/project/svg_image">Svg Image module</a></u>
 
-<p>In a Geofield Map View Display, just go into its settings and choose the wanted MapThemer in the new Map Theming Options section/fieldset.
-  It is possible to associate a Drupal Managed File for each MapThemer plugin value and even the Icon Image style the Icon should be rendered on the Map. The Value labels and Icons might have an alias, might be reordered and might be hidden from the correspondent Legend Block.<p>
+  <h4>How to use.</h4>
 
-<p>Once defined and configured the Legend you are free to place it, once or several times, as a normal Drupal 8 block on the pages, with your logics and contextual rules.</p>
+  <p>In a Geofield Map View Display, just go into its settings and choose the wanted MapThemer in the new Map Theming Options section/fieldset.
+    It is possible to associate a Drupal Managed File for each MapThemer plugin value and even the Icon Image style the Icon should be rendered on the Map. The Value labels and Icons might have an alias, might be reordered and might be hidden from the correspondent Legend Block.<p>
 
-<h4><strong>Notes & Warnings</strong></h4>
-<ul>
-  <li>The Geofield Map module depends from the <a href="https://www.drupal.org/project/geofield" title="Geofield" target="_blank">Geofield</a> module;</li>
-  <li>A unique <u>Gmap Api Key</u> is required for both Google Mapping and Geocoding operations, all performed client-side by js.<br>
-    <a href="https://developers.google.com/maps/documentation/javascript/get-api-key#key-restrictions" target="_blank">It might/should be restricted using the Website Domain / HTTP referrers method</a>;</li>
-</ul>
+  <p>Once defined and configured the Legend you are free to place it, once or several times, as a normal Drupal 8 block on the pages, with your logics and contextual rules.</p>
 
-<h4><strong>Roadmap / Planned evolution</strong></h4>
-<ul>
-  <li>Full integration with <a href="https://www.drupal.org/project/geocoder" title="Geocoder" target="_blank">Geocoder</a> module;</li>
-  <li><u>Leaflet Map library</u> support for the Geofield Map Formatter and the  Map Views Plugin. Now please refer to the <a href="https://www.drupal.org/project/leaflet" title="Leaflet" target="_blank">Leaflet</a> and the <a href="https://www.drupal.org/project/leaflet_markercluster" title="Leaflet Markercluster" target="_blank">Leaflet Markercluster</a> modules for Leaflet front-end mapping of Drupal 8 Geofields;</li>
-</ul>
+  <h4><strong>Notes & Warnings</strong></h4>
+  <ul>
+    <li>The Geofield Map module depends from the <a href="https://www.drupal.org/project/geofield" title="Geofield" target="_blank">Geofield</a> module;</li>
+    <li>A unique <u>Gmap Api Key</u> is required for both Google Mapping and Geocoding operations, all performed client-side by js.<br>
+      <a href="https://developers.google.com/maps/documentation/javascript/get-api-key#key-restrictions" target="_blank">It might/should be restricted using the Website Domain / HTTP referrers method</a>;</li>
+  </ul>
+
+  <h4><strong>Roadmap / Planned evolution</strong></h4>
+  <ul>
+    <li>Full integration with <a href="https://www.drupal.org/project/geocoder" title="Geocoder" target="_blank">Geocoder</a> module;</li>
+    <li><u>Leaflet Map library</u> support for the Geofield Map Formatter and the  Map Views Plugin. Now please refer to the <a href="https://www.drupal.org/project/leaflet" title="Leaflet" target="_blank">Leaflet</a> and the <a href="https://www.drupal.org/project/leaflet_markercluster" title="Leaflet Markercluster" target="_blank">Leaflet Markercluster</a> modules for Leaflet front-end mapping of Drupal 8 Geofields;</li>
+  </ul>

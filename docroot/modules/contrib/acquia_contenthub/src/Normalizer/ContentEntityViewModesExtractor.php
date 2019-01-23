@@ -17,6 +17,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Drupal\acquia_contenthub\ContentHubSubscription;
 use Drupal\acquia_contenthub\Session\ContentHubUserSession;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Drupal\Component\Render\FormattableMarkup;
 
 /**
  * Extracts the rendered view modes from a given ContentEntity Object.
@@ -226,6 +227,7 @@ class ContentEntityViewModesExtractor implements ContentEntityViewModesExtractor
       if (!in_array($view_mode_id, $configured_view_modes)) {
         continue;
       }
+      $view_mode_label = ($view_mode_label instanceof FormattableMarkup) ? $view_mode_label->render() : $view_mode_label;
       // Generate our URL where the isolated rendered view mode lives.
       // This is the best way to really make sure the content in Content Hub
       // and the content shown to any user is 100% the same.
