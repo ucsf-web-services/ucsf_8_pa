@@ -1,0 +1,27 @@
+<div class="author-main-article">
+  <div class="author-page-wrapper">
+    <main role="main" class="main">
+      <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+      <div class="main-content author-page">
+        <header class="basic-header author-page__header">
+          <h1>{{ label }}</h1>
+          <p class="basic-header__subheading">{{ content.field_job_title }}</p>
+        </header>
+        <div class="author-card has-image">
+          {{ content.field_author_image }}
+          <div class="author-card__copy">
+            {{ content.body }}
+            <ul class="author-card__links">
+              <li><a href="mailto:{{ node.field_email.value }}" class="link link--cta" >Email {{ label }}</a></li>
+              <li><a href="http://twitter.com/{{ node.field_twitter_handle.value }}
+" class="link link--cta">Follow
+                  on Twitter</a></li>
+            </ul>
+          </div>
+        </div>
+
+        {{ drupal_view('articles_by_author', 'block_1') }}
+      </div>
+    </main>
+  </div>
+</div>
