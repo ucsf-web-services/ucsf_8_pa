@@ -5,7 +5,7 @@
  * Contains \Drupal\ckeditor_test\Plugin\CKEditorPlugin\ucsfquote.
  */
 
-namespace Drupal\ckeditor_test\Plugin\CKEditorPlugin;
+namespace Drupal\ucsf_wysiwyg_pullquote\Plugin\CKEditorPlugin;
 
 use Drupal\ckeditor\CKEditorPluginBase;
 use Drupal\editor\Entity\Editor;
