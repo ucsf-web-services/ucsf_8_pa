@@ -5,7 +5,7 @@
       <div class="main-content author-page">
         <header class="basic-header author-page__header">
           <h1>{{ label }}</h1>
-          <p class="basic-header__subheading">{{ content.field_job_title }}</p>
+          <div class="basic-header__subheading">{{ content.field_job_title }}</div>
         </header>
         <div class="author-card has-image">
           {{ content.field_author_image }}
@@ -19,9 +19,8 @@
             </ul>
           </div>
         </div>
-
-        {{ drupal_view('articles_by_author', 'block_1') }}
       </div>
+      {{ drupal_view('articles_by_author', 'block_1') }}
     </main>
   </div>
 </div>
