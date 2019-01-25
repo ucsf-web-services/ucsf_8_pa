@@ -4,8 +4,9 @@ CKEDITOR.plugins.add('ucsfquote', {
 
   init: function(editor) {
     CKEDITOR.dialog.add('ucsfquote', this.path + 'dialogs/ucsfquote.js' );
-    //var config = editor.config.y3titemplatemenuButtons.split(',');
-    //var button =  config['pullquote'] == undefined ? 'Create a Pullquote' : undefined;
+    var pluginDirectory = this.path;
+//    window.alert(pluginDirectory);
+    editor.addContentsCss( pluginDirectory + 'css/ckeditstyles.css' );
     editor.ui.addButton( 'ucsfquote', {
             label: 'Insert ucsfquote',
             command: 'ucsfquote',
