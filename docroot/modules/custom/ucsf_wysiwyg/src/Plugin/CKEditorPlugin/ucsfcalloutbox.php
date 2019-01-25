@@ -62,8 +62,8 @@ class ucsfcalloutbox extends CKEditorPluginBase {
    */
   public function getButtons() {
     return [
-      'ucsfquote' => [
-        'label' => t('ucsfquote'),
+      'ucsfcalloutbox' => [
+        'label' => t('ucsfcalloutbox'),
         'image' => drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/ucsfcalloutbox/icons/ucsfcalloutbox.png',
       ]
     ];
