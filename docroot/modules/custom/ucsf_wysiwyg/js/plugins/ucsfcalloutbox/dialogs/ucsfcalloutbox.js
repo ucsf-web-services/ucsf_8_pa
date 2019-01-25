@@ -37,10 +37,10 @@ CKEDITOR.dialog.add('ucsfcalloutbox', function( editor ) {
               [ editor.lang.common.alignRight, 'right' ]
             ],
             setup: function( widget ) {
-              this.setValue( widget.data.align ? widget.data.align : '' );
+              this.setValue( widget.data.link ? widget.data.link : '' );
             },
             commit: function( widget ) {
-              widget.setData( 'calltoactionlink', this.getValue() );
+              widget.setData( 'link', this.getValue() );
             }
           }
         ]

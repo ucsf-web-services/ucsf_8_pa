@@ -7,18 +7,18 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
     //var config = editor.config.y3titemplatemenuButtons.split(',');
     //var button =  config['pullquote'] == undefined ? 'Create a Pullquote' : undefined;
     editor.ui.addButton( 'ucsfcalloutbox', {
-            label: 'Insert UCSF Callout Box',
-            command: 'ucsfcalloutbox'
-            //toolbar: 'insert'
-        });
+        label: 'Insert UCSF Callout Box',
+        command: 'ucsfcalloutbox'
+
+    });
 
     editor.widgets.add('ucsfcalloutbox', {
      allowedContent:
-       'div(!ucsfcallout,align--left,align--right,align--center);' +
-       'div(!ucsfcallout--content); div(!ucsfcallout--title); div(!ucsfcallout--related); div(!ucsfcallout--cta); ' +
-       'div(!ucsfcallout--image);',
+       'div(!ucsfcallout,align--left,align--right,align--center);',
+       //'div(!ucsfcallout--content); div(!ucsfcallout--title); div(!ucsfcallout--related); div(!ucsfcallout--cta); ' +
+       //'div(!ucsfcallout--image);',
 
-     requiredContent: 'div(ucsfcallout); div(ucsfcallout--title); div(ucsfcallout--content);',
+     //requiredContent: 'div(ucsfcallout); div(ucsfcallout--title); div(ucsfcallout--content);',
 
       editables: {
         content: {
@@ -50,7 +50,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
           '<div class="ucsfcallout--content">Content</div>' +
           '<div class="ucsfcallout--related">Related Stories...</div>' +
             '<div class="ucsfcallout--cta">' +
-                '<a href="'+ this.data.link +'" class="ucsfcallout--">Call to Action Text</a>' +
+                '<a href="" class="button ucsfcallout--cta">Call to Action Text</a>' +
             '</div>' +
         '</div>',
 
@@ -61,14 +61,16 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
         return element.name == 'div' && element.hasClass('ucsfcallout');
       },
       init: function() {
-        /*
-        if ( this.element.hasClass( 'align--center' ) )
-          this.setData( 'align', 'center' );
-        if ( this.element.hasClass( 'size--third' ) )
-          this.setData( 'size', 'third' );
-        */
+
+        if ( this.element.hasClass( 'align--left' ) )
+          this.setData( 'align', 'left' );
+        if ( this.element.hasClass( 'align--right' ) )
+          this.setData( 'align', 'right' );
+
       },
       data: function() {
+
+
         /*
         // Brutally remove all align classes and set a new one if "align" widget data is set.
         this.element.removeClass( 'align--center' );
@@ -85,7 +87,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
         if ( this.data.bgColor ) {
           this.element.addClass( 'bg--' + this.data.bgColor );
         }
-          */
+        */
       }
     });
   }

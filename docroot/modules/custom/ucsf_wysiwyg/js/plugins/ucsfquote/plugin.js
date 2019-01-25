@@ -5,18 +5,19 @@ CKEDITOR.plugins.add('ucsfquote', {
   init: function(editor) {
     CKEDITOR.dialog.add('ucsfquote', this.path + 'dialogs/ucsfquote.js' );
     var pluginDirectory = this.path;
-//    window.alert(pluginDirectory);
+
     editor.addContentsCss( pluginDirectory + 'css/ckeditstyles.css' );
+
     editor.ui.addButton( 'ucsfquote', {
-            label: 'Insert ucsfquote',
-            command: 'ucsfquote'
-            //toolbar: 'insert'
-        });
+        label: 'Insert Pull Quote',
+        command: 'ucsfquote'
+    });
 
     editor.widgets.add('ucsfquote', {
      allowedContent:
-       'div(!wysiwyg_quote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third);' +
-       'p(!wysiwyg_quote--content); p(!wysiwyg_quote--author); p(!wysiwyg_quote--org)',
+     'blockquote(!wysiwyg_quote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third);' +
+     'div(!wysiwyg_quote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third);' +
+     'p(!wysiwyg_quote--content); p(!wysiwyg_quote--author); p(!wysiwyg_quote--org)',
 
      requiredContent: 'div(wysiwyg_quote);p(wysiwyg_quote--content);p(wysiwyg_quote--author);p(wysiwyg_quote--org)',
 
@@ -36,13 +37,13 @@ CKEDITOR.plugins.add('ucsfquote', {
       },
 
       template:
-        '<div class="wysiwyg_quote">' +
+        '<blockquote class="wysiwyg_quote">' +
           '<p class="wysiwyg_quote--content">Lorem ipsum dolor sit amet, ex labore vivendo laboramus has, vel at putant legendos. Quod appareat id eos, noster malorum et mea.</p>' +
           '<p class="wysiwyg_quote--author">Firstname Lastname, Title</p>' +
           '<p class="wysiwyg_quote--org">Organization/Company/Source</p>' +
-        '</div>',
+        '</blockquote>',
 
-      button: 'Create a Ucsf Quote',
+      button: 'Create a Pull Quote',
       dialog: 'ucsfquote',
 
       upcast: function(element) {

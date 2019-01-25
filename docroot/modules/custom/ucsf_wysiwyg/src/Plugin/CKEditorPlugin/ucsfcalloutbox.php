@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\ucsf_wysiwyg\Plugin\CKEditorPlugin\ucsfcalloutbox.
+ * Contains \Drupal\ckeditor_test\Plugin\CKEditorPlugin\ucsfquote.
  */
 
 namespace Drupal\ucsf_wysiwyg\Plugin\CKEditorPlugin;
@@ -62,8 +62,8 @@ class ucsfcalloutbox extends CKEditorPluginBase {
    */
   public function getButtons() {
     return [
-      'ucsfcalloutbox' => [
-        'label' => t('ucsfcalloutbox'),
+      'Ucsfcalloutbox' => [
+        'label' => t('Callout Box'),
         'image' => drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/ucsfcalloutbox/icons/ucsfcalloutbox.png',
       ]
     ];
