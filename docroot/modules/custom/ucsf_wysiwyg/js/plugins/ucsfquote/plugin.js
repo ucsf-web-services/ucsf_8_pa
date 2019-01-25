@@ -9,7 +9,7 @@ CKEDITOR.plugins.add('ucsfquote', {
     editor.addContentsCss( pluginDirectory + 'css/ckeditstyles.css' );
     editor.ui.addButton( 'ucsfquote', {
             label: 'Insert ucsfquote',
-            command: 'ucsfquote',
+            command: 'ucsfquote'
             //toolbar: 'insert'
         });
 

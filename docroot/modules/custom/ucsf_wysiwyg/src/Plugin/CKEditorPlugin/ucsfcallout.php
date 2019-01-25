@@ -5,22 +5,22 @@
  * Contains \Drupal\ckeditor_test\Plugin\CKEditorPlugin\ucsfquote.
  */
 
-namespace Drupal\ucsf_wysiwyg_pullquote\Plugin\CKEditorPlugin;
+namespace Drupal\ucsf_wysiwyg\Plugin\CKEditorPlugin;
 
 use Drupal\ckeditor\CKEditorPluginBase;
 use Drupal\editor\Entity\Editor;
 
 /**
- * Defines the "ucsfquote" plugin.
+ * Defines the "ucsfcalloutbox" plugin.
 
  *
  * @CKEditorPlugin(
- *   id = "ucsfquote",
- *   label = @Translation("ucsfquote"),
- *   module = "ucsf_wysiwyg_pullquote"
+ *   id = "ucsfcalloutbox",
+ *   label = @Translation("ucsfcalloutbox"),
+ *   module = "ucsf_wysiwyg"
  * )
  */
-class ucsfquote extends CKEditorPluginBase {
+class ucsfcalloutbox extends CKEditorPluginBase {
 
   /**
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getDependencies().
@@ -47,7 +47,7 @@ class ucsfquote extends CKEditorPluginBase {
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return drupal_get_path('module', 'ucsf_wysiwyg_pullquote') . '/js/plugins/ucsfquote/plugin.js';
+    return drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/ucsfcalloutbox/plugin.js';
   }
 
   /**
@@ -64,7 +64,7 @@ class ucsfquote extends CKEditorPluginBase {
     return [
       'ucsfquote' => [
         'label' => t('ucsfquote'),
-        'image' => drupal_get_path('module', 'ucsf_wysiwyg_pullquote') . '/js/plugins/ucsfquote/icons/ucsfquote.png',
+        'image' => drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/ucsfcalloutbox/icons/ucsfcalloutbox.png',
       ]
     ];
   }
