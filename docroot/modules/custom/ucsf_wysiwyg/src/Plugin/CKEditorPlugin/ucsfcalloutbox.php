@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\ckeditor_test\Plugin\CKEditorPlugin\ucsfquote.
+ * Contains \Drupal\ucsf_wysiwyg\Plugin\CKEditorPlugin\ucsfcalloutbox.
  */
 
 namespace Drupal\ucsf_wysiwyg\Plugin\CKEditorPlugin;
