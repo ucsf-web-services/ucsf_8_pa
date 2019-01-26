@@ -2,16 +2,40 @@
   background: url('/themes/custom/evolve/assets/images/#{$file-name}') no-repeat $position $color;
 }
 
-@mixin button-base {
-  border: 0;
-  border-radius: 0;
+@mixin button {
+  background-color: transparent;
+  color: $navy;
+  border: 2px solid $navy;
+  border-radius: $space-four;
+  cursor: pointer;
+  line-height: 1.4;
+  padding: 1em 1.5em;
   display: inline-block;
-  height: 45px;
-  line-height: 15px;
-  padding: 15px 45px 17px 30px;
-  text-align: center;
   text-decoration: none;
-  text-transform: uppercase;
+  text-align: center;
+  font-family: $font-helvetica-neue-medium;
+  min-height: $space-eight;
+
+  &:hover {
+    background-color: $blue;
+    color: $white;
+    border-color: $blue;
+  }
+}
+
+@mixin button-alt {
+  @include button;
+
+  border-color: $blue;
+  color: $blue;
+}
+
+@mixin button-alt-2 {
+  @include button;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: none;
 }
 
 @mixin clearfix {
