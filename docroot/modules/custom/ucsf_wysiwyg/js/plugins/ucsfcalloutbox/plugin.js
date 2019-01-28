@@ -14,7 +14,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
 
     editor.widgets.add('ucsfcalloutbox', {
      allowedContent:
-       'div(!ucsfcallout,align--left,align--right,align--center);',
+       'aside(!ucsfcallout,callout-left,callout-right,align-center);',
        //'div(!ucsfcallout--content); div(!ucsfcallout--title); div(!ucsfcallout--related); div(!ucsfcallout--cta); ' +
        //'div(!ucsfcallout--image);',
 
@@ -22,39 +22,34 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
 
       editables: {
         content: {
-          selector: '.ucsfcallout--content',
+          selector: '.callout__content',
           allowedContent: 'p br strong em a[!href] '
         },
         title: {
-          selector: '.ucsfcallout--title',
+          selector: '.callout__title',
           allowedContent: 'h1 h2 h3 h4 h5 h6 p br strong em;'
         },
         image: {
-            selector: '.ucsfcallout--image',
+            selector: '.callout__image',
             allowedContent: 'img picture p br strong em a[!href] source video'
         },
-        related: {
-          selector: '.ucsfcallout--related',
-          allowedContent: 'h4 h4 h5 h6 p br strong em a[!href] ul ol li'
-        },
         cta: {
-          selector: '.ucsfcallout--cta',
+          selector: '.callout__cta',
           allowedContent: 'img picture p br strong em a[!href] source'
         }
       },
 
       template:
-        '<div class="ucsfcallout">' +
-          '<div class="ucsfcallout--image">Image Placeholder</div>' +
-          '<div class="ucsfcallout--title">Title</div>' +
-          '<div class="ucsfcallout--content">Content</div>' +
-          '<div class="ucsfcallout--related">Related Stories...</div>' +
-            '<div class="ucsfcallout--cta">' +
-                '<a href="" class="button ucsfcallout--cta">Call to Action Text</a>' +
+        '<aside class="callout-left">' +
+          '<div class="callout__image">Image</div>' +
+          '<h3 class="callout__title">Title</h3>' +
+          '<div class="callout__content">Content</div>' +
+          '<div class="callout__cta">' +
+                '<a href="" class="callout__cta">Learn more</a>' +
             '</div>' +
-        '</div>',
+        '</aside>',
 
-      button: 'Create a UCSF Callout Box',
+      button: 'Create a Callout Box',
       dialog: 'ucsfcalloutbox',
 
       upcast: function(element) {
@@ -62,28 +57,21 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
       },
       init: function() {
 
-        if ( this.element.hasClass( 'align--left' ) )
+        if ( this.element.hasClass( 'callout-left' ) )
           this.setData( 'align', 'left' );
-        if ( this.element.hasClass( 'align--right' ) )
+        if ( this.element.hasClass( 'callout-right' ) )
           this.setData( 'align', 'right' );
-
+      if ( this.element.hasClass( 'callout-center' ) )
+          this.setData( 'align', 'center' );
       },
       data: function() {
-
-
-        /*
         // Brutally remove all align classes and set a new one if "align" widget data is set.
-        this.element.removeClass( 'align--center' );
-        this.element.removeClass( 'align--left' );
-        this.element.removeClass( 'align--right' );
+        this.element.removeClass( 'callout-center' );
+        this.element.removeClass( 'callout-left' );
+        this.element.removeClass( 'callout-right' );
         if ( this.data.align )
-          this.element.addClass( 'align--' + this.data.align );
-
-        if ( this.data.size )
-          this.element.addClass( 'size--' + this.data.size );
-
-        this.element.removeClass( 'bg--orange' );
-
+          this.element.addClass( 'callout-' + this.data.align );
+        /*
         if ( this.data.bgColor ) {
           this.element.addClass( 'bg--' + this.data.bgColor );
         }

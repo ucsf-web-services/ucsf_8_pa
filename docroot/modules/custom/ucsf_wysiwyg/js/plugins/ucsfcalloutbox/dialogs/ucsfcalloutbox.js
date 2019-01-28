@@ -5,7 +5,7 @@
 
 CKEDITOR.dialog.add('ucsfcalloutbox', function( editor ) {
   return {
-    title: 'Edit Callout Box Settings',
+    title: 'Edit Callout Settings',
     minWidth: 300,
     minHeight: 150,
     contents: [
@@ -25,22 +25,6 @@ CKEDITOR.dialog.add('ucsfcalloutbox', function( editor ) {
             },
             commit: function( widget ) {
               widget.setData( 'align', this.getValue() );
-            }
-          },
-          {
-            id: 'calltoactionlink',
-            type: 'text',
-            label: 'Align',
-            items: [
-              [ editor.lang.common.alignCenter, 'center' ],
-              [ editor.lang.common.alignLeft, 'left' ],
-              [ editor.lang.common.alignRight, 'right' ]
-            ],
-            setup: function( widget ) {
-              this.setValue( widget.data.link ? widget.data.link : '' );
-            },
-            commit: function( widget ) {
-              widget.setData( 'link', this.getValue() );
             }
           }
         ]
