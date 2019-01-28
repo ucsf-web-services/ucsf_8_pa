@@ -92,3 +92,81 @@
 .main {
   //@include grid;
 }
+
+.layout-left-30-70 {
+  grid-column: 1/-1;
+  float: left;
+  width: 100%;
+  padding: 0 $space-ten;
+
+  .layout-30 {
+    float: left;
+    width: 30%;
+
+    & > :first-child {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+
+  .layout-70 {
+    float: right;
+    width: 70%;
+    padding-left: $space-ten;
+
+    & > :first-child {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+}
+
+.layout-left-70-30 {
+  grid-column: 1/-1;
+  float: left;
+  width: 100%;
+  padding: 0 $space-ten;
+
+  .layout-30 {
+    float: right;
+    width: 30%;
+
+    & > :first-child {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+
+  .layout-70 {
+    float: left;
+    width: 70%;
+    padding-right: $space-ten;
+
+    & > :first-child {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+}
+
+.bg-gray {
+  background: $background-gray;
+  padding-top: $space-ten;
+  padding-bottom: $space-ten;
+}
+
+.layout-columns__three {
+  list-style: none;
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: auto;
+  grid-gap: 5%;
+  grid-row-gap: 0;
+  padding: $space-ten;
+  padding-bottom: 0;
+}
+
+.layout-column {
+  margin-bottom: 0;
+}
