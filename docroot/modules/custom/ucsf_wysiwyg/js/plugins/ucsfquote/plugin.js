@@ -29,50 +29,54 @@ CKEDITOR.plugins.add('ucsfquote', {
 
     editor.widgets.add('ucsfquote', {
      allowedContent:
-     'blockquote(!blockquote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third);',
- //    'div(!wysiwyg_quote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third);' +
- //    'p(!wysiwyg_quote--content); p(!wysiwyg_quote--author); p(!wysiwyg_quote--org); div(!blockquote-content); p(!blockquote-content__text); cite(!blockquote-content__cite);',
+     'blockquote(!blockquote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third);' +
+     'cite(!blockquote-content__cite)' +
+     'p(!blockquote-content__text);',
+     //'div(!wysiwyg_quote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third);' +
+     //'p(!wysiwyg_quote--content); p(!wysiwyg_quote--author); p(!wysiwyg_quote--org); ' +
+
 
 //     requiredContent: 'div(!blockquote-content);p(!blockquote-content__text);cite(!blockquote-content__cite)',
 
       editables: {
+        contenttext: {
+          selector: '.blockquote-content__text',
+          allowedContent: 'br strong em; a[!href] cite'
+        },
+        cite: {
+          selector: '.blockquote-content__cite',
+          allowedContent: 'br strong em; a[!href] cite'
+        },
         content: {
           selector: '.wysiwyg_quote--content',
-          allowedContent: 'br strong em; a[!href]'
+          allowedContent: 'br strong em; a[!href] cite'
         },
         author: {
           selector: '.wysiwyg_quote--author',
-          allowedContent: 'br'
+          allowedContent: 'br strong em; a[!href]'
         },
         org: {
           selector: '.wysiwyg_quote--org',
-          allowedContent: 'br'
+          allowedContent: 'br strong em; a[!href]'
         },
-        contenttext: {
-          selector: '.blockquote-content__text',
-          allowedContent: 'br'
-        },
-        contentcite: {
-          selector: '.blockquote-content__cite',
-          allowedContent: 'br'
-        }
+
       },
 
       template:
         '<blockquote class="blockquote">' +
-          '<div class="blockquote-content">' +
+          //'<div class="blockquote-content">' +
             '<p class="blockquote-content__text">Lorem ipsum dolor sit amet, ex labore vivendo laboramus has, vel at putant legendos. Quod appareat id eos, noster malorum et mea.</p>' +
-            '<footer>' +
-              '<cite class="blockquote-content__cite">Name some cite</cite>' +
-            '</footer>' +
-          '</div>' +
+            //'<footer class="blockquote-content__cite">' +
+            '<cite class="blockquote-content__cite">Name some cite</cite>' +
+            //'</footer>' +
+          //'</div>' +
         '</blockquote>',
 
       button: 'Create a Pull Quote',
       dialog: 'ucsfquote',
 
       upcast: function(element) {
-        return element.name == 'div' && element.hasClass('wysiwyg_quote');
+        return element.name == 'blockquote' && element.hasClass('blockquote');
       },
       init: function() {
         if ( this.element.hasClass( 'bg--white' ) )

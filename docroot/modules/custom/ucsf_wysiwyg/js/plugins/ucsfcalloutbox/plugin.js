@@ -1,5 +1,7 @@
+
+(function($, Drupal, drupalSettings, CKEDITOR) {
 "use strict";
-//(function($, Drupal, drupalSettings, CKEDITOR) {
+
 CKEDITOR.plugins.add('ucsfcalloutbox', {
     requires: 'widget',
     icons: 'ucsfcalloutbox',
@@ -16,6 +18,22 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
             command: 'ucsfcalloutbox'
         });
 
+        // Register context menu option for editing widget.
+        if (editor.contextMenu) {
+            editor.addMenuGroup('ucsfGroup');
+            editor.addMenuItem('calloutbox', {
+                label: 'Edit Callout',
+                icon: this.path + 'icons/ucsfcalloutbox.png',
+                command: 'ucsfcalloutbox',
+                group: 'ucsfGroup'
+            });
+
+            editor.contextMenu.addListener(function (element) {
+                if (element.getAscendant('calloutbox', true)) {
+                    return {calloutboxItem: CKEDITOR.TRISTATE_OFF};
+                }
+            });
+        }
 
         editor.widgets.add('ucsfcalloutbox', {
             allowedContent: 'aside(!ucsfcallout,callout-left,callout-right,align-center);' +
@@ -45,10 +63,10 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
 
             template: '<aside class="ucsfcallout callout-left">' +
                 '<div class="callout__image">Image</div>' +
-                '<h3 class="callout__title">Title</h3>' +
+                '<div class="callout__title">Title</div>' +
                 '<div class="callout__content">Content</div>' +
                 '<div class="callout__cta">' +
-                '<a href="" class="callout__cta">Learn more</a>' +
+                '<a href="">Learn more</a>' +
                 '</div>' +
             '</aside>',
 
@@ -65,25 +83,6 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                     this.setData('align', 'right');
                 if (this.element.hasClass('callout-center'))
                     this.setData('align', 'center');
-
-
-                // Register context menu option for editing widget.
-                if (editor.contextMenu) {
-                    editor.addMenuGroup('ucsf');
-                    editor.addMenuItem('ucsfcalloutbox', {
-                        label: 'Edit Callout',
-                        icon: this.path + 'icons/ucsfcalloutbox.png',
-                        command: 'ucsfcalloutbox',
-                        group: 'ucsf'
-                    });
-
-                    editor.contextMenu.addListener( function( element ) {
-                        if ( element.getAscendant( 'ucsfcalloutbox', true ) ) {
-                            return { ucsfcalloutboxItem: CKEDITOR.TRISTATE_OFF };
-                        }
-                    });
-
-                }
             },
             data: function () {
                 // Brutally remove all align classes and set a new one if "align" widget data is set.
@@ -102,4 +101,4 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
     }
 });
 
-//})(jQuery, Drupal, drupalSettings, CKEDITOR);
+})(jQuery, Drupal, drupalSettings, CKEDITOR);
