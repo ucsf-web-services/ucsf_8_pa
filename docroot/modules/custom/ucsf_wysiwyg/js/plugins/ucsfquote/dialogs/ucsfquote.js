@@ -10,27 +10,27 @@ CKEDITOR.dialog.add('ucsfquote', function( editor ) {
     minHeight: 100,
     contents: [
       {
-        id: 'info',
-        elements: [
-          {
-            id: 'bgColor',
-            type: 'select',
-            label: 'Background Color',
-            items: [
-              [ 'White', 'white' ],
-              [ 'Grey', 'grey' ],
-              [ 'Blue', 'blue' ],
-              [ 'Teal', 'teal' ],
-              [ 'Lime', 'lime' ],
-              [ 'Orange', 'orange' ]
-            ],
-            setup: function( widget ) {
-              this.setValue( widget.data.bgColor ? widget.data.bgColor : 'white' );
-            },
-            commit: function( widget ) {
-              widget.setData( 'bgColor', this.getValue() );
-            }
-          },
+         id: 'info',
+         elements: [
+//           {
+//             id: 'bgColor',
+//             type: 'select',
+//             label: 'Background Color',
+//             items: [
+//               [ 'White', 'white' ],
+//               [ 'Grey', 'grey' ],
+//               [ 'Blue', 'blue' ],
+//               [ 'Teal', 'teal' ],
+//               [ 'Lime', 'lime' ],
+//               [ 'Orange', 'orange' ]
+//             ],
+//             setup: function( widget ) {
+//               this.setValue( widget.data.bgColor ? widget.data.bgColor : 'white' );
+//             },
+//             commit: function( widget ) {
+//               widget.setData( 'bgColor', this.getValue() );
+//             }
+//           },
           {
             id: 'align',
             type: 'select',
@@ -38,7 +38,9 @@ CKEDITOR.dialog.add('ucsfquote', function( editor ) {
             items: [
               [ editor.lang.common.alignCenter, 'center' ],
               [ editor.lang.common.alignLeft, 'left' ],
-              [ editor.lang.common.alignRight, 'right' ]
+              [ editor.lang.common.alignRight, 'right' ],
+              [ 'Half Left', 'half-left' ],
+              [ 'Half Right', 'half-right' ]
             ],
             setup: function( widget ) {
               this.setValue( widget.data.align ? widget.data.align : 'right' );
@@ -47,23 +49,23 @@ CKEDITOR.dialog.add('ucsfquote', function( editor ) {
               widget.setData( 'align', this.getValue() );
             }
           },
-          {
-            id: 'size',
-            type: 'select',
-            label: 'Size',
-            items: [
-              [ 'Full Width', 'full' ],
-              [ 'Half Width', 'half' ],
-              [ 'Two Fifth', 'twofifth' ],
-              [ 'One Third', 'third' ]
-            ],
-            setup: function( widget ) {
-              this.setValue( widget.data.size ? widget.data.size : 'twofifth' );
-            },
-            commit: function( widget ) {
-              widget.setData( 'size', this.getValue() );
-            }
-          }
+//           {
+//             id: 'size',
+//             type: 'select',
+//             label: 'Size',
+//             items: [
+//               [ 'Full Width', 'full' ],
+//               [ 'Half Width', 'half' ],
+//               [ 'Two Fifth', 'twofifth' ],
+//               [ 'One Third', 'third' ]
+//             ],
+//             setup: function( widget ) {
+//               this.setValue( widget.data.size ? widget.data.size : 'twofifth' );
+//             },
+//             commit: function( widget ) {
+//               widget.setData( 'size', this.getValue() );
+//             }
+//           }
         ]
       }
     ]
