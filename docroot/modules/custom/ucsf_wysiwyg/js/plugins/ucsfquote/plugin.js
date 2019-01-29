@@ -5,15 +5,17 @@ CKEDITOR.plugins.add('ucsfquote', {
 
     // Configure CKEditor DTD for custom drupal-entity element.
     // @see https://www.drupal.org/node/2448449#comment-9717735
+    /*
     var dtd = CKEDITOR.dtd, tagName;
-    window.alert('hello');
     dtd['ucsfquote'] = {'blockquote': 1, 'div': 1, 'p': 1, 'footer': 1, 'cite': 1};
     for (tagName in dtd) {
       if (dtd[tagName].p) {
         dtd[tagName]['ucsfquote'] = 1;
       }
     }
-  },
+    */
+    },
+
   init: function(editor) {
     CKEDITOR.dialog.add('ucsfquote', this.path + 'dialogs/ucsfquote.js' );
     var pluginDirectory = this.path;
@@ -46,23 +48,23 @@ CKEDITOR.plugins.add('ucsfquote', {
           selector: '.wysiwyg_quote--org',
           allowedContent: 'br'
         },
-        content-text: {
+        contenttext: {
           selector: '.blockquote-content__text',
           allowedContent: 'br'
         },
-//         content-cite: {
-//           selector: '.blockquote-content__cite',
-//           allowedContent: 'br'
-//        }
+        contentcite: {
+          selector: '.blockquote-content__cite',
+          allowedContent: 'br'
+        }
       },
 
       template:
         '<blockquote class="blockquote">' +
           '<div class="blockquote-content">' +
             '<p class="blockquote-content__text">Lorem ipsum dolor sit amet, ex labore vivendo laboramus has, vel at putant legendos. Quod appareat id eos, noster malorum et mea.</p>' +
-//            '<footer>' +
-//              '<cite class="blockquote-content__cite">Name some cite</cite>' +
-//            '</footer>' +
+            '<footer>' +
+              '<cite class="blockquote-content__cite">Name some cite</cite>' +
+            '</footer>' +
           '</div>' +
         '</blockquote>',
 

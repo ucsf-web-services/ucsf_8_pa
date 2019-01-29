@@ -5,7 +5,7 @@
 
 CKEDITOR.dialog.add('ucsfquote', function( editor ) {
   return {
-    title: 'Edit Ucsfquote Settings',
+    title: 'Edit Quote Settings',
     minWidth: 250,
     minHeight: 100,
     contents: [
