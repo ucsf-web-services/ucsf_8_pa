@@ -1,6 +1,6 @@
-
 (function($, Drupal, drupalSettings, CKEDITOR) {
-"use strict";
+
+    "use strict";
 
 CKEDITOR.plugins.add('ucsfcalloutbox', {
     requires: 'widget',
@@ -37,37 +37,37 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
 
         editor.widgets.add('ucsfcalloutbox', {
             allowedContent: 'aside(!ucsfcallout,callout-left,callout-right,align-center);' +
-            'div(!callout__content); div(!callout__title); div(!callout__cta);' +
-            'div(!callout__image);',
+            'div(!callout__content); div(!callout__title); div(!callout__cta); div(!callout__image);',
 
-            //requiredContent: 'aside(!ucsfcallout);',
+            requiredContent: 'aside(ucsfcallout);',
 
             editables: {
                 content: {
                     selector: '.callout__content',
-                    allowedContent: 'p br strong em a[!href] '
+                    allowedContent: 'p[*]; br strong[*]; em a[*]; time[*]; cite i strike sub sup ul[*]; ol[*]; li dl dd dt address[*]; abbr;'
                 },
                 title: {
                     selector: '.callout__title',
-                    allowedContent: 'h1 h2 h3 h4 h5 h6 p br strong em;'
+                    allowedContent: 'h1 h2 h3 h4 h5 h6 p[*]; br strong em;'
                 },
                 image: {
                     selector: '.callout__image',
-                    allowedContent: 'img picture p strong em a[!href] source video'
+                    allowedContent: 'img[*]; picture[*]; p[*]; strong em a[*] source[*]; video[*]; drupal-entity[*];'
                 },
                 cta: {
                     selector: '.callout__cta',
-                    allowedContent: 'img picture p br strong em a[!href] source'
+                    allowedContent: 'img[*]; picture p[*]; br strong[*]; em a[*]; source[*];'
                 }
             },
 
             template: '<aside class="ucsfcallout callout-left">' +
-                '<div class="callout__image">Image</div>' +
-                '<div class="callout__title">Title</div>' +
-                '<div class="callout__content">Content</div>' +
-                '<div class="callout__cta">' +
-                '<a href="">Learn more</a>' +
+                '<div class="callout__image">Image here optional</div>' +
+                '<div class="callout__title"><h3>Related Stories</h3></div>' +
+                '<div class="callout__content">' +
+                    '<time>Oct. 24, 2018</time>' +
+                    '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ultricies sit amet.</p>' +
                 '</div>' +
+                '<div class="callout__cta">Call to action</div>' +
             '</aside>',
 
             button: 'Create a Callout Box',
