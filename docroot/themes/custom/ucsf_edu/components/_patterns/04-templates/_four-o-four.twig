@@ -1,0 +1,55 @@
+{% set layout_modifiers = [] %}
+
+{% set main_base_class = main_base_class|default('main') %}
+{% set main_modifiers = [] %}
+
+{% set main_content_base_class = main_content_base_class|default('main-content narrow-page about-page') %}
+{% set main_content_modifiers = [] %}
+
+<div class="main-article page-node-type-basic">
+  <div {{ bem('layout-container', (layout_modifiers)) }}>
+    {% block page_universal_header %}
+      {% include "@organisms/site/universal-header/universal-header.twig" %}
+    {% endblock %}
+
+    {% block page_header %}
+      {% include "@organisms/site/site-header/site-header.twig" %}
+    {% endblock %}
+
+    {% block page_system %}
+    {% endblock %}
+
+    <main role="main" {{ bem(main_base_class, (main_modifiers), main_blockname) }}>
+      <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+
+      <div {{ bem(main_content_base_class, (main_content_modifiers), main_content_blockname) }}>
+          {% block page_content %}{% endblock %}
+      </div>
+
+    </main>
+
+    <div class="footer-ctas-wrapper">
+      <ul class="footer-ctas">
+        <li class="footer-cta">
+          <h2>Engage with us. Engage with your neighbors.</h2>
+
+          <div class="footer-cta__copy">
+            <a href="" class="icon-heart">Follow us on Facebook</a>
+          </div>
+        </li>
+
+        <li class="footer-cta">
+          <h2>Are you a member of the news media?</h2>
+
+          <div class="footer-cta__copy">
+            <a href="" class="icon-heart">Visit the Media Center</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    {% block page_footer %}
+      {% include "@organisms/site/site-footer/site-footer.twig" %}
+    {% endblock %}
+  </div>
+</div>

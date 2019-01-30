@@ -133,9 +133,7 @@
   }
 
   .article-header__description {
-    font-size: 24px;
     margin: 0;
-    line-height: 1.4em;
   }
 }
 
@@ -158,6 +156,7 @@
       padding: 0;
       grid-template-rows: $space-ten $space-ten auto auto;
       background: $white;
+      max-width: $full;
     }
 
     .recommended-articles_list {
@@ -173,7 +172,8 @@
 }
 
 .recommended-articles__banner {
-  padding: 0 $space-ten;
+  margin: 0 auto;
+  max-width: $xl;
 }
 
 .recommended-articles__title {
@@ -204,14 +204,14 @@
   grid-column: 10/-2;
   grid-row: 3/-1;
   background: $white;
-  padding: $space-eight;
-  padding-top: 0;
+  padding: 0 $space-eight;
 
   h2 {
     @include heading-two;
 
     margin: 0;
     margin-top: $space-two;
+    line-height: 1.2;
 
     a {
       text-decoration: none;
@@ -226,6 +226,8 @@
   margin-top: $space-two;
 
   .card-three-up {
+    margin: 0 auto;
+    max-width: $xl;
     margin-top: 0;
     padding-top: $space-five;
 
