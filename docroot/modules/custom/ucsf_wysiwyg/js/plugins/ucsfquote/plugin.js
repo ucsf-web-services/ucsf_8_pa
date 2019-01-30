@@ -35,7 +35,7 @@ CKEDITOR.plugins.add('ucsfquote', {
      'cite(!blockquote-content__cite); p(!blockquote-content__text);' +
      'p(!wysiwyg_quote--content); p(!wysiwyg_quote--author); p(!wysiwyg_quote--org); ',
 
-     requiredContent: 'blockquote(!blockquote)',
+        requiredContent: 'blockquote(!blockquote)',
 
         editables: {
             contenttext: {
@@ -58,7 +58,7 @@ CKEDITOR.plugins.add('ucsfquote', {
                 selector: '.wysiwyg_quote--org',
                 allowedContent: 'br strong em; a[!href];'
             },
-            orgization: {
+            organization: {
                 selector: '.blockquote-content__org',
                 allowedContent: 'br strong em; a[!href];'
             }
@@ -70,7 +70,7 @@ CKEDITOR.plugins.add('ucsfquote', {
             '<p class="blockquote-content__text">Lorem ipsum dolor sit amet, ex labore vivendo laboramus has, vel at putant legendos. Quod appareat id eos, noster malorum et mea.</p>' +
             '<footer>' +
             '<p class="blockquote-content__cite">Vivendo Laboramus, PhD</p>' +
-            '<p class="blockquote-content__org">Orgization name</p>' +
+            '<p class="blockquote-content__org">Organization name</p>' +
             '</footer>' +
           //'</div>' +
         '</blockquote>',
