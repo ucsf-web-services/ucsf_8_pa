@@ -102,7 +102,9 @@ class ApplenewsTemplate extends ConfigEntityBase implements ApplenewsTemplateInt
       if ($id == $component_id) {
         return $component;
       }
-      if ($found = $this->getNestedComponent($component['component_data']['components'], $id)) {
+      if (!empty($component['component_data']['components']) &&
+        $found = $this->getNestedComponent($component['component_data']['components'], $id)
+      ) {
         return $found;
       }
     }
@@ -145,17 +147,13 @@ class ApplenewsTemplate extends ConfigEntityBase implements ApplenewsTemplateInt
    * {@inheritdoc}
    */
   public function deleteComponent($id) {
-    foreach ($this->components as $component_id => &$component) {
-      if ($id == $component_id) {
-        unset($this->components[$id]);
-        return TRUE;
+    if ($this->deleteNestedComponent($this->components, $id)) {
+      if (!empty($this->components)) {
+        uasort($this->components, [$this, 'sortHelper']);
       }
-      if ($this->deleteNestedComponent($component['component_data']['components'], $id)) {
-        return TRUE;
-      }
-
+      return TRUE;
     }
-    uasort($components, [$this, 'sortHelper']);
+    return FALSE;
   }
 
   /**
@@ -178,7 +176,9 @@ class ApplenewsTemplate extends ConfigEntityBase implements ApplenewsTemplateInt
         }
         return TRUE;
       }
-      if ($this->deleteNestedComponent($component['component_data']['components'], $id)) {
+      if (!empty($component['component_data']['components']) &&
+        $this->deleteNestedComponent($component['component_data']['components'], $id)
+      ) {
         return TRUE;
       }
     }
