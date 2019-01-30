@@ -1,0 +1,144 @@
+{% set layout_modifiers = [] %}
+
+{% set main_base_class = main_base_class|default('main') %}
+{% set main_modifiers = [] %}
+
+{% set main_content_base_class = main_content_base_class|default('main-content narrow-page about-page') %}
+{% set main_content_modifiers = [] %}
+
+<div class="main-article page-node-type-basic">
+  <div {{ bem('layout-container', (layout_modifiers)) }}>
+    {% block page_universal_header %}
+      {% include "@organisms/site/universal-header/universal-header.twig" %}
+    {% endblock %}
+
+    {% block page_header %}
+      {% include "@organisms/site/site-header/site-header.twig" %}
+    {% endblock %}
+
+    {% block page_system %}
+    {% endblock %}
+
+    <main role="main" {{ bem(main_base_class, (main_modifiers), main_blockname) }}>
+      <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+
+      {% include "@atoms/04-images/00-image/figure.twig" with {
+        img_src: '../../images/about/about-banner.jpg',
+        img_alt: 'Doctors with patient',
+        image_figure_base_class: 'article-medium-banner',
+      } %}
+
+      <div {{ bem(main_content_base_class, (main_content_modifiers), main_content_blockname) }}>
+          {% block page_content %}{% endblock %}
+      </div>
+
+    </main>
+
+<div class="about-full-width-wrapper">
+    <div class="about-full-width">
+
+    <div class="layout-columns__three">
+      <div class="layout-column">
+        <h2>UCSF by the numbers</h2>
+      </div>
+
+      <div class="layout-column">
+        <div class="fact-card">
+          <div class="icon-education"></div>
+          <h3>Graduate Division</h3>
+          <ul>
+            <li>4 professional school</li>
+            <li>19 PhD programs</li>
+            <li>11 master’s programs</li>
+          </ul>
+        </div>
+
+        <div class="fact-card">
+          <div class="icon-campus"></div>
+          <h3>Medical Center</h3>
+          <ul>
+            <li>3 main clinical sites</li>
+            <li>Over 50 primary care and specialty clinics throughout Northern California</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="layout-column">
+        <div class="fact-card">
+          <div class="icon-doctor"></div>
+          <h3>People</h3>
+          <ul>
+            <li>3,300 students</li>
+            <li>1,500 clinical residents</li>
+            <li>1,000 postdoc scholars</li>
+            <li>3,000 faculty</li>
+            <li>22,000 staff</li>
+          </ul>
+        </div>
+
+        <div class="fact-card">
+          <div class="icon-money"></div>
+          <h3>Economic Impact</h3>
+          <ul>
+            <li>UCSF generates nearly 43,000 jobs</li>
+            <li>UCSF produces an estimated $8.9 billion in economic impact</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="promo-list">
+    <h2 class="promo-list__heading">Our Focus</h2>
+    <ul class="promo-list__cards card-three-up">
+      <li class="promo-list__card overlay-purple" style="background-image: url('../../images/promo-cards/promo-card-bk-1.jpg');">
+        <a href="">
+          <h3 class="promo-list__card-title">Patients</h3>
+          <p class="promo-list__card-content">UCSF holds over 1,890 active patents that raise more than $24.4M a year, helping us fund cutting-edge research.</p>
+          <p class="promo-list__card-more"><span href="" class="link link--cta">Learn more</span></p>
+        </a>
+      </li>
+      <li class="promo-list__card overlay-teal" style="background-image: url('../../images/promo-cards/promo-card-bk-2.jpg');">
+        <a href="">
+          <h3 class="promo-list__card-title">Discoveries</h3>
+          <p class="promo-list__card-content">UCSF’s research discoveries have transformed the landscape of human health.</p>
+          <p class="promo-list__card-more"><span href="" class="link link--cta">Learn more</span></p>
+        </a>
+      </li>
+      <li class="promo-list__card overlay-blue" style="background-image: url('../../images/promo-cards/promo-card-bk-3.jpg');">
+        <a href="">
+          <h3 class="promo-list__card-title">Innovation</h3>
+          <p class="promo-list__card-content">Since the days of the Gold Rush, UCSF’s pioneering spirit has been an integral part of its success.</p>
+          <p class="promo-list__card-more"><span href="" class="link link--cta">Learn more</span></p>
+        </a>
+      </li>
+    </ul>
+    </div>
+
+    </div>
+</div>
+
+    <div class="footer-ctas-wrapper">
+      <ul class="footer-ctas">
+        <li class="footer-cta">
+          <h2>Engage with us. Engage with your neighbors.</h2>
+
+          <div class="footer-cta__copy">
+            <a href="" class="icon-heart">Follow us on Facebook</a>
+          </div>
+        </li>
+
+        <li class="footer-cta">
+          <h2>Are you a member of the news media?</h2>
+
+          <div class="footer-cta__copy">
+            <a href="" class="icon-heart">Visit the Media Center</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    {% block page_footer %}
+      {% include "@organisms/site/site-footer/site-footer.twig" %}
+    {% endblock %}
+  </div>
+</div>

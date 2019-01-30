@@ -1,41 +1,139 @@
-// Tab Navigation
-.tabs__nav {
-  @include list-reset;
-
-  border-bottom: 1px solid $gray-lightest;
-
-  @include large {
-    border-left: 1px solid $gray-lightest;
-    display: flex;
-  }
-}
-
-// Tab Content (hidden only in full #tabs js version)
-.tabs__tab {
+.js-tabcontent[aria-hidden=true] {
   display: none;
+}
 
-  &.is-active {
-    display: block;
+.horizontal-tab {
+  .horizontal-tab__title {
+    display: inline-block;
+    top: 5px;
+    margin-left: 0;
+
+    &[role="tablist"] {
+      li,
+      li:first-child {
+        list-style-type: none;
+        display: block;
+        float: left;
+        margin: auto 0;
+
+        a {
+          background-color: $white;
+          padding: 1em;
+          cursor: pointer;
+          display: block;
+          //border-right: 2px solid $gray-lightest;
+          //border-top: 2px solid $gray-lightest;
+          color: $blue;
+          text-decoration: none;
+
+          &[aria-selected="true"] {
+            background-color: $blue;
+            color: $white;
+            //border-right: 2px solid $blue;
+            //border-top: 2px solid $blue;
+            //border-left: 2px solid $blue;
+          }
+        }
+      }
+
+      li:first-child {
+        a {
+          //border-top-left-radius: 3px;
+          //border-left: 2px solid $gray-lightest;
+        }
+      }
+
+      li:last-child {
+        a {
+          //border-top-right-radius: 3px;
+        }
+      }
+
+      li.first-child {
+        a[aria-selected="true"] {
+          //border-left: 2px solid $blue;
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  .horizontal-tab__content {
+    list-style: none;
+    border: 2px solid $blue;
+    background-color: $white;
+    margin-top: -2px;
+    min-height: 3em;
+    position: relative;
+    padding: 0.5em 1em;
+    margin-left: 0;
+
+    &:first-child {
+      display: block;
+    }
   }
 }
 
-.tabs__content {
-  padding: 1.5rem;
-}
+.vertical-tab {
+  grid-column: 1/-1;
 
-// No-js fallback
-.tabs.no-js {
-  .tabs__tab.is-active {
-    display: block;
+  .vertical-tab__title {
+    display: inline-block;
+    float: left;
+    margin: 0;
+    padding: 0;
+    padding-right: 50px;
+
+    li {
+      list-style-type: none;
+      margin: auto 0;
+      outline: 0;
+      text-decoration: none;
+      line-height: 1.1em;
+
+      a {
+        background-color: $white;
+        padding: $space-two $space-four;
+        cursor: pointer;
+        display: block;
+        border-bottom: 1px solid $gray-lightest;
+        text-decoration: none;
+        font-family: $font-helvetica-neue-medium;
+
+        &[aria-selected="true"] {
+          color: $blue;
+          //border-left: $space solid $blue;
+          //box-shadow: -4px 6px 11px 0 rgba(213, 217, 222, 0.35);
+          border-top: 0;
+          border-bottom: 0;
+          position: relative;
+          background: url("../images/vertical-tab-highlight.png") left center no-repeat $white;
+          background-size: 100% 100%;
+          min-height: $space-eight;
+          margin-right: -50px;
+        }
+      }
+    }
+
+    li:first-child {
+      a {
+        &[aria-selected="true"] {
+          margin-top: 0;
+        }
+      }
+    }
+
+    li:last-child {
+      a {
+        border-bottom-left-radius: 0;
+      }
+    }
   }
-}
 
-// Drupal Local Tasks variant
-.tabs__nav--local-tasks {
-  margin: 1em 0 0.5em;
-  padding: 0;
-}
-
-.tabs__link--local-tasks {
-  padding: 0.3em 1.5em;
+  .vertical-tab__content {
+    list-style: none;
+    background-color: $white;
+    min-height: 15em;
+    padding-top: 0;
+  }
 }

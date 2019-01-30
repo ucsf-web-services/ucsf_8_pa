@@ -58,6 +58,8 @@
       {% for item in items %}
         <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
       {% endfor %}
+      {% block coda %}
+      {% endblock coda %}
     </div>
   {% else %}
     {% for item in items %}

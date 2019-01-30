@@ -1,0 +1,89 @@
+.author-page-wrapper {
+  margin: 0 auto;
+  margin-top: $space-twenty;
+  max-width: $full;
+  background: $white;
+
+  &::before {
+    content: ' ';
+    display: block;
+    height: 80px;
+    width: 88%;
+    background: $white;
+    position: relative;
+    top: -80px;
+  }
+}
+
+.author-page {
+  margin: 0 auto;
+  max-width: $xl;
+  margin-top: -80px;
+}
+
+.author-page__header {
+  grid-column: 1/-1;
+  margin-bottom: $space-five;
+}
+
+.author-card {
+  @include grid;
+
+  grid-column: 1/-1;
+}
+
+.author-card__copy {
+  grid-column: 1/-2;
+
+  p {
+    margin-top: 0;
+  }
+}
+
+.has-image {
+  .field-author-image { // .author-card__image in PL.
+    grid-column: 1/5;
+    position: relative;
+
+    img {
+      width: 100%;
+    }
+
+    &::after {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #fff;
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .author-card__copy {
+    grid-column: 5/-2;
+
+    p {
+      margin-top: 0;
+    }
+  }
+}
+
+.author-card__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: inline-block;
+    margin-right: $space-five;
+  }
+}
+
+.author-page {
+  grid-template-rows: 4;
+
+  .news-card-three-up {
+    margin-top: $space-ten;
+  }
+}

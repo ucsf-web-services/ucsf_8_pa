@@ -6,7 +6,7 @@
 {% set main_content_base_class = main_content_base_class|default('main-content topic-page') %}
 {% set main_content_modifiers = [] %}
 
-<div class="main-article">
+<div class="main-article path-taxonomy">
   <div {{ bem('layout-container', (layout_modifiers)) }}>
     {% block page_universal_header %}
       {% include "@organisms/site/universal-header/universal-header.twig" %}
@@ -32,6 +32,26 @@
         </div>
 
       </main>
+    </div>
+
+    <div class="footer-ctas-wrapper">
+      <ul class="footer-ctas">
+        <li class="footer-cta">
+          <h2>Engage with us. Engage with your neighbors.</h2>
+
+          <div class="footer-cta__copy">
+            <a href="" class="icon-heart">Follow us on Facebook</a>
+          </div>
+        </li>
+
+        <li class="footer-cta">
+          <h2>Are you a member of the news media?</h2>
+
+          <div class="footer-cta__copy">
+            <a href="" class="icon-heart">Visit the Media Center</a>
+          </div>
+        </li>
+      </ul>
     </div>
 
     {% block page_footer %}

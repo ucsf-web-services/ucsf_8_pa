@@ -1,0 +1,50 @@
+.blockquote {
+  @include clearfix;
+
+  &.blockquote-full-width {
+    grid-column: 2 / -3;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: $space-four auto $space-four;
+    background: $white;
+    margin: 0;
+
+    .blockquote-image {
+      grid-column: 1 / 2;
+      grid-row: 1 / -1;
+    }
+
+    .blockquote-content {
+      grid-column: 2 / -1;
+      grid-row: 2 / -2;
+      padding-left: 25%;
+    }
+  }
+
+  .blockquote-content {
+    background: $background-gray;
+    padding: $space-seven $space-ten;
+    padding-right: 15%;
+  }
+
+  .field-blockquote-body p:first-child { // PL: .blockquote-content__text.
+    @include fs-heading-two;
+
+    @include medium {
+      font-size: 40px;
+    }
+
+    &::before {
+      content: '“ ';
+      display: inline-block;
+      margin-left: -$space-three;
+      padding-right: $space;
+      font-family: $font-granjon;
+    }
+  }
+
+  .field-blockquote-source {
+    @include eyebrow;
+    font-style: normal;
+  }
+}
