@@ -14,59 +14,63 @@ CKEDITOR.plugins.add('ucsfquote', {
       }
     }
     */
-    },
+  },
 
   init: function(editor) {
     CKEDITOR.dialog.add('ucsfquote', this.path + 'dialogs/ucsfquote.js' );
     var pluginDirectory = this.path;
 
     editor.addContentsCss( pluginDirectory + 'css/ckeditstyles.css' );
+
     editor.ui.addButton( 'ucsfquote', {
-        label: 'Insert Pull Quote',
+        label: 'Create a Pull Quote',
         command: 'ucsfquote'
+        //icon: this.path + '/js/plugins/ucsfquote/icons/quotebox.png'
     });
 
     editor.widgets.add('ucsfquote', {
      allowedContent:
-     'blockquote(!blockquote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third,blockquote--center,blockquote--left,blockquote--right,blockquote--half-left,blockquote--half-right);' +
-     'cite(!blockquote-content__cite)' +
-     'p(!blockquote-content__text);',
-     //'div(!wysiwyg_quote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third);' +
-     //'p(!wysiwyg_quote--content); p(!wysiwyg_quote--author); p(!wysiwyg_quote--org); ' +
+     'blockquote(!blockquote,align--left,align--right,align--center,blockquote--center,blockquote--left,blockquote--right,blockquote--half-left,blockquote--half-right,blockquote--half-right);' +
+     'div(!wysiwyg_quote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third);' +
+     'cite(!blockquote-content__cite); p(!blockquote-content__text);' +
+     'p(!wysiwyg_quote--content); p(!wysiwyg_quote--author); p(!wysiwyg_quote--org); ',
 
+     requiredContent: 'blockquote(!blockquote)',
 
-//     requiredContent: 'div(!blockquote-content);p(!blockquote-content__text);cite(!blockquote-content__cite)',
-
-      editables: {
-        contenttext: {
-          selector: '.blockquote-content__text',
-          allowedContent: 'br strong em; a[!href] cite'
+        editables: {
+            contenttext: {
+                selector: '.blockquote-content__text',
+                allowedContent: 'br strong em; a[!href];'
+            },
+            cite: {
+                selector: '.blockquote-content__cite',
+                allowedContent: 'br strong em; a[!href]; cite'
+            },
+            content: {
+                selector: '.wysiwyg_quote--content',
+                allowedContent: 'br strong em; a[!href];'
+            },
+            author: {
+                selector: '.wysiwyg_quote--author',
+                allowedContent: 'br strong em cite; a[!href];'
+            },
+            org: {
+                selector: '.wysiwyg_quote--org',
+                allowedContent: 'br strong em; a[!href];'
+            },
+            orgization: {
+                selector: '.blockquote-content__org',
+                allowedContent: 'br strong em; a[!href];'
+            }
         },
-        cite: {
-          selector: '.blockquote-content__cite',
-          allowedContent: 'br strong em; a[!href] cite'
-        },
-        content: {
-          selector: '.wysiwyg_quote--content',
-          allowedContent: 'br strong em; a[!href] cite'
-        },
-        author: {
-          selector: '.wysiwyg_quote--author',
-          allowedContent: 'br strong em; a[!href]'
-        },
-        org: {
-          selector: '.wysiwyg_quote--org',
-          allowedContent: 'br strong em; a[!href]'
-        },
-
-      },
 
       template:
         '<blockquote class="blockquote">' +
           //'<div class="blockquote-content">' +
             '<p class="blockquote-content__text">Lorem ipsum dolor sit amet, ex labore vivendo laboramus has, vel at putant legendos. Quod appareat id eos, noster malorum et mea.</p>' +
             '<footer>' +
-            '<p class="blockquote-content__cite">Name some cite</p>' +
+            '<p class="blockquote-content__cite">Vivendo Laboramus, PhD</p>' +
+            '<p class="blockquote-content__org">Orgization name</p>' +
             '</footer>' +
           //'</div>' +
         '</blockquote>',
@@ -90,7 +94,6 @@ CKEDITOR.plugins.add('ucsfquote', {
 //           this.setData( 'bgColor', 'lime' );
 //         if ( this.element.hasClass( 'bg--orange' ) )
 //           this.setData( 'bgColor', 'orange' );
-
         if ( this.element.hasClass( 'blockquote--center' ) )
           this.setData( 'align', 'center' );
         if ( this.element.hasClass( 'blockquote--left' ) )
@@ -101,8 +104,6 @@ CKEDITOR.plugins.add('ucsfquote', {
           this.setData( 'align', 'half-left' );
         if ( this.element.hasClass( 'blockquote--half-right' ) )
           this.setData( 'align', 'half-right' );
-
-
 //         if ( this.element.hasClass( 'size--full' ) )
 //           this.setData( 'size', 'full' );
 //         if ( this.element.hasClass( 'size--half' ) )
@@ -122,23 +123,25 @@ CKEDITOR.plugins.add('ucsfquote', {
         this.element.removeClass( 'blockquote--half-right' );
         if ( this.data.align )
           this.element.addClass( 'blockquote--' + this.data.align );
+        /**
+         * @info - these are the old classes
+        this.element.removeClass( 'size--full' );
+        this.element.removeClass( 'size--half' );
+        this.element.removeClass( 'size--twofifth' );
+        this.element.removeClass( 'size--third' );
+        if ( this.data.size )
+            this.element.addClass( 'size--' + this.data.size );
 
-//         this.element.removeClass( 'size--full' );
-//         this.element.removeClass( 'size--half' );
-//         this.element.removeClass( 'size--twofifth' );
-//         this.element.removeClass( 'size--third' );
-//         if ( this.data.size )
-//           this.element.addClass( 'size--' + this.data.size );
-
-//         this.element.removeClass( 'bg--white' );
-//         this.element.removeClass( 'bg--grey' );
-//         this.element.removeClass( 'bg--blue' );
-//         this.element.removeClass( 'bg--teal' );
-//         this.element.removeClass( 'bg--lime' );
-//         this.element.removeClass( 'bg--orange' );
-//         if ( this.data.bgColor )
-//           this.element.addClass( 'bg--' + this.data.bgColor );
+        this.element.removeClass( 'bg--white' );
+        this.element.removeClass( 'bg--grey' );
+        this.element.removeClass( 'bg--blue' );
+        this.element.removeClass( 'bg--teal' );
+        this.element.removeClass( 'bg--lime' );
+        this.element.removeClass( 'bg--orange' );
+        if ( this.data.bgColor )
+            this.element.addClass( 'bg--' + this.data.bgColor );
+        */
       }
     });
-  },
+  }
 });

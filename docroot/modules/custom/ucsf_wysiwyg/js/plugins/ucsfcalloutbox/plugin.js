@@ -5,6 +5,19 @@
 CKEDITOR.plugins.add('ucsfcalloutbox', {
     requires: 'widget',
     icons: 'ucsfcalloutbox',
+    beforeInit: function (editor) {
+        // Configure CKEditor DTD for custom drupal-entity element.
+        // @see https://www.drupal.org/node/2448449#comment-9717735
+        var dtd = CKEDITOR.dtd, tagName;
+        dtd['drupal-entity'] = {'#': 1};
+        // Register drupal-entity element as allowed child, in each tag that can
+        // contain a div element.
+        for (tagName in dtd) {
+            if (dtd[tagName].div) {
+                dtd[tagName]['drupal-entity'] = 1;
+            }
+        }
+    },
 
     init: function (editor) {
         CKEDITOR.dialog.add('ucsfcalloutbox', this.path + 'dialogs/ucsfcalloutbox.js');
@@ -14,7 +27,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
         editor.addContentsCss(pluginDirectory + 'css/ucsfcalloutbox.css');
 
         editor.ui.addButton('ucsfcalloutbox', {
-            label: 'Insert UCSF Callout Box',
+            label: 'Insert Callout Box',
             command: 'ucsfcalloutbox'
         });
 

@@ -62,9 +62,9 @@ class ucsfquote extends CKEditorPluginBase {
    */
   public function getButtons() {
     return [
-      'ucsfquote' => [
+      'Ucsfquote' => [
         'label' => t('Pull Quote'),
-        'image' => drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/ucsfquote/icons/widgetcommonQuotebox.png',
+        'image' => drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/ucsfquote/icons/ucsfquote.png'
       ]
     ];
   }
