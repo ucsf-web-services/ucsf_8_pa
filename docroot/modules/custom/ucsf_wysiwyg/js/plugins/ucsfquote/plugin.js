@@ -28,7 +28,7 @@ CKEDITOR.plugins.add('ucsfquote', {
 
     editor.widgets.add('ucsfquote', {
      allowedContent:
-     'blockquote(!blockquote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third);' +
+     'blockquote(!blockquote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third,blockquote--center,blockquote--left,blockquote--right,blockquote--half-left,blockquote--half-right);' +
      'cite(!blockquote-content__cite)' +
      'p(!blockquote-content__text);',
      //'div(!wysiwyg_quote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third);' +
