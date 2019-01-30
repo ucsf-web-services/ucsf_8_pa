@@ -1,0 +1,57 @@
+{% embed "@templates/_about.twig" with {
+  menu_items: header.menu_items,
+  footer_menu_items: footer.menu_items,
+} %}
+
+
+  {% block page_content %}
+    {% include "@organisms/title/about-page-title.twig" with {
+      heading_class: 'about-page-header about-page-header-banner',
+      heading: 'About UCSF',
+      subheading: 'At UC San Francisco, we are driven by the idea that when the best research, the best teaching and the best patient care converge, we can deliver breakthroughs that help heal the world.',
+    } %}
+
+    <div class="article-full-width__space"></div>
+        <div class="video article-full-width">
+          <iframe width='100%' height='100%' frameborder='0' allowfullscreen='allowfullscreen' src='https://www.youtube.com/embed/80yQ8wTnBB4?autoplay=0&amp;start=0' class="article-full-width__content"></iframe>
+        </div>
+    <div class="article-full-width__space"></div>
+
+<div class="page_narrow">
+    <p>Excellence is in our DNA. From heart disease and immunology to specialty services for women and children, UCSF brings together the world’s leading experts in nearly every area of health. We are home to five Nobel laureates who have advanced the understanding of cancer, neurodegenerative diseases, HIV/AIDS, aging and stem cell research. UCSF Medical Center, UCSF Benioff Children’s Hospitals, all four of our professional schools — dentistry, medicine, nursing and pharmacy — and many UCSF graduate programs consistently rank among the best in the country, according to the latest surveys by U.S. News & World Report.</p>
+
+    <p>Our top rankings reflect our singular focus on advancing health care. We are the leading institution dedicated exclusively to the health sciences.services, as well as more intimate changes at the ground level, like locally tailored treatment programs.</p>
+
+</div>
+
+    <blockquote class="blockquote blockquote-full-width">
+      <figure class="blockquote-image">
+        <picture class="blockquote-image__image">
+          <img class="blockquote-image__img" src="../../images/blockquote/sam-hawgood.jpg" alt="Elysa Marco">
+        </picture>
+      </figure>
+      <div class="blockquote-content">
+              <p class="blockquote-content__text">I believe our social alchemy of inclusion, collaboration, excellence and dedication to a public mission is very special and something I will work to preserve at all costs.</p>
+            <footer>
+        <cite class="blockquote-content__cite">Chancellor Sam Hawgood, MBBS</cite>
+        </footer>
+      </div>
+    </blockquote>
+
+<div class="page_narrow">
+    <h2>Disrupting the Status Quo for Good</h2>
+    <p>UCSF is a collection of dedicated scientists, clinicians, students and staff who share a common drive to make the world a better place by advancing health and the human condition. Care and compassion are as critical as science and discovery in fulfilling our mission to drive change, and make a difference for individual patients and whole populations.</p>
+
+    <h2>Embracing a Sense of Urgency</h2>
+    <p>In a field where lives often hang in a delicate balance, UCSF recognizes that time is of the essence – for patients in the hospital and for populations facing an epidemic. We harness the efficiency of multidisciplinary teams to accelerate learning and scientific progress and speed the development of new therapies and cures. We are constantly pushing forward the policies and partnerships that ensure that people in need are getting access to the most cutting-edge care and treatment.</p>
+
+    <h2>Fostering a Culture of Innovation</h2>
+    <p>UCSF is also San Francisco’s second-largest employer — attracting talented faculty and staff who mirror the energy and entrepreneurial spirit of the Bay Area. The most exciting part of being at UCSF is its diverse community of people who individually contribute to changing the status quo with their diverse backgrounds, experiences and perspectives. Our ability to recruit top talent leads to a constant influx of new ideas and approaches across each of our missions: research, patient care and education.</p>
+</div>
+
+  {% endblock %}
+
+
+
+
+{% endembed %}
