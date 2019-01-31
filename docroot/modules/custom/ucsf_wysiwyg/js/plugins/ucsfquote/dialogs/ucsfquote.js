@@ -36,14 +36,11 @@ CKEDITOR.dialog.add('ucsfquote', function( editor ) {
             type: 'select',
             label: 'Align',
             items: [
-              [ editor.lang.common.alignCenter, 'center' ],
-              [ editor.lang.common.alignLeft, 'left' ],
-              [ editor.lang.common.alignRight, 'right' ],
-              [ 'Half Left', 'half-left' ],
-              [ 'Half Right', 'half-right' ]
+              [ editor.lang.common.alignLeft, 'half-left' ],
+              [ editor.lang.common.alignRight, 'half-right' ]
             ],
             setup: function( widget ) {
-              this.setValue( widget.data.align ? widget.data.align : 'right' );
+              this.setValue( widget.data.align ? widget.data.align : 'half-left' );
             },
             commit: function( widget ) {
               widget.setData( 'align', this.getValue() );

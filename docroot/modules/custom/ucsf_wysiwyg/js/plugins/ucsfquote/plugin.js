@@ -57,10 +57,6 @@ CKEDITOR.plugins.add('ucsfquote', {
             org: {
                 selector: '.wysiwyg_quote--org',
                 allowedContent: 'br strong em; a[!href];'
-            },
-            organization: {
-                selector: '.blockquote-content__org',
-                allowedContent: 'br strong em; a[!href];'
             }
         },
 
@@ -70,7 +66,6 @@ CKEDITOR.plugins.add('ucsfquote', {
             '<p class="blockquote-content__text">Lorem ipsum dolor sit amet, ex labore vivendo laboramus has, vel at putant legendos. Quod appareat id eos, noster malorum et mea.</p>' +
             '<footer>' +
             '<p class="blockquote-content__cite">Vivendo Laboramus, PhD</p>' +
-            '<p class="blockquote-content__org">Organization name</p>' +
             '</footer>' +
           //'</div>' +
         '</blockquote>',
@@ -94,16 +89,12 @@ CKEDITOR.plugins.add('ucsfquote', {
 //           this.setData( 'bgColor', 'lime' );
 //         if ( this.element.hasClass( 'bg--orange' ) )
 //           this.setData( 'bgColor', 'orange' );
-        if ( this.element.hasClass( 'blockquote--center' ) )
-          this.setData( 'align', 'center' );
-        if ( this.element.hasClass( 'blockquote--left' ) )
-          this.setData( 'align', 'left' );
-        if ( this.element.hasClass( 'blockquote--right' ) )
-          this.setData( 'align', 'right' );
+
         if ( this.element.hasClass( 'blockquote--half-left' ) )
           this.setData( 'align', 'half-left' );
         if ( this.element.hasClass( 'blockquote--half-right' ) )
           this.setData( 'align', 'half-right' );
+
 //         if ( this.element.hasClass( 'size--full' ) )
 //           this.setData( 'size', 'full' );
 //         if ( this.element.hasClass( 'size--half' ) )
@@ -116,9 +107,6 @@ CKEDITOR.plugins.add('ucsfquote', {
       },
       data: function() {
         // Brutally remove all align classes and set a new one if "align" widget data is set.
-        this.element.removeClass( 'blockquote--center' );
-        this.element.removeClass( 'blockquote--left' );
-        this.element.removeClass( 'blockquote--right' );
         this.element.removeClass( 'blockquote--half-left' );
         this.element.removeClass( 'blockquote--half-right' );
         if ( this.data.align )
