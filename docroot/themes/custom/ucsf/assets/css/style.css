@@ -4050,6 +4050,21 @@ h1 {
   font-weight: 500;
   line-height: 1; }
 
+h2 {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+  font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.6px;
+  color: #052049; }
+  @media (min-width: 600px) {
+    h2 {
+      font-size: 56px;
+      letter-spacing: -1.2px; } }
+
 h3 {
   line-height: 1; }
 
@@ -5314,6 +5329,79 @@ h2 {
   clear: both;
   margin: 0 auto;
   max-width: 1280px; }
+
+.recommended-articles {
+  grid-column: 1/-1;
+  margin-top: 80px; }
+  .recommended-articles.has-recommended-article {
+    background: #fff; }
+    .recommended-articles.has-recommended-article .recommended-articles__banner {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      grid-gap: 5%;
+      grid-row-gap: 0;
+      padding: 0;
+      grid-template-rows: 80px 80px auto auto;
+      background: #fff; }
+      @media (min-width: 600px) {
+        .recommended-articles.has-recommended-article .recommended-articles__banner {
+          grid-template-columns: repeat(16, 1fr);
+          grid-gap: 0; } }
+    .recommended-articles.has-recommended-article .recommended-articles_list {
+      padding: 0 90px;
+      margin-top: 0; }
+      .recommended-articles.has-recommended-article .recommended-articles_list .card-three-up {
+        margin-top: 80px;
+        padding-top: 0; }
+
+.recommended-articles__banner {
+  padding: 0 80px; }
+
+.recommended-articles__title {
+  grid-column: 2/7;
+  grid-row: 1/1;
+  margin: 0;
+  -ms-flex-item-align: end;
+      align-self: end; }
+
+.recommended-article__bg {
+  grid-column: 7/-1;
+  grid-row: 1/-1; }
+
+.recommended-article__white-bg {
+  grid-column: 1/-2;
+  grid-row: 2/2;
+  height: 80px;
+  background: #fff; }
+
+.recommended-article__image {
+  grid-column: 1/10;
+  grid-row: 3/-1; }
+
+.recommended-article__copy {
+  grid-column: 10/-2;
+  grid-row: 3/-1;
+  background: #fff;
+  padding: 64px;
+  padding-top: 0; }
+  .recommended-article__copy h2 {
+    margin: 0;
+    margin-top: 16px; }
+    .recommended-article__copy h2 a {
+      text-decoration: none;
+      color: #052049; }
+
+.recommended-articles_list {
+  background: #fff;
+  padding: 0 80px;
+  margin-top: 16px; }
+  .recommended-articles_list .card-three-up {
+    margin-top: 0;
+    padding-top: 40px; }
+    .recommended-articles_list .card-three-up article {
+      margin-bottom: 0; }
+    .recommended-articles_list .card-three-up .news-card__copy {
+      padding-bottom: 0; }
 
 .author-page-wrapper {
   margin: 0 auto;
