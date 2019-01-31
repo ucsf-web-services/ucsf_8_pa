@@ -49,14 +49,47 @@
   line-height: 82px;
 }
 
-@mixin fs-heading-two {
-  @include font-smooth;
-
-  font-family: $font-granjon;
+@mixin fs-heading-blockquote-md {
   font-size: 40px;
-  line-height: 48px;
   letter-spacing: -1px;
+}
+
+@mixin fs-heading-blockquote-sm {
+  @include font-smooth;
+  font-family: $font-granjon;
+  font-size: 31px;
+  line-height: 1.2em;
+  letter-spacing: -0.6px;
+}
+
+@mixin fs-heading-blockquote {
+  @include fs-heading-blockquote-sm;
+
+  @include medium {
+    @include fs-heading-blockquote-md;
+  }
+}
+
+@mixin fs-heading-two-md {
+  font-size: 56px;
+  letter-spacing: -1px;
+}
+
+@mixin fs-heading-two-sm {
+  @include font-smooth;
+  font-family: $font-granjon;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.6px;
   color: $c-navy;
+}
+
+@mixin fs-heading-two {
+  @include fs-heading-two-sm;
+
+  @include medium {
+    @include fs-heading-two-md;
+  }
 }
 
 @mixin fs-heading-three {
