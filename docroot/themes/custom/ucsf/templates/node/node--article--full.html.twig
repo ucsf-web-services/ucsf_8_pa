@@ -16,4 +16,9 @@
     {% endif %}
   </div>
 </div>
-{{ content.field_recommended_article}}
+{# @todo Wrapper should probably be conditional. #}
+<div class="recommended-articles has-recommended-article">
+  {{ content.field_recommended_article }}
+  {{ drupal_view('articles_by_term', 'block_1') }}
+  {{ content.field_ankle_cta }}
+</div>
