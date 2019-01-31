@@ -34,6 +34,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
     );
 
     public static $prefixLengthsPsr4 = array (
+        'z' => 
+        array (
+            'zaporylie\\ComposerDrupalOptimizations\\' => 38,
+        ),
         'c' => 
         array (
             'cweagans\\Composer\\' => 18,
@@ -165,6 +169,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
     );
 
     public static $prefixDirsPsr4 = array (
+        'zaporylie\\ComposerDrupalOptimizations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zaporylie/composer-drupal-optimizations/src',
+        ),
         'cweagans\\Composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/cweagans/composer-patches/src',
