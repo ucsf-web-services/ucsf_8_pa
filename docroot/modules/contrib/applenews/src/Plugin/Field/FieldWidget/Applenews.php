@@ -42,6 +42,28 @@ class Applenews extends WidgetBase {
       $element['message'] = [
         '#markup' => $this->t('There are no channels available. To set up a channel, review the <a href=":url">Apple news Settings</a>.', [':url' => Url::fromRoute('entity.applenews_template.collection')->toString()]),
       ];
+      if (extension_loaded('zip') && $templates) {
+        $element['preview'] = [
+          '#type' => 'item',
+          '#title' => $this->t('Preview'),
+          '#markup' => $this->t('Download the Apple News generated document (use the News Preview app to preview the article): <ul>', []),
+        ];
+        foreach ($templates as $template_id => $template) {
+          $url_preview = Url::fromRoute('applenews.preview_download', [
+            'entity_type' => $entity->getEntityTypeId(),
+            'entity' => $entity->id(),
+            'revision_id' => $entity->getLoadedRevisionId(),
+            'template_id' => $template_id,
+          ]);
+
+          // @todo: Fix route, to support other than node.
+          $element['preview']['#markup'] .= ' <li>' . $this->t('<a href=":url">:label</a> template</li>', [
+            ':url' => $url_preview->toString(),
+            ':label' => $template,
+          ]);
+        }
+        $element['preview']['#markup'] .= '</ul>';
+      }
     }
     elseif (!$templates) {
       $element['message'] = [
