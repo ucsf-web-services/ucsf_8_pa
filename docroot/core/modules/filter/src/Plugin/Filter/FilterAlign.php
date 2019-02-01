@@ -37,8 +37,13 @@ class FilterAlign extends FilterBase {
           $classes = $node->getAttribute('class');
           $classes = (strlen($classes) > 0) ? explode(' ', $classes) : [];
           $classes[] = 'align-' . $align;
-          $node->setAttribute('class', implode(' ', $classes));
+          //$node->setAttribute('class', implode(' ', $classes));
         }
+        //allow any alignment class, should not be this restrictive
+        if (!in_array($align, ['left', 'center', 'right'])) {
+          $classes[] = $align;
+        }
+        $node->setAttribute('class', implode(' ', $classes));
       }
       $result->setProcessedText(Html::serialize($dom));
     }

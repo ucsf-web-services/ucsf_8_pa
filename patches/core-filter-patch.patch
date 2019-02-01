@@ -1,0 +1,26 @@
+diff --git a/modules/filter/src/Plugin/Filter/FilterAlign.php b/modules/filter/src/Plugin/Filter/FilterAlign.php
+index a3739ab82..fa3dd27e2 100644
+--- a/modules/filter/src/Plugin/Filter/FilterAlign.php
++++ b/modules/filter/src/Plugin/Filter/FilterAlign.php
+@@ -31,14 +31,19 @@ public function process($text, $langcode) {
+         // Read the data-align attribute's value, then delete it.
+         $align = $node->getAttribute('data-align');
+         $node->removeAttribute('data-align');
+-
++        
+         // If one of the allowed alignments, add the corresponding class.
+         if (in_array($align, ['left', 'center', 'right'])) {
+           $classes = $node->getAttribute('class');
+           $classes = (strlen($classes) > 0) ? explode(' ', $classes) : [];
+           $classes[] = 'align-' . $align;
+-          $node->setAttribute('class', implode(' ', $classes));
++          //$node->setAttribute('class', implode(' ', $classes));
++        }
++        //allow any alignment class, should not be this restrictive
++        if (!in_array($align, ['left', 'center', 'right'])) {
++          $classes[] = $align;
+         }
++        $node->setAttribute('class', implode(' ', $classes));
+       }
+       $result->setProcessedText(Html::serialize($dom));
+     }

@@ -498,7 +498,7 @@ class EntityEmbedDialog extends FormBase {
         'event' => 'click',
       ),
     );
-    //kpr($form);
+
     return $form;
   }
 
