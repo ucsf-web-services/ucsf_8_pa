@@ -4081,9 +4081,12 @@ h2,
 h3,
 h4,
 h5,
-h6,
-p {
+h6 {
   margin-top: 0; }
+
+p {
+  letter-spacing: .2px;
+  margin: 2rem 0; }
 
 a {
   text-decoration: none; }
@@ -4327,6 +4330,37 @@ textarea {
   height: 40px;
   margin-bottom: 24px;
   grid-column: 1 / span 2; }
+
+.callout-left {
+  float: left;
+  background: #f2f4f6;
+  margin: 10%;
+  margin-top: 0;
+  margin-left: -20%;
+  margin-bottom: 32px;
+  width: 50%;
+  padding: 80px 10%; }
+  .callout-left .callout-left__title,
+  .callout-left .callout__title h3 {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    font-weight: 500;
+    font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.6px;
+    color: #052049;
+    text-transform: uppercase; }
+    .callout-left .callout-left__title::after,
+    .callout-left .callout__title h3::after {
+      content: ' ';
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: #052049;
+      margin: 0 5px 3px; }
+  .callout-left p:last-child {
+    margin-bottom: 0; }
 
 .article-meta-share {
   grid-column: 2 / 3;
@@ -4959,35 +4993,6 @@ h2 {
     font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-weight: 500;
     line-height: 1.6em; }
-
-.callout-left {
-  float: left;
-  background: #f2f4f6;
-  margin: 10%;
-  margin-top: 0;
-  margin-left: -20%;
-  margin-bottom: 32px;
-  width: 50%;
-  padding: 80px 10%; }
-  .callout-left .callout-left__title {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-    font-weight: 500;
-    font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-    font-size: 12px;
-    letter-spacing: 1.6px;
-    color: #052049;
-    text-transform: uppercase; }
-    .callout-left .callout-left__title::after {
-      content: ' ';
-      display: inline-block;
-      width: 40px;
-      height: 1px;
-      background: #052049;
-      margin: 0 5px 3px; }
-  .callout-left p:last-child {
-    margin-bottom: 0; }
 
 .article-medium-banner {
   width: 100%; }
