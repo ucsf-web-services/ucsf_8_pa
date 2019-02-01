@@ -30,10 +30,9 @@ CKEDITOR.plugins.add('ucsfquote', {
 
     editor.widgets.add('ucsfquote', {
      allowedContent:
-     'blockquote(!blockquote,align--left,align--right,align--center,blockquote--center,blockquote--left,blockquote--right,blockquote--half-left,blockquote--half-right,blockquote--half-right);' +
-     'div(!wysiwyg_quote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third);' +
-     'cite(!blockquote-content__cite); p(!blockquote-content__text);' +
-     'p(!wysiwyg_quote--content); p(!wysiwyg_quote--author); p(!wysiwyg_quote--org); ',
+     'blockquote(!blockquote,*);' +
+     'div(!wysiwyg_quote,*);' +
+     'p(*); footer[*](*);',
 
         requiredContent: 'blockquote(!blockquote)',
 
@@ -62,14 +61,21 @@ CKEDITOR.plugins.add('ucsfquote', {
 
       template:
         '<blockquote class="blockquote">' +
-          //'<div class="blockquote-content">' +
             '<p class="blockquote-content__text">Lorem ipsum dolor sit amet, ex labore vivendo laboramus has, vel at putant legendos. Quod appareat id eos, noster malorum et mea.</p>' +
             '<footer>' +
             '<p class="blockquote-content__cite">Vivendo Laboramus, PhD</p>' +
             '</footer>' +
-          //'</div>' +
         '</blockquote>',
 
+    /**
+     * here for compatibility reference
+     template:
+     '<div class="wysiwyg_quote">' +
+     '<p class="wysiwyg_quote--content">Lorem ipsum dolor sit amet, ex labore vivendo laboramus has, vel at putant legendos. Quod appareat id eos, noster malorum et mea.</p>' +
+     '<p class="wysiwyg_quote--author">Firstname Lastname, Title</p>' +
+     '<p class="wysiwyg_quote--org">Organization/Company/Source</p>' +
+     '</div>',
+     */
       button: 'Create a Pull Quote',
       dialog: 'ucsfquote',
 

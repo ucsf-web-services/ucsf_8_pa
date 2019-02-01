@@ -49,10 +49,10 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
         }
 
         editor.widgets.add('ucsfcalloutbox', {
-            allowedContent: 'aside(!ucsfcallout,callout-left,callout-right,align-center);' +
-            'div(!callout__content); div(!callout__title); div(!callout__cta); div(!callout__image);',
+            allowedContent: 'aside(*);' +
+            'div(*); time;',
 
-            requiredContent: 'aside(ucsfcallout);',
+            requiredContent: 'aside(!ucsfcallout);',
 
             editables: {
                 content: {
@@ -65,16 +65,16 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                 },
                 image: {
                     selector: '.callout__image',
-                    allowedContent: 'img[*]; picture[*]; p[*]; strong em a[*] source[*]; video[*]; drupal-entity[*];'
+                    allowedContent: 'strong em; article[*], img[*]; picture[*]; p[*]; a[*]; source[*]; video[*]; drupal-entity[*];'
                 },
                 cta: {
                     selector: '.callout__cta',
-                    allowedContent: 'img[*]; picture p[*]; br strong[*]; em a[*]; source[*];'
+                    allowedContent: 'picture br em img[*]; p[*]; strong[*]; a[*]; source[*];'
                 }
             },
 
             template: '<aside class="ucsfcallout callout-left">' +
-                '<div class="callout__image">Image here optional</div>' +
+                '<div class="callout__image">&nbsp;</div>' +
                 '<div class="callout__title"><h3>Related Stories</h3></div>' +
                 '<div class="callout__content">' +
                     '<time>Oct. 24, 2018</time>' +
