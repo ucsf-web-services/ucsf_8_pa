@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_display.comment.comment.default
     - field.field.node.article.body
     - field.field.node.article.comment
     - field.field.node.article.field_ankle_cta
@@ -45,8 +46,13 @@ dependencies:
     - field.field.node.article.field_twitter_title
     - node.type.article
   module:
+    - comment
     - datetime
     - entity_reference_revisions
+    - image
+    - link
+    - media
+    - metatag
     - options
     - text
     - user
@@ -64,34 +70,77 @@ content:
     settings: {  }
     third_party_settings: {  }
     label: hidden
-  field_ankle_cta:
-    weight: 14
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
+  comment:
+    type: comment_default
+    weight: 34
     region: content
-  field_author:
-    weight: 4
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_banner_image:
-    type: entity_reference_entity_view
-    weight: 9
-    label: above
+    label: hidden
     settings:
       view_mode: default
+      pager_id: 0
+    third_party_settings: {  }
+  field_ankle_cta:
+    weight: 14
+    label: hidden
+    settings:
+      link: true
+      view_mode: default
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_apple_news_title:
+    type: string
+    weight: 25
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_areas:
+    type: entity_reference_label
+    weight: 37
+    region: content
+    label: hidden
+    settings:
       link: false
+    third_party_settings: {  }
+  field_article_type:
+    type: entity_reference_label
+    weight: 35
+    region: content
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_author:
+    weight: 4
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_author_byline:
+    type: entity_reference_revisions_entity_view
+    weight: 36
+    region: content
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+  field_banner_image:
+    type: media_thumbnail
+    weight: 9
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
     third_party_settings: {  }
     region: content
   field_banner_layout:
     weight: 8
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
@@ -99,7 +148,7 @@ content:
   field_card_image:
     type: entity_reference_entity_view
     weight: 10
-    label: above
+    label: hidden
     settings:
       view_mode: default
       link: false
@@ -116,21 +165,74 @@ content:
     region: content
   field_custom_author:
     weight: 5
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
     region: content
+  field_date:
+    type: datetime_default
+    weight: 40
+    region: content
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: news_date
+    third_party_settings: {  }
   field_date_and_time:
     weight: 7
-    label: above
+    label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: news_date
     third_party_settings: {  }
     type: datetime_default
     region: content
+  field_exclude:
+    type: entity_reference_label
+    weight: 38
+    region: content
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_external_url:
+    type: link
+    weight: 31
+    region: content
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+  field_facebook_description:
+    type: basic_string
+    weight: 33
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_facebook_image:
+    type: image
+    weight: 32
+    region: content
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+  field_facebook_title:
+    type: string
+    weight: 28
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
   field_featured_image_video:
     type: entity_reference_revisions_entity_view
     weight: 1
@@ -142,7 +244,7 @@ content:
     region: content
   field_hide_article:
     weight: 13
-    label: above
+    label: hidden
     settings:
       format: default
       format_custom_false: ''
@@ -150,17 +252,90 @@ content:
     third_party_settings: {  }
     type: boolean
     region: content
-  field_recommended_article:
-    weight: 12
-    label: above
+  field_include:
+    type: entity_reference_label
+    weight: 29
+    region: content
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
+  field_locations:
     type: entity_reference_label
+    weight: 26
     region: content
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_meta_tags:
+    type: metatag_empty_formatter
+    weight: 27
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_organizations:
+    type: entity_reference_label
+    weight: 18
+    region: content
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_people:
+    type: entity_reference_label
+    weight: 23
+    region: content
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_primary_area:
+    type: entity_reference_label
+    weight: 22
+    region: content
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+  field_recommended_article:
+    weight: 12
+    label: hidden
+    settings:
+      view_mode: recommended
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_related_sidebar_content:
+    type: entity_reference_revisions_entity_view
+    weight: 24
+    region: content
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+  field_short_title:
+    type: text_default
+    weight: 30
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_sidebar_content:
+    type: entity_reference_revisions_entity_view
+    weight: 21
+    region: content
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
   field_source:
     weight: 6
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -173,39 +348,58 @@ content:
     third_party_settings: {  }
     type: text_default
     region: content
+  field_tags:
+    type: entity_reference_label
+    weight: 19
+    region: content
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
   field_textured_background_image:
     type: entity_reference_entity_view
     weight: 11
-    label: above
+    label: hidden
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
     region: content
-hidden:
-  comment: true
-  field_apple_news_title: true
-  field_areas: true
-  field_article_type: true
-  field_author_byline: true
-  field_date: true
-  field_exclude: true
-  field_external_url: true
-  field_facebook_description: true
-  field_facebook_image: true
-  field_facebook_title: true
-  field_include: true
-  field_locations: true
-  field_meta_tags: true
-  field_organizations: true
-  field_people: true
-  field_primary_area: true
-  field_related_sidebar_content: true
-  field_short_title: true
-  field_sidebar_content: true
-  field_tags: true
-  field_topics: true
-  field_twitter_description: true
-  field_twitter_image: true
-  field_twitter_title: true
-  links: true
+  field_topics:
+    type: entity_reference_label
+    weight: 20
+    region: content
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_twitter_description:
+    type: basic_string
+    weight: 17
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_twitter_image:
+    type: image
+    weight: 15
+    region: content
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+  field_twitter_title:
+    type: string
+    weight: 16
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  links:
+    weight: 39
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

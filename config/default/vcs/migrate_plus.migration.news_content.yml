@@ -1,4 +1,4 @@
-uuid: 5f9a887f-136f-4bb7-bfb2-a8cdb0b2b71c
+uuid: c75f6cc9-23c0-4bcd-82dc-41d8ee92d7c1
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - ucsf_edu_migrate
 _core:
-  default_config_hash: LQRi-kxDmqLSgjwHzPaT6Uo_rDTSMlteFBm9PkRGL1A
+  default_config_hash: 6o7sHMkgmK7k3KxsI0TrQ-_yGpzwvkn2N0ajPd1H1cU
 id: news_content
 class: null
 field_plugin_method: null
@@ -198,6 +198,18 @@ process:
       plugin: entity_generate
       source: exclude_tax
       entity_type: taxonomy_term
+  field_author:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: author
+      message: 'there was an empty field'
+  field_custom_author:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: cus_author
+      message: 'there was an empty field'
   lookupval:
     -
       plugin: skip_on_empty

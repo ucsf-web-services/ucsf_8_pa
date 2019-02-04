@@ -29,12 +29,11 @@ CKEDITOR.plugins.add('ucsfquote', {
     });
 
     editor.widgets.add('ucsfquote', {
-     allowedContent:
-     'blockquote(!blockquote,*);' +
-     'div(!wysiwyg_quote,*);' +
-     'p(*); footer[*](*);',
-
-        requiredContent: 'blockquote(!blockquote)',
+        //allowedContent:
+        //'blockquote(!blockquote,*);',
+        //'div(!wysiwyg_quote,*);' +
+        //'p(*); footer[*](*);',
+        // requiredContent: 'blockquote(!blockquote)',
 
         editables: {
             contenttext: {

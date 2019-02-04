@@ -33,6 +33,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
 
         // Register context menu option for editing widget.
         if (editor.contextMenu) {
+
             editor.addMenuGroup('ucsfGroup');
             editor.addMenuItem('calloutbox', {
                 label: 'Edit Callout',
@@ -49,10 +50,8 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
         }
 
         editor.widgets.add('ucsfcalloutbox', {
-            allowedContent: 'aside(*);' +
-            'div(*); time;',
-
-            requiredContent: 'aside(!ucsfcallout);',
+            //allowedContent: 'aside div(*); time;',
+            //requiredContent: 'aside(!ucsfcallout);',
 
             editables: {
                 content: {

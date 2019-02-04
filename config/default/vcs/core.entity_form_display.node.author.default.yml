@@ -4,20 +4,22 @@ status: true
 dependencies:
   config:
     - field.field.node.author.body
+    - field.field.node.author.field_ankle_cta
     - field.field.node.author.field_author_image
     - field.field.node.author.field_author_type
+    - field.field.node.author.field_beats
+    - field.field.node.author.field_degrees
     - field.field.node.author.field_email
     - field.field.node.author.field_first_name
     - field.field.node.author.field_job_title
     - field.field.node.author.field_last_name
     - field.field.node.author.field_meta_tags
+    - field.field.node.author.field_middle_name
     - field.field.node.author.field_phone
-    - field.field.node.author.field_topics
     - field.field.node.author.field_twitter_handle
     - image.style.thumbnail
     - node.type.author
   module:
-    - chosen_field
     - image
     - metatag
     - path
@@ -44,6 +46,15 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_ankle_cta:
+    weight: 28
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   field_author_image:
     weight: 8
     settings:
@@ -57,6 +68,23 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: options_select
+    region: content
+  field_beats:
+    weight: 29
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_degrees:
+    weight: 27
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
     region: content
   field_email:
     weight: 6
@@ -96,18 +124,20 @@ content:
     third_party_settings: {  }
     type: metatag_firehose
     region: content
+  field_middle_name:
+    weight: 26
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_phone:
     weight: 7
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: telephone_default
-    region: content
-  field_topics:
-    weight: 10
-    settings: {  }
-    third_party_settings: {  }
-    type: chosen_select
     region: content
   field_twitter_handle:
     weight: 9

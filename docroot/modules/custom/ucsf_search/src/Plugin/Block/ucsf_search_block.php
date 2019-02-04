@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\ucsf_google_search\Plugin\Block;
+namespace Drupal\ucsf_search\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Access\AccessResult;
@@ -9,13 +9,13 @@ use Drupal\Core\Session\AccountInterface;
  * Provides a 'Search' block.
  *
  * @Block(
- *   id = "ucsf_google_search_block",
- *   admin_label = @Translation("UCSF Google Search Block"),
+ *   id = "ucsf_search_block",
+ *   admin_label = @Translation("UCSF Search Block"),
  *   category = @Translation("UCSF")
  * )
  */
 
-class ucsf_google_search_block extends BlockBase {
+class ucsf_search_block extends BlockBase {
 
 
   public function build() {
