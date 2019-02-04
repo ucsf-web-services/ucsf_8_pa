@@ -3,10 +3,10 @@
 # destination fields), and write it to Drupal.
 
 # The machine name for a migration, used to uniquely identify it.
-id: cus_byline_tax
+id: beats_tax
 
 # A human-friendly description of the migration.
-label: Migreate the custom byline taxnomy into the new ucsf.edu website
+label: Migreate the topics taxnomy into the new ucsf.edu website
 
 # The machine name of the group containing this migration (which contains shared
 # configuration to be merged with our own configuration here).
@@ -16,19 +16,31 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: http://ucsfpa1dev.prod.acquia-sites.com/cusbylinexml
+  urls:  https://www.ucsf.edu/beatsxml
   item_selector: /taxonomy/terms
   fields:
     -
       name: tax_title
       label: 'tax title'
-      selector: byline
+      selector: title
+    -
+      name: tax_id
+      label: 'tax ID'
+      selector: Term_ID
+    -
+      name: tax_description
+      label: 'tax description'
+      selector: description
+    -
+      name: tax_parent
+      label: 'tax parent'
+      selector: Parent_id
 
   constants:
     file_directory: public://
   ids:
-    tax_title:
-      type: string
+    tax_id:
+      type: integer
 
 # Every migration must also have a destination plugin, which handles writing
 # the migrated data in the appropriate form for that particular kind of data.
@@ -38,8 +50,8 @@ source:
 # destination plugin is implemented in Drupal itself.
 destination:
   plugin: entity:taxonomy_term
-  
-  default_bundle: custom_authors
+
+  default_bundle: beats
 
 # Here's the meat of the migration - the processing pipeline. This describes how
 # each destination field is to be populated based on the source data. For each
@@ -47,11 +59,23 @@ destination:
 process:
   type:
     plugin: default_value
-    default_value: custom_authors
-  
+    default_value: beats
+
   name: tax_title
-  
-      
+
+  tid: tax_id
+
+  description/value: tax_description
+
+  parent:
+    -
+      plugin: migration_lookup
+      migration: topics_tax
+      source: tax_parent
+    -
+      plugin: default_value
+      default_value: 0
+
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value
   # (the 'style' field from the source database in this case) to the destination
