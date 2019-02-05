@@ -11,8 +11,16 @@
 
   <div class="tags-menu-region">
     {% if content.field_topics|render or content.field_tags|render %}
-    <h3 class="tags-menu__title">{{ "Tags"|t }}</h3>
+    <h3 class="tags-menu__title">{{ "Topics"|t }}</h3>
     {{ content.field_topics }} {{ content.field_tags }}
     {% endif %}
+  </div>
+</div>
+{# @todo Wrapper should probably be conditional. #}
+<div class="recommended-articles has-recommended-article">
+  {{ content.field_recommended_article }}
+  {{ drupal_view('articles_by_term', 'block_1') }}
+  <div class="footer-ctas-wrapper">
+    {{ content.field_ankle_cta }}
   </div>
 </div>

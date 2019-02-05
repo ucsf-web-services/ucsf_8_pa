@@ -39,6 +39,44 @@
   }
 }
 
+@mixin button {
+  background-color: transparent;
+  color: $navy;
+  border: 2px solid $navy;
+  border-radius: $space-four;
+  cursor: pointer;
+  line-height: 1.4;
+  padding: 1em 1.5em;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  font-family: $font-helvetica-neue-medium;
+  min-height: $space-eight;
+
+  &:hover {
+    background-color: $blue;
+    color: $white;
+    border-color: $blue;
+  }
+}
+
+@mixin card-three-up {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: auto;
+  grid-gap: 5%;
+  grid-row-gap: 0;
+  margin-top: $space-ten;
+
+  article {
+    margin-bottom: $space-five;
+  }
+}
+
 @mixin eyebrow {
   @include font-smooth;
 
@@ -71,44 +109,15 @@
   padding: 0;
 }
 
-@mixin card-three-up {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  grid-column: 1/-1;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: auto;
-  grid-gap: 5%;
-  grid-row-gap: 0;
-  margin-top: $space-ten;
+@mixin grid-sixteen {
+  @include grid-base;
 
-  article {
-    margin-bottom: $space-five;
+  @include medium {
+    grid-template-columns: repeat(16, 1fr);
+    grid-gap: 0;
   }
 }
 
 @mixin no-bottom {
   margin-bottom: 0;
-}
-
-@mixin button {
-  background-color: transparent;
-  color: $navy;
-  border: 2px solid $navy;
-  border-radius: $space-four;
-  cursor: pointer;
-  line-height: 1.4;
-  padding: 1em 1.5em;
-  display: inline-block;
-  text-decoration: none;
-  text-align: center;
-  font-family: $font-helvetica-neue-medium;
-  min-height: $space-eight;
-
-  &:hover {
-    background-color: $blue;
-    color: $white;
-    border-color: $blue;
-  }
 }

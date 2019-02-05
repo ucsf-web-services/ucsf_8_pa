@@ -49,14 +49,70 @@
   line-height: 82px;
 }
 
-@mixin fs-heading-two {
+@mixin fs-article-medium-h1 {
+  @include fs-heading-sm;
+
+  @include medium {
+    @include fs-heading-two-md;
+  }
+}
+
+@mixin fs-heading {
   @include font-smooth;
 
-  font-family: $font-granjon;
+  font-family: $font-helvetica-neue-light;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.6px;
+  color: $navy;
+
+  @include medium {
+    font-size: 56px;
+    letter-spacing: -1.2px;
+  }
+}
+
+@mixin fs-heading-blockquote-md {
   font-size: 40px;
-  line-height: 48px;
   letter-spacing: -1px;
+}
+
+@mixin fs-heading-sm {
+  @include font-smooth;
+  font-family: $font-granjon;
+  font-size: 31px;
+  line-height: 1.2em;
+  letter-spacing: -0.6px;
+}
+
+@mixin fs-heading-blockquote {
+  @include fs-heading-sm;
+
+  @include medium {
+    @include fs-heading-blockquote-md;
+  }
+}
+
+@mixin fs-heading-two-md {
+  font-size: 56px;
+  letter-spacing: -1px;
+}
+
+@mixin fs-heading-two-sm {
+  @include font-smooth;
+  font-family: $font-granjon;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.6px;
   color: $c-navy;
+}
+
+@mixin fs-heading-two {
+  @include fs-heading-two-sm;
+
+  @include medium {
+    @include fs-heading-two-md;
+  }
 }
 
 @mixin fs-heading-three {
@@ -66,6 +122,16 @@
   font-weight: normal;
   line-height: 32px;
   letter-spacing: -0.3px;
+}
+
+@mixin fs-articles-title {
+  font-family: $font-helvetica-neue-light;
+  font-size: 24px;
+  line-height: 1.2;
+
+  @include medium {
+    font-size: 36px;
+  }
 }
 
 @mixin fs-universal-header {

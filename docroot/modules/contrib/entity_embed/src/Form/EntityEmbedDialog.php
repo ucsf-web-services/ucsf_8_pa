@@ -451,9 +451,11 @@ class EntityEmbedDialog extends FormBase {
           'left' => $this->t('Left'),
           'center' => $this->t('Center'),
           'right' => $this->t('Right'),
-          'bleed-left' => $this->t('Bleed-Left'),
-          'bleed-right' => $this->t('Bleed-Right'),
-          'bleed-full' => $this->t('Bleed-Full'),
+          'half-image-right' => $this->t('Half Image Right'),
+          'half-image-left' => $this->t('Half Image Left'),
+          'half-image-right-full' => $this->t('Full Bleed Right'),
+          'half-image-left-full' => $this->t('Full Bleed Left'),
+          'full-bleed-image' => $this->t('Full Bleed')
         ),
         '#default_value' => isset($entity_element['data-align']) ? $entity_element['data-align'] : '',
         '#wrapper_attributes' => array('class' => array('container-inline')),
@@ -496,7 +498,7 @@ class EntityEmbedDialog extends FormBase {
         'event' => 'click',
       ),
     );
-    //kpr($form);
+
     return $form;
   }
 

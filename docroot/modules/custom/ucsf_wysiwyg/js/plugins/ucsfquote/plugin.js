@@ -29,13 +29,11 @@ CKEDITOR.plugins.add('ucsfquote', {
     });
 
     editor.widgets.add('ucsfquote', {
-     allowedContent:
-     'blockquote(!blockquote,align--left,align--right,align--center,blockquote--center,blockquote--left,blockquote--right,blockquote--half-left,blockquote--half-right,blockquote--half-right);' +
-     'div(!wysiwyg_quote,align--left,align--right,align--center,bg--white,bg--grey,bg--blue,bg--teal,bg--lime,bg--orange,size--full,size--half,size--twofifth,size--third);' +
-     'cite(!blockquote-content__cite); p(!blockquote-content__text);' +
-     'p(!wysiwyg_quote--content); p(!wysiwyg_quote--author); p(!wysiwyg_quote--org); ',
-
-        requiredContent: 'blockquote(!blockquote)',
+        //allowedContent:
+        //'blockquote(!blockquote,*);',
+        //'div(!wysiwyg_quote,*);' +
+        //'p(*); footer[*](*);',
+        // requiredContent: 'blockquote(!blockquote)',
 
         editables: {
             contenttext: {
@@ -57,24 +55,26 @@ CKEDITOR.plugins.add('ucsfquote', {
             org: {
                 selector: '.wysiwyg_quote--org',
                 allowedContent: 'br strong em; a[!href];'
-            },
-            organization: {
-                selector: '.blockquote-content__org',
-                allowedContent: 'br strong em; a[!href];'
             }
         },
 
       template:
         '<blockquote class="blockquote">' +
-          //'<div class="blockquote-content">' +
             '<p class="blockquote-content__text">Lorem ipsum dolor sit amet, ex labore vivendo laboramus has, vel at putant legendos. Quod appareat id eos, noster malorum et mea.</p>' +
             '<footer>' +
             '<p class="blockquote-content__cite">Vivendo Laboramus, PhD</p>' +
-            '<p class="blockquote-content__org">Organization name</p>' +
             '</footer>' +
-          //'</div>' +
         '</blockquote>',
 
+    /**
+     * here for compatibility reference
+     template:
+     '<div class="wysiwyg_quote">' +
+     '<p class="wysiwyg_quote--content">Lorem ipsum dolor sit amet, ex labore vivendo laboramus has, vel at putant legendos. Quod appareat id eos, noster malorum et mea.</p>' +
+     '<p class="wysiwyg_quote--author">Firstname Lastname, Title</p>' +
+     '<p class="wysiwyg_quote--org">Organization/Company/Source</p>' +
+     '</div>',
+     */
       button: 'Create a Pull Quote',
       dialog: 'ucsfquote',
 
@@ -94,16 +94,12 @@ CKEDITOR.plugins.add('ucsfquote', {
 //           this.setData( 'bgColor', 'lime' );
 //         if ( this.element.hasClass( 'bg--orange' ) )
 //           this.setData( 'bgColor', 'orange' );
-        if ( this.element.hasClass( 'blockquote--center' ) )
-          this.setData( 'align', 'center' );
-        if ( this.element.hasClass( 'blockquote--left' ) )
-          this.setData( 'align', 'left' );
-        if ( this.element.hasClass( 'blockquote--right' ) )
-          this.setData( 'align', 'right' );
+
         if ( this.element.hasClass( 'blockquote--half-left' ) )
           this.setData( 'align', 'half-left' );
         if ( this.element.hasClass( 'blockquote--half-right' ) )
           this.setData( 'align', 'half-right' );
+
 //         if ( this.element.hasClass( 'size--full' ) )
 //           this.setData( 'size', 'full' );
 //         if ( this.element.hasClass( 'size--half' ) )
@@ -116,9 +112,6 @@ CKEDITOR.plugins.add('ucsfquote', {
       },
       data: function() {
         // Brutally remove all align classes and set a new one if "align" widget data is set.
-        this.element.removeClass( 'blockquote--center' );
-        this.element.removeClass( 'blockquote--left' );
-        this.element.removeClass( 'blockquote--right' );
         this.element.removeClass( 'blockquote--half-left' );
         this.element.removeClass( 'blockquote--half-right' );
         if ( this.data.align )

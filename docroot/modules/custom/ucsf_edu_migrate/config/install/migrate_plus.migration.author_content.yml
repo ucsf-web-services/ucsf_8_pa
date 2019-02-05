@@ -16,7 +16,7 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: http://ucsfpa1dev.prod.acquia-sites.com/authorxml
+  urls: https://www.ucsf.edu/authorxml
   item_selector: /nodes/node
 
 # unique identifier needs to be an integer
@@ -119,7 +119,7 @@ process:
       source: author_type_tax_id
       message: 'there was an empty field'
 
-  field_topics:
+  field_beats:
     -
       plugin: skip_on_empty
       method: process

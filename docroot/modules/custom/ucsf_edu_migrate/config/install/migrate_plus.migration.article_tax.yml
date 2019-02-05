@@ -16,7 +16,7 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: http://ucsfpa1dev.prod.acquia-sites.com/article_type_xml
+  urls: https://www.ucsf.edu/article_type_xml
   item_selector: /taxonomy/terms
   fields:
     -
@@ -50,7 +50,7 @@ source:
 # destination plugin is implemented in Drupal itself.
 destination:
   plugin: entity:taxonomy_term
-  
+
   default_bundle: article_type
 
 # Here's the meat of the migration - the processing pipeline. This describes how
@@ -60,15 +60,15 @@ process:
   type:
     plugin: default_value
     default_value: article_type
-  
+
   name: tax_title
-  
+
   tid: tax_id
-  
+
   description/value: tax_description
-  
+
   parent:
-    -  
+    -
       plugin: migration_lookup
       migration: article_tax
       source: tax_parent
@@ -76,7 +76,7 @@ process:
     -
       plugin: default_value
       default_value: 0
-      
+
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value
   # (the 'style' field from the source database in this case) to the destination

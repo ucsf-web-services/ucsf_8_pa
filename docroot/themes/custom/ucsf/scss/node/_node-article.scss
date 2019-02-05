@@ -1,7 +1,5 @@
 .page_narrow {
-  //width: $page-narrow;
   background: $white;
-  //margin-top: $space-decuple;
   padding: 0 11%;
   position: relative;
   grid-column: 3 / -3;
@@ -30,6 +28,10 @@
 
   &.article-medium-header {
     margin-top: -32%;
+
+    h1 {
+      @include fs-article-medium-h1;
+    }
   }
 }
 
@@ -214,26 +216,6 @@
   }
 }
 
-h1 {
-  font-size: 28px;
-  line-height: 1.2;
-  margin: $space 0;
-
-  @include medium {
-    font-size: 56px;
-  }
-}
-
-h2 {
-  font-size: 24px;
-  line-height: 1.2;
-  margin-top: $space-seven;
-
-  @include medium {
-    font-size: 36px;
-  }
-}
-
 //MOVE THIS TO images
 .half-image-right {
   float: right;
@@ -243,7 +225,7 @@ h2 {
   margin-left: 10%;
 }
 
-.half-image-left {
+figure.half-image-left {
   float: left;
   margin: $space-decuple;
   margin-top: 0;
@@ -264,7 +246,7 @@ h2 {
   }
 }
 
-.half-image-right-full {
+figure.half-image-right-full {
   float: right;
   margin: $space-decuple;
   margin-top: 0;
@@ -299,39 +281,17 @@ h2 {
 }
 
 .full-bleed-image {
-  margin: $space-ten;
   margin-left: -25%;
   margin-right: -25%;
-
-  .full-bleed-image__caption {
-    font-size: $font-size-xsm;
-    color: $gray-blue;
-    padding-top: $space-double;
-    padding-left: 17%;
-    padding-right: 17%;
-    font-family: $font-helvetica-neue-roman;
-    font-weight: 500;
-    line-height: 1.6em;
-  }
 }
 
-.callout-left {
-  float: left;
-  background: $background-gray;
-  margin: 10%;
-  margin-top: 0;
-  margin-left: -20%;
-  margin-bottom: $space-quadruple;
-  width: 50%;
-  padding: 80px 10%;
-
-  .callout-left__title {
-    @include eyebrow;
-  }
-
-  p:last-child {
-    margin-bottom: 0;
-  }
+figcaption {
+  font-size: $font-size-xsm;
+  color: $gray-blue;
+  padding-top: $space-double;
+  font-family: $font-helvetica-neue-roman;
+  font-weight: 500;
+  line-height: 1.6em;
 }
 
 .article-medium-banner {

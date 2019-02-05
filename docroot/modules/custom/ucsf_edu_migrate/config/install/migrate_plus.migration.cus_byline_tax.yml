@@ -16,7 +16,7 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: http://ucsfpa1dev.prod.acquia-sites.com/cusbylinexml
+  urls: https://www.ucsf.edu/cusbylinexml
   item_selector: /taxonomy/terms
   fields:
     -
@@ -38,7 +38,7 @@ source:
 # destination plugin is implemented in Drupal itself.
 destination:
   plugin: entity:taxonomy_term
-  
+
   default_bundle: custom_authors
 
 # Here's the meat of the migration - the processing pipeline. This describes how
@@ -48,20 +48,20 @@ process:
   type:
     plugin: default_value
     default_value: custom_authors
-  
+
   name: tax_title
-  
-  lookupval: 
+
+  lookupval:
     -
       plugin: data_condense
       source: tax_title
-  
+
   tid:
     -
       plugin: data_lookup
       source: '@lookupval'
       file: public://authormap.csv
-      
+
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value
   # (the 'style' field from the source database in this case) to the destination
