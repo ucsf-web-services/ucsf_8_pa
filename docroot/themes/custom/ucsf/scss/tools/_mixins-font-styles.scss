@@ -49,6 +49,14 @@
   line-height: 82px;
 }
 
+@mixin fs-article-medium-h1 {
+  @include fs-heading-sm;
+
+  @include medium {
+    @include fs-heading-two-md;
+  }
+}
+
 @mixin fs-heading {
   @include font-smooth;
 
@@ -69,7 +77,7 @@
   letter-spacing: -1px;
 }
 
-@mixin fs-heading-blockquote-sm {
+@mixin fs-heading-sm {
   @include font-smooth;
   font-family: $font-granjon;
   font-size: 31px;
@@ -78,7 +86,7 @@
 }
 
 @mixin fs-heading-blockquote {
-  @include fs-heading-blockquote-sm;
+  @include fs-heading-sm;
 
   @include medium {
     @include fs-heading-blockquote-md;
