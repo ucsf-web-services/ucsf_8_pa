@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3226611bb0a26486448519d9ee48ceaf",
+    "content-hash": "013eaf4a9a3e14aa1a72ecf2d307ac77",
     "packages": [
         {
             "name": "acquia/content-hub-php",
@@ -1828,7 +1828,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/applenews",
-                "reference": "96a3ead95e95216217b54450d6fd23c3c7a22430"
+                "reference": "3675ca18093892bbd3a5b6eb97be161b2e495b1d"
             },
             "require": {
                 "chapter-three/apple-news-api": "dev-master",
@@ -1840,12 +1840,17 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-beta1+10-dev",
-                    "datestamp": "1547146380",
+                    "version": "8.x-1.0-beta1+11-dev",
+                    "datestamp": "1547217855",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."
                     }
+                },
+                "patches_applied": {
+                    "Fix delete process of templates components": "https://www.drupal.org/files/issues/2019-02-05/applenews-fix-delete-process-of-templates-components-3025958-9.patch",
+                    "Add preview link when no channels are configured": "https://www.drupal.org/files/issues/2019-02-05/applenews-preview-with-no-api-3029632-4.patch",
+                    "Limit tags in html": "https://www.drupal.org/files/issues/2019-02-05/applenews-limit_tags_in_html-11333241-2.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -1887,7 +1892,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/applenews"
             },
-            "time": "2019-01-11T14:42:47+00:00"
+            "time": "2019-02-05T13:21:56+00:00"
         },
         {
             "name": "drupal/authorization",
@@ -3181,6 +3186,7 @@
                 },
                 "patches_applied": {
                     "2644468-88 - Multiple image upload breaks image dimensions": "https://www.drupal.org/files/issues/2644468-88.patch",
+                    "FilterAlign - remove aggressive removal of classes": "https://raw.githubusercontent.com/ucsf-web-services/ucsf_8_pa/master/patches/core-filteralign.patch",
                     "Drupalimage calling drupallink functions without checking if the plugin is loaded #13": "https://www.drupal.org/files/issues/edit_drupalimage-2855521-13.patch"
                 }
             },

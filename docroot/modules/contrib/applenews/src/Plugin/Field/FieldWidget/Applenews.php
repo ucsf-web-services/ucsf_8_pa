@@ -42,7 +42,7 @@ class Applenews extends WidgetBase {
       $element['message'] = [
         '#markup' => $this->t('There are no channels available. To set up a channel, review the <a href=":url">Apple news Settings</a>.', [':url' => Url::fromRoute('entity.applenews_template.collection')->toString()]),
       ];
-      if (extension_loaded('zip') && $templates) {
+      if (extension_loaded('zip') && $templates && $entity->id()) {
         $element['preview'] = [
           '#type' => 'item',
           '#title' => $this->t('Preview'),
