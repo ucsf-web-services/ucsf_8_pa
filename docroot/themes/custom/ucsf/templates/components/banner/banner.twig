@@ -1,14 +1,19 @@
 {% if layout == 'medium' %}
-  <figure class="article-medium-banner">
-    {{ content.field_banner_image }}
-  </figure>
-{% endif %}
+  {% set classes = [ 'article-medium-banner'] %}
 
+<figure{{ attributes.addClass(classes) }}>
+  {{ content.field_banner_image }}
+</figure>
 <div class="main-content narrow-page">
-  {% if layout == 'medium' and content.field_banner_image|render != '' %}
-   {% set class= 'article-medium-header' %}
-  {% endif %}
-  <header class="article-header {{ class }}">
-    {% include '@theme/banner/banner-content.twig' %}
-  </header>
-  {% include "@theme/share/share.twig" %}
+  {% else %}
+  {% set classes = [ 'main-content', 'narrow-page'] %}
+  <div {{ attributes.addClass(classes) }}>
+    {% endif %}
+
+    {% if layout == 'medium' and content.field_banner_image|render != '' %}
+      {% set class= 'article-medium-header' %}
+    {% endif %}
+    <header class="article-header {{ class }}">
+      {% include '@theme/banner/banner-content.twig' %}
+    </header>
+    {% include "@theme/share/share.twig" %}

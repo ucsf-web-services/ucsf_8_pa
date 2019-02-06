@@ -1,4 +1,6 @@
-<blockquote class="blockquote blockquote-full-width">
+{% set classes = ['blockquote', 'blockquote-full-width'] %}
+
+<blockquote{{ attributes.addClass(classes) }}>
   {{ content.field_blockquote_image }}
   <div class="blockquote-content">
     {{ content|without('field_blockquote_image') }}

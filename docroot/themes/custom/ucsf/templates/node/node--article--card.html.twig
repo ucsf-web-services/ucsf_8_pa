@@ -1,4 +1,6 @@
-<article class="news-card">
+{% set classes = ['news-card'] %}
+
+<article {{ attributes.addClass(classes) }}>
   <a href="{{ url }}" class="news-card__link">
     {{ content.field_card_image }}
     <header class="news-card__copy">
