@@ -3,14 +3,16 @@
 
 <main role="main" {{ attributes.addClass(classes) }}>
   <a id="main-content" tabindex="-1"></a>
-<div class="main-content narrow-page">
-  <header class="article-header">
-    <h1>{{ label }}</h1>
-  </header>
+  <div class="main-content narrow-page">
+    <header class="article-header">
+      <h1>{{ label }}</h1>
+    </header>
 
-  {% include "@theme/share/share.twig" %}
-  <div class="page_narrow">
-    {{ content.field_trending }}
+    {% include "@theme/share/share.twig" %}
+    <div class="page_narrow">
+      <ol class="news-row-card news-trending">
+        {{ content.field_trending }}
+      </ol>
+    </div>
   </div>
-</div>
 </main>

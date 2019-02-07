@@ -1,0 +1,25 @@
+{%
+  set classes = [
+  'node--type-' ~ node.bundle|clean_class,
+  view_mode ? 'node--type-' ~ node.bundle|clean_class ~ '--' ~ view_mode|clean_class,
+  not node.isPublished() ? 'node--unpublished',
+  view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  'card-row'
+]
+%}
+
+<li>
+  <article {{ attributes.addClass(classes) }}>
+    <div class="card-row__image">
+      {{ content.field_card_image }}
+    </div>
+    <div class="card-row__copy">
+      <header class="news-card">
+        <h2>{{ label }}</h2>
+      </header>
+      <a href="{{ url }}" class="card-row__link link--cta">
+        {{ "Continue reading"|t }}
+      </a>
+    </div>
+  </article>
+</li>
