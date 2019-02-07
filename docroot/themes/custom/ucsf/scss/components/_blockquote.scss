@@ -44,3 +44,43 @@
     font-style: normal;
   }
 }
+
+.page_narrow blockquote {
+  background: $background-gray;
+
+  &.blockquote--half-left {
+    float: left;
+    width: 50%;
+    left: auto;
+    padding-top: 0;
+    margin-left: -20%;
+    margin-right: 10%;
+    margin-top: 0;
+  }
+
+  .blockquote-content__text {
+    @include fs-heading-blockquote;
+    font-size: 31px;
+    line-height: 1.2em;
+    padding: $space-seven $space-ten 0 0;
+    padding-right: 15%;
+
+    &::before {
+      content: '“ ';
+      display: inline-block;
+      margin-left: -$space-three;
+      padding-right: $space;
+      font-family: $font-granjon;
+    }
+  }
+
+  .blockquote-content__cite {
+    @include eyebrow;
+
+    font-style: normal;
+  }
+
+  footer {
+    margin-bottom: 50px;
+  }
+}

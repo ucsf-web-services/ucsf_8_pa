@@ -4331,6 +4331,124 @@ textarea {
   margin-bottom: 24px;
   grid-column: 1 / span 2; }
 
+.blockquote::after {
+  clear: both;
+  content: " ";
+  display: table; }
+
+.blockquote.blockquote-full-width {
+  grid-column: 2 / -3;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: 32px auto 32px;
+  background: #fff;
+  margin: 0; }
+  .blockquote.blockquote-full-width .blockquote-image {
+    grid-column: 1 / 2;
+    grid-row: 1 / -1; }
+  .blockquote.blockquote-full-width .blockquote-content {
+    grid-column: 2 / -1;
+    grid-row: 2 / -2;
+    padding-left: 25%; }
+
+.blockquote .blockquote-content {
+  background: #f2f4f6;
+  padding: 56px 80px;
+  padding-right: 15%; }
+
+.blockquote .field-blockquote-body p:first-child {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+  font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
+  font-size: 31px;
+  line-height: 1.2em;
+  letter-spacing: -0.6px; }
+  @media (min-width: 600px) {
+    .blockquote .field-blockquote-body p:first-child {
+      font-size: 40px;
+      letter-spacing: -1px; } }
+  .blockquote .field-blockquote-body p:first-child::before {
+    content: '“ ';
+    display: inline-block;
+    margin-left: -24px;
+    padding-right: 8px;
+    font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif; }
+
+.blockquote .field-blockquote-source {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+  font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  color: #052049;
+  text-transform: uppercase;
+  font-style: normal; }
+  .blockquote .field-blockquote-source::after {
+    content: ' ';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: #052049;
+    margin: 0 5px 3px; }
+
+.page_narrow blockquote {
+  background: #f2f4f6; }
+  .page_narrow blockquote.blockquote--half-left {
+    float: left;
+    width: 50%;
+    left: auto;
+    padding-top: 0;
+    margin-left: -20%;
+    margin-right: 10%;
+    margin-top: 0; }
+  .page_narrow blockquote .blockquote-content__text {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    font-weight: 500;
+    font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
+    font-size: 31px;
+    line-height: 1.2em;
+    letter-spacing: -0.6px;
+    font-size: 31px;
+    line-height: 1.2em;
+    padding: 56px 80px 0 0;
+    padding-right: 15%; }
+    @media (min-width: 600px) {
+      .page_narrow blockquote .blockquote-content__text {
+        font-size: 40px;
+        letter-spacing: -1px; } }
+    .page_narrow blockquote .blockquote-content__text::before {
+      content: '“ ';
+      display: inline-block;
+      margin-left: -24px;
+      padding-right: 8px;
+      font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif; }
+  .page_narrow blockquote .blockquote-content__cite {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    font-weight: 500;
+    font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.6px;
+    color: #052049;
+    text-transform: uppercase;
+    font-style: normal; }
+    .page_narrow blockquote .blockquote-content__cite::after {
+      content: ' ';
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: #052049;
+      margin: 0 5px 3px; }
+  .page_narrow blockquote footer {
+    margin-bottom: 50px; }
+
 .ucsfcallout {
   float: left;
   background: #f2f4f6;
@@ -4952,7 +5070,7 @@ figure.half-image-left {
   margin-left: -25%;
   margin-bottom: 32px;
   width: 487px; }
-  figure.half-image-left .half-image-left__caption {
+  figure.half-image-left figcaption {
     float: right;
     font-size: 14px;
     color: #506380;
@@ -4969,7 +5087,7 @@ figure.half-image-right-full {
   margin-right: -305px;
   margin-bottom: 32px;
   width: 758px; }
-  figure.half-image-right-full .half-image-right-full__caption {
+  figure.half-image-right-full figcaption {
     float: right;
     font-size: 14px;
     color: #506380;
@@ -5554,70 +5672,6 @@ figcaption {
 
 .path-search strong {
   font-weight: 500; }
-
-.blockquote::after {
-  clear: both;
-  content: " ";
-  display: table; }
-
-.blockquote.blockquote-full-width {
-  grid-column: 2 / -3;
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  grid-template-rows: 32px auto 32px;
-  background: #fff;
-  margin: 0; }
-  .blockquote.blockquote-full-width .blockquote-image {
-    grid-column: 1 / 2;
-    grid-row: 1 / -1; }
-  .blockquote.blockquote-full-width .blockquote-content {
-    grid-column: 2 / -1;
-    grid-row: 2 / -2;
-    padding-left: 25%; }
-
-.blockquote .blockquote-content {
-  background: #f2f4f6;
-  padding: 56px 80px;
-  padding-right: 15%; }
-
-.blockquote .field-blockquote-body p:first-child {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  font-weight: 500;
-  font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
-  font-size: 31px;
-  line-height: 1.2em;
-  letter-spacing: -0.6px; }
-  @media (min-width: 600px) {
-    .blockquote .field-blockquote-body p:first-child {
-      font-size: 40px;
-      letter-spacing: -1px; } }
-  .blockquote .field-blockquote-body p:first-child::before {
-    content: '“ ';
-    display: inline-block;
-    margin-left: -24px;
-    padding-right: 8px;
-    font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif; }
-
-.blockquote .field-blockquote-source {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  font-weight: 500;
-  font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-  font-size: 12px;
-  letter-spacing: 1.6px;
-  color: #052049;
-  text-transform: uppercase;
-  font-style: normal; }
-  .blockquote .field-blockquote-source::after {
-    content: ' ';
-    display: inline-block;
-    width: 40px;
-    height: 1px;
-    background: #052049;
-    margin: 0 5px 3px; }
 
 .universal-header-region {
   color: #fff;
