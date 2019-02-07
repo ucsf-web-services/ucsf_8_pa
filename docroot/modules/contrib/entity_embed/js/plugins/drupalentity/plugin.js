@@ -64,8 +64,7 @@
             for (var key in attributes) {
               if (key == 'data-caption') {
                 if (typeof attributes[key] === 'object') {
-                  var dataCaption = attributes[key].value;
-                  attributes[key] = $('<textarea />').html(dataCaption).text();
+                  attributes[key] = attributes[key].value;
                 }
               }
               entityElement.setAttribute(key, attributes[key]);
