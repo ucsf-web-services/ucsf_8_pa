@@ -32,16 +32,15 @@ class FilterAlign extends FilterBase {
         $align = $node->getAttribute('data-align');
         $node->removeAttribute('data-align');
 
+        $classes = $node->getAttribute('class');
+        $classes = (strlen($classes) > 0) ? explode(' ', $classes) : [];
         //allow any alignment class, should not be this restrictive
         if (!in_array($align, ['left', 'center', 'right'])) {
           $classes[] = $align;
         }
         // If one of the allowed alignments, add the corresponding class.
         elseif (in_array($align, ['left', 'center', 'right'])) {
-          $classes = $node->getAttribute('class');
-          $classes = (strlen($classes) > 0) ? explode(' ', $classes) : [];
           $classes[] = 'align-' . $align;
-          //$node->setAttribute('class', implode(' ', $classes));
         }
         $node->setAttribute('class', implode(' ', $classes));
       }
