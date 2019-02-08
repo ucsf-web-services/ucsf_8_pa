@@ -63,7 +63,11 @@ process:
 
   name: tax_title
 
-  tid: tax_id
+  tid:
+    -
+      plugin: data_lookup
+      source: tax_id
+      file: public://area_tax_map.csv
 
   description/value: tax_description
 

@@ -50,6 +50,10 @@ source:
       label: 'news primary area tax'
       selector: Areas
     -
+      name: areas_tax_2
+      label: 'news secondary area tax'
+      selector: Second-Areas-EXCLUDED
+    -
       name: article_type_tax
       label: 'news article type tax'
       selector: Article-Type
@@ -140,15 +144,34 @@ process:
     plugin: default_value
     default_value: full_html
 
-  field_areas:
+  field_primary_area:
     -
       plugin: skip_on_empty
       method: process
       source: areas_tax
       message: 'there was an empty field'
     -
+      plugin: data_lookup
+      source: areas_tax
+      file: public://area_tax_map.csv
+    -
       plugin: explode
       source: areas_tax
+      delimiter: ','
+
+  field_areas:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: areas_tax_2
+      message: 'there was an empty field'
+#    -
+#      plugin: data_lookup
+#      source: areas_tax_2
+#      file: public://area_tax_map.csv
+    -
+      plugin: explode
+      source: areas_tax_2
       delimiter: ','
 
   field_article_type:
@@ -279,6 +302,10 @@ process:
       method: process
       source: cus_author
       message: 'there was an empty field'
+    -
+      plugin: data_lookup
+      source: '@lookupval'
+      file: public://authormap.csv
 
   lookupval:
     -
