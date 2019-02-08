@@ -13,7 +13,10 @@
 
   .article-header__Research,
   .news-card__Research,
-  .news-card__Patient {
+  .news-card__Patient,
+  .news-card__Happenings,
+  .news-card__Spotlight,
+  .news-card__Honors {
     color: $teal;
 
     &::before {
@@ -33,6 +36,16 @@
 
     &::before {
       background: $print-blue;
+    }
+  }
+
+  .news-card__Happenings,
+  .news-card__Spotlight,
+  .news-card__Honors {
+    color: #000;
+
+    &::before {
+      background: #000;
     }
   }
 
@@ -203,6 +216,25 @@ h2 {
   padding: 80px 10%;
 
   .callout-left__title {
+    @include eyebrow;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.callout-right {
+  float: right;
+  background: $background-gray;
+  margin: 10%;
+  margin-top: 0;
+  margin-right: -20%;
+  margin-bottom: $space-quadruple;
+  width: 50%;
+  padding: 80px 10%;
+
+  .callout__title {
     @include eyebrow;
   }
 

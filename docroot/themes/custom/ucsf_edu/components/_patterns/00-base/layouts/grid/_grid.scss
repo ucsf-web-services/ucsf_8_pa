@@ -130,6 +130,11 @@
       padding-bottom: 0;
     }
   }
+
+  &.wywiwyg-layout {
+    padding: 0;
+    padding-top: $space-five;
+  }
 }
 
 .layout-left-70-30 {
@@ -158,6 +163,45 @@
     float: left;
     width: 70%;
     padding-right: $space-ten;
+
+    & > :first-child {
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    & > :last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+}
+
+.layout-left-40-60 {
+  grid-column: 1/-1;
+  float: left;
+  width: 100%;
+  padding: 0;
+  padding-top: $space-five;
+
+  .layout-40 {
+    float: left;
+    width: 40%;
+
+    & > :first-child {
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    & > :last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  .layout-60 {
+    float: right;
+    width: 60%;
+    padding-left: $space-five;
 
     & > :first-child {
       margin-top: 0;
@@ -225,7 +269,8 @@
   }
 }
 
-.two-columns {
+.two-columns,
+.three-columns {
   float: left;
   padding-bottom: $space-ten;
   width: 100%;
@@ -243,13 +288,41 @@
       padding-top: 0;
     }
 
-    .cta--list {
+    .cta--list,
+    .ext--list {
       margin-bottom: 0;
     }
   }
 
   & + * {
     clear: both;
+  }
+}
+
+.two-columns {
+  .content-column:first-child {
+    padding-right: $space-five;
+  }
+
+  .content-column:last-child {
+    padding-left: $space-five;
+  }
+}
+
+.three-columns {
+  .content-column {
+    width: 33%;
+    padding-left: $space-three;
+    padding-right: $space-three;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+      padding-left: $space-three;
+    }
   }
 }
 

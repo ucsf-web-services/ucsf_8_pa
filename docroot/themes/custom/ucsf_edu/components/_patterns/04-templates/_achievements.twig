@@ -1,0 +1,55 @@
+{% set layout_modifiers = [] %}
+
+{% set main_base_class = main_base_class|default('main') %}
+{% set main_modifiers = [] %}
+
+{% set main_content_base_class = main_content_base_class|default('main-content achievements-page') %}
+{% set main_content_modifiers = [] %}
+
+<div class="main-article">
+  <div {{ bem('layout-container', (layout_modifiers)) }}>
+    {% block page_universal_header %}
+      {% include "@organisms/site/universal-header/universal-header.twig" %}
+    {% endblock %}
+
+    {% block page_header %}
+      {% include "@organisms/site/site-header/site-header.twig" %}
+    {% endblock %}
+
+    {% block page_breadcrumbs %}
+      {% include "@molecules/menus/breadcrumbs/breadcrumbs.twig" %}
+    {% endblock %}
+
+    {% block page_system %}
+    {% endblock %}
+
+    <header class="achievements-banner">
+
+      <div class="achievements-banner__header">
+        <h1 class="achievements-banner__title">Achievements at UCSF</h1>
+
+        <p class="achievements-banner__subheading">We have been creating opportunities for exploration and collaboration for more than 150 years.</p>
+
+        <ul class="achievements-banner__links">
+        <li><a href="" class="link--cta">Rankings</a></li>
+        <li><a href="" class="link--cta">Patents</a></li>
+        <li><a href="" class="link--cta">Discoveries</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <div class="achievements-wrapper">
+      <main role="main" {{ bem(main_base_class, (main_modifiers), main_blockname) }}>
+        <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+
+        <div {{ bem(main_content_base_class, (main_content_modifiers), main_content_blockname) }}>
+            {% block page_content %}{% endblock %}
+        </div>
+
+      </main>
+
+    {% block page_footer %}
+      {% include "@organisms/site/site-footer/site-footer.twig" %}
+    {% endblock %}
+  </div>
+</div>
