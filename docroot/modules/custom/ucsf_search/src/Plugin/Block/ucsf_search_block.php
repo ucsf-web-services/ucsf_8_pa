@@ -36,7 +36,7 @@ MARKUP;
       '#template' => $markup,
       '#attached' => array(
         'library' => array(
-          'ucsf_google_search/ucsf_google_search'
+          'ucsf_search/ucsf_search'
         ),
       )
     );

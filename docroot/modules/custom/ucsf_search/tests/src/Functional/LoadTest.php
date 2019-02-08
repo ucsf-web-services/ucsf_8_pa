@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\ucsf_google_search\Functional;
+namespace Drupal\Tests\ucsf_search\Functional;
 
 use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
