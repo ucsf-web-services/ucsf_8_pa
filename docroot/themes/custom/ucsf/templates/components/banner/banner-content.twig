@@ -1,7 +1,7 @@
 {% include '@theme/article/byline.twig' %}
 <h1>{{ label }}</h1>
 {{ content.field_sub_title }}
-<div class="article-header__author">
+<p class="article-header__author">
 
   {# Merge field_author with field_custom_author. #}
   {% if content.field_author['#items'] %}
@@ -29,4 +29,4 @@
       {%- include '@theme/banner/banner-author.twig' with {separator: ', '}-%}
     {%- endif -%}
   {%- endfor -%}
-</div>
+</p>
