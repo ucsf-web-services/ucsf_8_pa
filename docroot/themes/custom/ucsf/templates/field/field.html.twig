@@ -63,7 +63,9 @@
     </div>
   {% else %}
     {% for item in items %}
+      {% block single_item_no_label %}
       <div{{ attributes.addClass(classes, 'field__item') }}>{{ item.content }}</div>
+      {% endblock single_item_no_label %}
     {% endfor %}
   {% endif %}
 {% else %}
