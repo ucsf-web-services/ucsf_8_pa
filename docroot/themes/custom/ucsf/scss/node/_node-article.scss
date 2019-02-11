@@ -302,13 +302,13 @@ figure.align-center {
   padding-top: $space-quadruple;
 }
 
-.tags-menu-region .field { // .tags-menu
+.tags-menu-region .tags-menu {
   margin: 0;
   padding: 0;
   list-style: none;
   display: inline;
 
-  .field__item { // .tags-menu__item
+  .tags-menu__item {
     display: inline;
     font-size: $font-size-sm;
     font-family: $font-helvetica-neue-medium;
@@ -322,16 +322,18 @@ figure.align-center {
       margin: 0 10px 3px 7px;
       border-radius: 50%;
     }
-  }
 
-  &.field-topics .field__item:first-child {
-    &::before {
-      display: none;
+    &:first-child {
+      &::before {
+        display: none;
+      }
     }
   }
 
-  a:hover {
-    text-decoration: underline;
+  .tags-menu__item {
+    a:hover {
+      text-decoration: underline;
+    }
   }
 }
 
