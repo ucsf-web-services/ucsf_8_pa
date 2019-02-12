@@ -253,6 +253,10 @@ process:
       method: process
       source: tags_tax
       message: 'there was an empty field'
+    -
+      plugin: explode
+      source: tags_tax
+      delimiter: ','
 
   field_exclude:
     -
