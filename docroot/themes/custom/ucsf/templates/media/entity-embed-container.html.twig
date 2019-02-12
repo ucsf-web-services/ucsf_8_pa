@@ -12,4 +12,9 @@
  * @ingroup themeable
  */
 #}
-<article{{ attributes }}>{{ children }}</article>
+
+{% if media_type == 'image' %}
+  <figure{{ attributes }}><picture>{{ children }}</picture></figure>
+{% else %}
+  <article{{ attributes }}>{{ children }}</article>
+{% endif %}
