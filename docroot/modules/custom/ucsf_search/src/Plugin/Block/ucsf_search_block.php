@@ -20,6 +20,9 @@ class ucsf_search_block extends BlockBase {
 
   public function build() {
 
+
+
+
     $markup = <<<MARKUP
         <div class="form-search-block-div">
           <div class="search-box-container">
