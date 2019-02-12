@@ -113,6 +113,14 @@ source:
       name: cus_author
       label: 'the custom byline for the ucsf news'
       selector: Custom-Byline
+    -
+      name: pub_date
+      label: 'the published date of the news'
+      selector: Post-date
+    -
+      name: uid
+      label: 'Id of the account that authored the content'
+      selector: Author-uid
 
   constants:
     file_directory: public://
@@ -158,6 +166,15 @@ process:
       plugin: explode
       source: areas_tax
       delimiter: ','
+
+  uid: uid
+
+  field_date: pub_date
+
+  field_date_and_time: pub_date
+
+#  created: pub_date
+#  changed: pub_date
 
   field_areas:
     -
