@@ -19,8 +19,11 @@
   </div>
 </div>
 {# @todo Wrapper should probably be conditional. #}
-<div class="recommended-articles has-recommended-article">
-  {{ content.field_recommended_article }}
+<div class="recommended-articles{{ content.field_recommended_article|render ? ' has-recommended-article' }} ">
+  <div class="recommended-articles__banner">
+    <h2 class="recommended-articles__title">{{ "Recommended Reading"|t }}</h2>
+    {{ content.field_recommended_article }}
+  </div>
   {{ drupal_view('articles_by_term', 'block_1') }}
   <div class="footer-ctas-wrapper">
     {{ content.field_ankle_cta }}
