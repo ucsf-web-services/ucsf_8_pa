@@ -1,5 +1,16 @@
-.view-articles-by-term {
-  .view-content {
+.view-articles-by-term { // .recommended-articles_list
+  .view-content { // PL: .card-three-up
     @include card-three-up;
+    @include card-three-up-constrained;
+  }
+}
+
+.has-recommended-article .view-articles-by-term { // .recommended-articles_list
+  padding: 0 90px;
+  margin-top: 0;
+
+  .view-content {
+    margin-top: $space-ten;
+    padding-top: 0;
   }
 }
