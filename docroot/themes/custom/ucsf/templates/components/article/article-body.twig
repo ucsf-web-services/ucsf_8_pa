@@ -1,0 +1,11 @@
+{{ content.body }}
+    {{ content.field_content_panel }}
+
+<div class="tags-menu-region">
+  {% if content.field_topics|render or content.field_tags|render %}
+    <h3 class="tags-menu__title">{{ "Topics"|t }}</h3>
+    <ul class="tags-menu">
+      {{ content.field_topics }} {{ content.field_tags }}
+    </ul>
+  {% endif %}
+</div>
