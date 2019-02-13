@@ -1,23 +1,27 @@
 {% set layout = node.field_banner_layout.value %}
 
-{% if layout == 'feature' %}
-  {% include '@theme/banner/banner-feature.twig' %}
-{% else %}
-  {% include '@theme/banner/banner.twig' %}
-{% endif %}
+<main role="main" class="main">
+  {# link is in html.html.twig #}
+  <a id="main-content" tabindex="-1"></a>
+  {% if layout == 'feature' %}
+    {% include '@theme/banner/banner-feature.twig' %}
+  {% else %}
+    {% include '@theme/banner/banner.twig' %}
+  {% endif %}
 
   {{ content.body }}
   {{ content.field_content_panel }}
 
   <div class="tags-menu-region">
     {% if content.field_topics|render or content.field_tags|render %}
-    <h3 class="tags-menu__title">{{ "Topics"|t }}</h3>
-    <ul class="tags-menu">
-      {{ content.field_topics }} {{ content.field_tags }}
-    </ul>
+      <h3 class="tags-menu__title">{{ "Topics"|t }}</h3>
+      <ul class="tags-menu">
+        {{ content.field_topics }} {{ content.field_tags }}
+      </ul>
     {% endif %}
   </div>
-</div>
+  </div>
+</main>
 {# @todo Wrapper should probably be conditional. #}
 <div class="recommended-articles{{ content.field_recommended_article|render ? ' has-recommended-article' }} ">
   <div class="recommended-articles__banner">
