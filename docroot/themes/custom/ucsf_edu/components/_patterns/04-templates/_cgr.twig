@@ -3,7 +3,7 @@
 {% set main_base_class = main_base_class|default('main') %}
 {% set main_modifiers = [] %}
 
-{% set main_content_base_class = main_content_base_class|default('main-content landing-page') %}
+{% set main_content_base_class = main_content_base_class|default('main-content full-width-page') %}
 {% set main_content_modifiers = [] %}
 
 <div class="main-article">
@@ -23,21 +23,21 @@
     {% block page_system %}
     {% endblock %}
 
-    <header class="basic-header landing-page-banner">
+    <header class="basic-header full-width-page-banner">
         {% include "@atoms/04-images/00-image/figure.twig" with {
           img_src: '../../images/landing/cgr-bg.jpg',
           img_alt: 'Journalists talking',
-          image_figure_base_class: 'landing-banner-photo',
+          image_figure_base_class: 'full-width-page-banner-photo',
         } %}
 
-      <div class="landing-page-banner__header">
-        <h1 class="landing-page__header-title">UCSF Community and Government Relations</h1>
+      <div class="full-width-page-banner__header">
+        <h1 class="full-width-page__header-title">UCSF Community and Government Relations</h1>
 
         <p>UCSF Community and Government Relations (CGR) is UCSF's most direct link to our neighbors, community groups, and government officials. The CGR staff is committed to fostering the spirit of honest communication, mutual understanding and creative collaboration with the people whose neighborhoods and concerns we share.</p>
       </div>
     </header>
 
-    <div class="landing-page-wrapper">
+    <div class="full-width-page-wrapper">
       <main role="main" {{ bem(main_base_class, (main_modifiers), main_blockname) }}>
         <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
 

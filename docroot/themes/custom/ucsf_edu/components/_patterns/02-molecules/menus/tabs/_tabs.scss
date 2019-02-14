@@ -1,3 +1,18 @@
+.nobel-card__date {
+  @include eyebrow;
+
+  margin-bottom: $space-two;
+  padding-top: $space-two;
+  line-height: 1;
+}
+
+.nobel-card__title {
+  @include heading-three;
+
+  margin: 0;
+  margin-bottom: $space-two;
+}
+
 .js-tabcontent[aria-hidden=true] {
   display: none;
 }
@@ -89,7 +104,6 @@
       margin: auto 0;
       outline: 0;
       text-decoration: none;
-      line-height: 1.1em;
 
       a {
         background-color: $white;
@@ -111,6 +125,8 @@
           background-size: 100% 100%;
           min-height: $space-eight;
           margin-right: -50px;
+          margin-top: -1px;
+          padding-bottom: $space-three;
         }
       }
     }
@@ -135,5 +151,46 @@
     background-color: $white;
     min-height: 15em;
     padding-top: 0;
+  }
+}
+
+.vertical-tab-alt {
+  .vertical-tab__title {
+    padding-right: $space-fifteen;
+    width: 40%;
+
+    li {
+      border-bottom: 1px solid $gray-lightest;
+
+      a {
+        @include heading-two;
+
+        padding: $space-four 0;
+        border-bottom: none;
+
+        &[aria-selected="true"] {
+          color: $blue;
+          border-top: 0;
+          position: relative;
+          background: url("../images/vertical-tab-highlight-alt.png") right center no-repeat $white;
+          margin-right: -$space-fifteen;
+          padding-right: $space-fifteen;
+          margin-top: 0;
+          display: block;
+        }
+      }
+
+      h2 {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  .vertical-tab__content {
+    padding: $space-seven $space-ten;
+    padding-bottom: 0;
+    background: $background-gray;
+    width: 60%;
   }
 }
