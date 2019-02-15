@@ -25,11 +25,11 @@ use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
  * migration yml itself.
  *
  * Changes made to the column configuration, or aliases, are stored in the
- * private migrate_toools private store keyed by the migration plugin id. The
+ * private migrate_tools private store keyed by the migration plugin id. The
  * data stored for each migrations consists of two arrays, the 'original' column
  * aliases and the 'updated' column aliases.
  *
- * An addtional list of all changed migration id is kept in the store, in the
+ * An additional list of all changed migration id is kept in the store, in the
  * key 'migrations_changed'
  *
  * Private Store Usage:
@@ -38,7 +38,6 @@ use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
  *   [migration_id]: The original and changed values for this column assignments
  *
  * Format of the source configuration saved in the store.
- * @code
  * migration_id
  *   original
  *     column_index1
@@ -50,22 +49,19 @@ use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
  *       property 2 => label 2
  *     column_index2
  *       property 1 => label 1
- * @endcode
  *
- * Example source configuration.
- * @code
+ * Example source configuration:
  * custom_migration
- *  original
- *   2
- *     title => title
- *   3
- *     body => foo
- *  updated
- *   8
- *     title => new_title
- *   9
- *     body => new_body
- * @endcode
+ *   original
+ *     2
+ *       title => title
+ *     3
+ *       body => foo
+ *   updated
+ *     8
+ *       title => new_title
+ *     9
+ *       body => new_body
  */
 class SourceCsvForm extends FormBase {
 

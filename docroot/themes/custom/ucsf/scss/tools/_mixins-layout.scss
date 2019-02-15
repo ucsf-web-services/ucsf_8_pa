@@ -1,0 +1,43 @@
+@mixin grid-base {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 5%;
+  grid-row-gap: 0;
+}
+
+@mixin grid {
+  @include grid-base;
+
+  @include breakpoint($bp-medium) {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+
+@mixin grid-two {
+  @include grid-base;
+
+  @include breakpoint($bp-medium) {
+    grid-template-columns: repeat(2, 1fr);
+
+    *:last-child {
+      justify-self: end;
+    }
+  }
+}
+
+@mixin grid-four {
+  @include grid-base;
+
+  @include breakpoint($bp-medium) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@mixin grid-fifteen {
+  @include grid-base;
+
+  @include breakpoint($bp-medium) {
+    grid-template-columns: repeat(15, 1fr);
+    grid-gap: 0;
+  }
+}

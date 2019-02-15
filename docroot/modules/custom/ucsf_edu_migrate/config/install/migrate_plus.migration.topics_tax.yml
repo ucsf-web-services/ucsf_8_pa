@@ -16,7 +16,7 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls:  http://ucsfpa1dev.prod.acquia-sites.com/topicsxml
+  urls: https://www.ucsf.edu/topicsxml
   item_selector: /taxonomy/terms
   fields:
     -
@@ -58,7 +58,7 @@ source:
 # destination plugin is implemented in Drupal itself.
 destination:
   plugin: entity:taxonomy_term
-  
+
   default_bundle: topics
 
 # Here's the meat of the migration - the processing pipeline. This describes how
@@ -68,19 +68,19 @@ process:
   type:
     plugin: default_value
     default_value: topics
-  
+
   name: tax_title
-  
+
   tid: tax_id
-  
+
   description/value: tax_description
 
   field_mesd_id: mesh_id
-  
+
   field_mesh_name: mesh_name
-  
+
   parent:
-    - 
+    -
       plugin: migration_lookup
       migration: topics_tax
       source: tax_parent

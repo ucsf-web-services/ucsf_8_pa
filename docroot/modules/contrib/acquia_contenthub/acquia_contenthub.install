@@ -247,3 +247,14 @@ function acquia_contenthub_update_8402() {
     $entity->delete();
   }
 }
+
+/**
+ * Set default delete_mismatching_translations to zero.
+ */
+function acquia_contenthub_update_8601() {
+  $config = \Drupal::configFactory()->getEditable('acquia_contenthub.entity_config');
+  if (!$config->get('delete_mismatching_translations')) {
+    $config->set('delete_mismatching_translations', 0);
+  }
+  $config->save();
+}

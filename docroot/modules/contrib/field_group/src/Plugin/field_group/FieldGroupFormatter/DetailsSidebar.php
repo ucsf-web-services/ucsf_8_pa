@@ -26,12 +26,10 @@ class DetailsSidebar extends Details {
   /**
    * {@inheritdoc}
    */
-  public function preRender(&$element, $rendering_object) {
-    parent::preRender($element, $rendering_object);
+  public function process(&$element, $processed_object) {
+    parent::process($element, $processed_object);
 
-    $element += [
-      '#group' => 'advanced',
-    ];
+    $element['#group'] = 'advanced';
   }
 
   /**

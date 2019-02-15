@@ -1,0 +1,6 @@
+{% extends 'field.html.twig' %}
+{% block multiple_item_no_label %}
+  {% for item in items %}
+    <li{{ item.attributes.addClass('tags-menu__item') }}>{{ item.content }}</li>
+  {% endfor %}
+{% endblock multiple_item_no_label %}

@@ -141,6 +141,19 @@ class ContentHubExportQueueForm extends ConfigFormBase {
       '#default_value' => !empty($export_queue_waiting_time) ? $export_queue_waiting_time : 5,
     ];
 
+    if ($queue_count > 0) {
+      $form['export_queue_configuration']['purge_queue'] = [
+        '#type' => 'item',
+        '#title' => $this->t('Purge existing queues'),
+        '#description' => $this->t('Its possible an existing queue has becomed orphaned, use this function to wipe all existing queues'),
+      ];
+      $form['export_queue_configuration']['purge'] = [
+        '#type' => 'submit',
+        '#value' => t('Purge'),
+        '#name' => 'purge_export_queue',
+      ];
+    }
+
     $form['run_export_queue'] = [
       '#type' => 'details',
       '#title' => $this->t('Run Export Queue'),
@@ -187,27 +200,32 @@ class ContentHubExportQueueForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $queue_count = intval($this->exportQueueController->getQueueCount());
     $trigger = $form_state->getTriggeringElement();
-    if ($trigger['#name'] === 'run_export_queue') {
-      if (!empty($queue_count)) {
-        $number_of_items = $form_state->getValues()['number_of_items'];
-        $this->exportQueueController->processQueueItems($number_of_items);
-      }
-      else {
-        drupal_set_message($this->t('You cannot run the export queue because it is empty.'), 'warning');
-      }
-    }
-    else {
-      $config = $this->configFactory->getEditable('acquia_contenthub.entity_config');
-      $export_with_queue = $form_state->getValue('export_with_queue');
-      $export_queue_entities_per_item = $form_state->getValue('entities_per_item');
-      $export_queue_batch_size = $form_state->getValue('batch_size');
-      $export_queue_waiting_time = $form_state->getValue('waiting_time');
-      $config->set('export_with_queue', $export_with_queue);
-      $config->set('export_queue_entities_per_item', $export_queue_entities_per_item);
-      $config->set('export_queue_batch_size', $export_queue_batch_size);
-      $config->set('export_queue_waiting_time', $export_queue_waiting_time);
-      $config->save();
+    switch ($trigger['#name']) {
+      case 'run_export_queue':
+        if (!empty($queue_count)) {
+          $number_of_items = $form_state->getValues()['number_of_items'];
+          $this->exportQueueController->processQueueItems($number_of_items);
+        }
+        else {
+          drupal_set_message($this->t('You cannot run the export queue because it is empty.'), 'warning');
+        }
+        break;
+      case 'purge_export_queue':
+        $this->exportQueueController->purgeQueue();
+        drupal_set_message($this->t("Purged all contenthub export queues."));
+        break;
+      default:
+        $config = $this->configFactory->getEditable('acquia_contenthub.entity_config');
+        $export_with_queue = $form_state->getValue('export_with_queue');
+        $export_queue_entities_per_item = $form_state->getValue('entities_per_item');
+        $export_queue_batch_size = $form_state->getValue('batch_size');
+        $export_queue_waiting_time = $form_state->getValue('waiting_time');
+        $config->set('export_with_queue', $export_with_queue);
+        $config->set('export_queue_entities_per_item', $export_queue_entities_per_item);
+        $config->set('export_queue_batch_size', $export_queue_batch_size);
+        $config->set('export_queue_waiting_time', $export_queue_waiting_time);
+        $config->save();
+        break;
     }
   }
-
 }

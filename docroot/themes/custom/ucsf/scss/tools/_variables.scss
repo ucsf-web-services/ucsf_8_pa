@@ -1,0 +1,127 @@
+// Breakpoints.
+// Documentation: http://breakpoint-sass.com/
+//------------------------------------------------------------------------------
+
+$bp-until-large: max-width 1023px;
+$bp-xs: 320px;
+$bp-small: 480px;
+$bp-medium: 600px;
+$bp-large: 1024px;
+$bp-page-narrow: 1050px;
+$bp-xl: 1280px;
+$bp-full: 1440px;
+$bp-main-menu-medium: 43em;
+
+// Colors
+//------------------------------------------------------------------------------
+
+$c-navy: #052049;
+$c-dark-navy: #121a31;
+$c-teal: #058488;
+$c-green: #6ea400;
+$c-blue: #007cbe;
+$orange: #f26d04;
+$c-purple: #716fb2;
+$c-red: #eb093c;
+$c-yellow: #fd0;
+
+$c-black: #000;
+$c-white: #fff;
+$c-near-white: #efefef;
+$c-gray-lightest: #ddd;
+$c-gray-lighter: #d1d3d3;
+$c-gray-light: #b4b9bf;
+$c-near-medium: #939393;
+$c-gray: #333;
+$c-gray-dark: #666;
+$c-gray-darker: #525860;
+$c-gray-blue: #506380;
+$c-background-gray: #f2f4f6;
+
+$c-print-blue: #178ccb;
+$c-print-teal: #18a3ac;
+$c-print-green: #90bd31;
+$c-print-orange: #f48024;
+$c-print-red: #ec1848;
+
+// @todo Get all these values.
+$areas: (
+  ("about", $c-blue, $c-print-blue),
+  ("patient-care", $c-teal, $c-print-teal),
+  ("research", $c-blue, $c-print-blue),
+  ("news-center", $c-red, $c-print-red)
+);
+
+// Font Families
+//------------------------------------------------------------------------------
+
+$fa-font-path: "../fonts/fontawesome/webfonts", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+$font-helvetica-neue-light: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+$font-helvetica-neue-roman: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+$font-helvetica-neue-medium: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+$font-helvetica-neue-bold: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+$font-granjon: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
+$font-helvetica-neue-regular: $font-helvetica-neue-roman;
+
+// Font Weights
+//------------------------------------------------------------------------------
+
+$fw-light: 200;
+$fw-book: 300;
+$fw-medium: 500;
+$fw-bold: 700;
+
+// Grid
+//------------------------------------------------------------------------------
+
+$grid-container: 1400px;
+$grid-columns: 12;
+$grid-column-gap: 33.818181818px; // ((1400-(34*2))-(80*12))/11 = 33.818181818
+$grid-row-gap: 40px;
+$grid-gutter: $grid-row-gap $grid-column-gap;
+$grid-gutter-susy: $grid-column-gap;
+
+// Grid Debugging
+//------------------------------------------------------------------------------
+
+// Setting $grid-debug to true shows the grid lines via @page-container.
+$grid-debug: false;
+// Setting $grid-disable disables grid to test fallbacks.
+$grid-disable: false;
+
+// Susy Layouts
+//------------------------------------------------------------------------------
+
+$susy: (
+  'svg-grid-colors': hsl(180, 50%, 80%),
+  'columns': susy-repeat($grid-columns),
+  'gutters': $grid-gutter-susy,
+  'container-spread': 'wider'
+);
+$susy-narrow: (
+  'columns': susy-repeat(($grid-columns - 2)),
+  'gutters': $grid-gutter-susy,
+  'container-spread': 'narrow'
+);
+$susy-two: (
+  'columns': susy-repeat(2),
+  'gutters': 0,
+  'container-spread': 'narrow'
+);
+$susy-three: (
+  'columns': susy-repeat(3),
+  'gutters': 0,
+  'container-spread': 'narrow'
+);
+$susy-four: (
+  'columns': susy-repeat(4),
+  'gutters': 0,
+  'container-spread': 'narrow'
+);
+
+// Z-indices
+//------------------------------------------------------------------------------
+
+$z-footer: 500;
+$z-dropdown: 600;
+$z-top: 700;

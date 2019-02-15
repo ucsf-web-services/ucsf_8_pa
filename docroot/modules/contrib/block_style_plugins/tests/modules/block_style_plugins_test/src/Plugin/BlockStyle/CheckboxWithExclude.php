@@ -19,14 +19,14 @@ class CheckboxWithExclude extends BlockStyleBase {
   /**
    * {@inheritdoc}
    */
-  public function defaultStyles() {
+  public function defaultConfiguration() {
     return ['checkbox_class' => ''];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function formElements($form, FormStateInterface $form_state) {
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     // Checkboxes are do not apply a class automatically like other form
     // elements. Instead, they simply pass a boolean value that can be accessed
     // inside a Twig template like:
@@ -34,7 +34,7 @@ class CheckboxWithExclude extends BlockStyleBase {
     $elements['checkbox_class'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Check this box to pass a boolean to the theme'),
-      '#default_value' => $this->styles['checkbox_class'],
+      '#default_value' => $this->configuration['checkbox_class'],
     ];
 
     return $elements;

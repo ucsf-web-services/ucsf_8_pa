@@ -1,0 +1,17 @@
+{% embed "@templates/_news-package.twig" with {
+  menu_items: header.menu_items,
+  footer_menu_items: footer.menu_items,
+} %}
+
+  {% block page_content %}
+
+    {% include "@molecules/menus/share/share.twig" %}
+
+    <div class="page_narrow">
+      {% include "@organisms/card-grid/news-row-card-grid.twig" %}
+    </div>
+
+  {% endblock %}
+
+
+{% endembed %}

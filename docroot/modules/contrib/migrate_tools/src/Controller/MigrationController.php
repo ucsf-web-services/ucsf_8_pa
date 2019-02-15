@@ -211,6 +211,9 @@ class MigrationController extends ControllerBase implements ContainerInjectionIn
       $row = [];
       $row[] = ['data' => Html::escape($destination_id)];
       if (isset($process_line[0]['source'])) {
+        if (is_array($process_line[0]['source'])) {
+          $process_line[0]['source'] = implode(', ', $process_line[0]['source']);
+        }
         $row[] = ['data' => Xss::filterAdmin($process_line[0]['source'])];
       }
       else {

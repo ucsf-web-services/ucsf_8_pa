@@ -1,0 +1,15 @@
+{% set classes = [ 'article-feature-banner'] %}
+
+<div{{ attributes.addClass(classes) }}>
+  <figure class="article-feature-banner-image">
+    {{ content.field_banner_image }}
+  </figure>
+
+  <header class="article-header article-feature-header">
+    {% include '@theme/banner/banner-content.twig' %}
+  </header>
+</div>
+<div class="main-content article-feature-content narrow-page">
+  {% include "@theme/share/share.twig" %}
+  {% include "@theme/article/article-body.twig" %}
+</div>

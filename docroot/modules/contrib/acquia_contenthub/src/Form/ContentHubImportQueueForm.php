@@ -96,6 +96,7 @@ class ContentHubImportQueueForm extends ConfigFormBase {
     $wait_time = [3, 5, 10, 15, 30];
     $wait_time = array_combine($wait_time, $wait_time);
 
+    // @todo remove import_queue_wait_time, not used anywhere.
     $form['import_queue_configuration']['wait_time'] = [
       '#type' => 'select',
       '#options' => $wait_time,

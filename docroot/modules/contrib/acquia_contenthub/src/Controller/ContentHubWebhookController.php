@@ -71,6 +71,13 @@ class ContentHubWebhookController extends ControllerBase {
   protected $config;
 
   /**
+   * The Content Hub reindex service.
+   *
+   * @var \Drupal\acquia_contenthub\Controller\ContentHubReindex
+   */
+  protected $contentHubReindex;
+
+  /**
    * WebhooksSettingsForm constructor.
    *
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
@@ -85,14 +92,17 @@ class ContentHubWebhookController extends ControllerBase {
    *   The Drupal Module Handler.
    * @param \Drupal\acquia_contenthub\ContentHubSubscription $contenthub_subscription
    *   The Content Hub Subscription.
+   * @param \Drupal\acquia_contenthub\Controller\ContentHubReindex $contentHubReindex
+   *   The Content Hub Reindex service.
    */
-  public function __construct(LoggerChannelFactoryInterface $logger_factory, Request $current_request, ConfigFactoryInterface $config_factory, ClientManagerInterface $client_manager, ModuleHandlerInterface $module_handler, ContentHubSubscription $contenthub_subscription) {
+  public function __construct(LoggerChannelFactoryInterface $logger_factory, Request $current_request, ConfigFactoryInterface $config_factory, ClientManagerInterface $client_manager, ModuleHandlerInterface $module_handler, ContentHubSubscription $contenthub_subscription, ContentHubReindex $contentHubReindex) {
     $this->loggerFactory = $logger_factory;
     $this->request = $current_request;
     $this->configFactory = $config_factory;
     $this->clientManager = $client_manager;
     $this->moduleHandler = $module_handler;
     $this->contentHubSubscription = $contenthub_subscription;
+    $this->contentHubReindex = $contentHubReindex;
     // Get the content hub config settings.
     $this->config = $this->configFactory->get('acquia_contenthub.admin_settings');
   }
@@ -101,86 +111,77 @@ class ContentHubWebhookController extends ControllerBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    /** @var \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory */
-    $logger_factory = $container->get('logger.factory');
-    /** @var \Symfony\Component\HttpFoundation\Request $current_request */
-    $current_request = $container->get('request_stack')->getCurrentRequest();
-    /** @var \Drupal\Core\Config\ConfigFactoryInterface $config_factory */
-    $config_factory = $container->get('config.factory');
-    /** @var \Drupal\acquia_contenthub\Client\ClientManagerInterface $client_manager */
-    $client_manager = $container->get('acquia_contenthub.client_manager');
-    /** @var \Drupal\Core\Extension\ModuleHandlerInterface $module_handler */
-    $module_handler = $container->get('module_handler');
-    /** @var \Drupal\acquia_contenthub\ContentHubSubscription $contenthub_subscription */
-    $contenthub_subscription = $container->get('acquia_contenthub.acquia_contenthub_subscription');
-
     return new static(
-      $logger_factory,
-      $current_request,
-      $config_factory,
-      $client_manager,
-      $module_handler,
-      $contenthub_subscription
+      $container->get('logger.factory'),
+      $container->get('request_stack')->getCurrentRequest(),
+      $container->get('config.factory'),
+      $container->get('acquia_contenthub.client_manager'),
+      $container->get('module_handler'),
+      $container->get('acquia_contenthub.acquia_contenthub_subscription'),
+      $container->get('acquia_contenthub.acquia_contenthub_reindex')
     );
   }
 
   /**
    * Process a webhook.
    *
-   * @return \Acquia\ContentHubClient\ResponseSigner|\Symfony\Component\HttpFoundation\Response
-   *   The response object.
+   * @return \Acquia\ContentHubClient\hmacv1\ResponseSigner|null|\Symfony\Component\HttpFoundation\Response
+   *   The response object or null.
    */
   public function receiveWebhook() {
     // Obtain the headers.
-    $request = Request::createFromGlobals();
-    $webhook = $request->getContent();
+    $webhook = $this->request->getContent();
     $response = NULL;
+    $logger = $this->loggerFactory->get('acquia_contenthub');
 
-    if ($this->validateWebhookSignature($request)) {
-      // Notify about the arrival of the webhook request.
-      $args = [
-        '@whook' => print_r($webhook, TRUE),
+    if (!$this->validateWebhookSignature($this->request)) {
+      $ip_address = $this->request->getClientIp();
+      $logger->debug('Webhook [from IP = @IP] rejected (Signatures do not match): @whook',
+        [
+          '@IP' => $ip_address,
+          '@whook' => print_r($webhook, TRUE),
+        ]);
+
+      return new Response('');
+    }
+
+    $log_msg = 'Webhook landing: ';
+    $context = ['@webhook' => print_r($webhook, TRUE)];
+
+    if ($webhook = Json::decode($webhook)) {
+      $log_msg .= '(Request ID: @request_id - Entity: @uuid.) ';
+      $context += [
+        '@request_id' => $webhook['requestid'],
+        '@uuid' => $webhook['uuid'],
       ];
-      $message = new FormattableMarkup('Webhook landing: @whook', $args);
-      $this->loggerFactory->get('acquia_contenthub')->debug($message);
 
-      if ($webhook = Json::decode($webhook)) {
-        // Verification process successful!
-        // Now we can process the webhook.
-        if (isset($webhook['status'])) {
-          switch ($webhook['status']) {
-            case 'successful':
-              $response = $this->processWebhook($webhook);
-              break;
+      // Verification process successful!
+      // Now we can process the webhook.
+      if (isset($webhook['status'])) {
+        switch ($webhook['status']) {
+          case 'successful':
+            $response = $this->processWebhook($webhook);
+            break;
 
-            case 'pending':
-              $response = $this->registerWebhook($webhook);
-              break;
+          case 'pending':
+            $response = $this->registerWebhook($webhook);
+            break;
 
-            case 'shared_secret_regenerated':
-              $response = $this->updateSharedSecret($webhook);
-              break;
+          case 'shared_secret_regenerated':
+            $response = $this->updateSharedSecret($webhook);
+            break;
 
-            default:
-              // If any other webhook we are not processing then just display
-              // the response.
-              $response = new Response('');
-              break;
+          default:
+            // If any other webhook we are not processing then just display
+            // the response.
+            $response = new Response('');
+            break;
 
-          }
         }
       }
-
     }
-    else {
-      $ip_address = $this->request->getClientIp();
-      $message = new FormattableMarkup('Webhook [from IP = @IP] rejected (Signatures do not match): @whook', [
-        '@IP' => $ip_address,
-        '@whook' => print_r($webhook, TRUE),
-      ]);
-      $this->loggerFactory->get('acquia_contenthub')->debug($message);
-      $response = new Response('');
-    }
+    // Notify about the arrival of the webhook request.
+    $logger->debug($log_msg . '@webhook', $context);
 
     return $response;
   }
@@ -304,7 +305,7 @@ class ContentHubWebhookController extends ControllerBase {
    * @param array $webhook
    *   The webhook coming from Plexus.
    *
-   * @return \Acquia\ContentHubClient\ResponseSigner|\Symfony\Component\HttpFoundation\Response
+   * @return \Acquia\ContentHubClient\hmacv1\ResponseSigner|\Symfony\Component\HttpFoundation\Response
    *   The Response.
    */
   public function registerWebhook(array $webhook) {
@@ -343,10 +344,8 @@ class ContentHubWebhookController extends ControllerBase {
    */
   private function processReindexWebhook(array $webhook) {
     // Update the Reindex State Variable.
-    /** @var \Drupal\acquia_contenthub\Controller\ContentHubReindex $reindex */
-    $reindex = \Drupal::service('acquia_contenthub.acquia_contenthub_reindex');
-    if ($reindex->isReindexSent()) {
-      $reindex->setReindexStateFinished();
+    if ($this->contentHubReindex->isReindexSent()) {
+      $this->contentHubReindex->setReindexStateFinished();
     }
   }
 

@@ -5,6 +5,7 @@ namespace Drupal\Tests\datetime_range\Kernel\Views;
 use Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\node\Entity\Node;
+use Drupal\Tests\datetime\Kernel\Views\DateTimeHandlerTestBase;
 use Drupal\views\Views;
 
 /**
@@ -12,7 +13,19 @@ use Drupal\views\Views;
  *
  * @group datetime
  */
-class FilterDateTest extends DateRangeHandlerTestBase {
+class FilterDateTest extends DateTimeHandlerTestBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static $modules = ['datetime_test', 'node', 'datetime_range', 'field'];
+
+  /**
+   * Type of the field.
+   *
+   * @var string
+   */
+  protected static $field_type = 'daterange';
 
   /**
    * {@inheritdoc}
@@ -34,21 +47,15 @@ class FilterDateTest extends DateRangeHandlerTestBase {
     parent::setUp($import_test_views);
 
     // Set to 'today'.
-    static::$date = \Drupal::time()->getRequestTime();
+    static::$date = $this->getUTCEquivalentOfUserNowAsTimestamp();
 
     // Change field storage to date-only.
     $storage = FieldStorageConfig::load('node.' . static::$field_name);
     $storage->setSetting('datetime_type', DateRangeItem::DATETIME_TYPE_DATE);
     $storage->save();
 
-    $dates = [
-      // Tomorrow.
-      \Drupal::service('date.formatter')->format(static::$date + 86400, 'custom', DATETIME_DATE_STORAGE_FORMAT, DATETIME_STORAGE_TIMEZONE),
-      // Today.
-      \Drupal::service('date.formatter')->format(static::$date, 'custom', DATETIME_DATE_STORAGE_FORMAT, DATETIME_STORAGE_TIMEZONE),
-      // Yesterday.
-      \Drupal::service('date.formatter')->format(static::$date - 86400, 'custom', DATETIME_DATE_STORAGE_FORMAT, DATETIME_STORAGE_TIMEZONE),
-    ];
+    // Retrieve tomorrow, today and yesterday dates.
+    $dates = $this->getRelativeDateValuesFromTimestamp(static::$date);
 
     // Node 0: Yesterday - Today.
     $node = Node::create([

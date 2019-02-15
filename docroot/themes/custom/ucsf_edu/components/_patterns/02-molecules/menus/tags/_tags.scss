@@ -1,0 +1,45 @@
+.tags-menu-region {
+  background: $white;
+  grid-column: 3 / -3;
+  padding: $space-decuple 11%;
+  padding-top: $space-quadruple;
+}
+
+.tags-menu__title {
+  @include eyebrow;
+
+  display: inline-block;
+}
+
+.tags-menu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline-block;
+
+  .tags-menu__item {
+    display: inline-block;
+    font-size: $font-size-sm;
+    font-family: $font-helvetica-neue-medium;
+
+    &::before {
+      content: ' ';
+      display: inline-block;
+      height: 3px;
+      width: 3px;
+      background: $gray-blue;
+      margin: 0 10px 3px 7px;
+      border-radius: 50%;
+    }
+
+    &:first-child {
+      &::before {
+        display: none;
+      }
+    }
+
+    a {
+      @include link-color;
+    }
+  }
+}

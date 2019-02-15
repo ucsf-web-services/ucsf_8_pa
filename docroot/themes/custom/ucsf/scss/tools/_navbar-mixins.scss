@@ -1,0 +1,149 @@
+$desktop: $bp-large;
+
+@mixin dropdown { // Apply to .menu-item--expanded
+  position: relative;
+
+  // Level Two.
+  ul {
+    @include open-transition;
+    left: 0;
+    text-align: left;
+    display: none;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 3.5px 4px;
+    position: absolute;
+    top: calc(50% + 18px);
+    width: 245px;
+    z-index: z(dropdown);
+    margin-top: 0;
+  }
+
+  &:hover ul {
+    display: flex;
+    flex-flow: column wrap;
+    max-width: 234px;
+    height: auto;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  // Links
+  li {
+    display: block;
+    margin: 0;
+  }
+
+  li a {
+    background: $c-orange;
+    display: block;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+    padding: 10px 17px;
+    text-transform: none;
+    width: 100%;
+    background-color: $c-white;
+    line-height: 18px;
+    border-bottom: 0;
+    color: $c-textgrey;
+
+    .has-hero-home & {
+      color: $c-textgrey;
+    }
+
+    &:hover {
+      text-decoration: none;
+      background-color: $c-grey-lighter;
+    }
+  }
+}
+
+// todo: refactor this one, is intended for use in mobile.
+@mixin open-transition {
+  height: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease-in, height 0.2s ease-in;
+  visibility: hidden;
+
+  &.open {
+    height: auto;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// Apply to <ul> tag.
+@mixin ul-menu {
+  &.menu {
+    list-style: none;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-top: -1px;
+    padding-left: 0;
+
+    @supports (display: flex) {
+      display: flex;
+      flex-direction: row;
+    }
+
+    li {
+      list-style: none;
+    }
+  }
+}
+
+@mixin main-menu-underline {
+  position: relative;
+
+  &::after {
+    content: "";
+    background: $c-orange;
+    position: absolute;
+
+    @include breakpoint($bp-until-narrow) {
+      display: none;
+    }
+
+    @include breakpoint($bp-large) {
+      height: 3px;
+      bottom: 12px;
+      left: 6.5px;
+      right: 6.5px;
+    }
+
+    @include breakpoint($medium-screen) {
+      left: 8.25px;
+      right: 8.25px;
+    }
+
+    @include breakpoint($large-screen) {
+      left: 12px;
+      right: 12px;
+    }
+  }
+}
+
+@mixin utility-menu-underline {
+  position: relative;
+
+  &::after {
+    content: "";
+    background: $c-orange;
+    position: absolute;
+
+    @include breakpoint($bp-until-narrow) {
+      display: none;
+    }
+
+    @include breakpoint($bp-large) {
+      height: 3px;
+      bottom: -5px;
+      left: 6.5px;
+      right: 6.5px;
+    }
+
+    @include breakpoint($large-screen) {
+      left: 12px;
+      right: 12px;
+    }
+  }
+}

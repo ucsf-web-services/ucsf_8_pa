@@ -1,0 +1,75 @@
+// A
+.main-menu__item a {
+  color: $gray-dark;
+  display: block;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  padding: $space $space-triple $space $space-double;
+  text-decoration: none;
+  font-weight: bold;
+
+  &--with-sub {
+    width: 80%;
+  }
+
+  @include breakpoint($main-menu-medium) {
+    border-bottom: none;
+    color: $gray-blue;
+    display: inline-block;
+    font-size: $font-size-sm;
+    padding: $space 0;
+    margin: 0 $space-five;
+    text-transform: none;
+    position: relative;
+    width: auto;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    height: $space-octuple;
+    padding-right: 0;
+    margin-right: 0;
+
+    &.active,
+    &:active,
+    &:hover {
+      color: $gray-blue !important;
+      background: $white;
+      border-bottom: 4px solid $blue;
+    }
+
+    &--sub::after {
+      display: none;
+    }
+
+    &:hover {
+      color: $white;
+
+      &::after {
+        color: $gray-light;
+      }
+    }
+  }
+}
+
+//
+// Sub Navigation Links
+//
+// A (Nested)
+.main-menu__link--sub {
+  color: $gray-dark;
+  padding-left: $space-triple;
+  font-weight: normal;
+
+  @include breakpoint($main-menu-medium) {
+    color: $gray-light;
+    display: block;
+    padding: $space-one-third $space;
+  }
+}
+
+.main-menu--sub-2 {
+  background-color: $gray-lightest;
+}
+
+.main-menu__link--sub-2 {
+  padding-left: $space-quadruple;
+}

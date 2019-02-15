@@ -1,0 +1,248 @@
+@mixin background-image($file-name, $position, $color) {
+  background: url('/themes/custom/evolve/assets/images/#{$file-name}') no-repeat $position $color;
+}
+
+@mixin button {
+  background-color: transparent;
+  color: $navy;
+  border: 2px solid $navy;
+  border-radius: $space-four;
+  cursor: pointer;
+  line-height: 1.4;
+  padding: 1em 1.5em;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  font-family: $font-helvetica-neue-medium;
+  min-height: $space-eight;
+
+  &:hover {
+    background-color: $blue;
+    color: $white;
+    border-color: $blue;
+  }
+}
+
+@mixin button-alt {
+  @include button;
+
+  border-color: $blue;
+  color: $blue;
+}
+
+@mixin button-alt-2 {
+  @include button;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: none;
+}
+
+@mixin clearfix {
+  &::after {
+    clear: both;
+    content: " ";
+    display: table;
+  }
+}
+
+@mixin clearfix-before {
+  &::before {
+    clear: both;
+    content: " ";
+    display: table;
+  }
+}
+
+@mixin clearreset {
+  &::after {
+    clear: none;
+    content: none;
+    display: inherit;
+  }
+}
+
+// use the fordward slash if f is present.
+@mixin fa-icon-before($icon-code: '', $color: $c-blue) {
+  &::before {
+    margin-right: 5px;
+    color: $color;
+    content: '#{$icon-code}';
+    font-family: 'Font Awesome 5 Free';
+  }
+}
+
+// Link mixin
+// @param {color} $normal - normal color
+// @param {color} $hover  - hover
+// @param {color} $active - active
+// @param {color} $focus - focus
+@mixin link-colors($normal, $hover: false, $active: false, $visited: false, $focus: false) {
+  &:link {
+    color: $normal;
+  }
+
+  @if $visited {
+    &:visited,
+    &:link:visited {
+      color: $visited;
+    }
+  }
+
+  @else {
+    &:visited,
+    &:link:visited {
+      color: $normal;
+    }
+  }
+
+  @if $focus {
+    &:focus {
+      color: $focus;
+    }
+  }
+
+  @else {
+    &:focus {
+      color: $normal;
+    }
+  }
+
+  @if $hover {
+    &.active:hover,
+    &.is-active:hover,
+    &.active-trail:hover,
+    &.visited:hover,
+    &:hover {
+      color: $hover;
+    }
+  }
+
+  @if $active {
+    &.is-active,
+    &:active,
+    &.active-trail {
+      color: $active;
+    }
+  }
+
+  @else {
+    &.is-active,
+    &:active,
+    &.active-trail {
+      color: $normal;
+    }
+  }
+}
+
+@mixin link-text {
+  @include link-colors($c-blue);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+@mixin tables {
+  .table-wrapper-responsive {
+    overflow: scroll;
+
+    @include breakpoint($bp-large) {
+      overflow: auto;
+    }
+  }
+
+  // Tables
+  table,
+  td,
+  th {
+    border: 1px solid $c-beige;
+  }
+
+  table {
+    margin-bottom: 50px;
+    width: 100%;
+  }
+
+  th,
+  .table-header {
+    font-size: 15px;
+    line-height: 18px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  td,
+  th {
+    padding: 6px;
+    vertical-align: top;
+  }
+}
+
+@mixin transition {
+  transition: .3s ease-out all;
+}
+
+// Normal List Styles
+@mixin ul-text {
+  ul,
+  ol {
+    li {
+      line-height: 22px;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+// Remove all ul-styling from .item-list.
+@mixin ul-item-list-reset {
+  margin: 0;
+
+  ul {
+    margin: 0 0 13px 0;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  ul,
+  li {
+    line-height: inherit;
+    list-style: none;
+    padding: 0;
+  }
+}
+
+// Apply to <ul> tag.
+@mixin ul-menu {
+  &.menu {
+    list-style: none;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-top: -1px;
+    padding-left: 0;
+
+    li {
+      list-style: none;
+    }
+  }
+}
+
+@mixin visually-hidden {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  overflow: hidden;
+  height: 1px;
+  width: 1px;
+  word-wrap: normal;
+}
+
+/// Mixin - Wrapper
+/// Outer container mixin for large screens
+@mixin wrapper($container-max-width: $bp-full, $outer-container-break: $bp-small, $v-margin: 0, $v-padding: 0, $h-padding: $space, $h-padding-large: $h-padding) {
+  max-width: #{$container-max-width};
+  width: 100%;
+  margin: #{$v-margin} auto;
+}

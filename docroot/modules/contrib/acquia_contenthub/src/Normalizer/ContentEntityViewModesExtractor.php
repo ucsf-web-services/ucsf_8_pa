@@ -12,12 +12,12 @@ use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Session\AccountSwitcherInterface;
 use Drupal\Core\Url;
-use Drupal\image\Entity\ImageStyle;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Drupal\acquia_contenthub\ContentHubSubscription;
 use Drupal\acquia_contenthub\Session\ContentHubUserSession;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Drupal\Component\Render\FormattableMarkup;
 
 /**
  * Extracts the rendered view modes from a given ContentEntity Object.
@@ -227,6 +227,7 @@ class ContentEntityViewModesExtractor implements ContentEntityViewModesExtractor
       if (!in_array($view_mode_id, $configured_view_modes)) {
         continue;
       }
+      $view_mode_label = ($view_mode_label instanceof FormattableMarkup) ? $view_mode_label->render() : $view_mode_label;
       // Generate our URL where the isolated rendered view mode lives.
       // This is the best way to really make sure the content in Content Hub
       // and the content shown to any user is 100% the same.
@@ -338,7 +339,7 @@ class ContentEntityViewModesExtractor implements ContentEntityViewModesExtractor
     // Render View Mode.
     $entity_type_id = $object->getEntityTypeId();
     $use_block_content_view_builder = $this->config->get('acquia_contenthub.entity_config')->get('use_block_content_view_builder');
-    if ($entity_type_id === 'block_content' && !$use_block_content_view_builder) {
+    if ($entity_type_id === 'block_content' && $use_block_content_view_builder) {
       $build = $this->getBlockMinimalBuildArray($object, $view_mode);
     }
     else {

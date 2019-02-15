@@ -16,14 +16,14 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: http://ucsfpa1dev.prod.acquia-sites.com/newsxml
+  urls: public://news_xml_feed.xml
   item_selector: /nodes/node
-  
-# unique identifier needs to be an integer 
+
+# unique identifier needs to be an integer
   ids:
     nid:
       type: integer
-  
+
   fields:
     -
       name: nid
@@ -49,6 +49,10 @@ source:
       name: areas_tax
       label: 'news primary area tax'
       selector: Areas
+    -
+      name: areas_tax_2
+      label: 'news secondary area tax'
+      selector: Second-Areas-EXCLUDED
     -
       name: article_type_tax
       label: 'news article type tax'
@@ -88,7 +92,7 @@ source:
     -
       name: hbox
       label: 'news headline box'
-      selector: headline_box  
+      selector: headline_box
     -
       name: tags_tax
       label: 'news tags tax'
@@ -96,7 +100,7 @@ source:
     -
       name: exclude_tax
       label: 'news exclude tax'
-      selector: exclude   
+      selector: exclude
     -
       name: featured_image
       label: 'path to the featured image'
@@ -105,7 +109,19 @@ source:
       name: bool_explore
       label: 'boolean for explore ucsf news'
       selector: bool_explore
-      
+    -
+      name: cus_author
+      label: 'the custom byline for the ucsf news'
+      selector: Custom-Byline
+    -
+      name: pub_date
+      label: 'the published date of the news'
+      selector: Post-date
+    -
+      name: uid
+      label: 'Id of the account that authored the content'
+      selector: Author-uid
+
   constants:
     file_directory: public://
 
@@ -118,7 +134,7 @@ source:
 # destination plugin is implemented in Drupal itself.
 destination:
   plugin: entity:node
-  
+
   default_bundle: article
 
 # Here's the meat of the migration - the processing pipeline. This describes how
@@ -128,41 +144,69 @@ process:
   type:
     plugin: default_value
     default_value: article
-  
+
   title: news_title
-  
+
   body/value: body
   body/format:
     plugin: default_value
     default_value: full_html
-  
-  field_areas:
+
+  field_primary_area:
     -
       plugin: skip_on_empty
       method: process
       source: areas_tax
       message: 'there was an empty field'
     -
+      plugin: data_lookup
+      source: areas_tax
+      file: public://area_tax_map.csv
+    -
       plugin: explode
       source: areas_tax
       delimiter: ','
-      
+
+  uid: uid
+
+  field_date: pub_date
+
+  field_date_and_time: pub_date
+
+#  created: pub_date
+#  changed: pub_date
+
+  field_areas:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: areas_tax_2
+      message: 'there was an empty field'
+#    -
+#      plugin: data_lookup
+#      source: areas_tax_2
+#      file: public://area_tax_map.csv
+    -
+      plugin: explode
+      source: areas_tax_2
+      delimiter: ','
+
   field_article_type:
     -
       plugin: skip_on_empty
       method: process
       source: article_type_tax
       message: 'there was an empty field'
-      
-  field_sub_title: subtitle  
-  
+
+  field_sub_title: subtitle
+
   field_locations:
     -
       plugin: skip_on_empty
       method: process
       source: loc_tax
-      message: 'there was an empty field' 
-  
+      message: 'there was an empty field'
+
   field_organizations:
     -
       plugin: skip_on_empty
@@ -172,63 +216,68 @@ process:
     -
       plugin: explode
       source: orgs_tax
-      delimiter: ','     
-  
+      delimiter: ','
+
   field_people:
     -
       plugin: skip_on_empty
       method: process
       source: people_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: people_tax
-      delimiter: ',' 
-  
+      delimiter: ','
+
   field_topics:
     -
       plugin: skip_on_empty
       method: process
       source: topics_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: topics_tax
-      delimiter: ',' 
-  
+      delimiter: ','
+
   field_author_type:
     -
       plugin: skip_on_empty
       method: process
       source: author_type_tax_id
       message: 'there was an empty field'
-      
+
   field_tags:
     -
       plugin: skip_on_empty
       method: process
       source: tags_tax
       message: 'there was an empty field'
-  
+    -
+      plugin: explode
+      source: tags_tax
+      delimiter: ','
+
   field_exclude:
     -
       plugin: skip_on_empty
       method: process
       source: exclude_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: exclude_tax
-      delimiter: ',' 
+      delimiter: ','
     -
-      plugin: entity_generate  
+      plugin: entity_generate
       source: exclude_tax
       entity_type: taxonomy_term
-  
+
+
 #  HEADLINE BOX TBD DESTINATION FIELD: hbox
 
-#  BOOLEAN EXLPORE TBD DESTINATION FIELD: bool_expore  
-  
+#  BOOLEAN EXLPORE TBD DESTINATION FIELD: bool_expore
+
 #  FEATURED IMAGE TBD DESTINATION FILED:
 #   -
 #     plugin: skip_on_empty
@@ -252,15 +301,86 @@ process:
 #   source:
 #     - 'constants/file_directory'
 #     - '@destination_basename'
-      
-  field_author_byline: 
+
+#  field_author_byline:
+#    -
+#      plugin: testingbase
+#      para_type: author
+#      fields:
+#        -
+#          field_a_author: author
+
+  field_author:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: author
+      message: 'there was an empty field'
+
+  field_custom_author:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: cus_author
+      message: 'there was an empty field'
+    -
+      plugin: data_lookup
+      source: '@lookupval'
+      file: public://authormap.csv
+
+  lookupval:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: cus_author
+      message: 'there was an empty field'
+    -
+      plugin: data_condense
+      source: cus_author
+
+  cus_author_val:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: cus_author
+      message: 'there was an empty field'
+    -
+      plugin: data_lookup
+      source: '@lookupval'
+      file: public://authormap.csv
+
+  field_author_byline:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: cus_author
+      message: 'there was an empty field'
     -
       plugin: testingbase
-      para_type: author
-      fields: 
+      para_type: custom_author
+      fields:
         -
-          field_a_author: author
-  
+          field_c_author: '@cus_author_val'
+
+  field_featured_image_video:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: gallery
+      message: 'there was an empty field'
+    -
+      plugin: testingbase
+      para_type: gallery
+      fields:
+        -
+#          field_gallery_items/target_id: gallery
+#          field_gallery_items/target_revision_id: gallery
+      csv:
+        -
+          string: 'gallery'
+          string: '0'
+          pid:  'pid'
+          source: gallery
 #  field_featured_image_video:
 #    -
 #      plugin: testingbase
@@ -268,7 +388,7 @@ process:
 #      fields:
 #        -
 #          target_id: gallery
-              
+
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value
   # (the 'style' field from the source database in this case) to the destination

@@ -1,0 +1,46 @@
+/// Link
+@mixin link {
+  color: $color-link;
+
+  &:hover {
+    color: $color-link--hover;
+    text-decoration: none;
+  }
+
+  &:visited {
+    color: $color-link;
+  }
+}
+
+.link,
+a {
+  @include link;
+}
+
+.link--cta {
+  @include link;
+
+  display: inline-block;
+  //REPLACE THIS WHEN WE MOVE TO NEW PL
+  background: url('../images/cta-arrow.svg') right center no-repeat transparent;
+  background-size: 14px 10px;
+  padding-right: $space-three;
+  text-decoration: none;
+  font-family: $font-helvetica-neue-medium;
+}
+
+p.link--cta {
+  margin-top: 0;
+
+  a {
+    @include link;
+
+    display: inline-block;
+    //REPLACE THIS WHEN WE MOVE TO NEW PL
+    background: url('../images/cta-arrow.svg') right center no-repeat transparent;
+    background-size: 14px 10px;
+    padding-right: $space-three;
+    text-decoration: none;
+    font-family: $font-helvetica-neue-medium;
+  }
+}

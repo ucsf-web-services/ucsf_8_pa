@@ -1,0 +1,23 @@
+{% set layout = node.field_banner_layout.value %}
+
+<main role="main" class="main">
+  {# link is in html.html.twig #}
+  <a id="main-content" tabindex="-1"></a>
+  {% if layout == 'feature' %}
+    {% include '@theme/article/article-layout-feature.twig' %}
+  {% else %}
+    {% include '@theme/article/article-layout-default.twig' %}
+  {% endif %}
+</main>
+
+{# @todo Wrapper should probably be conditional. #}
+<div class="recommended-articles{{ content.field_recommended_article|render ? ' has-recommended-article' }} ">
+  <div class="recommended-articles__banner">
+    <h2 class="recommended-articles__title">{{ "Recommended Reading"|t }}</h2>
+    {{ content.field_recommended_article }}
+  </div>
+  {{ drupal_view('articles_by_term', 'block_1') }}
+  <div class="footer-ctas-wrapper">
+    {{ content.field_ankle_cta }}
+  </div>
+</div>

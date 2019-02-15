@@ -101,14 +101,7 @@ class ContentHubViewSubscriber implements EventSubscriberInterface {
    */
   public function onKernelFinishRequest(FinishRequestEvent $event) {
     if ($this->routeMatch->getRouteName() === 'acquia_contenthub.content_entity_display.entity') {
-      try {
-        $this->accountSwitcher->switchBack();
-      }
-      catch (\RuntimeException $e) {
-        $this->loggerFactory->get('acquia_contenthub')->debug("Not able to switch back from Content Hub user's account because it was never changed. Current user ID: %id", [
-          '%id' => \Drupal::currentUser()->id(),
-        ]);
-      }
+      $this->accountSwitcher->switchBack();
     }
   }
 

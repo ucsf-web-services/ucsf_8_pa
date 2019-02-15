@@ -592,7 +592,7 @@ function conditional_fields_evaluate_dependency($context, $values, $options) {
       // If $dependency_values is not an array, we can only assume that it
       // should map to the first key of the first value of $values.
       if (!is_array($dependency_values)) {
-        if (is_null(current($values)) || empty($options['value'][0])) {
+        if (is_null(current($values))) {
           return FALSE;
         }
         $key = current(array_keys((array) current($values)));

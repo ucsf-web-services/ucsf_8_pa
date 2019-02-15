@@ -22,8 +22,11 @@ use Drupal\Core\Render\Markup;
  *   type = "single_value",
  *   context = {"ViewStyle"},
  *   defaultSettings = {
- *    "values" = NULL
- *   },
+ *    "values" = {},
+ *    "legend" = {
+ *      "class" = "custom-icon",
+ *     },
+ *   }
  * )
  */
 class CustomIconThemer extends MapThemerBase {
@@ -52,12 +55,28 @@ class CustomIconThemer extends MapThemerBase {
         '#title' => t('Image style'),
         '#options' => $this->markerIcon->getImageStyleOptions(),
         '#default_value' => isset($default_element['image_style']) ? $default_element['image_style'] : 'geofield_map_default_icon_style',
+        '#states' => [
+          'visible' => [
+            ':input[name="style_options[map_marker_and_infowindow][theming][geofieldmap_custom_icon][values][icon_file][is_svg]"]' => ['checked' => FALSE],
+          ],
+        ],
+      ],
+      'image_style_svg' => [
+        '#type' => 'container',
+        'warning' => [
+          '#markup' => $this->t("Image style cannot apply to SVG Files,<br>SVG natural dimension will be applied."),
+        ],
+        '#states' => [
+          'invisible' => [
+            ':input[name="style_options[map_marker_and_infowindow][theming][geofieldmap_custom_icon][values][icon_file][is_svg]"]' => ['checked' => FALSE],
+          ],
+        ],
       ],
       'label_alias' => [
         '#type' => 'textfield',
         '#title' => t('Label alias'),
         '#default_value' => isset($default_element['label_alias']) ? $default_element['label_alias'] : '',
-        '#description' => $this->t('If not empty, this will be used in the legend as label alias.'),
+        '#description' => $this->t('If not empty, this will be used in the legend.'),
         '#size' => 20,
       ],
     ];
@@ -82,6 +101,7 @@ class CustomIconThemer extends MapThemerBase {
    * {@inheritdoc}
    */
   public function getLegend(array $map_theming_values, array $configuration = []) {
+    $legend = $this->defaultLegendHeader($configuration);
 
     // Get the icon image style, as result of the Legend configuration.
     $image_style = isset($configuration['markers_image_style']) ? $configuration['markers_image_style'] : 'none';
@@ -90,21 +110,9 @@ class CustomIconThemer extends MapThemerBase {
       $image_style = isset($map_theming_values['image_style']) ? $map_theming_values['image_style'] : 'none';
     }
 
-    $legend = [
-      '#type' => 'table',
-      '#header' => [
-        isset($configuration['values_label']) ? $configuration['values_label'] : $this->t('Type'),
-        isset($configuration['markers_label']) ? $configuration['markers_label'] : $this->t('Marker'),
-      ],
-      '#caption' => isset($configuration['legend_notes']) ? $configuration['legend_notes'] : '',
-      '#attributes' => [
-        'class' => ['geofield-map-legend', 'custom-icon'],
-      ],
-    ];
-
     $fid = (integer) !empty($map_theming_values['icon_file']['fids']) ? $map_theming_values['icon_file']['fids'][0] : NULL;
 
-    $legend['custom-icon'] = [
+    $legend['table']['custom-icon'] = [
       'value' => [
         '#type' => 'container',
         'label' => [
@@ -120,6 +128,13 @@ class CustomIconThemer extends MapThemerBase {
         '#attributes' => [
           'class' => ['marker'],
         ],
+      ],
+    ];
+
+    $legend['notes'] = [
+      '#markup' => isset($configuration['legend_notes']) ? $configuration['legend_notes'] : '',
+      '#attributes' => [
+        'class' => ['notes'],
       ],
     ];
 

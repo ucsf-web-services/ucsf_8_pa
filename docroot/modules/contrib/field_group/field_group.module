@@ -174,7 +174,7 @@ function field_group_form_alter(array &$form, FormStateInterface $form_state) {
       );
 
       field_group_attach_groups($form, $context);
-      $form['#process'][] = 'field_group_form_pre_render';
+      $form['#pre_render'][] = 'field_group_form_pre_render';
     }
   }
 

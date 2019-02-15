@@ -1,0 +1,252 @@
+.article-header__byline,
+.news-card__byline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: $font-size-xsm;
+  font-family: $font-helvetica-neue-roman;
+  font-weight: 500;
+
+  li {
+    display: inline-block;
+  }
+
+  .article-header__Research,
+  .news-card__Research,
+  .news-card__Patient,
+  .news-card__Happenings,
+  .news-card__Spotlight,
+  .news-card__Honors {
+    color: $teal;
+
+    &::before {
+      content: ' ';
+      display: inline-block;
+      height: 12px;
+      width: 12px;
+      background: $print-teal;
+      margin-right: $space;
+      vertical-align: middle;
+      margin-bottom: 3px;
+    }
+  }
+
+  .news-card__Patient {
+    color: $blue;
+
+    &::before {
+      background: $print-blue;
+    }
+  }
+
+  .news-card__Happenings,
+  .news-card__Spotlight,
+  .news-card__Honors {
+    color: $navy;
+
+    &::before {
+      background: $navy;
+    }
+  }
+
+  .article-header__date,
+  .news-card__date {
+    color: $gray-blue;
+
+    &::before {
+      content: ' ';
+      display: inline-block;
+      height: 3px;
+      width: 3px;
+      background: $gray-blue;
+      margin: 0 10px 3px 7px;
+      border-radius: 50%;
+    }
+  }
+}
+
+.article-header__subheading,
+.basic-header__subheading,
+.about-page-header__subheading {
+  font-size: 20px;
+  line-height: 1.6;
+  color: $gray-blue;
+  margin: 0;
+
+  @include medium {
+    font-size: 24px;
+  }
+}
+
+.basic-header__subheading {
+  line-height: 1;
+}
+
+.article-header__author {
+  font-size: $font-size-xsm;
+  font-family: $font-helvetica-neue-roman;
+  font-weight: 500;
+  color: $gray-blue;
+  width: 64%;
+  margin-top: $space;
+  margin-bottom: 0;
+  padding-bottom: $space-four;
+  border-bottom: 1px solid $gray-lighter;
+
+  a {
+    color: $gray-blue;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 1.2;
+  margin: $space 0;
+
+  @include medium {
+    font-size: 56px;
+  }
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 1.2;
+  margin-top: $space-seven;
+  margin-bottom: $space-two;
+
+  @include medium {
+    font-size: 36px;
+  }
+}
+
+//MOVE THIS TO images
+.half-image-right {
+  float: right;
+  margin: $space-quadruple;
+  margin-top: 0;
+  margin-right: -20%;
+  margin-left: 10%;
+}
+
+.half-image-left {
+  float: left;
+  margin: $space-decuple;
+  margin-top: 0;
+  margin-left: -25%;
+  margin-bottom: $space-quadruple;
+  width: 487px;
+
+  .half-image-left__caption {
+    float: right;
+    //width: 56%;
+    font-size: $font-size-xsm;
+    color: $gray-blue;
+    padding-top: $space-double;
+    padding-left: 42.5%;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    line-height: 1.6em;
+  }
+}
+
+.half-image-right-full {
+  float: right;
+  margin: $space-decuple;
+  margin-top: 0;
+  margin-right: -305px;
+  margin-bottom: $space-quadruple;
+  width: 758px;
+
+  .half-image-right-full__caption {
+    float: right;
+    //width: 56%;
+    font-size: $font-size-xsm;
+    color: $gray-blue;
+    padding-top: $space-double;
+    padding-right: 305px;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    line-height: 1.6em;
+  }
+}
+
+.video.article-full-width {
+  grid-column: 3 / -3;
+  margin: 0;
+  padding-bottom: 53%;
+}
+
+.article-full-width__space {
+  content: ' ';
+  display: block;
+  background: $white;
+  grid-column: 3 / -3;
+  height: $space-five;
+}
+
+.full-bleed-image {
+  margin: $space-ten;
+  margin-left: -25%;
+  margin-right: -25%;
+
+  .full-bleed-image__caption {
+    font-size: $font-size-xsm;
+    color: $gray-blue;
+    padding-top: $space-double;
+    padding-left: 17%;
+    padding-right: 17%;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    line-height: 1.6em;
+  }
+}
+
+.callout-left {
+  float: left;
+  background: $background-gray;
+  margin: 10%;
+  margin-top: 0;
+  margin-left: -20%;
+  margin-bottom: $space-quadruple;
+  width: 50%;
+  padding: 80px 10%;
+
+  .callout-left__title {
+    @include eyebrow;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.callout-right {
+  float: right;
+  background: $background-gray;
+  margin: 10%;
+  margin-top: 0;
+  margin-right: -20%;
+  margin-bottom: $space-quadruple;
+  width: 50%;
+  padding: 80px 10%;
+
+  .callout__title {
+    @include eyebrow;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.article-medium-banner {
+  width: 100%;
+
+  img {
+    width: auto;
+  }
+}

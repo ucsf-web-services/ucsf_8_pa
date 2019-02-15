@@ -1,0 +1,65 @@
+{#
+/**
+ * Available variables:
+ * - REWRITE THIS
+ */
+#}
+{% set card_base_class = 'card' %}
+
+<div {{ bem(card_base_class, (card_modifiers), card_blockname) }}>
+  {% block card_img %}
+    {% if card_img_src %}
+      {% include "@atoms/04-images/00-image/responsive-image.twig" with {
+        "img_url": card_img_url|default(card_link_url),
+        "img_src": card_img_src,
+        "img_alt": card_img_alt,
+        "image_link_blockname": card_base_class,
+        "image_blockname": card_base_class,
+        "output_image_tag": card_image_output_image_tag,
+      } %}
+    {% endif %}
+  {% endblock %}
+  <div {{ bem(card_copy_base_class|default('card__copy'), (card_copy_modifiers), card_copy_blockname) }}>
+    {% if card_heading %}
+      {{ title_prefix }}
+      {% include "@organisms/title/news-card-title.twig" with {
+        "card_source": card_source,
+        "card_area": card_area,
+        "card_date": card_date,
+        "card_heading": card_heading,
+      } %}
+      {{ title_suffix }}
+    {% endif %}
+
+    {% block card_info %}
+    {% endblock %}
+
+    {% if card_body %}
+      {% include "@atoms/02-text/text/01-paragraph.twig" with {
+        "paragraph_content": card_body,
+        "paragraph_blockname": card_body_base_class|default(card_base_class),
+        "paragraph_modifiers": card_body_modifiers,
+        "paragraph_base_class": card_body_base_class|default('body'),
+      } %}
+    {% endif %}
+    {% if card_link_url %}
+      {% include "@atoms/01-links/link/cta-link.twig" with {
+        "link_content": card_link_text,
+        "link_url": card_link_url,
+        "link_attributes": card_link_attributes,
+        "link_blockname": card_link_blockname|default(card_base_class),
+        "link_base_class": card_link_base_class|default('link link--cta'),
+      } %}
+    {% endif %}
+    {% if card_button_url %}
+      {% include "@atoms/06-buttons/01-button.twig" with {
+        "button_content": card_button_content,
+        "button_url": card_button_url,
+        "button_base_class": card_button_base_class|default('button'),
+        "button_attributes": card_button_attributes,
+        "button_modifiers": card_button_modifiers,
+        "button_blockname": card_blockname|default(card_base_class),
+      } %}
+    {% endif %}
+  </div><!-- copy -->
+</div>

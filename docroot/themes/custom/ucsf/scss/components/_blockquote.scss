@@ -1,0 +1,92 @@
+.blockquote {
+  @include clearfix;
+
+  &.blockquote-full-width {
+    grid-column: 2 / -3;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: $space-four auto $space-four;
+    background: $white;
+    margin: 0;
+
+    .field-blockquote-image { // PL: .blockquote-image
+      grid-column: 1 / 2;
+      grid-row: 1 / -1;
+    }
+
+    .blockquote-content {
+      grid-column: 1 / -1;
+      grid-row: 2 / -2;
+      padding-left: 50%;
+      padding-right: 10%;
+    }
+
+    & + * {
+      padding-top: $space;
+    }
+  }
+
+  .blockquote-content {
+    background: $background-gray;
+    padding: $space-six $space-ten;
+    padding-right: 15%;
+  }
+
+  .field-blockquote-body p:first-child { // PL: .blockquote-content__text.
+    @include fs-heading-blockquote;
+
+    &::before {
+      content: '“ ';
+      display: inline-block;
+      margin-left: -$space-three;
+      padding-right: $space;
+      font-family: $font-granjon;
+    }
+  }
+
+  .field-blockquote-source {
+    @include eyebrow;
+    font-style: normal;
+  }
+}
+
+// In WYSIWYG.
+.page_narrow blockquote {
+  background: $background-gray;
+
+  &.blockquote--half-left {
+    float: left;
+    width: 50%;
+    left: auto;
+    padding-top: 0;
+    margin-left: -20%;
+    margin-right: 10%;
+    margin-top: 0;
+  }
+
+  .blockquote-content__text {
+    @include fs-heading-blockquote;
+    font-size: 31px;
+    line-height: 1.2em;
+    padding: $space-seven $space-ten 0 0;
+    padding-right: 15%;
+
+    &::before {
+      content: '“ ';
+      display: inline-block;
+      margin-left: -$space-three;
+      padding-right: $space;
+      font-family: $font-granjon;
+    }
+  }
+
+  .blockquote-content__cite {
+    @include eyebrow;
+
+    font-style: normal;
+  }
+
+  footer {
+    margin-bottom: 50px;
+  }
+}

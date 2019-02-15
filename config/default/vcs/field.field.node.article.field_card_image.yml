@@ -1,0 +1,28 @@
+uuid: 8de85bc9-b29d-43de-b2c7-c9c62894988a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_card_image
+    - media.type.image
+    - node.type.article
+id: node.article.field_card_image
+field_name: field_card_image
+entity_type: node
+bundle: article
+label: 'Card Image'
+description: 'For large cards used on News Center, image should be 1360px x 900px, for smaller cards that will not be featured, 750px x 400px'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

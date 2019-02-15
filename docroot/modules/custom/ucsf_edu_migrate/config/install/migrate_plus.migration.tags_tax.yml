@@ -16,7 +16,7 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls:  http://ucsfpa1dev.prod.acquia-sites.com/tagstaxxml
+  urls: https://www.ucsf.edu/tagstaxxml
   item_selector: /taxonomy/terms
   fields:
     -
@@ -46,7 +46,7 @@ source:
 # destination plugin is implemented in Drupal itself.
 destination:
   plugin: entity:taxonomy_term
-  
+
   default_bundle: tags
 
 # Here's the meat of the migration - the processing pipeline. This describes how
@@ -56,11 +56,11 @@ process:
   type:
     plugin: default_value
     default_value: tags
-  
+
   name: tax_title
-  
+
   tid: tax_id
-  
+
 #  destination_basename:
 #    plugin: callback
 #    callable: basename
@@ -70,7 +70,7 @@ process:
 #    source:
 #      - 'constants/file_directory'
 #      - '@destination_basename'
-  
+
 #  field_image:
 #    -
 #      plugin: skip_on_empty
@@ -84,7 +84,7 @@ process:
 #        - '@destination_path'
 #    -
 #      plugin: entity_generate
-  
+
 #  field_image/alt: tax_title
 
   # The simplest process plugin is named 'get' - it is the default plugin, so

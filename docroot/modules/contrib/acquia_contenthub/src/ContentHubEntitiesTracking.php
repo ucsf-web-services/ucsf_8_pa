@@ -309,6 +309,16 @@ class ContentHubEntitiesTracking {
   }
 
   /**
+   * Check if the entity auto-updates is disabled.
+   *
+   * @return bool
+   *   TRUE if the entity auto update is disabled, FALSE otherwise.
+   */
+  public function isAutoUpdateDisabled() {
+    return $this->getImportStatus() === self::AUTO_UPDATE_DISABLED;
+  }
+
+  /**
    * Check if the entity is pending synchronization to Content Hub or not.
    *
    * @return bool
@@ -765,6 +775,31 @@ class ContentHubEntitiesTracking {
       return $query;
     }
     return FALSE;
+  }
+
+  /**
+   * Database query that fetches entities based on type and status.
+   *
+   * @param string $status_import
+   *   The Import Status.
+   * @param string $entity_type_id
+   *   The Entity type.
+   *
+   * @return array
+   *   Entities returned from the query.
+   */
+  public function getImportedEntities($status_import = '', $entity_type_id = '') {
+    if ($status_import) {
+      /** @var \Drupal\Core\Database\Query\SelectInterface $query */
+      $query = $this->database->select(self::TABLE, 'ci')
+        ->fields('ci');
+      $query = $query->condition('status_import', $status_import);
+      if (!empty($entity_type_id)) {
+        $query = $query->condition('entity_type', $entity_type_id);
+      }
+      return $query->execute()->fetchAll();
+    }
+    return [];
   }
 
   /**

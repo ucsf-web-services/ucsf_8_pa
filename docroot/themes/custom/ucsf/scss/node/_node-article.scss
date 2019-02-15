@@ -1,0 +1,293 @@
+.page_narrow {
+  background: $white;
+  padding: 0 11%;
+  position: relative;
+  grid-column: 3 / -3;
+
+  > :first-child {
+    padding-top: $space-four;
+    margin-top: 0;
+  }
+}
+
+.article-feature-content > .page_narrow {
+  padding-top: $space-six;
+}
+
+.article-feature-content > .page_narrow ~ .page_narrow {
+  padding-top: 0;
+}
+
+.article-header {
+  grid-column: 3 / -3;
+  grid-row: 1;
+  background: $c-white;
+  margin-top: $space-decuple;
+  padding: $space-decuple 11%;
+  padding-bottom: 0;
+
+  &.article-medium-header {
+    margin-top: -32%;
+  }
+
+  h1 {
+    @include fs-article-medium-h1;
+  }
+}
+
+.article-feature-banner {
+  @include grid-fifteen;
+
+  grid-template-rows: repeat(2, auto);
+  grid-gap: 0;
+
+  .article-header {
+    background-color: rgba(255, 255, 255, 0.8);
+    grid-column: 2 / -1;
+    grid-row: 2 / -1;
+    padding: 5% 5% 0 8%;
+
+    h1 {
+      font-size: 82px;
+    }
+
+    .field-sub-title { // .article-header__subheading
+      width: 64%;
+      margin: 0;
+    }
+
+    .article-header__author {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.article-feature-banner-image {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+}
+
+.article-header__byline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: $font-size-xsm;
+  font-family: $font-helvetica-neue-roman;
+  font-weight: 500;
+
+  li,
+  li * {
+    display: inline-block;
+  }
+
+  .article-header__primary-area {
+    &::before {
+      content: ' ';
+      display: inline-block;
+      height: 12px;
+      width: 12px;
+      margin-right: $space;
+      vertical-align: middle;
+      margin-bottom: 3px;
+    }
+  }
+
+  .article-header__date {
+    color: $gray-blue;
+  }
+}
+
+[data-primary-area^="pa-"] + .article-header__date::before {
+  content: ' ';
+  display: inline-block;
+  height: 3px;
+  width: 3px;
+  background: $gray-blue;
+  margin: 0 10px 3px 7px;
+  border-radius: 50%;
+}
+
+@each $area, $color, $color2 in $areas {
+  [data-primary-area="pa-#{$area}"] {
+    color: $color;
+
+    &::before {
+      background: $color2;
+    }
+  }
+}
+
+.basic-header__subheading,
+.article-header .field-sub-title { // .article-header__subheading
+  font-size: 20px;
+  line-height: 1.6;
+  color: $gray-blue;
+  margin: 0;
+
+  @include medium {
+    font-size: 24px;
+  }
+}
+
+.article-header__author {
+  font-size: $font-size-xsm;
+  font-family: $font-helvetica-neue-roman;
+  font-weight: 500;
+  color: $gray-blue;
+  width: 64%;
+  margin-top: $space;
+  margin-bottom: 0;
+  padding-bottom: $space-four;
+  border-bottom: 1px solid $gray-lighter;
+
+  > * {
+    display: inline;
+  }
+
+  a {
+    color: $gray-blue;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+//MOVE THIS TO images
+.half-image-right {
+  float: right;
+  margin: $space-quadruple;
+  margin-top: 0;
+  margin-right: -20%;
+  margin-left: 10%;
+}
+
+figure.half-image-left {
+  float: left;
+  margin: $space-decuple;
+  margin-top: 0;
+  margin-left: -25%;
+  margin-bottom: $space-quadruple;
+  width: 487px;
+
+  figcaption { //PL: .half-image-left__caption
+    float: right;
+    font-size: $font-size-xsm;
+    color: $gray-blue;
+    padding-top: $space-double;
+    padding-left: 42.5%;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    line-height: 1.6em;
+  }
+}
+
+figure.half-image-right-full {
+  float: right;
+  margin: $space-decuple;
+  margin-top: 0;
+  margin-right: -305px;
+  margin-bottom: $space-quadruple;
+  width: 758px;
+
+  figcaption {
+    float: right;
+    padding-right: 305px;
+  }
+}
+
+.video.article-full-width {
+  grid-column: 3 / -3;
+  margin: 0;
+}
+
+.article-full-width__space {
+  content: ' ';
+  display: block;
+  background: $white;
+  grid-column: 3 / -3;
+  height: $space-five;
+}
+
+.full-bleed-image {
+  margin: 80px;
+  margin-left: -25%;
+  margin-right: -25%;
+
+  figcaption {
+    padding-top: $space-double;
+    padding-left: 17%;
+    padding-right: 17%;
+  }
+}
+
+.article-medium-banner {
+  position: static;
+  width: 100%;
+
+  img {
+    width: auto;
+  }
+}
+
+figure.align-center {
+  img,
+  figcaption {
+    margin: 0 auto;
+  }
+}
+
+// Field Tags.
+.tags-menu-region {
+  background: $white;
+  grid-column: 3 / -3;
+  padding: $space-decuple 11%;
+  padding-top: $space-quadruple;
+}
+
+.tags-menu-region .tags-menu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline;
+
+  .tags-menu__item {
+    display: inline;
+    font-size: $font-size-sm;
+    font-family: $font-helvetica-neue-medium;
+
+    &::before {
+      content: ' ';
+      display: inline-block;
+      height: 3px;
+      width: 3px;
+      background: $gray-blue;
+      margin: 0 10px 3px 7px;
+      border-radius: 50%;
+    }
+
+    &:first-child {
+      &::before {
+        display: none;
+      }
+    }
+  }
+
+  .tags-menu__item {
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.tags-menu__title {
+  @include eyebrow;
+  display: inline-block;
+}
+
+// Top Image
+.media--type-image {
+  position: static; // Override contextual link positioning.
+}

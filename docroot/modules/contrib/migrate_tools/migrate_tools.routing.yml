@@ -157,7 +157,7 @@ migrate_tools.messages:
   path: '/admin/structure/migrate/manage/{migration_group}/migrations/{migration}/messages'
   defaults:
     _controller: '\Drupal\migrate_tools\Controller\MessageController::overview'
-    _title: 'Messages'
+    _title_callback: '\Drupal\migrate_tools\Controller\MessageController::title'
     _migrate_group: true
   requirements:
     _permission: 'administer migrations'

@@ -122,11 +122,11 @@ class ContentEntityNormalizerTest extends UnitTestCase {
   protected $entityTypeManager;
 
   /**
-   * The account switcher service.
+   * Logger.
    *
-   * @var \Drupal\acquia_contenthub\ContentHubInternalRequest
+   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface|\PHPUnit_Framework_MockObject_MockObject
    */
-  protected $internalRequest;
+  private $loggerFactory;
 
   /**
    * The Language Manager.
@@ -162,7 +162,7 @@ class ContentEntityNormalizerTest extends UnitTestCase {
         return NULL;
       });
 
-    $this->internalRequest = $this->getMockBuilder('Drupal\acquia_contenthub\ContentHubInternalRequest')
+    $this->loggerFactory = $this->getMockBuilder('Drupal\Core\Logger\LoggerChannelFactoryInterface')
       ->disableOriginalConstructor()
       ->getMock();
 
@@ -186,7 +186,7 @@ class ContentEntityNormalizerTest extends UnitTestCase {
 
     $this->userContext = new ContentHubUserSession(AccountInterface::ANONYMOUS_ROLE);
 
-    $this->contentEntityNormalizer = new ContentEntityCdfNormalizer($this->configFactory, $this->contentEntityViewModesExtractor, $this->moduleHandler, $this->entityRepository, $this->kernel, $this->renderer, $this->entityManager, $this->entityTypeManager, $this->internalRequest, $this->languageManager);
+    $this->contentEntityNormalizer = new ContentEntityCdfNormalizer($this->configFactory, $this->contentEntityViewModesExtractor, $this->moduleHandler, $this->entityRepository, $this->kernel, $this->renderer, $this->entityManager, $this->entityTypeManager, $this->loggerFactory, $this->languageManager);
   }
 
   /**
@@ -369,7 +369,9 @@ class ContentEntityNormalizerTest extends UnitTestCase {
     // Check if there was a created date set.
     $this->assertEquals($normalized_entity->getCreated(), date('c', 1458811508));
     // Check if there was a modified date set.
-    $this->assertEquals($normalized_entity->getModified(), date('c', 1458811509));
+    // We assure that the date set will be the one when the CDF was modified
+    // and sent to Content Hub, not when the drupal entity was las modified.
+    $this->assertEquals($normalized_entity->getModified(), date('c'));
     // Check if field_1 has the correct values.
     $this->assertEquals($normalized_entity->getAttribute('field_1')->getValues(), ['en' => ['test']]);
     // Field created should not be part of the normalizer.

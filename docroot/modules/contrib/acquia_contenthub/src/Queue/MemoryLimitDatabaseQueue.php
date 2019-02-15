@@ -75,6 +75,16 @@ class MemoryLimitDatabaseQueue extends DatabaseQueue {
    * {@inheritdoc}
    */
   public function claimItem($lease_time = 30) {
+    // Allow for the queue to be paused via Drupal state. Useful when the queue
+    // is processed by multiple workers and distributed across machines, this
+    // central switch allow for a graceful pause of the entire processing.
+    $paused = \Drupal::state()
+      ->get('acquia_contenthub.export_queue.paused');
+    if ($paused) {
+      drush_log(dt("Acquia Content Hub export queue is currently paused."));
+      return FALSE;
+    }
+
     // Claim an item by updating its expire fields. If claim is not successful
     // another thread may have claimed the item in the meantime. Therefore loop
     // until an item is successfully claimed or we are reasonably sure there

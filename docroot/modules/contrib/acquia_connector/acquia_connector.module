@@ -33,7 +33,7 @@ function acquia_connector_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.acquia_connector':
       $output = '<h2>' . t('Acquia Connector') . '</h2>';
       $output .= '<p>' . t('The Acquia Connector module allows you to connect your site to the Acquia Subscription and use its variety of services.') . '<p>';
-      $output .= '<p>' . Link::fromTextAndUrl(t('Read more about the installation and use of the Acquia Connector module on the Acquia Library'), Url::fromUri('https://docs.acquia.com/network/install/connector', array()))->toString() . '</p>';
+      $output .= '<p>' . Link::fromTextAndUrl(t('Read more about the installation and use of the Acquia Connector module on the Acquia Library'), Url::fromUri('https://docs.acquia.com/acquia-cloud/insight/install/', array()))->toString() . '</p>';
 
       $output .= '<dl>';
       $output .= '<dt>' . t('Acquia SPI Custom Tests') . '</dt>';
@@ -49,7 +49,7 @@ function acquia_connector_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<dd>' . t('Upon cron (or if configured to run manually) information about your site will be sent and analyzed as part of the Acquia Insight service. You can optionally exclude information about admin privileges, content and user count, and watchdog logs.') . '</dd>';
 
       $output .= '<dt>' . t('Source code analysis') . '</dt>';
-      $output .= '<dd>' . t('If your site supports external SSL connections, Acquia Insight will examine the source code of your site to detect alterations and provide code diffs and update recommentations.') . '</dd>';
+      $output .= '<dd>' . t('If your site supports external SSL connections, Acquia Insight will examine the source code of your site to detect alterations and provide code diffs and update recommendations.') . '</dd>';
 
       $output .= '<dt>' . t('Receive updates from Acquia Subscription') . '</dt>';
       $output .= '<dd>' . t('Receive dynamic updates on the Network Settings page from Acquia.com about your subscription and new features.') . '</dd>';
@@ -128,14 +128,14 @@ function acquia_connector_toolbar() {
         '@date' => \Drupal::service('date.formatter')->format(strtotime($subscription_data['expiration_date']['value']), 'custom', 'Y/n/j'),
       ));
       $link['#attributes']['class'][] = 'acquia-active-subscription';
-      $link['#url'] = Url::fromUri($subscription_data['href']);
+      $link['#url'] = Url::fromUri('https://cloud.acquia.com/app/develop/applications/' . $subscription_data['uuid']);
     }
   }
 
   if (empty($link['#url'])) {
     $link['#title'] = t('Subscription not active');
     $link['#attributes']['class'][] = 'acquia-inactive-subscription';
-    $link['#url'] = Url::fromUri('https://insight.acquia.com');
+    $link['#url'] = Url::fromUri('https://cloud.acquia.com');
   }
 
   return [

@@ -10,7 +10,6 @@ use Acquia\ContentHubClient\Attribute;
 use Drupal\acquia_contenthub\Session\ContentHubUserSession;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\path\Plugin\Field\FieldType\PathFieldItemList;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\acquia_contenthub\ContentHubException;
 use Drupal\Component\Utility\UrlHelper;
@@ -25,13 +24,12 @@ use Drupal\Core\Render\RendererInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Drupal\Component\Uuid\Uuid;
 use Drupal\acquia_contenthub\EntityManager;
-use Drupal\acquia_contenthub\ContentHubInternalRequest;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\taxonomy\Entity\Vocabulary;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\acquia_contenthub\ContentHubEntityLinkFieldHandler;
-use Symfony\Component\Serializer\Serializer;
 
 /**
  * Converts the Drupal entity object to a Acquia Content Hub CDF array.
@@ -125,11 +123,11 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
   protected $entityTypeManager;
 
   /**
-   * The account switcher service.
+   * Logger.
    *
-   * @var \Drupal\acquia_contenthub\ContentHubInternalRequest
+   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
    */
-  protected $internalRequest;
+  protected $loggerFactory;
 
   /**
    * Language Manager.
@@ -164,12 +162,12 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
    *   The entity manager.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
-   * @param \Drupal\acquia_contenthub\ContentHubInternalRequest $internal_request
-   *   The Content Hub Internal Request Service.
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
+   *   The logger factory.
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
    *   The Language Manager.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, ContentEntityViewModesExtractorInterface $content_entity_view_modes_normalizer, ModuleHandlerInterface $module_handler, EntityRepositoryInterface $entity_repository, HttpKernelInterface $kernel, RendererInterface $renderer, EntityManager $entity_manager, EntityTypeManagerInterface $entity_type_manager, ContentHubInternalRequest $internal_request, LanguageManagerInterface $language_manager) {
+  public function __construct(ConfigFactoryInterface $config_factory, ContentEntityViewModesExtractorInterface $content_entity_view_modes_normalizer, ModuleHandlerInterface $module_handler, EntityRepositoryInterface $entity_repository, HttpKernelInterface $kernel, RendererInterface $renderer, EntityManager $entity_manager, EntityTypeManagerInterface $entity_type_manager, LoggerChannelFactoryInterface $logger_factory, LanguageManagerInterface $language_manager) {
     global $base_url;
     $this->baseUrl = $base_url;
     $this->config = $config_factory;
@@ -180,7 +178,7 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
     $this->renderer = $renderer;
     $this->entityManager = $entity_manager;
     $this->entityTypeManager = $entity_type_manager;
-    $this->internalRequest = $internal_request;
+    $this->loggerFactory = $logger_factory;
     $this->languageManager = $language_manager;
 
     // Setting this property only if content_translation is enabled.
@@ -189,6 +187,9 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
     }
   }
 
+  /**
+   * Obtains the serializer.
+   */
   protected function getSerializer() {
     return \Drupal::service('serializer');
   }
@@ -266,13 +267,9 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
       $created = date('c');
     }
 
-    // Required Modified field.
-    if ($entity->hasField('changed') && $entity->get('changed')) {
-      $modified = date('c', $entity->get('changed')->getValue()[0]['value']);
-    }
-    else {
-      $modified = date('c');
-    }
+    // Modified date in the CDF will correspond to the time when the entity was
+    // modified in Content Hub, not in Drupal.
+    $modified = date('c');
 
     // Base Root Path.
     $base_root = $this->getBaseRoot();
@@ -476,6 +473,7 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
           $referenced_entities = $field->referencedEntities();
         }
 
+        $values[$langcode] = [];
         foreach ($referenced_entities as $key => $referenced_entity) {
           // In the case of images/files, etc... we need to add the assets.
           $file_types = [
@@ -692,9 +690,9 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
         }
 
         if ($field instanceof EntityReferenceFieldItemListInterface && !$field->isEmpty()) {
-          // Before checking each individual target entity, verify if we can skip
-          // all of them at once by checking if none of the target bundles are set
-          // to be exported in Content Hub configuration.
+          // Before checking each individual target entity, verify if we can
+          // skip all of them at once by checking if none of the target bundles
+          // are set to be exported in Content Hub configuration.
           $skip_entities = FALSE;
           $settings = $field->getFieldDefinition()->getSettings();
           $target_type = isset($settings['target_type']) ? $settings['target_type'] : NULL;
@@ -719,8 +717,8 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
               $target_bundles = [$target_type];
             }
           }
-          // Compare the list of bundles with the bundles set to be exportable in
-          // the Content Hub Entity configuration form.
+          // Compare the list of bundles with the bundles set to be exportable
+          // in the Content Hub Entity configuration form.
           if (!empty($target_type)) {
             $skip_entities = TRUE;
             foreach ($target_bundles as $target_bundle) {
@@ -853,8 +851,11 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
         // Try to map it to a known field type.
         $field_type = $field->getFieldDefinition()->getType();
         $settings = $field->getFieldDefinition()->getSettings();
-        $value = $attribute['value'][$langcode];
+        $value = isset($attribute['value'][$langcode]) ? $attribute['value'][$langcode] : NULL;
         $field->setValue([]);
+        if ($value === NULL) {
+          continue;
+        }
         $field->setLangcode($langcode);
 
         if ($field instanceof EntityReferenceFieldItemListInterface) {
@@ -1146,6 +1147,12 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
       }
       else {
         $default_langcode = $this->languageManager->getDefaultLanguage()->getId();
+        if ($langcode = $contenthub_entity->getAttribute('langcode')) {
+          $langcodes = $langcode['value'];
+          if (!in_array($default_langcode, $langcodes)) {
+            $default_langcode = reset($langcodes);
+          }
+        }
       }
     }
     // Default Langcode is only used for initial entity creation. Remove now.
@@ -1166,7 +1173,8 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
         $values[$bundle_key] = $bundle;
       }
 
-      // Set the content_translation source of whatever the default langcode says.
+      // Set the content_translation source of whatever the default langcode
+      // says.
       $values['content_translation_source'] = $content_translation_source['value'][$default_langcode][0];
       if (empty($values['content_translation_source'])) {
         unset($values['content_translation_source']);
@@ -1228,12 +1236,11 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
                 // complete the creation of this entity because it will fail
                 // to be saved in the system.
                 // Return a NULL entity and deal with it afterwards.
-                $logger = \Drupal::getContainer()->get('logger.factory');
                 $message = $this->t('File Entity with UUID = "%uuid" cannot be created: The remote resource %uri could not be downloaded into the system. Make sure this resource has a publicly accessible URL.', [
                   '%uuid' => $values['uuid'],
                   '%uri' => $remote_uri,
                 ]);
-                $logger->get('acquia_contenthub')->error($message);
+                $this->loggerFactory->get('acquia_contenthub')->error($message);
                 drupal_set_message($message, 'error');
                 return NULL;
               }
@@ -1283,6 +1290,35 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
     }
     else {
       $contenthub_entity->removeAttribute('default_langcode');
+      $delete_translations = $this->config->get('acquia_contenthub.entity_config')->get('delete_mismatching_translations');
+      if ($delete_translations) {
+        // Make sure that if there are local translations that have been deleted
+        // from Content Hub, they are deleted locally too.
+        $local_languages = $source_entity->getTranslationLanguages();
+        $local_langcodes = array_keys($local_languages);
+        $delete_translations = array_diff($local_langcodes, array_values($langcodes));
+        foreach ($delete_translations as $lang) {
+          if ($source_entity->hasTranslation($lang)) {
+            try {
+              $translated = $source_entity->getTranslation($lang);
+              // We cannot remove default translations.
+              if (!$translated->isDefaultTranslation()) {
+                $source_entity->removeTranslation($lang);
+              }
+            }
+            catch (\Exception $e) {
+              $this->loggerFactory->get('acquia_contenthub')
+                ->error('Cannot remove translation "@lang" for entity type = @type, id = @id, uuid = @uuid: @message', [
+                  '@lang' => $lang,
+                  '@type' => $source_entity->getEntityTypeId(),
+                  '@id' => $source_entity->id(),
+                  '@uuid' => $source_entity->uuid(),
+                  '@message' => $e->getMessage(),
+                ]);
+            }
+          }
+        }
+      }
     }
 
     $entity = $source_entity;
@@ -1392,7 +1428,7 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
     if (!is_dir($filepath) || !is_writable($filepath)) {
       if (!file_prepare_directory($filepath, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
         // Log that directory could not be created.
-        \Drupal::logger('acquia_contenthub')
+        $this->loggerFactory->get('acquia_contenthub')
           ->error('Cannot create files subdirectory "!dir". Please check filesystem permissions.', [
             '!dir' => $filepath,
           ]);
@@ -1401,4 +1437,5 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
     }
     return $file_uri;
   }
+
 }

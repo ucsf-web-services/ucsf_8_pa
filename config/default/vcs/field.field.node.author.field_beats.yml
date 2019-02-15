@@ -1,0 +1,29 @@
+uuid: 68453fd4-b0f9-4053-ae08-aa2635009fd0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_beats
+    - node.type.author
+    - taxonomy.vocabulary.beats
+id: node.author.field_beats
+field_name: field_beats
+entity_type: node
+bundle: author
+label: Beats
+description: 'What beats/topics this author covers.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      beats: beats
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

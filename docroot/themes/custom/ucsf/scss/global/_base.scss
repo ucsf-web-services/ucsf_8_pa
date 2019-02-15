@@ -1,0 +1,146 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  @include fs-body;
+  margin: 0;
+}
+
+// h1-h6
+h1 {
+  @include fs-h1;
+  font-weight: 500;
+  line-height: 1;
+  margin: $space 0;
+}
+
+/* @todo Determine base header styles. */
+h2 {
+  @include fs-heading-two;
+}
+
+h3 {
+  line-height: 1;
+}
+//
+//h4 {
+//  @include fs-h4;
+//}
+
+h5 {
+  font-size: 17px;
+  line-height: 27px;
+}
+
+h6 {
+  font-size: 14px;
+  line-height: 22px;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+}
+
+p {
+  letter-spacing: .2px;
+  margin: 2rem 0
+}
+
+// Links and buttons.
+a {
+  @include link-text;
+
+  &.cta {
+    @include fs-cta;
+  }
+
+  .text-formatted & {
+    @include link-colors($c-blue);
+  }
+}
+
+.link--cta {
+  display: inline-block;
+  background: url('../images/cta-arrow.svg') right center no-repeat transparent;
+  background-size: 14px 10px;
+  padding-right: $space-three;
+  text-decoration: none;
+  font-family: $font-helvetica-neue-medium;
+}
+
+.button--alt {
+  @include button-alt;
+}
+
+// Image Styles
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+figure {
+  margin: 0;
+}
+
+figcaption {
+  font-size: $font-size-xsm;
+  color: $gray-blue;
+  padding-top: $space-double;
+  font-family: $font-helvetica-neue-roman;
+  font-weight: 500;
+  line-height: 1.6em;
+}
+
+.marker {
+  background: black;
+  color: white;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 2px 2px 3px 4px;
+}
+
+hr {
+  border: 1px solid;
+}
+
+ul {
+  padding-left: 15px;
+}
+
+// Global Content Styles
+.submitted {
+  color: $c-gray;
+  font-size: 13px;
+}
+
+.clearfix {
+  @include clearfix;
+}
+
+.svgsprite {
+  display: none;
+}
+
+// Some layout
+.header,
+.main,
+.footer,
+.universal-header,
+.footer-bottom,
+.breadcrumb {
+  @include wrapper;
+
+  margin-bottom: $space-ten;
+}
+
+.main {
+  margin-bottom: 0;
+}

@@ -1,0 +1,7 @@
+<?php
+
+// Include all files from the includes directory.
+$includes_path = dirname(__FILE__) . '/php-includes/*.inc';
+foreach (glob($includes_path) as $filename) {
+  require_once dirname(__FILE__) . '/php-includes/' . basename($filename);
+}

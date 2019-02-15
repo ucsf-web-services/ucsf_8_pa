@@ -141,4 +141,22 @@ class MessageController extends ControllerBase {
     return $build;
   }
 
+  /**
+   * Get the title of the page.
+   *
+   * @param \Drupal\migrate_plus\Entity\MigrationGroupInterface $migration_group
+   *   The migration group.
+   * @param \Drupal\migrate_plus\Entity\MigrationInterface $migration
+   *   The $migration.
+   *
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup
+   *   The translated title.
+   */
+  public function title(MigrationGroupInterface $migration_group, MigratePlusMigrationInterface $migration) {
+    return $this->t(
+      'Messages of %migration',
+      ['%migration' => $migration->label()]
+    );
+  }
+
 }

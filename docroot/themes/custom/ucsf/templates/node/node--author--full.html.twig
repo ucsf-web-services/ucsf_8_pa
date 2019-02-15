@@ -1,0 +1,37 @@
+{% set classes = ['author-main-article'] %}
+
+<div {{ attributes.addClass(classes) }}>
+  <div class="author-page-wrapper">
+    <main role="main" class="main">
+      <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+      <div class="main-content author-page">
+        <header class="basic-header author-page__header">
+          <h1>{{ label }}</h1>
+          <div class="basic-header__subheading">{{ content.field_job_title }}</div>
+        </header>
+        <div class="author-card {{ content.field_author_image|render ? 'has-image' }}">
+          {{ content.field_author_image }}
+          <div class="author-card__copy">
+            {{ content.body }}
+            {% if node.field_email.value or node.field_twitter_handle.value %}
+            <ul class="author-card__links">
+              {% if node.field_email.value %}
+              <li><a href="mailto:{{ node.field_email.value }}" class="link link--cta" >Email {{ label }}</a></li>
+              {% endif %}
+              {% if node.field_twitter_handle.value %}
+              <li><a href="http://twitter.com/{{ node.field_twitter_handle.value }}
+" class="link link--cta">Follow
+                  on Twitter</a></li>
+              {% endif %}
+            </ul>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {{ drupal_view('articles_by_author', 'block_1') }}
+    </main>
+  </div>
+</div>
+<div class="footer-ctas-wrapper">
+  {{ content.field_ankle_cta }}
+</div>

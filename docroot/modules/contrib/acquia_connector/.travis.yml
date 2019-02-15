@@ -38,17 +38,16 @@ install:
 
   # Download Drupal.
   - cd $TRAVIS_BUILD_DIR/..
-  - git clone --depth 1 --branch 8.2.x http://git.drupal.org/project/drupal.git
+  - git clone --depth 1 --branch 8.5.x http://git.drupal.org/project/drupal.git
 
   - echo "error_log=syslog" >> `php --ini | grep "Loaded Configuration" | awk '{print $4}'`
 
 before_script:
   # Download all composer dependencies and install Drupal site.
   - cd $TRAVIS_BUILD_DIR/../drupal
-  - composer config repositories.drupal composer https://packages.drupal.org/8
   - composer install
-  - composer require drupal/search_api:1.0-beta4
-  - composer require drupal/search_api_solr:1.0-beta1
+  - composer require drupal/search_api:^1.8
+  - composer require drupal/search_api_solr:^1.2
   - drush -v site-install testing --db-url=mysql://root:@localhost/drupal --yes
   - drush en --yes simpletest
 

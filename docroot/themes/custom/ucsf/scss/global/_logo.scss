@@ -1,0 +1,83 @@
+
+// These are hardcoded in logo-sprite.svg. The classes they map to, also in the
+// svg are shown at the right.  The sprite has 2 versions of the logo:
+// #logo-compact: Shows the name and mark.
+// #logo-full: Shows the name, mark and tagline.
+
+$color-logo-name: #8a1f03;    // .logo__name
+$color-logo-mark: #eeb111;    // .logo__mark
+$color-logo-tagline: #e87d1d; // .logo__tagline
+
+// Logo container
+//------------------------------------------------------------------------------
+
+.site-logo {
+  display: block;
+  height: 40px;
+  width: 60px;
+
+  @include breakpoint($bp-large) {
+    width: 88px;
+    height: 58px;
+  }
+
+  @include breakpoint($medium-screen) {
+    width: 179px;
+    height: 72px;
+  }
+
+  svg {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+// Logo visibility toggle
+//
+// - compact: Visible by default, hides at $medium-screen.
+// - full: Hidden by dedault, shows at $medium-screen.
+//------------------------------------------------------------------------------
+
+@include breakpoint($medium-screen) {
+  .logo--compact {
+    display: none;
+  }
+}
+
+.logo--full {
+  display: none;
+
+  @include breakpoint($medium-screen) {
+    display: block;
+  }
+}
+
+// Logo color changes
+//
+// The homepage has a "dark" version of the header, that overlaps the hero, and
+// everything is white.
+//------------------------------------------------------------------------------
+
+.has-hero-home {
+  .logo__name,
+  .logo__mark,
+  .logo__tagline {
+    @include breakpoint($bp-large) {
+      fill: #fff !important;
+    }
+  }
+}
+
+.is-open--mobile-nav {
+  .logo__name {
+    fill: $color-logo-name !important;
+  }
+
+  .logo__mark {
+    fill: $color-logo-mark !important;
+  }
+
+  .logo__tagline {
+    fill: $color-logo-tagline !important;
+  }
+}

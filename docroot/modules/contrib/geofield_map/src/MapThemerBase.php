@@ -54,6 +54,105 @@ abstract class MapThemerBase extends PluginBase implements MapThemerInterface, C
   protected $markerIcon;
 
   /**
+   * Returns Default Table Header.
+   *
+   * @param array $table_settings
+   *   The Table base settings..
+   *
+   * @return array
+   *   The Default Table Header render array.
+   */
+  protected function buildTableHeader(array $table_settings) {
+
+    return [
+      '#type' => 'table',
+      '#header' => [
+        $table_settings['header']['label'],
+        $this->t('Weight'),
+        $table_settings['header']['label_alias'],
+        $table_settings['header']['marker_icon'],
+        $this->t('Icon Image Style'),
+        $this->t('Hide from Legend'),
+      ],
+      '#tabledrag' => [
+        [
+          'action' => 'order',
+          'relationship' => 'sibling',
+          'group' => $table_settings['tabledrag_group'],
+        ],
+      ],
+      '#caption' => $this->renderer->renderPlain($table_settings['caption']),
+    ];
+  }
+
+  /**
+   * Builds the base table row for multivalue MapThemer.
+   *
+   * @param array $row
+   *   The row configuration.
+   *
+   * @return array
+   *   The table row render array.
+   */
+  protected function buildDefaultMapThemerRow(array $row) {
+
+    $element = [
+      'label' => [
+        '#type' => 'value',
+        '#value' => $row['label']['value'],
+        'markup' => [
+          '#markup' => $row['label']['markup'],
+        ],
+      ],
+      'weight' => [
+        '#type' => 'weight',
+        '#title' => '',
+        '#title_display' => 'invisible',
+        '#default_value' => $row['weight']['value'],
+        '#delta' => 20,
+        '#attributes' => ['class' => [$row['weight']['class']]],
+      ],
+      'label_alias' => [
+        '#type' => 'textfield',
+        '#default_value' => $row['label_alias']['value'],
+        '#size' => 30,
+        '#maxlength' => 128,
+      ],
+      'icon_file' => $this->markerIcon->getIconFileManagedElement($row['icon_file_id'], $row['id']),
+      'image_style' => [
+        '#type' => 'select',
+        '#title' => t('Image style'),
+        '#title_display' => 'invisible',
+        '#options' => $row['image_style']['options'],
+        '#default_value' => $row['image_style']['value'],
+        '#states' => [
+          'visible' => [
+            ':input[name="style_options[map_marker_and_infowindow][theming]' . $row['id'] . '[icon_file][is_svg]"]' => ['checked' => FALSE],
+          ],
+        ],
+      ],
+      'legend_exclude' => [
+        '#type' => 'checkbox',
+        '#default_value' => $row['legend_exclude']['value'],
+      ],
+      'image_style_svg' => [
+        '#type' => 'container',
+        'warning' => [
+          '#markup' => $this->t("Image style cannot apply to SVG Files,<br>SVG natural dimension will be applied."),
+        ],
+        '#states' => [
+          'invisible' => [
+            ':input[name="style_options[map_marker_and_infowindow][theming]' . $row['id'] . '[icon_file][is_svg]"]' => ['checked' => FALSE],
+          ],
+        ],
+      ],
+      '#attributes' => $row['attributes'],
+    ];
+
+    return $element;
+  }
+
+  /**
    * Returns the default Icon output for the Legend.
    *
    * @return array
@@ -72,6 +171,55 @@ abstract class MapThemerBase extends PluginBase implements MapThemerInterface, C
   }
 
   /**
+   * Returns the default Legend Header.
+   *
+   * @param array $configuration
+   *   The Legend configuration.
+   *
+   * @return array
+   *   The DefaultLegendIcon render array.
+   */
+  protected function defaultLegendHeader(array $configuration) {
+
+    $legend_default_settings = $this->defaultSettings('legend');
+
+    return [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => ['geofield-map-legend', $legend_default_settings['class']],
+      ],
+      'table' => [
+        '#type' => 'table',
+        '#caption' => isset($configuration['legend_caption']) ? $configuration['legend_caption'] : '',
+        '#header' => [
+          isset($configuration['values_label']) ? $configuration['values_label'] : '',
+          isset($configuration['markers_label']) ? $configuration['markers_label'] : '',
+        ],
+      ],
+    ];
+  }
+
+  /**
+   * Returns the default Legend Footer.
+   *
+   * @param array $configuration
+   *   The Legend configuration.
+   *
+   * @return array
+   *   The DefaultLegendIcon render array.
+   */
+  protected function defaultLegendFooter(array $configuration) {
+    return [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#value' => isset($configuration['legend_notes']) ? $configuration['legend_notes'] : '',
+      '#attributes' => [
+        'class' => ['notes'],
+      ],
+    ];
+  }
+
+  /**
    * Generate Label Alias Help Message.
    *
    * @return array
@@ -81,7 +229,7 @@ abstract class MapThemerBase extends PluginBase implements MapThemerInterface, C
     return [
       '#type' => 'html_tag',
       '#tag' => 'div',
-      '#value' => $this->t('If not empty, this will be used in the legend as label alias.'),
+      '#value' => $this->t('If not empty, this will be used in the legend.'),
       '#attributes' => [
         'style' => ['style' => 'font-size:0.8em; color: gray; font-weight: normal'],
       ],

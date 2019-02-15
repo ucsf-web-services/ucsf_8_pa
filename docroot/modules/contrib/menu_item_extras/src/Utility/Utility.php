@@ -44,7 +44,7 @@ class Utility {
     $string = str_replace(
       $to_replace,
       array_fill(0, count($to_replace), '_'),
-      Unicode::strtolower($string)
+      mb_strtolower($string)
     );
     $string = preg_replace('/[^A-Za-z0-9\_]/', '', $string);
     return self::limitUnderscores($string);

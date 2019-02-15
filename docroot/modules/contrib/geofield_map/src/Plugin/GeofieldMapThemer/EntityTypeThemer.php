@@ -28,8 +28,11 @@ use Drupal\Core\Entity\EntityInterface;
  *   type = "key_value",
  *   context = {"ViewStyle"},
  *   defaultSettings = {
- *    "values": {}
- *   },
+ *    "values" = {},
+ *    "legend" = {
+ *      "class" = "entity-type",
+ *     },
+ *   }
  * )
  */
 class EntityTypeThemer extends MapThemerBase {
@@ -116,79 +119,64 @@ class EntityTypeThemer extends MapThemerBase {
       $view_bundles = array_keys($weighted_bundles);
     }
 
-    $caption = [
-      'title' => [
-        '#type' => 'html_tag',
-        '#tag' => 'label',
-        '#value' => $this->t('Icon Urls, per Entity Types'),
-      ],
-    ];
-
     $label_alias_upload_help = $this->getLabelAliasHelp();
     $file_upload_help = $this->markerIcon->getFileUploadHelp();
 
-    $element = [
-      '#type' => 'table',
-      '#header' => [
-        $this->t('@entity type Type/Bundle', ['@entity type' => $entity_type]),
-        $this->t('Weight'),
-        Markup::create($this->t('Label Alias @description', [
+    $table_settings = [
+      'header' => [
+        'label' => $this->t('@entity type Type/Bundle', ['@entity type' => $entity_type]),
+        'label_alias' => Markup::create($this->t('Label Alias @description', [
           '@description' => $this->renderer->renderPlain($label_alias_upload_help),
         ])),
-        Markup::create($this->t('Marker Icon @file_upload_help', [
+        'marker_icon' => Markup::create($this->t('Marker Icon @file_upload_help', [
           '@file_upload_help' => $this->renderer->renderPlain($file_upload_help),
         ])),
-        $this->t('Icon Image Style'),
-        $this->t('Exclude from Legend'),
       ],
-      '#tabledrag' => [[
-        'action' => 'order',
-        'relationship' => 'sibling',
-        'group' => 'bundles-order-weight',
+      'tabledrag_group' => 'bundles-order-weight',
+      'caption' => [
+        'title' => [
+          '#type' => 'html_tag',
+          '#tag' => 'label',
+          '#value' => $this->t('Icon Urls, per Entity Types'),
+        ],
       ],
-      ],
-      '#caption' => $this->renderer->renderPlain($caption),
     ];
+
+    // Define the Table header.
+    $element = $this->buildTableHeader($table_settings);
 
     foreach ($view_bundles as $k => $bundle) {
 
       $fid = (integer) !empty($default_element[$bundle]['icon_file']['fids']) ? $default_element[$bundle]['icon_file']['fids'] : NULL;
-      $element[$bundle] = [
+      $label_value = $entity_bundles[$bundle]['label'];
+
+      // Define the table row parameters.
+      $row = [
+        'id' => "[geofieldmap_entity_type][values][{$bundle}]",
         'label' => [
-          '#type' => 'value',
-          '#value' => $entity_bundles[$bundle]['label'],
-          'markup' => [
-            '#markup' => $entity_bundles[$bundle]['label'],
-          ],
+          'value' => $label_value,
+          'markup' => $label_value,
         ],
         'weight' => [
-          '#type' => 'weight',
-          '#title' => $this->t('Weight for @bundle', ['@bundle' => $bundle]),
-          '#title_display' => 'invisible',
-          '#default_value' => isset($default_element[$bundle]['weight']) ? $default_element[$bundle]['weight'] : $k,
-          '#delta' => 20,
-          '#attributes' => ['class' => ['bundles-order-weight']],
+          'value' => isset($default_element[$bundle]['weight']) ? $default_element[$bundle]['weight'] : $k,
+          'class' => $table_settings['tabledrag_group'],
         ],
         'label_alias' => [
-          '#type' => 'textfield',
-          '#default_value' => isset($default_element[$bundle]['label_alias']) ? $default_element[$bundle]['label_alias'] : '',
-          '#size' => 30,
-          '#maxlength' => 128,
+          'value' => isset($default_element[$bundle]['label_alias']) ? $default_element[$bundle]['label_alias'] : '',
         ],
-        'icon_file' => $this->markerIcon->getIconFileManagedElement($fid),
+        'icon_file_id' => $fid,
         'image_style' => [
-          '#type' => 'select',
-          '#title' => t('Image style'),
-          '#title_display' => 'invisible',
-          '#options' => $this->markerIcon->getImageStyleOptions(),
-          '#default_value' => isset($default_element[$bundle]['image_style']) ? $default_element[$bundle]['image_style'] : 'geofield_map_default_icon_style',
+          'options' => $this->markerIcon->getImageStyleOptions(),
+          'value' => isset($default_element[$bundle]['image_style']) ? $default_element[$bundle]['image_style'] : 'geofield_map_default_icon_style',
         ],
         'legend_exclude' => [
-          '#type' => 'checkbox',
-          '#default_value' => isset($default_element[$bundle]['legend_exclude']) ? $default_element[$bundle]['legend_exclude'] : '0',
+          'value' => isset($default_element[$bundle]['legend_exclude']) ? $default_element[$bundle]['legend_exclude'] : '0',
         ],
-        '#attributes' => ['class' => ['draggable']],
+        'attributes' => ['class' => ['draggable']],
       ];
+
+      // Builds the table row for the MapThemer.
+      $element[$bundle] = $this->buildDefaultMapThemerRow($row);;
 
     }
 
@@ -212,17 +200,7 @@ class EntityTypeThemer extends MapThemerBase {
    * {@inheritdoc}
    */
   public function getLegend(array $map_theming_values, array $configuration = []) {
-    $legend = [
-      '#type' => 'table',
-      '#header' => [
-        isset($configuration['values_label']) ? $configuration['values_label'] : $this->t('Type/Bundle'),
-        isset($configuration['markers_label']) ? $configuration['markers_label'] : $this->t('Marker'),
-      ],
-      '#caption' => isset($configuration['legend_notes']) ? $configuration['legend_notes'] : '',
-      '#attributes' => [
-        'class' => ['geofield-map-legend', 'entity-type'],
-      ],
-    ];
+    $legend = $this->defaultLegendHeader($configuration);
 
     foreach ($map_theming_values as $bundle => $value) {
 
@@ -240,7 +218,7 @@ class EntityTypeThemer extends MapThemerBase {
         continue;
       }
       $label = isset($value['label']) ? $value['label'] : $bundle;
-      $legend[$bundle] = [
+      $legend['table'][$bundle] = [
         'value' => [
           '#type' => 'container',
           'label' => [
@@ -259,6 +237,8 @@ class EntityTypeThemer extends MapThemerBase {
         ],
       ];
     }
+
+    $legend['notes'] = $this->defaultLegendFooter($configuration);
 
     return $legend;
   }

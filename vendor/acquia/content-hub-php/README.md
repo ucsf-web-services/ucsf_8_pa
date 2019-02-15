@@ -7,7 +7,8 @@ A PHP Client library to consume the Acquia Content Hub API.
 ## Version Information
 
 * `0.6.x` branch: Uses guzzle version `~5.0`. Drupal 7 [content hub module](https://docs.acquia.com/content-hub) depends upon builds against this branch.
-* `master` branch: Uses guzzle version `~6.0`. Drupal 8 content hub work, that is in progress at the moment, depends upon builds against this branch.
+* `1.x` branch: Uses guzzle version `~6.0`. Drupal 8 content hub work, that is in progress at the moment, depends upon builds against this branch.
+* `2.x` branch: Uses the most recent version of guzzle and only works with the 2.x version of D8 Content Hub.
 
 ## Installation
 
@@ -30,6 +31,8 @@ published to the hub.
 <?php
 
 use Acquia\ContentHubClient\ContentHub;
+// For versions => 1.3, HMAC middleware is required.
+use Acquia\ContentHubClient\Middleware\MiddlewareHmacV1;
 
 // The URL to the Content Hub instance, provided by Acquia. Note that us-east-1
 // might be replaced by a region that is within your geographic proximity.
@@ -42,7 +45,7 @@ $secretKey = 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB';
 
 // For versions => 1.3, the api key is passed via the HMAC middleware.
 $middleware = new MiddlewareHmacV1($apiKey, $secretKey, 'V1');
-$client = new ContentHub('', $middleware, ['base_uri' => $url]);
+$client = new ContentHub('', [$middleware], ['base_uri' => $url]);
 
 // For versions < 1.3, use the following client callback.
 $client = new ContentHub($apiKey, $secretKey, '', ['base_url' => $url]);
