@@ -90,6 +90,17 @@
  */
 $databases = array();
 
+$databases['default']['default'] = array (
+  'database' => 'ucsfpa8',
+  'username' => 'root',
+  'password' => 'root',
+  'host' => 'localhost',
+  'port' => '3306',
+  'driver' => 'mysql',
+  'prefix' => '',
+  'collation' => 'utf8mb4_general_ci',
+);
+
 /**
  * Customizing database settings.
  *

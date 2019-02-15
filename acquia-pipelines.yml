@@ -3,8 +3,13 @@ services:
   - mysql
   - php:
         version: 7.1
+cde-databases:
+  - ucsfpa8
 variables:
   global:
+    ADMIN_USERNAME: ucsf_admin
+    ADMIN_PASSWORD:
+      secure: 2acuuInxOTeqI9KbKUksrR2GXWoAqZGhzU4a3/p+HZfP5WbGJnZr1VkvfVin62oRDhD8+jISg8PKhn4URTEnculPVt86+jPRKZ26ADWh63/QllbPkPWQeeT974wID3jshEYmjiCIoHytbe3e9qsktcg7LKPy8dFFB0Dq/qeYYvo3FHJ1XQlV+i4HiH2+pEIUK+B5YLFukUobfZoAjmJg2ZEtKlUEnCGv+Wy0HgGNgnbtTfnVGY/QOLIEXOOZ2hNIYw4sxuEd57yA/CxwLRAG2cADZrM8hNy5mxk5HMImMCJIFDya9mCYDuIY22UGHXKknix7fxKt8opjD3DVFZo2Rxm0Utfd0BE7//gOvUmnIdunu5MA0+iyeXD95+yWJvKSV4xViv/9rGZtygPLaebNNm1bqVIqZ5SPsCUlaxt3D0PtwX5u8/dkuVn240P79XP0tAbzm3ZTO7AVoTVJi/Jyo035M6KgSp8JQ/Junlvy1SL559/TKZQJILTW0V71aLRf4/kx8heAd3zQ5dO1pJ/kgd/ZOrDVoMsq3iqzHjr4F5m8TnvxrNC/BpTtECnNOjNxJrLETSLytmlUlysxo14VVps4IJCJdtAFQYG4F08Qalh0ZCATQ/GYTel/fYkZ4TAT/NP8xVSyCvXwZg8XsfR73T48tzSZDL+BS3GpzzBLg8+KU0=46ArolFFa/xe9KPJ08yoGeCVD7tWo8OoNGZlD2vBMreeklsQEBoVHkLiyvop1royE4wlbdVDU6N2wNyG1N/OVAkch4tyyP4ORZgRVpC3K+fSaVgCAFwtXC1ZYDNH9Z5I
 #    SLACK_HOSTNAME: "uctech.slack.com"
 #    SLACK_TOKEN:
 #      secure: U48EOVjDl+h+QRi$x3kpGwBIc27rKqCblXqkv2MxMBDyV+Pas3x...
@@ -12,11 +17,23 @@ variables:
 events:
   build:
     steps:
+      - database:
+          type: script
+          script:
+            - mysql -u root -proot -e "CREATE DATABASE ucsfpa8"
       - composer:
           type: script
           script:
             - composer install
       - unit_tests:
-                type: script
-                script:
-                  - echo "unit tests completed"
+          type: script
+          script:
+            - ./vendor/bin/phpunit
+post-deploy:
+  steps:
+    # Deploy the build artifact to an on-demand environment,
+    # and sync the specified databases.
+    - deploy:
+        script:
+          - pipelines-deploy
+          - pipelines-sync-dbs ucsfpa8
