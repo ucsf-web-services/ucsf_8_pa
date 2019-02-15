@@ -38,7 +38,7 @@
         },
         "ucdavis": {
             "type": "vcs",
-            "url": "https://github.com/stopfstedt/sitefarm_seed"
+            "url": "https://github.com/ucsf-web-services/sitefarm_seed"
         },
         "1": {
             "type": "composer",
@@ -50,7 +50,8 @@
         "oomphinc/composer-installers-extender": "^1.1",
         "wikimedia/composer-merge-plugin": "^1.4.1",
         "cweagans/composer-patches": "^1.6",
-        "drupal/core" : "^8.6.0",
+        "zaporylie/composer-drupal-optimizations": "^1.0",
+        "drupal/core" : "^8.6.9",
         "drupal-composer/drupal-scaffold": "^2.5",
         "ucdavis/sitefarm_seed": "dev-crop-dependency-update",
         "drupal/acquia_lift": "~3.0",
@@ -144,15 +145,14 @@
         "drupal/config_installer": "^1.8",
         "drupal/media_entity_image": "^1.3",
         "fourkitchens/emulsify": "^2.7",
-		"drupal/applenews": "^1.0@beta",
-        "drupal/better_normalizers": "^1.0@beta",
+		    "drupal/applenews": "^1.0@beta",
+        "drupal/better_normalizers": "~1.0",
         "drupal/video_embed_media": "^2.0",
         "sebastian/version": "^2.0",
         "drupal-pattern-lab/unified-twig-extensions": "^0.1.0",
         "drupal/ldap": "^3.0@beta",
         "drupal/entity_clone": "^1.0@beta",
-        "drupal/allowed_formats": "^1.1",
-        "zaporylie/composer-drupal-optimizations": "^1.0"
+        "drupal/allowed_formats": "^1.1"
     },
     "require-dev": {
         "drupal/console" : "^1.8",
@@ -213,12 +213,10 @@
     "scripts": {
         "post-install-cmd": [
             "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-            "cp -a docroot/profiles/contrib/sitefarm_seed/libraries/. docroot/libraries/",
             "@renamelibraries"
         ],
         "post-update-cmd": [
             "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-            "cp -a docroot/profiles/contrib/sitefarm_seed/libraries/. docroot/libraries/",
             "@renamelibraries"
         ],
         "rmvendor" : "rm -rf vendor/*",
