@@ -5,10 +5,19 @@ services:
         version: 7.1
 variables:
   global:
+#    SLACK_HOSTNAME: "uctech.slack.com"
+#    SLACK_TOKEN:
+#      secure: U48EOVjDl+h+QRi$x3kpGwBIc27rKqCblXqkv2MxMBDyV+Pas3x...
+#    SLACK_CHANNEL: "#ucsf-www-ucsf-edu"
 events:
   build:
     steps:
-      - setup:
+      - composer:
           type: script
           script:
-            - echo "completed"
+            - composer install
+      - unit_tests:
+                type: script
+                script:
+                  - ./vendor/bin/phpunit
+                  - echo "unit tests completed"
