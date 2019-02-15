@@ -223,8 +223,10 @@
         ],
         "rmvendor" : "rm -rf vendor/*",
         "rmprofiles" : "rm -rf docroot/profiles/contrib/sitefarm_seed/*",
+        "rmmodules" : "rm -rf docroot/modules/contrib/*",
         "purge" : [
             "@rmvendor",
+            "@rmmodules",
             "@rmprofiles",
             "@composer clear-cache"
         ],
