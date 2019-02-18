@@ -25,3 +25,8 @@ index 7d51a2226..bf5695fc3 100644
          $node->setAttribute('class', implode(' ', $classes));
        }
        $result->setProcessedText(Html::serialize($dom));
+
+
+line 35 - 47
+-        $caption = Html::decodeEntities($caption);
++        $caption = Html::decodeEntities(Html::decodeEntities($caption));
