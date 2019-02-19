@@ -16,14 +16,14 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: http://ucsfpa1dev.prod.acquia-sites.com/mediacoveragexml
+  urls: public://media_coverage_xml_feed.xml
   item_selector: /nodes/node
-  
-# unique identifier needs to be an integer 
+
+# unique identifier needs to be an integer
   ids:
     nid:
       type: integer
-  
+
   fields:
     -
       name: nid
@@ -61,7 +61,15 @@ source:
       name: loc_tax
       label: 'media coverage locations taxonomy reference'
       selector: Locations
-    
+    -
+      name: pub_date
+      label: 'the published date of the news'
+      selector: Post-date
+    -
+      name: uid
+      label: 'Id of the account that authored the content'
+      selector: Author-uid
+
   constants:
     file_directory: public://
 
@@ -74,7 +82,7 @@ source:
 # destination plugin is implemented in Drupal itself.
 destination:
   plugin: entity:node
-  
+
   default_bundle: article
 
 # Here's the meat of the migration - the processing pipeline. This describes how
@@ -84,13 +92,19 @@ process:
   type:
     plugin: default_value
     default_value: article
-  
+
   title: title
-  
+
   nid: nid
-  
+
+  uid: uid
+
+  field_date: pub_date
+
+  field_date_and_time: pub_date
+
   field_external_url: ex-url
-  
+
   field_areas:
     -
       plugin: skip_on_empty
@@ -101,68 +115,76 @@ process:
       plugin: explode
       source: areas_tax
       delimiter: ','
-      
-  field_topics: 
+
+  field_topics:
     -
       plugin: skip_on_empty
       method: process
       source: topics_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: topics_tax
       delimiter: ','
-    
-  field_organizations: 
+
+  field_organizations:
     -
       plugin: skip_on_empty
       method: process
       source: orgs_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: orgs_tax
       delimiter: ','
-      
-  field_people: 
+
+  field_people:
     -
       plugin: skip_on_empty
       method: process
       source: people_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: people_tax
       delimiter: ','
-  
+
   field_locations:
     -
       plugin: skip_on_empty
       method: process
       source: loc_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: loc_tax
       delimiter: ','
-  
+
   field_article_type:
     -
       plugin: default_value
-      default_value: 714
-  
-# field_author_byline: 
+      default_value: 411951
+
+  field_source:
+    -
+      plugin: migration_lookup
+      migration: press_tax
+      source: media_source
+
+
+
+# field_author_byline:
 #   -
 #     plugin: testingbase
 #     para_type: source
-#     fields: 
+#     fields:
 #       -
-#         field_source: 
+#         field_source:
 #           -
-#             plugin: entity_generate  
+#             plugin: entity_generate
 #             source: media_source
 #             entity_type: taxonomy_term
-  
+
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value
   # (the 'style' field from the source database in this case) to the destination
