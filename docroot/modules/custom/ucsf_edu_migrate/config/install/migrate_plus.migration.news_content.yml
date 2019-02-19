@@ -125,6 +125,10 @@ source:
       name: body_summary
       label: 'the summary of the body content'
       selector: body-summary
+    -
+      name: updated-date
+      label: 'date the content was updated'
+      selector: updated-date
 
   constants:
     file_directory: public://
@@ -178,8 +182,13 @@ process:
 
   field_date_and_time: pub_date
 
-#  created: pub_date
-#  changed: pub_date
+  created:
+    plugin: format_date
+    from_format: 'Y-m-d\TH:i:s'
+    to_format: 'U'
+    source: pub_date
+
+  changed: updated-date
 
   field_areas:
     -
