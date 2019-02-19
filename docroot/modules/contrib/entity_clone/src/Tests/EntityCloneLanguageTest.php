@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneLanguageTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -30,7 +25,7 @@ class EntityCloneLanguageTest extends WebTestBase {
    */
   protected $permissions = [
     'administer languages',
-    'clone configurable_language entity'
+    'clone configurable_language entity',
   ];
 
   /**
@@ -50,9 +45,12 @@ class EntityCloneLanguageTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test language entity clone.
+   */
   public function testLanguageEntityClone() {
     $edit = [
-      'predefined_langcode' => 'fr'
+      'predefined_langcode' => 'fr',
     ];
     $this->drupalPostForm("/admin/config/regional/language/add", $edit, t('Add language'));
 
@@ -79,4 +77,3 @@ class EntityCloneLanguageTest extends WebTestBase {
   }
 
 }
-

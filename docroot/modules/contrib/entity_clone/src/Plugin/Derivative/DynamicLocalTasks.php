@@ -62,12 +62,12 @@ class DynamicLocalTasks extends DeriverBase implements ContainerDeriverInterface
       $has_canonical_path = $entity_type->hasLinkTemplate('canonical');
 
       if ($has_clone_path) {
-        $this->derivatives["$entity_type_id.clone_tab"] = array(
+        $this->derivatives["$entity_type_id.clone_tab"] = [
           'route_name' => "entity.$entity_type_id.clone_form",
           'title' => $this->translationManager->translate('Clone'),
           'base_route' => "entity.$entity_type_id." . ($has_canonical_path ? "canonical" : "edit_form"),
           'weight' => 100,
-        );
+        ];
       }
     }
 

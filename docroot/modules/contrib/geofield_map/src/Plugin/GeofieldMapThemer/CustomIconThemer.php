@@ -17,10 +17,14 @@ use Drupal\Core\Render\Markup;
  *
  * @MapThemer(
  *   id = "geofieldmap_custom_icon",
- *   name = @Translation("Custom Icon Image File (Geofield Map)"),
+ *   name = @Translation("Custom Icon Image File (geofield_map) - Image Upload (deprecated)"),
  *   description = "This Geofield Map Themer allows the definition of a unique custom Marker Icon, valid for all the Map Markers.",
- *   type = "single_value",
  *   context = {"ViewStyle"},
+ *   weight = 0,
+ *   markerIconSelection = {
+ *    "type" = "managed_file",
+ *    "configSyncCompatibility" = FALSE,
+ *   },
  *   defaultSettings = {
  *    "values" = {},
  *    "legend" = {
@@ -124,7 +128,7 @@ class CustomIconThemer extends MapThemerBase {
       ],
       'marker' => [
         '#type' => 'container',
-        'icon_file' => !empty($fid) ? $this->markerIcon->getLegendIcon($fid, $image_style) : $this->getDefaultLegendIcon(),
+        'icon_file' => !empty($fid) ? $this->markerIcon->getLegendIconFromFid($fid, $image_style) : $this->getDefaultLegendIcon(),
         '#attributes' => [
           'class' => ['marker'],
         ],

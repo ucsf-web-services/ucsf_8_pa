@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneResponsiveImageStyleTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -30,7 +25,7 @@ class EntityCloneResponsiveImageStyleTest extends WebTestBase {
    */
   protected $permissions = [
     'clone responsive_image_style entity',
-    'administer responsive images'
+    'administer responsive images',
   ];
 
   /**
@@ -50,6 +45,9 @@ class EntityCloneResponsiveImageStyleTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test responsive image style entity clone.
+   */
   public function testResponsiveImageStyleEntityClone() {
     $edit = [
       'label' => 'Test responsive image style for clone',
@@ -82,4 +80,3 @@ class EntityCloneResponsiveImageStyleTest extends WebTestBase {
   }
 
 }
-

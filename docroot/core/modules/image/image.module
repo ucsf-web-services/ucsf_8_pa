@@ -6,10 +6,12 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\file\FileInterface;
-use Drupal\field\FieldStorageConfigInterface;
 use Drupal\field\FieldConfigInterface;
+use Drupal\field\FieldStorageConfigInterface;
+use Drupal\file\Entity\File;
+use Drupal\file\FileInterface;
 use Drupal\image\Entity\ImageStyle;
 
 /**
@@ -510,4 +512,103 @@ function image_field_config_delete(FieldConfigInterface $field) {
   if ($uuid && ($file = \Drupal::entityManager()->loadEntityByUuid('file', $uuid))) {
     \Drupal::service('file.usage')->delete($file, 'image', 'default_image', $field->uuid());
   }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Alters the image dialog form for text editor to allow the user to select an
+ * image style.
+ *
+ * @see \Drupal\editor\Form\EditorImageDialog::buildForm()
+ */
+function image_form_editor_image_dialog_alter(array &$form, FormStateInterface $form_state) {
+  /** @var \Drupal\editor\EditorInterface $editor */
+  $editor = $form_state->getBuildInfo()['args'][0];
+
+  /** @var \Drupal\image\Plugin\Filter\FilterImageStyle $filter */
+  $filter = $editor->getFilterFormat()->filters('filter_image_style');
+
+  if (!$filter->status) {
+    // The 'filter_image_style' filter is not enabled for this text format.
+    return;
+  }
+
+  // Get the image (<img>) that is being edited on the client.
+  $image_element = $form_state->get('image_element');
+
+  // Add a select element to choose an image style.
+  $form['image_style']['selection'] = [
+    '#title' => t('Use image style'),
+    '#type' => 'select',
+    '#default_value' => isset($image_element['data-image-style']) ? $image_element['data-image-style'] : '',
+    '#options' => $filter->getAllowedImageStyleOptions(),
+    '#empty_value' => '',
+    '#parents' => ['attributes', 'data-image-style'],
+  ];
+
+  // Check the access to link for configuring allowed image styles.
+  $url = $editor->getFilterFormat()->toUrl('edit-form');
+  if ($url->access()) {
+    // Add a link to the configuration of the image styles.
+    $url->setOptions(['fragment' => 'edit-filters-filter-image-style-settings']);
+    $form['image_style']['configure_link'] = [
+      '#title' => t('Configure allowed image styles'),
+      '#type' => 'link',
+      '#url' => $url,
+      '#attributes' => [
+        'target' => '_blank',
+      ],
+    ];
+  }
+
+  $form['actions']['save_modal']['#validate'][] = 'image_form_editor_image_dialog_validate';
+}
+
+/**
+ * Form validation handler for EditorImageDialog.
+ *
+ * Ensures the image shown in the text editor matches the chosen image style.
+ *
+ * @see \Drupal\editor\Form\EditorImageDialog::buildForm()
+ * @see \Drupal\editor\Form\EditorImageDialog::validateForm()
+ * @see image_form_editor_image_dialog_alter()
+ */
+function image_form_editor_image_dialog_validate(array &$form, FormStateInterface $form_state) {
+  // There is no file yet to apply an image style so no need to validate.
+  if (empty($form_state->getValue('fid')[0])) {
+    return;
+  }
+
+  $attributes = $form_state->getValue('attributes');
+
+  if (!$attributes || !($image_style = ImageStyle::load($attributes['data-image-style']))) {
+    return;
+  }
+
+  $uri = File::load($form_state->getValue('fid')[0])->getFileUri();
+
+  // Set the 'src' attribute to the image style URL. FilterImageStyle will
+  // look at the 'data-editor-file-uuid' attribute, not the 'src' attribute
+  // to render the appropriate output.
+  $image_url = $image_style->buildUrl($uri);
+  $attributes['src'] = file_url_transform_relative($image_url);
+
+  /** @var \Drupal\Core\Image\ImageInterface $image */
+  $image = \Drupal::service('image.factory')->get($uri);
+
+  if ($image->isValid()) {
+    // Get the original width and height of the image.
+    $dimensions = [
+      'width' => $image->getWidth(),
+      'height' => $image->getHeight(),
+    ];
+
+    // Transform the 'width' and 'height' dimensions of the image based on
+    // the image style.
+    $image_style->transformDimensions($dimensions, $attributes['src']);
+    $attributes['width'] = $dimensions['width'];
+    $attributes['height'] = $dimensions['height'];
+  }
+  $form_state->setValue('attributes', $attributes);
 }

@@ -40,7 +40,7 @@ class FilterHtmlUpdateTest extends UpdatePathTestBase {
 
     // Make sure we have the expected values after the update.
     $filters_after = [
-      'basic_html' => '<a href hreflang> <em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h4 id> <h5 id> <h6 id> <p> <br> <span> <img src alt height width data-align data-caption>',
+      'basic_html' => '<a href hreflang> <em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h4 id> <h5 id> <h6 id> <p> <br> <span> <img src alt height width data-align data-caption data-image-style>',
       'restricted_html' => '<a href hreflang> <em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h4 id> <h5 id> <h6 id>',
     ];
     foreach ($filters_after as $name => $after) {

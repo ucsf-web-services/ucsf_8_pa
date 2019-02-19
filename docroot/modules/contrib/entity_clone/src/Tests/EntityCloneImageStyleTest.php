@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneImageStyleTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -30,7 +25,7 @@ class EntityCloneImageStyleTest extends WebTestBase {
    */
   protected $permissions = [
     'clone image_style entity',
-    'administer image styles'
+    'administer image styles',
   ];
 
   /**
@@ -50,6 +45,9 @@ class EntityCloneImageStyleTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test image style entity clone.
+   */
   public function testImageStyleEntityClone() {
     $edit = [
       'label' => 'Test image style for clone',
@@ -80,4 +78,3 @@ class EntityCloneImageStyleTest extends WebTestBase {
   }
 
 }
-

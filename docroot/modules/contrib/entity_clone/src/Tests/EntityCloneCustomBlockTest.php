@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneCustomBlockTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\block_content\Tests\BlockContentTestBase;
@@ -41,9 +36,12 @@ class EntityCloneCustomBlockTest extends BlockContentTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test custom block entity clone.
+   */
   public function testCustomBlockEntityClone() {
 
-    $edit = array();
+    $edit = [];
     $edit['info[0][value]'] = 'Test block ready to clone';
     $edit['body[0][value]'] = $this->randomMachineName(16);
     $this->drupalPostForm('block/add/basic', $edit, t('Save'));

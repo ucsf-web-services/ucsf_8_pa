@@ -71,7 +71,7 @@ abstract class MapThemerBase extends PluginBase implements MapThemerInterface, C
         $this->t('Weight'),
         $table_settings['header']['label_alias'],
         $table_settings['header']['marker_icon'],
-        $this->t('Icon Image Style'),
+        $table_settings['header']['image_style'],
         $this->t('Hide from Legend'),
       ],
       '#tabledrag' => [
@@ -118,8 +118,9 @@ abstract class MapThemerBase extends PluginBase implements MapThemerInterface, C
         '#size' => 30,
         '#maxlength' => 128,
       ],
-      'icon_file' => $this->markerIcon->getIconFileManagedElement($row['icon_file_id'], $row['id']),
-      'image_style' => [
+      'icon_file' => array_key_exists('icon_file_id', $row) ? $this->markerIcon->getIconFileManagedElement($row['icon_file_id'], $row['id']) :
+      (array_key_exists('icon_file_uri', $row) ? $this->markerIcon->getIconFileSelectElement($row['icon_file_uri'], $row['id']) : NULL),
+      'image_style' => array_key_exists('icon_file_id', $row) ? [
         '#type' => 'select',
         '#title' => t('Image style'),
         '#title_display' => 'invisible',
@@ -130,12 +131,17 @@ abstract class MapThemerBase extends PluginBase implements MapThemerInterface, C
             ':input[name="style_options[map_marker_and_infowindow][theming]' . $row['id'] . '[icon_file][is_svg]"]' => ['checked' => FALSE],
           ],
         ],
-      ],
+      ] : [],
+      // @TODO: Monitor this core issue that prevents correct legend_exclude default
+      // value via ajax:
+      // Checkboxes default value is ignored by forms system during processing
+      // of AJAX request (https://www.drupal.org/project/drupal/issues/1100170)
       'legend_exclude' => [
         '#type' => 'checkbox',
         '#default_value' => $row['legend_exclude']['value'],
+        '#return_value' => 1,
       ],
-      'image_style_svg' => [
+      'image_style_svg' => array_key_exists('icon_file_id', $row) ? [
         '#type' => 'container',
         'warning' => [
           '#markup' => $this->t("Image style cannot apply to SVG Files,<br>SVG natural dimension will be applied."),
@@ -145,7 +151,7 @@ abstract class MapThemerBase extends PluginBase implements MapThemerInterface, C
             ':input[name="style_options[map_marker_and_infowindow][theming]' . $row['id'] . '[icon_file][is_svg]"]' => ['checked' => FALSE],
           ],
         ],
-      ],
+      ] : [],
       '#attributes' => $row['attributes'],
     ];
 

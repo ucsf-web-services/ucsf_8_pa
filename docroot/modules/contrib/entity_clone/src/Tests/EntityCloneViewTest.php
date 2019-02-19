@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneViewTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -29,7 +24,7 @@ class EntityCloneViewTest extends WebTestBase {
    * @var array
    */
   protected $permissions = [
-    'clone view entity'
+    'clone view entity',
   ];
 
   /**
@@ -49,6 +44,9 @@ class EntityCloneViewTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test view entity clone.
+   */
   public function testViewEntityClone() {
     $edit = [
       'id' => 'test_view_cloned',
@@ -66,4 +64,3 @@ class EntityCloneViewTest extends WebTestBase {
   }
 
 }
-

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneActionTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -30,7 +25,7 @@ class EntityCloneActionTest extends WebTestBase {
    */
   protected $permissions = [
     'administer actions',
-    'clone action entity'
+    'clone action entity',
   ];
 
   /**
@@ -50,6 +45,9 @@ class EntityCloneActionTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test action entity clone.
+   */
   public function testActionEntityClone() {
     foreach (\Drupal::service('plugin.manager.action')->getDefinitions() as $id => $definition) {
       if (is_subclass_of($definition['class'], '\Drupal\Core\Plugin\PluginFormInterface') && $definition['label'] == 'Send email') {
@@ -90,4 +88,3 @@ class EntityCloneActionTest extends WebTestBase {
   }
 
 }
-

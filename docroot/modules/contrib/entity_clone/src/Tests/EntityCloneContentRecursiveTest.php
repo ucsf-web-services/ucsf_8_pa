@@ -82,7 +82,7 @@ class EntityCloneContentRecursiveTest extends NodeTestBase {
         'default_value' => 1,
         'disable' => 0,
         'hidden' => 0,
-      ]
+      ],
     ];
     \Drupal::service('config.factory')->getEditable('entity_clone.settings')->set('form_settings', $settings)->save();
 

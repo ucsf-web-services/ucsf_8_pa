@@ -388,7 +388,7 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
       ]));
     }
     else {
-      $state = $this->t("<span class='geofield-map-warning'>Gmap Api Key missing - @settings_page_link<br>Google Maps functionalities not available.</span>", [
+      $state = $this->t("<span class='geofield-map-warning'>missing - @settings_page_link<br>Google Maps functionalities not available.</span>", [
         '@settings_page_link' => $this->link->generate($this->t('Set it in the Geofield Map Configuration Page'), Url::fromRoute('geofield_map.settings', [], [
           'query' => [
             'destination' => Url::fromRoute('<current>')

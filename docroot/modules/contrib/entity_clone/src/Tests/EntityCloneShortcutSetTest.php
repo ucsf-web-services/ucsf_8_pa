@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneShortcutSetTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -29,7 +24,7 @@ class EntityCloneShortcutSetTest extends WebTestBase {
    * @var array
    */
   protected $permissions = [
-    'clone shortcut_set entity'
+    'clone shortcut_set entity',
   ];
 
   /**
@@ -49,6 +44,9 @@ class EntityCloneShortcutSetTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test shortcut set entity clone.
+   */
   public function testShortcutSetEntityClone() {
     $edit = [
       'id' => 'test_shortcut_set_cloned',
@@ -66,4 +64,3 @@ class EntityCloneShortcutSetTest extends WebTestBase {
   }
 
 }
-

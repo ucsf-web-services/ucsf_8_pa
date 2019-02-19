@@ -219,13 +219,6 @@ class SettingsForm extends ConfigFormBase {
         '#title' => $this->t('Watchdog logs'),
         '#default_value' => $config->get('spi.send_watchdog'),
       );
-      $form['connection']['spi']['module_diff_data'] = array(
-        '#type' => 'checkbox',
-        '#title' => $this->t('Source code'),
-        '#default_value' => (int) $config->get('spi.module_diff_data') && $ssl_available,
-        '#description' => $this->t('Source code analysis requires a SSL connection and for your site to be publicly accessible. <a href=":url">Learn more</a>.', array(':url' => $help_url)),
-        '#disabled' => !$ssl_available,
-      );
       $form['connection']['acquia_dynamic_banner'] = array(
         '#type' => 'checkbox',
         '#title' => $this->t('Receive updates from Acquia Subscription'),
@@ -280,8 +273,7 @@ class SettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = \Drupal::configFactory()->getEditable('acquia_connector.settings');
     $values = $form_state->getValues();
-    $config->set('spi.module_diff_data', $values['module_diff_data'])
-      ->set('spi.site_name', $values['name'])
+    $config->set('spi.site_name', $values['name'])
       ->set('spi.dynamic_banner', $values['acquia_dynamic_banner'])
       ->set('spi.admin_priv', $values['admin_priv'])
       ->set('spi.send_node_user', $values['send_node_user'])

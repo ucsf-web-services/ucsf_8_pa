@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneFileTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\file\Entity\File;
@@ -30,7 +25,7 @@ class EntityCloneFileTest extends WebTestBase {
    * @var array
    */
   protected $permissions = [
-    'clone file entity'
+    'clone file entity',
   ];
 
   /**
@@ -50,15 +45,18 @@ class EntityCloneFileTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test file entity clone.
+   */
   public function testFileEntityClone() {
     /** @var \Drupal\file\FileInterface $file */
-    $file = File::create(array(
+    $file = File::create([
       'uid' => 1,
       'filename' => 'druplicon.txt',
       'uri' => 'public://druplicon.txt',
       'filemime' => 'text/plain',
       'status' => FILE_STATUS_PERMANENT,
-    ));
+    ]);
     file_put_contents($file->getFileUri(), 'hello world');
     $file->save();
 
@@ -76,4 +74,3 @@ class EntityCloneFileTest extends WebTestBase {
   }
 
 }
-

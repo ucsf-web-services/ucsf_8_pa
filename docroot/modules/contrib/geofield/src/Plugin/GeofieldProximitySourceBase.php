@@ -39,6 +39,19 @@ abstract class GeofieldProximitySourceBase extends PluginBase implements Geofiel
   protected $origin;
 
   /**
+   * Check if Origin is empty.
+   *
+   * @param array $origin
+   *   The origin array.
+   *
+   * @return bool
+   *   The bool result.
+   */
+  protected function originIsValidButEmpty(array $origin) {
+    return (isset($origin['lat']) && isset($origin['lon']) && empty($origin['lat']) && empty($origin['lon']));
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function buildOptionsForm(array &$form, FormStateInterface $form_state, array $options_parents, $is_exposed = FALSE) {
@@ -159,21 +172,20 @@ abstract class GeofieldProximitySourceBase extends PluginBase implements Geofiel
    */
   public function getHaversineOptions() {
 
-    try {
-      $origin = $this->getOrigin();
-      if (!$origin || !is_numeric($origin['lat']) || !is_numeric($origin['lon'])) {
-        throw new HaversineUnavailableException('Not able to calculate Haversine Options due to invalid Proximity origin location.');
-      }
+    $origin = $this->getOrigin();
+    if ($this->originIsValidButEmpty($origin)) {
+      return NULL;
+    }
+    if (!$origin || !is_numeric($origin['lat']) || !is_numeric($origin['lon'])) {
+      throw new HaversineUnavailableException('Not able to calculate Haversine Options due to invalid Proximity origin location.');
+    }
 
-      return [
-        'origin_latitude' => $origin['lat'],
-        'origin_longitude' => $origin['lon'],
-        'earth_radius' => constant($this->units),
-      ];
-    }
-    catch (\Exception $e) {
-      watchdog_exception('geofield', $e);
-    }
+    return [
+      'origin_latitude' => $origin['lat'],
+      'origin_longitude' => $origin['lon'],
+      'earth_radius' => constant($this->units),
+    ];
+
   }
 
   /**

@@ -176,6 +176,8 @@
 
       // If the feature is a Polyline or a Polygon, add to the Map and extend the Map bounds.
       if (feature.getPath) {
+        var feature_options = JSON.parse(self.map_data[mapid].map_geometries_options) || {};
+        feature.setOptions(feature_options);
         feature.setMap(map);
         var path = feature.getPath();
         var path_bounds = new google.maps.LatLngBounds();
@@ -210,6 +212,13 @@
           map.infowindow.open(map, feature);
         }, 200);
       }
+    },
+
+    map_refresh: function (mapid) {
+      var self = this;
+      setTimeout(function() {
+        google.maps.event.trigger(self.map_data[mapid].map, 'resize');
+      }, 10);
     },
 
     // Init Geofield Google Map and its functions.
@@ -413,20 +422,9 @@
         // At the beginning (once) ...
         google.maps.event.addListenerOnce(map, 'idle', function() {
 
-          // Fix map issue in field_groups / details & vertical tabs
-          // Show all map tiles when a map is shown in a vertical tab.
-          $('#' + mapid).closest('div.vertical-tabs').find('.vertical-tabs__menu-item a').click(function () {
-            self.map_refresh(mapid);
-          });
-          // Show all map tiles when a map is shown in a collapsible detail/ single tab.
-          $('#' + mapid).closest('.field-group-details, .field-group-tab').find('summary').click(function () {
-              self.map_refresh(mapid);
-            }
-          );
-
           // Open the Feature infowindow, if so set.
           if (self.map_data[mapid].map_marker_and_infowindow.force_open && parseInt(self.map_data[mapid].map_marker_and_infowindow.force_open) === 1) {
-            map.setCenter(features[0].getPosition());
+           // map.setCenter(features[0].getPosition());
             self.infowindow_open(mapid, features[0]);
           }
 

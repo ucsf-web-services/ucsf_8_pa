@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneCommentTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\comment\Tests\CommentTestBase;
@@ -24,7 +19,15 @@ class EntityCloneCommentTest extends CommentTestBase {
    *
    * @var array
    */
-  public static $modules = ['entity_clone', 'block', 'comment', 'node', 'history', 'field_ui', 'datetime'];
+  public static $modules = [
+    'entity_clone',
+    'block',
+    'comment',
+    'node',
+    'history',
+    'field_ui',
+    'datetime',
+  ];
 
   /**
    * Permissions to grant admin user.
@@ -42,7 +45,7 @@ class EntityCloneCommentTest extends CommentTestBase {
     'access comments',
     'access user profiles',
     'access content',
-    'clone comment entity'
+    'clone comment entity',
   ];
 
   /**
@@ -55,6 +58,9 @@ class EntityCloneCommentTest extends CommentTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test comment entity clone.
+   */
   public function testCommentEntityClone() {
     $subject = 'Test comment for clone';
     $body = $this->randomMachineName();

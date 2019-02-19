@@ -33,11 +33,11 @@ class ImageUpdateTest extends UpdatePathTestBase {
     // Check that view display 'node.article.default' doesn't depend on image
     // style 'image.style.large'.
     $dependencies = $this->config($view)->get('dependencies.config');
-    $this->assertFalse(in_array('image.style.large', $dependencies));
+    $this->assertNotContains('image.style.large', $dependencies);
     // Check that form display 'node.article.default' doesn't depend on image
     // style 'image.style.thumbnail'.
     $dependencies = $this->config($form)->get('dependencies.config');
-    $this->assertFalse(in_array('image.style.thumbnail', $dependencies));
+    $this->assertNotContains('image.style.thumbnail', $dependencies);
 
     // Run updates.
     $this->runUpdates();
@@ -45,11 +45,36 @@ class ImageUpdateTest extends UpdatePathTestBase {
     // Check that view display 'node.article.default' depend on image style
     // 'image.style.large'.
     $dependencies = $this->config($view)->get('dependencies.config');
-    $this->assertTrue(in_array('image.style.large', $dependencies));
+    $this->assertContains('image.style.large', $dependencies);
     // Check that form display 'node.article.default' depend on image style
     // 'image.style.thumbnail'.
     $dependencies = $this->config($view)->get('dependencies.config');
-    $this->assertTrue(in_array('image.style.large', $dependencies));
+    $this->assertContains('image.style.large', $dependencies);
+  }
+
+  /**
+   * Tests image_post_update_enable_filter_image_style().
+   *
+   * @see image_post_update_enable_filter_image_style()
+   */
+  public function testPostUpdateFilterImageStyle() {
+    // Check that the 'basic_html' and 'full_html' formats do not have the image
+    // style filter before starting the update.
+    $config_factory = \Drupal::configFactory();
+    $basic_html_data = $config_factory->get('filter.format.basic_html');
+    $this->assertNull($basic_html_data->get('filters.filter_image_style'));
+    $full_html_data = $config_factory->get('filter.format.full_html');
+    $this->assertNull($full_html_data->get('filters.filter_image_style'));
+
+    // Run updates.
+    $this->runUpdates();
+
+    // Check that the filter_format entities have been updated.
+    $basic_html_data = $config_factory->get('filter.format.basic_html');
+    $this->assertNotNull($basic_html_data->get('filters.filter_image_style'));
+    // Full HTML doesn't have filter_html configured, so it isn't updated.
+    $full_html_data = $config_factory->get('filter.format.full_html');
+    $this->assertNull($full_html_data->get('filters.filter_image_style'));
   }
 
 }

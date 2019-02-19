@@ -445,17 +445,12 @@ class EntityEmbedDialog extends FormBase {
     if ($editor->getFilterFormat()->filters('filter_align')->status) {
       $form['attributes']['data-align'] = array(
         '#title' => $this->t('Align'),
-        '#type' => 'select',
+        '#type' => 'radios',
         '#options' => array(
           '' => $this->t('None'),
           'left' => $this->t('Left'),
           'center' => $this->t('Center'),
           'right' => $this->t('Right'),
-          'half-image-right' => $this->t('Half Image Right'),
-          'half-image-left' => $this->t('Half Image Left'),
-          'half-image-right-full' => $this->t('Full Bleed Right'),
-          'half-image-left-full' => $this->t('Full Bleed Left'),
-          'full-bleed-image' => $this->t('Full Bleed')
         ),
         '#default_value' => isset($entity_element['data-align']) ? $entity_element['data-align'] : '',
         '#wrapper_attributes' => array('class' => array('container-inline')),
@@ -468,7 +463,7 @@ class EntityEmbedDialog extends FormBase {
     if ($editor->getFilterFormat()->filters('filter_caption')->status) {
       $form['attributes']['data-caption'] = array(
         '#title' => $this->t('Caption'),
-        '#type' => 'text_format', //textfield or text_format
+        '#type' => 'textfield',
         '#default_value' => isset($entity_element['data-caption']) ? Html::decodeEntities($entity_element['data-caption']) : '',
         '#element_validate' => array('::escapeValue'),
       );

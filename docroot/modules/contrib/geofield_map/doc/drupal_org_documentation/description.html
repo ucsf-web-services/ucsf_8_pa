@@ -6,6 +6,8 @@ It represents the perfect solution to:
   <li>render each Content's Locations throughout a fully customizable Interactive Geofield Map Formatter;</li>
   <li>expose and query Contents throughout fully customizable  Map Views Integration;</li>
   <li>implement advanced front-end Google Maps with Marker Icon & Infowindow advanced customizations, custom Google Map Styles and Marker Clustering capabilities;</li>
+  <li>customize Map Geometries properties (Lines & Polylines, Polygons,
+    Multipolygons, etc.), based on Google Maps Polygons APIs;</li>
 </ul>
 
 <hr>
@@ -41,12 +43,15 @@ providing an interactive and very intuitive map on which to perform localization
 </ul>
 
 <h4><strong>Geofield Map Formatter</strong></h4>
-An higly customizable  Google Map formatter, by which render and expose the contents Geofields / Geolocations, throughout:
+An higly customizable  Google Map formatter, by which render and expose the Geo contents throughout:
 <ul>
   <li>a wide set of Map options fully compliant with <a href="https://developers.google.com/maps/documentation/javascript/" title="Google Maps Js v3 APIs" target="_blank">Google Maps Js v3 APIs</a>;</li>
   <li>the possibility to fully personalize the Map Marker Icon and its Infowindow content;</li>
   <li>the integration of <a href="https://github.com/googlemaps/js-marker-clusterer" title="Markecluster Google Maps Library" target="_blank">Markecluster Google Maps Library</a> functionalities and its personalization;</li>
 </ul>
+
+<p>A "Geofield Google Map (static)" formatter is also available, that renders a
+  Google Map, accordingly to the <a href="https://developers.google.com/maps/documentation/maps-static/dev-guide" target="_blank">Google Maps Static API</a> (only Points supported, and not Geometries such as Polylines, Polygons, etc.).</p>
 
 <h4>Views Integration</h4>
 A dedicated Geofield Map View style plugin able to render a Views result on a higly customizable  Google Map,
@@ -100,22 +105,22 @@ Both in Geofield Map Formatter and in the Geofield Map View style it is possible
 
 <b>New: </b><u>SVG Image files are now supported for Marker Icons, via the <a href="https://www.drupal.org/project/svg_image">Svg Image module</a></u>
 
-  <h4>How to use.</h4>
+<h4>How to use.</h4>
 
-  <p>In a Geofield Map View Display, just go into its settings and choose the wanted MapThemer in the new Map Theming Options section/fieldset.
-    It is possible to associate a Drupal Managed File for each MapThemer plugin value and even the Icon Image style the Icon should be rendered on the Map. The Value labels and Icons might have an alias, might be reordered and might be hidden from the correspondent Legend Block.<p>
+<p>In a Geofield Map View Display, just go into its settings and choose the wanted MapThemer in the new Map Theming Options section/fieldset.
+  It is possible to associate a Drupal Managed File for each MapThemer plugin value and even the Icon Image style the Icon should be rendered on the Map. The Value labels and Icons might have an alias, might be reordered and might be hidden from the correspondent Legend Block.<p>
 
-  <p>Once defined and configured the Legend you are free to place it, once or several times, as a normal Drupal 8 block on the pages, with your logics and contextual rules.</p>
+<p>Once defined and configured the Legend you are free to place it, once or several times, as a normal Drupal 8 block on the pages, with your logics and contextual rules.</p>
 
-  <h4><strong>Notes & Warnings</strong></h4>
-  <ul>
-    <li>The Geofield Map module depends from the <a href="https://www.drupal.org/project/geofield" title="Geofield" target="_blank">Geofield</a> module;</li>
-    <li>A unique <u>Gmap Api Key</u> is required for both Google Mapping and Geocoding operations, all performed client-side by js.<br>
-      <a href="https://developers.google.com/maps/documentation/javascript/get-api-key#key-restrictions" target="_blank">It might/should be restricted using the Website Domain / HTTP referrers method</a>;</li>
-  </ul>
+<h4><strong>Notes & Warnings</strong></h4>
+<ul>
+  <li>The Geofield Map module depends from the <a href="https://www.drupal.org/project/geofield" title="Geofield" target="_blank">Geofield</a> module;</li>
+  <li>A unique <u>Gmap Api Key</u> is required for both Google Mapping and Geocoding operations, all performed client-side by js.<br>
+    <a href="https://developers.google.com/maps/documentation/javascript/get-api-key#key-restrictions" target="_blank">It might/should be restricted using the Website Domain / HTTP referrers method</a>;</li>
+</ul>
 
-  <h4><strong>Roadmap / Planned evolution</strong></h4>
-  <ul>
-    <li>Full integration with <a href="https://www.drupal.org/project/geocoder" title="Geocoder" target="_blank">Geocoder</a> module;</li>
-    <li><u>Leaflet Map library</u> support for the Geofield Map Formatter and the  Map Views Plugin. Now please refer to the <a href="https://www.drupal.org/project/leaflet" title="Leaflet" target="_blank">Leaflet</a> and the <a href="https://www.drupal.org/project/leaflet_markercluster" title="Leaflet Markercluster" target="_blank">Leaflet Markercluster</a> modules for Leaflet front-end mapping of Drupal 8 Geofields;</li>
-  </ul>
+<h4><strong>Roadmap / Planned evolution</strong></h4>
+<ul>
+  <li>Full integration with <a href="https://www.drupal.org/project/geocoder" title="Geocoder" target="_blank">Geocoder</a> module;</li>
+  <li><u>Leaflet Map library</u> support for the Geofield Map Formatter and the  Map Views Plugin. Now please refer to the <a href="https://www.drupal.org/project/leaflet" title="Leaflet" target="_blank">Leaflet</a> and the <a href="https://www.drupal.org/project/leaflet_markercluster" title="Leaflet Markercluster" target="_blank">Leaflet Markercluster</a> modules for Leaflet front-end mapping of Drupal 8 Geofields;</li>
+</ul>

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneDateFormatTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -30,7 +25,7 @@ class EntityCloneDateFormatTest extends WebTestBase {
    */
   protected $permissions = [
     'clone date_format entity',
-    'administer site configuration'
+    'administer site configuration',
   ];
 
   /**
@@ -50,6 +45,9 @@ class EntityCloneDateFormatTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test date format entity clone.
+   */
   public function testDateFormatEntityClone() {
     $edit = [
       'label' => 'Test date format for clone',
@@ -81,4 +79,3 @@ class EntityCloneDateFormatTest extends WebTestBase {
   }
 
 }
-

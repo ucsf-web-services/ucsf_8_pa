@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneSearchPageTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -30,7 +25,7 @@ class EntityCloneSearchPageTest extends WebTestBase {
    */
   protected $permissions = [
     'administer search',
-    'clone search_page entity'
+    'clone search_page entity',
   ];
 
   /**
@@ -50,6 +45,9 @@ class EntityCloneSearchPageTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test search page entity clone.
+   */
   public function testSearchPageEntityClone() {
     $edit = [
       'label' => 'Test search page for clone',
@@ -81,4 +79,3 @@ class EntityCloneSearchPageTest extends WebTestBase {
   }
 
 }
-

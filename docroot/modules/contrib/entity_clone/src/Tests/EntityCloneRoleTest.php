@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneRoleTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -30,7 +25,7 @@ class EntityCloneRoleTest extends WebTestBase {
    */
   protected $permissions = [
     'administer permissions',
-    'clone user_role entity'
+    'clone user_role entity',
   ];
 
   /**
@@ -50,6 +45,9 @@ class EntityCloneRoleTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test role entity clone.
+   */
   public function testRoleEntityClone() {
     $edit = [
       'label' => 'Test role for clone',
@@ -80,4 +78,3 @@ class EntityCloneRoleTest extends WebTestBase {
   }
 
 }
-

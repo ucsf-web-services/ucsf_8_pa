@@ -26,7 +26,6 @@ class EntityClonePermissions implements ContainerInjectionInterface {
    */
   protected $translationManager;
 
-
   /**
    * Constructs a new EntityClonePermissions instance.
    *

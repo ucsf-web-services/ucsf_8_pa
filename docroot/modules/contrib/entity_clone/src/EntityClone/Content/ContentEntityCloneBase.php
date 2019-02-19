@@ -58,15 +58,17 @@ class ContentEntityCloneBase implements EntityHandlerInterface, EntityCloneInter
   /**
    * {@inheritdoc}
    */
-  public function cloneEntity(EntityInterface $entity, EntityInterface $cloned_entity, array $properties = []) {
+  public function cloneEntity(EntityInterface $entity, EntityInterface $cloned_entity, array $properties = [], array &$already_cloned = []) {
     // Clone referenced entities.
+    $cloned_entity->save();
+    $already_cloned[$entity->getEntityTypeId()][$entity->id()] = $cloned_entity;
     if ($cloned_entity instanceof FieldableEntityInterface && $entity instanceof FieldableEntityInterface) {
       foreach ($cloned_entity->getFieldDefinitions() as $field_id => $field_definition) {
         if ($this->fieldIsClonable($field_definition)) {
           $field = $entity->get($field_id);
           /** @var \Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem $value */
           if ($field->count() > 0) {
-            $cloned_entity->set($field_id, $this->cloneReferencedEntities($field, $field_definition, $properties));
+            $cloned_entity->set($field_id, $this->cloneReferencedEntities($field, $field_definition, $properties, $already_cloned));
           }
         }
       }
@@ -109,7 +111,7 @@ class ContentEntityCloneBase implements EntityHandlerInterface, EntityCloneInter
    */
   protected function setClonedEntityLabel(EntityInterface $original_entity, EntityInterface $cloned_entity) {
     $label_key = $this->entityTypeManager->getDefinition($this->entityTypeId)->getKey('label');
-    if ($label_key) {
+    if ($label_key && $cloned_entity->hasField($label_key)) {
       $cloned_entity->set($label_key, $original_entity->label() . ' - Cloned');
     }
   }
@@ -123,28 +125,34 @@ class ContentEntityCloneBase implements EntityHandlerInterface, EntityCloneInter
    *   The field definition.
    * @param array $properties
    *   All new properties to replace old.
+   * @param array $already_cloned
+   *   List of all already cloned entities, used for circular references.
    *
    * @return array
    *   Referenced entities.
    */
-  protected function cloneReferencedEntities(FieldItemListInterface $field, FieldConfigInterface $field_definition, array $properties) {
+  protected function cloneReferencedEntities(FieldItemListInterface $field, FieldConfigInterface $field_definition, array $properties, array &$already_cloned) {
     $referenced_entities = [];
     foreach ($field as $value) {
-      // Check if we're not dealing with an entity that has been deleted in the meantime
+      // Check if we're not dealing with an entity
+      // that has been deleted in the meantime.
       if (!$referenced_entity = $value->get('entity')->getTarget()) {
         continue;
       }
       /** @var \Drupal\Core\Entity\ContentEntityInterface $referenced_entity */
       $referenced_entity = $value->get('entity')->getTarget()->getValue();
-      if (!empty($properties['recursive'][$field_definition->id()]['references'][$referenced_entity->id()]['clone'])) {
+      $child_properties = $this->getChildProperties($properties, $field_definition, $referenced_entity);
+      if (!empty($child_properties['clone'])) {
 
         $cloned_reference = $referenced_entity->createDuplicate();
         /** @var \Drupal\entity_clone\EntityClone\EntityCloneInterface $entity_clone_handler */
         $entity_clone_handler = $this->entityTypeManager->getHandler($referenced_entity->getEntityTypeId(), 'entity_clone');
-        $child_properties = $this->getChildProperties($properties, $field_definition, $referenced_entity);
-        $entity_clone_handler->cloneEntity($referenced_entity, $cloned_reference, $child_properties);
+        $entity_clone_handler->cloneEntity($referenced_entity, $cloned_reference, $child_properties['children'], $already_cloned);
 
         $referenced_entities[] = $cloned_reference;
+      }
+      elseif ($child_properties['is_circular']) {
+        $referenced_entities[] = $already_cloned[$referenced_entity->getEntityTypeId()][$referenced_entity->id()];
       }
       else {
         $referenced_entities[] = $referenced_entity;
@@ -168,8 +176,11 @@ class ContentEntityCloneBase implements EntityHandlerInterface, EntityCloneInter
    */
   protected function getChildProperties(array $properties, FieldConfigInterface $field_definition, EntityInterface $referenced_entity) {
     $child_properties = [];
-    if (isset($properties['recursive'][$field_definition->id()]['references'][$referenced_entity->id()]['children'])) {
-      $child_properties = $properties['recursive'][$field_definition->id()]['references'][$referenced_entity->id()]['children'];
+    if (isset($properties['recursive'][$field_definition->id()]['references'][$referenced_entity->id()])) {
+      $child_properties = $properties['recursive'][$field_definition->id()]['references'][$referenced_entity->id()];
+    }
+    if (!isset($child_properties['children'])) {
+      $child_properties['children'] = [];
     }
     return $child_properties;
   }

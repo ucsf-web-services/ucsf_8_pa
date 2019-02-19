@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneContentTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\node\Entity\Node;
@@ -32,7 +27,7 @@ class EntityCloneContentTest extends NodeTestBase {
   protected $permissions = [
     'bypass node access',
     'administer nodes',
-    'clone node entity'
+    'clone node entity',
   ];
 
   /**
@@ -52,6 +47,9 @@ class EntityCloneContentTest extends NodeTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test content entity clone.
+   */
   public function testContentEntityClone() {
     $node_title = $this->randomMachineName(8);
     $node = Node::create([

@@ -182,7 +182,7 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
       // remote value is null and the field value should be preserved
       // geofield has value and remote field value has not changed.
       if ((empty($remote_field->getValue()) && $geocoder['failure']['handling'] == 'preserve') ||
-      (isset($original_field) && !$entity->get($field_name)->isEmpty() && $remote_field->getValue() == $original_field->getValue())) {
+      (isset($original_field) && !$entity->get($field_name)->isEmpty() && $preprocessor_manager->sourceFieldIsSameOfOriginal($remote_field, $original_field))) {
         continue;
       }
 

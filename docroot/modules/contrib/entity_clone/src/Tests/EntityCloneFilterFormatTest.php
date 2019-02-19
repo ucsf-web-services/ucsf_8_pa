@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneFilterFormatTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -30,11 +25,13 @@ class EntityCloneFilterFormatTest extends WebTestBase {
    */
   protected $permissions = [
     'clone filter_format entity',
-    'administer filters'
+    'administer filters',
   ];
 
   /**
-   * An administrative user with permission to configure filter formats settings.
+   * An administrative user.
+   *
+   * With permission to configure filter formats settings.
    *
    * @var \Drupal\user\UserInterface
    */
@@ -50,6 +47,9 @@ class EntityCloneFilterFormatTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test filter format entity clone.
+   */
   public function testFilterFormatEntityClone() {
     $edit = [
       'name' => 'Test filter format for clone',
@@ -80,4 +80,3 @@ class EntityCloneFilterFormatTest extends WebTestBase {
   }
 
 }
-

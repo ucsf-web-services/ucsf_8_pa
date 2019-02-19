@@ -12,7 +12,7 @@ class TaxonomyTermEntityClone extends ContentEntityCloneBase {
   /**
    * {@inheritdoc}
    */
-  public function cloneEntity(EntityInterface $entity, EntityInterface $cloned_entity, array $properties = []) {
+  public function cloneEntity(EntityInterface $entity, EntityInterface $cloned_entity, array $properties = [], array &$already_cloned = []) {
     /** @var \Drupal\core\Entity\ContentEntityInterface $cloned_entity */
 
     // Enforce a parent if the cloned term doesn't have a parent.

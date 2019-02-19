@@ -153,7 +153,7 @@ class GeocodeOrigin extends GeofieldProximitySourceBase implements ContainerFact
       // Get the enabled/selected plugins.
       $enabled_plugins = [];
       foreach ($plugins_settings as $plugin_id => $plugin) {
-        if ($plugin['checked']) {
+        if (!empty($plugin['checked'])) {
           $enabled_plugins[] = $plugin_id;
         }
       }

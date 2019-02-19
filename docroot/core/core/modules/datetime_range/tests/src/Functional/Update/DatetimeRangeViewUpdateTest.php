@@ -9,10 +9,9 @@ use Drupal\views\Entity\View;
  * Test update of views with datetime_range filters.
  *
  * @see https://www.drupal.org/node/2786577
- * @see datetime_range_post_update_views_string_plugin_id()
+ * @see datetime_range_update_8001()
  *
  * @group Update
- * @group legacy
  */
 class DatetimeRangeViewUpdateTest extends UpdatePathTestBase {
 

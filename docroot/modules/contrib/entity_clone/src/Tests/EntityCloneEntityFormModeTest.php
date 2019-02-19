@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneEntityFormModeTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -29,11 +24,13 @@ class EntityCloneEntityFormModeTest extends WebTestBase {
    * @var array
    */
   protected $permissions = [
-    'clone entity_form_mode entity'
+    'clone entity_form_mode entity',
   ];
 
   /**
-   * An administrative user with permission to configure entity form modes settings.
+   * An administrative user.
+   *
+   * With permission to configure entity form modes settings.
    *
    * @var \Drupal\user\UserInterface
    */
@@ -49,6 +46,9 @@ class EntityCloneEntityFormModeTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test entity form mode entity clone.
+   */
   public function testEntityFormModeEntityClone() {
     $entity_form_modes = \Drupal::entityTypeManager()
       ->getStorage('entity_form_mode')
@@ -73,4 +73,3 @@ class EntityCloneEntityFormModeTest extends WebTestBase {
   }
 
 }
-

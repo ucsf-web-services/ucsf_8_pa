@@ -6,7 +6,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element;
+use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\TranslationManager;
 use Drupal\entity_clone\Event\EntityCloneEvent;
@@ -55,6 +55,13 @@ class EntityCloneForm extends FormBase {
   protected $eventDispatcher;
 
   /**
+   * The messenger service.
+   *
+   * @var \Drupal\Core\Messenger\Messenger
+   */
+  protected $messenger;
+
+  /**
    * Constructs a new Entity Clone form.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -65,13 +72,16 @@ class EntityCloneForm extends FormBase {
    *   The string translation manager.
    * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
    *   The event dispatcher service.
+   * @param \Drupal\Core\Messenger\Messenger $messenger
+   *   The messenger service.
    *
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, RouteMatchInterface $route_match, TranslationManager $string_translation, EventDispatcherInterface $eventDispatcher) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, RouteMatchInterface $route_match, TranslationManager $string_translation, EventDispatcherInterface $eventDispatcher, Messenger $messenger) {
     $this->entityTypeManager = $entity_type_manager;
     $this->stringTranslationManager = $string_translation;
     $this->eventDispatcher = $eventDispatcher;
+    $this->messenger = $messenger;
 
     $parameter_name = $route_match->getRouteObject()->getOption('_entity_clone_entity_type_id');
     $this->entity = $route_match->getParameter($parameter_name);
@@ -87,7 +97,8 @@ class EntityCloneForm extends FormBase {
       $container->get('entity_type.manager'),
       $container->get('current_route_match'),
       $container->get('string_translation'),
-      $container->get('event_dispatcher')
+      $container->get('event_dispatcher'),
+      $container->get('messenger')
     );
   }
 
@@ -112,12 +123,12 @@ class EntityCloneForm extends FormBase {
 
       $form['clone'] = [
         '#type' => 'submit',
-        '#value' => 'Clone',
+        '#value' => $this->stringTranslationManager->translate('Clone'),
       ];
 
       $form['abort'] = [
         '#type' => 'submit',
-        '#value' => 'Abort',
+        '#value' => $this->stringTranslationManager->translate('Abort'),
         '#submit' => ['::cancelForm'],
       ];
     }
@@ -151,7 +162,7 @@ class EntityCloneForm extends FormBase {
     $cloned_entity = $entity_clone_handler->cloneEntity($this->entity, $duplicate, $properties);
     $this->eventDispatcher->dispatch(EntityCloneEvents::POST_CLONE, new EntityCloneEvent($this->entity, $duplicate, $properties));
 
-    drupal_set_message($this->stringTranslationManager->translate('The entity <em>@entity (@entity_id)</em> of type <em>@type</em> was cloned', [
+    $this->messenger->addMessage($this->stringTranslationManager->translate('The entity <em>@entity (@entity_id)</em> of type <em>@type</em> was cloned', [
       '@entity' => $this->entity->label(),
       '@entity_id' => $this->entity->id(),
       '@type' => $this->entity->getEntityTypeId(),

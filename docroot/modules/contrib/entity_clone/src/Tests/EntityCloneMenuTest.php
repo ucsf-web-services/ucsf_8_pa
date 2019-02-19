@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneMenuTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -30,7 +25,7 @@ class EntityCloneMenuTest extends WebTestBase {
    */
   protected $permissions = [
     'clone menu entity',
-    'administer menu'
+    'administer menu',
   ];
 
   /**
@@ -50,6 +45,9 @@ class EntityCloneMenuTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test menu entity clone.
+   */
   public function testMenuEntityClone() {
 
     $menus = \Drupal::entityTypeManager()
@@ -75,4 +73,3 @@ class EntityCloneMenuTest extends WebTestBase {
   }
 
 }
-

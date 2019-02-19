@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneUserTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -29,7 +24,7 @@ class EntityCloneUserTest extends WebTestBase {
    * @var array
    */
   protected $permissions = [
-    'clone user entity'
+    'clone user entity',
   ];
 
   /**
@@ -49,6 +44,9 @@ class EntityCloneUserTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test user entity clone.
+   */
   public function testUserEntityClone() {
     $this->drupalPostForm('entity_clone/user/' . $this->adminUser->id(), [], t('Clone'));
 
@@ -62,4 +60,3 @@ class EntityCloneUserTest extends WebTestBase {
   }
 
 }
-

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneEntityViewModeTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -29,11 +24,13 @@ class EntityCloneEntityViewModeTest extends WebTestBase {
    * @var array
    */
   protected $permissions = [
-    'clone entity_view_mode entity'
+    'clone entity_view_mode entity',
   ];
 
   /**
-   * An administrative user with permission to configure entity view modes settings.
+   * An administrative user.
+   *
+   * With permission to configure entity view modes settings.
    *
    * @var \Drupal\user\UserInterface
    */
@@ -49,6 +46,9 @@ class EntityCloneEntityViewModeTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test entity view mode entity clone.
+   */
   public function testEntityViewModeEntityClone() {
     $entity_view_modes = \Drupal::entityTypeManager()
       ->getStorage('entity_view_mode')
@@ -73,4 +73,3 @@ class EntityCloneEntityViewModeTest extends WebTestBase {
   }
 
 }
-

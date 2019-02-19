@@ -15,7 +15,6 @@ interface EntityCloneFormInterface {
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity.
-   *
    * @param bool $parent
    *   Is the parent form element.
    *

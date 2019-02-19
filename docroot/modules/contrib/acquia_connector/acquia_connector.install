@@ -261,3 +261,17 @@ function acquia_connector_update_8005() {
   $config->save(TRUE);
 }
 
+
+/**
+ * Delete the spi module diff data settings.
+ */
+function acquia_connector_update_8006() {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('acquia_connector.settings');
+
+  if ($config->get('spi.module_diff_data')) {
+    $config->clear('spi.module_diff_data');
+  }
+
+  $config->save(TRUE);
+}

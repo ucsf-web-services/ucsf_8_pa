@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\entity_clone\Tests\EntityCloneBlockTest.
- */
-
 namespace Drupal\entity_clone\Tests;
 
 use Drupal\block\Entity\Block;
@@ -31,7 +26,7 @@ class EntityCloneBlockTest extends WebTestBase {
    */
   protected $permissions = [
     'administer blocks',
-    'clone block entity'
+    'clone block entity',
   ];
 
   /**
@@ -51,6 +46,9 @@ class EntityCloneBlockTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
   }
 
+  /**
+   * Test block entity clone.
+   */
   public function testBlockEntityClone() {
     $config = \Drupal::configFactory();
     $block = Block::create([
@@ -79,4 +77,3 @@ class EntityCloneBlockTest extends WebTestBase {
   }
 
 }
-
