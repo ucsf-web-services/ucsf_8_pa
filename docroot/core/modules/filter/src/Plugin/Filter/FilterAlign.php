@@ -31,14 +31,16 @@ class FilterAlign extends FilterBase {
         // Read the data-align attribute's value, then delete it.
         $align = $node->getAttribute('data-align');
         $node->removeAttribute('data-align');
-
+        // UCSF - Remove restriction on only left, center, right
+        $classes = $node->getAttribute('class');
+        $classes = (strlen($classes) > 0) ? explode(' ', $classes) : [];
         // If one of the allowed alignments, add the corresponding class.
         if (in_array($align, ['left', 'center', 'right'])) {
-          $classes = $node->getAttribute('class');
-          $classes = (strlen($classes) > 0) ? explode(' ', $classes) : [];
           $classes[] = 'align-' . $align;
-          $node->setAttribute('class', implode(' ', $classes));
+        } else {
+          $classes[] = $align;
         }
+        $node->setAttribute('class', implode(' ', $classes));
       }
       $result->setProcessedText(Html::serialize($dom));
     }

@@ -1,23 +1,22 @@
 diff --git a/modules/filter/src/Plugin/Filter/FilterAlign.php b/modules/filter/src/Plugin/Filter/FilterAlign.php
-index a3739ab82..fa3dd27e2 100644
+index a3739ab82..1ef59b2c3 100644
 --- a/modules/filter/src/Plugin/Filter/FilterAlign.php
 +++ b/modules/filter/src/Plugin/Filter/FilterAlign.php
-@@ -31,14 +31,19 @@ public function process($text, $langcode) {
+@@ -31,14 +31,16 @@ public function process($text, $langcode) {
          // Read the data-align attribute's value, then delete it.
          $align = $node->getAttribute('data-align');
          $node->removeAttribute('data-align');
 -
-+        
++        // UCSF - Remove restriction on only left, center, right
++        $classes = $node->getAttribute('class');
++        $classes = (strlen($classes) > 0) ? explode(' ', $classes) : [];
          // If one of the allowed alignments, add the corresponding class.
          if (in_array($align, ['left', 'center', 'right'])) {
-           $classes = $node->getAttribute('class');
-           $classes = (strlen($classes) > 0) ? explode(' ', $classes) : [];
+-          $classes = $node->getAttribute('class');
+-          $classes = (strlen($classes) > 0) ? explode(' ', $classes) : [];
            $classes[] = 'align-' . $align;
 -          $node->setAttribute('class', implode(' ', $classes));
-+          //$node->setAttribute('class', implode(' ', $classes));
-+        }
-+        //allow any alignment class, should not be this restrictive
-+        if (!in_array($align, ['left', 'center', 'right'])) {
++        } else {
 +          $classes[] = $align;
          }
 +        $node->setAttribute('class', implode(' ', $classes));
