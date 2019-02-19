@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\image\Plugin\Filter;
+//use Drupal\Component\Serialization\Json;
 
 /**
  * Implements hook_preprocess_HOOK() for HTML document templates.
@@ -172,4 +174,57 @@ function seven_form_media_form_alter(&$form, FormStateInterface $form_state) {
   // display a top border over the published checkbox by defining a
   // media-edit-form.html.twig template the same way node does.
   $form['#attached']['library'][] = 'seven/media-form';
+}
+
+/**
+ * Hook into the entity_embed_dialog
+ * Allow additional styles over left, right, center.
+ * Allow the caption to support the WYSIWYG
+ * Filter the Image Style options based on the Image Styles Options patch.
+ * https://www.drupal.org/files/issues/2018-09-19/2061377-328.patch
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function seven_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_state) {
+  /** @var \Drupal\editor\EditorInterface $editor */
+  $editor = $form_state->getBuildInfo()['args'][0];
+
+  /** @var \Drupal\image\Plugin\Filter\FilterImageStyle $filter */
+  $filter = $editor->getFilterFormat()->filters('filter_image_style');
+
+  $styles = $filter->getAllowedImageStyleOptions();
+
+  // After getting the allowed image styles, filter out options we don't need.
+  if (isset($form['attributes']['data-entity-embed-display-settings']['image_style'])) {
+    foreach ($form['attributes']['data-entity-embed-display-settings']['image_style']['#options'] as $name => $value) {
+      if (!array_key_exists($name, $styles)) {
+        unset($form['attributes']['data-entity-embed-display-settings']['image_style']['#options'][$name]);
+      }
+    }
+  }
+
+  /*
+   * Was going to use this to filter on them using Javascript if no other way.
+  $form['attributes']['entity-embed-filter-image-styles'] = array(
+    '#type' => 'hidden',
+    '#value' => Json::encode($styles)
+  );
+  */
+
+  // Add the new styles to the Entity Embed popup.
+  if (isset($form['attributes']['data-align'])) {
+    $form['attributes']['data-align']['#options'] += array (
+      'half-image-right' => t('Half Image Right'),
+      'half-image-left' => t('Half Image Left'),
+      'half-image-right-full' => t('Full Bleed Right'),
+      'half-image-left-full' => t('Full Bleed Left'),
+      'full-bleed-image' => t('Full Bleed')
+    );
+    $form['attributes']['data-align']['#type'] = 'select';
+  }
+
+  if (isset($form['attributes']['data-caption'])) {
+    $form['attributes']['data-caption']['#type'] = 'text_format';
+  }
+
 }
