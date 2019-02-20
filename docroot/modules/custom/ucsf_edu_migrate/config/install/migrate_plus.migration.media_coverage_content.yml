@@ -103,6 +103,14 @@ process:
 
   field_date_and_time: pub_date
 
+  created:
+    plugin: format_date
+    from_format: 'Y-m-d\TH:i:s'
+    to_format: 'U'
+    source: pub_date
+
+  changed: updated-date
+
   field_external_url: ex-url
 
   field_areas:
