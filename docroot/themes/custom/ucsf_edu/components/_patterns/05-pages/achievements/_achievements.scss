@@ -1,7 +1,41 @@
-.achievements-banner {
-  max-width: $full;
+.achievements-carousel {
+  list-style: none;
+  padding: 0;
   margin: 0 auto;
-  padding: $space-seven 0 $space-ten $space-ten;
+  max-width: $full;
+  overflow: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
+  padding-top: $space-seven;
+  margin-bottom: $space-twelve;
+
+  li {
+    display: inline-block;
+    list-style: none;
+  }
+}
+
+.achievements-carousel__one {
+  width: 1167px;
+  position: relative;
+}
+
+.achievements-carousel__two {
+  width: 801px;
+}
+
+.achievements-carousel__three {
+  width: 1123px;
+}
+
+.achievements-banner {
+  margin: 0 auto;
+  padding: 0 0 $space-ten 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 450px;
+  white-space: normal;
 }
 
 .achievements-banner__title {
@@ -10,6 +44,7 @@
 
 .achievements-banner__subheading {
   margin-bottom: 0;
+  margin-top: $space-three;
 }
 
 .achievements-banner__links {
@@ -57,4 +92,114 @@
   @include heading;
 
   margin-bottom: $space-two;
+}
+
+.nobel-card__date {
+  @include eyebrow;
+
+  margin-bottom: $space-two;
+  padding-top: $space-two;
+  line-height: 1;
+}
+
+.nobel-card__title {
+  @include heading-three;
+
+  margin: 0;
+  margin-bottom: $space-two;
+}
+
+.nobel-card__content {
+  margin-bottom: 0;
+}
+
+.memberships {
+  @include grid;
+
+  grid-column: 1/-1;
+  padding: $space-ten;
+  padding-bottom: $space-five;
+}
+
+.memberships__content {
+  grid-column: 9/-1;
+  grid-row: 1/-1;
+}
+
+.memberships__title {
+  @include heading-two;
+
+  line-height: 1.2;
+  margin-bottom: 0;
+}
+
+.memberships-cards {
+  grid-column: 1/9;
+  grid-row: 1/-1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @include grid-three;
+}
+
+.memberships-cards__card {
+  border: 1px solid $gray-border;
+  margin-right: $space-three;
+  padding: $space-four;
+  min-height: 285px;
+  margin-bottom: $space-five;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.memberships-cards__title,
+.memberships-cards__subtitle {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.memberships-cards__title {
+  @include display;
+
+  color: $teal;
+  margin-bottom: $space-four;
+}
+
+.memberships-cards__subtitle {
+  font-family: $font-helvetica-neue-medium;
+}
+
+.award-winners {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.award-winners__date {
+  @include eyebrow;
+}
+
+.award-winners__name {
+  margin-top: 0;
+  border-bottom: 1px solid $gray-border;
+  padding-bottom: $space-three;
+  margin-right: $space-fourteen;
+  font-family: $font-helvetica-neue-medium;
+
+  a {
+    color: $navy;
+    text-decoration: none;
+
+    &:hover {
+      color: $blue;
+    }
+  }
+}
+
+.award-winners__image {
+  float: right;
 }
