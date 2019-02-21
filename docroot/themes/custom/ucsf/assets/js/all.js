@@ -9,5 +9,15 @@
       });
     }
   };
+
+  Drupal.behaviors.slickNav = {
+    attach: function attach(context, settings) {
+
+      $('#block-ucsf-main-menu').slicknav({
+        prependTo: '.slicknav-placeholder',
+        label: ''
+      });
+    }
+  };
 })(jQuery);
 //# sourceMappingURL=all.js.map

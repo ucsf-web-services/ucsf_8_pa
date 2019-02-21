@@ -1,0 +1,39 @@
+.universal-header-region {
+  @include clearfix;
+  @include fs-universal-header;
+  background: $c-navy;
+
+  a {
+    color: $c-white;
+  }
+}
+
+.universal-header {
+  @include grid-two;
+  margin-bottom: 0;
+  max-width: $bp-xl;
+  vertical-align: middle;
+
+  .universal-header__title {
+    margin: 0;
+    padding: $space 0 $space $space;
+
+    @include breakpoint($bp-medium) {
+      display: inline-block;
+    }
+  }
+
+  .universal-header__give {
+    display: none;
+    padding: $space 0;
+    padding-top: 10px;
+    min-width: $space-nineteen;
+    border: none;
+    background: $c-blue;
+    color: $c-white;
+
+    @include breakpoint($bp-medium) {
+      display: inline-block;
+    }
+  }
+}

@@ -7,4 +7,16 @@
       });
     }
   };
+  
+  
+  Drupal.behaviors.slickNav = {
+    attach: function (context, settings) {
+  
+      $('#block-ucsf-main-menu').slicknav({
+        prependTo: '.slicknav-placeholder',
+        label: '',
+      });
+    }
+  };
+
 })(jQuery);

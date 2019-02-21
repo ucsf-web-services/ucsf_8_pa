@@ -8,14 +8,10 @@
   </div>
   <div class="header-region">
     <header class="header" role="banner">
-      <figure class="logo">
-        <a class="logo__link" href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home">
-          <picture class="logo__image">
-            <img class="logo__img" src="/{{ directory ~ '/logo.svg' }}" alt="{{ 'Home'|t }}">
-          </picture>
-        </a>
-      </figure>
-      {{ content }}
+      {% include '@theme/header/header--logo.twig' %}
+      {% include '@theme/header/header--search.twig' %}
+      <div class="slicknav-placeholder"></div>
+      {{ content }} {# main nav #}
     </header>
   </div>
 {% endblock content %}
