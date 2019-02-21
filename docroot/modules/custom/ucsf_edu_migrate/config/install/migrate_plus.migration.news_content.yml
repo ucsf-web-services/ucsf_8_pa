@@ -153,6 +153,8 @@ process:
     plugin: default_value
     default_value: article
 
+  nid: nid
+
   title: news_title
 
   body/value: body
@@ -171,10 +173,6 @@ process:
       plugin: data_lookup
       source: areas_tax
       file: public://area_tax_map.csv
-    -
-      plugin: explode
-      source: areas_tax
-      delimiter: ','
 
   uid: uid
 
@@ -337,6 +335,17 @@ process:
       source: author
       message: 'there was an empty field'
 
+  lookupval:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: cus_author
+      message: 'there was an empty field'
+    -
+      plugin: data_condense
+      source: cus_author
+
+
   field_custom_author:
     -
       plugin: skip_on_empty
@@ -347,16 +356,6 @@ process:
       plugin: data_lookup
       source: '@lookupval'
       file: public://authormap.csv
-
-  lookupval:
-    -
-      plugin: skip_on_empty
-      method: process
-      source: cus_author
-      message: 'there was an empty field'
-    -
-      plugin: data_condense
-      source: cus_author
 
   cus_author_val:
     -
