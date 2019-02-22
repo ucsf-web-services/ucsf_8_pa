@@ -10,52 +10,34 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
+use Symfony\Component\HttpFoundation\Request as Post;
 
 class UcsfsearchController extends ControllerBase {
 
-  public function content() {
+  public function content(Post $request) {
 
-    $search = '';
+    $searchterm = '';
 
     if(isset($_GET['search'])) {
-      $search = preg_replace("/\r\n|\r|\n/", ' ', $_GET['search']);
-      $search = Xss::filter(htmlspecialchars($search, ENT_QUOTES));
+      $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $_GET['search']);
+      $searchterm = Xss::filter(htmlspecialchars($searchterm, ENT_QUOTES));
     }
 
-    $directory = $this->directoryLookup($search);
+    $directory = $this->directoryLookup($searchterm);
 
-    $markup = <<<XHTML
-
-        <div class="form-search-block-div">
-          <div class="search-box-container">
-            <gcse:searchbox enableAutoComplete="true"></gcse:searchbox>
-          </div>
-          <div id="directorySearch">
-
-          </div>
-          <div id="websiteSearch">
-
-          </div>
-          <div id="cse">
-            <gcse:searchresults queryParameterName="search" {$refinement}></gcse:searchresults>
-          </div>
-        </div>
-XHTML;
-
-
-      return [
-        'ucsfsearch' => [
-          '#type' => 'inline_template',
-          '#template' => $markup,
-          '#attached' => [
-            'library' => [
-              'ucsf_search/ucsf_search'
-            ]
-          ]
+    return [
+      '#theme' => 'ucsf_universal_search',
+      '#results' => $directory,
+      '#directory' => $directory,
+      '#searchterm' => $searchterm,
+      '#attached' => [
+        'library' => [
+          'ucsf_search/ucsf_search'
         ]
-      ];
+      ]
+    ];
 
-    }
+  }
 
 
 
@@ -65,25 +47,36 @@ XHTML;
    */
   protected function directoryLookup($search) {
 
-      $searchterm = explode(' ', urldecode($search));
+    //don't search anything under 3 characters, reduce lookup load
+    if (strlen($search)<3) {
+      return [];
+    }
+    //url encode the string for searching
+    $search = urlencode($search);
 
-      if (count($searchterm) < 2) {
-        return array();
+    //call GuzzleHTTP for the lookup and JSON decode the body request
+    $client       = new Client(array('base_uri' => 'https://directory.ucsf.edu'));
+    $res          = $client->request('GET', "/people/search/name/{$search}/json");
+    $jsonresponse = json_decode($res->getBody(), TRUE);
+
+
+    //return the array of data values
+    if (isset($jsonresponse['data'])) {
+      $data = $jsonresponse['data'];
+      // fix the odd array structure from the API
+      foreach ($data as $person) {
+        foreach ($person as $key=>$value) {
+            $person[$key] = $value[0];
+        }
+        $directory[] = $person;
       }
 
-      $searchterm = urlencode(implode(' ', $searchterm));
 
-      $client = new Client(array('base_uri' => 'https://directory.ucsf.edu'));
-      $res = $client->request('GET', "/people/search/name/{$searchterm}/json");
-      $response = json_decode($res->getBody(), TRUE);
-
-      //dpm($response);
-      if (isset($response['data'][0])) {
-        // return the json results
-        return $response['data'][0];
-      }
-
+      //dpm($directory);
+      return $directory;
+    } else {
+      return [];
     }
 
-
+  }
 }

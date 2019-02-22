@@ -24,6 +24,41 @@ function ucsf_search_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
+ * Implements HOOK_theme() to define all templates needed
+ * @param $existing
+ * @param $type
+ * @param $theme
+ * @param $path
+ * @return array
+ */
+function ucsf_search_theme($existing, $type, $theme, $path) {
+  return [
+    'ucsf_universal_search' => [
+      'variables' => [
+        'results' => NULL,
+        'directory' => NULL,
+        'websites' => NULL,
+        'searchterm' => NULL
+      ],
+    ],
+    'ucsf_directory_search' => [
+      'variables' => [
+        'results' => NULL,
+        'directory' => NULL,
+        'searchterm' => NULL
+      ],
+    ],
+    'ucsf_websites_search' => [
+      'variables' => [
+        'results' => NULL,
+        'websites' => NULL,
+        'searchterm' => NULL
+      ],
+    ]
+  ];
+}
+
+/**
  * Implements hook_cron().
  */
 function ucsf_search_cron() {

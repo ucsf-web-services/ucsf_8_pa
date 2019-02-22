@@ -22,7 +22,7 @@ class ucsf_search_block extends BlockBase {
 
 
 
-
+    //converting all this into a twig file is hard!
     $markup = <<<MARKUP
         <div class="form-search-block-div">
           <div class="search-box-container">
@@ -34,15 +34,20 @@ class ucsf_search_block extends BlockBase {
         </div>
 MARKUP;
 
-    return array(
-      '#type' => 'inline_template',  //this avoids having Drupal strip tags out, like GCSE tags.
-      '#template' => $markup,
-      '#attached' => array(
-        'library' => array(
-          'ucsf_search/ucsf_search'
-        ),
-      )
-    );
+
+   return array(
+     '#type' => 'inline_template',  //this avoids having Drupal strip tags out, like GCSE tags.
+     '#template' => $markup,
+     '#attached' => array(
+       'library' => array(
+         'ucsf_search/ucsf_search'
+       ),
+     )
+   );
+
+
+
+
   }
 
   /**

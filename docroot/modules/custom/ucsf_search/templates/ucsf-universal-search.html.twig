@@ -1,0 +1,64 @@
+{#
+/**
+ * @file
+ * This implements the universal search main page
+ * @Zeplin universal_search_desktop_result
+ *
+ * Uses unordered list markup in both compact and extended modes.
+ *
+ * Available variables:
+ *  - searchterm - search term used on the site
+ *  - directory - list of results from the API at https://directory.ucsf.edu/people/search/name/john+kealy/json
+ *      - displayname
+ *      - sn
+ *      - givenname
+ *      - ucsfeduworkingtitle
+ *      - uid
+ *      - mail
+ *      - telephonenumber
+ *      - departmentname
+ *      - baseaddress
+ *      - see API examples for more options
+ *  - websites  - list of results from websites.ucsf.edu that match search term
+ *
+ *  @see UcsfsearchController::content()
+ */
+#}
+<div class="form-search-block-div">
+    <div class="search-box-container">
+        <!-- This was the Google search input box, but didn't allow some things to work right
+        <!-- gcse:searchbox enableAutoComplete="true"></gcse:searchbox -->
+        <form action="/search" method="get">
+            <input type="text" name="search" id="search" size="32" alt="Search text" class="searchbox" value="{{ searchterm }}" />
+            <button type="submit">Search</button>
+        </form>
+        {# We should style these like Zeplin mockup and have them link to other routes #}
+        <ul id="universalSearchTabs">
+            <li><a href="/search?search={{ searchterm }}">All Results</a></li>
+            <li><a href="/search/news?search={{ searchterm }}">News</a></li>
+            <li><a href="/search/people?search={{ searchterm }}">People Directory</a></li>
+            <li><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
+        </ul>
+    </div>
+
+    <div id="universalDirectory">
+        <h3>People Directory</h3>
+        <ul>
+        {% for person in directory %}
+        <li>
+            <a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a>|
+            {% if person.mail %} {{ person.mail }}, {% endif %}
+            {% if person.telephonenumber %} {{ person.telephonenumber }}, {% endif %}
+            {{ person.departmentname }}
+        </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div id="universalWebsites">
+        <h3>Websites</h3>
+    </div>
+    <div id="cse">
+        <h3>All Results</h3>
+        <gcse:searchresults-only queryParameterName="search"></gcse:searchresults-only>
+    </div>
+</div>
