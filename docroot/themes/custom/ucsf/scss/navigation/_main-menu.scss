@@ -1,89 +1,62 @@
-#block-ucsf-main-menu {
+header .menu--main {
+  grid-column: span 2;
+
   @include breakpoint($bp-until-large) {
     display: none;
   }
-}
 
-header .menu--main {
-
-  ul {
-    @include ul-menu;
+  .menu--main-ul-wrapper {
+    padding-left: 0;
   }
-
-  li {
-    display: block;
-
-    @include breakpoint($bp-medium) {
-      display: inline-block;
-    }
-  }
-
 
   .menu--main-ul {
-    //@include menu--main--open-transition;
-  }
+    @include visually-hidden;
 
-  // Level One  Links
-  > ul  {
-    //left: 0;
-    //position: absolute;
-    //top: 50px;
-    //width: 100%;
-    //z-index: 4;
-
-    @include breakpoint($bp-medium) {
-      //left: auto;
-      //position: relative;
-      //top: auto;
-    }
-  }
-
-  > ul > li {
-    > a {
+    a {
       display: block;
-
-    }
-
-    // hover/active state
-    &.menu-item--active-trail > a,
-    > a.is-active,
-    > a:hover {
-      text-decoration: none;
-    }
-
-    &.open > a,
-    a.is-active,
-    &.menu-item--active-trail > a {
-      color: $c-teal;
     }
   }
 
-  // Level Two - Dropdowns
-  .menu-item--expanded {
-    //@include dropdown;
+  .menu-item {
+    display: inline-block;
+
+    &:hover > .menu--main-ul {
+      @include visually-hidden-reset;
+      background: $c-grey-pale;
+      height: 520px;
+      right: 0;
+      z-index: $z-dropdown;
+      width: 1021px;
+    }
+  }
+
+  a {
+    line-height: 1.5;
+    letter-spacing: 0;
+    text-decoration: none;
+    border-bottom: none;
+    color: $gray-blue;
+    display: inline-block;
+    font-size: $font-size-sm;
+    padding: $space 0;
+    margin: 0 $space-five;
+    text-transform: none;
     position: relative;
+    width: auto;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    height: $space-octuple;
+    padding-right: 0;
+    margin-right: 0;
 
-    //i {
-    //  display: block;
-    //  position: absolute;
-    //  right: 0;
-    //  top: 0;
-    //  cursor: pointer;
-    //}
-
-    //.fa-angle-down {
-    //  display: none;
-    //}
-
-    &:hover i,
-    &.menu-item--active-trail i {
-      color: $c-teal;
+    &.is-active,
+    &:active,
+    &:hover {
+      border-bottom: 4px solid $blue;
     }
+  }
 
-    &.open {
-      > i {
-        color: $c-teal;
-      }
-    }
+  button {
+    display: none;
   }
 }
