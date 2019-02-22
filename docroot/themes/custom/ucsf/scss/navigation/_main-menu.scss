@@ -101,7 +101,22 @@ header .menu--main {
       display: block;
     }
 
+    .menu-item--expanded {
+      position: relative;
+
+      i {
+        position: absolute;
+        right: 0;
+        top: 13px;
+      }
+
+      &:hover i {
+        color: $c-blue;
+      }
+    }
+
     a {
+      @include link-colors($c-navy, $c-blue);
       border-bottom: 1px solid #d5d9de;
       display: block;
       font-size: 18px;

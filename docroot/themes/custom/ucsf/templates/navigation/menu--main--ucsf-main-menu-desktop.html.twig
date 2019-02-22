@@ -54,6 +54,11 @@
         {% endif %}
       >
         {{ link(item.title, item.url, menu_attributes.link) }}
+
+        {% if menu_level > 0 and item.is_expanded %}
+          <i class="fas fa-angle-right"></i>
+        {% endif %}
+
         {% if item.below %}
 
           <div class="menu-child--wrapper">
