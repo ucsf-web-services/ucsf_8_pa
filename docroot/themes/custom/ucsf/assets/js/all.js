@@ -14,6 +14,7 @@
     attach: function attach(context, settings) {
 
       $('#block-ucsf-main-menu').slicknav({
+        duplicate: false,
         prependTo: '.slicknav-placeholder',
         label: '',
         openedSymbol: '<i class="fas fa-angle-up">',
