@@ -4,12 +4,12 @@ header .menu--main {
   @include breakpoint($bp-until-large) {
     display: none;
   }
+}
 
-  .menu-parent-wrapper {
-    padding-left: 0;
-  }
+[block="block-ucsf-main-menu-desktop"] {
+  padding-left: 0;
 
-  .menu-child-wrapper {
+  .menu-child--wrapper {
     @include visually-hidden;
 
     a {
@@ -20,14 +20,44 @@ header .menu--main {
   .menu-item {
     display: inline-block;
 
-    &:hover > .menu-child-wrapper {
+    &:hover > .menu-child--wrapper {
       @include visually-hidden-reset;
-      background: $c-grey-pale;
-      height: 520px;
-      right: 0;
-      z-index: $z-dropdown;
-      width: 1021px;
     }
+
+    // for debugging only.
+    //&.research > .menu-child--wrapper {
+    //  @include visually-hidden-reset;
+    //}
+  }
+
+  .menu-child--wrapper {
+    background: $c-grey-pale;
+    display: table;
+    height: 520px;
+    right: 0;
+    z-index: $z-dropdown;
+    width: 1021px;
+  }
+
+  .menu-child--label {
+    @include eyebrow;
+    color: $c-white;
+    background: $c-teal;
+    float: left;
+    height: 48px;
+    line-height: 48px;
+    transform: rotate(90deg);
+    transform-origin: 13px 12px 5px;
+    padding: 0 24px;
+    width: 520px;
+
+    &:after {
+      background: $c-white;
+    }
+  }
+
+  .menu-child--menu {
+    display: table-cell;
   }
 
   a {

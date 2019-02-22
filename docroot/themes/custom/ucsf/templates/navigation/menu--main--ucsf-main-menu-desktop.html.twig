@@ -30,9 +30,9 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-<ul{{ attributes.addClass('menu-parent-wrapper') }}>
+<ul{{ attributes.addClass('menu-parent--wrapper') }}>
   {% else %}
-  <ul class="menu-child-wrapper">
+  <ul class="menu-child--menu">
     {% endif %}
     {% for item in items %}
       {% set menu_attributes = menus_attribute(items|keys[loop.index0]) %}
@@ -55,7 +55,14 @@
       >
         {{ link(item.title, item.url, menu_attributes.link) }}
         {% if item.below %}
-          {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+
+          <div class="menu-child--wrapper">
+            {% if menu_level == 0 %}
+              <div class="menu-child--label">{{ item.title }}</div>
+            {% endif %}
+            {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+          </div>
+
         {% endif %}
       </li>
     {% endfor %}
