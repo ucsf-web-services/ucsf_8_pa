@@ -80,7 +80,7 @@ class StylesCombo extends CKEditorPluginBase implements CKEditorPluginConfigurab
       '#title_display' => 'invisible',
       '#type' => 'textarea',
       '#default_value' => $config['styles'],
-      '#description' => $this->t('A list of classes that will be provided in the "Styles" dropdown. Enter one or more classes on each line in the format: element.classA.classB|Label. Example: h1.title|Title. Advanced example: h1.fancy.title|Fancy title.<br />These styles should be available in your theme\'s CSS file.'),
+      '#description' => $this->t('A list of classes that will be provided in the "Styles" dropdown. Enter one or more classes on each line in the format: elements.classA.classB|Label. Multiple elements may be provided as a comma-separated list. Example: h1.title|Title. Advanced example: h1,h2,h3.fancy.title|Fancy title.<br />These styles should be available in your theme\'s CSS file.'),
       '#attached' => [
         'library' => ['ckeditor/drupal.ckeditor.stylescombo.admin'],
       ],
@@ -140,20 +140,20 @@ class StylesCombo extends CKEditorPluginBase implements CKEditorPluginConfigurab
       }
 
       // Validate syntax: element[.class...]|label pattern expected.
-      if (!preg_match('@^ *[a-zA-Z0-9]+ *(\\.[a-zA-Z0-9_-]+ *)*\\| *.+ *$@', $style)) {
+      if (!preg_match('@^ *[a-zA-Z0-9,]+ *(\\.[a-zA-Z0-9_-]+ *)*\\| *.+ *$@', $style)) {
         return FALSE;
       }
 
       // Parse.
       list($selector, $label) = explode('|', $style);
       $classes = explode('.', $selector);
-      $element = array_shift($classes);
+      $elements = preg_split('/, */', trim(array_shift($classes)));
 
       // Build the data structure CKEditor's stylescombo plugin expects.
       // @see http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Styles
       $configured_style = [
         'name' => trim($label),
-        'element' => trim($element),
+        'element' => (count($elements) === 1) ? $elements[0] : $elements,
       ];
       if (!empty($classes)) {
         $configured_style['attributes'] = [
