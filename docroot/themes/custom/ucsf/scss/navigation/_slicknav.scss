@@ -1,0 +1,75 @@
+.slicknav-placeholder {
+  @include breakpoint($bp-large) {
+    display: none;
+  }
+}
+
+.slicknav_menu {
+
+  .slicknav_icon-bar {
+    background: $c-navy;
+    box-shadow: none;
+    height: 2px;
+    width: 20px;
+
+    + .slicknav_icon-bar {
+      margin-top: 4px;
+    }
+  }
+}
+
+.slicknav_nav {
+  background: $c-grey-pale;
+  position: absolute;
+  width: 100%;
+
+  .menu--main-ul-wrapper {
+    padding-left: 24px;
+    padding-right: 16px;
+  }
+}
+
+.slicknav_btn {
+  position: absolute;
+  top: 0;
+  right: 16px;
+}
+
+.slicknav_open {
+
+  .slicknav_icon-bar {
+    &:first-child {
+      transform: translateY(3px) rotate(135deg) scale(1.1);
+    }
+
+    &:nth-child(2) {
+      transform: translateY(-3px) rotate(-135deg) scale(1.1);
+    }
+
+    &:nth-child(3) {
+      transform: scale(0);
+    }
+  }
+}
+
+.slicknav_nav .slicknav_item a,
+[role="menuitem"] {
+  @include link-colors($c-navy, $c-blue);
+  display: inline-block;
+  font-size: 16px;
+  line-height: 48px;
+  width: calc(100% - 20px);
+}
+
+.slicknav_nav .slicknav_open .slicknav_item a {
+  @include link-colors($c-blue, $c-navy);
+}
+
+
+[role="menuitem"] {
+  border-bottom: 1px solid #d5d9de;
+}
+
+.slicknav_arrow {
+  display: inline-block;
+}

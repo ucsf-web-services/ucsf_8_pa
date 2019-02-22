@@ -15,7 +15,9 @@
 
       $('#block-ucsf-main-menu').slicknav({
         prependTo: '.slicknav-placeholder',
-        label: ''
+        label: '',
+        openedSymbol: '<i class="fas fa-angle-up">',
+        closedSymbol: '<i class="fas fa-angle-down">'
       });
     }
   };

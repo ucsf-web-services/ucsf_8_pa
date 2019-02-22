@@ -22,18 +22,26 @@
       display: inline-block;
     }
   }
+}
 
-  .universal-header__give {
-    display: none;
-    padding: $space 0;
-    padding-top: 10px;
-    min-width: $space-nineteen;
-    border: none;
-    background: $c-blue;
-    color: $c-white;
+.universal-header__give {
+  display: block;
+  padding: $space 0;
+  padding-top: 10px;
+  min-width: $space-nineteen;
+  border: none;
+  background: $c-blue;
+  color: $c-white;
+  width: 100%;
 
-    @include breakpoint($bp-medium) {
-      display: inline-block;
+  @include breakpoint($bp-large) {
+    display: inline-block;
+    width: auto;
+  }
+
+  .universal-header & {
+    @include breakpoint($bp-until-large) {
+      display: none;
     }
   }
 }

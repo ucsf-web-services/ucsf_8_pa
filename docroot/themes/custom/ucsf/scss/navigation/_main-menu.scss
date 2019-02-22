@@ -1,96 +1,89 @@
-// Nav
-.main-nav {
-  display: none;
-
-  @include breakpoint($main-menu-medium) {
-    display: block;
-    grid-column: 4 / span 9;
-    justify-self: end;
-  }
-
-  &--open {
-    display: block;
-  }
-}
-
-// UL
-.main-menu {
-  @include list-reset;
-
-  border-bottom: 1px solid;
-  position: relative;
-  z-index: 10;
-
-  @include breakpoint($main-menu-medium) {
-    border-bottom: none;
-  }
-
-  &--open {
-    position: fixed;
-    top: 134px;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 85%;
-    overflow-y: scroll;
-    background-color: $white;
-  }
-}
-
-//
-// Sub Navigation
-//
-
-// UL (Nested)
-.main-menu--sub {
-  border-bottom: none;
-  height: 0;
-  overflow: hidden;
-  background-color: $near-white;
-  width: 100%;
-
-  @include breakpoint($main-menu-medium) {
-    background-color: $gray-lightest;
+#block-ucsf-main-menu {
+  @include breakpoint($bp-until-large) {
     display: none;
-    height: auto;
-    left: 0;
-    overflow: visible;
-    padding: $space 0;
-    position: absolute;
-    top: 55px;
-    width: 315px;
-    z-index: 1;
-    font-size: 0.9rem;
-    opacity: 0.6;
+  }
+}
+
+header .menu--main {
+
+  ul {
+    @include ul-menu;
   }
 
-  &:hover {
-    @include breakpoint($main-menu-medium) {
-      opacity: 1;
-      background-color: $black;
-      transition: all 0.2s;
+  li {
+    display: block;
 
-      .main-menu__link--sub {
-        color: $gray-light;
-
-        &.active,
-        &:active,
-        &:hover {
-          color: $white;
-          background-color: $black;
-        }
-      }
+    @include breakpoint($bp-medium) {
+      display: inline-block;
     }
   }
 
-  // See main-menu.js
-  &-open {
-    height: auto;
-  }
-}
 
-.main-menu--sub-2 {
-  @include breakpoint($main-menu-medium) {
-    display: none; // Never shown on large screens
+  .menu--main-ul {
+    //@include menu--main--open-transition;
+  }
+
+  // Level One  Links
+  > ul  {
+    //left: 0;
+    //position: absolute;
+    //top: 50px;
+    //width: 100%;
+    //z-index: 4;
+
+    @include breakpoint($bp-medium) {
+      //left: auto;
+      //position: relative;
+      //top: auto;
+    }
+  }
+
+  > ul > li {
+    > a {
+      display: block;
+
+    }
+
+    // hover/active state
+    &.menu-item--active-trail > a,
+    > a.is-active,
+    > a:hover {
+      text-decoration: none;
+    }
+
+    &.open > a,
+    a.is-active,
+    &.menu-item--active-trail > a {
+      color: $c-teal;
+    }
+  }
+
+  // Level Two - Dropdowns
+  .menu-item--expanded {
+    //@include dropdown;
+    position: relative;
+
+    //i {
+    //  display: block;
+    //  position: absolute;
+    //  right: 0;
+    //  top: 0;
+    //  cursor: pointer;
+    //}
+
+    //.fa-angle-down {
+    //  display: none;
+    //}
+
+    &:hover i,
+    &.menu-item--active-trail i {
+      color: $c-teal;
+    }
+
+    &.open {
+      > i {
+        color: $c-teal;
+      }
+    }
   }
 }
