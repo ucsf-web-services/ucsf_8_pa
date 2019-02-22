@@ -30,21 +30,30 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes.addClass('menu') }}>
+      <ul{{ attributes.addClass('menu-parent-wrapper') }}>
     {% else %}
-      <ul class="menu">
+      <ul class="menu-child-wrapper">
     {% endif %}
     {% for item in items %}
+      {% set menu_attributes = menus_attribute(items|keys[loop.index0]) %}
       {%
         set classes = [
           'menu-item',
           item.is_expanded ? 'menu-item--expanded',
           item.is_collapsed ? 'menu-item--collapsed',
           item.in_active_trail ? 'menu-item--active-trail',
+          menu_attributes.item.class ? menu_attributes.item.class
         ]
       %}
-      <li{{ item.attributes.addClass(classes) }}>
-        {{ link(item.title, item.url) }}
+      <li{{ item.attributes.addClass(classes) }}
+        {% if menu_attributes.item.id %}
+          {{ item.attributes.setAttribute('id', menu_attributes.item.id) }}
+        {% endif %}
+        {% if menu_attributes.item.style %}
+          {{ item.attributes.setAttribute('style', menu_attributes.item.style) }}
+        {% endif %}
+      >
+        {{ link(item.title, item.url, menu_attributes.link) }}
         {% if item.below %}
           {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
         {% endif %}
@@ -53,3 +62,6 @@
     </ul>
   {% endif %}
 {% endmacro %}
+
+  {% block give %}
+  {% endblock give %}

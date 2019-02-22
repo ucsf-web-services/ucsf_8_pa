@@ -5,11 +5,11 @@ header .menu--main {
     display: none;
   }
 
-  .menu--main-ul-wrapper {
+  .menu-parent-wrapper {
     padding-left: 0;
   }
 
-  .menu--main-ul {
+  .menu-child-wrapper {
     @include visually-hidden;
 
     a {
@@ -20,7 +20,7 @@ header .menu--main {
   .menu-item {
     display: inline-block;
 
-    &:hover > .menu--main-ul {
+    &:hover > .menu-child-wrapper {
       @include visually-hidden-reset;
       background: $c-grey-pale;
       height: 520px;
