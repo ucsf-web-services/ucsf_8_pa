@@ -23,6 +23,10 @@ header .menu--main {
     // for debugging only.
     //&.research > .menu-child--wrapper {
     //  @include visually-hidden-reset;
+    //
+    //  .menu-child--wrapper {
+    //    @include visually-hidden-reset;
+    //  }
     //}
   }
 
@@ -143,9 +147,14 @@ header .menu--main {
 
 // Level Three Expanded menu (2nd column).
 [block="block-ucsf-main-menu-desktop"] {
-  .menu-child--menu .menu-child--menu {
+  .menu-child--menu .menu-child--wrapper {
     position: absolute;
     right: 0;
     top: 0;
+    width: 510px;
+
+    .menu-child--menu {
+      width: 100%;
+    }
   }
 }
