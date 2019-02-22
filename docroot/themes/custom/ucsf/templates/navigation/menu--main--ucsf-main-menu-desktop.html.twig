@@ -58,7 +58,7 @@
 
           <div class="menu-child--wrapper">
             {% if menu_level == 0 %}
-              <div class="menu-child--label">{{ item.title }}</div>
+              <div data-section="section-{{ item.title|clean_class }}" class="menu-child--label">{{ item.title }}</div>
             {% endif %}
             {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
           </div>

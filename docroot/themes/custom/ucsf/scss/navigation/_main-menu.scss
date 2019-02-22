@@ -54,6 +54,12 @@ header .menu--main {
     &:after {
       background: $c-white;
     }
+
+    @each $area, $color, $color2 in $areas {
+      &[data-section="section-#{$area}"] {
+        background: $color;
+      }
+    }
   }
 
   .menu-child--menu {
