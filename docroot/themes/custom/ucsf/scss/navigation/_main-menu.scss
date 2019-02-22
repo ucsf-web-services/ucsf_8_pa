@@ -11,13 +11,9 @@ header .menu--main {
 
   .menu-child--wrapper {
     @include visually-hidden;
-
-    a {
-      display: block;
-    }
   }
 
-  .menu-item {
+  > .menu-item {
     display: inline-block;
 
     &:hover > .menu-child--wrapper {
@@ -32,7 +28,6 @@ header .menu--main {
 
   .menu-child--wrapper {
     background: $c-grey-pale;
-    display: table;
     height: 520px;
     right: 0;
     z-index: $z-dropdown;
@@ -60,10 +55,6 @@ header .menu--main {
         background: $color;
       }
     }
-  }
-
-  .menu-child--menu {
-    display: table-cell;
   }
 
   a {
@@ -94,6 +85,35 @@ header .menu--main {
     &:active,
     &:hover {
       border-bottom: 4px solid $blue;
+    }
+  }
+}
+
+// Level Two Dropdown box.
+[block="block-ucsf-main-menu-desktop"] {
+
+  .menu-child--menu {
+    display: block;
+    margin-top: 64px;
+    width: 50%;
+
+    .menu-item {
+      display: block;
+    }
+
+    a {
+      border-bottom: 1px solid #d5d9de;
+      display: block;
+      font-size: 18px;
+      line-height: 32px;
+      height: 48px;
+      margin-left: 66px;
+    }
+
+    span.ext {
+      float: right;
+      height: 32px;
+      line-height: 32px;
     }
   }
 }
