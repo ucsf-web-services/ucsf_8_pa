@@ -4718,9 +4718,9 @@ header .menu--main {
     height: 1px;
     width: 1px;
     word-wrap: normal; }
-  [block="block-ucsf-main-menu-desktop"] > .menu-item {
+  [block="block-ucsf-main-menu-desktop"] .menu-item {
     display: inline-block; }
-    [block="block-ucsf-main-menu-desktop"] > .menu-item:hover > .menu-child--wrapper {
+    [block="block-ucsf-main-menu-desktop"] .menu-item:hover > .menu-child--wrapper {
       clip: auto;
       overflow: visible; }
   [block="block-ucsf-main-menu-desktop"] .menu-child--wrapper {
@@ -4796,22 +4796,28 @@ header .menu--main {
   margin-top: 64px;
   width: 50%; }
   [block="block-ucsf-main-menu-desktop"] .menu-child--menu .menu-item {
-    display: block; }
-  [block="block-ucsf-main-menu-desktop"] .menu-child--menu .menu-item--expanded {
-    position: relative; }
-    [block="block-ucsf-main-menu-desktop"] .menu-child--menu .menu-item--expanded i {
-      position: absolute;
-      right: 0;
-      top: 13px; }
-    [block="block-ucsf-main-menu-desktop"] .menu-child--menu .menu-item--expanded:hover i {
-      color: #007cbe; }
-  [block="block-ucsf-main-menu-desktop"] .menu-child--menu a {
     border-bottom: 1px solid #d5d9de;
     display: block;
+    margin-left: 66px; }
+  [block="block-ucsf-main-menu-desktop"] .menu-child--menu .menu-item--expanded a {
+    border: 0;
+    display: inline-block;
+    width: calc(100% - 22px); }
+  [block="block-ucsf-main-menu-desktop"] .menu-child--menu .menu-item--expanded i {
+    display: inline-block;
+    line-height: 32px;
+    height: 48px;
+    padding: 8px 0;
+    width: 16px; }
+  [block="block-ucsf-main-menu-desktop"] .menu-child--menu .menu-item--expanded:hover i {
+    color: #007cbe; }
+  [block="block-ucsf-main-menu-desktop"] .menu-child--menu a {
+    display: block;
+    font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 18px;
     line-height: 32px;
     height: 48px;
-    margin-left: 66px; }
+    margin-left: 0; }
     [block="block-ucsf-main-menu-desktop"] .menu-child--menu a:link {
       color: #052049; }
     [block="block-ucsf-main-menu-desktop"] .menu-child--menu a:visited, [block="block-ucsf-main-menu-desktop"] .menu-child--menu a:link:visited {
@@ -4826,6 +4832,11 @@ header .menu--main {
     float: right;
     height: 32px;
     line-height: 32px; }
+
+[block="block-ucsf-main-menu-desktop"] .menu-child--menu .menu-child--menu {
+  position: absolute;
+  right: 0;
+  top: 0; }
 
 .pager {
   padding-bottom: 47px;

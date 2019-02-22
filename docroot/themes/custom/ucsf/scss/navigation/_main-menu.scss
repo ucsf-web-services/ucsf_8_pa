@@ -13,7 +13,7 @@ header .menu--main {
     @include visually-hidden;
   }
 
-  > .menu-item {
+  .menu-item {
     display: inline-block;
 
     &:hover > .menu-child--wrapper {
@@ -89,7 +89,7 @@ header .menu--main {
   }
 }
 
-// Level Two Dropdown box.
+// Level Two Dropdown box (1st Column).
 [block="block-ucsf-main-menu-desktop"] {
 
   .menu-child--menu {
@@ -98,16 +98,24 @@ header .menu--main {
     width: 50%;
 
     .menu-item {
+      border-bottom: 1px solid #d5d9de;
       display: block;
+      margin-left: 66px;
     }
 
     .menu-item--expanded {
-      position: relative;
+      a {
+        border: 0;
+        display: inline-block;
+        width: calc(100% - 22px);
+      }
 
       i {
-        position: absolute;
-        right: 0;
-        top: 13px;
+        display: inline-block;
+        line-height: 32px;
+        height: 48px;
+        padding: 8px 0;
+        width: 16px;
       }
 
       &:hover i {
@@ -117,12 +125,12 @@ header .menu--main {
 
     a {
       @include link-colors($c-navy, $c-blue);
-      border-bottom: 1px solid #d5d9de;
       display: block;
+      font-family: $font-helvetica-neue-light;
       font-size: 18px;
       line-height: 32px;
       height: 48px;
-      margin-left: 66px;
+      margin-left: 0;
     }
 
     span.ext {
@@ -130,5 +138,14 @@ header .menu--main {
       height: 32px;
       line-height: 32px;
     }
+  }
+}
+
+// Level Three Expanded menu (2nd column).
+[block="block-ucsf-main-menu-desktop"] {
+  .menu-child--menu .menu-child--menu {
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 }
