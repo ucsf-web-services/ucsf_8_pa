@@ -35,10 +35,10 @@ header .menu--main {
     height: 520px;
     right: 0;
     z-index: $z-dropdown;
-    width: 1021px;
+    width: 999px;
   }
 
-  .menu-child--label {
+  [data-level="level-0"] > .menu-child--label {
     @include eyebrow;
     color: $c-white;
     background: $c-teal;
@@ -93,22 +93,22 @@ header .menu--main {
   }
 }
 
-// Level Two Dropdown box (1st Column).
+// Level 0 - Dropdown box 1st Column.
 [block="block-ucsf-main-menu-desktop"] {
 
-  .menu-child--menu {
+  [data-level="level-0"] > .menu-child--menu {
     display: block;
     margin-top: 64px;
-    width: 50%;
+    width: 464px;
 
     .menu-item {
       border-bottom: 1px solid #d5d9de;
       display: block;
-      margin-left: 66px;
+      margin-left: 73px;
     }
 
     .menu-item--expanded {
-      a {
+      > a {
         border: 0;
         display: inline-block;
         width: calc(100% - 22px);
@@ -145,16 +145,32 @@ header .menu--main {
   }
 }
 
-// Level Three Expanded menu (2nd column).
+// Level-1 Expanded menu 2nd column.
 [block="block-ucsf-main-menu-desktop"] {
-  .menu-child--menu .menu-child--wrapper {
+  [data-level="level-1"] {
     position: absolute;
     right: 0;
     top: 0;
     width: 510px;
 
     .menu-child--menu {
+      padding-right: 80px;
+      padding-left: 0;
       width: 100%;
+
+      .menu-item {
+        margin-left: 55px;
+      }
+    }
+
+    .menu-child--label {
+      @include eyebrow;
+      margin-left: 66px;
+      margin-top: 74px;
+
+      &:after {
+        content: none;
+      }
     }
   }
 }
