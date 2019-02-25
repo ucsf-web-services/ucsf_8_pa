@@ -15,6 +15,21 @@
     display: inline-block;
     list-style: none;
   }
+
+  &::-webkit-scrollbar {
+    height: 5px;
+    background-color: $gray-lighter;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $gray-blue;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: $blue;
+    }
+  }
 }
 
 .achievements-carousel__one {
@@ -66,23 +81,28 @@
 
 .full-bleed-subbanner {
   grid-column: 1/-1;
+  position: relative;
 }
 
 .full-bleed-subbanner__image {
   height: 463px;
-  display: flex;
-}
-
-.subbanner-right {
-  justify-content: end;
 }
 
 .full-bleed-subbanner__content {
   width: 48%;
   background: white;
-  align-self: end;
   height: auto;
   padding: $space-eight $space-eleven;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.subbanner-right {
+  .full-bleed-subbanner__content {
+    left: auto;
+    right: 0;
+  }
 }
 
 .full-bleed-subbanner__title,
@@ -171,14 +191,33 @@
 
 .memberships-cards__subtitle {
   font-family: $font-helvetica-neue-medium;
+  line-height: 1.4;
 }
 
 .award-winners {
   list-style: none;
   margin: 0;
+  margin-bottom: $space-six !important;
   padding: 0;
-  height: 500px;
+  padding-right: $space-fourteen;
+  padding-bottom: $space-five;
+  height: 452px;
   overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: $gray-lighter;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $gray-blue;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: $blue;
+    }
+  }
 }
 
 .award-winners__date {
@@ -187,7 +226,7 @@
 
 .award-winners__name {
   margin-top: 0;
-  border-bottom: 1px solid $gray-border;
+  border-bottom: 1px solid $gray-lighter;
   padding-bottom: $space-three;
   margin-right: $space-fourteen;
   font-family: $font-helvetica-neue-medium;
@@ -204,4 +243,5 @@
 
 .award-winners__image {
   float: right;
+  filter: grayscale(100%);
 }
