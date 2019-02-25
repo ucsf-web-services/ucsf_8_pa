@@ -11,11 +11,14 @@ module.exports = {
       dest: './assets/css',
       outputStyle: 'nested',
       includePaths: [],
-      autoPrefixerBrowsers: [
-        'last 2 versions',
-        '>= 1%',
-        'ie >= 11'
-      ],
+      autoPrefixer: {
+        browers: [
+          'last 2 versions',
+          '>= 1%',
+          'ie >= 10'
+        ],
+        grid: true,
+      },
       removeSourceComments: true,
       flattenDest: true,
       lint: false,
