@@ -1,7 +1,7 @@
 {% extends 'field.html.twig' %}
 
 {% block multiple_item_no_label %}
-  <ul{{ attributes.addClass(classes, 'field__items') }}>
+  <ol{{ attributes.addClass(classes, 'field__items') }}>
     {% for item in items %}
       <li{{ item.attributes.addClass('field__item') }}>{{ item.content }}</li>
     {% endfor %}
@@ -11,5 +11,5 @@
         {{ entity.label }}
       </div>
     {% endblock coda %}
-  </ul>
+  </ol>
 {% endblock multiple_item_no_label %}
