@@ -1,6 +1,7 @@
 {% extends 'field.html.twig' %}
 
 {% block multiple_item_no_label %}
+<nav role="navigation" aria-labelledby="system-breadcrumb" class="breadcrumb-region">
   <ol{{ attributes.addClass(classes, 'field__items') }}>
     {% for item in items %}
       <li{{ item.attributes.addClass('field__item') }}>{{ item.content }}</li>
@@ -12,4 +13,5 @@
       </div>
     {% endblock coda %}
   </ol>
+</nav>
 {% endblock multiple_item_no_label %}
