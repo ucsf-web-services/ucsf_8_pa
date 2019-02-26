@@ -1,0 +1,107 @@
+.vertical-tab {
+  grid-column: 1/-1;
+
+   ul { // PL: .vertical-tab__title
+    display: inline-block;
+    float: left;
+    margin: 0;
+    padding: 0;
+    padding-right: 50px;
+
+    li {
+      list-style-type: none;
+      margin: auto 0;
+      outline: 0;
+      text-decoration: none;
+
+      a {
+        background-color: $white;
+        padding: $space-two $space-four;
+        cursor: pointer;
+        display: block;
+        border-bottom: 1px solid $gray-lightest;
+        text-decoration: none;
+        font-family: $font-helvetica-neue-medium;
+
+        &[aria-selected="true"] {
+          color: $blue;
+          //border-left: $space solid $blue;
+          //box-shadow: -4px 6px 11px 0 rgba(213, 217, 222, 0.35);
+          border-top: 0;
+          border-bottom: 0;
+          position: relative;
+          background: url("../images/vertical-tab-highlight.png") left center no-repeat $white;
+          background-size: 100% 100%;
+          min-height: $space-eight;
+          margin-right: -50px;
+          margin-top: -1px;
+          padding-bottom: $space-three;
+        }
+      }
+    }
+
+    li:first-child {
+      a {
+        &[aria-selected="true"] {
+          margin-top: 0;
+        }
+      }
+    }
+
+    li:last-child {
+      a {
+        border-bottom-left-radius: 0;
+      }
+    }
+  }
+
+  .cta-list, ext-list { // PL: .vertical-tab__content
+    list-style: none;
+    background-color: $white;
+    min-height: 15em;
+    padding-top: 0;
+  }
+}
+
+.vertical-tab-alt {
+  padding-right: 0;
+
+  ul { // PL: .vertical-tab__title
+    padding-right: $space-fifteen;
+    width: 38%;
+
+    li {
+      border-bottom: 1px solid $gray-lightest;
+
+      a {
+        @include fs-heading-two;
+
+        padding: $space-four 0;
+        border-bottom: none;
+
+        &[aria-selected="true"] {
+          color: $blue;
+          border-top: 0;
+          position: relative;
+          background: url("../images/vertical-tab-highlight-alt.png") right center no-repeat $white;
+          margin-right: -$space-fifteen;
+          padding-right: $space-fifteen;
+          margin-top: 0;
+          display: block;
+        }
+      }
+
+      h2 {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  .cta-list, ext-list { // PL: .vertical-tab__content
+    padding: $space-seven $space-ten;
+    padding-bottom: 0;
+    background: $background-gray;
+    width: 62%;
+  }
+}
