@@ -1,0 +1,9 @@
+{% set classes = [
+  'layout-column',
+  paragraph.field_content_promotional_bg_col.value,
+  'accent-' ~ paragraph.field_content_accent_color.entity.label|clean_class
+] %}
+
+<div{{ attributes.addClass(classes) }}>
+  {{ content|without('field_content_promotional_bg_col', 'field_content_accent_color') }}
+</div>

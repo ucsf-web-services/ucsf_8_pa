@@ -120,7 +120,7 @@
   }
 }
 
-.layout-columns__two {
+.layout-columns__2 .field-content-wrapper-content { // PL: .layout-columns__two
   list-style: none;
   grid-column: 1/-1;
   display: grid;
@@ -132,7 +132,7 @@
   padding-bottom: 0;
 }
 
-.layout-columns__three {
+.layout-columns__3 .field-content-wrapper-content { // PL: .layout-columns__three
   list-style: none;
   grid-column: 1/-1;
   display: grid;
@@ -144,7 +144,7 @@
   padding-bottom: 0;
 }
 
-.layout-columns__four {
+.layout-columns__4 .field-content-wrapper-content { // PL: .layout-columns__four
   list-style: none;
   grid-column: 1/-1;
   display: grid;
@@ -235,4 +235,80 @@
   background: $background-gray;
   padding-bottom: $space-ten;
   margin-top: $space-ten;
+}
+
+.overlay-purple,
+.overlay-teal,
+.overlay-blue,
+.overlay-green {
+  box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.8);
+}
+
+.overlay-teal {
+  box-shadow: inset 0 0 0 1000px rgba(5, 132, 136, 0.8);
+}
+
+.overlay-blue {
+  box-shadow: inset 0 0 0 1000px rgba(0, 124, 190, 0.8);
+}
+
+.overlay-green {
+  box-shadow: inset 0 0 0 1000px rgba(110, 164, 0, 0.8);
+}
+
+.promo-list__card.overlay-gray {
+  background: $background-gray;
+
+  .promo-list__card-title,
+  .promo-list__card-content,
+  .promo-list__card-more {
+    color: $navy;
+
+    .link--cta {
+      background: url(../images/cta-arrow.svg) right center no-repeat transparent;
+      background-size: 14px 10px;
+      color: $blue;
+    }
+
+    &::after {
+      height: 0;
+      width: 0;
+    }
+  }
+
+  .promo-list__card-title {
+    font-size: $font-size;
+    font-family: $font-helvetica-neue-medium;
+    text-transform: none;
+    letter-spacing: 0.2px;
+  }
+
+  a {
+    padding: $space-seven $space-five;
+  }
+
+  .promo-list__card-content {
+    font-size: $font-size;
+    font-family: $font-helvetica-neue-light;
+  }
+
+  &::after {
+    left: auto;
+    right: 0;
+    bottom: -8px;
+    width: $space-five;
+    height: $space-five;
+  }
+}
+
+.accent-purple {
+  border-bottom: 8px solid $c-purple;
+}
+
+.accent-teal {
+  border-bottom: 8px solid $print-teal;
+}
+
+.accent-blue {
+  border-bottom: 8px solid $print-blue;
 }

@@ -1,6 +1,6 @@
 {% set classes = [
-  'layout-left-30-70',
-  paragraph.field_background_color.value,
+  'layout-columns__' ~ paragraph.field_content_wrapper_content.value |length,
+  paragraph.field_background_color.value
 ] %}
 
 <div{{ attributes.addClass(classes) }}>
