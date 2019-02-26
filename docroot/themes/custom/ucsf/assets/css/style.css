@@ -4938,11 +4938,13 @@ header .menu--main {
 .page-node-type-author,
 .page-node-type-article,
 .page-node-type-news-package,
+.page-node-type-full-width-page,
 .page-node-type-trending {
   background: #f2f4f6; }
   .page-node-type-author .main-content,
   .page-node-type-article .main-content,
   .page-node-type-news-package .main-content,
+  .page-node-type-full-width-page .main-content,
   .page-node-type-trending .main-content {
     display: -ms-grid;
     display: grid;
@@ -4957,12 +4959,14 @@ header .menu--main {
       .page-node-type-author .main-content,
       .page-node-type-article .main-content,
       .page-node-type-news-package .main-content,
+      .page-node-type-full-width-page .main-content,
       .page-node-type-trending .main-content {
         -ms-grid-columns: (1fr)[12];
             grid-template-columns: repeat(12, 1fr); } }
     .page-node-type-author .main-content.narrow-page,
     .page-node-type-article .main-content.narrow-page,
     .page-node-type-news-package .main-content.narrow-page,
+    .page-node-type-full-width-page .main-content.narrow-page,
     .page-node-type-trending .main-content.narrow-page {
       display: -ms-grid;
       display: grid;
@@ -4975,6 +4979,7 @@ header .menu--main {
         .page-node-type-author .main-content.narrow-page,
         .page-node-type-article .main-content.narrow-page,
         .page-node-type-news-package .main-content.narrow-page,
+        .page-node-type-full-width-page .main-content.narrow-page,
         .page-node-type-trending .main-content.narrow-page {
           -ms-grid-columns: (1fr)[15];
               grid-template-columns: repeat(15, 1fr);
@@ -4982,6 +4987,7 @@ header .menu--main {
   .page-node-type-author h2,
   .page-node-type-article h2,
   .page-node-type-news-package h2,
+  .page-node-type-full-width-page h2,
   .page-node-type-trending h2 {
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 24px;
@@ -4990,6 +4996,7 @@ header .menu--main {
       .page-node-type-author h2,
       .page-node-type-article h2,
       .page-node-type-news-package h2,
+      .page-node-type-full-width-page h2,
       .page-node-type-trending h2 {
         font-size: 36px; } }
 
@@ -5792,6 +5799,70 @@ figure.align-center figcaption {
   .author-card__links li {
     display: inline-block;
     margin-right: 40px; }
+
+.full-width-page-wrapper .footer-ctas-wrapper {
+  margin-top: 0; }
+
+.full-width-page-wrapper .lastest-events-list {
+  padding-top: 80px; }
+
+.full-width-page-banner {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[1];
+      grid-template-columns: repeat(1, 1fr);
+  grid-gap: 5%;
+  grid-row-gap: 0;
+  grid-column: 1/-1;
+  -ms-grid-rows: 80px auto;
+      grid-template-rows: 80px auto;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto; }
+  @media (min-width: 600px) {
+    .full-width-page-banner {
+      -ms-grid-columns: (1fr)[15];
+          grid-template-columns: repeat(15, 1fr);
+      grid-gap: 0; } }
+  .full-width-page-banner .article-header__date::before {
+    display: none; }
+  .full-width-page-banner figure {
+    grid-column: 8/-1;
+    grid-row: 1/-1;
+    -ms-grid-column-align: end;
+        justify-self: end; }
+
+.full-width-page-banner__header {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 8;
+  grid-column: 1/9;
+  grid-row: 2/-1;
+  background: #fff;
+  padding: 80px;
+  padding-bottom: 0; }
+  .full-width-page-banner__header > * {
+    margin: 0; }
+  .full-width-page-banner__header > p {
+    margin-bottom: 2rem; }
+
+.full-width-page__header-title {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+  font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.6px;
+  color: #052049;
+  margin-bottom: 16px; }
+  @media (min-width: 600px) {
+    .full-width-page__header-title {
+      font-size: 56px;
+      letter-spacing: -1.2px; } }
+
+.full-width-page {
+  padding: 0; }
 
 .news-package-banner {
   display: -ms-grid;
