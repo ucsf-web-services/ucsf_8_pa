@@ -1,0 +1,116 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="dom-tab.html">
+<link rel="import" href="dom-pages.html">
+
+
+<dom-module id="dom-tabs">
+  <template>
+    <style>
+      :host {
+        overflow: hidden;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+
+        /* NOTE: Both values are needed, since some phones require the value to be `transparent`. */
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-tap-highlight-color: transparent;
+
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .not-visible {
+        opacity: 0;
+        cursor: default;
+      }
+      .tabs-content {
+        display: flex;
+        align-items: center;
+        min-height: 48px;
+        flex: 1 1 auto;
+      }
+
+    </style>
+
+
+    <div id="tabsContainer">
+      <div class="tabs-content" on-tap="_onTap" on-keydown="_keyDown">
+        <slot selected="{{selected}}"></slot>
+      </div>
+      <div class="pages-content">
+        <slot name="pages-content" class="page-content"></slot>
+      </div>
+
+    </div>
+
+
+  </template>
+
+  <script>'use strict';
+
+Polymer({
+  is: 'dom-tabs',
+
+  properties: {
+    selected: {
+      type: Boolean,
+      value: false,
+      reflectToAttribute: true
+    }
+  },
+
+  ready: function ready() {
+
+    var tabFirst = this.querySelector('dom-tab');
+    var contentFirst = this.querySelector('dom-pages div');
+    tabFirst.setAttribute('selected', true);
+    contentFirst.setAttribute('selected', true);
+
+    var tabsNode = this.querySelectorAll('dom-tab');
+
+    tabsNode.forEach(function (element, index) {
+      var tabText = element.innerText;
+      var cleanTab = tabText.replace(/(<([^>]+)>)/ig, "").replace(/&nbsp;/gi, " ").replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, ' ').trim().replace(/\s/g, "-");
+      tabsNode[index].id = cleanTab;
+      if (location.hash.replace('#', '') == cleanTab) {
+        element.click();
+      }
+    });
+  },
+  _onTap: function _onTap(event) {
+    var tab = event.target;
+    var oldOffset = window.pageYOffset;
+    var tabsNode = this.querySelectorAll('dom-tab');
+    var contents = this.querySelectorAll('dom-pages div');
+    if (!tab.hasAttribute('selected')) {
+      location.hash = tab.id;
+      tabsNode.forEach(function (element, index) {
+        element.removeAttribute('selected');
+        contents[index].removeAttribute('selected');
+      });
+      var savedIndex = '';
+      tab.setAttribute('selected', true);
+      tabsNode.forEach(function (element, index) {
+        if (element.hasAttribute('selected')) {
+          savedIndex = index;
+        }
+      });
+
+      window.scrollTo(0, oldOffset);
+    }
+  },
+  _keyDown: function _keyDown(event) {
+    var keys = {
+      enter: 13,
+      space: 32
+    };
+    if (event.keyCode == keys.enter || event.keyCode == keys.space) {
+      this._onTap(event);
+    }
+  }
+});</script>
+</dom-module>

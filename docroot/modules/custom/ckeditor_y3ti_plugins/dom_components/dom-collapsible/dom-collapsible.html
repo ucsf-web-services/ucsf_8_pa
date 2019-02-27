@@ -1,0 +1,157 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<dom-module id="dom-collapsible">
+
+	<template>
+
+		<style>
+			:host {
+				display: block;
+				border-bottom: 1px solid #ccc;
+			}
+
+			.header {
+				font-size: 17px;
+				display: flex;
+				align-items: center;
+		    padding: 15px 15px;
+		    outline: none;
+				cursor: pointer;
+			}
+			.icon:before {
+				color: #6ea400;
+				font-size: 14px;
+				font-family: "Font Awesome 5 Free";
+				content: "\f068";
+				font-weight: 900;
+				font-style: normal;
+				font-variant: normal;
+				text-rendering: auto;
+				-webkit-font-smoothing: antialiased;
+			}
+			.icon.expand-less:before {
+		    content: "\f068";
+			}
+			.icon.expand-more:before {
+		    content: "\f067";
+			}
+
+			::slotted([slot=header-text]), .header-text,::slotted(h5), {
+				flex: 1 1 auto;
+				margin: 0 !important;
+				color: #007CBE !important;
+		    font-weight: 500 !important;
+			}
+			.content {
+				padding: 0 15px;
+				font-size: 16px;
+				/* white-space: pre-line; */
+			}
+			.expand-less.content-text,
+			.expand-less.content {
+				display: block;
+				visibility: visible;
+				opacity: 1;
+				height: auto;
+				transition: all 0.35s ease;
+				transition: visibility 0.35s ease, display 0.35s ease, max-height 0.35s ease, opacity 0.35s ease;
+				margin-bottom: 0;
+				float: none;
+		    width: 100%;
+		    padding: 0 15px;
+
+			}
+			.expand-more.content-text,
+			.expand-more.content {
+				display: none;
+				visibility: hidden;
+				max-height: 0;
+				height: 0;
+				opacity: 0;
+				transition: visibility 0.35s cubic-bezier(0, 0, 0.2, 1), display 0.35s cubic-bezier(0, 0, 0.2, 1), max-height 0.35s ease-in 0.5s, opacity 0.35s cubic-bezier(0, 0, 0.2, 1);
+				margin-bottom: 0;
+			}
+
+		</style>
+		<div class="header" aria-expanded="false" role="button" tabindex="0" on-tap="_toggleOpened" on-keydown="_keyDown">
+			<slot name="header-text" class="header-text"></slot>
+			<div class$="[[_toggleIcon]] icon"></div>
+		</div>
+		<div class$="[[_toggleIcon]] content">
+    	<slot name="content-text" class$="[[_toggleIcon]] content-text" aria-hidden="true" role="region" tabindex="-1" opened="{{opened}}"></slot>
+		</div>
+	</template>
+</dom-module>
+<style>
+dom-collapsible:first-of-type {
+	border-top: 1px solid #ccc;
+	margin-top: 30px;
+}
+dom-collapsible:last-of-type {
+  margin-bottom: 30px;
+}
+dom-collapsible h5 {
+	flex: 1 1 auto;
+	margin: 0 !important;
+	color: #007CBE !important;
+	font-weight: 500 !important;
+}
+</style>
+<script>'use strict';
+
+(function () {
+
+	Polymer({
+		is: 'dom-collapsible',
+		properties: {
+			/**
+    * True if the content section is opened
+    */
+			opened: {
+				type: Boolean,
+				reflectToAttribute: true,
+				value: false,
+				notify: true
+			},
+			_toggleIcon: {
+				type: String,
+				computed: '_computeToggleIcon(opened)'
+			}
+		},
+
+		// Private methods
+		/**
+   * Fired whenever the status is changed (opened/closed)
+   *
+   * @event toggle
+   */
+		_toggleOpened: function _toggleOpened(e) {
+			this.opened = !this.opened;
+			var oldOffset = window.pageYOffset;
+			if (this.opened) {
+				location.hash = this.id;
+			} else {
+				location.hash = '';
+			}
+
+			window.scrollTo(0, oldOffset);
+			this.fire('toggle', this);
+		},
+		_keyDown: function _keyDown(e) {
+			var keys = {
+				enter: 13,
+				space: 32
+			};
+			if (e.keyCode == keys.enter || e.keyCode == keys.space) {
+				this._toggleOpened();
+			}
+		},
+		_computeToggleIcon: function _computeToggleIcon(opened) {
+			return opened ? 'expand-less' : 'expand-more';
+		},
+		ready: function ready() {
+			var headerText = this.getElementsByClassName('header-text')[0].innerText;
+			var cleanHeader = headerText.replace(/(<([^>]+)>)/ig, "").replace(/&nbsp;/gi, " ").replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, ' ').trim().replace(/\s/g, "-");
+			this.id = cleanHeader;
+		}
+	});
+})();</script>

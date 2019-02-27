@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * @file
+ * Contains ckeditor_y3ti_plugins.module.
+ */
+
+ use Drupal\Core\Form\FormStateInterface;
+ use Drupal\editor\Entity\Editor;
+
+/**
+ * Implements hook_page_attachments().
+**/
+function ckeditor_y3ti_plugins_page_attachments(&$page) {
+  $page['#attached']['library'][] = 'ckeditor_y3ti_plugins/webcomponents';
+  // $page['#attached']['library'][] = 'ckeditor_y3ti_plugins/buttonCss';
+  $page['#attached']['library'][] = 'ckeditor_y3ti_plugins/extraScript';
+}
+
+/**
+ * Implements hook_editor_js_settings_alter
+ */
+function ckeditor_y3ti_plugins_editor_js_settings_alter(array &$settings) {
+  global $base_url;
+  $settings['editor']['formats']['sf_full_html']['editorSettings']['contentsCss'][] = $base_url.'/'.drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/css/CKEditorExtra.css';
+  $settings['editor']['formats']['sf_full_html']['editorSettings']['customConfig'] = $base_url.'/'.drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/customCkeditor.config.js';
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function ckeditor_y3ti_plugins_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'form_alter') { // (e.g. form_alter, node_save, etc)
+    $group = $implementations['ckeditor_y3ti_plugins']; // 'example' is the name of your module
+    unset($implementations['ckeditor_y3ti_plugins']);
+    $implementations['ckeditor_y3ti_plugins'] = $group;
+  }
+}
+/**
+ * Implements hook_form_alter().
+ */
+ function ckeditor_y3ti_plugins_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  if ('editor_link_dialog' == $form_id) {
+
+    $form['attributes']['class'] = array(
+      '#type' => 'select',
+      '#title' => t('Button link Style'),
+      '#name' => 'attributes[class]',
+      '#options' => array (
+        'btn btn-primary' => 'Blue Button',
+        'btn btn-primary btn-lg btn-block' => 'Blue Button Large Full Width',
+        'btn btn-primary btn-xs' => 'Blue Button Small',
+        'btn btn-secondary' => 'Dark Gray Button',
+        'btn btn-secondary btn-lg btn-block' => 'Dark Gray Button Large Full Width',
+        'btn btn-secondary btn-xs' => 'Dark Gray Button Small',
+        'btn btn-warning' => 'Purple Button',
+        'btn btn-warning btn-xs' => 'Purple Button Small',
+        'btn btn-warning btn-lg btn-block' => 'Purple Button Large Full Width',
+        'btn btn-info' => 'Navy Button',
+        'btn btn-info btn-xs' => 'Navy Button Small',
+        'btn btn-info btn-lg btn-block' => 'Navy Button Large Full Width',
+        'btn-text' => 'Button Text',
+        'btn btn-orange' => 'Orange Button',
+        'btn btn-orange btn-xs' => 'Orange Button Small',
+        'btn btn-orange btn-lg btn-block' => 'Orange Button Large Full Width',
+        'btn btn-success' => 'Teal Button',
+        'btn btn-success btn-xs' => 'Teal Button Small',
+        'btn btn-success btn-lg btn-block' => 'Teal Button Large Full Width',
+        'btn btn-green' => 'Green Button',
+        'btn btn-green btn-xs' => 'Green Button Small',
+        'btn btn-green btn-lg btn-block' => 'Green Button Large Full Width',
+        'btn btn-danger' => 'Red Button',
+        'btn btn-danger btn-xs' => 'Red Button Small',
+        'btn btn-danger btn-lg btn-block' => 'Red Button Large Full Width',
+        'btn-text' => 'Button Text',
+        '' => 'None'
+      )
+    );
+
+  }
+  // if ( 'editor_image_dialog' == $form_id) {
+  //   $form['attributes']['width'] = [
+  //     '#title' => t('Image Width'),
+  //     '#placeholder' => t('Image width'),
+  //     '#type' => 'textfield',
+  //
+  //     '#maxlength' => 256,
+  //   ];
+  //   $form['attributes']['height'] = [
+  //     '#title' => t('Image Height'),
+  //     '#placeholder' => t('Image height'),
+  //     '#type' => 'textfield',
+  //     '#maxlength' => 256,
+  //   ];
+  // }
+}

@@ -1,0 +1,74 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="dom-cta" class="simple-cta">
+  <template>
+    <style>
+      :host {
+        margin: 2% 0;
+        display: inline-block;
+        --font-white: #FFF;
+        --font-black: #000;
+        --bg-interactive-blue: #0071ad;
+        --bg-interactive-dark-blue: #052049;
+        --bg-interactive-light-navy: #506380;
+        --bg-interactive-green: #6EA400;
+        --bg-interactive-dark-grey: #737373;
+        --bg-interactive-orange: #F26D04;
+        --bg-interactive-teal: #058488;
+        --bg-interactive-purple: #716FB2;
+        --bg-interactive-red: #EB093C;
+        --bg-interactive-yellow: #FFDD00;
+        --bg-transparent: transparent;
+        background-color: var(--cta-color);
+        /* width: 100%; */
+      }
+      ::slotted(a::after){
+        background-color: var(--cta-color);
+      }
+    </style>
+    <!-- <slot name="title" class="title"></slot>
+    <slot name="image" class="image"></slot>
+    <slot name="description" class="description"></slot>
+    <slot name="cta" class="cta"></slot> -->
+    <slot></slot>
+  </template>
+</dom-module>
+  <style>
+    dom-cta.simple-cta a:after {
+      background-color: var(--cta-color);
+    }
+  </style>
+  <script>'use strict';
+
+/**
+ * `column-layout`
+ * Multiple column content management
+ *
+ * @customElement
+ * @polymer
+ * @demo demo/index.html
+ */
+
+(function () {
+
+  Polymer({
+    is: 'dom-cta',
+    properties: {
+      dataCtaColor: {
+        type: String,
+        value: 'transparent'
+      }
+    },
+    ready: function ready() {
+      var ctaFontColor = 'white';
+      if (this.dataCtaColor == 'transparent' || this.dataCtaColor == 'interactive-yellow') {
+        ctaFontColor = 'black';
+      }
+
+      this.updateStyles({
+        '--cta-font-color': 'var(--font-' + ctaFontColor + ') ',
+        '--cta-color': 'var(--bg-' + this.dataCtaColor + ')'
+      });
+    }
+  });
+})();</script>

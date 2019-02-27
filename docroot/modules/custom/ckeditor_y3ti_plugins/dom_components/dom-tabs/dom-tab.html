@@ -1,0 +1,106 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!--
+`paper-tab` is styled to look like a tab.  It should be used in conjunction with
+`paper-tabs`.
+
+Example:
+
+    <paper-tabs selected="0">
+      <paper-tab>TAB 1</paper-tab>
+      <paper-tab>TAB 2</paper-tab>
+      <paper-tab>TAB 3</paper-tab>
+    </paper-tabs>
+
+### Styling
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--paper-tab-ink` | Ink color | `--paper-yellow-a100`
+`--paper-tab` | Mixin applied to the tab | `{}`
+`--paper-tab-content` | Mixin applied to the tab content | `{}`
+`--paper-tab-content-unselected` | Mixin applied to the tab content when the tab is not selected | `{}`
+
+This element applies the mixin `--paper-font-common-base` but does not import `paper-styles/typography.html`.
+In order to apply the `Roboto` font to this element, make sure you've imported `paper-styles/typography.html`.
+
+-->
+
+<dom-module id="dom-tab" selected="{{selected}}">
+  <template>
+    <style>
+      :host {
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1 1 auto;
+        position: relative;
+        padding: 0 12px;
+        overflow: hidden;
+        cursor: pointer;
+        vertical-align: middle;
+        height: 48px;
+        background: var(--bg-interactive-dark-blue);
+        color: #fff !important;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        transition: all 0.2s cubic-bezier(0.4, 0.0, 1, 1);
+        --bg-interactive-orange: #F26D04;
+        --bg-interactive-dark-blue: #052049;
+      }
+      :host(:not([selected]))  {
+        opacity: 0.6;
+        color: #000;
+      }
+
+      :host(:focus) {
+        opacity: 1;
+        font-weight: 700;
+        outline: none;
+      }
+      :host([selected]) {
+        border-bottom: 2px solid var(--bg-interactive-orange);
+      }
+      .tab-content {
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+      }
+    </style>
+
+    <div class="tab-content">
+      <slot></slot>
+    </div>
+  </template>
+
+  <script>'use strict';
+
+Polymer({
+  is: 'dom-tab',
+  properties: {
+
+    /**
+     * If true, the tab will forward keyboard clicks (enter/space) to
+     * the first anchor element found in its descendants
+     */
+    selected: {
+      type: Boolean,
+      reflectToAttribute: true,
+      value: false,
+      notify: true
+    }
+
+  },
+
+  hostAttributes: {
+    role: 'tab',
+    tabindex: '0'
+  }
+
+});</script>
+</dom-module>

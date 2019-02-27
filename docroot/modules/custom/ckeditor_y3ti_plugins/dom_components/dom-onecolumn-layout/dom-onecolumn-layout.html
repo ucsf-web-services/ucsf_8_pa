@@ -1,0 +1,114 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="dom-onecolumn-layout">
+  <template>
+    <style>
+      :host {
+        margin: 2% 0;
+        display: flex;
+        flex-direction: column;
+        --font-white: #FFF;
+        --font-black: #404040;
+        --size-50: 50%;
+        --size-20: 20%;
+        --size-30: 30%;
+        --size-40: 40%;
+        --size-60: 60%;
+        --size-70: 70%;
+        --size-80: 80%;
+        --bg-interactive-blue: #0071ad;
+        --bg-interactive-dark-blue: #052049;
+        --bg-interactive-light-navy: #506380;
+        --bg-interactive-green: #6EA400;
+        --bg-interactive-dark-grey: #737373;
+        --bg-interactive-orange: #F26D04;
+        --bg-interactive-teal: #058488;
+        --bg-interactive-purple: #716FB2;
+        --bg-interactive-red: #EB093C;
+        --bg-interactive-yellow: #FFDD00;
+        --bg-transparent: transparent;
+        --padding-transparent: 0 !important;
+        --padding-normal: 10px 25px !important;
+      }
+      ::slotted([slot=column1]), .column1 {
+        padding: var(--column1-padding);
+        margin-bottom: 2% !important;
+        background-color: var(--column1-color);
+        color: var(--column1-font-color);
+      }
+      .column1 > *:last-child,
+      ::slotted([slot=column1]) > *:last-child {
+         margin-bottom: 0;
+       }
+
+      @media (min-width: 769px) {
+        :host {
+          flex-direction: row;
+        }
+        ::slotted([slot=column1]), .column1 {
+          flex: 1;
+        }
+
+      }
+
+    </style>
+    <slot name="column1" class="column1"></slot>
+  </template>
+</dom-module>
+  <style>
+    dom-onecolumn-layout .column1 > *:last-child {
+      margin-bottom: 0;
+    }
+    dom-onecolumn-layout .column1 h1,
+    dom-onecolumn-layout .column1 h2,
+    dom-onecolumn-layout .column1 h3,
+    dom-onecolumn-layout .column1 h4,
+    dom-onecolumn-layout .column1 h5,
+    dom-onecolumn-layout .column1 h6,
+    dom-onecolumn-layout .column1 p:not(.number-highlight),
+    dom-onecolumn-layout .column1 a:not(.btn),
+    dom-onecolumn-layout .column1 strong {
+      color: var(--column1-font-color) !important;
+    }
+    dom-onecolumn-layout dom-numbercallout * {
+      color: var(--column1-font-color) !important;
+    }
+  </style>
+  <script>'use strict';
+
+/**
+ * `column-layout`
+ * Multiple column content management
+ *
+ * @customElement
+ * @polymer
+ * @demo demo/index.html
+ */
+
+(function () {
+
+  Polymer({
+    is: 'dom-onecolumn-layout',
+    properties: {
+      dataColumn1Color: {
+        type: String,
+        value: 'transparent'
+      }
+    },
+    ready: function ready() {
+      var column1FontColor = 'white';
+      var column1Padding = 'normal';
+      if (this.dataColumn1Color == 'transparent' || this.dataColumn1Color == 'interactive-yellow') {
+        column1FontColor = 'black';
+        column1Padding = 'transparent';
+      }
+
+      this.updateStyles({
+        '--column1-font-color': 'var(--font-' + column1FontColor + ')',
+        '--column1-color': 'var(--bg-' + this.dataColumn1Color + ')',
+        '--column1-size': 'var(--size-' + this.dataColumn1Size + ')',
+        '--column1-padding': 'var(--padding-' + column1Padding+ ')'
+      });
+    }
+  });
+})();</script>

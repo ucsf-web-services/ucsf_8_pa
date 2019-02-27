@@ -18,4 +18,27 @@ function ucsf_preprocess_html(&$variables) {
   }
 
   $variables['attributes']['class'][] = $class;
+
+  $variables['ckeditor_y3ti_plugins'] = drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/elements/elements.html';
+
+
 }
+
+function ucsf_page_attachments_alter(array &$page) {
+
+  /*
+  $link = [
+    '#type'=> 'html_tag',
+    '#tag' => 'link',
+    '#attributes' => [
+      'name' => 'polymer_platform',
+      'href' => '/'. drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/elements/elements.html',
+      'rel' => 'import'
+    ],
+    '#weight' => '200'
+  ];
+
+  $page['#attached']['html_head'][] = [$link, 'polymer_platform'];
+  */
+}
+
