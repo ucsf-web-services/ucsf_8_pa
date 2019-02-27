@@ -56,7 +56,7 @@ CKEDITOR.plugins.add('domtwocolumn', {
 
         var column1 = this.element.findOne('.column1')
         var column2 = this.element.findOne('.column2')
-        var column1FontColor = column2FontColor = 'white';
+        var column1FontColor = column2FontColor = 'black';
         if (column1Color == 'transparent' ||
             column1Color == 'interactive-yellow') {
               column1FontColor = 'black';

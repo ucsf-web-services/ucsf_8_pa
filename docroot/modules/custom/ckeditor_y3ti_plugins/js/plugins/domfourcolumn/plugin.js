@@ -94,8 +94,8 @@ CKEDITOR.plugins.add('domfourcolumn', {
             }
             column1.setAttribute('style', '--column1-color: var(--bg-'+column1Color+'); --column1-size: var(--size-'+column1Size+'); --column1-font-color: var(--font-' + column1FontColor + ')' )
             column2.setAttribute('style', '--column2-color: var(--bg-'+column2Color+'); --column2-size: var(--size-'+column2Size+'); --column2-font-color: var(--font-' + column2FontColor + ')' )
-        column3.setAttribute('style', '--column3-color: var(--bg-'+column3Color+'); --column3-size: var(--size-'+column3Size+'); --column3-font-color: var(--font-' + column3FontColor + ')' )
-          column4.setAttribute('style', '--column4-color: var(--bg-'+column4Color+'); --column4-size: var(--size-'+column4Size+'); --column4-font-color: var(--font-' + column4FontColor + ')' )
+            column3.setAttribute('style', '--column3-color: var(--bg-'+column3Color+'); --column3-size: var(--size-'+column3Size+'); --column3-font-color: var(--font-' + column3FontColor + ')' )
+            column4.setAttribute('style', '--column4-color: var(--bg-'+column4Color+'); --column4-size: var(--size-'+column4Size+'); --column4-font-color: var(--font-' + column4FontColor + ')' )
 
       },
       data: function() {

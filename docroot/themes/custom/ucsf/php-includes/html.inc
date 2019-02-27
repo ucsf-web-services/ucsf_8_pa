@@ -19,14 +19,16 @@ function ucsf_preprocess_html(&$variables) {
 
   $variables['attributes']['class'][] = $class;
 
-  $variables['ckeditor_y3ti_plugins'] = drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/elements/elements.html';
-
-
+  $variables['ckeditor_y3ti_plugins'] = '/' . drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/elements/elements.html';
 }
 
 function ucsf_page_attachments_alter(array &$page) {
 
-  /*
+  /**
+   * @note - while this works, there doesn't appear to be a way to
+   * weight the link below the js includes for polymer, which is what is
+   * needed here.  Put the <link> into the template html.html.twig
+   *
   $link = [
     '#type'=> 'html_tag',
     '#tag' => 'link',
