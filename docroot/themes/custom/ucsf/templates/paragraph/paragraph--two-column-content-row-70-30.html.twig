@@ -1,0 +1,8 @@
+{% set classes = [
+  'layout-left-70-30',
+  paragraph.field_background_color.value,
+] %}
+
+<div{{ attributes.addClass(classes) }}>
+  {{ content|without('field_background_color') }}
+</div>
