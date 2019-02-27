@@ -1,12 +1,41 @@
 .field-content-promotional-conten { // PL: .content-card__copy
-  background: $white;
-  margin-right: 10%;
-  margin-top: -10%;
-  position: relative;
-  padding: 20px $space-four 0 0;
-  color: $navy;
-
   &:hover {
     color: $navy;
+  }
+
+  p {
+    margin-bottom: 1em;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .overlay-white & {
+    background: $white;
+    margin-right: 10%;
+    margin-top: -10%;
+    position: relative;
+    padding: 20px $space-four 0 0;
+    color: $navy;
+  }
+
+  .overlay-gray & { // Pl: .promo-list
+    background: transparent;
+    padding: 58px 40px;
+
+    h2 {
+      line-height: 1;
+      margin-bottom: 32px;
+      margin-top: 0;
+    }
+
+    p {
+      margin: 1em 0;
+    }
+
+    .link--cta {
+      margin-top: 7px;
+    }
   }
 }
