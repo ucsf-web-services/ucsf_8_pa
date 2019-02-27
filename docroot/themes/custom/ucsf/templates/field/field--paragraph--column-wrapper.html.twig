@@ -1,0 +1,9 @@
+{% extends 'field.html.twig' %}
+
+{% block multiple_item_no_label %}
+  <div{{ attributes.addClass(classes, 'field__items') }}>
+    {% for item in items %}
+      <div{{ item.attributes.addClass('layout-column') }}>{{ item.content }}</div>
+    {% endfor %}
+  </div>
+{% endblock multiple_item_no_label %}
