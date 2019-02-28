@@ -120,8 +120,12 @@
   font-family: $font-granjon;
   font-size: 28px;
   font-weight: normal;
-  line-height: 32px;
+  line-height: 1;
   letter-spacing: -0.3px;
+
+  @include medium {
+    letter-spacing: -0.3px;
+  }
 }
 
 @mixin fs-articles-title {
@@ -131,6 +135,20 @@
 
   @include medium {
     font-size: 36px;
+  }
+}
+
+@mixin fs-display {
+  @include font-smooth;
+
+  font-family: $font-granjon;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -1px;
+
+  @include medium {
+    font-size: 82px;
+    letter-spacing: -2px;
   }
 }
 

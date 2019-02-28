@@ -4358,6 +4358,37 @@ textarea {
 .webform-submission-form textarea {
   border: 1px solid #333; }
 
+.icon-education,
+.icon-doctor,
+.icon-campus,
+.icon-money,
+.icon-awards,
+.icon-support,
+.icon-caduceus {
+  content: ' ';
+  background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
+  background-size: 48px;
+  height: 48px;
+  width: 48px; }
+
+.icon-doctor {
+  background-image: url(/themes/custom/ucsf/assets/images/card/doctor.svg); }
+
+.icon-campus {
+  background-image: url(/themes/custom/ucsf/assets/images/card/campus.svg); }
+
+.icon-money {
+  background-image: url(/themes/custom/ucsf/assets/images/card/money.svg); }
+
+.icon-awards {
+  background-image: url(/themes/custom/ucsf/assets/images/card/awards.svg); }
+
+.icon-support {
+  background-image: url(/themes/custom/ucsf/assets/images/card/support.svg); }
+
+.icon-caduceus {
+  background-image: url(/themes/custom/ucsf/assets/images/card/caduceus.svg); }
+
 .vertical-tab {
   grid-column: 1/-1; }
   .vertical-tab ul {
@@ -5503,12 +5534,15 @@ figure.align-center figcaption {
       font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
       font-size: 28px;
       font-weight: normal;
-      line-height: 32px;
+      line-height: 1;
       letter-spacing: -0.3px;
       content: counter(item) ".";
       margin-left: -40px;
       float: left;
       font-size: 28px; }
+      @media (min-width: 600px) {
+        .news-trending li::before {
+          letter-spacing: -0.3px; } }
   .news-trending .card-row .card-row__image {
     -ms-grid-column: 2;
     -ms-grid-column-span: 1;
@@ -5563,11 +5597,14 @@ figure.align-center figcaption {
     font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
     font-size: 28px;
     font-weight: normal;
-    line-height: 32px;
+    line-height: 1;
     letter-spacing: -0.3px;
     margin: 0;
     margin-top: 8px;
     line-height: 1.2; }
+    @media (min-width: 600px) {
+      .news-card__copy h2 {
+        letter-spacing: -0.3px; } }
 
 .news-card__content {
   margin: 1em 0; }
@@ -6088,10 +6125,13 @@ figure.align-center figcaption {
   font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
   font-size: 28px;
   font-weight: normal;
-  line-height: 32px;
+  line-height: 1;
   letter-spacing: -0.3px;
   margin-bottom: 16px;
   line-height: 1.2; }
+  @media (min-width: 600px) {
+    .field-featured h2 {
+      letter-spacing: -0.3px; } }
 
 .field-featured p {
   margin: 0; }
@@ -6346,41 +6386,55 @@ figure.align-center figcaption {
 .accent-blue {
   border-bottom: 8px solid #178ccb; }
 
-.paragraph--type--fact-promotional-card {
+.fact-card {
   border: 1px solid #9ba6b6;
-  min-height: 450px;
-  padding: 64px 32px;
-  margin-bottom: 40px; }
-  .paragraph--type--fact-promotional-card:first-child {
-    padding-top: 64px; }
-  .paragraph--type--fact-promotional-card:first-child:nth-last-child(1) {
-    height: 100%; }
-  .paragraph--type--fact-promotional-card:first-child:nth-last-child(2) {
-    height: 50%; }
-  .paragraph--type--fact-promotional-card:last-child {
-    padding-bottom: 64px; }
-  .paragraph--type--fact-promotional-card > :last-child {
+  min-height: 513px;
+  height: 100%;
+  padding: 64px 32px 64px;
+  margin-bottom: 0; }
+  .fact-card .field-fact-card-content > :last-child {
     padding-bottom: 0;
     margin-bottom: 0; }
-  .paragraph--type--fact-promotional-card h2,
-  .paragraph--type--fact-promotional-card h3,
-  .paragraph--type--fact-promotional-card h4 {
+  .fact-card h2,
+  .fact-card h3,
+  .fact-card h4 {
     color: #052049;
     font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
     font-size: 28px;
     font-weight: normal;
-    line-height: 32px;
+    line-height: 1;
     letter-spacing: -0.3px;
     margin: 0;
     margin-top: 16px;
     margin-bottom: 8px; }
-    .paragraph--type--fact-promotional-card h2.small-title,
-    .paragraph--type--fact-promotional-card h3.small-title,
-    .paragraph--type--fact-promotional-card h4.small-title {
+    @media (min-width: 600px) {
+      .fact-card h2,
+      .fact-card h3,
+      .fact-card h4 {
+        letter-spacing: -0.3px; } }
+    .fact-card h2.small-title,
+    .fact-card h3.small-title,
+    .fact-card h4.small-title {
       font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
       font-size: 18px;
       margin-top: 8px;
       letter-spacing: -0.2px; }
+
+.field-fact-card-stat {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+  font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -1px;
+  color: #058488;
+  margin-bottom: 32px; }
+  @media (min-width: 600px) {
+    .field-fact-card-stat {
+      font-size: 82px;
+      letter-spacing: -2px; } }
 
 .field-content-promotional-conten:hover {
   color: #052049; }

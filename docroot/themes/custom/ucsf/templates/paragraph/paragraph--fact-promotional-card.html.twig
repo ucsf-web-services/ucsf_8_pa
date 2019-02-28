@@ -1,0 +1,10 @@
+{% set classes = [
+  'fact-card'
+] %}
+
+<div{{ attributes.addClass(classes) }}>
+  {% if paragraph.field_fact_card_icon.entity %}
+    <div class="icon-{{ paragraph.field_fact_card_icon.entity.label|clean_class }}"></div>
+  {% endif %}
+  {{ content|without('field_fact_card_icon') }}
+</div>

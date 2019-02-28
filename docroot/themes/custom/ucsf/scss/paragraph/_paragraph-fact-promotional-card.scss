@@ -1,26 +1,11 @@
-.paragraph--type--fact-promotional-card { // PL: .fact-card
+.fact-card {
   border: 1px solid $c-gray-border;
-  min-height: 450px;
-  padding: $space-eight $space-four;
-  margin-bottom: $space-five;
+  min-height: 513px;
+  height: 100%;
+  padding: $space-eight $space-four $space-eight;
+  margin-bottom: 0;
 
-  &:first-child {
-    padding-top: $space-eight;
-  }
-
-  &:first-child:nth-last-child(1) {
-    height: 100%;
-  }
-
-  &:first-child:nth-last-child(2) {
-    height: 50%;
-  }
-
-  &:last-child {
-    padding-bottom: $space-eight;
-  }
-
-  & > :last-child {
+  .field-fact-card-content > :last-child {
     padding-bottom: 0;
     margin-bottom: 0;
   }
@@ -41,4 +26,10 @@
       letter-spacing: -0.2px;
     }
   }
+}
+
+.field-fact-card-stat { // PL: .fact-stat
+  @include fs-display;
+  color: $teal;
+  margin-bottom: 32px;
 }
