@@ -30,13 +30,42 @@ class Applenews extends WidgetBase {
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $field_name = $items->getName();
     $default_channels = unserialize($items[$delta]->channels);
+    $channels = $this->getChannels();
+
     /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
     $entity = $items->getEntity();
     $element['#attached']['library'][] = 'applenews/drupal.applenews.admin';
     $templates = $this->getTemplates($entity);
     $article = ApplenewsManager::getArticle($entity, $field_name);
 
-    if (!$templates) {
+    if (empty($channels)) {
+      $element['message'] = [
+        '#markup' => $this->t('There are no channels available. To set up a channel, review the <a href=":url">Apple news Settings</a>.', [':url' => Url::fromRoute('entity.applenews_template.collection')->toString()]),
+      ];
+      if (extension_loaded('zip') && $templates && $entity->id()) {
+        $element['preview'] = [
+          '#type' => 'item',
+          '#title' => $this->t('Preview'),
+          '#markup' => $this->t('Download the Apple News generated document (use the News Preview app to preview the article): <ul>', []),
+        ];
+        foreach ($templates as $template_id => $template) {
+          $url_preview = Url::fromRoute('applenews.preview_download', [
+            'entity_type' => $entity->getEntityTypeId(),
+            'entity' => $entity->id(),
+            'revision_id' => $entity->getLoadedRevisionId(),
+            'template_id' => $template_id,
+          ]);
+
+          // @todo: Fix route, to support other than node.
+          $element['preview']['#markup'] .= ' <li>' . $this->t('<a href=":url">:label</a> template</li>', [
+            ':url' => $url_preview->toString(),
+            ':label' => $template,
+          ]);
+        }
+        $element['preview']['#markup'] .= '</ul>';
+      }
+    }
+    elseif (!$templates) {
       $element['message'] = [
         '#markup' => $this->t('Add a template to %type type. Check Apple news Template <a href=":url">configuration</a> page.', ['%type' => $entity->bundle(), ':url' => Url::fromRoute('entity.applenews_template.collection')->toString()]),
       ];
@@ -68,7 +97,7 @@ class Applenews extends WidgetBase {
           '#title' => $this->t('Share URL'),
           '#markup' => $this->t('<a href=":url">:url</a>', [':url' => $article->getShareUrl()]),
         ];
-        $delete_url = Url::fromRoute('applenews.remote.article_delete', ['channel_id' => '121-12121-sdf-121', 'article_id' => $article->getArticleId()]);
+        $delete_url = Url::fromRoute('applenews.remote.article_delete', ['entity_type' => $entity->getEntityTypeId(), 'entity' => $entity->id()]);
         $element['delete'] = [
           '#type' => 'item',
           '#title' => $this->t('Delete'),
@@ -113,6 +142,9 @@ class Applenews extends WidgetBase {
             'visible' => [
               ':input[name="' . $items->getName() . '[' . $delta . '][status]"]' => ['checked' => TRUE],
             ],
+            'checked' => [
+              ':input[data-section-of="' . $channel_key . '"]' => ['checked' => TRUE],
+            ],
           ],
         ];
         foreach ($channel->getSections() as $section_id => $section_label) {
@@ -145,7 +177,7 @@ class Applenews extends WidgetBase {
           ],
         ],
       ];
-      if ($article) {
+      if ($article && extension_loaded('zip')) {
         $url_preview = Url::fromRoute('applenews.preview_download', [
           'entity_type' => $entity->getEntityTypeId(),
           'entity' => $entity->id(),

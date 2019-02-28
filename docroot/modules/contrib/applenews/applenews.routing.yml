@@ -119,12 +119,16 @@ applenews.preview_download:
         type: entity:{entity_type}
 
 applenews.remote.article_delete:
-  path: '/admin/config/services/applenews/remote/{channel_id}/{article_id}/delete'
+  path: '/admin/config/services/applenews/remote/{entity_type}/{entity}/delete'
   defaults:
-    _form: 'Drupal\applenews\Form\SettingsForm'
+    _form: 'Drupal\applenews\Form\AppleNewsArticleDeleteForm'
     _title: 'Delete article'
   requirements:
     _permission: 'administer applenews configuration'
+  options:
+    parameters:
+      entity:
+        type: entity:{entity_type}
 
 # Settings.
 applenews.settings:

@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.article.body
     - field.field.node.article.comment
     - field.field.node.article.field_ankle_cta
+    - field.field.node.article.field_apple_news
     - field.field.node.article.field_apple_news_title
     - field.field.node.article.field_areas
     - field.field.node.article.field_article_type
@@ -46,6 +47,7 @@ dependencies:
     - image.style.thumbnail
     - node.type.article
   module:
+    - applenews
     - chosen_field
     - conditional_fields
     - datetime
@@ -64,7 +66,7 @@ third_party_settings:
         - field_short_title
         - field_sub_title
       parent_name: ''
-      weight: 3
+      weight: 4
       format_type: details
       format_settings:
         label: 'Short and Sub Title'
@@ -81,7 +83,7 @@ third_party_settings:
         - field_custom_author
         - field_source
       parent_name: ''
-      weight: 4
+      weight: 5
       format_type: details
       format_settings:
         id: ''
@@ -97,7 +99,7 @@ third_party_settings:
         - field_card_image
         - field_textured_background_image
       parent_name: ''
-      weight: 5
+      weight: 6
       format_type: details
       format_settings:
         label: 'Banner, Card, and Background Images'
@@ -112,7 +114,7 @@ third_party_settings:
         - body
         - field_content_panel
       parent_name: ''
-      weight: 6
+      weight: 7
       format_type: details
       format_settings:
         label: 'Main Content'
@@ -135,7 +137,7 @@ third_party_settings:
         - field_include
         - field_hide_article
       parent_name: ''
-      weight: 7
+      weight: 8
       format_type: details
       format_settings:
         label: Classifications
@@ -155,7 +157,7 @@ third_party_settings:
         - field_twitter_image
         - field_twitter_description
       parent_name: ''
-      weight: 8
+      weight: 9
       format_type: details
       format_settings:
         id: ''
@@ -168,7 +170,7 @@ third_party_settings:
       children:
         - field_recommended_article
       parent_name: ''
-      weight: 9
+      weight: 10
       format_type: details
       format_settings:
         label: 'Recommended Reading'
@@ -182,7 +184,7 @@ third_party_settings:
       children:
         - field_ankle_cta
       parent_name: ''
-      weight: 11
+      weight: 12
       format_type: details
       format_settings:
         id: ''
@@ -208,7 +210,7 @@ content:
     third_party_settings: {  }
   created:
     type: datetime_timestamp
-    weight: 12
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -220,6 +222,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
+    region: content
+  field_apple_news:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: applenews_default
     region: content
   field_apple_news_title:
     weight: 41
@@ -367,7 +375,7 @@ content:
     type: chosen_select
     region: content
   field_meta_tags:
-    weight: 21
+    weight: 22
     settings: {  }
     third_party_settings: {  }
     type: metatag_firehose
@@ -474,7 +482,7 @@ content:
     region: content
   path:
     type: path
-    weight: 15
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -482,17 +490,17 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 13
+    weight: 14
     region: content
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 19
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
   scheduler_settings:
-    weight: 17
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -500,14 +508,14 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 16
+    weight: 17
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 14
+    weight: 15
     region: content
     third_party_settings: {  }
   title:
@@ -520,7 +528,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 10
+    weight: 11
     region: content
     settings:
       match_operator: CONTAINS
@@ -529,12 +537,12 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 18
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 20
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }

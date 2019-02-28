@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a7994985cc36f67c0fcb3d1a3155498",
+    "content-hash": "013eaf4a9a3e14aa1a72ecf2d307ac77",
     "packages": [
         {
             "name": "acquia/content-hub-php",
@@ -1824,17 +1824,11 @@
         },
         {
             "name": "drupal/applenews",
-            "version": "1.0.0-beta1",
+            "version": "dev-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/applenews",
-                "reference": "8.x-1.0-beta1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/applenews-8.x-1.0-beta1.zip",
-                "reference": "8.x-1.0-beta1",
-                "shasum": "0b52273028c8918fa35546f8b623ace66e91c776"
+                "reference": "3675ca18093892bbd3a5b6eb97be161b2e495b1d"
             },
             "require": {
                 "chapter-three/apple-news-api": "dev-master",
@@ -1846,12 +1840,17 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-beta1",
-                    "datestamp": "1540682285",
+                    "version": "8.x-1.0-beta1+11-dev",
+                    "datestamp": "1547217855",
                     "security-coverage": {
                         "status": "not-covered",
-                        "message": "Beta releases are not covered by Drupal security advisories."
+                        "message": "Dev releases are not covered by Drupal security advisories."
                     }
+                },
+                "patches_applied": {
+                    "Fix delete process of templates components": "https://www.drupal.org/files/issues/2019-02-05/applenews-fix-delete-process-of-templates-components-3025958-9.patch",
+                    "Add preview link when no channels are configured": "https://www.drupal.org/files/issues/2019-02-05/applenews-preview-with-no-api-3029632-4.patch",
+                    "Limit tags in html": "https://www.drupal.org/files/issues/2019-02-05/applenews-limit_tags_in_html-11333241-2.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -1859,6 +1858,10 @@
                 "GPL-2.0-or-later"
             ],
             "authors": [
+                {
+                    "name": "geekygnr",
+                    "homepage": "https://www.drupal.org/user/2775199"
+                },
                 {
                     "name": "m4olivei",
                     "homepage": "https://www.drupal.org/user/410384"
@@ -1888,7 +1891,8 @@
             "homepage": "https://www.drupal.org/project/applenews",
             "support": {
                 "source": "http://cgit.drupalcode.org/applenews"
-            }
+            },
+            "time": "2019-02-05T13:21:56+00:00"
         },
         {
             "name": "drupal/authorization",
@@ -2119,8 +2123,7 @@
             "homepage": "https://www.drupal.org/project/better_normalizers",
             "support": {
                 "source": "http://cgit.drupalcode.org/better_normalizers"
-            },
-            "time": "2017-05-03T02:35:27+00:00"
+            }
         },
         {
             "name": "drupal/blazy",
@@ -2635,8 +2638,7 @@
             "homepage": "https://www.drupal.org/project/ckeditor_widgets",
             "support": {
                 "source": "http://cgit.drupalcode.org/ckeditor_widgets"
-            },
-            "time": "2016-09-02T06:39:25+00:00"
+            }
         },
         {
             "name": "drupal/ckwordcount",
@@ -15047,7 +15049,7 @@
         "drupal/viewfield": 15,
         "drupal/auto_entitylabel": 10,
         "drupal/menu_reference_render": 15,
-        "drupal/applenews": 10,
+        "drupal/applenews": 20,
         "drupal/better_normalizers": 20,
         "drupal/ldap": 10,
         "drupal/entity_clone": 10,
