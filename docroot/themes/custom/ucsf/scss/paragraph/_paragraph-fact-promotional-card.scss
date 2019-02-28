@@ -5,25 +5,30 @@
   padding: $space-eight $space-four $space-eight;
   margin-bottom: 0;
 
-  .field-fact-card-content > :last-child {
-    padding-bottom: 0;
-    margin-bottom: 0;
+  .layout-column & {
+    padding: $space-eight $space-four $space-eight;
   }
 
-  h2,
-  h3,
-  h4 {
-    @include fs-heading-three;
+  .layout-column & .field-fact-card-content {
 
-    margin: 0;
-    margin-top: $space-two;
-    margin-bottom: $space;
+  }
 
-    &.small-title {
-      font-family: $font-helvetica-neue-medium;
-      font-size: 18px;
-      margin-top: 8px;
-      letter-spacing: -0.2px;
+  .layout-column & {
+    h2,
+    h3,
+    h4 {
+      @include fs-heading-three;
+
+      margin: 0;
+      margin-top: $space-two;
+      margin-bottom: $space;
+
+      &.small-title {
+        font-family: $font-helvetica-neue-medium;
+        font-size: 18px;
+        margin-top: 8px;
+        letter-spacing: -0.2px;
+      }
     }
   }
 }
