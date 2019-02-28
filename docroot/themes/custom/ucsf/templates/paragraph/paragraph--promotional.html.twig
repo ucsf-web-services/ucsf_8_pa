@@ -1,0 +1,17 @@
+{% set classes = [
+  'promo-list__card',
+  'overlay-' ~ paragraph.field_textbox_background_color.entity.label|clean_class,
+] %}
+
+<div{{ attributes.addClass(classes) }} style="background: url('{{ file_url(paragraph.field_image_media.entity.field_media_image.entity.uri.value) }}') no-repeat left bottom  / cover transparent;">
+  <a class="promo-list__card-link" href="{{ paragraph.field_promo_cta.uri }}">
+    <h3 class="promo-list__card-title">{{ paragraph.field_title.value }}</h3>
+    {{ content|without(
+      'field_textbox_background_color',
+      'field_image_media',
+      'field_title',
+      'field_promo_cta'
+    ) }}
+    <p class="promo-list__card-more"><span class="link link--cta">{{ paragraph.field_promo_cta.title }}</span></p>
+  </a>
+</div>
