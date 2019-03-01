@@ -21,5 +21,30 @@
       });
     }
   };
+  
+  Drupal.behaviors.desktopDropdownHeight = {
+    attach: function (context, settings) {
+
+      // Set dropdown heights based on the content within.
+      var dropdown = $('[data-level="level-0"]');
+  
+      dropdown.each(function() {
+        
+        var self = $(this);
+        var childMenuHeight = self.find('.menu-child--menu').height();
+        var grandChildMenuHeight = self.find('[data-level="level-1"] > .menu-child--menu').height();
+        
+        if (grandChildMenuHeight > childMenuHeight) {
+          var dropdDownHeight = grandChildMenuHeight + 160;
+        } else {
+          var dropdDownHeight = childMenuHeight + 128;
+        }
+        
+        self.height(dropdDownHeight);
+        self.find('.menu-child--label').width(dropdDownHeight - 48);
+        
+      })
+    }
+  };
 
 })(jQuery);
