@@ -74,8 +74,12 @@ a {
 }
 
 span.ext {
-  @include background-image('external-link.svg', right center, transparent);
+  @include background-image('external-link.svg', right center);
   padding-right: 20px;
+
+  a:hover & {
+    @include background-image('external-link-hover.svg', right center);
+  }
 }
 
 .link--cta {
