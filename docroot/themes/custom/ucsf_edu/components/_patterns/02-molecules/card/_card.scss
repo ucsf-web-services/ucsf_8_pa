@@ -827,6 +827,12 @@
     &.link--cta {
       background: url(../images/cta-arrow-white.svg) right center no-repeat transparent;
       background-size: 14px 10px;
+      color: $white;
+
+      &:hover {
+        color: $white;
+        text-decoration: underline;
+      }
     }
 
     span {
@@ -961,12 +967,41 @@
 .icon-money,
 .icon-awards,
 .icon-support,
-.icon-caduceus {
+.icon-caduceus,
+.icon-heart,
+.icon-comprehensive,
+.icon-media,
+.icon-microscope {
   content: ' ';
   background: url(../images/card/education.svg) left center no-repeat transparent;
   background-size: $space-six;
   height: $space-six;
   width: $space-six;
+}
+
+a {
+  &.icon-education,
+  &.icon-doctor,
+  &.icon-campus,
+  &.icon-money,
+  &.icon-awards,
+  &.icon-support,
+  &.icon-caduceus,
+  &.icon-heart,
+  &.icon-comprehensive,
+  &.icon-media,
+  &.icon-microscope {
+    content: ' ';
+    background-size: $space-four;
+    height: auto;
+    width: auto;
+    padding-left: $space-five;
+    display: inline-block;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .icon-doctor {
@@ -991,4 +1026,84 @@
 
 .icon-caduceus {
   background-image: url(../images/card/caduceus.svg);
+}
+
+.icon-heart {
+  background-image: url(../images/card/heart.svg);
+}
+
+.icon-comprehensive {
+  background-image: url(../images/card/comprehensive.svg);
+}
+
+.icon-media {
+  background-image: url(../images/card/media.svg);
+}
+
+.icon-microscope {
+  background-image: url(../images/card/microscope.svg);
+}
+
+[data-primary-area="pa-about"],
+[data-primary-area="pa-campus-news"],
+[data-primary-area="pa-announcements"],
+[data-primary-area="pa-happenings"],
+[data-primary-area="pa-honors-awards"],
+[data-primary-area="pa-spotlight"],
+[data-primary-area="pa-education"],
+[data-primary-area="pa-patient-care"],
+[data-primary-area="pa-research"],
+[data-primary-area="pa-locations"],
+[data-primary-area="pa-news-center"] {
+  picture {
+    background: url(../images/card/support-reverse.svg) center no-repeat $purple;
+    background-size: $space-six;
+    background-position: 50% 35%;
+  }
+}
+
+[data-primary-area="pa-campus-news"],
+[data-primary-area="pa-announcements"],
+[data-primary-area="pa-happenings"],
+[data-primary-area="pa-honors-awards"],
+[data-primary-area="pa-spotlight"] {
+  picture {
+    background-image: url(../images/card/campus-reverse.svg);
+    background-color: $navy;
+  }
+}
+
+[data-primary-area="pa-education"] {
+  picture {
+    background-image: url(../images/card/education-reverse.svg);
+    background-color: $print-green;
+  }
+}
+
+[data-primary-area="pa-patient-care"] {
+  picture {
+    background-image: url(../images/card/doctor-reverse.svg);
+    background-color: $blue;
+  }
+}
+
+[data-primary-area="pa-research"] {
+  picture {
+    background-image: url(../images/card/microscope-reverse.svg);
+    background-color: $teal;
+  }
+}
+
+[data-primary-area="pa-locations"] {
+  picture {
+    background-image: url(../images/card/campus-reverse.svg);
+    background-color: $print-green;
+  }
+}
+
+[data-primary-area="pa-news-center"] {
+  picture {
+    background-image: url(../images/card/media-reverse.svg);
+    background-color: $purple;
+  }
 }

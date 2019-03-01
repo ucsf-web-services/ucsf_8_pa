@@ -22,21 +22,38 @@
     <main role="main" {{ bem(main_base_class, (main_modifiers), main_blockname) }}>
       <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
 
-      <div class="article-feature-banner">
-      {% include "@atoms/04-images/00-image/figure.twig" with {
-        img_src: '../../images/article/building.jpg',
-        img_alt: 'Mother with Child',
-        image_figure_base_class: 'article-feature-banner-image',
-      } %}
+      <div class="article-feature-banner" style="background: url(&quot;../../images/article/building.jpg&quot;) no-repeat right bottom;">
 
-      {% include "@organisms/title/basic-article-title.twig" with {
-        heading_class: 'article-feature-header',
-        area: 'Research',
-        date: 'Sept. 18, 2018',
-        heading: 'Streets of Pain: The Opioid Epidemic',
-        subheading: 'Daniel Ciccarone, MD, MPH, is leading a nationwide study that aims to better understand the scope of the opioid crisis in America.',
-        author: 'Kate Vidinsky',
-      } %}
+<figure class="article-feature-banner-image">
+
+
+<picture class="article-feature-banner-image__image">
+
+<img class="article-feature-banner-image__img" src="../../images/article/building.jpg" alt="Mother with Child">
+</picture>
+
+  </figure>
+
+      <header class="article-header article-feature-header blur">
+<div class="blur-content">
+      <ul class="article-header__byline">
+          <li class="article-header__Research">Research</li>
+              <li class="article-header__date">Sept. 18, 2018</li>
+        </ul>
+
+  <h1>
+      Streets of Pain: The Opioid Epidemic
+  </h1>
+
+    <p class="article-header__subheading">
+    Daniel Ciccarone, MD, MPH, is leading a nationwide study that aims to better understand the scope of the opioid crisis in America.
+  </p>
+
+    <p class="article-header__author what">
+    By <a href="#">Kate Vidinsky</a>
+  </p>
+  </div>
+</header>
       </div>
 
       <div {{ bem(main_content_base_class, (main_content_modifiers), main_content_blockname) }}>
