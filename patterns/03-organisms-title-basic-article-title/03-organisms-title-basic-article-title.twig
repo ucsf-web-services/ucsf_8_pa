@@ -1,14 +1,15 @@
 <header class="article-header {{ heading_class }}">
-{% if area or date %}
-  <ul class="article-header__byline">
-  {% if area %}
-    <li class="article-header__{{ area }}">{{ area }}</li>
+<div class="blur-content">
+  {% if area or date %}
+    <ul class="article-header__byline">
+    {% if area %}
+      <li class="article-header__{{ area }}">{{ area }}</li>
+    {% endif %}
+    {% if date %}
+      <li class="article-header__date">{{ date }}</li>
+    {% endif %}
+    </ul>
   {% endif %}
-  {% if date %}
-    <li class="article-header__date">{{ date }}</li>
-  {% endif %}
-  </ul>
-{% endif %}
 
   <h1>
       {{ heading }}
@@ -25,4 +26,5 @@
     By <a href="#">{{ author }}</a>
   </p>
   {% endif %}
+</div>
 </header>
