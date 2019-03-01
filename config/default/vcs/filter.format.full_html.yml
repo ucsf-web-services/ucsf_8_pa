@@ -5,11 +5,12 @@ dependencies:
   module:
     - editor
     - entity_embed
+    - image
 _core:
   default_config_hash: hewPmBgni9jlDK_IjLxUx1HsTbinK-hdl0lOwjbteIY
 name: 'Full HTML'
 format: full_html
-weight: -8
+weight: -9
 filters:
   filter_align:
     id: filter_align
@@ -75,3 +76,13 @@ filters:
     weight: -42
     settings:
       filter_url_length: 72
+  filter_image_style:
+    id: filter_image_style
+    provider: image
+    status: true
+    weight: 0
+    settings:
+      allowed_styles:
+        full_bleed__image: full_bleed__image
+        full_bleed_half__image: full_bleed_half__image
+        half__image: half__image

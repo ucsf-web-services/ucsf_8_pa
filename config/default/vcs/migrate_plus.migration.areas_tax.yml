@@ -1,4 +1,4 @@
-uuid: ee0e2090-2b97-4c46-a2e4-6fb5f9008f89
+uuid: e6188ebf-b7e6-4110-b109-4f08ba99b502
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - ucsf_edu_migrate
 _core:
-  default_config_hash: oX-A_miqa8L9Sj0eDXBH2HA1LnF-LR6s5_ZA7G4TlVY
+  default_config_hash: McIOO8HwwQGRrrh5cnyzuthNyAimFJJza_VCgqT-Qg4
 id: areas_tax
 class: null
 field_plugin_method: null
@@ -18,7 +18,7 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: 'http://ucsfpa1dev.prod.acquia-sites.com/areasxml'
+  urls: 'https://www.ucsf.edu/areasxml'
   item_selector: /taxonomy/terms
   fields:
     -
@@ -47,7 +47,11 @@ process:
     plugin: default_value
     default_value: areas
   name: tax_title
-  tid: tax_id
+  tid:
+    -
+      plugin: data_lookup
+      source: tax_id
+      file: 'public://area_tax_map.csv'
   description/value: tax_description
   parent:
     -

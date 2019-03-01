@@ -1,0 +1,28 @@
+uuid: f98546f7-6cf2-4a69-b0b7-a6c61489a077
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_banner_image
+    - media.type.image
+    - node.type.news_package
+id: node.news_package.field_banner_image
+field_name: field_banner_image
+entity_type: node
+bundle: news_package
+label: 'Banner Image'
+description: 'Images need to be 2880px x 1560px for retina screens'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

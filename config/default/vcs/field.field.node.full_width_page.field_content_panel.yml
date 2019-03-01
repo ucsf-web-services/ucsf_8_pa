@@ -1,0 +1,143 @@
+uuid: 4291c162-23c2-44a2-be39-63e5bdae314d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_panel
+    - node.type.full_width_page
+    - paragraphs.paragraphs_type.blockquote
+    - paragraphs.paragraphs_type.column_wrapper
+    - paragraphs.paragraphs_type.events
+    - paragraphs.paragraphs_type.featured_video
+    - paragraphs.paragraphs_type.gallery
+    - paragraphs.paragraphs_type.text_block
+    - paragraphs.paragraphs_type.two_column_content_row_30_70
+    - paragraphs.paragraphs_type.two_column_content_row_70_30
+    - paragraphs.paragraphs_type.vertical_tabs
+  module:
+    - entity_reference_revisions
+id: node.full_width_page.field_content_panel
+field_name: field_content_panel
+entity_type: node
+bundle: full_width_page
+label: 'Full-Width Video, Full-Bleed Blockquote, Gallery, Text Block, Tabs, Events, Columned Layouts'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      text_block: text_block
+      column_wrapper: column_wrapper
+      two_column_content_row_30_70: two_column_content_row_30_70
+      two_column_content_row_70_30: two_column_content_row_70_30
+      blockquote: blockquote
+      featured_video: featured_video
+      events: events
+      gallery: gallery
+      vertical_tabs: vertical_tabs
+    target_bundles_drag_drop:
+      author:
+        weight: -67
+        enabled: false
+      text_block:
+        enabled: true
+        weight: -66
+      column_wrapper:
+        enabled: true
+        weight: -65
+      two_column_content_row_30_70:
+        enabled: true
+        weight: -64
+      two_column_content_row_70_30:
+        enabled: true
+        weight: -63
+      blockquote:
+        enabled: true
+        weight: -62
+      featured_video:
+        enabled: true
+        weight: -61
+      events:
+        enabled: true
+        weight: -60
+      gallery:
+        enabled: true
+        weight: -59
+      vertical_tabs:
+        enabled: true
+        weight: -58
+      block:
+        weight: -57
+        enabled: false
+      two_column_content_row_25_75:
+        weight: -56
+        enabled: false
+      two_column_content_row_75_25:
+        weight: -55
+        enabled: false
+      column_content:
+        weight: -54
+        enabled: false
+      custom_author:
+        weight: -53
+        enabled: false
+      featured:
+        weight: -52
+        enabled: false
+      featured_card_image:
+        weight: -51
+        enabled: false
+      featured_image:
+        weight: -50
+        enabled: false
+      gallery_item:
+        weight: -49
+        enabled: false
+      image:
+        weight: -48
+        enabled: false
+      location:
+        weight: -47
+        enabled: false
+      menu:
+        weight: -46
+        enabled: false
+      promotional:
+        weight: -45
+        enabled: false
+      related_content:
+        weight: -44
+        enabled: false
+      related_external_link:
+        weight: -43
+        enabled: false
+      source:
+        weight: -42
+        enabled: false
+      three_column_25_25_50:
+        weight: -41
+        enabled: false
+      three_column_25_50_25:
+        weight: -40
+        enabled: false
+      three_column_50_25_25:
+        weight: -39
+        enabled: false
+      view:
+        weight: -38
+        enabled: false
+      vertical_tab:
+        weight: -37
+        enabled: false
+      content_promotional:
+        weight: -36
+        enabled: false
+      fact_promotional_card:
+        weight: -35
+        enabled: false
+field_type: entity_reference_revisions

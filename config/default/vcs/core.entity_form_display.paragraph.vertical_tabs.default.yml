@@ -1,0 +1,44 @@
+uuid: 1cefd185-e6bd-4b97-84dc-fbec90b9d558
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.vertical_tabs.field_tabs
+    - field.field.paragraph.vertical_tabs.field_vertical_tab_design
+    - paragraphs.paragraphs_type.vertical_tabs
+  module:
+    - paragraphs
+id: paragraph.vertical_tabs.default
+targetEntityType: paragraph
+bundle: vertical_tabs
+mode: default
+content:
+  field_tabs:
+    type: paragraphs
+    weight: 1
+    settings:
+      title: Tab
+      title_plural: Tabs
+      edit_mode: open
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: vertical_tab
+      features:
+        duplicate: duplicate
+        collapse_edit_all: collapse_edit_all
+        add_above: '0'
+    third_party_settings: {  }
+    region: content
+  field_vertical_tab_design:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

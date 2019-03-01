@@ -1,0 +1,133 @@
+uuid: a22b3538-0002-4443-85ed-6485e6adf273
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_panel
+    - node.type.narrow_page
+    - paragraphs.paragraphs_type.blockquote
+    - paragraphs.paragraphs_type.featured_video
+    - paragraphs.paragraphs_type.gallery
+    - paragraphs.paragraphs_type.text_block
+  module:
+    - entity_reference_revisions
+id: node.narrow_page.field_content_panel
+field_name: field_content_panel
+entity_type: node
+bundle: narrow_page
+label: 'Full-Width Video, Full-Bleed Blockquote, Gallery, and Text Block'
+description: 'This is to add narrow page elements'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      text_block: text_block
+      blockquote: blockquote
+      featured_video: featured_video
+      gallery: gallery
+    target_bundles_drag_drop:
+      text_block:
+        enabled: true
+        weight: -67
+      blockquote:
+        enabled: true
+        weight: -66
+      featured_video:
+        enabled: true
+        weight: -65
+      gallery:
+        enabled: true
+        weight: -64
+      author:
+        weight: -63
+        enabled: false
+      block:
+        weight: -62
+        enabled: false
+      column_content:
+        weight: -61
+        enabled: false
+      column_wrapper:
+        weight: -60
+        enabled: false
+      content_promotional:
+        weight: -59
+        enabled: false
+      custom_author:
+        weight: -58
+        enabled: false
+      events:
+        weight: -57
+        enabled: false
+      fact_promotional_card:
+        weight: -56
+        enabled: false
+      featured:
+        weight: -55
+        enabled: false
+      featured_card_image:
+        weight: -54
+        enabled: false
+      featured_image:
+        weight: -53
+        enabled: false
+      gallery_item:
+        weight: -52
+        enabled: false
+      image:
+        weight: -51
+        enabled: false
+      location:
+        weight: -50
+        enabled: false
+      menu:
+        weight: -49
+        enabled: false
+      promotional:
+        weight: -48
+        enabled: false
+      related_content:
+        weight: -47
+        enabled: false
+      related_external_link:
+        weight: -46
+        enabled: false
+      source:
+        weight: -45
+        enabled: false
+      three_column_25_25_50:
+        weight: -44
+        enabled: false
+      three_column_25_50_25:
+        weight: -43
+        enabled: false
+      three_column_50_25_25:
+        weight: -42
+        enabled: false
+      two_column_content_row_25_75:
+        weight: -41
+        enabled: false
+      two_column_content_row_30_70:
+        weight: -40
+        enabled: false
+      two_column_content_row_70_30:
+        weight: -39
+        enabled: false
+      two_column_content_row_75_25:
+        weight: -38
+        enabled: false
+      vertical_tab:
+        weight: -37
+        enabled: false
+      vertical_tabs:
+        weight: -36
+        enabled: false
+      view:
+        weight: -35
+        enabled: false
+field_type: entity_reference_revisions

@@ -1,0 +1,28 @@
+uuid: cbe0d66c-1114-46ef-9e63-28e402e6a71d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_banner_image
+    - media.type.image
+    - node.type.homepage
+id: node.homepage.field_banner_image
+field_name: field_banner_image
+entity_type: node
+bundle: homepage
+label: 'Banner Image'
+description: 'Will have to upload 2880px x 1500px for retina display. Left-align text box requires 2720px x 1360px'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

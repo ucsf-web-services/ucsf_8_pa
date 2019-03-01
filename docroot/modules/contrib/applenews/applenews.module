@@ -6,10 +6,37 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\migrate\MigrateSkipRowException;
 use Drupal\migrate\Plugin\MigrateSourceInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Row;
+
+/**
+ * Implements hook_help().
+ */
+function applenews_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.applenews':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Apple News module provides an easy way to get your Drupal site\'s content into Apple News.') . '</p>';
+      $output .= '<h3>' . t('Key features') . '</h3>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Build custom Apple News layout.') . '</li>';
+      $output .= '<li>' . t('Ability to export content to preview in the News Preview application.') . '</li>';
+      $output .= '<li>' . t('Bulk export to Apple News.') . '</li>';
+      $output .= '<li>' . t('Export individual content to Apple News.') . '</li>';
+      $output .= '<li>' . t('Integration with Views allows to build custom reports.') . '</li>';
+      $output .= '<li>' . t('Built-in plugin system allows extend module components by adding support to almost any field types.') . '</li>';
+      $output .= '</ul>';
+      $output .= '<h3>' . t('Dependencies') . '</h3>';
+      $output .= '<p>' . t('Apple News requires the Serialization module (in Web Services) to be installed.') . '</p>';
+      $output .= '<h3>' . t('More Help') . '</h3>';
+      $output .= '<p>' . t('For more help, please consult the README.MD file in the applenews module folder.') . '</p>';
+      return $output;
+  }
+}
 
 /**
  * Implements hook_entity_insert().

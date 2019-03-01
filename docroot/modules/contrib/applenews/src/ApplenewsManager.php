@@ -2,8 +2,10 @@
 
 namespace Drupal\applenews;
 
+use ChapterThree\AppleNewsAPI\Document\Components\Text;
 use Drupal\applenews\Entity\ApplenewsArticle;
 use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityInterface;
@@ -232,7 +234,10 @@ class ApplenewsManager {
     foreach ($fields as $field_name => $detail) {
       $article = self::getArticle($entity, $field_name);
       if ($article) {
+        // Delete article from remote.
         $this->doDelete($article->getArticleId());
+        // Delete corresponding applenews_article entity.
+        $article->delete();
       }
     }
   }
@@ -291,10 +296,19 @@ class ApplenewsManager {
    * @return string
    *   JSON string document.
    */
-  protected function getDocumentDataFromEntity(EntityInterface $entity, $template) {
+  public function getDocumentDataFromEntity(EntityInterface $entity, $template) {
+    global $base_url;
     $context['template_id'] = $template;
     /** @var \ChapterThree\AppleNewsAPI\Document $document */
     $document = $this->serializer->normalize($entity, 'applenews', $context);
+
+    /** @var \ChapterThree\AppleNewsAPI\Document\Components\Text $component */
+    foreach ($document['components'] as $index => $component) {
+      if (!$component instanceof Text) {
+        continue;
+      }
+      $component->setText(Html::transformRootRelativeUrlsToAbsolute($component->getText(), $base_url));
+    }
     return Json::encode($document);
   }
 

@@ -7,7 +7,9 @@ dependencies:
     - paragraphs.paragraphs_type.block
     - paragraphs.paragraphs_type.blockquote
     - paragraphs.paragraphs_type.column_content
-    - paragraphs.paragraphs_type.gallery
+    - paragraphs.paragraphs_type.content_promotional
+    - paragraphs.paragraphs_type.fact_promotional_card
+    - paragraphs.paragraphs_type.featured
     - paragraphs.paragraphs_type.image
     - paragraphs.paragraphs_type.menu
     - paragraphs.paragraphs_type.promotional
@@ -38,7 +40,9 @@ settings:
       view: view
       menu: menu
       block: block
-      gallery: gallery
+      content_promotional: content_promotional
+      fact_promotional_card: fact_promotional_card
+      featured: featured
       promotional: promotional
     target_bundles_drag_drop:
       text_block:
@@ -58,9 +62,6 @@ settings:
         enabled: false
       author:
         weight: -18
-        enabled: false
-      authors:
-        weight: -17
         enabled: false
       custom_author:
         weight: -16
@@ -87,26 +88,32 @@ settings:
         weight: 32
         enabled: false
       gallery:
-        enabled: true
         weight: 35
+        enabled: false
       gallery_item:
         weight: 36
+        enabled: false
+      content_promotional:
+        enabled: true
+        weight: 37
+      events:
+        weight: 39
         enabled: false
       related_external_link:
         weight: 39
         enabled: false
-      related_internal_link:
+      fact_promotional_card:
+        enabled: true
         weight: 40
-        enabled: false
-      related_links:
+      featured:
+        enabled: true
         weight: 41
+      source:
+        weight: 42
         enabled: false
       promotional:
         enabled: true
         weight: 42
-      source:
-        weight: 42
-        enabled: false
       three_column_25_25_50:
         weight: 44
         enabled: false
@@ -119,7 +126,16 @@ settings:
       two_column_content_row_25_75:
         weight: 47
         enabled: false
+      location:
+        weight: 48
+        enabled: false
       two_column_content_row_75_25:
         weight: 48
+        enabled: false
+      vertical_tab:
+        weight: 60
+        enabled: false
+      vertical_tabs:
+        weight: 61
         enabled: false
 field_type: entity_reference_revisions

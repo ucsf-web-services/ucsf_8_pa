@@ -6,6 +6,9 @@ dependencies:
     - block_content.type.ankle_cta
     - field.storage.node.field_ankle_cta
     - node.type.author
+  content:
+    - 'block_content:ankle_cta:358bc508-413a-48d6-978c-5d070d20f9df'
+    - 'block_content:ankle_cta:ee8c73ce-3039-4ddd-bd09-23754d3b7b10'
 id: node.author.field_ankle_cta
 field_name: field_ankle_cta
 entity_type: node
@@ -14,7 +17,11 @@ label: 'Ankle CTA'
 description: 'Create the ankle CTA block to reference it'
 required: false
 translatable: true
-default_value: {  }
+default_value:
+  -
+    target_uuid: ee8c73ce-3039-4ddd-bd09-23754d3b7b10
+  -
+    target_uuid: 358bc508-413a-48d6-978c-5d070d20f9df
 default_value_callback: ''
 settings:
   handler: 'default:block_content'

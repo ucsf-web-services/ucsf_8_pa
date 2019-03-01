@@ -172,3 +172,10 @@ parameters:
     maxAge: false
     # Sets the Access-Control-Allow-Credentials header.
     supportsCredentials: false
+services:
+  serializer.applenews.content_entity:
+    class: Drupal\ucsf_applenews\Normalizer\UcsfApplenewsContentEntityNormalizer
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: normalizer, priority: 1 }
+

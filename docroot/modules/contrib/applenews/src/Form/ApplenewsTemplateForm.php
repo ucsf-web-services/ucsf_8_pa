@@ -184,16 +184,18 @@ class ApplenewsTemplateForm extends EntityForm {
     ];
 
     $rows = [];
-    foreach ($components as $id => $component) {
-      $rows[$id] = $this->getComponentRow($component, $form_state);
-      $component_plugin = $this->applenewsComponentTypeManager->createInstance($component['id']);
-      // If not a nested component, it cannot be a parent of other components.
-      if ($component_plugin->getComponentType() != 'nested') {
-        $rows[$id]['#attributes']['class'][] = 'tabledrag-leaf';
-      }
-      else {
-        $rows += $this->getChildComponentRows($component, $form_state);
-        $rows[$id]['type']['#markup'] = '<strong>' . $component['id'] . '</strong>';
+    if (!empty($components)) {
+      foreach ($components as $id => $component) {
+        $rows[$id] = $this->getComponentRow($component, $form_state);
+        $component_plugin = $this->applenewsComponentTypeManager->createInstance($component['id']);
+        // If not a nested component, it cannot be a parent of other components.
+        if ($component_plugin->getComponentType() != 'nested') {
+          $rows[$id]['#attributes']['class'][] = 'tabledrag-leaf';
+        }
+        else {
+          $rows += $this->getChildComponentRows($component, $form_state);
+          $rows[$id]['type']['#markup'] = '<strong>' . $component['id'] . '</strong>';
+        }
       }
     }
 

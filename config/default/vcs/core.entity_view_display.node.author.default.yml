@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.author.field_meta_tags
     - field.field.node.author.field_middle_name
     - field.field.node.author.field_phone
+    - field.field.node.author.field_topics
     - field.field.node.author.field_twitter_handle
     - node.type.author
   module:
@@ -40,9 +41,10 @@ content:
     weight: 114
     label: hidden
     settings:
-      link: true
+      view_mode: default
+      link: false
     third_party_settings: {  }
-    type: entity_reference_label
+    type: entity_reference_entity_view
     region: content
   field_author_image:
     weight: 109
@@ -130,6 +132,14 @@ content:
       title: ''
     third_party_settings: {  }
     type: telephone_link
+    region: content
+  field_topics:
+    weight: 116
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
     region: content
   field_twitter_handle:
     weight: 110

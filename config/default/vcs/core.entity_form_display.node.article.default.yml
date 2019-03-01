@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.media_assets_library_field
     - field.field.node.article.body
     - field.field.node.article.comment
     - field.field.node.article.field_ankle_cta
@@ -43,14 +44,13 @@ dependencies:
     - field.field.node.article.field_twitter_description
     - field.field.node.article.field_twitter_image
     - field.field.node.article.field_twitter_title
-    - image.style.thumbnail
     - node.type.article
   module:
     - chosen_field
     - conditional_fields
     - datetime
+    - entity_browser
     - field_group
-    - image
     - link
     - metatag
     - paragraphs
@@ -149,11 +149,11 @@ third_party_settings:
       children:
         - field_apple_news_title
         - field_facebook_title
-        - field_facebook_image
         - field_facebook_description
+        - field_facebook_image
         - field_twitter_title
-        - field_twitter_image
         - field_twitter_description
+        - field_twitter_image
       parent_name: ''
       weight: 8
       format_type: details
@@ -247,17 +247,40 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      conditional_fields:
+        896b8b79-5ec4-482c-85de-ed156129ef36:
+          dependee: field_article_type
+          settings:
+            state: '!visible'
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                target_id: '411961'
+            effect: show
+            effect_options: {  }
+            selector: ''
+          entity_type: node
+          bundle: article
     type: entity_reference_autocomplete
     region: content
   field_banner_image:
     weight: 23
     settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+      entity_browser: media_assets_library_field
+      field_widget_display: label
+      field_widget_remove: true
+      open: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      field_widget_replace: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: entity_browser_entity_reference
     region: content
   field_banner_layout:
     weight: 22
@@ -268,11 +291,16 @@ content:
   field_card_image:
     weight: 24
     settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+      entity_browser: media_assets_library_field
+      field_widget_display: label
+      field_widget_remove: true
+      open: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      field_widget_replace: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: entity_browser_entity_reference
     region: content
   field_content_panel:
     type: paragraphs
@@ -299,7 +327,25 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      conditional_fields:
+        79f9e9dd-1f9d-42f8-86d6-4e75842c661c:
+          dependee: field_article_type
+          settings:
+            state: '!visible'
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                target_id: '411961'
+            effect: show
+            effect_options: {  }
+            selector: ''
+          entity_type: node
+          bundle: article
     type: entity_reference_autocomplete
     region: content
   field_date_and_time:
@@ -320,11 +366,28 @@ content:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings:
-      conditional_fields: {  }
+      conditional_fields:
+        b17c87ff-1cd2-48c9-9c05-3041a72726f8:
+          dependee: field_article_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                target_id: '411961'
+            effect: show
+            effect_options: {  }
+            selector: ''
+          entity_type: node
+          bundle: article
     type: link_default
     region: content
   field_facebook_description:
-    weight: 44
+    weight: 43
     settings:
       rows: 5
       placeholder: ''
@@ -332,12 +395,18 @@ content:
     type: string_textarea
     region: content
   field_facebook_image:
-    weight: 43
+    weight: 44
     settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
+      entity_browser: media_assets_library_field
+      field_widget_display: label
+      field_widget_edit: true
+      field_widget_remove: true
+      open: true
+      selection_mode: selection_append
+      field_widget_replace: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
-    type: image_image
+    type: entity_browser_entity_reference
     region: content
   field_facebook_title:
     weight: 42
@@ -413,7 +482,25 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      conditional_fields:
+        adc46eef-20a6-4591-b94a-9eb0bcc8a5a3:
+          dependee: field_article_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                target_id: '411961'
+            effect: show
+            effect_options: {  }
+            selector: ''
+          entity_type: node
+          bundle: article
     type: entity_reference_autocomplete
     region: content
   field_sub_title:
@@ -436,11 +523,16 @@ content:
   field_textured_background_image:
     weight: 25
     settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+      entity_browser: media_assets_library_field
+      field_widget_display: label
+      field_widget_remove: true
+      open: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      field_widget_replace: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: entity_browser_entity_reference
     region: content
   field_topics:
     weight: 19
@@ -449,7 +541,7 @@ content:
     type: chosen_select
     region: content
   field_twitter_description:
-    weight: 47
+    weight: 46
     settings:
       rows: 5
       placeholder: ''
@@ -457,12 +549,18 @@ content:
     type: string_textarea
     region: content
   field_twitter_image:
-    weight: 46
+    weight: 47
     settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
+      entity_browser: media_assets_library_field
+      field_widget_display: label
+      field_widget_edit: true
+      field_widget_remove: true
+      open: true
+      selection_mode: selection_append
+      field_widget_replace: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
-    type: image_image
+    type: entity_browser_entity_reference
     region: content
   field_twitter_title:
     weight: 45

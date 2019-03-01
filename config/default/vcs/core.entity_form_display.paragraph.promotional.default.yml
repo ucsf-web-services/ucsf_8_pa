@@ -5,6 +5,7 @@ dependencies:
   config:
     - entity_browser.browser.media_assets_library
     - field.field.paragraph.promotional.field_image_media
+    - field.field.paragraph.promotional.field_promo_cta
     - field.field.paragraph.promotional.field_promo_image
     - field.field.paragraph.promotional.field_promo_text
     - field.field.paragraph.promotional.field_textbox_background_color
@@ -12,6 +13,7 @@ dependencies:
     - paragraphs.paragraphs_type.promotional
   module:
     - entity_browser
+    - link
     - text
 id: paragraph.promotional.default
 targetEntityType: paragraph
@@ -19,7 +21,7 @@ bundle: promotional
 mode: default
 content:
   field_image_media:
-    weight: 1
+    weight: 2
     settings:
       entity_browser: media_assets_library
       field_widget_display: rendered_entity
@@ -33,8 +35,16 @@ content:
     third_party_settings: {  }
     type: entity_browser_entity_reference
     region: content
+  field_promo_cta:
+    weight: 4
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
   field_promo_text:
-    weight: 2
+    weight: 3
     settings:
       rows: 5
       placeholder: ''
@@ -42,7 +52,7 @@ content:
     type: text_textarea
     region: content
   field_textbox_background_color:
-    weight: 3
+    weight: 1
     settings: {  }
     third_party_settings: {  }
     type: options_select
