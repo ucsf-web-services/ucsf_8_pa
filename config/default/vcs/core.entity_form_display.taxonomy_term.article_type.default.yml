@@ -1,0 +1,79 @@
+uuid: 201fac75-3668-4bb7-80d9-1392f0782a2b
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.media_assets_library_field
+    - field.field.taxonomy_term.article_type.field_ankle_cta
+    - field.field.taxonomy_term.article_type.field_taxonomy_banner_image
+    - taxonomy.vocabulary.article_type
+  module:
+    - entity_browser
+    - field_group
+    - path
+    - text
+third_party_settings:
+  field_group:
+    group_a:
+      children:
+        - field_ankle_cta
+      parent_name: ''
+      weight: 3
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: false
+        required_fields: true
+      label: 'Ankle CTAs'
+id: taxonomy_term.article_type.default
+targetEntityType: taxonomy_term
+bundle: article_type
+mode: default
+content:
+  description:
+    type: text_textarea
+    weight: 2
+    region: content
+    settings:
+      placeholder: ''
+      rows: 5
+    third_party_settings: {  }
+  field_ankle_cta:
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_taxonomy_banner_image:
+    weight: 1
+    settings:
+      entity_browser: media_assets_library_field
+      field_widget_display: label
+      field_widget_edit: true
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

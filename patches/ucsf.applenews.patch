@@ -1,0 +1,1709 @@
+diff --git a/composer.json b/composer.json
+index eff57190e..49e7ecd6c 100644
+--- a/composer.json
++++ b/composer.json
+@@ -145,7 +145,7 @@
+         "drupal/config_installer": "^1.8",
+         "drupal/media_entity_image": "^1.3",
+         "fourkitchens/emulsify": "^2.7",
+-		"drupal/applenews": "^1.0@beta",
++		    "drupal/applenews": "1.x-dev",
+         "drupal/better_normalizers": "^1.0@beta",
+         "drupal/video_embed_media": "^2.0",
+         "sebastian/version": "^2.0",
+@@ -200,18 +200,22 @@
+         "enable-patching": true,
+         "patches" : {
+             "drupal/core" : {
+-                "2644468-88 - Multiple image upload breaks image dimensions" : "https://www.drupal.org/files/issues/2644468-88.patch",
+-                "2061377-328 - Allow image style to be selected in Text Editor's image dialog": "https://www.drupal.org/files/issues/2018-09-19/2061377-328.patch",
+-                "UCSF FilterAlign - Remove class restriction on FilterAlign plugin" : "https://raw.githubusercontent.com/ucsf-web-services/ucsf_8_pa/master/patches/core-filteralign.patch",
+-                "UCSF FilterCaption - Fix decode entities on FilterCaption" : "https://raw.githubusercontent.com/ucsf-web-services/ucsf_8_pa/master/patches/core-filtercaption.patch",
+-                "2973706 - Styles dropdown configuration permit multiple tags" : "https://www.drupal.org/files/issues/2018-05-18/allow-multiple-elements-2973706-2.patch"
++              "2644468-88 - Multiple image upload breaks image dimensions" : "https://www.drupal.org/files/issues/2644468-88.patch",
++              "2786577 - datetime-range views enhancements" : "https://www.drupal.org/files/issues/2786577-270_0.patch",
++              "FilterAlign - remove aggressive removal of classes" : "https://raw.githubusercontent.com/ucsf-web-services/ucsf_8_pa/master/patches/core-filteralign.patch"
++              "UCSF FilterCaption - Fix decode entities on FilterCaption" : "https://raw.githubusercontent.com/ucsf-web-services/ucsf_8_pa/master/patches/core-filtercaption.patch",
++              "2973706 - Styles dropdown configuration permit multiple tags" : "https://www.drupal.org/files/issues/2018-05-18/allow-multiple-elements-2973706-2.patch"
+             },
+             "drupal/field_group": {
+-                "2652642 - Allow to position the group in the advanced sidebar column": "https://www.drupal.org/files/issues/2018-07-26/2652642-57.patch"
++              "2652642 - Allow to position the group in the advanced sidebar column": "https://www.drupal.org/files/issues/2018-07-26/2652642-57.patch"
+             },
+-            "drupal/entity_embed" : {
+-                "UCSF Entity Embed Caption Fix - Allows the HTML tags to come through from the WYSIWYG" :
+-                "https://raw.githubusercontent.com/ucsf-web-services/ucsf_8_pa/master/patches/entity_embed_caption_fix.patch"
++            "drupal/entity_embed": {
++              "UCSF Entity Embed Caption Fix - Allows the HTML tags to come through from the WYSIWYG" : "https://raw.githubusercontent.com/ucsf-web-services/ucsf_8_pa/master/patches/entity_embed_caption_fix.patch"
++   			    },
++            "drupal/applenews": {
++              "Fix delete process of templates components": "https://www.drupal.org/files/issues/2019-02-05/applenews-fix-delete-process-of-templates-components-3025958-9.patch",
++              "Add preview link when no channels are configured": "https://www.drupal.org/files/issues/2019-02-05/applenews-preview-with-no-api-3029632-4.patch",
++              "Limit tags in html": "https://www.drupal.org/files/issues/2019-02-05/applenews-limit_tags_in_html-11333241-2.patch"
+             }
+         }
+     },
+diff --git a/composer.lock b/composer.lock
+index 7785f49e7..df0f8562f 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "2a7994985cc36f67c0fcb3d1a3155498",
++    "content-hash": "013eaf4a9a3e14aa1a72ecf2d307ac77",
+     "packages": [
+         {
+             "name": "acquia/content-hub-php",
+@@ -1824,17 +1824,11 @@
+         },
+         {
+             "name": "drupal/applenews",
+-            "version": "1.0.0-beta1",
++            "version": "dev-1.x",
+             "source": {
+                 "type": "git",
+                 "url": "https://git.drupal.org/project/applenews",
+-                "reference": "8.x-1.0-beta1"
+-            },
+-            "dist": {
+-                "type": "zip",
+-                "url": "https://ftp.drupal.org/files/projects/applenews-8.x-1.0-beta1.zip",
+-                "reference": "8.x-1.0-beta1",
+-                "shasum": "0b52273028c8918fa35546f8b623ace66e91c776"
++                "reference": "3675ca18093892bbd3a5b6eb97be161b2e495b1d"
+             },
+             "require": {
+                 "chapter-three/apple-news-api": "dev-master",
+@@ -1846,12 +1840,17 @@
+                     "dev-1.x": "1.x-dev"
+                 },
+                 "drupal": {
+-                    "version": "8.x-1.0-beta1",
+-                    "datestamp": "1540682285",
++                    "version": "8.x-1.0-beta1+11-dev",
++                    "datestamp": "1547217855",
+                     "security-coverage": {
+                         "status": "not-covered",
+-                        "message": "Beta releases are not covered by Drupal security advisories."
++                        "message": "Dev releases are not covered by Drupal security advisories."
+                     }
++                },
++                "patches_applied": {
++                    "Fix delete process of templates components": "https://www.drupal.org/files/issues/2019-02-05/applenews-fix-delete-process-of-templates-components-3025958-9.patch",
++                    "Add preview link when no channels are configured": "https://www.drupal.org/files/issues/2019-02-05/applenews-preview-with-no-api-3029632-4.patch",
++                    "Limit tags in html": "https://www.drupal.org/files/issues/2019-02-05/applenews-limit_tags_in_html-11333241-2.patch"
+                 }
+             },
+             "notification-url": "https://packages.drupal.org/8/downloads",
+@@ -1859,6 +1858,10 @@
+                 "GPL-2.0-or-later"
+             ],
+             "authors": [
++                {
++                    "name": "geekygnr",
++                    "homepage": "https://www.drupal.org/user/2775199"
++                },
+                 {
+                     "name": "m4olivei",
+                     "homepage": "https://www.drupal.org/user/410384"
+@@ -1888,7 +1891,8 @@
+             "homepage": "https://www.drupal.org/project/applenews",
+             "support": {
+                 "source": "http://cgit.drupalcode.org/applenews"
+-            }
++            },
++            "time": "2019-02-05T13:21:56+00:00"
+         },
+         {
+             "name": "drupal/authorization",
+@@ -2119,8 +2123,7 @@
+             "homepage": "https://www.drupal.org/project/better_normalizers",
+             "support": {
+                 "source": "http://cgit.drupalcode.org/better_normalizers"
+-            },
+-            "time": "2017-05-03T02:35:27+00:00"
++            }
+         },
+         {
+             "name": "drupal/blazy",
+@@ -2635,8 +2638,7 @@
+             "homepage": "https://www.drupal.org/project/ckeditor_widgets",
+             "support": {
+                 "source": "http://cgit.drupalcode.org/ckeditor_widgets"
+-            },
+-            "time": "2016-09-02T06:39:25+00:00"
++            }
+         },
+         {
+             "name": "drupal/ckwordcount",
+@@ -15047,7 +15049,7 @@
+         "drupal/viewfield": 15,
+         "drupal/auto_entitylabel": 10,
+         "drupal/menu_reference_render": 15,
+-        "drupal/applenews": 10,
++        "drupal/applenews": 20,
+         "drupal/better_normalizers": 20,
+         "drupal/ldap": 10,
+         "drupal/entity_clone": 10,
+diff --git a/config/default/vcs/applenews.applenews_template.article.yml b/config/default/vcs/applenews.applenews_template.article.yml
+new file mode 100644
+index 000000000..29bc7aea0
+--- /dev/null
++++ b/config/default/vcs/applenews.applenews_template.article.yml
+@@ -0,0 +1,48 @@
++uuid: 51de564c-5b20-4008-9817-561baa28da63
++langcode: en
++status: true
++dependencies: {  }
++id: article
++label: News
++node_type: article
++columns: 9
++width: 768
++margin: 75
++gutter: 20
++components:
++  143114f6-0765-47ca-882e-53f349bb3d81:
++    uuid: 143114f6-0765-47ca-882e-53f349bb3d81
++    id: 'default_text:author'
++    weight: -10
++    component_layout:
++      column_start: 0
++      column_span: 9
++      margin_top: 10
++      margin_bottom: 10
++      ignore_margin: none
++      ignore_gutter: none
++      minimum_height: 10
++      minimum_height_unit: pt
++    component_data:
++      text:
++        field_name: field_author
++        field_property: target_id
++      format: none
++  a318fafd-e52c-45f5-b5dd-b2460c1c804e:
++    uuid: a318fafd-e52c-45f5-b5dd-b2460c1c804e
++    id: 'default_text:body'
++    weight: -9
++    component_layout:
++      column_start: 1
++      column_span: 7
++      margin_top: 25
++      margin_bottom: 25
++      ignore_margin: none
++      ignore_gutter: none
++      minimum_height: 0
++      minimum_height_unit: pt
++    component_data:
++      text:
++        field_name: body
++        field_property: processed
++      format: html
+diff --git a/config/default/vcs/applenews.settings.yml b/config/default/vcs/applenews.settings.yml
+new file mode 100644
+index 000000000..406ea57a8
+--- /dev/null
++++ b/config/default/vcs/applenews.settings.yml
+@@ -0,0 +1,9 @@
++endpoint: ''
++api_key: ''
++api_secret: ''
++curl_options:
++  ssl: false
++  proxy: ''
++  proxy_port: ''
++_core:
++  default_config_hash: nBdRyjxgODQiNraBlvFJ-ZllAWMp8Itn_IB1nbSRpLo
+diff --git a/config/default/vcs/core.entity_form_display.node.article.default.yml b/config/default/vcs/core.entity_form_display.node.article.default.yml
+index a4113c1d3..8d385fcd3 100644
+--- a/config/default/vcs/core.entity_form_display.node.article.default.yml
++++ b/config/default/vcs/core.entity_form_display.node.article.default.yml
+@@ -6,6 +6,7 @@ dependencies:
+     - field.field.node.article.body
+     - field.field.node.article.comment
+     - field.field.node.article.field_ankle_cta
++    - field.field.node.article.field_apple_news
+     - field.field.node.article.field_apple_news_title
+     - field.field.node.article.field_areas
+     - field.field.node.article.field_article_type
+@@ -46,6 +47,7 @@ dependencies:
+     - image.style.thumbnail
+     - node.type.article
+   module:
++    - applenews
+     - chosen_field
+     - conditional_fields
+     - datetime
+@@ -64,7 +66,7 @@ third_party_settings:
+         - field_short_title
+         - field_sub_title
+       parent_name: ''
+-      weight: 3
++      weight: 4
+       format_type: details
+       format_settings:
+         label: 'Short and Sub Title'
+@@ -81,7 +83,7 @@ third_party_settings:
+         - field_custom_author
+         - field_source
+       parent_name: ''
+-      weight: 4
++      weight: 5
+       format_type: details
+       format_settings:
+         id: ''
+@@ -97,7 +99,7 @@ third_party_settings:
+         - field_card_image
+         - field_textured_background_image
+       parent_name: ''
+-      weight: 5
++      weight: 6
+       format_type: details
+       format_settings:
+         label: 'Banner, Card, and Background Images'
+@@ -112,7 +114,7 @@ third_party_settings:
+         - body
+         - field_content_panel
+       parent_name: ''
+-      weight: 6
++      weight: 7
+       format_type: details
+       format_settings:
+         label: 'Main Content'
+@@ -135,7 +137,7 @@ third_party_settings:
+         - field_include
+         - field_hide_article
+       parent_name: ''
+-      weight: 7
++      weight: 8
+       format_type: details
+       format_settings:
+         label: Classifications
+@@ -155,7 +157,7 @@ third_party_settings:
+         - field_twitter_image
+         - field_twitter_description
+       parent_name: ''
+-      weight: 8
++      weight: 9
+       format_type: details
+       format_settings:
+         id: ''
+@@ -168,7 +170,7 @@ third_party_settings:
+       children:
+         - field_recommended_article
+       parent_name: ''
+-      weight: 9
++      weight: 10
+       format_type: details
+       format_settings:
+         label: 'Recommended Reading'
+@@ -182,7 +184,7 @@ third_party_settings:
+       children:
+         - field_ankle_cta
+       parent_name: ''
+-      weight: 11
++      weight: 12
+       format_type: details
+       format_settings:
+         id: ''
+@@ -208,7 +210,7 @@ content:
+     third_party_settings: {  }
+   created:
+     type: datetime_timestamp
+-    weight: 12
++    weight: 13
+     region: content
+     settings: {  }
+     third_party_settings: {  }
+@@ -221,6 +223,12 @@ content:
+     third_party_settings: {  }
+     type: entity_reference_autocomplete
+     region: content
++  field_apple_news:
++    weight: 3
++    settings: {  }
++    third_party_settings: {  }
++    type: applenews_default
++    region: content
+   field_apple_news_title:
+     weight: 41
+     settings:
+@@ -367,7 +375,7 @@ content:
+     type: chosen_select
+     region: content
+   field_meta_tags:
+-    weight: 21
++    weight: 22
+     settings: {  }
+     third_party_settings: {  }
+     type: metatag_firehose
+@@ -474,7 +482,7 @@ content:
+     region: content
+   path:
+     type: path
+-    weight: 15
++    weight: 16
+     region: content
+     settings: {  }
+     third_party_settings: {  }
+@@ -482,17 +490,17 @@ content:
+     type: boolean_checkbox
+     settings:
+       display_label: true
+-    weight: 13
++    weight: 14
+     region: content
+     third_party_settings: {  }
+   publish_on:
+     type: datetime_timestamp_no_default
+-    weight: 19
++    weight: 20
+     region: content
+     settings: {  }
+     third_party_settings: {  }
+   scheduler_settings:
+-    weight: 17
++    weight: 18
+     region: content
+     settings: {  }
+     third_party_settings: {  }
+@@ -500,14 +508,14 @@ content:
+     type: boolean_checkbox
+     settings:
+       display_label: true
+-    weight: 16
++    weight: 17
+     region: content
+     third_party_settings: {  }
+   sticky:
+     type: boolean_checkbox
+     settings:
+       display_label: true
+-    weight: 14
++    weight: 15
+     region: content
+     third_party_settings: {  }
+   title:
+@@ -520,7 +528,7 @@ content:
+     third_party_settings: {  }
+   uid:
+     type: entity_reference_autocomplete
+-    weight: 10
++    weight: 11
+     region: content
+     settings:
+       match_operator: CONTAINS
+@@ -529,12 +537,12 @@ content:
+     third_party_settings: {  }
+   unpublish_on:
+     type: datetime_timestamp_no_default
+-    weight: 18
++    weight: 19
+     region: content
+     settings: {  }
+     third_party_settings: {  }
+   url_redirects:
+-    weight: 20
++    weight: 21
+     region: content
+     settings: {  }
+     third_party_settings: {  }
+diff --git a/config/default/vcs/core.entity_view_display.node.article.default.yml b/config/default/vcs/core.entity_view_display.node.article.default.yml
+index bf98b3f3d..bb12692c1 100644
+--- a/config/default/vcs/core.entity_view_display.node.article.default.yml
++++ b/config/default/vcs/core.entity_view_display.node.article.default.yml
+@@ -7,6 +7,7 @@ dependencies:
+     - field.field.node.article.body
+     - field.field.node.article.comment
+     - field.field.node.article.field_ankle_cta
++    - field.field.node.article.field_apple_news
+     - field.field.node.article.field_apple_news_title
+     - field.field.node.article.field_areas
+     - field.field.node.article.field_article_type
+@@ -88,6 +89,13 @@ content:
+     third_party_settings: {  }
+     type: entity_reference_entity_view
+     region: content
++  field_apple_news:
++    weight: 41
++    label: above
++    settings: {  }
++    third_party_settings: {  }
++    type: null
++    region: content
+   field_apple_news_title:
+     type: string
+     weight: 25
+diff --git a/config/default/vcs/core.extension.yml b/config/default/vcs/core.extension.yml
+index f3f3d3f7d..903299833 100644
+--- a/config/default/vcs/core.extension.yml
++++ b/config/default/vcs/core.extension.yml
+@@ -3,6 +3,7 @@ module:
+   admin_toolbar: 0
+   admin_toolbar_tools: 0
+   allowed_formats: 0
++  applenews: 0
+   auto_entitylabel: 0
+   automated_cron: 0
+   better_exposed_filters: 0
+@@ -81,6 +82,7 @@ module:
+   redirect: 0
+   scheduler: 0
+   search: 0
++  serialization: 0
+   shortcut: 0
+   slick: 0
+   slick_media: 0
+@@ -97,6 +99,7 @@ module:
+   twig_tweak: 0
+   ucsf_edu_migrate: 0
+   ucsf_google_search: 0
++  ucsf_applenews: 0
+   ucsf_wysiwyg: 0
+   update: 0
+   user: 0
+diff --git a/config/default/vcs/field.field.node.article.field_apple_news.yml b/config/default/vcs/field.field.node.article.field_apple_news.yml
+new file mode 100644
+index 000000000..4aeedbbd3
+--- /dev/null
++++ b/config/default/vcs/field.field.node.article.field_apple_news.yml
+@@ -0,0 +1,30 @@
++uuid: 90a4b055-5cff-4328-93e6-188463aa5dea
++langcode: en
++status: true
++dependencies:
++  config:
++    - field.storage.node.field_apple_news
++    - node.type.article
++  module:
++    - applenews
++id: node.article.field_apple_news
++field_name: field_apple_news
++entity_type: node
++bundle: article
++label: 'Apple News'
++description: ''
++required: false
++translatable: false
++default_value:
++  -
++    status: null
++    template: null
++    channels: null
++    is_preview: null
++default_value_callback: ''
++settings:
++  status: 0
++  template: null
++  channels: null
++  is_preview: 1
++field_type: applenews_default
+diff --git a/config/default/vcs/field.storage.node.field_apple_news.yml b/config/default/vcs/field.storage.node.field_apple_news.yml
+new file mode 100644
+index 000000000..661db2c8b
+--- /dev/null
++++ b/config/default/vcs/field.storage.node.field_apple_news.yml
+@@ -0,0 +1,19 @@
++uuid: 8b17ee6a-40b2-4596-8cda-52650c038632
++langcode: en
++status: true
++dependencies:
++  module:
++    - applenews
++    - node
++id: node.field_apple_news
++field_name: field_apple_news
++entity_type: node
++type: applenews_default
++settings: {  }
++module: applenews
++locked: false
++cardinality: 1
++translatable: true
++indexes: {  }
++persist_with_no_fields: false
++custom_storage: false
+diff --git a/config/default/vcs/serialization.settings.yml b/config/default/vcs/serialization.settings.yml
+new file mode 100644
+index 000000000..ea2d8a53b
+--- /dev/null
++++ b/config/default/vcs/serialization.settings.yml
+@@ -0,0 +1,4 @@
++bc_primitives_as_strings: false
++bc_timestamp_normalizer_unix: false
++_core:
++  default_config_hash: 6A1rmsmNf4SJrwCEt_aZyO_kPYuFnIOPC2n5lJiIftA
+diff --git a/docroot/modules/contrib/applenews/PATCHES.txt b/docroot/modules/contrib/applenews/PATCHES.txt
+new file mode 100644
+index 000000000..97a6031d2
+--- /dev/null
++++ b/docroot/modules/contrib/applenews/PATCHES.txt
+@@ -0,0 +1,15 @@
++This file was automatically generated by Composer Patches (https://github.com/cweagans/composer-patches)
++Patches applied to this directory:
++
++Fix delete process of templates components
++Source: https://www.drupal.org/files/issues/2019-02-05/applenews-fix-delete-process-of-templates-components-3025958-9.patch
++
++
++Add preview link when no channels are configured
++Source: https://www.drupal.org/files/issues/2019-02-05/applenews-preview-with-no-api-3029632-4.patch
++
++
++Limit tags in html
++Source: https://www.drupal.org/files/issues/2019-02-05/applenews-limit_tags_in_html-11333241-2.patch
++
++
+diff --git a/docroot/modules/contrib/applenews/applenews.info.yml b/docroot/modules/contrib/applenews/applenews.info.yml
+index fba5d81c5..9bdc6397a 100644
+--- a/docroot/modules/contrib/applenews/applenews.info.yml
++++ b/docroot/modules/contrib/applenews/applenews.info.yml
+@@ -1,13 +1,8 @@
+ name: Apple News
+ description: Push content to Apple News.
+ type: module
+-# core: 8.x
++core: 8.x
+ package: Apple News
++configure: applenews.settings
+ dependencies:
+   - drupal:serialization
+-
+-# Information added by Drupal.org packaging script on 2018-10-27
+-version: '8.x-1.0-beta1'
+-core: '8.x'
+-project: 'applenews'
+-datestamp: 1540682287
+diff --git a/docroot/modules/contrib/applenews/applenews.install b/docroot/modules/contrib/applenews/applenews.install
+new file mode 100644
+index 000000000..2023973c7
+--- /dev/null
++++ b/docroot/modules/contrib/applenews/applenews.install
+@@ -0,0 +1,20 @@
++<?php
++
++/**
++ * @file
++ * Apple News module install file.
++ */
++
++
++/**
++ * Implements hook_requirements().
++ */
++function applenews_requirements() {
++  $hasZip = extension_loaded('zip');
++  $requirements['applenews.zip']  = [
++    'title' => 'PHP Zip',
++    'description' => 'Php-zip is required by the applenews module in order to create previews',
++    'severity' => $hasZip ? REQUIREMENT_OK : REQUIREMENT_WARNING,
++  ];
++  return $requirements;
++}
+diff --git a/docroot/modules/contrib/applenews/applenews.module b/docroot/modules/contrib/applenews/applenews.module
+index 0eb313fc7..6c8ecddc9 100644
+--- a/docroot/modules/contrib/applenews/applenews.module
++++ b/docroot/modules/contrib/applenews/applenews.module
+@@ -6,11 +6,38 @@
+  */
+ 
+ use Drupal\Core\Entity\EntityInterface;
++use Drupal\Core\Routing\RouteMatchInterface;
+ use Drupal\migrate\MigrateSkipRowException;
+ use Drupal\migrate\Plugin\MigrateSourceInterface;
+ use Drupal\migrate\Plugin\MigrationInterface;
+ use Drupal\migrate\Row;
+ 
++/**
++ * Implements hook_help().
++ */
++function applenews_help($route_name, RouteMatchInterface $route_match) {
++  switch ($route_name) {
++    case 'help.page.applenews':
++      $output = '';
++      $output .= '<h3>' . t('About') . '</h3>';
++      $output .= '<p>' . t('Apple News module provides an easy way to get your Drupal site\'s content into Apple News.') . '</p>';
++      $output .= '<h3>' . t('Key features') . '</h3>';
++      $output .= '<ul>';
++      $output .= '<li>' . t('Build custom Apple News layout.') . '</li>';
++      $output .= '<li>' . t('Ability to export content to preview in the News Preview application.') . '</li>';
++      $output .= '<li>' . t('Bulk export to Apple News.') . '</li>';
++      $output .= '<li>' . t('Export individual content to Apple News.') . '</li>';
++      $output .= '<li>' . t('Integration with Views allows to build custom reports.') . '</li>';
++      $output .= '<li>' . t('Built-in plugin system allows extend module components by adding support to almost any field types.') . '</li>';
++      $output .= '</ul>';
++      $output .= '<h3>' . t('Dependencies') . '</h3>';
++      $output .= '<p>' . t('Apple News requires the Serialization module (in Web Services) to be installed.') . '</p>';
++      $output .= '<h3>' . t('More Help') . '</h3>';
++      $output .= '<p>' . t('For more help, please consult the README.MD file in the applenews module folder.') . '</p>';
++      return $output;
++  }
++}
++
+ /**
+  * Implements hook_entity_insert().
+  */
+diff --git a/docroot/modules/contrib/applenews/applenews.routing.yml b/docroot/modules/contrib/applenews/applenews.routing.yml
+index 8003322cc..88c1c68a4 100644
+--- a/docroot/modules/contrib/applenews/applenews.routing.yml
++++ b/docroot/modules/contrib/applenews/applenews.routing.yml
+@@ -119,12 +119,16 @@ applenews.preview_download:
+         type: entity:{entity_type}
+ 
+ applenews.remote.article_delete:
+-  path: '/admin/config/services/applenews/remote/{channel_id}/{article_id}/delete'
++  path: '/admin/config/services/applenews/remote/{entity_type}/{entity}/delete'
+   defaults:
+-    _form: 'Drupal\applenews\Form\SettingsForm'
++    _form: 'Drupal\applenews\Form\AppleNewsArticleDeleteForm'
+     _title: 'Delete article'
+   requirements:
+     _permission: 'administer applenews configuration'
++  options:
++    parameters:
++      entity:
++        type: entity:{entity_type}
+ 
+ # Settings.
+ applenews.settings:
+diff --git a/docroot/modules/contrib/applenews/src/ApplenewsManager.php b/docroot/modules/contrib/applenews/src/ApplenewsManager.php
+index 0b3128623..a52db8b2b 100644
+--- a/docroot/modules/contrib/applenews/src/ApplenewsManager.php
++++ b/docroot/modules/contrib/applenews/src/ApplenewsManager.php
+@@ -2,8 +2,10 @@
+ 
+ namespace Drupal\applenews;
+ 
++use ChapterThree\AppleNewsAPI\Document\Components\Text;
+ use Drupal\applenews\Entity\ApplenewsArticle;
+ use Drupal\Component\Serialization\Json;
++use Drupal\Component\Utility\Html;
+ use Drupal\Core\Config\ConfigFactoryInterface;
+ use Drupal\Core\Entity\EntityFieldManagerInterface;
+ use Drupal\Core\Entity\EntityInterface;
+@@ -232,7 +234,10 @@ public function delete(EntityInterface $entity) {
+     foreach ($fields as $field_name => $detail) {
+       $article = self::getArticle($entity, $field_name);
+       if ($article) {
++        // Delete article from remote.
+         $this->doDelete($article->getArticleId());
++        // Delete corresponding applenews_article entity.
++        $article->delete();
+       }
+     }
+   }
+@@ -291,10 +296,19 @@ protected function doPost($channel_id, array $data) {
+    * @return string
+    *   JSON string document.
+    */
+-  protected function getDocumentDataFromEntity(EntityInterface $entity, $template) {
++  public function getDocumentDataFromEntity(EntityInterface $entity, $template) {
++    global $base_url;
+     $context['template_id'] = $template;
+     /** @var \ChapterThree\AppleNewsAPI\Document $document */
+     $document = $this->serializer->normalize($entity, 'applenews', $context);
++
++    /** @var \ChapterThree\AppleNewsAPI\Document\Components\Text $component */
++    foreach ($document['components'] as $index => $component) {
++      if (!$component instanceof Text) {
++        continue;
++      }
++      $component->setText(Html::transformRootRelativeUrlsToAbsolute($component->getText(), $base_url));
++    }
+     return Json::encode($document);
+   }
+ 
+diff --git a/docroot/modules/contrib/applenews/src/ApplenewsPreviewBuilder.php b/docroot/modules/contrib/applenews/src/ApplenewsPreviewBuilder.php
+index 1002b0194..976d68e24 100644
+--- a/docroot/modules/contrib/applenews/src/ApplenewsPreviewBuilder.php
++++ b/docroot/modules/contrib/applenews/src/ApplenewsPreviewBuilder.php
+@@ -353,7 +353,7 @@ private function createArchive(array $entity_ids = []) {
+       }
+ 
+       // Open archive.
+-      $result = $zip->open($entity_archive, \ZipArchive::CREATE | \ZipArchive::CREATE);
++      $result = $zip->open($entity_archive, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+       if ($result !== TRUE) {
+         throw new \Exception('Could not open archive file: ' . $this->zipErrorMsg($result));
+       }
+diff --git a/docroot/modules/contrib/applenews/src/Controller/ApplenewsPreviewController.php b/docroot/modules/contrib/applenews/src/Controller/ApplenewsPreviewController.php
+index 4e237c530..19829dac6 100644
+--- a/docroot/modules/contrib/applenews/src/Controller/ApplenewsPreviewController.php
++++ b/docroot/modules/contrib/applenews/src/Controller/ApplenewsPreviewController.php
+@@ -2,6 +2,7 @@
+ 
+ namespace Drupal\applenews\Controller;
+ 
++use Drupal\applenews\ApplenewsManager;
+ use Drupal\applenews\ApplenewsPreviewBuilder;
+ use Drupal\Component\Serialization\Json;
+ use Drupal\Core\Controller\ControllerBase;
+@@ -39,6 +40,13 @@ class ApplenewsPreviewController extends ControllerBase {
+    */
+   protected $previewBuilder;
+ 
++  /**
++   * Apple News Manager.
++   *
++   * @var \Drupal\applenews\ApplenewsManager
++   */
++  protected $applenewsManager;
++
+   /**
+    * ApplenewsPreviewController constructor.
+    *
+@@ -48,11 +56,14 @@ class ApplenewsPreviewController extends ControllerBase {
+    *   Serializer object.
+    * @param \Drupal\applenews\ApplenewsPreviewBuilder $preview_builder
+    *   Preview builder object.
++   * @param \Drupal\applenews\ApplenewsManager $manager
++   *   Apple news manager.
+    */
+-  public function __construct(LoggerInterface $logger, Serializer $serializer, ApplenewsPreviewBuilder $preview_builder) {
++  public function __construct(LoggerInterface $logger, Serializer $serializer, ApplenewsPreviewBuilder $preview_builder, ApplenewsManager $manager) {
+     $this->logger = $logger;
+     $this->serializer = $serializer;
+     $this->previewBuilder = $preview_builder;
++    $this->applenewsManager = $manager;
+   }
+ 
+   /**
+@@ -62,7 +73,8 @@ public static function create(ContainerInterface $container) {
+     return new static(
+       $container->get('logger.channel.applenews'),
+       $container->get('serializer'),
+-      $container->get('applenews.preview_builder')
++      $container->get('applenews.preview_builder'),
++      $container->get('applenews.manager')
+     );
+   }
+ 
+@@ -82,14 +94,12 @@ public static function create(ContainerInterface $container) {
+    *   Response object.
+    */
+   public function preview($entity_type, EntityInterface $entity, $revision_id, $template_id) {
+-    $context['template_id'] = $template_id;
+     $filename = NULL;
+     $entity_archive = TRUE;
+     $entity_id = $entity->id();
+-    $entity_ids = [$entity_id];
+ 
+-    $data = $this->getDataArray($entity, $context);
+-    $this->exportToFile($entity_id, $entity_ids, $filename, $entity_archive, $data);
++    $data = $this->getDataArray($entity, $template_id);
++    $this->export($entity_id, $filename, $entity_archive, $data);
+     $archive_path = $this->exportFilePath($entity_id);
+     $archive = $archive_path . '.zip';
+ 
+@@ -106,18 +116,17 @@ public function preview($entity_type, EntityInterface $entity, $revision_id, $te
+    *
+    * @param \Drupal\Core\Entity\EntityInterface $entity
+    *   Entity article attached to.
+-   * @param array $context
+-   *   An array of context.
++   * @param string $template_id
++   *   String template ID.
+    *
+    * @return array
+    *   An array of article data.
+    */
+-  protected function getDataArray(EntityInterface $entity, array $context) {
+-    /** @var \ChapterThree\AppleNewsAPI\Document $document */
+-    $document = $this->serializer->normalize($entity, 'applenews', $context);
++  protected function getDataArray(EntityInterface $entity, $template_id) {
++    $document = $this->applenewsManager->getDocumentDataFromEntity($entity, $template_id);
+ 
+     return [
+-      'json' => Json::encode($document),
++      'json' => $document,
+       'files' => [],
+     ];
+   }
+@@ -127,8 +136,6 @@ protected function getDataArray(EntityInterface $entity, array $context) {
+    *
+    * @param int $entity_id
+    *   Entity ID.
+-   * @param array $entity_ids
+-   *   An array of entity IDs.
+    * @param string $filename
+    *   String filename.
+    * @param string $entity_archive
+@@ -136,33 +143,51 @@ protected function getDataArray(EntityInterface $entity, array $context) {
+    * @param array $data
+    *   An array of article dta.
+    *
+-   * @return int|null|string
+-   *   NULL if successful. URL for group of entities.
++   * @return null|string
++   *   URL of the archive file if available, NULL otherwise.
+    */
+-  protected function exportToFile($entity_id, array $entity_ids, $filename, $entity_archive, array $data) {
++  protected function export($entity_id, $filename, $entity_archive, array $data) {
+     $preview = $this->previewBuilder->setEntity($entity_id, $filename, $entity_archive, $data);
+ 
+-    if (!empty($entity_id)) {
+-      $preview->toFile();
++    $file_url = $preview->getArchiveFilePath();
++    $preview->toFile();
+       try {
+-        $preview->archive($entity_ids);
+-      }
+-      catch (\Exception $e) {
+-        $this->logger->error('Could not create archive: @err', ['@err' => $e->getMessage()]);
+-      }
+-      return NULL;
+-    }
+-    else {
+-      $file_url = $preview->getArchiveFilePath();
+-      try {
+-        $preview->archive($entity_ids);
++        $preview->archive([$entity_id]);
+       }
+       catch (\Exception $e) {
+         $this->logger->error('Could not create archive: @err', ['@err' => $e->getMessage()]);
+         return NULL;
+       }
+       return $file_url;
++  }
++
++  /**
++   * Export articles to file.
++   *
++   * @param array $entity_ids
++   *   An array of entity IDs.
++   * @param string $filename
++   *   String filename.
++   * @param string $entity_archive
++   *   String path.
++   * @param array $data
++   *   An array of article dta.
++   *
++   * @return null|string
++   *   URL of the archive file if available, NULL otherwise.
++   */
++  protected function exportMultiple(array $entity_ids, $filename, $entity_archive, array $data) {
++    $preview = $this->previewBuilder->setEntity(NULL, $filename, $entity_archive, $data);
++
++    $file_url = $preview->getArchiveFilePath();
++    try {
++      $preview->archive($entity_ids);
++    }
++    catch (\Exception $e) {
++      $this->logger->error('Could not create archive: @err', ['@err' => $e->getMessage()]);
++      return NULL;
+     }
++    return $file_url;
+   }
+ 
+   /**
+diff --git a/docroot/modules/contrib/applenews/src/Entity/ApplenewsTemplate.php b/docroot/modules/contrib/applenews/src/Entity/ApplenewsTemplate.php
+index b862588dd..5514af6ab 100644
+--- a/docroot/modules/contrib/applenews/src/Entity/ApplenewsTemplate.php
++++ b/docroot/modules/contrib/applenews/src/Entity/ApplenewsTemplate.php
+@@ -102,7 +102,9 @@ public function getComponent($id) {
+       if ($id == $component_id) {
+         return $component;
+       }
+-      if ($found = $this->getNestedComponent($component['component_data']['components'], $id)) {
++      if (!empty($component['component_data']['components']) &&
++        $found = $this->getNestedComponent($component['component_data']['components'], $id)
++      ) {
+         return $found;
+       }
+     }
+@@ -145,17 +147,13 @@ public function addComponent(array $component) {
+    * {@inheritdoc}
+    */
+   public function deleteComponent($id) {
+-    foreach ($this->components as $component_id => &$component) {
+-      if ($id == $component_id) {
+-        unset($this->components[$id]);
+-        return TRUE;
+-      }
+-      if ($this->deleteNestedComponent($component['component_data']['components'], $id)) {
+-        return TRUE;
++    if ($this->deleteNestedComponent($this->components, $id)) {
++      if (!empty($this->components)) {
++        uasort($this->components, [$this, 'sortHelper']);
+       }
+-
++      return TRUE;
+     }
+-    uasort($components, [$this, 'sortHelper']);
++    return FALSE;
+   }
+ 
+   /**
+@@ -178,7 +176,9 @@ protected function deleteNestedComponent(array &$components, $id) {
+         }
+         return TRUE;
+       }
+-      if ($this->deleteNestedComponent($component['component_data']['components'], $id)) {
++      if (!empty($component['component_data']['components']) &&
++        $this->deleteNestedComponent($component['component_data']['components'], $id)
++      ) {
+         return TRUE;
+       }
+     }
+diff --git a/docroot/modules/contrib/applenews/src/Form/AppleNewsArticleDeleteForm.php b/docroot/modules/contrib/applenews/src/Form/AppleNewsArticleDeleteForm.php
+new file mode 100644
+index 000000000..62aeae6e3
+--- /dev/null
++++ b/docroot/modules/contrib/applenews/src/Form/AppleNewsArticleDeleteForm.php
+@@ -0,0 +1,70 @@
++<?php
++
++namespace Drupal\applenews\Form;
++
++use Drupal\Core\Entity\ContentEntityInterface;
++use Drupal\Core\Form\ConfirmFormBase;
++use Drupal\Core\Form\FormStateInterface;
++
++/**
++ * Builds the form to delete a Apple News article.
++ *
++ * @internal
++ */
++class AppleNewsArticleDeleteForm extends ConfirmFormBase {
++
++  /**
++   * @var \Drupal\Core\Entity\ContentEntityInterface
++   */
++  protected $entity;
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getFormId() {
++    return 'applenews_article_confirm_delete';
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getQuestion() {
++    return $this->t('Are you sure you want to delete the Apple News article %label?', ['%label' => $this->entity->label()]);
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getCancelUrl() {
++    return $this->entity->toUrl('edit-form');
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getConfirmText() {
++    return $this->t('Delete');
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function buildForm(array $form, FormStateInterface $form_state, $entity_type = NULL, ContentEntityInterface $entity = NULL) {
++    $this->entity = $entity;
++
++    return parent::buildForm($form, $form_state);
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function submitForm(array &$form, FormStateInterface $form_state) {
++    /** @var \Drupal\applenews\ApplenewsManager $applenews_manager */
++    $applenews_manager = \Drupal::service('applenews.manager');
++    $applenews_manager->delete($this->entity);
++
++    $this->messenger()->addStatus($this->t('%label has been deleted from Apple News.', ['%label' => $this->entity->label()]));
++    $form_state->setRedirectUrl($this->getCancelUrl());
++  }
++
++}
+diff --git a/docroot/modules/contrib/applenews/src/Form/ApplenewsTemplateForm.php b/docroot/modules/contrib/applenews/src/Form/ApplenewsTemplateForm.php
+index dc4488098..8f0f7fff9 100644
+--- a/docroot/modules/contrib/applenews/src/Form/ApplenewsTemplateForm.php
++++ b/docroot/modules/contrib/applenews/src/Form/ApplenewsTemplateForm.php
+@@ -184,16 +184,18 @@ public function form(array $form, FormStateInterface $form_state) {
+     ];
+ 
+     $rows = [];
+-    foreach ($components as $id => $component) {
+-      $rows[$id] = $this->getComponentRow($component, $form_state);
+-      $component_plugin = $this->applenewsComponentTypeManager->createInstance($component['id']);
+-      // If not a nested component, it cannot be a parent of other components.
+-      if ($component_plugin->getComponentType() != 'nested') {
+-        $rows[$id]['#attributes']['class'][] = 'tabledrag-leaf';
+-      }
+-      else {
+-        $rows += $this->getChildComponentRows($component, $form_state);
+-        $rows[$id]['type']['#markup'] = '<strong>' . $component['id'] . '</strong>';
++    if (!empty($components)) {
++      foreach ($components as $id => $component) {
++        $rows[$id] = $this->getComponentRow($component, $form_state);
++        $component_plugin = $this->applenewsComponentTypeManager->createInstance($component['id']);
++        // If not a nested component, it cannot be a parent of other components.
++        if ($component_plugin->getComponentType() != 'nested') {
++          $rows[$id]['#attributes']['class'][] = 'tabledrag-leaf';
++        }
++        else {
++          $rows += $this->getChildComponentRows($component, $form_state);
++          $rows[$id]['type']['#markup'] = '<strong>' . $component['id'] . '</strong>';
++        }
+       }
+     }
+ 
+diff --git a/docroot/modules/contrib/applenews/src/Normalizer/ApplenewsTextComponentNormalizer.php b/docroot/modules/contrib/applenews/src/Normalizer/ApplenewsTextComponentNormalizer.php
+index 10e4ca418..ffd58471f 100644
+--- a/docroot/modules/contrib/applenews/src/Normalizer/ApplenewsTextComponentNormalizer.php
++++ b/docroot/modules/contrib/applenews/src/Normalizer/ApplenewsTextComponentNormalizer.php
+@@ -9,6 +9,13 @@
+  */
+ class ApplenewsTextComponentNormalizer extends ApplenewsComponentNormalizerBase {
+ 
++  /**
++   * HTML tags allowed by Apple News JSON.
++   *
++   * @see https://developer.apple.com/documentation/apple_news/apple_news_format/components/using_html_with_apple_news_format
++   */
++  const ALLOWED_HTML_ELEMENTS = '<p><strong><b><em><i><a><ul><ol><li><br><sub><sup><del><s><pre><code><samp><footer><aside><blockquote>';
++
+   /**
+    * Component type.
+    *
+@@ -26,6 +33,9 @@ public function normalize($data, $format = NULL, array $context = []) {
+     $field_name = $data['component_data']['text']['field_name'];
+     $context['field_property'] = $data['component_data']['text']['field_property'];
+     $text = $this->serializer->normalize($entity->get($field_name), $format, $context);
++    if ($data['component_data']['format'] == 'html') {
++      $text = strip_tags($text, self::ALLOWED_HTML_ELEMENTS);
++    }
+     $component = new $component_class($text);
+ 
+     $component->setFormat($data['component_data']['format']);
+diff --git a/docroot/modules/contrib/applenews/src/Plugin/Field/FieldWidget/Applenews.php b/docroot/modules/contrib/applenews/src/Plugin/Field/FieldWidget/Applenews.php
+index 361d4c4b2..4f1521a53 100644
+--- a/docroot/modules/contrib/applenews/src/Plugin/Field/FieldWidget/Applenews.php
++++ b/docroot/modules/contrib/applenews/src/Plugin/Field/FieldWidget/Applenews.php
+@@ -30,13 +30,42 @@ class Applenews extends WidgetBase {
+   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
+     $field_name = $items->getName();
+     $default_channels = unserialize($items[$delta]->channels);
++    $channels = $this->getChannels();
++
+     /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+     $entity = $items->getEntity();
+     $element['#attached']['library'][] = 'applenews/drupal.applenews.admin';
+     $templates = $this->getTemplates($entity);
+     $article = ApplenewsManager::getArticle($entity, $field_name);
+ 
+-    if (!$templates) {
++    if (empty($channels)) {
++      $element['message'] = [
++        '#markup' => $this->t('There are no channels available. To set up a channel, review the <a href=":url">Apple news Settings</a>.', [':url' => Url::fromRoute('entity.applenews_template.collection')->toString()]),
++      ];
++      if (extension_loaded('zip') && $templates && $entity->id()) {
++        $element['preview'] = [
++          '#type' => 'item',
++          '#title' => $this->t('Preview'),
++          '#markup' => $this->t('Download the Apple News generated document (use the News Preview app to preview the article): <ul>', []),
++        ];
++        foreach ($templates as $template_id => $template) {
++          $url_preview = Url::fromRoute('applenews.preview_download', [
++            'entity_type' => $entity->getEntityTypeId(),
++            'entity' => $entity->id(),
++            'revision_id' => $entity->getLoadedRevisionId(),
++            'template_id' => $template_id,
++          ]);
++
++          // @todo: Fix route, to support other than node.
++          $element['preview']['#markup'] .= ' <li>' . $this->t('<a href=":url">:label</a> template</li>', [
++            ':url' => $url_preview->toString(),
++            ':label' => $template,
++          ]);
++        }
++        $element['preview']['#markup'] .= '</ul>';
++      }
++    }
++    elseif (!$templates) {
+       $element['message'] = [
+         '#markup' => $this->t('Add a template to %type type. Check Apple news Template <a href=":url">configuration</a> page.', ['%type' => $entity->bundle(), ':url' => Url::fromRoute('entity.applenews_template.collection')->toString()]),
+       ];
+@@ -68,7 +97,7 @@ public function formElement(FieldItemListInterface $items, $delta, array $elemen
+           '#title' => $this->t('Share URL'),
+           '#markup' => $this->t('<a href=":url">:url</a>', [':url' => $article->getShareUrl()]),
+         ];
+-        $delete_url = Url::fromRoute('applenews.remote.article_delete', ['channel_id' => '121-12121-sdf-121', 'article_id' => $article->getArticleId()]);
++        $delete_url = Url::fromRoute('applenews.remote.article_delete', ['entity_type' => $entity->getEntityTypeId(), 'entity' => $entity->id()]);
+         $element['delete'] = [
+           '#type' => 'item',
+           '#title' => $this->t('Delete'),
+@@ -113,6 +142,9 @@ public function formElement(FieldItemListInterface $items, $delta, array $elemen
+             'visible' => [
+               ':input[name="' . $items->getName() . '[' . $delta . '][status]"]' => ['checked' => TRUE],
+             ],
++            'checked' => [
++              ':input[data-section-of="' . $channel_key . '"]' => ['checked' => TRUE],
++            ],
+           ],
+         ];
+         foreach ($channel->getSections() as $section_id => $section_label) {
+@@ -145,7 +177,7 @@ public function formElement(FieldItemListInterface $items, $delta, array $elemen
+           ],
+         ],
+       ];
+-      if ($article) {
++      if ($article && extension_loaded('zip')) {
+         $url_preview = Url::fromRoute('applenews.preview_download', [
+           'entity_type' => $entity->getEntityTypeId(),
+           'entity' => $entity->id(),
+diff --git a/docroot/modules/contrib/applenews/tests/src/Functional/ApplenewsTemplateAdminTest.php b/docroot/modules/contrib/applenews/tests/src/Functional/ApplenewsTemplateAdminTest.php
+index e047f6932..37ca7ed18 100644
+--- a/docroot/modules/contrib/applenews/tests/src/Functional/ApplenewsTemplateAdminTest.php
++++ b/docroot/modules/contrib/applenews/tests/src/Functional/ApplenewsTemplateAdminTest.php
+@@ -34,7 +34,7 @@ public function testAppleNewsTemplateAdminPages() {
+     // Verify overview page has empty message by default.
+     $this->drupalGet('admin/config/services/applenews');
+     $assert_session->statusCodeEquals(200);
+-    $assert_session->pageTextNotContains('There are no applenews template entities yet.');
++    $assert_session->pageTextContains('There are no applenews template entities yet.');
+ 
+     $assert_session->linkExists('Add Apple News Template');
+   }
+diff --git a/docroot/modules/custom/ucsf_applenews/src/Normalizer/UcsfApplenewsContentEntityNormalizer.php b/docroot/modules/custom/ucsf_applenews/src/Normalizer/UcsfApplenewsContentEntityNormalizer.php
+new file mode 100644
+index 000000000..df2d85d53
+--- /dev/null
++++ b/docroot/modules/custom/ucsf_applenews/src/Normalizer/UcsfApplenewsContentEntityNormalizer.php
+@@ -0,0 +1,82 @@
++<?php
++
++namespace Drupal\ucsf_applenews\Normalizer;
++
++use Drupal\applenews\Normalizer\ApplenewsContentEntityNormalizer;
++use ChapterThree\AppleNewsAPI\Document\Layouts\Layout;
++use ChapterThree\AppleNewsAPI\Document;
++use ChapterThree\AppleNewsAPI\Document\Metadata;
++use Drupal\Core\Language\LanguageInterface;
++use ChapterThree\AppleNewsAPI\Document\Components\Component;
++use Drupal\node\Entity\Node;
++
++/**
++ * Override ApplenewsContentEntityNormalizer for UCSF exports.
++ */
++class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormalizer {
++
++  /**
++   * {@inheritdoc}
++   */
++  public function normalize($data, $format = NULL, array $context = []) {
++    // @todo check cache
++    $template = $this->entityTypeManager->getStorage('applenews_template')
++      ->load($context['template_id']);
++    $layout = new Layout($template->columns, $template->width);
++    $langcode = $data->language()->getId();
++    // If language is not specified , fallback to site default.
++    if ($langcode == LanguageInterface::LANGCODE_NOT_SPECIFIED) {
++      $langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
++    }
++    $layout
++      ->setMargin($template->margin)
++      ->setGutter($template->gutter);
++    $document = new Document($data->uuid(), $data->getTitle(), $langcode, $layout);
++
++    // Customized to add metadata.
++    $metadata = new Metadata();
++    if ($data instanceof Node) {
++      $info = system_get_info('module', 'applenews');
++      $version = $info['core'] ?? '';
++      if (!empty($info['version'])) {
++        $version .= '-' . $info['version'];
++      }
++      $metadata
++        ->setCanonicalURL($data->toUrl()->setAbsolute()->toString())
++        ->setDateCreated(date('c', $data->getCreatedTime()))
++        ->setDateModified(date('c', $data->getChangedTime()))
++        ->setGeneratorIdentifier('DrupalAppleNews')
++        ->setGeneratorName('Apple News Drupal Module')
++        ->setGeneratorIdentifier($version);
++    }
++    $document->setMetadata($metadata);
++    // End customization.
++
++    $context['entity'] = $data;
++    foreach ($template->getComponents() as $component) {
++      $normalized = $this->serializer->normalize($component, $format, $context);
++      if (!$normalized) {
++        continue;
++      }
++      elseif ($normalized instanceof Component) {
++        $normalized = [$normalized];
++      }
++
++      foreach ($normalized as $normalized_component) {
++        if ($normalized_component instanceof Component) {
++          $document->addComponent($normalized_component);
++        }
++      }
++    }
++
++    // @todo: Load only default and used custom styles.
++    $text_styles = $this->entityTypeManager->getStorage('applenews_text_style')
++      ->loadMultiple();
++    foreach ($text_styles as $id => $text_style) {
++      /** @var \Drupal\applenews\Entity\ApplenewsTextStyle $text_style */
++      $document->addTextStyle($text_style->id(), $text_style->toObject());
++    }
++    return $document->jsonSerialize();
++  }
++
++}
+diff --git a/docroot/modules/custom/ucsf_applenews/src/Normalizer/UcsfApplenewsTextComponentNormalizer.php b/docroot/modules/custom/ucsf_applenews/src/Normalizer/UcsfApplenewsTextComponentNormalizer.php
+new file mode 100644
+index 000000000..0a5861996
+--- /dev/null
++++ b/docroot/modules/custom/ucsf_applenews/src/Normalizer/UcsfApplenewsTextComponentNormalizer.php
+@@ -0,0 +1,172 @@
++<?php
++
++namespace Drupal\ucsf_applenews\Normalizer;
++
++use ChapterThree\AppleNewsAPI\Document\Components\Author;
++use ChapterThree\AppleNewsAPI\Document\Components\Body;
++use ChapterThree\AppleNewsAPI\Document\Components\Photo;
++use ChapterThree\AppleNewsAPI\Document\Margin;
++use ChapterThree\AppleNewsAPI\Document\Styles\ComponentTextStyle;
++use ChapterThree\AppleNewsAPI\Document\Styles\TextStyle;
++use Drupal\applenews\Normalizer\ApplenewsTextComponentNormalizer;
++use Drupal\Core\TypedData\Exception\MissingDataException;
++use Drupal\Core\Url;
++use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
++
++/**
++ * Override ApplenewsTextComponentNormalizer for UCSF exports.
++ */
++class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormalizer {
++
++  /**
++   * {@inheritdoc}
++   */
++  public function normalize($data, $format = NULL, array $context = []) {
++
++    if ($data['id'] == 'default_text:author' &&
++      isset($data['component_data']['text']['field_name']) &&
++      $data['component_data']['text']['field_name'] == 'field_author'
++    ) {
++      return $this->normalizeNewsAuthor($data, $format, $context);
++    }
++
++    if ($data['id'] == 'default_text:body' &&
++      isset($data['component_data']['text']['field_name']) &&
++      $data['component_data']['text']['field_name'] == 'body'
++    ) {
++      return $this->normalizeBody($data, $format, $context);
++    }
++
++    return parent::normalize($data, $format, $context);
++  }
++
++  /**
++   * Body.
++   */
++  protected function normalizeBody($data, $format = NULL, array $context = []) {
++    $components = [];
++
++    /** @var \Drupal\node\Entity\Node $entity */
++    $entity = $context['entity'];
++
++    $field_name = $data['component_data']['text']['field_name'];
++    $context['field_property'] = $data['component_data']['text']['field_property'];
++    $text = $this->serializer->normalize($entity->get($field_name), $format, $context);
++
++    // Add first img as photo component.
++    $doc = new \DOMDocument();
++    if (!$doc->loadHTML($text)) {
++      throw new NotNormalizableValueException('Could not parse body HTML.');
++    }
++    $xp = new \DOMXPath($doc);
++    /** @var \DOMElement $img */
++    foreach ($xp->query('//img') as $img) {
++      if (!$img->hasAttribute('src')) {
++        continue;
++      }
++      if (!$url = $img->getAttribute('src')) {
++        continue;
++      }
++      $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
++      $components['img'] = new Photo($url);
++      $layout = $this->getComponentLayout($data['component_layout']);
++      $layout
++        ->setIgnoreDocumentGutter('both')
++        ->setIgnoreDocumentMargin('both')
++        ->setMargin(new Margin(15, 15));
++      $components['img']->setLayout($layout);
++      break;
++    }
++
++    $text = strip_tags($text, self::ALLOWED_HTML_ELEMENTS);
++    $components['body'] = new Body($text);
++
++    // Text style.
++    $link_style = new TextStyle();
++    $link_style
++      ->setFontName('HelveticaNeue-Medium')
++      ->setFontSize(18)
++      ->setTextColor('#0071AD')
++      ->setUnderline(FALSE);
++    $style = new ComponentTextStyle();
++    $style
++      ->setFontName('HelveticaNeue')
++      ->setFontSize(18)
++      ->setHyphenation(FALSE)
++      ->setLineHeight(26)
++      ->setLinkStyle($link_style)
++      ->setStrikethrough(FALSE)
++      ->setTextAlignment('left')
++      ->setTextColor('#000')
++      ->setTextTransform('none')
++      ->setUnderline(FALSE)
++      ->setVerticalAlignment('baseline');
++    $components['body']->setTextStyle($style);
++
++    $components['body']->setFormat($data['component_data']['format']);
++    $components['body']->setLayout($this->getComponentLayout($data['component_layout']));
++
++    return $components;
++  }
++
++  /**
++   * News author.
++   */
++  protected function normalizeNewsAuthor($data, $format = NULL, array $context = []) {
++
++    /** @var \Drupal\node\Entity\Node $entity */
++    $entity = $context['entity'];
++
++    // Generate content.
++    /** @var \Drupal\datetime\Plugin\Field\FieldType\DateTimeItem $date */
++    try {
++      $date = $entity->get('field_date')->get(0);
++    }
++    catch (MissingDataException $e) {
++      return FALSE;
++    }
++    $date = \Drupal::service('date.formatter')->format(
++      strtotime($date->getString()),
++      'news_date');
++    $field_name = $data['component_data']['text']['field_name'];
++    /** @var \Drupal\Core\Field\EntityReferenceFieldItemList $authors */
++    $authors = $entity->get($field_name);
++    $names = [];
++    /** @var \Drupal\node\Entity\Node $author */
++    foreach ($authors->referencedEntities() as $author) {
++      $names[] = array_filter([
++        $author->get('field_first_name')->getString(),
++        $author->get('field_middle_name')->getString(),
++        $author->get('field_last_name')->getString(),
++      ]);
++    }
++    if (!$names) {
++      return FALSE;
++    }
++    $names = array_map(function ($name) {
++      return implode(' ', $name);
++    }, $names);
++    $component = new Author("By " . implode(', ', $names) .
++      ' on ' . $date . '.');
++
++    // Text style.
++    $style = new ComponentTextStyle();
++    $style
++      ->setFontName("HelveticaNeue-Italic")
++      ->setFontSize(14)
++      ->setHyphenation(FALSE)
++      ->setStrikethrough(FALSE)
++      ->setTextAlignment('left')
++      ->setTextColor('#646464')
++      ->setTextTransform('none')
++      ->setUnderline(FALSE)
++      ->setVerticalAlignment('baseline');
++    $component->setTextStyle($style);
++
++    $component->setFormat($data['component_data']['format']);
++    $component->setLayout($this->getComponentLayout($data['component_layout']));
++
++    return $component;
++  }
++
++}
+diff --git a/docroot/modules/custom/ucsf_applenews/ucsf_applenews.info.yml b/docroot/modules/custom/ucsf_applenews/ucsf_applenews.info.yml
+new file mode 100644
+index 000000000..005f73da3
+--- /dev/null
++++ b/docroot/modules/custom/ucsf_applenews/ucsf_applenews.info.yml
+@@ -0,0 +1,5 @@
++name: 'UCSF Apple News'
++type: module
++description: 'Customizations to Apple News integration.'
++core: 8.x
++package: 'UCSF'
+diff --git a/docroot/modules/custom/ucsf_applenews/ucsf_applenews.module b/docroot/modules/custom/ucsf_applenews/ucsf_applenews.module
+new file mode 100644
+index 000000000..3624feac0
+--- /dev/null
++++ b/docroot/modules/custom/ucsf_applenews/ucsf_applenews.module
+@@ -0,0 +1,8 @@
++<?php
++
++/**
++ * @file
++ * Contains ucsf_applenews.module.
++ */
++
++use Drupal\Core\Form\FormStateInterface;
+diff --git a/docroot/sites/default/services.yml b/docroot/sites/default/services.yml
+index e1bbbc7e2..1abb82d19 100644
+--- a/docroot/sites/default/services.yml
++++ b/docroot/sites/default/services.yml
+@@ -172,3 +172,14 @@ parameters:
+     maxAge: false
+     # Sets the Access-Control-Allow-Credentials header.
+     supportsCredentials: false
++services:
++  serializer.applenews.content_entity:
++    class: Drupal\ucsf_applenews\Normalizer\UcsfApplenewsContentEntityNormalizer
++    arguments: ['@entity_type.manager']
++    tags:
++      - { name: normalizer, priority: 1 }
++  serializer.applenews.text.component:
++    class: \Drupal\ucsf_applenews\Normalizer\UcsfApplenewsTextComponentNormalizer
++    arguments: ['@plugin.manager.applenews_component_type']
++    tags:
++      - { name: normalizer, priority: 1 }
+diff --git a/vendor/composer/installed.json b/vendor/composer/installed.json
+index bdc28a968..7c23e12d8 100644
+--- a/vendor/composer/installed.json
++++ b/vendor/composer/installed.json
+@@ -2636,18 +2636,12 @@
+     },
+     {
+         "name": "drupal/applenews",
+-        "version": "1.0.0-beta1",
+-        "version_normalized": "1.0.0.0-beta1",
++        "version": "dev-1.x",
++        "version_normalized": "dev-1.x",
+         "source": {
+             "type": "git",
+             "url": "https://git.drupal.org/project/applenews",
+-            "reference": "8.x-1.0-beta1"
+-        },
+-        "dist": {
+-            "type": "zip",
+-            "url": "https://ftp.drupal.org/files/projects/applenews-8.x-1.0-beta1.zip",
+-            "reference": "8.x-1.0-beta1",
+-            "shasum": "0b52273028c8918fa35546f8b623ace66e91c776"
++            "reference": "3675ca18093892bbd3a5b6eb97be161b2e495b1d"
+         },
+         "require": {
+             "chapter-three/apple-news-api": "dev-master",
+@@ -2659,20 +2653,29 @@
+                 "dev-1.x": "1.x-dev"
+             },
+             "drupal": {
+-                "version": "8.x-1.0-beta1",
+-                "datestamp": "1540682285",
++                "version": "8.x-1.0-beta1+11-dev",
++                "datestamp": "1547217855",
+                 "security-coverage": {
+                     "status": "not-covered",
+-                    "message": "Beta releases are not covered by Drupal security advisories."
++                    "message": "Dev releases are not covered by Drupal security advisories."
+                 }
++            },
++            "patches_applied": {
++                "Fix delete process of templates components": "https://www.drupal.org/files/issues/2019-02-05/applenews-fix-delete-process-of-templates-components-3025958-9.patch",
++                "Add preview link when no channels are configured": "https://www.drupal.org/files/issues/2019-02-05/applenews-preview-with-no-api-3029632-4.patch",
++                "Limit tags in html": "https://www.drupal.org/files/issues/2019-02-05/applenews-limit_tags_in_html-11333241-2.patch"
+             }
+         },
+-        "installation-source": "dist",
++        "installation-source": "source",
+         "notification-url": "https://packages.drupal.org/8/downloads",
+         "license": [
+             "GPL-2.0-or-later"
+         ],
+         "authors": [
++            {
++                "name": "geekygnr",
++                "homepage": "https://www.drupal.org/user/2775199"
++            },
+             {
+                 "name": "m4olivei",
+                 "homepage": "https://www.drupal.org/user/410384"
+diff --git a/vendor/drupal/console/templates/files/.env.dist.twig b/vendor/drupal/console/templates/files/.env.dist.twig
+new file mode 100644
+index 000000000..316076390
+--- /dev/null
++++ b/vendor/drupal/console/templates/files/.env.dist.twig
+@@ -0,0 +1,25 @@
++{{ yaml_comment('commands.dotenv.init.messages.template-env') }}
++
++# ENV
++ENVIRONMENT={{ environment }}
++
++# Database
++DATABASE_NAME={{ database_name }}
++DATABASE_USER={{ database_user }}
++DATABASE_PASSWORD={{ database_password }}
++DATABASE_HOST={{ database_host }}
++DATABASE_PORT={{ database_port }}
++
++# HOST
++HOST_NAME={{ host_name }}
++HOST_PORT={{ host_port }}
++
++# Default values for drupal-composer
++DRUPAL_ROOT={{ drupal_root }}
++SERVER_ROOT={{ server_root }}
++
++{% if load_settings is defined %}
++# SETTINGS
++SETTINGS_BAR=baz
++SETTINGS_LOREM=ipsum
++{% endif %}
+diff --git a/vendor/drupal/console/templates/files/.gitignore.dist b/vendor/drupal/console/templates/files/.gitignore.dist
+new file mode 100644
+index 000000000..2be09c853
+--- /dev/null
++++ b/vendor/drupal/console/templates/files/.gitignore.dist
+@@ -0,0 +1,7 @@
++
++# dotenv file
++.env
++
++# backup files
++*.original
++*.backup
+\ No newline at end of file
+diff --git a/vendor/drupal/console/templates/files/docker-compose.yml.twig b/vendor/drupal/console/templates/files/docker-compose.yml.twig
+new file mode 100644
+index 000000000..974a31d0a
+--- /dev/null
++++ b/vendor/drupal/console/templates/files/docker-compose.yml.twig
+@@ -0,0 +1,73 @@
++version: "2.3"
++
++services:
++  mariadb:
++    image: wodby/mariadb:10.2-3.0.2
++    env_file: ./.env
++    environment:
++      MYSQL_RANDOM_ROOT_PASSWORD: 'true'
++      MYSQL_DATABASE: ${DATABASE_NAME}
++      MYSQL_USER: ${DATABASE_USER}
++      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
++    volumes:
++      - mysqldata:/var/lib/mysql
++      # Uncomment next line and place DDb dump.sql file(s) here
++      # - ./mariadb-init:/docker-entrypoint-initdb.d
++    healthcheck:
++      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
++      timeout: 20s
++      retries: 10
++
++  php:
++    image: wodby/drupal-php:7.0-2.4.3
++    env_file: ./.env
++    environment:
++      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
++      DB_HOST: ${DATABASE_HOST}
++      DB_USER: ${DATABASE_USER}
++      DB_PASSWORD: ${DATABASE_PASSWORD}
++      DB_NAME: ${DATABASE_NAME}
++      DB_DRIVER: mysql
++    volumes:
++      - ./:${DRUPAL_ROOT}{{ volume_configuration }}
++    depends_on:
++      mariadb:
++        condition: service_healthy
++
++  nginx:
++    image: wodby/drupal-nginx:8-1.13-2.4.2
++    env_file: ./.env
++    depends_on:
++      - php
++    environment:
++      NGINX_STATIC_CONTENT_OPEN_FILE_CACHE: "off"
++      NGINX_ERROR_LOG_LEVEL: debug
++      NGINX_BACKEND_HOST: php
++      NGINX_SERVER_ROOT: ${SERVER_ROOT}
++    volumes:
++      - ./:${DRUPAL_ROOT}{{ volume_configuration }}
++    labels:
++      - 'traefik.backend=nginx'
++      - 'traefik.port=80'
++      - 'traefik.frontend.rule=Host:${HOST_NAME}'
++
++  mailhog:
++    image: mailhog/mailhog
++    env_file: ./.env
++    labels:
++      - 'traefik.backend=mailhog'
++      - 'traefik.port=8025'
++      - 'traefik.frontend.rule=Host:mailhog.${HOST_NAME}'
++
++  traefik:
++    image: traefik
++    env_file: ./.env
++    command: -c /dev/null --web --docker --logLevel=INFO
++    ports:
++      - '${HOST_PORT}:80'
++    volumes:
++      - /var/run/docker.sock:/var/run/docker.sock
++
++volumes:
++  mysqldata:
++    driver: "local"
+diff --git a/vendor/drupal/console/templates/files/settings.php.twig b/vendor/drupal/console/templates/files/settings.php.twig
+new file mode 100644
+index 000000000..d98d00d5a
+--- /dev/null
++++ b/vendor/drupal/console/templates/files/settings.php.twig
+@@ -0,0 +1,34 @@
++{% if load_from_env is defined %}
++{{ yaml_comment('commands.dotenv.init.messages.load-from-env') }}
++{% endif %}
++
++# Load environment
++$env = getenv('ENVIRONMENT');
++
++{% if load_settings is defined %}
++{{ yaml_comment('commands.dotenv.init.messages.load-settings') }}
++{% endif %}
++$base_path = $app_root . '/' . $site_path;
++$servicesFile = $base_path . '/services.'.$env.'.yml';
++$settingsFile = $base_path . '/settings.'.$env.'.php';
++
++// Load services definition file.
++if (file_exists($servicesFile)) {
++    $settings['container_yamls'][] = $servicesFile;
++}
++
++// Load settings file.
++if (file_exists($settingsFile)) {
++    include $settingsFile;
++}
++
++$databases['default']['default'] = array (
++    'database' =>  getenv('DATABASE_NAME'),
++    'username' => getenv('DATABASE_USER'),
++    'password' => getenv('DATABASE_PASSWORD'),
++    'prefix' => '',
++    'host' => getenv('DATABASE_HOST'),
++    'port' => getenv('DATABASE_PORT'),
++    'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
++    'driver' => 'mysql',
++);

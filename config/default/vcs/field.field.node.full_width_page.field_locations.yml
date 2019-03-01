@@ -1,0 +1,29 @@
+uuid: 9e086489-be90-44c4-8ac2-2f7f651f8f55
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_locations
+    - node.type.full_width_page
+    - taxonomy.vocabulary.locations
+id: node.full_width_page.field_locations
+field_name: field_locations
+entity_type: node
+bundle: full_width_page
+label: Locations
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      locations: locations
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

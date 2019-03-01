@@ -1,4 +1,4 @@
-uuid: a553b809-5b22-495d-a73f-c59a6937b66f
+uuid: 63011cae-e736-43eb-858e-2a41d5491460
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - ucsf_edu_migrate
 _core:
-  default_config_hash: FrnzH_Y3B8QMoeLwDAqmAkEXp4wAuiI8nVFhoF-_sV0
+  default_config_hash: mVw0dZg-t41Z9Sl0lQvU6HsnUNdUTpafvqV7rZkPG14
 id: media_coverage_content
 class: null
 field_plugin_method: null
@@ -18,7 +18,7 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: 'http://ucsfpa1dev.prod.acquia-sites.com/mediacoveragexml'
+  urls: 'public://media_coverage_xml_feed.xml'
   item_selector: /nodes/node
   ids:
     nid:
@@ -60,6 +60,18 @@ source:
       name: loc_tax
       label: 'media coverage locations taxonomy reference'
       selector: Locations
+    -
+      name: pub_date
+      label: 'the published date of the news'
+      selector: Post-date
+    -
+      name: uid
+      label: 'Id of the account that authored the content'
+      selector: Author-uid
+    -
+      name: updated-date
+      label: 'date the content was updated'
+      selector: updated-date
   constants:
     file_directory: 'public://'
 process:
@@ -68,6 +80,15 @@ process:
     default_value: article
   title: title
   nid: nid
+  uid: uid
+  field_date: pub_date
+  field_date_and_time: pub_date
+  created:
+    plugin: format_date
+    from_format: 'Y-m-d\TH:i:s'
+    to_format: U
+    source: pub_date
+  changed: updated-date
   field_external_url: ex-url
   field_areas:
     -
@@ -122,7 +143,12 @@ process:
   field_article_type:
     -
       plugin: default_value
-      default_value: 714
+      default_value: 411961
+  field_source:
+    -
+      plugin: migration_lookup
+      migration: press_tax
+      source: media_source
 destination:
   plugin: 'entity:node'
   default_bundle: article

@@ -4,12 +4,14 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.promotional.field_image_media
+    - field.field.paragraph.promotional.field_promo_cta
     - field.field.paragraph.promotional.field_promo_image
     - field.field.paragraph.promotional.field_promo_text
     - field.field.paragraph.promotional.field_textbox_background_color
     - field.field.paragraph.promotional.field_title
     - paragraphs.paragraphs_type.promotional
   module:
+    - link
     - text
 id: paragraph.promotional.default
 targetEntityType: paragraph
@@ -24,6 +26,18 @@ content:
       view_mode: default
     third_party_settings: {  }
     type: entity_reference_entity_view
+    region: content
+  field_promo_cta:
+    weight: 4
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
     region: content
   field_promo_text:
     weight: 2

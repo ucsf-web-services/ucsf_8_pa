@@ -3,7 +3,9 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.column_wrapper.field_background_color
     - field.field.paragraph.column_wrapper.field_content_wrapper_content
+    - field.field.paragraph.column_wrapper.field_title
     - paragraphs.paragraphs_type.column_wrapper
   module:
     - paragraphs
@@ -12,9 +14,15 @@ targetEntityType: paragraph
 bundle: column_wrapper
 mode: default
 content:
+  field_background_color:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   field_content_wrapper_content:
     type: entity_reference_paragraphs
-    weight: 0
+    weight: 2
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -23,6 +31,14 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
+    region: content
+  field_title:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
     region: content
 hidden:
   created: true

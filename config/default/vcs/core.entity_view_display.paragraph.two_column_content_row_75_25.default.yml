@@ -3,16 +3,25 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.two_column_content_row_75_25.field_background_color
     - field.field.paragraph.two_column_content_row_75_25.field_column_25
     - field.field.paragraph.two_column_content_row_75_25.field_column_75
     - paragraphs.paragraphs_type.two_column_content_row_75_25
   module:
     - entity_reference_revisions
+    - options
 id: paragraph.two_column_content_row_75_25.default
 targetEntityType: paragraph
 bundle: two_column_content_row_75_25
 mode: default
 content:
+  field_background_color:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
   field_column_25:
     weight: 1
     label: hidden

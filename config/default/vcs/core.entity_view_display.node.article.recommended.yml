@@ -23,7 +23,6 @@ dependencies:
     - field.field.node.article.field_exclude
     - field.field.node.article.field_external_url
     - field.field.node.article.field_facebook_description
-    - field.field.node.article.field_facebook_image
     - field.field.node.article.field_facebook_title
     - field.field.node.article.field_featured_image_video
     - field.field.node.article.field_hide_article
@@ -43,14 +42,13 @@ dependencies:
     - field.field.node.article.field_textured_background_image
     - field.field.node.article.field_topics
     - field.field.node.article.field_twitter_description
-    - field.field.node.article.field_twitter_image
     - field.field.node.article.field_twitter_title
+    - image.style.recommended_article__image
     - node.type.article
   module:
     - comment
     - datetime
     - entity_reference_revisions
-    - image
     - link
     - media
     - metatag
@@ -130,12 +128,12 @@ content:
       link: ''
     third_party_settings: {  }
   field_banner_image:
-    type: media_thumbnail
+    type: entity_reference_entity_view
     weight: 9
     label: hidden
     settings:
-      image_style: ''
-      image_link: ''
+      view_mode: default
+      link: false
     third_party_settings: {  }
     region: content
   field_banner_layout:
@@ -146,12 +144,12 @@ content:
     type: list_default
     region: content
   field_card_image:
-    type: entity_reference_entity_view
+    type: media_thumbnail
     weight: 10
     label: hidden
     settings:
-      view_mode: default
-      link: false
+      image_style: recommended_article__image
+      image_link: ''
     third_party_settings: {  }
     region: content
   field_content_panel:
@@ -215,15 +213,6 @@ content:
     region: content
     label: hidden
     settings: {  }
-    third_party_settings: {  }
-  field_facebook_image:
-    type: image
-    weight: 32
-    region: content
-    label: hidden
-    settings:
-      image_style: ''
-      image_link: ''
     third_party_settings: {  }
   field_facebook_title:
     type: string
@@ -378,15 +367,6 @@ content:
     region: content
     label: hidden
     settings: {  }
-    third_party_settings: {  }
-  field_twitter_image:
-    type: image
-    weight: 15
-    region: content
-    label: hidden
-    settings:
-      image_style: ''
-      image_link: ''
     third_party_settings: {  }
   field_twitter_title:
     type: string

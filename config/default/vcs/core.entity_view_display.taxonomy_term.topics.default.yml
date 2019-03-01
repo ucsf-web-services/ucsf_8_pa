@@ -3,17 +3,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.taxonomy_term.topics.field_content_row
-    - field.field.taxonomy_term.topics.field_hero_color_line
-    - field.field.taxonomy_term.topics.field_hero_image
-    - field.field.taxonomy_term.topics.field_hero_link
-    - field.field.taxonomy_term.topics.field_hero_text
-    - field.field.taxonomy_term.topics.field_hero_title
+    - field.field.taxonomy_term.topics.field_ankle_cta
+    - field.field.taxonomy_term.topics.field_events
+    - field.field.taxonomy_term.topics.field_featured
+    - field.field.taxonomy_term.topics.field_goals_promos
+    - field.field.taxonomy_term.topics.field_taxonomy_banner_image
+    - field.field.taxonomy_term.topics.field_taxonomy_card_image
     - taxonomy.vocabulary.topics
   module:
     - entity_reference_revisions
-    - image
-    - link
     - text
 id: taxonomy_term.topics.default
 targetEntityType: taxonomy_term
@@ -27,57 +25,56 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_content_row:
-    type: entity_reference_revisions_entity_view
-    weight: 6
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    region: content
-  field_hero_color_line:
-    weight: 5
-    label: hidden
+  field_ankle_cta:
+    weight: 11
+    label: above
     settings:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
     region: content
-  field_hero_image:
-    weight: 1
-    label: hidden
-    settings:
-      image_style: ''
-      image_link: ''
-    third_party_settings: {  }
-    type: image
-    region: content
-  field_hero_link:
-    weight: 4
-    label: hidden
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
-    third_party_settings: {  }
-    type: link
-    region: content
-  field_hero_text:
-    weight: 3
-    label: hidden
+  field_events:
+    weight: 10
+    label: above
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
-  field_hero_title:
-    weight: 2
-    label: hidden
+  field_featured:
+    weight: 9
+    label: above
     settings:
-      link_to_entity: false
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
     third_party_settings: {  }
-    type: string
+    type: boolean
+    region: content
+  field_goals_promos:
+    type: entity_reference_revisions_entity_view
+    weight: 12
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  field_taxonomy_banner_image:
+    type: entity_reference_entity_view
+    weight: 7
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
+  field_taxonomy_card_image:
+    type: entity_reference_entity_view
+    weight: 8
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
     region: content
 hidden: {  }

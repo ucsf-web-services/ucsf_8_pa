@@ -1,0 +1,29 @@
+uuid: fcfac32a-484c-409d-88c9-afe856b67d15
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_primary_area
+    - node.type.full_width_page
+    - taxonomy.vocabulary.areas
+id: node.full_width_page.field_primary_area
+field_name: field_primary_area
+entity_type: node
+bundle: full_width_page
+label: 'Primary Area'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      areas: areas
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

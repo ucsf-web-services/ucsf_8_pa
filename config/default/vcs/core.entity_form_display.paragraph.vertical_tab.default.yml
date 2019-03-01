@@ -1,0 +1,35 @@
+uuid: 56c1b87f-ada5-4930-a004-d50a774d6a7f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.vertical_tab.field_tab_content
+    - field.field.paragraph.vertical_tab.field_tab_title
+    - paragraphs.paragraphs_type.vertical_tab
+  module:
+    - text
+id: paragraph.vertical_tab.default
+targetEntityType: paragraph
+bundle: vertical_tab
+mode: default
+content:
+  field_tab_content:
+    weight: 1
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_tab_title:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

@@ -1,0 +1,33 @@
+uuid: a6ea3d26-2db9-4058-b3d0-97be64149164
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_banner_box_alignment
+    - node.type.homepage
+    - taxonomy.vocabulary.banner_box_alignment
+  content:
+    - 'taxonomy_term:banner_box_alignment:68f0b197-667f-40ae-a869-ba4feeca8b2d'
+id: node.homepage.field_banner_box_alignment
+field_name: field_banner_box_alignment
+entity_type: node
+bundle: homepage
+label: 'Banner Box Alignment'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    target_uuid: 68f0b197-667f-40ae-a869-ba4feeca8b2d
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      banner_box_alignment: banner_box_alignment
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

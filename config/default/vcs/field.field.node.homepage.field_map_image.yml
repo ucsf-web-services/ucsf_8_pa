@@ -1,0 +1,28 @@
+uuid: a0c91956-a89a-450c-85e2-28afc424ff0e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_map_image
+    - media.type.image
+    - node.type.homepage
+id: node.homepage.field_map_image
+field_name: field_map_image
+entity_type: node
+bundle: homepage
+label: 'Map Image'
+description: 'Required size for retina: 2720px x 1360px.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
