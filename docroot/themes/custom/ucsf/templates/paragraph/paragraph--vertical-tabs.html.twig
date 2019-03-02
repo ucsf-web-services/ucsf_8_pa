@@ -9,15 +9,19 @@
 <div{{ attributes.addClass(classes) }}>
 
   {# titles #}
-  <ul>
+  <ul class="vertical-tab__title js-tablist field-column-30">
     {% for paragraph_vertical_tab in paragraph.field_tabs %}
-      <li><a href="#tabs-{{ loop.index }}">{{ paragraph_vertical_tab.entity.field_tab_title.value }}</a></li>
+      <li role="presentation">
+        <a href="#tabs-{{ loop.index }}">
+          {{ paragraph_vertical_tab.entity.field_tab_title.value }}
+        </a>
+      </li>
     {% endfor %}
   </ul>
 
   {# content #}
   {% for paragraph_vertical_tab in paragraph.field_tabs %}
-    <div id="tabs-{{ loop.index }}">
+    <div id="tabs-{{ loop.index }}" class="field-column-70">
       {{ paragraph_vertical_tab.entity.field_tab_content.value|raw }}
     </div>
   {% endfor %}

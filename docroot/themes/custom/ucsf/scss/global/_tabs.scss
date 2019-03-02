@@ -1,7 +1,7 @@
 .vertical-tab {
   grid-column: 1/-1;
 
-   ul { // PL: .vertical-tab__title
+  .vertical-tab__title {
     display: inline-block;
     float: left;
     margin: 0;
@@ -23,28 +23,28 @@
         text-decoration: none;
         font-family: $font-helvetica-neue-medium;
 
-        &[aria-selected="true"] {
-          color: $blue;
-          //border-left: $space solid $blue;
-          //box-shadow: -4px 6px 11px 0 rgba(213, 217, 222, 0.35);
-          border-top: 0;
-          border-bottom: 0;
-          position: relative;
-          background: url("../images/vertical-tab-highlight.png") left center no-repeat $white;
-          background-size: 100% 100%;
-          min-height: $space-eight;
-          margin-right: -50px;
-          margin-top: -1px;
-          padding-bottom: $space-three;
+        &:focus {
+          outline: none;
         }
+      }
+
+      &[aria-selected="true"] a {
+        @include background-image('vertical-tab-highlight.png', left center, $white);
+        color: $blue;
+        border-top: 0;
+        border-bottom: 0;
+        position: relative;
+        background-size: 100% 100%;
+        min-height: $space-eight;
+        margin-right: -50px;
+        margin-top: -1px;
+        padding-bottom: $space-three;
       }
     }
 
     li:first-child {
-      a {
-        &[aria-selected="true"] {
-          margin-top: 0;
-        }
+      &[aria-selected="true"] a {
+        margin-top: 0;
       }
     }
 
@@ -77,23 +77,23 @@
 
         padding: $space-four 0;
         border-bottom: none;
-
-        &[aria-selected="true"] {
-          color: $blue;
-          border-top: 0;
-          position: relative;
-          background: url("../images/vertical-tab-highlight-alt.png") right center no-repeat $white;
-          margin-right: -$space-fifteen;
-          padding-right: $space-fifteen;
-          margin-top: 0;
-          display: block;
-        }
       }
 
       h2 {
         margin: 0;
         padding: 0;
       }
+    }
+
+    &[aria-selected="true"] a {
+      color: $blue;
+      border-top: 0;
+      position: relative;
+      background: url("../images/vertical-tab-highlight-alt.png") right center no-repeat $white;
+      margin-right: -$space-fifteen;
+      padding-right: $space-fifteen;
+      margin-top: 0;
+      display: block;
     }
   }
 

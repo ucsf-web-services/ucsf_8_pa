@@ -4393,18 +4393,18 @@ textarea {
 
 .vertical-tab {
   grid-column: 1/-1; }
-  .vertical-tab ul {
+  .vertical-tab .vertical-tab__title {
     display: inline-block;
     float: left;
     margin: 0;
     padding: 0;
     padding-right: 50px; }
-    .vertical-tab ul li {
+    .vertical-tab .vertical-tab__title li {
       list-style-type: none;
       margin: auto 0;
       outline: 0;
       text-decoration: none; }
-      .vertical-tab ul li a {
+      .vertical-tab .vertical-tab__title li a {
         background-color: #fff;
         padding: 16px 32px;
         cursor: pointer;
@@ -4412,20 +4412,22 @@ textarea {
         border-bottom: 1px solid #ddd;
         text-decoration: none;
         font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
-        .vertical-tab ul li a[aria-selected="true"] {
-          color: #007cbe;
-          border-top: 0;
-          border-bottom: 0;
-          position: relative;
-          background: url("../images/vertical-tab-highlight.png") left center no-repeat #fff;
-          background-size: 100% 100%;
-          min-height: 64px;
-          margin-right: -50px;
-          margin-top: -1px;
-          padding-bottom: 24px; }
-    .vertical-tab ul li:first-child a[aria-selected="true"] {
+        .vertical-tab .vertical-tab__title li a:focus {
+          outline: none; }
+      .vertical-tab .vertical-tab__title li[aria-selected="true"] a {
+        background: url("/themes/custom/ucsf/assets/images/vertical-tab-highlight.png") no-repeat left center #fff;
+        color: #007cbe;
+        border-top: 0;
+        border-bottom: 0;
+        position: relative;
+        background-size: 100% 100%;
+        min-height: 64px;
+        margin-right: -50px;
+        margin-top: -1px;
+        padding-bottom: 24px; }
+    .vertical-tab .vertical-tab__title li:first-child[aria-selected="true"] a {
       margin-top: 0; }
-    .vertical-tab ul li:last-child a {
+    .vertical-tab .vertical-tab__title li:last-child a {
       border-bottom-left-radius: 0; }
   .vertical-tab .cta-list, .vertical-tab ext-list {
     background-color: #fff;
@@ -4455,18 +4457,18 @@ textarea {
           .vertical-tab-alt ul li a {
             font-size: 56px;
             letter-spacing: -1.2px; } }
-        .vertical-tab-alt ul li a[aria-selected="true"] {
-          color: #007cbe;
-          border-top: 0;
-          position: relative;
-          background: url("../images/vertical-tab-highlight-alt.png") right center no-repeat #fff;
-          margin-right: -120px;
-          padding-right: 120px;
-          margin-top: 0;
-          display: block; }
       .vertical-tab-alt ul li h2 {
         margin: 0;
         padding: 0; }
+    .vertical-tab-alt ul[aria-selected="true"] a {
+      color: #007cbe;
+      border-top: 0;
+      position: relative;
+      background: url("../images/vertical-tab-highlight-alt.png") right center no-repeat #fff;
+      margin-right: -120px;
+      padding-right: 120px;
+      margin-top: 0;
+      display: block; }
   .vertical-tab-alt .cta-list, .vertical-tab-alt ext-list {
     padding: 56px 80px;
     padding-bottom: 0;

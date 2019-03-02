@@ -4,8 +4,7 @@
   Drupal.behaviors.verticalTabs = {
     attach: function (context, settings) {
       
-      $( ".js-tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
-      $( ".js-tabs" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+      $( ".js-tabs" ).tabs().addClass("ui-helper-clearfix");
       
     }
   };
