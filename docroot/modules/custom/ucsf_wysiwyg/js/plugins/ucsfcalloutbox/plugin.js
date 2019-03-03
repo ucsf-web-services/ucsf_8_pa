@@ -51,35 +51,28 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
 
         editor.widgets.add('ucsfcalloutbox', {
             //allowedContent: 'aside div(*); time;',
-            //requiredContent: 'aside(!ucsfcallout);',
+            requiredContent: 'aside(!ucsfcallout);',
 
             editables: {
                 content: {
                     selector: '.callout__content',
-                    allowedContent: 'p[*]; br strong[*]; em a[*]; time[*]; cite i strike sub sup ul[*]; ol[*]; li dl dd dt address[*]; abbr;'
-                },
-                title: {
-                    selector: '.callout__title',
-                    allowedContent: 'h1 h2 h3 h4 h5 h6 p[*]; br strong em;'
+                    allowedContent: 'h3 h4 h5 h6 picture br p[*]; strong[*]; em a[*]; time[*]; cite i strike sub sup ul[*]; ol[*]; li dl dd dt address[*]; abbr;'
                 },
                 image: {
                     selector: '.callout__image',
-                    allowedContent: 'strong em; article[*], img[*]; picture[*]; p[*]; a[*]; source[*]; video[*]; drupal-entity[*];'
-                },
-                cta: {
-                    selector: '.callout__cta',
-                    allowedContent: 'picture br em img[*]; p[*]; strong[*]; a[*]; source[*];'
+                    allowedContent: 'img[*]; picture[*]; source[*]; video[*]; drupal-entity[*];'
                 }
             },
 
-            template: '<aside class="ucsfcallout callout-left">' +
-                '<div class="callout__image">&nbsp;</div>' +
-                '<div class="callout__title"><h3>Related Stories</h3></div>' +
-                '<div class="callout__content">' +
-                    '<time>Oct. 24, 2018</time>' +
+            template:
+            '<aside class="ucsfcallout callout-left" data-image="none">' +
+                '<div class="callout__image hidden"><img id="callout_image_0" src="/sites/default/files/media-icons/generic/no-thumbnail.png" /></div>' +
+                '<div class="callout__content">'    +
+                    '<h3>Take Action ––– </h3>'     +
+                    '<time>Oct. 24, 2018</time>'    +
                     '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ultricies sit amet.</p>' +
+                    '<p><a href="/">Learn More</a></p>' +
                 '</div>' +
-                '<div class="callout__cta">Call to action</div>' +
             '</aside>',
 
             button: 'Create a Callout Box',
@@ -89,25 +82,34 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
             },
 
             init: function () {
+                //called only when page loads
                 if (this.element.hasClass('callout-left'))
                     this.setData('align', 'left');
                 if (this.element.hasClass('callout-right'))
                     this.setData('align', 'right');
                 if (this.element.hasClass('callout-center'))
                     this.setData('align', 'center');
+                if (this.data.callout)
+                    this.setData('calloutImage', this.data.callout);
+
             },
             data: function () {
+                //called everytime dialog is opened and closed.
                 // Brutally remove all align classes and set a new one if "align" widget data is set.
                 this.element.removeClass('callout-center');
                 this.element.removeClass('callout-left');
                 this.element.removeClass('callout-right');
-                if (this.data.align)
+                if (this.data.align) {
                     this.element.addClass('callout-' + this.data.align);
-                /*
-                 if ( this.data.bgColor ) {
-                 this.element.addClass( 'bg--' + this.data.bgColor );
-                 }
-                 */
+                }
+                //console.log('data(): ' + this.data.callout);
+                if (this.data.callout && this.data.callout != 'none') {
+                    //set the image tag
+                    //this.element.setAttribute('data-image', this.data.callout);
+                    var images = this.element.getElementsByTag('img');
+                } else {
+                    //hide image div
+                }
             }
         });
     }

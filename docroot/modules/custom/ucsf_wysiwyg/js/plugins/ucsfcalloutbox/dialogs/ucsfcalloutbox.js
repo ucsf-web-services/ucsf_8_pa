@@ -26,6 +26,21 @@ CKEDITOR.dialog.add('ucsfcalloutbox', function( editor ) {
             commit: function( widget ) {
               widget.setData( 'align', this.getValue() );
             }
+          },
+          {
+            id: 'callout',
+            type: 'radio',
+            label: 'Callout Image',
+            items: [
+              [ 'On', 1 ],
+              [ 'Off', 0 ]
+            ],
+            setup: function( widget ) {
+              this.setValue( widget.data.callout ? widget.data.callout : 'none' );
+            },
+            commit: function( widget ) {
+              widget.setData( 'callout', this.getValue() );
+            }
           }
         ]
       }
