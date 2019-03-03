@@ -73,6 +73,18 @@ source:
       name: author_image
       label: 'source url of the author profile image'
       selector: Image
+    -
+      name: pub_date
+      label: 'the published date of the news'
+      selector: Post-date
+    -
+      name: uid
+      label: 'Id of the account that authored the content'
+      selector: Author-uid
+    -
+      name: updated-date
+      label: 'date the content was updated'
+      selector: Updated-date
 
   constants:
     file_directory: public://
@@ -100,6 +112,12 @@ process:
   title: author_title
 
   nid: nid
+
+  uid: uid
+
+  created: pub_date
+
+  changed: updated-date
 
   body/value: author_bio
   body/format:

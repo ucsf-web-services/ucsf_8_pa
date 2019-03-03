@@ -16,7 +16,7 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: https://www.ucsf.edu/topicsxml
+  urls: public://topics_tax.xml
   item_selector: /taxonomy/terms
   fields:
     -
@@ -75,18 +75,18 @@ process:
 
   description/value: tax_description
 
-  field_mesd_id: mesh_id
+#  field_mesd_id: mesh_id
+#
+#  field_mesh_name: mesh_name
 
-  field_mesh_name: mesh_name
-
-  parent:
-    -
-      plugin: migration_lookup
-      migration: topics_tax
-      source: tax_parent
-    -
-      plugin: default_value
-      default_value: 0
+  parent: tax_parent
+#    -
+#      plugin: migration_lookup
+#      migration: topics_tax
+#      source: tax_parent
+#    -
+#      plugin: default_value
+#      default_value: 0
 
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value

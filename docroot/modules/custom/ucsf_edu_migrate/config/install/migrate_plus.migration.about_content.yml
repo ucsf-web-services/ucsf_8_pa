@@ -16,7 +16,7 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: http://ucsfpa1dev.prod.acquia-sites.com/aboutxml
+  urls: https://www.ucsf.edu/aboutxml
   item_selector: /nodes/node
 
 # unique identifier needs to be an integer
@@ -49,6 +49,22 @@ source:
       name: image
       label: 'image for the about pages'
       selector: image
+    -
+      name: pub_date
+      label: 'the published date of the news'
+      selector: Post-date
+    -
+      name: updated-date
+      label: 'date the content was updated'
+      selector: updated-date
+    -
+      name: uid
+      label: 'Id of the account that authored the content'
+      selector: Author-uid
+    -
+      name: body_summary
+      label: 'the summary of the body content'
+      selector: body-summary
 
   constants:
     file_directory: public://
@@ -77,6 +93,12 @@ process:
 
   nid: nid
 
+  uid: uid
+
+  created: pub_date
+
+  changed: updated-date
+
   field_topics:
     -
       plugin: skip_on_empty
@@ -89,6 +111,7 @@ process:
       delimiter: ','
 
   body/value: body
+  body/summary: body_summary
   body/format:
     plugin: default_value
     default_value: full_html

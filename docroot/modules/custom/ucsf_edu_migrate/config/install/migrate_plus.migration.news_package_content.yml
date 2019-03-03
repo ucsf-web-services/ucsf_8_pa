@@ -16,14 +16,14 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: http://ucsfpa1dev.prod.acquia-sites.com/newspackagexml
+  urls: https://www.ucsf.edu/newspackagexml
   item_selector: /nodes/node
-  
-# unique identifier needs to be an integer 
+
+# unique identifier needs to be an integer
   ids:
     nid:
       type: integer
-  
+
   fields:
     -
       name: nid
@@ -73,7 +73,20 @@ source:
       name: feat_img
       label: 'featured image for the news package'
       selector: feat_img
-      
+    -
+      name: pub_date
+      label: 'the published date of the news'
+      selector: Post-date
+    -
+      name: updated-date
+      label: 'date the content was updated'
+      selector: Updated-date
+    -
+      name: uid
+      label: 'Id of the account that authored the content'
+      selector: Author-uid
+
+
   constants:
     file_directory: public://
 
@@ -86,8 +99,8 @@ source:
 # destination plugin is implemented in Drupal itself.
 destination:
   plugin: entity:node
-  
-  default_bundle: article
+
+  default_bundle: news_package
 
 # Here's the meat of the migration - the processing pipeline. This describes how
 # each destination field is to be populated based on the source data. For each
@@ -95,12 +108,24 @@ destination:
 process:
   type:
     plugin: default_value
-    default_value: article
-  
+    default_value: news_package
+
   title: title
-  
+
   nid: nid
-  
+
+  uid: uid
+
+  created:
+    plugin: format_date
+    from_format: 'Y-m-d\TH:i:s'
+    to_format: 'U'
+    source: pub_date
+
+  changed: updated-date
+
+  field_date_and_time: pub_date
+
   field_primary_area:
     -
       plugin: skip_on_empty
@@ -111,7 +136,7 @@ process:
       plugin: explode
       source: pri_area
       delimiter: ','
-      
+
   field_areas:
     -
       plugin: skip_on_empty
@@ -122,51 +147,51 @@ process:
       plugin: explode
       source: areas_tax
       delimiter: ','
-      
-  field_topics: 
+
+  field_topics:
     -
       plugin: skip_on_empty
       method: process
       source: topics_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: topics_tax
       delimiter: ','
-    
-  field_organizations: 
+
+  field_organizations:
     -
       plugin: skip_on_empty
       method: process
       source: orgs_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: orgs_tax
       delimiter: ','
-      
-  field_people: 
+
+  field_people:
     -
       plugin: skip_on_empty
       method: process
       source: people_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: people_tax
       delimiter: ','
-  
+
   field_locations:
     -
       plugin: skip_on_empty
       method: process
       source: loc_tax
-      message: 'there was an empty field' 
+      message: 'there was an empty field'
     -
       plugin: explode
       source: loc_tax
       delimiter: ','
-  
+
   field_article_type:
     -
       plugin: default_value
@@ -195,9 +220,9 @@ process:
 #   plugin: concat
 #   source:
 #     - 'constants/file_directory'
-#     - '@destination_basename'  
-  
-  
+#     - '@destination_basename'
+
+
   # The simplest process plugin is named 'get' - it is the default plugin, so
   # does not need to be explicitly named. It simply copies the source value
   # (the 'style' field from the source database in this case) to the destination
