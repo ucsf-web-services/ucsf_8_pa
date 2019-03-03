@@ -36,7 +36,7 @@ CKEDITOR.dialog.add('ucsfcalloutbox', function( editor ) {
               [ 'Off', 0 ]
             ],
             setup: function( widget ) {
-              this.setValue( widget.data.callout ? widget.data.callout : 'none' );
+              this.setValue( widget.data.callout ? widget.data.callout : 0 );
             },
             commit: function( widget ) {
               widget.setData( 'callout', this.getValue() );
