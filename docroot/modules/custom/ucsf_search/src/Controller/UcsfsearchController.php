@@ -40,12 +40,47 @@ class UcsfsearchController extends ControllerBase {
   }
 
 
+  /**
+   * First check if the search string looks like a domain, if it does
+   * and it doesn't match our domain(s) then ignore the search
+   * /ucsf.edu|ucsfmedicalcenter.org|ucsfhealth.org/
+   *
+   * If doesn't appear to be a domain, then do a string lookup
+   * check the meta title, title, and description fields in the
+   * combine filer.
+   *
+   * Cache all results for further usage using a filtered, trimmed and
+   * normalized search term.
+   *
+   * Return the top-three results as array.
+   * If more then three results show the "more results" button"
+   *
+   * @param $search
+   * @param int $limit
+   */
+  protected function websiteLookup($search, $limit=3) {
+    //don't search anything under 3 characters, reduce lookup load
+    if (strlen($search)<3) {
+      return [];
+    }
+    //url encode the string for searching
+    //@todo make #search the cache key, $directory the cache items
+    $search = urlencode($search);
+
+    //@todo - check the cache for the results
+    //call GuzzleHTTP for the lookup and JSON decode the body request
+    $client       = new Client(array('base_uri' => 'https://directory.ucsf.edu'));
+    $res          = $client->request('GET', "/people/search/name/{$search}/json");
+    $jsonresponse = json_decode($res->getBody(), TRUE);
+
+    return [];
+  }
 
   /**
    * DIRECTORY API is retiring soon, might need to change this eventually.
    * https://directory.ucsf.edu/people/search/name/john%20Kealy/json
    */
-  protected function directoryLookup($search, $limit=null) {
+  protected function directoryLookup($search, $limit=3) {
 
     //don't search anything under 3 characters, reduce lookup load
     if (strlen($search)<3) {
@@ -73,7 +108,9 @@ class UcsfsearchController extends ControllerBase {
         $directory[] = $person;
       }
 
-      //@todo limit the results to three if univeral page
+      //@todo limit the results to three if universal page
+
+      //@todo add a see more here to take you to the directory.ucsf.edu website results
 
       //@todo store the results in the cache using the key for further lookup
       return $directory;

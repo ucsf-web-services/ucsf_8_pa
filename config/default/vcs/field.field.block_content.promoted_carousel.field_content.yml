@@ -6,8 +6,6 @@ dependencies:
     - block_content.type.promoted_carousel
     - field.storage.block_content.field_content
     - node.type.article
-    - node.type.event
-    - node.type.page
 id: block_content.promoted_carousel.field_content
 field_name: field_content
 entity_type: block_content
@@ -22,11 +20,9 @@ settings:
   handler: 'default:node'
   handler_settings:
     target_bundles:
-      page: page
-      event: event
       article: article
     sort:
       field: _none
-    auto_create: false
-    auto_create_bundle: page
+    auto_create: null
+    auto_create_bundle: null
 field_type: entity_reference

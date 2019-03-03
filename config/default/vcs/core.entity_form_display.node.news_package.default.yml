@@ -47,7 +47,7 @@ third_party_settings:
         - field_short_title
         - field_sub_title
       parent_name: ''
-      weight: 1
+      weight: 2
       format_type: details
       format_settings:
         id: ''
@@ -59,7 +59,7 @@ third_party_settings:
       children:
         - field_date_and_time
       parent_name: ''
-      weight: 2
+      weight: 3
       format_type: details
       format_settings:
         id: ''
@@ -72,7 +72,7 @@ third_party_settings:
         - field_banner_image
         - field_textured_background_image
       parent_name: ''
-      weight: 3
+      weight: 4
       format_type: details
       format_settings:
         id: ''
@@ -92,8 +92,9 @@ third_party_settings:
         - field_exclude
         - field_include
         - field_hide_article
+        - field_article_type
       parent_name: ''
-      weight: 6
+      weight: 7
       format_type: details
       format_settings:
         id: ''
@@ -111,7 +112,7 @@ third_party_settings:
         - field_twitter_description
         - field_twitter_image
       parent_name: ''
-      weight: 7
+      weight: 8
       format_type: details
       format_settings:
         id: ''
@@ -123,7 +124,7 @@ third_party_settings:
       children:
         - field_ankle_cta
       parent_name: ''
-      weight: 8
+      weight: 9
       format_type: details
       format_settings:
         id: ''
@@ -138,7 +139,7 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 4
+    weight: 5
     region: content
     settings:
       rows: 9
@@ -147,7 +148,7 @@ content:
     third_party_settings: {  }
   created:
     type: datetime_timestamp
-    weight: 13
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -174,6 +175,12 @@ content:
     third_party_settings: {  }
     type: options_buttons
     region: content
+  field_article_type:
+    type: options_select
+    weight: 38
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_banner_image:
     weight: 20
     settings:
@@ -232,7 +239,7 @@ content:
     region: content
   field_featured:
     type: paragraphs
-    weight: 5
+    weight: 6
     settings:
       title: 'Featured Item'
       title_plural: 'Featured Items'
@@ -363,7 +370,7 @@ content:
     region: content
   path:
     type: path
-    weight: 9
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -371,12 +378,12 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 15
+    weight: 16
     region: content
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 11
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -384,14 +391,14 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 17
+    weight: 18
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 14
+    weight: 15
     region: content
     third_party_settings: {  }
   title:
@@ -404,7 +411,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 10
+    weight: 11
     settings:
       match_operator: CONTAINS
       size: 60
@@ -413,14 +420,13 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 12
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 16
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden:
-  field_article_type: true
+hidden: {  }

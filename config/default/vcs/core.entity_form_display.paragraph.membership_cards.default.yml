@@ -1,0 +1,49 @@
+uuid: 9641bb49-7ae4-46b6-bb2c-9e768d0eb16a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.membership_cards.field_membership_description
+    - field.field.paragraph.membership_cards.field_membership_title
+    - field.field.paragraph.membership_cards.field_memberships
+    - paragraphs.paragraphs_type.membership_cards
+  module:
+    - paragraphs
+    - text
+id: paragraph.membership_cards.default
+targetEntityType: paragraph
+bundle: membership_cards
+mode: default
+content:
+  field_membership_description:
+    weight: 1
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_membership_title:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_memberships:
+    type: entity_reference_paragraphs
+    weight: 2
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

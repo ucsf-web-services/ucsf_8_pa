@@ -5,6 +5,9 @@ dependencies:
   config:
     - field.storage.node.field_article_type
     - node.type.news_package
+    - taxonomy.vocabulary.article_type
+  content:
+    - 'taxonomy_term:article_type:d7d0eb90-583f-45e3-a13c-bb92282eecbf'
 id: node.news_package.field_article_type
 field_name: field_article_type
 entity_type: node
@@ -13,9 +16,18 @@ label: 'Article Type'
 description: ''
 required: false
 translatable: true
-default_value: {  }
+default_value:
+  -
+    target_uuid: d7d0eb90-583f-45e3-a13c-bb92282eecbf
 default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'
-  handler_settings: {  }
+  handler_settings:
+    target_bundles:
+      article_type: article_type
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
 field_type: entity_reference

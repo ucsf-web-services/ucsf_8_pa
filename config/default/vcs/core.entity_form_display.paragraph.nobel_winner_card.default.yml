@@ -1,0 +1,60 @@
+uuid: b62d555f-80af-4b79-8863-c9c84ce55bde
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.media_assets_library_field
+    - field.field.paragraph.nobel_winner_card.field_nobel_winner_date
+    - field.field.paragraph.nobel_winner_card.field_nobel_winner_description
+    - field.field.paragraph.nobel_winner_card.field_nobel_winner_image
+    - field.field.paragraph.nobel_winner_card.field_nobel_winner_name
+    - paragraphs.paragraphs_type.nobel_winner_card
+  module:
+    - datetime
+    - entity_browser
+    - text
+id: paragraph.nobel_winner_card.default
+targetEntityType: paragraph
+bundle: nobel_winner_card
+mode: default
+content:
+  field_nobel_winner_date:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_nobel_winner_description:
+    weight: 3
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_nobel_winner_image:
+    weight: 0
+    settings:
+      entity_browser: media_assets_library_field
+      field_widget_display: label
+      field_widget_edit: true
+      field_widget_remove: true
+      open: true
+      selection_mode: selection_append
+      field_widget_replace: false
+      field_widget_display_settings: {  }
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_nobel_winner_name:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true
