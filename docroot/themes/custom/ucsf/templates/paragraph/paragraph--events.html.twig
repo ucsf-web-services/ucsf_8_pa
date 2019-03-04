@@ -1,7 +1,12 @@
 {% set classes = [
   paragraph.field_background_color.value,
+  'latest-events-list'
 ] %}
 
 <div{{ attributes.addClass(classes) }}>
+  <div class="lastest-events-list__header">
+    <h2 class="lastest-events-list__heading">{{ "Events"|t }}</h2>
+    <p class="lastest-events-list__view-all"><a href="" class="link link--cta">{{ "View all events"|t }}</a></p>
+  </div>
   {{ content|without('field_background_color') }}
 </div>
