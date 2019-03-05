@@ -378,6 +378,16 @@ abstract class FileUploadResourceTestBase extends ResourceTestBase {
     $expected = $this->getExpectedNormalizedEntity(1, 'example-✓.txt', TRUE);
     $this->assertResponseData($expected, $response);
     $this->assertSame($this->testFileData, file_get_contents('public://foobar/example-✓.txt'));
+
+    // Test a file with unicode but enable filename sanitization.
+    $this->config('file.settings')
+      ->set('filename_sanitization.transliterate', TRUE)
+      ->set('filename_sanitization.replace_whitespace', TRUE)
+      ->save();
+    $response = $this->fileRequest($uri, $this->testFileData, ['Content-Disposition' => 'filename="Ä example🙈.txt"']);
+    $this->assertSame(201, $response->getStatusCode());
+    $expected = $this->getExpectedNormalizedEntity(2, 'A-example-.txt', TRUE);
+    $this->assertResponseData($expected, $response);
   }
 
   /**

@@ -164,3 +164,19 @@ function file_update_8001() {
     }
   }
 }
+
+/**
+ * Set filename_sanitization config to the default values.
+ */
+function file_update_8701() {
+  \Drupal::configFactory()->getEditable('file.settings')
+    ->set('filename_sanitization', [
+      'transliterate' => FALSE,
+      'replace_whitespace' => FALSE,
+      'replace_non_alphanumeric' => FALSE,
+      'dedupe_separators' => FALSE,
+      'lowercase' => FALSE,
+      'replacement_character' => '-',
+    ])
+    ->save(TRUE);
+}

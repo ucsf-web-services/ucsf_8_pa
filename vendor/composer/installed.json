@@ -3717,6 +3717,77 @@
         }
     },
     {
+        "name": "drupal/config_filter",
+        "version": "1.4.0",
+        "version_normalized": "1.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/config_filter",
+            "reference": "8.x-1.4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/config_filter-8.x-1.4.zip",
+            "reference": "8.x-1.4",
+            "shasum": "4b2b7f4dfc8358212f9e25f63dcc77cc2c1dcf6c"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "suggest": {
+            "drupal/config_split": "Split site configuration for different environments."
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.4",
+                "datestamp": "1542184982",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Fabian Bircher",
+                "homepage": "https://www.drupal.org/u/bircher",
+                "email": "opensource@fabianbircher.com",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Nuvole Web",
+                "homepage": "http://nuvole.org",
+                "email": "info@nuvole.org",
+                "role": "Maintainer"
+            },
+            {
+                "name": "pescetti",
+                "homepage": "https://www.drupal.org/user/436244"
+            }
+        ],
+        "description": "Config Filter allows other modules to interact with a ConfigStorage through filter plugins.",
+        "homepage": "https://www.drupal.org/project/config_filter",
+        "keywords": [
+            "Drupal",
+            "configuration",
+            "configuration management"
+        ],
+        "support": {
+            "source": "http://cgit.drupalcode.org/config_filter",
+            "issues": "https://www.drupal.org/project/issues/config_filter",
+            "irc": "irc://irc.freenode.org/drupal-contribute"
+        }
+    },
+    {
         "name": "drupal/config_installer",
         "version": "1.8.0",
         "version_normalized": "1.8.0.0",
@@ -3762,6 +3833,80 @@
         "homepage": "https://www.drupal.org/project/config_installer",
         "support": {
             "source": "http://cgit.drupalcode.org/config_installer"
+        }
+    },
+    {
+        "name": "drupal/config_split",
+        "version": "1.4.0",
+        "version_normalized": "1.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/config_split",
+            "reference": "8.x-1.4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/config_split-8.x-1.4.zip",
+            "reference": "8.x-1.4",
+            "shasum": "938ea6c88834aa88bb310740758e56c1800e535b"
+        },
+        "require": {
+            "drupal/config_filter": "*",
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.4",
+                "datestamp": "1537971780",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            },
+            "drush": {
+                "services": {
+                    "drush.services.yml": "^9"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Fabian Bircher",
+                "homepage": "https://www.drupal.org/u/bircher",
+                "email": "opensource@fabianbircher.com",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Nuvole Web",
+                "homepage": "http://nuvole.org",
+                "email": "info@nuvole.org",
+                "role": "Maintainer"
+            },
+            {
+                "name": "pescetti",
+                "homepage": "https://www.drupal.org/user/436244"
+            }
+        ],
+        "description": "Configuration filter for importing and exporting extra config",
+        "homepage": "https://www.drupal.org/project/config_split",
+        "keywords": [
+            "Drupal",
+            "configuration",
+            "configuration management"
+        ],
+        "support": {
+            "source": "http://cgit.drupalcode.org/config_split",
+            "issues": "https://www.drupal.org/project/issues/config_split",
+            "irc": "irc://irc.freenode.org/drupal-contribute"
         }
     },
     {
@@ -4301,9 +4446,10 @@
             "patches_applied": {
                 "2644468-88 - Multiple image upload breaks image dimensions": "https://www.drupal.org/files/issues/2644468-88.patch",
                 "2061377-328 - Allow image style to be selected in Text Editor's image dialog": "https://www.drupal.org/files/issues/2018-09-19/2061377-328.patch",
-                "FilterAlign - remove aggressive removal of classes": "https://raw.githubusercontent.com/ucsf-web-services/ucsf_8_pa/master/patches/core-filteralign.patch",
+                "UCSF FilterAlign - remove aggressive removal of classes": "https://raw.githubusercontent.com/ucsf-web-services/ucsf_8_pa/master/patches/core-filteralign.patch",
                 "UCSF FilterCaption - Fix decode entities on FilterCaption": "https://raw.githubusercontent.com/ucsf-web-services/ucsf_8_pa/master/patches/core-filtercaption.patch",
                 "2973706 - Styles dropdown configuration permit multiple tags": "https://www.drupal.org/files/issues/2018-05-18/allow-multiple-elements-2973706-2.patch",
+                "2492171 - Provide options to sanitize filenames": "https://www.drupal.org/files/issues/2019-02-06/2492171-4-257_1.patch",
                 "Drupalimage calling drupallink functions without checking if the plugin is loaded #13": "https://www.drupal.org/files/issues/edit_drupalimage-2855521-13.patch"
             }
         },
@@ -9632,6 +9778,133 @@
         "support": {
             "source": "http://cgit.drupalcode.org/viewfield",
             "issues": "https://www.drupal.org/project/issues/viewfield"
+        }
+    },
+    {
+        "name": "drupal/views_bulk_edit",
+        "version": "2.2.0",
+        "version_normalized": "2.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/views_bulk_edit",
+            "reference": "8.x-2.2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/views_bulk_edit-8.x-2.2.zip",
+            "reference": "8.x-2.2",
+            "shasum": "6a096dc73fab842c1b000d8788241ed9d3a17427"
+        },
+        "require": {
+            "drupal/core": "*",
+            "drupal/views_bulk_operations": "~1.0 | ~2.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-2.x": "2.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-2.2",
+                "datestamp": "1532689085",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Marcin Grabias",
+                "homepage": "https://www.drupal.org/u/graber"
+            },
+            {
+                "name": "benjy",
+                "homepage": "https://www.drupal.org/user/1852732"
+            }
+        ],
+        "description": "Allows bulk edition of entity field values.",
+        "homepage": "https://www.drupal.org/project/views_bulk_edit",
+        "support": {
+            "source": "http://cgit.drupalcode.org/views_bulk_edit",
+            "issues": "https://www.drupal.org/project/issues/views_bulk_edit?version=8.x"
+        }
+    },
+    {
+        "name": "drupal/views_bulk_operations",
+        "version": "2.5.0",
+        "version_normalized": "2.5.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/views_bulk_operations",
+            "reference": "8.x-2.5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/views_bulk_operations-8.x-2.5.zip",
+            "reference": "8.x-2.5",
+            "shasum": "3ec848b4f235720d05cb9713ea80a86415b6909f"
+        },
+        "require": {
+            "drupal/core": "^8.4"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-2.x": "2.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-2.5",
+                "datestamp": "1550740384",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            },
+            "drush": {
+                "services": {
+                    "drush.services.yml": "^9"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Marcin Grabias",
+                "homepage": "https://www.drupal.org/u/graber"
+            },
+            {
+                "name": "Jon Pugh",
+                "homepage": "https://www.drupal.org/user/17028"
+            },
+            {
+                "name": "bojanz",
+                "homepage": "https://www.drupal.org/user/86106"
+            },
+            {
+                "name": "infojunkie",
+                "homepage": "https://www.drupal.org/user/48424"
+            },
+            {
+                "name": "joelpittet",
+                "homepage": "https://www.drupal.org/user/160302"
+            }
+        ],
+        "description": "Adds an ability to perform bulk operations on selected entities from view results. Provides an API to create such operations.",
+        "homepage": "https://www.drupal.org/project/views_bulk_operations",
+        "support": {
+            "source": "http://cgit.drupalcode.org/views_bulk_operations",
+            "issues": "https://www.drupal.org/project/issues/views_bulk_operations?version=8.x",
+            "docs": "https://www.drupal.org/docs/8/modules/views-bulk-operations-vbo"
         }
     },
     {
