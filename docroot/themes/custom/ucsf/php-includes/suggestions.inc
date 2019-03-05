@@ -13,7 +13,19 @@ function ucsf_theme_suggestions_page_alter(array &$suggestions, array $variables
   /** @var Drupal\node\Entity\Node $node */
   if ($node instanceof NodeInterface) {
     $node_type = $node->getType();
-    $suggestions[] = 'page__' . $node_type;
+    $custom_layout_types = [
+      'article',
+      'author',
+      'full-width-page',
+      'homepage',
+      'narrow-page',
+      'news-package',
+      'trending',
+    ];
+
+    if(in_array($node_type, $custom_layout_types)) {
+      $suggestions[] = 'page__fancy';
+    }
   }
 }
 
