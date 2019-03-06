@@ -20,7 +20,7 @@ use Drupal\editor\Entity\Editor;
  *   module = "ucsf_wysiwyg"
  * )
  */
-class ucsfquote extends CKEditorPluginBase {
+class blankdiv extends CKEditorPluginBase {
 
   /**
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getDependencies().
@@ -62,7 +62,7 @@ class ucsfquote extends CKEditorPluginBase {
    */
   public function getButtons() {
     return [
-      'Ucsfquote' => [
+      'blankdiv' => [
         'label' => t('Pull Quote'),
         'image' => drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/blankdiv/icons/blankdiv.png'
       ]
