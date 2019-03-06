@@ -22,7 +22,7 @@
   {# content #}
   {% for paragraph_vertical_tab in paragraph.field_tabs %}
     <div id="tabs-{{ loop.index }}" class="field-column-70">
-      {{ paragraph_vertical_tab.entity.field_tab_content.value|raw }}
+      {{ drupal_field('field_tab_content','paragraph', paragraph_vertical_tab.value.target_id) }}
     </div>
   {% endfor %}
 </div>
