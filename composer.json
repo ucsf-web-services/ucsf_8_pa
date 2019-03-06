@@ -252,15 +252,18 @@
     }
   },
   "scripts": {
+    "remove-git-submodules" : "find . -mindepth 2 -type d -name .git | xargs rm -rf",
     "post-install-cmd": [
       "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
       "cp -a docroot/profiles/contrib/sitefarm_seed/libraries/. docroot/libraries/",
-      "@renamelibraries"
+      "@renamelibraries",
+      "@remove-git-submodules"
     ],
     "post-update-cmd": [
       "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
       "cp -a docroot/profiles/contrib/sitefarm_seed/libraries/. docroot/libraries/",
-      "@renamelibraries"
+      "@renamelibraries",
+      "@remove-git-submodules"
     ],
     "rmvendor": "rm -rf vendor/*",
     "rmprofiles": "rm -rf docroot/profiles/contrib/*",
