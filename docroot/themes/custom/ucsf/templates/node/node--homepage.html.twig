@@ -25,120 +25,17 @@
     </div>
   </div>
 
-  <div class="home-search">
-    <h2 class="home-search__title">{{ content.field_search_title }}</h2>
-    <form class="home-search__form">
-      <input type="text" name="search" id="search-q" class="home-search__form-input" placeholder="{{ node.field_search_placeholder_text.value }}" onclick="this.value='';" tabindex="2">
-      <input type="submit" id="edit-submit" name="op" value="Search" class="home-search__form-submit">
-    </form>
-
-    {#<ul class="home-search__presearch-links">#}
-      {{ content.field_search_supporting_links }}
-      {#<li class="home-search__presearch-link"><a href="">CRISPR</a></li>#}
-      {#<li class="home-search__presearch-link"><a href="">Chan Zuckerberg Biohub</a></li>#}
-      {#<li class="home-search__presearch-link"><a href="">Cell design</a></li>#}
-      {#<li class="home-search__presearch-link"><a href="">UCSF Medical Center</a></li>#}
-    {#</ul>#}
-  </div>
+  {% include '@theme/homepage/homepage-search.twig' %}
 
   <div class="home-talking-about">
     <h2 class="home-talking-about__title">{{ "What we're talking about"|t }}</h2>
     <p class="home-talking-about__description">{{ "Our top priorities, proudest moments, and groundbreaking news and achievements."|t }}</p>
-
     <ul class="card-three-up">
-      <li>
-        <article class="news-card">
-          <a href="" class="news-card__link">
-            <picture class="news-card__image">
-              <img class="img" src="https://placeimg.com/800/450/nature">
-            </picture>
-
-            <header class="news-card__copy">
-              <ul class="news-card__byline">
-                <li class="news-card__Research">Research</li>
-                <li class="news-card__date">Sept. 18, 2018</li>
-              </ul>
-
-              <h2>Primary Care is an Untapped Resource for Depression Screening and How That Can Be Used to Make a Larger Headline</h2>
-            </header>
-          </a>
-        </article>
-      </li>
-      <li class="promo-list__card overlay-blue" style="background-image: url('../../images/promo-cards/promo-card-bk-2.jpg');">
-        <a href="">
-          <h3 class="promo-list__card-title">UCSF: The Campaign</h3>
-          <p class="promo-list__card-content">Help us solve the hardest problems in health and science.</p>
-          <p class="promo-list__card-more"><span href="" class="link link--cta">Learn more</span></p>
-        </a>
-      </li>
-      <li>
-        <article class="news-card">
-          <a href="" class="news-card__link">
-            <picture class="news-card__image">
-              <img class="img" src="https://placeimg.com/800/450/nature">
-            </picture>
-
-            <header class="news-card__copy">
-              <ul class="news-card__byline">
-                <li class="news-card__Research">Research</li>
-                <li class="news-card__date">Sept. 18, 2018</li>
-              </ul>
-
-              <h2>Innovative Technique Reveals ‘Core Identities’ of Brain Cells</h2>
-            </header>
-          </a>
-        </article>
-      </li>
-      <li>
-        <article class="news-card">
-          <a href="" class="news-card__link">
-            <picture class="news-card__image">
-              <img class="img" src="https://placeimg.com/800/450/nature">
-            </picture>
-
-            <header class="news-card__copy">
-              <ul class="news-card__byline">
-                <li class="news-card__Research">Research</li>
-                <li class="news-card__date">Sept. 18, 2018</li>
-              </ul>
-
-              <h2>Researchers Unlock Secret of Deadly Brain Cancer’s “Immortality”</h2>
-            </header>
-          </a>
-        </article>
-      </li>
-      <li class="promo-list__card promo-list__card-two" style="background-image: url('https://placeimg.com/750/660/people');">
-        <a href="">
-          <div class="promo-list__card-two-content overlay-purple">
-            <p class="promo-list__card-content">Become a UCSF advocate.</p>
-            <p class="promo-list__card-more"><span href="" class="link link--cta">Find out what you can do</span></p>
-          </div>
-        </a>
-      </li>
-      <li class="promo-list__card promo-list__card-two" style="background-image: url('https://placeimg.com/750/660/people');">
-        <a href="">
-          <div class="promo-list__card-two-content overlay-teal">
-            <p class="promo-list__card-content">Students, find resources that can help you succeed.</p>
-            <p class="promo-list__card-more"><span class="link link--cta">Visit success.ucsf.edu</span></p>
-          </div>
-        </a>
-      </li>
+      {{ content.field_featured_content }}
     </ul>
   </div>
 
-  <div class="twitter-wrapper">
-    <div class="twitter-wrapper__space"> </div>
-
-    <div class="twitter">
-      <h2 class="twitter__title">On Twitter</h2>
-      <p class="twitter__follow"><a href="" class="link link--cta"><span class="fab fa-twitter"> </span> Follow</a></p>
-      <ol class="twitter__tweets">
-        <li>This will be pulled from Twitter API</li>
-        <li>This will be pulled from Twitter API</li>
-        <li>This will be pulled from Twitter API</li>
-      </ol>
-    </div>
-  </div>
+  {% include '@theme/homepage/homepage-twitter.twig' %}
 
   <div class="topics-list">
     <div class="topics-list__header">
