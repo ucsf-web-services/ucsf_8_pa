@@ -2,7 +2,7 @@
 
 {% if content.field_link|render|striptags != '' %}
   {# Feature Paragraph > Overwrite Link #}
-  {% set link = content.field_link %}
+  {% set link = paragraph.field_link.value.0.uri %}
 {% else %}
   {# Feature Paragraph > News Article (News) > ID #}
   {% set link = drupal_url('node/' ~ content.field_news_article.0['#node'].id ) %}
