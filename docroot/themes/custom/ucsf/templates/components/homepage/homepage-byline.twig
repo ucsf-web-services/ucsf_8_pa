@@ -1,0 +1,15 @@
+{% set primary_area = node.field_primary_area.0.entity.label|clean_class %}
+{% set primary_area = paragraph.field_news_article.entity.field_primary_area.0.entity.label|clean_class %}
+
+{% set campus_news_subs = ['announcements', 'happenings', 'honors--awards', 'spotlight'] %}
+{% if primary_area in campus_news_subs %}
+  {% set primary_area = 'campus-news' %}
+  {% set primary_area_field = 'Campus News'|t %}
+{% endif %}
+
+<ul class="news-card__byline">
+  {% if primary_area %}
+    <li class="news-card__primary-area" data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">{{ drupal_field('field_primary_area', 'node', paragraph.field_news_article.target_id) }}</li>
+  {% endif %}
+  <li class="news-card__date">{{ drupal_field('field_date_and_time', 'node', paragraph.field_news_article.target_id) }}</li>
+</ul>

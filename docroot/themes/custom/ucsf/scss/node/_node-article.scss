@@ -70,7 +70,8 @@
   grid-row: 1 / -1;
 }
 
-.article-header__byline {
+.article-header__byline,
+.news-card__byline {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -83,6 +84,7 @@
     display: inline-block;
   }
 
+  .news-card__primary-area,
   .article-header__primary-area {
     &::before {
       content: ' ';
@@ -100,6 +102,7 @@
   }
 }
 
+[data-primary-area^="pa-"] + .news-card__date::before,
 [data-primary-area^="pa-"] + .article-header__date::before {
   content: ' ';
   display: inline-block;
