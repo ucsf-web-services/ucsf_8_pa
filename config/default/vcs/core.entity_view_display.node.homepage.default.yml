@@ -14,13 +14,16 @@ dependencies:
     - field.field.node.homepage.field_featured_content
     - field.field.node.homepage.field_map_image
     - field.field.node.homepage.field_map_text
+    - field.field.node.homepage.field_quick_link_menu
     - field.field.node.homepage.field_search_placeholder_text
     - field.field.node.homepage.field_search_supporting_links
     - field.field.node.homepage.field_search_title
+    - image.style.home_banner
     - node.type.homepage
   module:
     - entity_reference_revisions
     - link
+    - media
     - text
     - user
 id: node.homepage.default
@@ -31,98 +34,110 @@ content:
   body:
     label: hidden
     type: text_default
-    weight: 101
+    weight: 1
     settings: {  }
     third_party_settings: {  }
     region: content
   field_banner_box_alignment:
-    weight: 102
-    label: above
+    weight: 2
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
     region: content
   field_banner_description:
-    weight: 105
-    label: above
+    weight: 5
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
   field_banner_image:
-    weight: 103
-    label: above
+    weight: 3
+    label: hidden
     settings:
-      link: true
+      image_style: home_banner
+      image_link: ''
     third_party_settings: {  }
-    type: entity_reference_label
+    type: media_thumbnail
     region: content
   field_banner_support:
-    weight: 107
-    label: above
+    weight: 7
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
   field_banner_support_title:
-    weight: 106
-    label: above
+    weight: 6
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: content
   field_banner_title:
-    weight: 104
-    label: above
+    weight: 4
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
   field_events:
-    weight: 115
-    label: above
+    weight: 13
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
   field_featured_content:
     type: entity_reference_revisions_entity_view
-    weight: 111
-    label: above
+    weight: 9
+    label: hidden
     settings:
-      view_mode: default
+      view_mode: alt
       link: ''
     third_party_settings: {  }
     region: content
   field_map_image:
     type: entity_reference_entity_view
-    weight: 113
-    label: above
+    weight: 10
+    label: hidden
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
     region: content
   field_map_text:
-    weight: 114
-    label: above
+    weight: 11
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
+  field_quick_link_menu:
+    type: entity_reference_revisions_entity_view
+    weight: 14
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
   field_search_placeholder_text:
-    weight: 109
-    label: above
+    type: string
+    weight: 12
+    region: content
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
-    region: content
   field_search_supporting_links:
-    weight: 110
-    label: above
+    type: link
+    weight: 15
+    region: content
+    label: hidden
     settings:
       trim_length: 80
       url_only: false
@@ -130,18 +145,16 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    type: link
-    region: content
   field_search_title:
-    weight: 108
-    label: above
+    weight: 8
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
   links:
-    weight: 100
+    weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden: {  }

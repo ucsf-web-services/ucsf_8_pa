@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.news_center.body
+    - field.field.node.news_center.field_ankle_cta
     - field.field.node.news_center.field_feature_article
     - field.field.node.news_center.field_featured_media_article
     - field.field.node.news_center.field_search_news_supporting
@@ -26,7 +27,7 @@ third_party_settings:
         - field_feature_article
         - field_support_articles
       parent_name: ''
-      weight: 2
+      weight: 1
       format_type: details
       format_settings:
         id: ''
@@ -40,7 +41,7 @@ third_party_settings:
         - field_search_placeholder_text
         - field_search_news_supporting
       parent_name: ''
-      weight: 5
+      weight: 2
       format_type: details
       format_settings:
         id: ''
@@ -53,7 +54,7 @@ third_party_settings:
         - field_featured_media_article
         - field_supporting_media_articles
       parent_name: ''
-      weight: 9
+      weight: 3
       format_type: details
       format_settings:
         id: ''
@@ -61,26 +62,38 @@ third_party_settings:
         open: false
         required_fields: true
       label: 'Featured Media Coverage'
+    group_a:
+      children:
+        - field_ankle_cta
+      parent_name: ''
+      weight: 4
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: false
+        required_fields: true
+      label: 'Ankle CTAs'
 id: node.news_center.default
 targetEntityType: node
 bundle: news_center
 mode: default
 content:
-  body:
-    type: text_textarea_with_summary
-    weight: 1
-    settings:
-      rows: 9
-      summary_rows: 3
-      placeholder: ''
-    third_party_settings: {  }
-    region: content
   created:
     type: datetime_timestamp
-    weight: 13
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_ankle_cta:
+    weight: 29
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   field_feature_article:
     type: entity_reference_paragraphs
     weight: 3
@@ -149,7 +162,7 @@ content:
     region: content
   path:
     type: path
-    weight: 17
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -157,17 +170,17 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 14
+    weight: 7
     region: content
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 18
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   scheduler_settings:
-    weight: 16
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -175,14 +188,14 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 21
+    weight: 14
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 15
+    weight: 8
     region: content
     third_party_settings: {  }
   title:
@@ -195,7 +208,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 12
+    weight: 5
     settings:
       match_operator: CONTAINS
       size: 60
@@ -204,13 +217,14 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 19
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 20
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  body: true

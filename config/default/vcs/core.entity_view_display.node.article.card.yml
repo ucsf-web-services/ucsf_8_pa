@@ -22,6 +22,7 @@ dependencies:
     - field.field.node.article.field_exclude
     - field.field.node.article.field_external_url
     - field.field.node.article.field_facebook_description
+    - field.field.node.article.field_facebook_image
     - field.field.node.article.field_facebook_title
     - field.field.node.article.field_featured_image_video
     - field.field.node.article.field_hide_article
@@ -41,11 +42,13 @@ dependencies:
     - field.field.node.article.field_textured_background_image
     - field.field.node.article.field_topics
     - field.field.node.article.field_twitter_description
+    - field.field.node.article.field_twitter_image
     - field.field.node.article.field_twitter_title
     - node.type.article
+    - responsive_image.styles.card_row__image
   module:
     - datetime
-    - media
+    - media_responsive_thumbnail
     - text
     - user
 _core:
@@ -64,11 +67,11 @@ content:
       link: false
     third_party_settings: {  }
   field_card_image:
-    type: media_thumbnail
+    type: media_responsive_thumbnail
     weight: 1
     label: hidden
     settings:
-      image_style: ''
+      responsive_image_style: card_row__image
       image_link: ''
     third_party_settings: {  }
     region: content
@@ -112,6 +115,7 @@ hidden:
   field_exclude: true
   field_external_url: true
   field_facebook_description: true
+  field_facebook_image: true
   field_facebook_title: true
   field_featured_image_video: true
   field_hide_article: true
@@ -129,5 +133,6 @@ hidden:
   field_textured_background_image: true
   field_topics: true
   field_twitter_description: true
+  field_twitter_image: true
   field_twitter_title: true
   links: true
