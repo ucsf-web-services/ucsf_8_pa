@@ -173,9 +173,14 @@ parameters:
     # Sets the Access-Control-Allow-Credentials header.
     supportsCredentials: false
 services:
-  serializer.applenews.content_entity:
-    class: Drupal\ucsf_applenews\Normalizer\UcsfApplenewsContentEntityNormalizer
-    arguments: ['@entity_type.manager']
-    tags:
-      - { name: normalizer, priority: 1 }
+  #serializer.applenews.content_entity:
+  #  class: Drupal\ucsf_applenews\Normalizer\UcsfApplenewsContentEntityNormalizer
+  #  arguments: ['@entity_type.manager']
+  #  tags:
+  #    - { name: normalizer, priority: 1 }
+  #serializer.applenews.text.component:
+  #  class: \Drupal\ucsf_applenews\Normalizer\UcsfApplenewsTextComponentNormalizer
+  #  arguments: ['@plugin.manager.applenews_component_type']
+  #  tags:
+  #    - { name: normalizer, priority: 1 }
 
