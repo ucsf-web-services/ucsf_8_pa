@@ -37,193 +37,36 @@
 
   {% include '@theme/homepage/homepage-twitter.twig' %}
 
-  <div class="topics-list">
-    <div class="topics-list__header">
-      <h2 class="topics-list__title">Dive Deeper</h2>
-      <p class="topics-list__description">Stay involved in the topics and challenges we’re facing today.</p>
-      <p class="topics-list__view-all"><a href="" class="link link--cta">Visit the News Center</a></p>
-    </div>
-
-    <div class="topics-list__topics-wrapper">
-      <div class="topics-list__topics-wrapper-space-left"> </div>
-      <div class="topics-list__topics-wrapper-space-bottom"> </div>
-
-      <ul class="topics-list__topics">
-        <li class="topic-card" style="background: url('../../images/topics/innovation.jpg'); no-repeat transparent left top">
-          <a href="">Alzheimer’s and Dementia</a>
-        </li>
-        <li class="topic-card" style="background: url('../../images/topics/innovation.jpg'); no-repeat transparent left top">
-          <a href="">Marijuana</a>
-        </li>
-        <li class="topic-card" style="background: url('../../images/topics/innovation.jpg'); no-repeat transparent left top">
-          <a href="">Autism and Sensory Processing Disorder</a>
-        </li>
-        <li class="topic-card" style="background: url('../../images/topics/innovation.jpg'); no-repeat transparent left top">
-          <a href="">Innovations in Health</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="lastest-events-list">
-    <div class="lastest-events-list__header">
-      <h2 class="lastest-events-list__heading">Events</h2>
-
-      <p class="lastest-events-list__view-all"><a href="" class="link link--cta">View all events</a></p>
-    </div>
-
-    <ul class="lastest-events-list__cards card-three-up">
-      <li class="event-card">
-        <ul class="event-card__icon">
-          <li class="event-card__month"><time property="dc:date" datatype="xsd:dateTime" content="-T::00-8:00">Jan</time></li>
-          <li class="event-card__icon-date"><time property="dc:date" datatype="xsd:dateTime" content="-T::00-8:00">5</time></li>
-        </ul>
-
-        <div class="event-card__content">
-          <h3 class="event-card__title"><a href="#">Pediatric Heart Center Research Symposium: Abe Rudolph</a></h3>
-
-          <ul class="event-card__date-location">
-            <li class="event-card__date"><span class="far fa-clock"></span><time>12:00 - 2:00 PM</time></li>
-            <li class="event-card__location"><span class="fas fa-map-marker-alt"></span>Byers Auditorium<br> UCSF Medical Center at Mission Bay</li>
-          </ul>
-        </div>
-      </li>
-      <li class="event-card">
-        <ul class="event-card__icon">
-          <li class="event-card__month"><time property="dc:date" datatype="xsd:dateTime" content="-T::00-8:00">Jan</time></li>
-          <li class="event-card__icon-date"><time property="dc:date" datatype="xsd:dateTime" content="-T::00-8:00">5</time></li>
-        </ul>
-
-        <div class="event-card__content">
-          <h3 class="event-card__title"><a href="#">Pediatric Heart Center Research Symposium: Abe Rudolph</a></h3>
-
-          <ul class="event-card__date-location">
-            <li class="event-card__date"><span class="far fa-clock"></span><time>12:00 - 2:00 PM</time></li>
-            <li class="event-card__location"><span class="fas fa-map-marker-alt"></span>Byers Auditorium<br> UCSF Medical Center at Mission Bay</li>
-          </ul>
-        </div>
-      </li>
-      <li class="event-card">
-        <ul class="event-card__icon">
-          <li class="event-card__month"><time property="dc:date" datatype="xsd:dateTime" content="-T::00-8:00">Jan</time></li>
-          <li class="event-card__icon-date"><time property="dc:date" datatype="xsd:dateTime" content="-T::00-8:00">5</time></li>
-        </ul>
-
-        <div class="event-card__content">
-          <h3 class="event-card__title"><a href="#">Pediatric Heart Center Research Symposium: Abe Rudolph</a></h3>
-
-          <ul class="event-card__date-location">
-            <li class="event-card__date"><span class="far fa-clock"></span><time>12:00 - 2:00 PM</time></li>
-            <li class="event-card__location"><span class="fas fa-map-marker-alt"></span>Byers Auditorium<br> UCSF Medical Center at Mission Bay</li>
-          </ul>
-        </div>
-      </li>
-    </ul>
-  </div>
+  {{ content.field_events }}
 
   <div class="map-home-wrapper">
     <div class="map-home">
 
-      <figure class="map-home__image">
+      {{ content.field_map_image }}
+      {#<figure class="map-home__image">#}
 
 
-        <picture class="map-home__image__image">
+        {#<picture class="map-home__image__image">#}
 
-          <img class="map-home__image__img" src="../../images/home/map-home.jpg" alt="Doctors at Working">
-        </picture>
+          {#<img class="map-home__image__img" src="../../images/home/map-home.jpg" alt="Doctors at Working">#}
+        {#</picture>#}
 
-      </figure>
+      {#</figure>#}
 
-      <div class="map-home__content">
-        <h2>Bridging the Bay</h2>
+      {{ content.field_map_text }}
 
-        <p class="map-home__subheading">With locations throughout San Francisco and beyond, UC San Francisco is an industry of its own, contributing greatly to the intellectual vigor and economic vitality of the City by the Bay.</p>
 
-        <ul class="map-home__links">
-          <li class="map-home__link"><a href="" class="map-home__locations">View our locations</a></li>
-          <li class="map-home__link"><a href="" class="map-home__transport">Find transportation</a></li>
-          <li class="map-home__link"><a href="" class="map-home__directions">Get directions</a></li>
-        </ul>
-      </div>
+      {#<div class="map-home__content">#}
+        {#<h2>Bridging the Bay</h2>#}
+
+        {#<p class="map-home__subheading">With locations throughout San Francisco and beyond, UC San Francisco is an industry of its own, contributing greatly to the intellectual vigor and economic vitality of the City by the Bay.</p>#}
+
+        {#<ul class="map-home__links">#}
+          {#<li class="map-home__link"><a href="" class="map-home__locations">View our locations</a></li>#}
+          {#<li class="map-home__link"><a href="" class="map-home__transport">Find transportation</a></li>#}
+          {#<li class="map-home__link"><a href="" class="map-home__directions">Get directions</a></li>#}
+        {#</ul>#}
+      {#</div>#}
     </div>
   </div>
 </main>
-<footer class="footer-region">
-  <div class="footer">
-    <div>
-
-      <figure class="footer-logo">
-        <a class="footer-logo__link" href="/">
-
-
-          <picture class="footer-logo__image">
-
-            <img class="footer-logo__img" src="../../images/footer-logo.svg" alt="UCSF Footer Logo">
-          </picture>
-        </a>
-
-      </figure>
-
-      <div class="follow">
-        <h2>Follow Us:</h2>
-        <ul>
-          <li class="follow-facebook"><a href=""><span class="fab fa-facebook-f"></span> <span class="indent-text">Facebook</span></a></li>
-          <li class="follow-twitter"><a href=""><span class="fab fa-twitter"></span> <span class="indent-text">Twitter</span></a></li>
-          <li class="follow-youtube"><a href=""><span class="fab fa-youtube"></span> <span class="indent-text">YouTube</span></a></li>
-          <li class="follow-instagram"><a href=""><span class="fab fa-instagram"></span> <span class="indent-text">Instagram</span></a></li>
-        </ul>
-      </div>
-    </div>
-
-
-    <div>
-      <h2>Get Involved</h2>
-      <ul>
-        <li><a href="">Become a UCSF Advocate</a></li>
-        <li><a href="">Volunteer with us</a></li>
-        <li><a href="">Apply to a school</a></li>
-        <li><a href="">Chart your career</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <h2>Resources</h2>
-      <ul>
-        <li><a href="">A to Z Website List
-          </a></li><li><a href="">Administrative Policies</a></li>
-        <li><a href="">Brand Guidelines</a></li>
-        <li><a href="">Campus Maps</a></li>
-        <li><a href="">Careers at UCSF</a></li>
-        <li><a href="">Chancellor</a></li>
-        <li><a href="">Diversity &amp; Outreach</a></li>
-        <li><a href="">Emergency Management</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <ul>
-        <li><a href="">Emergency Management</a></li>
-        <li><a href="">Ethics &amp; Compliance</a></li>
-        <li><a href="">Human Resources</a></li>
-        <li><a href="">Library</a></li>
-        <li><a href="">People Directory</a></li>
-        <li><a href="">Police</a></li>
-        <li><a href="">Shuttle Schedule</a></li>
-        <li><a href="">UCSF Profiles</a></li>
-      </ul>
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    <p>© 2002 - 2018. The Regents of The University of California.</p>
-
-    <ul>
-      <li><a href="">Site Map</a></li>
-      <li><a href="">Privacy Policy</a></li>
-      <li><a href="">Report an issue with UCSF.edu website</a></li>
-    </ul>
-
-  </div>
-
-</footer>
