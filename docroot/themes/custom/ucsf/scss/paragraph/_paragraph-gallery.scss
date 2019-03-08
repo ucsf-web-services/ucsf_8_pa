@@ -1,6 +1,7 @@
 .paragraph--type--gallery {
   background: $c-white;
   grid-column: 3 / -3;
+  overflow: hidden;
   padding-right: 16px;
 
   @include breakpoint($bp-small) {
@@ -15,7 +16,7 @@
     overflow: visible;
   }
 
-  img { // @todo Padding and width should be responsive.
+  img {
     margin: 0 auto;
     padding-right: 16px;
     width: 961px;
@@ -34,5 +35,36 @@
 
   button {
     @include visually-hidden;
+  }
+
+  figcaption {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    overflow: hidden;
+    height: 1px;
+    width: 1px;
+    word-wrap: normal;
+  }
+
+  .slick-active figcaption {
+    position: relative;
+    clip: auto;
+    overflow: visible;
+    padding-left: 16px;
+    height: auto;
+    width: auto;
+
+    @include breakpoint($bp-small) {
+      margin: 0 auto;
+      max-width: 602px;
+      padding-left: 13%;
+      padding-right: 13%;
+    }
+
+    @include breakpoint($bp-large) {
+      max-width: 602px;
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 }
