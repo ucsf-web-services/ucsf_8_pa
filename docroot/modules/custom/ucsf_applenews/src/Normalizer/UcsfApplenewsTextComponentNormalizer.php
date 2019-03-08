@@ -55,6 +55,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
 
     // Add first img as photo component.
     $doc = new \DOMDocument();
+    $libxml_previous_state = libxml_use_internal_errors(TRUE);
     if (!$doc->loadHTML($text)) {
       throw new NotNormalizableValueException('Could not parse body HTML.');
     }
@@ -77,6 +78,8 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       $components['img']->setLayout($layout);
       break;
     }
+    libxml_clear_errors();
+    libxml_use_internal_errors($libxml_previous_state);
 
     $text = strip_tags($text, self::ALLOWED_HTML_ELEMENTS);
     $components['body'] = new Body($text);
