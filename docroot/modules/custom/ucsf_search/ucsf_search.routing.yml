@@ -1,7 +1,28 @@
 ucsf_search.content:
   path: '/search'
   defaults:
-    _controller: '\Drupal\ucsf_search\Controller\UcsfsearchController::content'
-    _title: 'Search'
+   _controller: '\Drupal\ucsf_search\Controller\UcsfsearchController::search'
+   _title: 'Search'
   requirements:
-    _permission: 'access content'
+   _permission: 'access content'
+ucsf_search.news:
+  path: '/search/news'
+  defaults:
+   _controller: '\Drupal\ucsf_search\Controller\UcsfsearchController::news'
+   _title: 'Search News'
+  requirements:
+   _permission: 'access content'
+ucsf_search.people:
+  path: '/search/people'
+  defaults:
+   _controller: '\Drupal\ucsf_search\Controller\UcsfsearchController::people'
+   _title: 'Search People Directory'
+  requirements:
+   _permission: 'access content'
+ucsf_search.websites:
+  path: '/search/websites'
+  defaults:
+   _controller: '\Drupal\ucsf_search\Controller\UcsfsearchController::websites'
+   _title: 'Website Search'
+  requirements:
+   _permission: 'access content'

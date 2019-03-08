@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request as Post;
 
 class UcsfsearchController extends ControllerBase {
 
-  public function content(Post $request) {
+  public function search(Post $request) {
 
     $searchterm = '';
     //@todo try using symfony request object instead of direct get request
@@ -40,7 +40,29 @@ class UcsfsearchController extends ControllerBase {
 
   }
 
+  public function news(Post $request) {
 
+    $build = [
+      '#markup' => $this->t('Hello NEWS World!'),
+    ];
+    return $build;
+  }
+
+  public function people(Post $request) {
+
+    $build = [
+      '#markup' => $this->t('Hello People!'),
+    ];
+    return $build;
+  }
+
+  public function websites(Post $request) {
+
+    $build = [
+      '#markup' => $this->t('Searching Websites A-Z List!'),
+    ];
+    return $build;
+  }
   /**
    * First check if the search string looks like a domain, if it does
    * and it doesn't match our domain(s) then ignore the search
