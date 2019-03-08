@@ -22,13 +22,14 @@ class UcsfsearchController extends ControllerBase {
       $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $_GET['search']);
       $searchterm = Xss::filter(htmlspecialchars($searchterm, ENT_QUOTES));
     }
-
+    $websites  = $this->websiteLookup($searchterm);
     $directory = $this->directoryLookup($searchterm);
 
     return [
       '#theme' => 'ucsf_universal_search',
-      '#results' => $directory,
+      '#results' => [],
       '#directory' => $directory,
+      '#websites' => $websites,
       '#searchterm' => $searchterm,
       '#attached' => [
         'library' => [
@@ -57,8 +58,11 @@ class UcsfsearchController extends ControllerBase {
    *
    * @param $search
    * @param int $limit
+   * @return array
    */
   protected function websiteLookup($search, $limit=3) {
+
+    $base_url = 'http://local.websites.ucsf.edu';
     //don't search anything under 3 characters, reduce lookup load
     if (strlen($search)<3) {
       return [];
@@ -67,13 +71,22 @@ class UcsfsearchController extends ControllerBase {
     //@todo make #search the cache key, $directory the cache items
     $search = urlencode($search);
 
+    if (preg_match('#^([\w-]+\.)+(ucsfopenresearch\.org|ucsfmedicalcenter\.org|ucsfnursing\.org|ucsfhealth\.org|immunetolerance\.org|ucsf\.edu|ucsfdentalcenter\.org|ucsfcme\.com|rsvpify\.com)+(\:|\/)+([\w-./?%&=\#\$~,_\[\]:()@\^+.]*)?$#', $search, $matches)) {
+      // might be a domain lookup
+    }
+
     //@todo - check the cache for the results
     //call GuzzleHTTP for the lookup and JSON decode the body request
-    $client       = new Client(array('base_uri' => 'https://directory.ucsf.edu'));
-    $res          = $client->request('GET', "/people/search/name/{$search}/json");
+    $client       = new Client(array('base_uri' => $base_url));
+    $res          = $client->request('GET', "/azlist/json?combine={$search}");
     $jsonresponse = json_decode($res->getBody(), TRUE);
+    if (count($jsonresponse['nodes']) > 0) {
+      //dpm($jsonresponse['nodes']);
+      return $jsonresponse['nodes'];
+    } else {
+      return [];
+    }
 
-    return [];
   }
 
   /**

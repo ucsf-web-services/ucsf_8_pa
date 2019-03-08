@@ -46,7 +46,7 @@
         <ul>
         {% for person in directory %}
         <li>
-            <a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a>|
+            <a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a> |
             {% if person.mail %} {{ person.mail }}, {% endif %}
             {% if person.telephonenumber %} {{ person.telephonenumber }}, {% endif %}
             {{ person.departmentname }}
@@ -56,6 +56,15 @@
     </div>
     <div id="universalWebsites">
         <h3>Websites</h3>
+        {% for website in websites %}
+            <li>
+                {{ website['node'].title }} |
+                <a href="{{ website['node'].field_website_url }}" target="_blank">{{ website['node'].field_website_url }}</a>
+                {% if website['node'].field_display_name %}, {{ website['node'].field_display_name }}{% endif %}
+                {% if website['node'].field_meta_title %}, {{ website['node'].field_meta_title }}{% endif %}
+                {% if website['node'].body %}, {{ website['node'].body }}{% endif %}
+            </li>
+        {% endfor %}
     </div>
     <div id="cse">
         <h3>All Results</h3>
