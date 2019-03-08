@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.article.body
     - field.field.node.article.comment
     - field.field.node.article.field_ankle_cta
+    - field.field.node.article.field_apple_news
     - field.field.node.article.field_apple_news_title
     - field.field.node.article.field_areas
     - field.field.node.article.field_article_type
@@ -23,6 +24,7 @@ dependencies:
     - field.field.node.article.field_exclude
     - field.field.node.article.field_external_url
     - field.field.node.article.field_facebook_description
+    - field.field.node.article.field_facebook_image
     - field.field.node.article.field_facebook_title
     - field.field.node.article.field_featured_image_video
     - field.field.node.article.field_hide_article
@@ -42,15 +44,18 @@ dependencies:
     - field.field.node.article.field_textured_background_image
     - field.field.node.article.field_topics
     - field.field.node.article.field_twitter_description
+    - field.field.node.article.field_twitter_image
     - field.field.node.article.field_twitter_title
     - image.style.recommended_article__image
     - node.type.article
+    - responsive_image.styles.recommended_reading_background
   module:
     - comment
     - datetime
     - entity_reference_revisions
     - link
     - media
+    - media_responsive_thumbnail
     - metatag
     - options
     - text
@@ -345,12 +350,12 @@ content:
       link: true
     third_party_settings: {  }
   field_textured_background_image:
-    type: entity_reference_entity_view
+    type: media_responsive_thumbnail
     weight: 11
     label: hidden
     settings:
-      view_mode: default
-      link: false
+      responsive_image_style: recommended_reading_background
+      image_link: ''
     third_party_settings: {  }
     region: content
   field_topics:
@@ -381,4 +386,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_apple_news: true
+  field_facebook_image: true
+  field_twitter_image: true

@@ -7,8 +7,10 @@ dependencies:
     - field.field.paragraph.blockquote.field_blockquote_image
     - field.field.paragraph.blockquote.field_blockquote_source
     - field.field.paragraph.blockquote.field_blockquote_source_org
+    - image.style.blockquote__image
     - paragraphs.paragraphs_type.blockquote
   module:
+    - media
     - text
 id: paragraph.blockquote.default
 targetEntityType: paragraph
@@ -23,12 +25,12 @@ content:
     type: text_default
     region: content
   field_blockquote_image:
-    type: entity_reference_entity_view
+    type: media_thumbnail
     weight: 0
     label: hidden
     settings:
-      view_mode: default
-      link: false
+      image_style: blockquote__image
+      image_link: ''
     third_party_settings: {  }
     region: content
   field_blockquote_source:

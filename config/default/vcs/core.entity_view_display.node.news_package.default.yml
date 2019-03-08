@@ -30,11 +30,10 @@ dependencies:
     - field.field.node.news_package.field_twitter_image
     - field.field.node.news_package.field_twitter_title
     - node.type.news_package
-    - responsive_image.styles.news_package_banner
+    - responsive_image.styles.news_package_banner_background_image
   module:
     - datetime
     - entity_reference_revisions
-    - media
     - media_responsive_thumbnail
     - text
     - user
@@ -209,10 +208,10 @@ content:
     weight: 19
     label: hidden
     settings:
-      image_style: ''
+      responsive_image_style: news_package_banner_background_image
       image_link: ''
     third_party_settings: {  }
-    type: media_thumbnail
+    type: media_responsive_thumbnail
     region: content
   field_topics:
     weight: 20
