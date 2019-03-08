@@ -1,10 +1,15 @@
 .paragraph--type--gallery {
   background: $c-white;
-  padding: 0 11%;
   grid-column: 3 / -3;
+  padding-right: 16px;
+
+  @include breakpoint($bp-small) {
+    padding: 0 11%;
+  }
 }
 
 .field-gallery-items {
+  cursor: pointer;
 
   .slick-list {
     overflow: visible;
@@ -12,8 +17,22 @@
 
   img { // @todo Padding and width should be responsive.
     margin: 0 auto;
-    padding-left: 42px;
-    padding-right: 42px;
+    padding-right: 16px;
     width: 961px;
+
+    @include breakpoint($bp-small) {
+      padding-left: 42px;
+      padding-right: 42px;
+    }
+  }
+
+  &:hover {
+    button {
+      @include visually-hidden-reset;
+    }
+  }
+
+  button {
+    @include visually-hidden;
   }
 }

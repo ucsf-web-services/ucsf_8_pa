@@ -7105,17 +7105,34 @@ figure.align-center figcaption {
 
 .paragraph--type--gallery {
   background: #fff;
-  padding: 0 11%;
-  grid-column: 3 / -3; }
+  grid-column: 3 / -3;
+  padding-right: 16px; }
+  @media (min-width: 480px) {
+    .paragraph--type--gallery {
+      padding: 0 11%; } }
 
-.field-gallery-items .slick-list {
-  overflow: visible; }
-
-.field-gallery-items img {
-  margin: 0 auto;
-  padding-left: 42px;
-  padding-right: 42px;
-  width: 961px; }
+.field-gallery-items {
+  cursor: pointer; }
+  .field-gallery-items .slick-list {
+    overflow: visible; }
+  .field-gallery-items img {
+    margin: 0 auto;
+    padding-right: 16px;
+    width: 961px; }
+    @media (min-width: 480px) {
+      .field-gallery-items img {
+        padding-left: 42px;
+        padding-right: 42px; } }
+  .field-gallery-items:hover button {
+    clip: auto;
+    overflow: visible; }
+  .field-gallery-items button {
+    position: absolute !important;
+    clip: rect(1px, 1px, 1px, 1px);
+    overflow: hidden;
+    height: 1px;
+    width: 1px;
+    word-wrap: normal; }
 
 .field-content-promotional-conten:hover {
   color: #052049; }
