@@ -4,6 +4,7 @@
     attach: function (context) {
   
       $('.paragraph--type--gallery > .field-gallery-items').slick();
+      $('.main-content.narrow-page').css('overflow', 'hidden');
       
     }
   };
