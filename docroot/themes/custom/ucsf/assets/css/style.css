@@ -7110,12 +7110,15 @@ figure.align-center figcaption {
   padding-right: 16px; }
   @media (min-width: 480px) {
     .paragraph--type--gallery {
+      overflow: visible;
       padding: 0 11%; } }
 
 .field-gallery-items .slick-list {
   overflow: visible; }
 
 .field-gallery-items img {
+  -webkit-filter: blur(3px);
+          filter: blur(3px);
   margin: 0 auto;
   padding-right: 16px;
   width: 961px; }
@@ -7145,7 +7148,7 @@ figure.align-center figcaption {
   padding: 10px;
   position: absolute;
   text-indent: -999px;
-  top: 50%;
+  top: 40%;
   z-index: 700; }
   .field-gallery-items button:after {
     content: none; }
@@ -7167,6 +7170,10 @@ figure.align-center figcaption {
   height: 1px;
   width: 1px;
   word-wrap: normal; }
+
+.field-gallery-items .slick-active img {
+  -webkit-filter: blur(0);
+          filter: blur(0); }
 
 .field-gallery-items .slick-active figcaption {
   position: relative;
