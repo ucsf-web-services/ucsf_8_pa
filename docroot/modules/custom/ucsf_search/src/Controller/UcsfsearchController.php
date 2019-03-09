@@ -11,6 +11,7 @@ use GuzzleHttp\Psr7\Request;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\Request as Post;
+use Symfony\Component\Cache;
 
 class UcsfsearchController extends ControllerBase {
 
@@ -23,14 +24,14 @@ class UcsfsearchController extends ControllerBase {
       $searchterm = Xss::filter(htmlspecialchars($searchterm, ENT_QUOTES));
     }
     $websites  = $this->websiteLookup($searchterm);
-    $directory = $this->directoryLookup($searchterm);
+    $people = $this->directoryLookup($searchterm);
 
     return [
       '#theme' => 'ucsf_universal_search',
-      '#results' => [],
-      '#directory' => $directory,
-      '#websites' => $websites,
+      '#directory' => $people['results'],
+      '#websites' => $websites['results'],
       '#searchterm' => $searchterm,
+      '#more' => [ 'web'=>$websites['more'], 'people'=>$people['more'] ],
       '#attached' => [
         'library' => [
           'ucsf_search/ucsf_search'
@@ -42,26 +43,71 @@ class UcsfsearchController extends ControllerBase {
 
   public function news(Post $request) {
 
-    $build = [
-      '#markup' => $this->t('Hello NEWS World!'),
+    $searchterm = '';
+    //@todo try using symfony request object instead of direct get request
+    if(isset($_GET['search'])) {
+      $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $_GET['search']);
+      $searchterm = Xss::filter(htmlspecialchars($searchterm, ENT_QUOTES));
+    }
+
+    return [
+      '#theme' => 'ucsf_news_search',
+      '#searchterm' => $searchterm,
+      '#more' => [],
+      '#attached' => [
+        'library' => [
+          'ucsf_search/ucsf_search'
+        ]
+      ]
     ];
-    return $build;
   }
 
   public function people(Post $request) {
 
-    $build = [
-      '#markup' => $this->t('Hello People!'),
+    $searchterm = '';
+    //@todo try using symfony request object instead of direct get request
+    if(isset($_GET['search'])) {
+      $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $_GET['search']);
+      $searchterm = Xss::filter(htmlspecialchars($searchterm, ENT_QUOTES));
+    }
+
+    $directory = $this->directoryLookup($searchterm, 25);
+
+    return [
+      '#theme' => 'ucsf_people_search',
+      '#directory' => $directory['results'],
+      '#searchterm' => $searchterm,
+      '#more' => $directory['more'],
+      '#attached' => [
+        'library' => [
+          'ucsf_search/ucsf_search'
+        ]
+      ]
     ];
-    return $build;
   }
 
   public function websites(Post $request) {
 
-    $build = [
-      '#markup' => $this->t('Searching Websites A-Z List!'),
+    $searchterm = '';
+    //@todo try using symfony request object instead of direct get request
+    if(isset($_GET['search'])) {
+      $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $_GET['search']);
+      $searchterm = Xss::filter(htmlspecialchars($searchterm, ENT_QUOTES));
+    }
+
+    $websites = $this->websiteLookup($searchterm, 25);
+
+    return [
+      '#theme' => 'ucsf_websites_search',
+      '#websites' => $websites['results'],
+      '#searchterm' => $searchterm,
+      '#more' => $websites['more'],
+      '#attached' => [
+        'library' => [
+          'ucsf_search/ucsf_search'
+        ]
+      ]
     ];
-    return $build;
   }
   /**
    * First check if the search string looks like a domain, if it does
@@ -93,20 +139,32 @@ class UcsfsearchController extends ControllerBase {
     //@todo make #search the cache key, $directory the cache items
     $search = urlencode($search);
 
-    if (preg_match('#^([\w-]+\.)+(ucsfopenresearch\.org|ucsfmedicalcenter\.org|ucsfnursing\.org|ucsfhealth\.org|immunetolerance\.org|ucsf\.edu|ucsfdentalcenter\.org|ucsfcme\.com|rsvpify\.com)+(\:|\/)+([\w-./?%&=\#\$~,_\[\]:()@\^+.]*)?$#', $search, $matches)) {
+    if (preg_match('#^([\w-]+\.)+(ucsfopenresearch\.org|ucsfmedicalcenter\.org|ucsfnursing\.org|ucsfhealth\.org|immunetolerance\.org|ucsf\.edu|ucsfdentalcenter\.org|ucsfcme\.com)+(\:|\/)+([\w-./?%&=\#\$~,_\[\]:()@\^+.]*)?$#', $search, $matches)) {
       // might be a domain lookup
     }
+
 
     //@todo - check the cache for the results
     //call GuzzleHTTP for the lookup and JSON decode the body request
     $client       = new Client(array('base_uri' => $base_url));
     $res          = $client->request('GET', "/azlist/json?combine={$search}");
     $jsonresponse = json_decode($res->getBody(), TRUE);
-    if (count($jsonresponse['nodes']) > 0) {
-      //dpm($jsonresponse['nodes']);
-      return $jsonresponse['nodes'];
+
+    $results = [];
+    $cnt = 0;
+    $items = count($jsonresponse['nodes']);
+    $more = ($items > $limit) ? true : false;
+
+    if ($items > 0) {
+      foreach ($jsonresponse['nodes'] as $key=>$node) {
+          $results[] = $node['node'];
+          $cnt++;
+          if ($cnt==($limit)) break;
+      }
+      //dpm($results);
+      return ['results'=>$results, 'more'=>$more];
     } else {
-      return [];
+      return ['results'=>[], 'more'=>false];
     }
 
   }
@@ -131,26 +189,29 @@ class UcsfsearchController extends ControllerBase {
     $res          = $client->request('GET', "/people/search/name/{$search}/json");
     $jsonresponse = json_decode($res->getBody(), TRUE);
 
+    $cnt=0;
+    $directory = [];
+    $items = count($jsonresponse['data']);
+    $more = ($items > $limit) ? true : false;
 
     //return the array of data values
-    if (isset($jsonresponse['data'])) {
-      $data = $jsonresponse['data'];
+    if ($items > 0) {
       // fix the odd array structure from the API
-      foreach ($data as $person) {
+      foreach ($jsonresponse['data'] as $person) {
         foreach ($person as $key=>$value) {
             $person[$key] = $value[0];
         }
         $directory[] = $person;
+        $cnt++;
+        if ($cnt==($limit)) break;
       }
-
-      //@todo limit the results to three if universal page
 
       //@todo add a see more here to take you to the directory.ucsf.edu website results
 
       //@todo store the results in the cache using the key for further lookup
-      return $directory;
+      return ['results'=>$directory, 'more'=>$more];
     } else {
-      return [];
+      return ['results'=>[], 'more'=>false];
     }
 
   }

@@ -17,6 +17,11 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                 dtd[tagName]['drupal-entity'] = 1;
             }
         }
+        for (tagName in dtd) {
+            if (dtd[tagName].aside) {
+                dtd[tagName]['drupal-entity'] = 1;
+            }
+        }
     },
 
     init: function (editor) {
@@ -56,7 +61,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
             editables: {
                 content: {
                     selector: '.callout__content',
-                    allowedContent: 'h3 h4 h5 h6 picture br p[*](*); strong[*](*); em a[*](*); time[*](*); cite i strike sub sup ul[*](*); ol[*](*); li dl dd dt address[*]; abbr;'
+                    allowedContent: 'h2[*](*); h3[*](*); h4[*](*); h5[*](*); h6[*](*); p[*](*); strong[*](*); a[*](*); picture br em cite i strike sub sup ul[*](*); ol[*](*); li dl dd dt address[*](*); abbr;'
                 },
                 image: {
                     selector: '.callout__image',
@@ -68,7 +73,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
             '<aside class="ucsfcallout callout-left" data-image="none">' +
                 '<div class="callout__image hidden"><img id="callout_image_0" src="/sites/default/files/media-icons/generic/no-thumbnail.png" /></div>' +
                 '<div class="callout__content">'    +
-                    '<h3 class="callout__title">Take Action ––– </h3>'     +
+                    '<h3 class="eyebrow-title">Take Action ––– </h3>'     +
                     '<time>Oct. 24, 2018</time>'    +
                     '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ultricies sit amet.</p>' +
                     '<p><a href="/">Learn More</a></p>' +

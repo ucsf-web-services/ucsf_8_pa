@@ -1,0 +1,32 @@
+{#
+/**
+ * @file
+ * This implements the universal search main page
+ * @Zeplin universal_search_desktop_result
+ *
+ * Uses unordered list markup in both compact and extended modes.
+ *
+ *
+ *  @see UcsfsearchController::news()
+ */
+#}
+<div class="form-search-block-div">
+    <div class="search-box-container">
+        <form action="/search/news" method="get">
+            <input type="text" name="search" id="search" size="32" alt="Search text" class="searchbox" value="{{ searchterm }}" />
+            <button type="submit">Search</button>
+        </form>
+
+        <ul id="universalSearchTabs">
+            <li><a href="/search?search={{ searchterm }}">All Results</a></li>
+            <li class="active"><a href="/search/news?search={{ searchterm }}" class="active">News</a></li>
+            <li><a href="/search/people?search={{ searchterm }}">People Directory</a></li>
+            <li><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
+        </ul>
+    </div>
+    <div id="cse">
+        <h3>News Results</h3>
+        <!-- Google Search Results -->
+        <gcse:searchresults-only queryParameterName="search" defaultToRefinement="news"></gcse:searchresults-only>
+    </div>
+</div>
