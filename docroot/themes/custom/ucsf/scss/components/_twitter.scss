@@ -13,11 +13,14 @@
 .twitter {
   display: grid;
   grid-template-columns: repeat(2, auto);
-  width: 1360px;
   justify-self: end;
   background: $twitter-blue;
   padding: $space-nine 0;
   padding-left: $space-fifteen;
+
+  @include breakpoint($bp-medium) {
+    width: 1360px;
+  }
 }
 
 .twitter__title {
