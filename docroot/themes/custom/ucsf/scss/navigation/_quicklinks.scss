@@ -16,8 +16,25 @@
     grid-column: -2/-1;
     grid-row: 1/-1;
     justify-self: end;
+    padding: 0;
+    position: relative;
+    right: auto;
     writing-mode: vertical-rl;
     text-orientation: mixed;
+  }
+
+  .fa-caret-up {
+    @include breakpoint($bp-medium) {
+      display: none;
+    }
+  }
+
+  .fa-caret-right {
+    display: none;
+
+    @include breakpoint($bp-medium) {
+      display: inline;
+    }
   }
 
   a {
