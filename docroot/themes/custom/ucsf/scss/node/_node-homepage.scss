@@ -212,14 +212,14 @@
   max-width: 1360px;
 }
 
-.map-home__image {
+.field-map-image { // PL: .map-home__image
   grid-column: 1/-1;
   grid-row: 1/-1;
   justify-self: end;
   max-width: 1360px;
 }
 
-.map-home__content {
+.field-map-text { // PL: .map-home__content
   grid-column: 8/-1;
   grid-row: 2/3;
   padding: $space-eight;
@@ -255,15 +255,15 @@
       padding-left: $space-five;
 
       &.map-home__locations {
-        background: url("../images/home/map-home-locations.svg") left top no-repeat transparent;
+        @include background-image('map-home-locations.svg', left top );
       }
 
       &.map-home__transport {
-        background: url("../images/home/map-home-transport.svg") left top no-repeat transparent;
+        @include background-image('map-home-transport.svg', left top );
       }
 
       &.map-home__directions {
-        background: url("../images/home/map-home-directions.svg") left top no-repeat transparent;
+        @include background-image('map-home-directions.svg', left top );
       }
     }
   }
