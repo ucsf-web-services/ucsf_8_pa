@@ -3,10 +3,10 @@
 # destination fields), and write it to Drupal.
 
 # The machine name for a migration, used to uniquely identify it.
-id: page_content
+id: full_width_page_content
 
 # A human-friendly description of the migration.
-label: Migrate the news package content type into the new ucsf.edu website
+label: Migrate content from the old website into the new narrow_page ccontent type
 
 # The machine name of the group containing this migration (which contains shared
 # configuration to be merged with our own configuration here).
@@ -16,7 +16,7 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: https://www.ucsf.edu/pagexml
+  urls: https://www.ucsf.edu/fullwidthpagexml
   item_selector: /nodes/node
 
 # unique identifier needs to be an integer
@@ -31,32 +31,60 @@ source:
       selector: Nid
     -
       name: title
-      label: 'author node title'
+      label: 'news node title'
       selector: title
     -
+      name: body
+      label: 'news body'
+      selector: body
+    -
+      name: areas_tax
+      label: 'news secondary area tax'
+      selector: Areas
+    -
+      name: areas_tax_2
+      label: 'news primary area tax'
+      selector: Second-Areas-EXCLUDED
+    -
       name: topics_tax
-      label: 'media coverage topic taxonomy reference'
+      label: 'news topics tax'
       selector: Topics
     -
       name: orgs_tax
-      label: 'media coverage organizations taxonomy reference'
+      label: 'news organizations tax'
       selector: Organizations
     -
       name: people_tax
-      label: 'media coverage people taxonomy reference'
+      label: 'news people tax'
       selector: People
     -
       name: loc_tax
-      label: 'media coverage locations taxonomy reference'
-      selector: Locations
+      label: 'news location tax'
+      selector: location
     -
-      name: body
-      label: 'body of the news package'
-      selector: Body
+      name: news_apple
+      label: 'news apple news title'
+      selector: Apple_News_Title
     -
-      name: in_file
-      label: 'featured image for the news package'
-      selector: Inline-Files
+      name: tags_tax
+      label: 'news tags tax'
+      selector: Tags
+    -
+      name: pub_date
+      label: 'the published date of the news'
+      selector: Post-date
+    -
+      name: uid
+      label: 'Id of the account that authored the content'
+      selector: Author-uid
+    -
+      name: body_summary
+      label: 'the summary of the body content'
+      selector: body-summary
+    -
+      name: updated-date
+      label: 'date the content was updated'
+      selector: updated-date
 
   constants:
     file_directory: public://
@@ -71,7 +99,7 @@ source:
 destination:
   plugin: entity:node
 
-  default_bundle: page
+  default_bundle: full_width_page
 
 # Here's the meat of the migration - the processing pipeline. This describes how
 # each destination field is to be populated based on the source data. For each
@@ -79,22 +107,70 @@ destination:
 process:
   type:
     plugin: default_value
-    default_value: page
-
-  title: title
+    default_value: full_width_page
 
   nid: nid
 
-  field_topics:
+  title: title
+
+  field_apple_news_title: news_apple
+
+  body/value:
     -
       plugin: skip_on_empty
       method: process
-      source: topics_tax
+      source: body
+      message: 'there was an empty field'
+
+  body/summary:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: body_summary
+      message: 'there was an empty field'
+
+#  field_primary_area:
+#    -
+#      plugin: skip_on_empty
+#      method: process
+#      source: areas_tax
+#      message: 'there was an empty field'
+#    -
+#      plugin: data_lookup
+#      source: areas_tax
+#      file: public://area_tax_map.csv
+
+  uid: uid
+
+  field_date: pub_date
+
+  field_date_and_time: pub_date
+
+  created:
+    plugin: format_date
+    from_format: 'Y-m-d\TH:i:s'
+    to_format: 'U'
+    source: pub_date
+
+  changed: updated-date
+
+  field_areas:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: areas_tax
       message: 'there was an empty field'
     -
       plugin: explode
-      source: topics_tax
+      source: areas_tax
       delimiter: ','
+
+  field_locations:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: loc_tax
+      message: 'there was an empty field'
 
   field_organizations:
     -
@@ -118,45 +194,27 @@ process:
       source: people_tax
       delimiter: ','
 
-  field_locations:
+  field_topics:
     -
       plugin: skip_on_empty
       method: process
-      source: loc_tax
+      source: topics_tax
       message: 'there was an empty field'
     -
       plugin: explode
-      source: loc_tax
+      source: topics_tax
       delimiter: ','
 
-  body/value: body
-  body/format:
-    plugin: default_value
-    default_value: full_html
-
-#  INLINE FILE TBD DESTINATION FILED:
-#   -
-#     plugin: skip_on_empty
-#     method: process
-#     source: feat_image
-#     message: 'there was an empty field'
-#   -
-#     plugin: file_copy
-#     source:
-#       - feat_image
-#       - '@destination_path'
-#   -
-#     plugin: entity_generate
-#
-# destination_basename:
-#   plugin: callback
-#   callable: basename
-#   source: feat_image
-# destination_path:
-#   plugin: concat
-#   source:
-#     - 'constants/file_directory'
-#     - '@destination_basename'
+  field_tags:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: tags_tax
+      message: 'there was an empty field'
+    -
+      plugin: explode
+      source: tags_tax
+      delimiter: ','
 
 
   # The simplest process plugin is named 'get' - it is the default plugin, so
