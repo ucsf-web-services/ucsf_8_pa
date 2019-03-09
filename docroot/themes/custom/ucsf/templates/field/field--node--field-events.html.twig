@@ -1,0 +1,8 @@
+{% extends 'field.html.twig' %}
+
+{% block single_item_no_label %}
+  <div{{ attributes.addClass('latest-events-list') }}>
+    {% include '@theme/misc/events.twig' %}
+    {{ item.content }}
+  </div>
+{% endblock single_item_no_label %}
