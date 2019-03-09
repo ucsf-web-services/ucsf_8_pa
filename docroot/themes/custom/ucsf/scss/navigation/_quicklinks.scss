@@ -1,0 +1,31 @@
+.quicklinks {
+  background: $c-white;
+  bottom: 0;
+  position: absolute;
+  background: $white;
+  text-align: center;
+  font-size: $font-size-xxsm;
+  font-family: $font-helvetica-neue-bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 12px 16px;
+  right: 0;
+
+  @include breakpoint($bp-medium) {
+    bottom: auto;
+    grid-column: -2/-1;
+    grid-row: 1/-1;
+    justify-self: end;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  a {
+    color: $navy;
+    text-decoration: none;
+  }
+}
+
+.quicklinks-menu {
+  display: none;
+}
