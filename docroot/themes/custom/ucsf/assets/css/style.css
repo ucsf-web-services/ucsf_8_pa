@@ -4074,7 +4074,13 @@ h2 {
       margin-top: 0; }
 
 h3 {
-  line-height: 1; }
+  line-height: 1;
+  font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 20px;
+  line-height: 1.2; }
+  @media (min-width: 600px) {
+    h3 {
+      font-size: 28px; } }
   h3.small-title {
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 18px;
@@ -4230,10 +4236,16 @@ figcaption {
   padding: 2px 2px 3px 4px; }
 
 hr {
-  border: 1px solid; }
+  border: 1px solid #d1d3d3;
+  margin-bottom: 32px;
+  margin-bottom: 32px; }
 
 ul {
   padding-left: 15px; }
+
+strong, b {
+  font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-weight: normal; }
 
 .submitted {
   color: #333;
@@ -4554,10 +4566,18 @@ textarea {
     margin: 0 5px 3px; }
 
 .page_narrow blockquote,
-.paragraph-text-block blockquote {
+.paragraph-text-block blockquote,
+.ckpullquote {
   background: #f2f4f6; }
-  .page_narrow blockquote.blockquote--half-left,
-  .paragraph-text-block blockquote.blockquote--half-left {
+  .page_narrow blockquote.blockquote--half-left, .page_narrow blockquote.blockquote--half-right, .page_narrow blockquote.ckpullquote-left, .page_narrow blockquote.ckpullquote-right,
+  .paragraph-text-block blockquote.blockquote--half-left,
+  .paragraph-text-block blockquote.blockquote--half-right,
+  .paragraph-text-block blockquote.ckpullquote-left,
+  .paragraph-text-block blockquote.ckpullquote-right,
+  .ckpullquote.blockquote--half-left,
+  .ckpullquote.blockquote--half-right,
+  .ckpullquote.ckpullquote-left,
+  .ckpullquote.ckpullquote-right {
     float: left;
     width: 50%;
     left: auto;
@@ -4566,7 +4586,11 @@ textarea {
     margin-right: 10%;
     margin-top: 0; }
   .page_narrow blockquote .blockquote-content__text,
-  .paragraph-text-block blockquote .blockquote-content__text {
+  .page_narrow blockquote .ckpullquote--quote,
+  .paragraph-text-block blockquote .blockquote-content__text,
+  .paragraph-text-block blockquote .ckpullquote--quote,
+  .ckpullquote .blockquote-content__text,
+  .ckpullquote .ckpullquote--quote {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -4578,21 +4602,34 @@ textarea {
     font-size: 31px;
     line-height: 1.2em;
     padding: 56px 80px 0 0;
-    padding-right: 15%; }
+    padding-right: 15%;
+    margin-top: 0; }
     @media (min-width: 600px) {
       .page_narrow blockquote .blockquote-content__text,
-      .paragraph-text-block blockquote .blockquote-content__text {
+      .page_narrow blockquote .ckpullquote--quote,
+      .paragraph-text-block blockquote .blockquote-content__text,
+      .paragraph-text-block blockquote .ckpullquote--quote,
+      .ckpullquote .blockquote-content__text,
+      .ckpullquote .ckpullquote--quote {
         font-size: 40px;
         letter-spacing: -1px; } }
     .page_narrow blockquote .blockquote-content__text::before,
-    .paragraph-text-block blockquote .blockquote-content__text::before {
+    .page_narrow blockquote .ckpullquote--quote::before,
+    .paragraph-text-block blockquote .blockquote-content__text::before,
+    .paragraph-text-block blockquote .ckpullquote--quote::before,
+    .ckpullquote .blockquote-content__text::before,
+    .ckpullquote .ckpullquote--quote::before {
       content: '“ ';
       display: inline-block;
       margin-left: -24px;
       padding-right: 8px;
       font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif; }
   .page_narrow blockquote .blockquote-content__cite,
-  .paragraph-text-block blockquote .blockquote-content__cite {
+  .page_narrow blockquote .ckpullquote--author,
+  .paragraph-text-block blockquote .blockquote-content__cite,
+  .paragraph-text-block blockquote .ckpullquote--author,
+  .ckpullquote .blockquote-content__cite,
+  .ckpullquote .ckpullquote--author {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -4602,18 +4639,76 @@ textarea {
     letter-spacing: 1.6px;
     color: #052049;
     text-transform: uppercase;
-    font-style: normal; }
+    font-style: normal;
+    padding-right: 15%; }
     .page_narrow blockquote .blockquote-content__cite::after,
-    .paragraph-text-block blockquote .blockquote-content__cite::after {
+    .page_narrow blockquote .ckpullquote--author::after,
+    .paragraph-text-block blockquote .blockquote-content__cite::after,
+    .paragraph-text-block blockquote .ckpullquote--author::after,
+    .ckpullquote .blockquote-content__cite::after,
+    .ckpullquote .ckpullquote--author::after {
       content: ' ';
       display: inline-block;
       width: 40px;
       height: 1px;
       background: #052049;
       margin: 0 5px 3px; }
+  .page_narrow blockquote .ckpullquote--org,
+  .paragraph-text-block blockquote .ckpullquote--org,
+  .ckpullquote .ckpullquote--org {
+    font-size: 14px;
+    padding-right: 15%; }
+  .page_narrow blockquote.blockquote--half-right, .page_narrow blockquote.ckpullquote-right,
+  .paragraph-text-block blockquote.blockquote--half-right,
+  .paragraph-text-block blockquote.ckpullquote-right,
+  .ckpullquote.blockquote--half-right,
+  .ckpullquote.ckpullquote-right {
+    float: right;
+    right: auto;
+    margin-right: -20%;
+    margin-left: 10%; }
+    .page_narrow blockquote.blockquote--half-right .blockquote-content__text,
+    .page_narrow blockquote.blockquote--half-right .ckpullquote--quote, .page_narrow blockquote.ckpullquote-right .blockquote-content__text,
+    .page_narrow blockquote.ckpullquote-right .ckpullquote--quote,
+    .paragraph-text-block blockquote.blockquote--half-right .blockquote-content__text,
+    .paragraph-text-block blockquote.blockquote--half-right .ckpullquote--quote,
+    .paragraph-text-block blockquote.ckpullquote-right .blockquote-content__text,
+    .paragraph-text-block blockquote.ckpullquote-right .ckpullquote--quote,
+    .ckpullquote.blockquote--half-right .blockquote-content__text,
+    .ckpullquote.blockquote--half-right .ckpullquote--quote,
+    .ckpullquote.ckpullquote-right .blockquote-content__text,
+    .ckpullquote.ckpullquote-right .ckpullquote--quote {
+      padding-right: 0;
+      padding-left: 15%; }
+    .page_narrow blockquote.blockquote--half-right .blockquote-content__cite,
+    .page_narrow blockquote.blockquote--half-right .ckpullquote--author,
+    .page_narrow blockquote.blockquote--half-right .ckpullquote--org, .page_narrow blockquote.ckpullquote-right .blockquote-content__cite,
+    .page_narrow blockquote.ckpullquote-right .ckpullquote--author,
+    .page_narrow blockquote.ckpullquote-right .ckpullquote--org,
+    .paragraph-text-block blockquote.blockquote--half-right .blockquote-content__cite,
+    .paragraph-text-block blockquote.blockquote--half-right .ckpullquote--author,
+    .paragraph-text-block blockquote.blockquote--half-right .ckpullquote--org,
+    .paragraph-text-block blockquote.ckpullquote-right .blockquote-content__cite,
+    .paragraph-text-block blockquote.ckpullquote-right .ckpullquote--author,
+    .paragraph-text-block blockquote.ckpullquote-right .ckpullquote--org,
+    .ckpullquote.blockquote--half-right .blockquote-content__cite,
+    .ckpullquote.blockquote--half-right .ckpullquote--author,
+    .ckpullquote.blockquote--half-right .ckpullquote--org,
+    .ckpullquote.ckpullquote-right .blockquote-content__cite,
+    .ckpullquote.ckpullquote-right .ckpullquote--author,
+    .ckpullquote.ckpullquote-right .ckpullquote--org {
+      padding-left: 15%; }
   .page_narrow blockquote footer,
-  .paragraph-text-block blockquote footer {
+  .paragraph-text-block blockquote footer,
+  .ckpullquote footer {
     margin-bottom: 50px; }
+
+.ckpullquote {
+  padding-bottom: 50px;
+  margin-bottom: 24px; }
+
+.ckpullquote--author {
+  margin-top: 2rem; }
 
 .ucsfcallout {
   background: #f2f4f6;
@@ -5632,6 +5727,155 @@ figure.align-center figcaption {
 
 .media--type-image {
   position: static; }
+
+.align--right, .align--left, .about-cta-right {
+  float: right;
+  margin: 80px;
+  margin-right: 0;
+  margin-top: 0; }
+
+.align--left {
+  float: left;
+  margin-right: 80px;
+  margin-left: 0; }
+
+.size--half {
+  width: 50%; }
+
+.wysiwyg_cta.align--left, .wysiwyg_cta.about-cta-right, .about-cta.align--left, .about-cta.about-cta-right {
+  background: #f2f4f6;
+  margin-right: 10%;
+  margin-top: 0;
+  margin-bottom: 32px;
+  margin-left: -20%;
+  width: 50%;
+  padding: 80px 10%; }
+
+.wysiwyg_cta.about-cta-right, .about-cta.about-cta-right {
+  margin-left: 10%;
+  margin-right: -20%; }
+
+.wysiwyg_cta .wysiwyg_cta__image, .about-cta .wysiwyg_cta__image {
+  padding-bottom: 24px; }
+
+.wysiwyg_cta h3, .about-cta h3 {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+  font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  color: #052049;
+  text-transform: uppercase; }
+  .wysiwyg_cta h3::after, .about-cta h3::after {
+    content: ' ';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: #052049;
+    margin: 0 5px 3px; }
+
+.wysiwyg_cta .readmore, .about-cta .readmore {
+  display: inline-block;
+  background: url("../images/cta-arrow.svg") right center no-repeat transparent;
+  background-size: 14px 10px;
+  padding-right: 24px;
+  text-decoration: none;
+  font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
+
+.wysiwyg_twocols .wysiwyg_twocols--first, .wysiwyg_twocols .wysiwyg_twocols--second, .layout--50-50 .wysiwyg_twocols--first, .layout--50-50 .wysiwyg_twocols--second {
+  float: left;
+  width: 48%;
+  margin-right: 2%; }
+
+.wysiwyg_twocols .wysiwyg_twocols--second, .layout--50-50 .wysiwyg_twocols--second {
+  float: right;
+  margin-right: 0; }
+
+.image-2014_wysiwyg_full[style~="float:right"], .image-2014_wysiwyg_full[style~="right;"], .image-2014_wysiwyg_full[style~="float:right;"],
+.ckimagebox[style~="float:right"],
+.ckimagebox[style~="right;"],
+.ckimagebox[style~="float:right;"],
+.wysiwyg-full[style~="float:right"],
+.wysiwyg-full[style~="right;"],
+.wysiwyg-full[style~="float:right;"],
+.ckgreybox[style~="float:right"],
+.ckgreybox[style~="right;"],
+.ckgreybox[style~="float:right;"] {
+  margin: 80px;
+  margin-right: 0;
+  margin-top: 0; }
+
+.image-2014_wysiwyg_full[style~="float:left"], .image-2014_wysiwyg_full[style~="left;"], .image-2014_wysiwyg_full[style~="float:left;"],
+.ckimagebox[style~="float:left"],
+.ckimagebox[style~="left;"],
+.ckimagebox[style~="float:left;"],
+.wysiwyg-full[style~="float:left"],
+.wysiwyg-full[style~="left;"],
+.wysiwyg-full[style~="float:left;"],
+.ckgreybox[style~="float:left"],
+.ckgreybox[style~="left;"],
+.ckgreybox[style~="float:left;"] {
+  margin: 80px;
+  margin-left: 0;
+  margin-top: 0; }
+
+.image-2014_wysiwyg_full p,
+.ckimagebox p {
+  font-size: 14px;
+  color: #506380;
+  padding-top: 16px;
+  font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  line-height: 1.6em;
+  margin: 0; }
+
+.ckimagebox {
+ }
+
+.ckgreybox {
+  background-color: #f2f4f6;
+  padding: 32px; }
+  .ckgreybox h3 {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    font-weight: 500;
+    font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.6px;
+    color: #052049;
+    text-transform: uppercase; }
+    .ckgreybox h3::after {
+      content: ' ';
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: #052049;
+      margin: 0 5px 3px; }
+
+[style~="color:#8D8580"],
+[style~="color:#729ABD"],
+[style~="color:rgb(114, 154, 189)"],
+[style="color:rgb(114, 154, 189)"] {
+  color: #052049 !important; }
+
+.video-container iframe {
+  margin-bottom: 80px; }
+
+.wysiwyg_twocols {
+  clear: both;
+  float: left;
+  width: 100%; }
+  .wysiwyg_twocols.layout--60-40 .wysiwyg_twocols--first {
+    width: 58%;
+    margin-right: 2%; }
+  .wysiwyg_twocols.layout--60-40 .wysiwyg_twocols--second {
+    width: 38%;
+    margin-left: 2%; }
+    .wysiwyg_twocols.layout--60-40 .wysiwyg_twocols--second .cke-videolightbox-wrapper.align--right {
+      margin: 0; }
 
 .card__title {
   margin-bottom: 0; }

@@ -52,10 +52,14 @@
 
 // In WYSIWYG.
 .page_narrow blockquote,
-.paragraph-text-block blockquote {
+.paragraph-text-block blockquote,
+.ckpullquote  {
   background: $background-gray;
 
-  &.blockquote--half-left {
+  &.blockquote--half-left,
+  &.blockquote--half-right,
+  &.ckpullquote-left,
+  &.ckpullquote-right {
     float: left;
     width: 50%;
     left: auto;
@@ -65,12 +69,14 @@
     margin-top: 0;
   }
 
-  .blockquote-content__text {
+  .blockquote-content__text,
+  .ckpullquote--quote {
     @include fs-heading-blockquote;
     font-size: 31px;
     line-height: 1.2em;
     padding: $space-seven $space-ten 0 0;
     padding-right: 15%;
+    margin-top: 0;
 
     &::before {
       content: '“ ';
@@ -81,13 +87,49 @@
     }
   }
 
-  .blockquote-content__cite {
+  .blockquote-content__cite,
+  .ckpullquote--author {
     @include eyebrow;
 
     font-style: normal;
+    padding-right: 15%;
+  }
+
+  .ckpullquote--org {
+    font-size: 14px;
+    padding-right: 15%;
+  }
+
+  &.blockquote--half-right,
+  &.ckpullquote-right {
+    float: right;
+    right: auto;
+    margin-right: -20%;
+    margin-left: 10%;
+
+    .blockquote-content__text,
+    .ckpullquote--quote {
+      padding-right: 0;
+      padding-left: 15%;
+    }
+
+    .blockquote-content__cite,
+    .ckpullquote--author,
+    .ckpullquote--org {
+      padding-left: 15%;
+    }
   }
 
   footer {
     margin-bottom: 50px;
   }
+}
+
+.ckpullquote {
+  padding-bottom: 50px;
+  margin-bottom: 24px;
+}
+
+.ckpullquote--author {
+  margin-top: 2rem;
 }
