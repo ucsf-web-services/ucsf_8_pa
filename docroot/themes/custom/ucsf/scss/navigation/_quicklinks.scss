@@ -1,26 +1,30 @@
 .quicklinks {
-  background: $c-white;
-  bottom: 0;
-  position: absolute;
   background: $white;
   text-align: center;
   font-size: $font-size-xxsm;
   font-family: $font-helvetica-neue-bold;
   text-transform: uppercase;
   letter-spacing: 1px;
+  pointer: cursor;
+  bottom: 0;
+  height: 40px;
+  position: fixed;
   padding: 12px 16px;
   right: 0;
+  width: 144px;
 
   @include breakpoint($bp-medium) {
     bottom: auto;
     grid-column: -2/-1;
     grid-row: 1/-1;
+    height: auto;
     justify-self: end;
     padding: 0;
-    position: relative;
+    position: static;
     right: auto;
-    writing-mode: vertical-rl;
     text-orientation: mixed;
+    writing-mode: vertical-rl;
+    width: auto;
   }
 
   .fa-caret-up {
@@ -44,5 +48,33 @@
 }
 
 .quicklinks-menu {
+  background: $c-navy;
   display: none;
+  position: absolute;
+  right: 0;
+  top: 28px;
+  width: calc(100% - 16px);
+  z-index: $z-quicklinks-menu;
+
+  @include breakpoint($bp-medium) {
+    position: relative;
+    top: auto;
+    right: auto;
+  }
+
+  &.js-quicklinks-open {
+    display: block;
+  }
+
+  a {
+    @include link-colors($c-white);
+  }
+
+  .quicklinks-close {
+    cursor: pointer;
+    text-align: right;
+    color: white;
+    margin-right: 32.5px;
+    margin-top: 32.5px;
+  }
 }
