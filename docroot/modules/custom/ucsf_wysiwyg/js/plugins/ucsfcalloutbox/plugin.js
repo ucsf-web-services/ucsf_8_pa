@@ -73,7 +73,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
             '<aside class="ucsfcallout callout-left" data-image="none">' +
                 '<div class="callout__image hidden"><img id="callout_image_0" src="/sites/default/files/media-icons/generic/no-thumbnail.png" /></div>' +
                 '<div class="callout__content">'    +
-                    '<h3 class="eyebrow-title">Take Action ––– </h3>'     +
+                    '<h3 class="eyebrow-title">Take Action</h3>'     +
                     '<time>Oct. 24, 2018</time>'    +
                     '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ultricies sit amet.</p>' +
                     '<p><a href="/">Learn More</a></p>' +

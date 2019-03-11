@@ -1,4 +1,10 @@
+{% if paragraph.field_events_link.uri is not empty %}
+  {% set event_link = paragraph.field_events_link.uri %}
+{% else %}
+  {% set event_link = "https://calendar.ucsf.edu" %}
+{% endif %}
+
 <div class="lastest-events-list__header">
   <h2 class="lastest-events-list__heading">{{ "Events"|t }}</h2>
-  <p class="lastest-events-list__view-all"><a href="" class="link link--cta">{{ "View all events"|t }}</a></p>
+  <p class="lastest-events-list__view-all"><a href="{{ event_link }}" class="link link--cta">{{ "View all events"|t }}</a></p>
 </div>

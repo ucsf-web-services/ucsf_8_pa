@@ -1,8 +1,26 @@
 {% set classes = ['news-card'] %}
 
-<article {{ attributes.addClass(classes) }}>
+{% set primary_area = node.field_primary_area.0.entity.label|clean_class %}
+
+{% set campus_news_subs = ['announcements', 'happenings', 'honors--awards', 'spotlight'] %}
+{% if primary_area in campus_news_subs %}
+  {% set primary_area = 'campus-news' %}
+  {% set primary_area_field = 'Campus News'|t %}
+{% endif %}
+
+<article {{ attributes.addClass(classes) }} data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
   <a href="{{ url }}" class="news-card__link">
-    {{ content.field_card_image }}
+
+    {% if content.field_card_image['#items'] is not empty %}
+      {{ content.field_card_image }}
+    {% else %}
+      <figure>
+        <picture>
+          <img src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image">
+        </picture>
+      </figure>
+    {% endif %}
+
     <header class="news-card__copy">
       {% include '@theme/article/byline.twig' %}
       <h2>{{ label }}</h2>

@@ -3,14 +3,9 @@
 {% block multiple_item_no_label %}
 <nav role="navigation" aria-labelledby="system-breadcrumb" class="breadcrumb-region">
   <ol{{ attributes.addClass(classes, 'field__items') }}>
-    {% for item in items %}
-      <li{{ item.attributes.addClass('field__item') }}>{{ item.content }}</li>
-    {% endfor %}
-    {% block coda %}
-      {% set entity = element['#object'] %}
-      <div class="field__item">
+    {% for item in items %}<li{{ item.attributes.addClass('field__item') }}>{{ item.content }}</li>{% endfor %}{% block coda %}{% set entity = element['#object'] %}<li class="field__item">
         {{ entity.label }}
-      </div>
+      </li>
     {% endblock coda %}
   </ol>
 </nav>

@@ -4,12 +4,41 @@
 .icon-money,
 .icon-awards,
 .icon-support,
-.icon-caduceus {
+.icon-caduceus,
+.icon-heart,
+.icon-comprehensive,
+.icon-media,
+.icon-microscope {
   content: ' ';
   background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
   background-size: $space-six;
   height: $space-six;
   width: $space-six;
+}
+
+a {
+  &.icon-education,
+  &.icon-doctor,
+  &.icon-campus,
+  &.icon-money,
+  &.icon-awards,
+  &.icon-support,
+  &.icon-caduceus,
+  &.icon-heart,
+  &.icon-comprehensive,
+  &.icon-media,
+  &.icon-microscope {
+    content: ' ';
+    background-size: $space-four;
+    height: auto;
+    width: auto;
+    padding-left: $space-five;
+    display: inline-block;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .icon-doctor {
@@ -34,4 +63,70 @@
 
 .icon-caduceus {
   background-image: url(/themes/custom/ucsf/assets/images/card/caduceus.svg);
+}
+
+.icon-heart {
+  background-image: url(/themes/custom/ucsf/assets/images/card/heart.svg);
+}
+
+.icon-comprehensive {
+  background-image: url(/themes/custom/ucsf/assets/images/card/comprehensive.svg);
+}
+
+.icon-media {
+  background-image: url(/themes/custom/ucsf/assets/images/card/media.svg);
+}
+
+.icon-microscope {
+  background-image: url(/themes/custom/ucsf/assets/images/card/microscope.svg);
+}
+
+[data-primary-area="pa-about"],
+[data-primary-area="pa-campus-news"],
+[data-primary-area="pa-announcements"],
+[data-primary-area="pa-happenings"],
+[data-primary-area="pa-honors-awards"],
+[data-primary-area="pa-spotlight"],
+[data-primary-area="pa-education"],
+[data-primary-area="pa-patient-care"],
+[data-primary-area="pa-research"],
+[data-primary-area="pa-locations"],
+[data-primary-area="pa-news-center"] {
+  figure {
+    background: url(/themes/custom/ucsf/assets/images/card/support-reverse.svg) center no-repeat $c-purple;
+    background-size: $space-six;
+    background-position: 50% 35%;
+  }
+}
+
+[data-primary-area="pa-campus-news"],
+[data-primary-area="pa-announcements"],
+[data-primary-area="pa-happenings"],
+[data-primary-area="pa-honors-awards"],
+[data-primary-area="pa-spotlight"] {
+  figure {
+    background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+    background-color: $navy;
+  }
+}
+
+[data-primary-area="pa-education"] {
+  figure {
+    background-image: url(/themes/custom/ucsf/assets/images/card/education-reverse.svg);
+    background-color: $print-green;
+  }
+}
+
+[data-primary-area="pa-patient-care"] {
+  figure {
+    background-image: url(/themes/custom/ucsf/assets/images/card/doctor-reverse.svg);
+    background-color: $blue;
+  }
+}
+
+[data-primary-area="pa-research"] {
+  figure {
+    background-image: url(/themes/custom/ucsf/assets/images/card/microscope-reverse.svg);
+    background-color: $teal;
+  }
 }

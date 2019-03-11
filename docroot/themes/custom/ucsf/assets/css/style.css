@@ -4105,9 +4105,30 @@ h5,
 h6 {
   margin-top: 0; }
 
+.eyebrow-title {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+  font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  color: #052049;
+  text-transform: uppercase; }
+  .eyebrow-title::after {
+    content: ' ';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: #052049;
+    margin: 0 5px 3px; }
+
 p {
   letter-spacing: .2px;
   margin: 2rem 0; }
+  p.feature-text {
+    font-size: 24px;
+    color: #506380; }
 
 a {
   text-decoration: none; }
@@ -4163,6 +4184,24 @@ span.ext {
   text-decoration: none;
   font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
 
+.button {
+  background-color: transparent;
+  color: #052049;
+  border: 2px solid #052049;
+  border-radius: 32px;
+  cursor: pointer;
+  line-height: 1.4;
+  padding: 1em 1.5em;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  min-height: 64px; }
+  .button:hover {
+    background-color: #007cbe;
+    color: #fff;
+    border-color: #007cbe; }
+
 .button--alt {
   background-color: transparent;
   color: #052049;
@@ -4179,6 +4218,28 @@ span.ext {
   border-color: #007cbe;
   color: #007cbe; }
   .button--alt:hover {
+    background-color: #007cbe;
+    color: #fff;
+    border-color: #007cbe; }
+
+.button-reverse,
+a.button-reverse {
+  background-color: transparent;
+  color: #052049;
+  border: 2px solid #052049;
+  border-radius: 32px;
+  cursor: pointer;
+  line-height: 1.4;
+  padding: 1em 1.5em;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  min-height: 64px;
+  color: #fff;
+  border-color: #fff; }
+  .button-reverse:hover,
+  a.button-reverse:hover {
     background-color: #007cbe;
     color: #fff;
     border-color: #007cbe; }
@@ -4205,6 +4266,12 @@ span.ext {
 .ext--list a {
   background: url("../images/ext-link.svg") right center no-repeat transparent;
   background-size: 20px; }
+
+.no-bullets, .no-bullets ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 40px; }
 
 img {
   display: block;
@@ -4303,7 +4370,7 @@ strong, b {
     .field-breadcrumbs .field__item::after {
       content: ">";
       display: inline-block;
-      margin: 0 4px; }
+      margin: 0 8px; }
     .field-breadcrumbs .field__item:last-child {
       color: #506380; }
       .field-breadcrumbs .field__item:last-child::after {
@@ -4384,12 +4451,26 @@ textarea {
 .icon-money,
 .icon-awards,
 .icon-support,
-.icon-caduceus {
+.icon-caduceus,
+.icon-heart,
+.icon-comprehensive,
+.icon-media,
+.icon-microscope {
   content: ' ';
   background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
   background-size: 48px;
   height: 48px;
   width: 48px; }
+
+a.icon-education, a.icon-doctor, a.icon-campus, a.icon-money, a.icon-awards, a.icon-support, a.icon-caduceus, a.icon-heart, a.icon-comprehensive, a.icon-media, a.icon-microscope {
+  content: ' ';
+  background-size: 32px;
+  height: auto;
+  width: auto;
+  padding-left: 40px;
+  display: inline-block; }
+  a.icon-education:hover, a.icon-doctor:hover, a.icon-campus:hover, a.icon-money:hover, a.icon-awards:hover, a.icon-support:hover, a.icon-caduceus:hover, a.icon-heart:hover, a.icon-comprehensive:hover, a.icon-media:hover, a.icon-microscope:hover {
+    text-decoration: underline; }
 
 .icon-doctor {
   background-image: url(/themes/custom/ucsf/assets/images/card/doctor.svg); }
@@ -4408,6 +4489,53 @@ textarea {
 
 .icon-caduceus {
   background-image: url(/themes/custom/ucsf/assets/images/card/caduceus.svg); }
+
+.icon-heart {
+  background-image: url(/themes/custom/ucsf/assets/images/card/heart.svg); }
+
+.icon-comprehensive {
+  background-image: url(/themes/custom/ucsf/assets/images/card/comprehensive.svg); }
+
+.icon-media {
+  background-image: url(/themes/custom/ucsf/assets/images/card/media.svg); }
+
+.icon-microscope {
+  background-image: url(/themes/custom/ucsf/assets/images/card/microscope.svg); }
+
+[data-primary-area="pa-about"] figure,
+[data-primary-area="pa-campus-news"] figure,
+[data-primary-area="pa-announcements"] figure,
+[data-primary-area="pa-happenings"] figure,
+[data-primary-area="pa-honors-awards"] figure,
+[data-primary-area="pa-spotlight"] figure,
+[data-primary-area="pa-education"] figure,
+[data-primary-area="pa-patient-care"] figure,
+[data-primary-area="pa-research"] figure,
+[data-primary-area="pa-locations"] figure,
+[data-primary-area="pa-news-center"] figure {
+  background: url(/themes/custom/ucsf/assets/images/card/support-reverse.svg) center no-repeat #716fb2;
+  background-size: 48px;
+  background-position: 50% 35%; }
+
+[data-primary-area="pa-campus-news"] figure,
+[data-primary-area="pa-announcements"] figure,
+[data-primary-area="pa-happenings"] figure,
+[data-primary-area="pa-honors-awards"] figure,
+[data-primary-area="pa-spotlight"] figure {
+  background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+  background-color: #052049; }
+
+[data-primary-area="pa-education"] figure {
+  background-image: url(/themes/custom/ucsf/assets/images/card/education-reverse.svg);
+  background-color: #90bd31; }
+
+[data-primary-area="pa-patient-care"] figure {
+  background-image: url(/themes/custom/ucsf/assets/images/card/doctor-reverse.svg);
+  background-color: #007cbe; }
+
+[data-primary-area="pa-research"] figure {
+  background-image: url(/themes/custom/ucsf/assets/images/card/microscope-reverse.svg);
+  background-color: #058488; }
 
 .vertical-tab {
   grid-column: 1/-1; }
@@ -4718,7 +4846,8 @@ textarea {
   width: 50%;
   padding: 80px 10%; }
   .ucsfcallout .callout-left__title,
-  .ucsfcallout .callout__title h3 {
+  .ucsfcallout .callout__title h3,
+  .ucsfcallout .eyebrow-title {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -4729,7 +4858,8 @@ textarea {
     color: #052049;
     text-transform: uppercase; }
     .ucsfcallout .callout-left__title::after,
-    .ucsfcallout .callout__title h3::after {
+    .ucsfcallout .callout__title h3::after,
+    .ucsfcallout .eyebrow-title::after {
       content: ' ';
       display: inline-block;
       width: 40px;
@@ -5378,6 +5508,46 @@ header .menu--main {
       .page-node-type-news-package h2,
       .page-node-type-trending h2 {
         font-size: 36px; } }
+  .page-node-type-author .eyebrow-title,
+  .page-node-type-article .eyebrow-title,
+  .page-node-type-narrow-page .eyebrow-title,
+  .page-node-type-news-package .eyebrow-title,
+  .page-node-type-trending .eyebrow-title {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    font-weight: 500;
+    font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.6px;
+    color: #052049;
+    text-transform: uppercase; }
+    .page-node-type-author .eyebrow-title::after,
+    .page-node-type-article .eyebrow-title::after,
+    .page-node-type-narrow-page .eyebrow-title::after,
+    .page-node-type-news-package .eyebrow-title::after,
+    .page-node-type-trending .eyebrow-title::after {
+      content: ' ';
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: #052049;
+      margin: 0 5px 3px; }
+  .page-node-type-author .small-title,
+  .page-node-type-article .small-title,
+  .page-node-type-narrow-page .small-title,
+  .page-node-type-news-package .small-title,
+  .page-node-type-trending .small-title {
+    font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-size: 18px;
+    margin-top: 8px;
+    letter-spacing: -0.2px; }
+    .page-node-type-author .small-title + *,
+    .page-node-type-article .small-title + *,
+    .page-node-type-narrow-page .small-title + *,
+    .page-node-type-news-package .small-title + *,
+    .page-node-type-trending .small-title + * {
+      margin-top: 0; }
 
 .page-node-type-full-width-page {
   background: #f2f4f6; }
@@ -6872,14 +7042,13 @@ figure.align-center figcaption {
       .narrow-page-header h1 {
         font-size: 82px;
         letter-spacing: -2px; } }
-  .narrow-page-header .narrow-page-header__subheading {
-    margin-bottom: 32px; }
 
 .narrow-page-header-banner {
   margin-top: -120px; }
 
 .narrow-page-full-width-wrapper {
-  background: #fff; }
+  background: #fff;
+  margin-bottom: -80px; }
 
 .field-footer-tabs-events-columne {
   margin: 0 auto;
@@ -6903,6 +7072,13 @@ figure.align-center figcaption {
   .field-footer-tabs-events-columne .layout-columns__3 {
     padding: 0;
     padding-top: 80px; }
+    .field-footer-tabs-events-columne .layout-columns__3 .field-content-wrapper-content {
+      padding: 0; }
+  .field-footer-tabs-events-columne .layout-left-70-30 {
+    padding-left: 0;
+    padding-right: 0; }
+  .field-footer-tabs-events-columne .field-column-content-content .paragraph-text-block {
+    padding: 0; }
 
 .news-package-banner {
   display: -ms-grid;
@@ -7359,7 +7535,7 @@ figure.align-center figcaption {
   min-height: 513px;
   height: 100%;
   padding: 64px 32px 64px;
-  margin-bottom: 0; }
+  margin-bottom: 40px; }
   .layout-column .fact-card {
     margin-bottom: 40px;
     padding: 64px 32px 64px; }
