@@ -1,4 +1,4 @@
-uuid: bc31ad6e-7c18-401c-bafb-a2009db53cb1
+uuid: d9ef309d-5e1f-4b59-83ee-d6fa54ec3820
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - ucsf_edu_migrate
 _core:
-  default_config_hash: xghYxQyrn3jUDL5N1HlltNuG0mXeq_PK8zUsBVRVqzc
+  default_config_hash: 81SN0Qp_qW_OoFY3R_2jjbtFLdltPYnELmTDPMnTWxs
 id: author_content
 class: null
 field_plugin_method: null
@@ -72,6 +72,18 @@ source:
       name: author_image
       label: 'source url of the author profile image'
       selector: Image
+    -
+      name: pub_date
+      label: 'the published date of the news'
+      selector: Post-date
+    -
+      name: uid
+      label: 'Id of the account that authored the content'
+      selector: Author-uid
+    -
+      name: updated-date
+      label: 'date the content was updated'
+      selector: Updated-date
   constants:
     file_directory: 'public://'
 process:
@@ -80,6 +92,9 @@ process:
     default_value: author
   title: author_title
   nid: nid
+  uid: uid
+  created: pub_date
+  changed: updated-date
   body/value: author_bio
   body/format:
     plugin: default_value

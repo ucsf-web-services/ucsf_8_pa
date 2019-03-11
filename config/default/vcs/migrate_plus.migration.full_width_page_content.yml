@@ -1,4 +1,4 @@
-uuid: 640b6f20-f0e7-4fe1-a817-3b143484f7c0
+uuid: 946420d2-65b8-432d-9f4b-dad0a40ca905
 langcode: en
 status: true
 dependencies:
@@ -6,19 +6,19 @@ dependencies:
     module:
       - ucsf_edu_migrate
 _core:
-  default_config_hash: jibE_To-QfPvR9vrBmAVLEtUpUzv1qvR7b1D40PQuv8
-id: media_coverage_content
+  default_config_hash: f0M6Y71iVIXmCK8ynID5Ctw0jd1AsqIwFHenVwrkzE4
+id: full_width_page_content
 class: null
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags: null
 migration_group: content_import
-label: 'Migrate the media coverage content type into the new ucsf.edu website'
+label: 'Migrate content from the old website into the new narrow_page ccontent type'
 source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: 'public://media_coverage_xml_feed.xml'
+  urls: 'https://www.ucsf.edu/fullwidthpagexml'
   item_selector: /nodes/node
   ids:
     nid:
@@ -30,36 +30,44 @@ source:
       selector: Nid
     -
       name: title
-      label: 'author node title'
+      label: 'news node title'
       selector: title
     -
-      name: ex-url
-      label: 'url to referenced article'
-      selector: external-url
-    -
-      name: media_source
-      label: 'the source of the media'
-      selector: media_source
+      name: body
+      label: 'news body'
+      selector: body
     -
       name: areas_tax
-      label: 'Areas type taxonomy reference'
+      label: 'news secondary area tax'
       selector: Areas
     -
+      name: areas_tax_2
+      label: 'news primary area tax'
+      selector: Second-Areas-EXCLUDED
+    -
       name: topics_tax
-      label: 'media coverage topic taxonomy reference'
+      label: 'news topics tax'
       selector: Topics
     -
       name: orgs_tax
-      label: 'media coverage organizations taxonomy reference'
+      label: 'news organizations tax'
       selector: Organizations
     -
       name: people_tax
-      label: 'media coverage people taxonomy reference'
+      label: 'news people tax'
       selector: People
     -
       name: loc_tax
-      label: 'media coverage locations taxonomy reference'
-      selector: Locations
+      label: 'news location tax'
+      selector: location
+    -
+      name: news_apple
+      label: 'news apple news title'
+      selector: Apple_News_Title
+    -
+      name: tags_tax
+      label: 'news tags tax'
+      selector: Tags
     -
       name: pub_date
       label: 'the published date of the news'
@@ -69,6 +77,10 @@ source:
       label: 'Id of the account that authored the content'
       selector: Author-uid
     -
+      name: body_summary
+      label: 'the summary of the body content'
+      selector: body-summary
+    -
       name: updated-date
       label: 'date the content was updated'
       selector: updated-date
@@ -77,9 +89,22 @@ source:
 process:
   type:
     plugin: default_value
-    default_value: article
-  title: title
+    default_value: full_width_page
   nid: nid
+  title: title
+  field_apple_news_title: news_apple
+  body/value:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: body
+      message: 'there was an empty field'
+  body/summary:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: body_summary
+      message: 'there was an empty field'
   uid: uid
   field_date: pub_date
   field_date_and_time: pub_date
@@ -89,7 +114,6 @@ process:
     to_format: U
     source: pub_date
   changed: updated-date
-  field_external_url: ex-url
   field_areas:
     -
       plugin: skip_on_empty
@@ -100,16 +124,12 @@ process:
       plugin: explode
       source: areas_tax
       delimiter: ','
-  field_topics:
+  field_locations:
     -
       plugin: skip_on_empty
       method: process
-      source: topics_tax
+      source: loc_tax
       message: 'there was an empty field'
-    -
-      plugin: explode
-      source: topics_tax
-      delimiter: ','
   field_organizations:
     -
       plugin: skip_on_empty
@@ -130,26 +150,27 @@ process:
       plugin: explode
       source: people_tax
       delimiter: ','
-  field_locations:
+  field_topics:
     -
       plugin: skip_on_empty
       method: process
-      source: loc_tax
+      source: topics_tax
       message: 'there was an empty field'
     -
       plugin: explode
-      source: loc_tax
+      source: topics_tax
       delimiter: ','
-  field_article_type:
+  field_tags:
     -
-      plugin: default_value
-      default_value: 413496
-  field_source:
+      plugin: skip_on_empty
+      method: process
+      source: tags_tax
+      message: 'there was an empty field'
     -
-      plugin: migration_lookup
-      migration: press_tax
-      source: media_source
+      plugin: explode
+      source: tags_tax
+      delimiter: ','
 destination:
   plugin: 'entity:node'
-  default_bundle: article
+  default_bundle: full_width_page
 migration_dependencies: {  }

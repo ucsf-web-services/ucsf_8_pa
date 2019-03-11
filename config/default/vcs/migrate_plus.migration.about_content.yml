@@ -1,4 +1,4 @@
-uuid: 8c2a1b03-7f7d-4f84-80a6-7a0424056d04
+uuid: a8f72e72-03f8-4064-9a7e-f3f547a94b0b
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - ucsf_edu_migrate
 _core:
-  default_config_hash: AfAiuzpR3oehFG4plZiuIaBjBrrsln2p7bc53MJXgVg
+  default_config_hash: NV_63zbQpK9Lzi2K60H9Qwra954qDz4EiWUUcbV7gvY
 id: about_content
 class: null
 field_plugin_method: null
@@ -18,7 +18,7 @@ source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: xml
-  urls: 'http://ucsfpa1dev.prod.acquia-sites.com/aboutxml'
+  urls: 'https://www.ucsf.edu/aboutxml'
   item_selector: /nodes/node
   ids:
     nid:
@@ -48,6 +48,22 @@ source:
       name: image
       label: 'image for the about pages'
       selector: image
+    -
+      name: pub_date
+      label: 'the published date of the news'
+      selector: Post-date
+    -
+      name: updated-date
+      label: 'date the content was updated'
+      selector: updated-date
+    -
+      name: uid
+      label: 'Id of the account that authored the content'
+      selector: Author-uid
+    -
+      name: body_summary
+      label: 'the summary of the body content'
+      selector: body-summary
   constants:
     file_directory: 'public://'
 process:
@@ -56,6 +72,9 @@ process:
     default_value: page
   title: title
   nid: nid
+  uid: uid
+  created: pub_date
+  changed: updated-date
   field_topics:
     -
       plugin: skip_on_empty
@@ -67,6 +86,7 @@ process:
       source: topics_tax
       delimiter: ','
   body/value: body
+  body/summary: body_summary
   body/format:
     plugin: default_value
     default_value: full_html
