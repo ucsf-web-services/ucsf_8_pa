@@ -49,7 +49,9 @@
 
 .quicklinks-menu {
   background: $c-navy;
+  color: white;
   display: none;
+  padding: 40px 32px 0;
   position: absolute;
   right: 0;
   top: 28px;
@@ -72,9 +74,28 @@
 
   .quicklinks-close {
     cursor: pointer;
+    float: right;
     text-align: right;
-    color: white;
-    margin-right: 32.5px;
-    margin-top: 32.5px;
+  }
+
+  .field-quick-link-title {
+    @include eyebrow;
+    color: $c-white;
+    margin-bottom: 24px;
+
+    &:after {
+      background: $c-white;
+    }
+  }
+
+  .field-quick-link-link {
+    font-size: 14px;
+    line-height: 38px;
+    letter-spacing: 0.3px;
+    padding-bottom: 40px;
+
+    @include breakpoint($bp-medium) {
+      column-count: 2;
+    }
   }
 }
