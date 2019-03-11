@@ -2,11 +2,16 @@
 
 <main role="main" class="main" {{ attributes.addClass(classes) }}>
   <a id="main-content" tabindex="-1"></a>
-  <div class="article-medium-banner">
-    {{ content.field_banner_image }}
-  </div>
+
+  {% if node.field_banner_image is not empty %}
+    {% set banner_image = "narrow-page-header-banner" %}
+
+    <div class="article-medium-banner">
+      {{ content.field_banner_image }}
+    </div>
+  {% endif %}
   <div class="main-content narrow-page">
-    <header class="narrow-page-header narrow-page-header-banner">
+    <header class="narrow-page-header {{ banner_image }}">
       <h1>{{ label }}</h1>
       <div class="narrow-page-header__subheading">{{ content.body }}</div>
     </header>
