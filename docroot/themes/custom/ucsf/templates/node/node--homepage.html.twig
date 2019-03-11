@@ -1,9 +1,9 @@
 {% set banner_style = node.field_banner_box_alignment.entity.label|clean_class %}
 
-{#{{ banner_style }}#}
-
 {% if banner_style == 'right-bottom-align-text-box' %}
   {% set layout = 'home-banner-two' %}
+{% elseif banner_style == 'left-bottom-align-text-box' %}
+  {% set layout = 'home-banner-three' %}
 {% endif %}
 
 <div class="quicklinks-menu">
