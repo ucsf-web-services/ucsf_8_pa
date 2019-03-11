@@ -54,6 +54,7 @@ class UcsfsearchController extends ControllerBase {
       '#theme' => 'ucsf_news_search',
       '#searchterm' => $searchterm,
       '#more' => [],
+      '#cache' => ['max-age' => 0],
       '#attached' => [
         'library' => [
           'ucsf_search/ucsf_search'
@@ -78,6 +79,7 @@ class UcsfsearchController extends ControllerBase {
       '#directory' => $directory['results'],
       '#searchterm' => $searchterm,
       '#more' => $directory['more'],
+      '#cache' => ['max-age' => 0],
       '#attached' => [
         'library' => [
           'ucsf_search/ucsf_search'
@@ -102,6 +104,7 @@ class UcsfsearchController extends ControllerBase {
       '#websites' => $websites['results'],
       '#searchterm' => $searchterm,
       '#more' => $websites['more'],
+      '#cache' => ['max-age' => 0],
       '#attached' => [
         'library' => [
           'ucsf_search/ucsf_search'
