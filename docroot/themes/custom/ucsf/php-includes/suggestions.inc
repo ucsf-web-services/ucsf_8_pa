@@ -19,6 +19,7 @@ function ucsf_theme_suggestions_page_alter(array &$suggestions, array $variables
       'full-width-page',
       'homepage',
       'narrow-page',
+      'news-center',
       'news-package',
       'trending',
     ];

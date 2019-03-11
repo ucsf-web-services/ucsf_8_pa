@@ -8,9 +8,11 @@
   {% set link = drupal_url('node/' ~ content.field_news_article.0['#node'].id ) %}
 {% endif %}
 
+{% block wrapper_top %}
 <li{{  attributes.addClass(classes) }}>
   <article class="news-card">
     <a href="{{ link }}" class="news-card__link">
+{% endblock wrapper_top %}
       <div class="news-card__image">
         {% if content.field_image_media|render|striptags != ''%}
           {# Feature Paragraph - Overwrite Image #}
@@ -33,6 +35,8 @@
           {% endif %}
         </h2>
       </header>
+{% block wrapper_bottom %}
     </a>
   </article>
 </li>
+{% endblock wrapper_bottom %}
