@@ -1,21 +1,27 @@
+{% set banner_style = node.field_banner_box_alignment.entity.label|clean_class %}
+
+{#{{ banner_style }}#}
+
+{% if banner_style == 'right-bottom-align-text-box' %}
+  {% set layout = 'home-banner-two' %}
+{% endif %}
+
 <div class="quicklinks-menu">
   <div class="quicklinks-close"><i class="fas fa-times"></i></div>
   {{ content.field_quick_link_menu }}
   {{ attach_library('ucsf/quicklinks') }}
 </div>
 
-<main role="main" class="main homepage">
+<main role="main" class="main homepage {{ layout }}">
   <a id="main-content" tabindex="-1"></a>
 
   <div class="home-banner-wrapper">
     <div class="home-banner-wrapper__space"> </div>
     <div class="home-banner">
-      <div class="home-banner__image">
-        {{ content.field_banner_image }}
-      </div>
+      {{ content.field_banner_image }}
       <header class="home-banner__header">
         <h1>{{ label }}</h1>
-        <p class="home-banner__subheading">{{ content.field_banner_description }}</p>
+        {{ content.field_banner_description }}
       </header>
       <div class="quicklinks">
         <a class="quicklinks__openlink">{{ "Quick Links"|t }} <span class="fas fa-caret-up"></span><span class="fas fa-caret-right"></span></a>
