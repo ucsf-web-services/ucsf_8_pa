@@ -1,1 +1,9 @@
-{% include 'field--node--field-search-supporting-links.html.twig' %}
+{% extends 'field.html.twig' %}
+{% block multiple_item_no_label %}
+  <ul class="home-search__presearch-links">
+    {% for item in items %}
+      <li{{ item.attributes.addClass('home-search__presearch-link') }}>{{ item.content }}</li>
+    {% endfor %}
+    <li class="home-search__advanced-search"><a href="">Advanced</a></li>
+  </ul>
+{% endblock multiple_item_no_label %}
