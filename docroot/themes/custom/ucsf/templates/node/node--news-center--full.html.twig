@@ -19,40 +19,13 @@
   <div class="media-coverage">
     <div class="media-coverage__list">
       <h2 class="media-coverage__list-title">UCSF in the News</h2>
-      <ul class="media-coverage__list-articles">
-        {{ content.field_featured_media_article }}
-      </ul>
+        {{ content.field_supporting_media_articles }}
       <p class="media-coverage__list-more"><a href="" class="link link--cta">View more</a></p>
     </div>
 
     <div class="media-coverage__featured">
-      <article class="news-card">
-        <picture class="news-card__image">
-          <img class="img" src="../../images/news-center/featured-media-article.jpg">
-        </picture>
-
-        <div class="news-card__copy">
-          <ul class="news-card__byline">
-            <li class="news-card__media">Wired</li>
-            <li class="news-card__date">Aug. 13, 2018</li>
-          </ul>
-
-          <h2><a href="">Why DNA is the most exciting programming language today</a></h2>
-
-          <p class="news-card__content">Napster cofounder Sean Parker and biologist Alex Marson on the coming power of Crispr.</p>
-
-          <p class="news-card__more"><a href="" class="link link--cta">Continue reading</a></p>
-        </div>
-      </article>
+      {{ content.field_featured_media_article }}
     </div>
-  </div>
-
-  <div class="news-list">
-    <h2 class="news-list__title">The Latest</h2>
-    <ul class="card-three-up">
-      {{ content.field_support_articles }}
-    </ul>
-    <p class="view-more"><a href="" class="button--alt">View More</a></p>
   </div>
 
   {% include '@theme/misc/video.twig' %}

@@ -5,5 +5,9 @@
     <input type="text" name="search" id="search-q" class="home-search__form-input" placeholder="{{ node.field_search_placeholder_text.value }}" onclick="this.value='';" tabindex="2">
     <input type="submit" id="edit-submit" name="op" value="Search" class="home-search__form-submit">
   </form>
-  {{ content.field_search_supporting_links }}
+  {% if content.field_search_news_supporting %}
+    {{ content.field_search_news_supporting }}
+  {% elseif content.field_search_supporting_links %}
+    {{ content.field_search_supporting_links }}
+  {% endif %}
 </div>
