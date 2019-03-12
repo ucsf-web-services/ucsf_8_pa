@@ -2,8 +2,8 @@
 
 namespace Drupal\ucsf_applenews\Normalizer;
 
-use ChapterThree\AppleNewsAPI\Document\Components\Author;
 use ChapterThree\AppleNewsAPI\Document\Components\Body;
+use ChapterThree\AppleNewsAPI\Document\Components\Byline;
 use ChapterThree\AppleNewsAPI\Document\Components\Photo;
 use ChapterThree\AppleNewsAPI\Document\Margin;
 use ChapterThree\AppleNewsAPI\Document\Styles\ComponentTextStyle;
@@ -153,7 +153,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
     if (!$names) {
       return FALSE;
     }
-    $component = new Author("By " . implode(', ', $names) .
+    $component = new Byline("By " . implode(', ', $names) .
       ' on ' . $date . '.');
 
     // Text style.
