@@ -1,8 +1,9 @@
-uuid: e50a452d-e942-4cfa-adee-408a0c0fc07d
+uuid: ea117ae3-8a58-454e-b642-abb551c326d6
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.paragraph.preview
     - field.field.paragraph.featured.field_banner_cta_text
     - field.field.paragraph.featured.field_description
     - field.field.paragraph.featured.field_image_media
@@ -11,19 +12,17 @@ dependencies:
     - field.field.paragraph.featured.field_text_body
     - field.field.paragraph.featured.field_title
     - paragraphs.paragraphs_type.featured
-    - responsive_image.styles.card_row__image
   module:
     - link
-    - media_responsive_thumbnail
     - text
-id: paragraph.featured.default
+id: paragraph.featured.preview
 targetEntityType: paragraph
 bundle: featured
-mode: default
+mode: preview
 content:
   field_banner_cta_text:
     weight: 7
-    label: hidden
+    label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -40,10 +39,10 @@ content:
     weight: 4
     label: hidden
     settings:
-      responsive_image_style: card_row__image
-      image_link: ''
+      view_mode: default
+      link: false
     third_party_settings: {  }
-    type: media_responsive_thumbnail
+    type: entity_reference_entity_view
     region: content
   field_link:
     weight: 3
@@ -61,10 +60,9 @@ content:
     weight: 5
     label: hidden
     settings:
-      view_mode: default
-      link: false
+      link: true
     third_party_settings: {  }
-    type: entity_reference_entity_view
+    type: entity_reference_label
     region: content
   field_text_body:
     weight: 6
