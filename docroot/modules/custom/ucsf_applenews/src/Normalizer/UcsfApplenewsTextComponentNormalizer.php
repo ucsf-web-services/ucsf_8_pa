@@ -30,18 +30,14 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       return $this->normalizeByline($data, $format, $context);
     }
 
-    if ($data['id'] == 'default_text:body' &&
-      isset($data['component_data']['text']['field_name']) &&
-      $data['component_data']['text']['field_name'] == 'body'
-    ) {
-      return $this->normalizeBody($data, $format, $context);
-    }
-
     return parent::normalize($data, $format, $context);
   }
 
   /**
    * Body.
+   *
+   * Not in use, leaving as an example of parsing a markup field, and
+   * normalizing a field into multiple components.
    */
   protected function normalizeBody($data, $format = NULL, array $context = []) {
     $components = [];
