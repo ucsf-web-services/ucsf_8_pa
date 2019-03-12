@@ -9,7 +9,6 @@ use ChapterThree\AppleNewsAPI\Document\Margin;
 use ChapterThree\AppleNewsAPI\Document\Styles\ComponentTextStyle;
 use ChapterThree\AppleNewsAPI\Document\Styles\TextStyle;
 use Drupal\applenews\Normalizer\ApplenewsTextComponentNormalizer;
-use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\TypedData\Exception\MissingDataException;
 use Drupal\Core\Url;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
@@ -52,7 +51,9 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
 
     $field_name = $data['component_data']['text']['field_name'];
     $context['field_property'] = $data['component_data']['text']['field_property'];
-    $text = $this->serializer->normalize($entity->get($field_name), $format, $context);
+    /** @var \Symfony\Component\Serializer\Serializer $serializer */
+    $serializer = $this->serializer;
+    $text = $serializer->normalize($entity->get($field_name), $format, $context);
 
     // Add first img as photo component.
     $doc = new \DOMDocument();
