@@ -183,4 +183,8 @@ services:
     arguments: ['@plugin.manager.applenews_component_type']
     tags:
       - { name: normalizer, priority: 1 }
-
+  serializer.applenews.image.component:
+    class: \Drupal\ucsf_applenews\Normalizer\UcsfApplenewsImageComponentNormalizer
+    arguments: ['@plugin.manager.applenews_component_type']
+    tags:
+      - { name: normalizer, priority: 1 }
