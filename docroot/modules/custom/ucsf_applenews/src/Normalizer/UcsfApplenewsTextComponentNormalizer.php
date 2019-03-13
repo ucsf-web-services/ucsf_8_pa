@@ -5,6 +5,7 @@ namespace Drupal\ucsf_applenews\Normalizer;
 use ChapterThree\AppleNewsAPI\Document\Components\Body;
 use ChapterThree\AppleNewsAPI\Document\Components\Byline;
 use ChapterThree\AppleNewsAPI\Document\Components\Gallery;
+use ChapterThree\AppleNewsAPI\Document\Components\Heading;
 use ChapterThree\AppleNewsAPI\Document\Components\Photo;
 use ChapterThree\AppleNewsAPI\Document\Components\Quote;
 use ChapterThree\AppleNewsAPI\Document\Components\Video;
@@ -32,6 +33,13 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       $data['component_data']['text']['field_name'] == 'field_author'
     ) {
       return $this->normalizeByline($data, $format, $context);
+    }
+
+    if ($data['id'] == 'default_text:body' &&
+      isset($data['component_data']['text']['field_name']) &&
+      $data['component_data']['text']['field_name'] == 'body'
+    ) {
+      return $this->normalizeBody($data, $format, $context);
     }
 
     if ($data['id'] == 'ucsf_entityref:ucsf_body' &&
@@ -146,8 +154,8 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
   /**
    * Body.
    *
-   * Not in use, leaving as an example of parsing a markup field, and
-   * normalizing a field into multiple components.
+   * If value contains certain tags (blockquote, headers...), break up the value
+   * into a series of Body and Blockquote, Heading, etc. components.
    */
   protected function normalizeBody($data, $format = NULL, array $context = []) {
     $components = [];
@@ -157,64 +165,182 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
 
     $field_name = $data['component_data']['text']['field_name'];
     $context['field_property'] = $data['component_data']['text']['field_property'];
-    /** @var \Symfony\Component\Serializer\Serializer $serializer */
-    $serializer = $this->serializer;
-    $text = $serializer->normalize($entity->get($field_name), $format, $context);
 
-    // Add first img as photo component.
-    $doc = new \DOMDocument();
-    $libxml_previous_state = libxml_use_internal_errors(TRUE);
-    if (!$doc->loadHTML($text)) {
-      throw new NotNormalizableValueException('Could not parse body HTML.');
-    }
-    $xp = new \DOMXPath($doc);
-    /** @var \DOMElement $img */
-    foreach ($xp->query('//img') as $img) {
-      if (!$img->hasAttribute('src')) {
-        continue;
+    /** @var \Drupal\Core\Field\FieldItemList $field */
+    $field = $entity->get($field_name);
+    foreach ($field as $item) {
+
+      // Toss out tags we don't care about.
+      $text = $this->htmlValue($item->get('value')->getValue(),
+        '<blockquote><h1><h2><h3><h4><h5><h6><img><drupal-entity>');
+
+      // Parse value and create components for blockquote, headers, etc.
+      $inline_components = [];
+      $doc = new \DOMDocument();
+      $libxml_previous_state = libxml_use_internal_errors(TRUE);
+      if (!$doc->loadHTML($text)) {
+        throw new NotNormalizableValueException('Could not parse body HTML.');
       }
-      if (!$url = $img->getAttribute('src')) {
-        continue;
+      $xp = new \DOMXPath($doc);
+      $xp_query = '//blockquote|//h1|//h2|//h3|//h4|//h5|//h6|//img|//drupal-entity';
+      /** @var \DOMElement $element */
+      foreach ($xp->query($xp_query) as $element) {
+        $component = NULL;
+
+        switch ($element->tagName) {
+
+          case 'blockquote':
+            $component = new Quote($this->textValue($element->textContent));
+            break;
+
+          case 'h1':
+            $component = new Heading($this->textValue($element->textContent));
+            $component->setRole('heading1');
+            break;
+
+          case 'h2':
+            $component = new Heading($this->textValue($element->textContent));
+            $component->setRole('heading2');
+            break;
+
+          case 'h3':
+            $component = new Heading($this->textValue($element->textContent));
+            $component->setRole('heading3');
+            break;
+
+          case 'h4':
+            $component = new Heading($this->textValue($element->textContent));
+            $component->setRole('heading4');
+            break;
+
+          case 'h5':
+            $component = new Heading($this->textValue($element->textContent));
+            $component->setRole('heading5');
+            break;
+
+          case 'h6':
+            $component = new Heading($this->textValue($element->textContent));
+            $component->setRole('heading6');
+            break;
+
+          case 'img':
+            if ($element->hasAttribute('href')) {
+              $url = $element->getAttribute('src');
+              $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
+              $component = new Photo($url);
+              $layout = $this->getComponentLayout($data['component_layout']);
+              $layout
+                ->setIgnoreDocumentGutter('both')
+                ->setIgnoreDocumentMargin('both')
+                ->setMargin(new Margin(15, 15));
+              $component->setLayout($layout);
+            }
+            break;
+
+          case 'drupal-entity':
+            if ($element->hasAttribute('data-entity-type') &&
+              $element->getAttribute('data-entity-type') == 'media' &&
+              $element->hasAttribute('data-entity-uuid')
+            ) {
+              $uuid = $element->getAttribute('data-entity-uuid');
+              $media = \Drupal::entityTypeManager()->getStorage('media')
+                ->loadByProperties(['uuid' => $uuid]);
+              if ($media) {
+                /** @var \Drupal\media\Entity\Media $media */
+                $media = reset($media);
+                /** @var \Drupal\file\Entity\File $file */
+                $file = $media->get('field_media_image')->entity;
+                $component = new Photo($file->url());
+                if ($element->hasAttribute('data-caption')) {
+                  $caption = $this->textValue(
+                    $element->getAttribute('data-caption'));
+                  $component->setCaption($caption);
+                }
+              }
+            }
+            break;
+
+        }
+
+        // Replace element with a token.
+        if ($component) {
+
+          // Value of the component is the index of the component in
+          // $inline_components.
+          $token = $doc->createElement('applenews_component',
+            count($inline_components));
+          $inline_components[] = $component;
+
+          // Replace with token, making sure the token is at the root level of
+          // the value html.
+          if ($element->parentNode->tagName == 'body') {
+            $element->parentNode->replaceChild($token, $element);
+          }
+          else {
+            do {
+              $append_after = $element->parentNode;
+            } while ($append_after->parentNode->tagName != 'body');
+            if ($append_after->nextSibling) {
+              $append_after->parentNode->insertBefore($append_after->nextSibling, $token);
+            }
+            else {
+              $append_after->parentNode->appendChild($token);
+            }
+            $doc->removeChild($element);
+          }
+
+        }
+        // Remove even if no component generated.
+        else {
+          $doc->removeChild($element);
+        }
+
       }
-      $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
-      $components['img'] = new Photo($url);
-      $layout = $this->getComponentLayout($data['component_layout']);
-      $layout
-        ->setIgnoreDocumentGutter('both')
-        ->setIgnoreDocumentMargin('both')
-        ->setMargin(new Margin(15, 15));
-      $components['img']->setLayout($layout);
-      break;
+
+      $text = preg_replace('/<[!\?][^>]+>/', '', $doc->saveHTML());
+      $text = str_replace(
+        array('<html>', '</html>', '<body>', '</body>'),
+        array('', '', '', ''),
+        $text);
+
+      libxml_clear_errors();
+      libxml_use_internal_errors($libxml_previous_state);
+
+      // Split value into multiple Body components and insert other components
+      // in the correct place.
+      $text = preg_split('/<\/?applenews_component>/', $text);
+      foreach ($text as $i => $value) {
+        if ($i % 2) {
+          $components[] = $inline_components[$value];
+        }
+        else {
+          $component = new Body($this->htmlValue($value));
+          $link_style = new TextStyle();
+          $link_style
+            ->setFontName('HelveticaNeue-Medium')
+            ->setFontSize(18)
+            ->setTextColor('#0071AD')
+            ->setUnderline(FALSE);
+          $style = new ComponentTextStyle();
+          $style
+            ->setFontName('HelveticaNeue')
+            ->setFontSize(18)
+            ->setHyphenation(FALSE)
+            ->setLineHeight(26)
+            ->setLinkStyle($link_style)
+            ->setStrikethrough(FALSE)
+            ->setTextAlignment('left')
+            ->setTextColor('#000')
+            ->setTextTransform('none')
+            ->setUnderline(FALSE)
+            ->setVerticalAlignment('baseline');
+          $component->setTextStyle($style);
+          $component->setFormat($data['component_data']['format']);
+          $component->setLayout($this->getComponentLayout($data['component_layout']));
+          $components[] = $component;
+        }
+      }
     }
-    libxml_clear_errors();
-    libxml_use_internal_errors($libxml_previous_state);
-
-    $components['body'] = new Body($this->htmlValue($text));
-
-    // Text style.
-    $link_style = new TextStyle();
-    $link_style
-      ->setFontName('HelveticaNeue-Medium')
-      ->setFontSize(18)
-      ->setTextColor('#0071AD')
-      ->setUnderline(FALSE);
-    $style = new ComponentTextStyle();
-    $style
-      ->setFontName('HelveticaNeue')
-      ->setFontSize(18)
-      ->setHyphenation(FALSE)
-      ->setLineHeight(26)
-      ->setLinkStyle($link_style)
-      ->setStrikethrough(FALSE)
-      ->setTextAlignment('left')
-      ->setTextColor('#000')
-      ->setTextTransform('none')
-      ->setUnderline(FALSE)
-      ->setVerticalAlignment('baseline');
-    $components['body']->setTextStyle($style);
-
-    $components['body']->setFormat($data['component_data']['format']);
-    $components['body']->setLayout($this->getComponentLayout($data['component_layout']));
 
     return $components;
   }
@@ -288,10 +414,11 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
   /**
    * Apple news HTML subset.
    */
-  protected function htmlValue($str) {
+  protected function htmlValue($str, $additional_elements = '') {
+    $allowed_elements = self::ALLOWED_HTML_ELEMENTS . $additional_elements;
     return trim(
       html_entity_decode(
-        strip_tags($str, self::ALLOWED_HTML_ELEMENTS)
+        strip_tags($str, $allowed_elements)
       ),
       " \t\n\r\0\x0B\xC2\xA0"
     );
