@@ -55,7 +55,7 @@
   grid-row: 2/3;
   padding: $space-eight;
   padding-left: 0;
-  background-color: rgba(255, 255, 255, 0.975);
+  background: url(/themes/custom/ucsf/assets/images/banner-overlay-left.png) left top repeat-y rgba(255, 255, 255, 0.925);
 
   h1 {
     @include fs-display;
@@ -70,6 +70,7 @@
   padding-left: $space-three;
   padding-right: $space-eight;
   padding-bottom: 0;
+  background: url(/themes/custom/ucsf/assets/images/banner-overlay-bottom.png) left bottom repeat-x rgba(255, 255, 255, 0.925);
 
   h1 {
     grid-column: 2/12;
@@ -85,7 +86,7 @@
   }
 }
 
-.field-banner-description { // PL: .home-banner__subheading
+.field-banner-description, .field-banner-description p { // PL: .home-banner__subheading
   margin: 0;
 }
 
@@ -98,6 +99,7 @@
       padding-bottom: 0;
       padding-left: $space-ten;
       padding-top: $space-six;
+      background: url(/themes/custom/ucsf/assets/images/banner-overlay-bottom.png) left bottom repeat-x rgba(255, 255, 255, 0.925);
     }
   }
 }
@@ -191,6 +193,18 @@
 
   grid-template-rows: repeat(3, auto);
   max-width: 1360px;
+
+  ul {
+    margin-bottom: 0;
+
+    li {
+      margin-bottom: $space-two;
+
+      a {
+        font-family: $font-helvetica-neue-medium;
+      }
+    }
+  }
 }
 
 .field-map-image { // PL: .map-home__image
@@ -205,7 +219,8 @@
   grid-row: 2/3;
   padding: $space-eight;
   padding-right: 0;
-  background-color: rgba(255, 255, 255, 0.975);
+  background: url(/themes/custom/ucsf/assets/images/banner-overlay-right.png) right top repeat-y rgba(255, 255, 255, 0.925);
+  color: $c-gray-blue;
 
   h2 {
     @include fs-heading;
@@ -255,8 +270,11 @@
   margin-top: $space-ten;
 }
 
-.home-search__title {
+.home-search .home-search__title {
   @include fs-heading;
+
+  margin-top: 56px;
+  margin-bottom: 16px;
 }
 
 .home-search__form {
@@ -335,10 +353,14 @@
   background: $white;
   margin-top: $space-ten;
 
-  .card-three-up .field-featured-content {
+  .card-three-up {
     @include card-three-up;
     margin: 0 auto;
     max-width: $xl;
+
+    .news-card {
+      margin-bottom: $space-five;
+    }
   }
 }
 

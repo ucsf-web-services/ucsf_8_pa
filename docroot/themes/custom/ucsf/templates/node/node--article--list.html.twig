@@ -1,6 +1,8 @@
 <li>
   <article>
-    <h3><a href="">{{ label }}</a></h3>
-    <p class="media-coverage__list-byline">{{ content.field_external_url }}  <span class="media-coverage__list-date">{{ content.field_date_and_time }}</span></p>
+    <h3><a href="{{ node.field_external_url.uri }}">{{ label }}</a></h3>
+    <p class="media-coverage__list-byline">{{ node.field_source.entity.label }}
+      <span class="media-coverage__list-date">{{ content.field_date_and_time.0 }}</span>
+    </p>
   </article>
 </li>

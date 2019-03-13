@@ -45,11 +45,11 @@ dependencies:
     - field.field.node.article.field_twitter_description
     - field.field.node.article.field_twitter_image
     - field.field.node.article.field_twitter_title
+    - image.style.news_card__image
     - node.type.article
-    - responsive_image.styles.card_row__image
   module:
     - datetime
-    - media_responsive_thumbnail
+    - media
     - text
     - user
 _core:
@@ -68,11 +68,11 @@ content:
       link: false
     third_party_settings: {  }
   field_card_image:
-    type: media_responsive_thumbnail
+    type: media_thumbnail
     weight: 1
     label: hidden
     settings:
-      responsive_image_style: card_row__image
+      image_style: news_card__image
       image_link: ''
     third_party_settings: {  }
     region: content

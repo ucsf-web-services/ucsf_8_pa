@@ -87,7 +87,7 @@
   margin-left: 10%;
 }
 
-.media-coverage__list-title {
+.media-coverage__list .media-coverage__list-title {
   @include fs-heading;
 
   margin: 0;
@@ -179,4 +179,26 @@
 
   margin: 0 auto;
   max-width: $xl;
+}
+
+// Search
+.news-search {
+  .home-search__presearch-links {
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 840px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .home-search__advanced-search {
+    margin-left: auto;
+
+    a {
+      @include background-image('filter.svg', left);
+      margin-right: 0;
+      background-size: 16px 16px;
+    }
+  }
 }

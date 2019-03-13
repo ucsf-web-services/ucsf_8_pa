@@ -1,0 +1,14 @@
+{% set classes = [
+  'promo-list__card',
+  'promo-list__card-two',
+
+] %}
+
+<li {{ attributes.addClass(classes)}} style="background-image: url('{{ file_url(paragraph.field_image_media.entity.field_media_image.entity.uri.value) }}')">
+  <a href="{{ paragraph.field_promo_cta.value.0.uri }}">
+    <div class="promo-list__card-two-content overlay-{{ paragraph.field_textbox_background_color.entity.label|clean_class }}">
+      <div class="promo-list__card-content">{{ content.field_promo_text }}</div>
+      <p class="promo-list__card-more"><span href="{{ paragraph.field_promo_cta.value.0.uri }}" class="link link--cta">{{ paragraph.field_promo_cta.value.0.title }}</span></p>
+    </div>
+  </a>
+</li>
