@@ -85,7 +85,7 @@
   }
 }
 
-.field-banner-description { // PL: .home-banner__subheading
+.field-banner-description, .field-banner-description p { // PL: .home-banner__subheading
   margin: 0;
 }
 
@@ -191,9 +191,13 @@
 
   grid-template-rows: repeat(3, auto);
   max-width: 1360px;
-
-  li {
-    margin-bottom: $space-two;
+  
+  ul {
+    margin-bottom: 0;
+    
+    li {
+      margin-bottom: $space-two;
+    }
   }
 }
 
@@ -261,6 +265,9 @@
 
 .home-search .home-search__title {
   @include fs-heading;
+  
+  margin-top: 56px;
+  margin-bottom: 16px;
 }
 
 .home-search__form {
