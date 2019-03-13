@@ -4455,21 +4455,23 @@ textarea {
 .icon-heart,
 .icon-comprehensive,
 .icon-media,
-.icon-microscope {
+.icon-microscope,
+.icon-directions,
+.icon-transit {
   content: ' ';
   background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
   background-size: 48px;
   height: 48px;
   width: 48px; }
 
-a.icon-education, a.icon-doctor, a.icon-campus, a.icon-money, a.icon-awards, a.icon-support, a.icon-caduceus, a.icon-heart, a.icon-comprehensive, a.icon-media, a.icon-microscope {
+a.icon-education, a.icon-doctor, a.icon-campus, a.icon-money, a.icon-awards, a.icon-support, a.icon-caduceus, a.icon-heart, a.icon-comprehensive, a.icon-media, a.icon-microscope, a.icon-directions, a.icon-transit {
   content: ' ';
   background-size: 32px;
   height: auto;
   width: auto;
   padding-left: 40px;
   display: inline-block; }
-  a.icon-education:hover, a.icon-doctor:hover, a.icon-campus:hover, a.icon-money:hover, a.icon-awards:hover, a.icon-support:hover, a.icon-caduceus:hover, a.icon-heart:hover, a.icon-comprehensive:hover, a.icon-media:hover, a.icon-microscope:hover {
+  a.icon-education:hover, a.icon-doctor:hover, a.icon-campus:hover, a.icon-money:hover, a.icon-awards:hover, a.icon-support:hover, a.icon-caduceus:hover, a.icon-heart:hover, a.icon-comprehensive:hover, a.icon-media:hover, a.icon-microscope:hover, a.icon-directions:hover, a.icon-transit:hover {
     text-decoration: underline; }
 
 .icon-doctor {
@@ -4501,6 +4503,12 @@ a.icon-education, a.icon-doctor, a.icon-campus, a.icon-money, a.icon-awards, a.i
 
 .icon-microscope {
   background-image: url(/themes/custom/ucsf/assets/images/card/microscope.svg); }
+
+.icon-directions {
+  background-image: url(/themes/custom/ucsf/assets/images/card/directions.svg); }
+
+.icon-transit {
+  background-image: url(/themes/custom/ucsf/assets/images/card/transit.svg); }
 
 [data-primary-area="pa-about"] figure,
 [data-primary-area="pa-campus-news"] figure,
@@ -5443,7 +5451,9 @@ header .menu--main {
         display: inline; } }
   .quicklinks a {
     color: #052049;
-    text-decoration: none; }
+    text-decoration: none;
+    display: block;
+    cursor: pointer; }
 
 .quicklinks-menu {
   background: #052049;
@@ -6296,16 +6306,18 @@ figure.align-center figcaption {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex; }
-  .homepage .promo-list__card a {
+  .homepage .promo-list__card a.promo-list__card-link {
     padding: 64px 40px;
     -ms-flex-item-align: center;
         -ms-grid-row-align: center;
         align-self: center; }
   .homepage .promo-list__card::after {
     background: transparent; }
+  .homepage .promo-list__card .field-promo-text p {
+    margin: 0; }
   .homepage .promo-list__card .promo-list__card-more {
     margin-bottom: 0;
-    margin-top: 4px; }
+    margin-top: 12px; }
 
 .homepage .promo-list__card.promo-list__card-two a {
   -ms-flex-item-align: end;
@@ -6351,7 +6363,8 @@ figure.align-center figcaption {
 
 .promo-list__card-two .overlay-purple,
 .promo-list__card-two .overlay-teal,
-.promo-list__card-two .overlay-blue {
+.promo-list__card-two .overlay-blue,
+.promo-list__card-two .overlay-green {
   -webkit-box-shadow: inset 0 0 0 1000px #716fb2;
           box-shadow: inset 0 0 0 1000px #716fb2; }
 
@@ -6362,6 +6375,10 @@ figure.align-center figcaption {
 .promo-list__card-two .overlay-blue {
   -webkit-box-shadow: inset 0 0 0 1000px #007cbe;
           box-shadow: inset 0 0 0 1000px #007cbe; }
+
+.promo-list__card-two .overlay-green {
+  -webkit-box-shadow: inset 0 0 0 1000px #6ea400;
+          box-shadow: inset 0 0 0 1000px #6ea400; }
 
 .lastest-events-list {
   grid-column: 1/-1;
@@ -6909,6 +6926,8 @@ figure.align-center figcaption {
     .map-home {
       -ms-grid-columns: (1fr)[12];
           grid-template-columns: repeat(12, 1fr); } }
+  .map-home li {
+    margin-bottom: 16px; }
 
 .field-map-image {
   grid-column: 1/-1;
@@ -7044,7 +7063,7 @@ figure.align-center figcaption {
 .home-talking-about {
   background: #fff;
   margin-top: 80px; }
-  .home-talking-about .card-three-up .field-featured-content {
+  .home-talking-about .card-three-up {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -7060,9 +7079,11 @@ figure.align-center figcaption {
     margin: 0 auto;
     max-width: 1280px; }
     @media (min-width: 600px) {
-      .home-talking-about .card-three-up .field-featured-content {
+      .home-talking-about .card-three-up {
         -ms-grid-columns: (1fr)[3];
             grid-template-columns: repeat(3, 1fr); } }
+    .home-talking-about .card-three-up .news-card {
+      margin-bottom: 40px; }
 
 .home-talking-about__title {
   -webkit-font-smoothing: antialiased;
@@ -7974,10 +7995,10 @@ figure.align-center figcaption {
   .overlay-gray .field-content-promotional-conten .link--cta {
     margin-top: 7px; }
 
-.field__item .promo-list__card {
+.promo-list__card {
   color: #fff;
   position: relative; }
-  .field__item .promo-list__card::after {
+  .promo-list__card::after {
     content: ' ';
     position: absolute;
     bottom: 0;
@@ -7985,32 +8006,32 @@ figure.align-center figcaption {
     background: #fff;
     width: 32px;
     height: 32px; }
-  .homepage .field__item .promo-list__card::after {
+  .homepage .promo-list__card::after {
     background: transparent; }
-  .field__item .promo-list__card a.promo-list__card-link {
+  .promo-list__card a.promo-list__card-link {
     color: #fff;
     text-decoration: none;
     display: block;
     padding: 80px 32px; }
-  .field__item .promo-list__card .field-promo-text {
+  .promo-list__card .field-promo-text {
     font-size: 24px;
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     margin: 1em 0; }
-  .field__item .promo-list__card .promo-list__card-more {
+  .promo-list__card .promo-list__card-more {
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     margin: 1em 0;
     line-height: 1;
     margin-bottom: 24px; }
-    .field__item .promo-list__card .promo-list__card-more a {
+    .promo-list__card .promo-list__card-more a {
       color: #fff; }
-      .field__item .promo-list__card .promo-list__card-more a:hover {
+      .promo-list__card .promo-list__card-more a:hover {
         color: #fff;
         text-decoration: underline; }
-    .field__item .promo-list__card .promo-list__card-more .link--cta {
+    .promo-list__card .promo-list__card-more .link--cta {
       background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat right center transparent;
       background-size: 14px 10px;
       color: #fff; }
-  .field__item .promo-list__card .promo-list__card-title {
+  .promo-list__card .promo-list__card-title {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -8023,14 +8044,14 @@ figure.align-center figcaption {
     margin: 0;
     color: #fff;
     font-size: 12px; }
-    .field__item .promo-list__card .promo-list__card-title::after {
+    .promo-list__card .promo-list__card-title::after {
       content: ' ';
       display: inline-block;
       width: 40px;
       height: 1px;
       background: #052049;
       margin: 0 5px 3px; }
-    .field__item .promo-list__card .promo-list__card-title::after {
+    .promo-list__card .promo-list__card-title::after {
       background: #fff; }
 
 .promo-list__card-two,
