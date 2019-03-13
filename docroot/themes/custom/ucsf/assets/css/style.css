@@ -7906,9 +7906,22 @@ figure.align-center figcaption {
       letter-spacing: -2px; } }
 
 .paragraph--type--gallery {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[1];
+      grid-template-columns: repeat(1, 1fr);
+  grid-gap: 5%;
+  grid-row-gap: 0;
   grid-column: 1 / -1;
-  overflow: hidden; }
+  overflow: hidden;
+  position: relative; }
+  @media (min-width: 600px) {
+    .paragraph--type--gallery {
+      -ms-grid-columns: (1fr)[15];
+          grid-template-columns: repeat(15, 1fr);
+      grid-gap: 0; } }
   .paragraph--type--gallery .gallery-container {
+    background: #fff;
     grid-column: 3 / -3;
     overflow: hidden;
     padding-right: 16px;
@@ -7954,7 +7967,7 @@ figure.align-center figcaption {
   padding: 10px;
   position: absolute;
   text-indent: -999px;
-  top: 40%;
+  top: 200px;
   z-index: 700; }
   .field-gallery-items button:after {
     content: none; }

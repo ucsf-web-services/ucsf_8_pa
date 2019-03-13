@@ -1,8 +1,11 @@
 .paragraph--type--gallery {
+  @include grid-fifteen;
   grid-column: 1 / -1;
   overflow: hidden;
+  position: relative;
 
   .gallery-container {
+    background: $c-white;
     grid-column: 3 / -3;
     overflow: hidden;
     padding-right: 16px;
@@ -51,7 +54,7 @@
     padding: 10px;
     position: absolute;
     text-indent: -999px;
-    top: 40%;
+    top: 200px;
     z-index: $z-gallery;
 
     &:after {
