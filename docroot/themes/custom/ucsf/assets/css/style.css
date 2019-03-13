@@ -7895,16 +7895,18 @@ figure.align-center figcaption {
       letter-spacing: -2px; } }
 
 .paragraph--type--gallery {
-  background: #fff;
-  grid-column: 3 / -3;
-  overflow: hidden;
-  padding-right: 16px;
-  min-width: 0;
-  min-height: 0; }
-  @media (min-width: 480px) {
-    .paragraph--type--gallery {
-      overflow: visible;
-      padding: 0 11%; } }
+  grid-column: 1 / -1;
+  overflow: hidden; }
+  .paragraph--type--gallery .gallery-container {
+    grid-column: 3 / -3;
+    overflow: hidden;
+    padding-right: 16px;
+    min-width: 0;
+    min-height: 0; }
+    @media (min-width: 480px) {
+      .paragraph--type--gallery .gallery-container {
+        overflow: visible;
+        padding: 0 11%; } }
 
 .field-gallery-items .slick-list {
   overflow: visible; }

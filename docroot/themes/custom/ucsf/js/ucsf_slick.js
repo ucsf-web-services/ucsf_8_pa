@@ -3,8 +3,10 @@
   Drupal.behaviors.gallery = {
     attach: function (context) {
   
-      $('.paragraph--type--gallery > .field-gallery-items').slick();
-      $('.main-content.narrow-page').css('overflow', 'hidden');
+      $('.paragraph--type--gallery .gallery-container > .field-gallery-items').slick();
+  
+      var windowWidth = $(window).width();
+      $('.paragraph--type--gallery').css('width', windowWidth);
       
     }
   };

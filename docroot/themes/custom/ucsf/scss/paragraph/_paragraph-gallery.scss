@@ -1,14 +1,18 @@
 .paragraph--type--gallery {
-  background: $c-white;
-  grid-column: 3 / -3;
+  grid-column: 1 / -1;
   overflow: hidden;
-  padding-right: 16px;
-  min-width: 0;
-  min-height: 0;
 
-  @include breakpoint($bp-small) {
-    overflow: visible;
-    padding: 0 11%;
+  .gallery-container {
+    grid-column: 3 / -3;
+    overflow: hidden;
+    padding-right: 16px;
+    min-width: 0;
+    min-height: 0;
+
+    @include breakpoint($bp-small) {
+      overflow: visible;
+      padding: 0 11%;
+    }
   }
 }
 
@@ -105,3 +109,4 @@
     }
   }
 }
+
