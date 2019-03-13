@@ -4,5 +4,20 @@
   <article{{ attributes.addClass('news-card') }}>
 {% endblock wrapper_top %}
 {% block wrapper_bottom %}
+    <p class="news-card__content">
+
+      {% if content.field_text_body|render|striptags != '' %}
+        {# Feature Paragraph - Banner Description #}
+        {{ content.field_text_body }}
+      {% else %}
+        {# Feature Paragraph > News Article (News) > Sub Title #}
+        {{ drupal_field('field_sub_title', 'node', paragraph.field_news_article.target_id) }}
+      {% endif %}
+    </p>
+    <p class="news-card__more">
+      {# todo conditional link and link text needed. #}
+      <a href="{{ link }}" class="link link--cta">{{ paragraph.banner.cta_text.value}}</a>
+    </p>
+    </header>
   </article>
 {% endblock wrapper_bottom %}
