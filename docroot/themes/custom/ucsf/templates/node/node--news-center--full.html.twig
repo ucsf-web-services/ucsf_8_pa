@@ -27,7 +27,10 @@
       {{ content.field_featured_media_article }}
     </div>
   </div>
-  {{ drupal_view('articles_for_news_center', 'block_1') }}
+  <div class="news-list">
+    <h2 class="news-list__title">{{ "The Latest"|t }}</h2>
+    {{ drupal_view('articles_for_news_center', 'block_1') }}
+  </div>
   {% include '@theme/misc/video.twig' %}
   {% include '@theme/homepage/homepage-twitter.twig' %}
 </main>
