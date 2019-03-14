@@ -13,15 +13,22 @@ bundle: gallery
 mode: default
 content:
   field_gallery_items:
-    type: entity_reference_paragraphs
+    type: paragraphs
     weight: 0
     settings:
       title: Paragraph
       title_plural: Paragraphs
-      edit_mode: open
+      edit_mode: closed
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: ''
+      default_paragraph_type: gallery_item
+      features:
+        duplicate: duplicate
+        collapse_edit_all: collapse_edit_all
+        add_above: '0'
     third_party_settings: {  }
     region: content
 hidden:
