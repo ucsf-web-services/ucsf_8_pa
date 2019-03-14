@@ -11,9 +11,7 @@
 <ul class="news-card__byline">
   {% if source %}
     <li class="news-card__media">{{ source }}</li>
-  {% endif %}
-
-  {% if primary_area %}
+  {% elseif primary_area %}
     <li class="news-card__primary-area" data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">{{ drupal_field('field_primary_area', 'node', paragraph.field_news_article.target_id) }}</li>
   {% endif %}
   <li class="news-card__date article-header__date">{{ drupal_field('field_date_and_time', 'node', paragraph.field_news_article.target_id) }}</li>
