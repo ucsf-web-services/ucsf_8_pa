@@ -1,0 +1,7 @@
+{% extends 'field.html.twig' %}
+{% block multiple_item_no_label %}
+  <{{ tag_wrapper }}{{ attributes.addClass(classes) }}>
+  {% for item in items %}
+    <{{ tag_item }}{{ item.attributes }}>{{ item.content }}</{{ tag_item }}>
+  {% endfor %}
+{% endblock multiple_item_no_label %}
