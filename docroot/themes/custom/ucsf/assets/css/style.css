@@ -5462,7 +5462,7 @@ header .menu--main {
     border: 0;
     text-decoration: none; }
 
-.quicklinks {
+.quicklinks-trigger {
   background: #fff;
   text-align: center;
   font-size: 12px;
@@ -5478,30 +5478,26 @@ header .menu--main {
   width: 144px;
   z-index: 900; }
   @media (min-width: 600px) {
-    .quicklinks {
-      bottom: auto;
-      grid-column: -2/-1;
-      grid-row: 1/-1;
-      height: auto;
-      -ms-grid-column-align: end;
-          justify-self: end;
+    .quicklinks-trigger {
+      top: 42px;
+      height: calc(100vh - 42px);
       padding: 0;
-      position: static;
-      right: auto;
+      position: absolute;
+      right: 0;
       text-orientation: mixed;
+      width: auto;
       -webkit-writing-mode: vertical-rl;
           -ms-writing-mode: tb-rl;
-              writing-mode: vertical-rl;
-      width: auto; } }
+              writing-mode: vertical-rl; } }
   @media (min-width: 600px) {
-    .quicklinks .fa-caret-up {
+    .quicklinks-trigger .fa-caret-up {
       display: none; } }
-  .quicklinks .fa-caret-right {
+  .quicklinks-trigger .fa-caret-right {
     display: none; }
     @media (min-width: 600px) {
-      .quicklinks .fa-caret-right {
+      .quicklinks-trigger .fa-caret-right {
         display: inline; } }
-  .quicklinks a {
+  .quicklinks-trigger a {
     color: #052049;
     text-decoration: none;
     display: block;

@@ -1,4 +1,12 @@
 .quicklinks {
+  &.js-quicklinks-open {
+    @include breakpoint($bp-medium) {
+
+    }
+  }
+}
+
+.quicklinks-trigger {
   background: $white;
   text-align: center;
   font-size: $font-size-xxsm;
@@ -15,17 +23,14 @@
   z-index: $z-quicklinks-menu;
 
   @include breakpoint($bp-medium) {
-    bottom: auto;
-    grid-column: -2/-1;
-    grid-row: 1/-1;
-    height: auto;
-    justify-self: end;
+    top: 42px;
+    height: calc(100vh - 42px) ;
     padding: 0;
-    position: static;
-    right: auto;
+    position: absolute;
+    right: 0;
     text-orientation: mixed;
-    writing-mode: vertical-rl;
     width: auto;
+    writing-mode: vertical-rl;
   }
 
   .fa-caret-up {

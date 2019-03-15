@@ -5,8 +5,9 @@
   Drupal.behaviors.quicklinks = {
     attach: function attach(context) {
 
-      $(".quicklinks, .quicklinks-close", context).click(function () {
+      $(".quicklinks-trigger, .quicklinks-close", context).click(function () {
         $(".quicklinks-menu").toggleClass('js-quicklinks-open');
+        $(".quicklinks").toggleClass('js-quicklinks-open');
       });
     }
   };
