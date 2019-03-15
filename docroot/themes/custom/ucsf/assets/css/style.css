@@ -5476,25 +5476,26 @@ header .menu--main {
       top: 35px; } }
   .quicklinks.js-quicklinks-open {
     visibility: visible;
-    width: calc(100% - 16px);
-    right: calc(100% - 32px); }
+    width: 100%; }
     @media (min-width: 600px) {
       .quicklinks.js-quicklinks-open {
-        right: calc(50% - 32px); } }
+        right: 0;
+        width: 50%; } }
 
 .quicklinks-trigger {
+  -webkit-transition: .3s ease-out all;
+  transition: .3s ease-out all;
   background: #fff;
   text-align: center;
   font-size: 12px;
   font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   text-transform: uppercase;
+  left: 0;
   letter-spacing: 1px;
-  pointer: cursor;
+  cursor: pointer;
   height: calc(100vh - 42px);
   position: absolute;
   padding: 0;
-  right: 0;
-  top: 42px;
   text-orientation: mixed;
   -webkit-writing-mode: vertical-rl;
       -ms-writing-mode: tb-rl;
@@ -5519,7 +5520,9 @@ header .menu--main {
   margin: 0;
   background: #052049;
   color: #fff;
+  height: calc(100vh - 42px);
   padding: 40px 32px 0;
+  margin-left: 32px;
   visibility: hidden;
   width: 0; }
   .quicklinks-menu ul {
@@ -5533,7 +5536,7 @@ header .menu--main {
     padding: 0; }
   .quicklinks-menu.js-quicklinks-open {
     visibility: visible;
-    width: auto; }
+    width: 100%; }
   .quicklinks-menu a:link {
     color: #fff; }
   .quicklinks-menu a:visited, .quicklinks-menu a:link:visited {

@@ -13,28 +13,28 @@
 
   &.js-quicklinks-open {
     visibility: visible;
-    width: calc(100% - 16px);
-    right: calc(100% - 32px);
+    width: 100%;
 
     @include breakpoint($bp-medium) {
-      right: calc(50% - 32px);
+      right: 0;
+      width: 50%;
     }
   }
 }
 
 .quicklinks-trigger {
+  @include transition;
   background: $white;
   text-align: center;
   font-size: $font-size-xxsm;
   font-family: $font-helvetica-neue-bold;
   text-transform: uppercase;
+  left: 0;
   letter-spacing: 1px;
-  pointer: cursor;
+  cursor: pointer;
   height: calc(100vh - 42px) ;
   position: absolute;
   padding: 0;
-  right: 0;
-  top: 42px;
   text-orientation: mixed;
   writing-mode: vertical-rl;
   width: auto;
@@ -66,13 +66,15 @@
   @include ul-item-list-reset;
   background: $c-navy;
   color: $c-white;
+  height: calc(100vh - 42px) ;
   padding: 40px 32px 0;
+  margin-left: 32px;
   visibility: hidden;
   width: 0;
 
   &.js-quicklinks-open {
     visibility: visible;
-    width: auto;
+    width: 100%;
   }
 
   a {
