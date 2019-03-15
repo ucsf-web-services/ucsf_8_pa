@@ -1,0 +1,11 @@
+{# todo
+  Need to move all templates from the
+  single-no-label folder to extend this instead.
+  In retrospect, should have used the fences module.
+#}
+{% extends 'field.html.twig' %}
+
+{% block single_item_no_label %}
+  <{{ tag }}{{ attributes.addClass(classes) }}>{{ item.content }}</{{ tag }}>
+{% endblock single_item_no_label %}
+

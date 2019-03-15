@@ -22,8 +22,10 @@
           {# Feature Paragraph - Overwrite Image #}
           {{ content.field_image_media }}
         {% else %}
+          {% block article_image %}
           {# Feature Paragraph > News Article (News) > Card Image #}
           {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id) }}
+          {% endblock article_image %}
         {% endif %}
       </div>
 

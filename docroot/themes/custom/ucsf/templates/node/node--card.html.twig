@@ -1,3 +1,13 @@
+{# Display available on News and News Pagckage content types #}
+{# Display implemented on:
+ Fields:
+  News Center > Support Articles (news_center.field_support_articles)
+ Views:
+  articles_by_author
+  articles_by_term
+  articles_for_news_center
+  #}
+
 {% set classes = ['news-card'] %}
 
 {% set primary_area = node.field_primary_area.0.entity.label|clean_class %}
@@ -23,7 +33,11 @@
 
     <header class="news-card__copy">
       {% include '@theme/article/byline.twig' %}
-      <h2>{{ label }}</h2>
+      {% if content.field_short_title|render|striptags != ''  %}
+        <h2>{{ content.field_short_title }}</h2>
+      {% else %}
+        <h2>{{ label }}</h2>
+      {% endif %}
     </header>
   </a>
 </article>

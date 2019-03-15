@@ -11,9 +11,11 @@ dependencies:
     - field.field.paragraph.featured.field_news_article
     - field.field.paragraph.featured.field_text_body
     - field.field.paragraph.featured.field_title
+    - image.style.featured_news_card__image
     - paragraphs.paragraphs_type.featured
   module:
     - link
+    - media
     - text
 id: paragraph.featured.alt_2
 targetEntityType: paragraph
@@ -39,10 +41,10 @@ content:
     weight: 4
     label: hidden
     settings:
-      view_mode: default
-      link: false
+      image_style: featured_news_card__image
+      image_link: ''
     third_party_settings: {  }
-    type: entity_reference_entity_view
+    type: media_thumbnail
     region: content
   field_link:
     weight: 3
