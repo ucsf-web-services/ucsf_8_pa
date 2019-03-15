@@ -6,6 +6,17 @@
   <!-- nid: {{ paragraph.field_news_article.target_id }}  -->
   <article{{ attributes.addClass('news-card') }}>
 {% endblock wrapper_top %}
+
+{% block article_image %}
+  {# Feature Paragraph > News Article (News) > Card Image #}
+  {% set card_image_uri = paragraph.field_news_article.entity.field_card_image.0.entity.field_media_image.entity.fileuri %}
+  <figure>
+    <picture>
+      <img src="{{ card_image_uri|image_style('featured_news_card__image') }}"/>
+    </picture>
+  </figure>
+{% endblock article_image %}
+
 {% block wrapper_bottom %}
 
     {% if content.field_text_body|render|striptags != '' %}
