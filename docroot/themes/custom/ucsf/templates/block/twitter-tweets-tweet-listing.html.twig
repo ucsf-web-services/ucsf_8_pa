@@ -1,0 +1,15 @@
+<ol class="twitter__tweets">
+  {% for tweet in params.tweets %}
+  <li>
+    <div style="width: 263px,font-family:HelveticaNeue">
+      <img class="oval" sytle="width:40px,float:left" src='{% if tweet.retweeted_status.user.profile_image_url %}{{tweet.retweeted_status.user.profile_image_url }}{% else %}{{ tweet.user.profile_image_url }}{% endif %}'/>
+        <p style="font-size:18px">{% if tweet.retweeted_status.user.name %} {{tweet.retweeted_status.user.name}} {% else %} {{ tweet.user.name }} {% endif %}
+        </br>{% if tweet.retweeted_status.user.screen_name %}@{{tweet.retweeted_status.user.screen_name}}{% else %}@{{tweet.user.screen_name}}{% endif %} {{ tweet.created_at|time_diff}}</p>
+        {# If hashtags will be in Tweets it will appear else nothing will show up. #}
+        {# Other Tweets Information can be fetched like Followers, Status_count... #}
+        <p style="font-size:14px">{% if tweet.retweeted_status.text %}{{tweet.retweeted_status.text}}{% else %}{{ tweet.text }}{% endif %}{% if tweet.retweeted_status.entities.hashtag %} {{tweet.retweeted_status.entities.hashtag}}{% else %} {{ tweet.entities.hashtags }}{% endif %}</p>
+    </div>
+  </li>
+  {% endfor %}
+</ol>
+
