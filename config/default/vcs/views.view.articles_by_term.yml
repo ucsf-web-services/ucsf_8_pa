@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.card
     - node.type.article
+    - taxonomy.vocabulary.areas
     - taxonomy.vocabulary.tags
     - taxonomy.vocabulary.topics
   module:
@@ -139,6 +140,30 @@ display:
           entity_field: type
           plugin_id: bundle
       sorts:
+        field_tags_target_id:
+          id: field_tags_target_id
+          table: node__field_tags
+          field: field_tags_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          plugin_id: standard
+        field_topics_target_id:
+          id: field_topics_target_id
+          table: node__field_topics
+          field: field_topics_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          plugin_id: standard
         field_date_and_time_value:
           id: field_date_and_time_value
           table: node__field_date_and_time
@@ -176,9 +201,10 @@ display:
             node: true
             limit: true
             vids:
+              areas: areas
               tags: tags
               topics: topics
-            anyall: ','
+            anyall: +
             term_page: '0'
           default_argument_skip_url: false
           summary_options:
