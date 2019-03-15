@@ -1,0 +1,23 @@
+uuid: 3598714a-5630-4d72-90b5-1eaf1c3a2d76
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: narrow_full_pattern
+label: 'Paths for Narrow/Full page'
+type: 'canonical_entities:node'
+pattern: '[node:title]'
+selection_criteria:
+  76f736df-9389-451c-a9d2-5ad858026120:
+    id: node_type
+    bundles:
+      full_width_page: full_width_page
+      narrow_page: narrow_page
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 76f736df-9389-451c-a9d2-5ad858026120
+selection_logic: and
+weight: -5
+relationships: {  }
