@@ -1,7 +1,23 @@
 .quicklinks {
-  &.js-quicklinks-open {
-    @include breakpoint($bp-medium) {
+  @include transition;
+  height: calc(100vh - 47px);
+  position: absolute;
+  right: 0;
+  top: 89px;
+  width: 32px;
+  z-index: $z-quicklinks-menu;
 
+  @include breakpoint($bp-medium) {
+    top: 35px;
+  }
+
+  &.js-quicklinks-open {
+    visibility: visible;
+    width: calc(100% - 16px);
+    right: calc(100% - 32px);
+
+    @include breakpoint($bp-medium) {
+      right: calc(50% - 32px);
     }
   }
 }
@@ -14,24 +30,15 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   pointer: cursor;
-  bottom: 0;
-  height: 40px;
-  position: fixed;
-  padding: 12px 16px;
+  height: calc(100vh - 42px) ;
+  position: absolute;
+  padding: 0;
   right: 0;
-  width: 144px;
+  top: 42px;
+  text-orientation: mixed;
+  writing-mode: vertical-rl;
+  width: auto;
   z-index: $z-quicklinks-menu;
-
-  @include breakpoint($bp-medium) {
-    top: 42px;
-    height: calc(100vh - 42px) ;
-    padding: 0;
-    position: absolute;
-    right: 0;
-    text-orientation: mixed;
-    width: auto;
-    writing-mode: vertical-rl;
-  }
 
   .fa-caret-up {
     @include breakpoint($bp-medium) {
@@ -56,27 +63,16 @@
 }
 
 .quicklinks-menu {
-  @include transition;
   @include ul-item-list-reset;
   background: $c-navy;
   color: $c-white;
-  height: calc(100vh - 28px);
   padding: 40px 32px 0;
-  position: fixed;
-  right: 0;
-  top: 100vh;
   visibility: hidden;
-  width: calc(100% - 16px);
-  z-index: $z-quicklinks-menu;
-
-  @include breakpoint($bp-medium) {
-    top: auto;
-    right: auto;
-  }
+  width: 0;
 
   &.js-quicklinks-open {
-    top: 28px;
     visibility: visible;
+    width: auto;
   }
 
   a {

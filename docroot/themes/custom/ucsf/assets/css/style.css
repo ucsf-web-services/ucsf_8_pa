@@ -5462,6 +5462,26 @@ header .menu--main {
     border: 0;
     text-decoration: none; }
 
+.quicklinks {
+  -webkit-transition: .3s ease-out all;
+  transition: .3s ease-out all;
+  height: calc(100vh - 47px);
+  position: absolute;
+  right: 0;
+  top: 89px;
+  width: 32px;
+  z-index: 900; }
+  @media (min-width: 600px) {
+    .quicklinks {
+      top: 35px; } }
+  .quicklinks.js-quicklinks-open {
+    visibility: visible;
+    width: calc(100% - 16px);
+    right: calc(100% - 32px); }
+    @media (min-width: 600px) {
+      .quicklinks.js-quicklinks-open {
+        right: calc(50% - 32px); } }
+
 .quicklinks-trigger {
   background: #fff;
   text-align: center;
@@ -5470,25 +5490,17 @@ header .menu--main {
   text-transform: uppercase;
   letter-spacing: 1px;
   pointer: cursor;
-  bottom: 0;
-  height: 40px;
-  position: fixed;
-  padding: 12px 16px;
+  height: calc(100vh - 42px);
+  position: absolute;
+  padding: 0;
   right: 0;
-  width: 144px;
+  top: 42px;
+  text-orientation: mixed;
+  -webkit-writing-mode: vertical-rl;
+      -ms-writing-mode: tb-rl;
+          writing-mode: vertical-rl;
+  width: auto;
   z-index: 900; }
-  @media (min-width: 600px) {
-    .quicklinks-trigger {
-      top: 42px;
-      height: calc(100vh - 42px);
-      padding: 0;
-      position: absolute;
-      right: 0;
-      text-orientation: mixed;
-      width: auto;
-      -webkit-writing-mode: vertical-rl;
-          -ms-writing-mode: tb-rl;
-              writing-mode: vertical-rl; } }
   @media (min-width: 600px) {
     .quicklinks-trigger .fa-caret-up {
       display: none; } }
@@ -5504,19 +5516,12 @@ header .menu--main {
     cursor: pointer; }
 
 .quicklinks-menu {
-  -webkit-transition: .3s ease-out all;
-  transition: .3s ease-out all;
   margin: 0;
   background: #052049;
   color: #fff;
-  height: calc(100vh - 28px);
   padding: 40px 32px 0;
-  position: fixed;
-  right: 0;
-  top: 100vh;
   visibility: hidden;
-  width: calc(100% - 16px);
-  z-index: 900; }
+  width: 0; }
   .quicklinks-menu ul {
     margin: 0; }
   .quicklinks-menu li {
@@ -5526,13 +5531,9 @@ header .menu--main {
     line-height: inherit;
     list-style: none;
     padding: 0; }
-  @media (min-width: 600px) {
-    .quicklinks-menu {
-      top: auto;
-      right: auto; } }
   .quicklinks-menu.js-quicklinks-open {
-    top: 28px;
-    visibility: visible; }
+    visibility: visible;
+    width: auto; }
   .quicklinks-menu a:link {
     color: #fff; }
   .quicklinks-menu a:visited, .quicklinks-menu a:link:visited {
