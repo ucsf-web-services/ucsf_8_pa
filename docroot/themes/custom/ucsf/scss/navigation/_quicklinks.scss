@@ -12,6 +12,7 @@
   padding: 12px 16px;
   right: 0;
   width: 144px;
+  z-index: $z-quicklinks-menu;
 
   @include breakpoint($bp-medium) {
     bottom: auto;
@@ -50,25 +51,27 @@
 }
 
 .quicklinks-menu {
+  @include transition;
   @include ul-item-list-reset;
   background: $c-navy;
-  color: white;
-  display: none;
+  color: $c-white;
+  height: calc(100vh - 28px);
   padding: 40px 32px 0;
-  position: absolute;
+  position: fixed;
   right: 0;
-  top: 28px;
+  top: 100vh;
+  visibility: hidden;
   width: calc(100% - 16px);
   z-index: $z-quicklinks-menu;
 
   @include breakpoint($bp-medium) {
-    position: relative;
     top: auto;
     right: auto;
   }
 
   &.js-quicklinks-open {
-    display: block;
+    top: 28px;
+    visibility: visible;
   }
 
   a {
