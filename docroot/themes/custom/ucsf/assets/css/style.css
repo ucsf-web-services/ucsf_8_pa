@@ -5033,6 +5033,23 @@ a.icon-education, a.icon-doctor, a.icon-campus, a.icon-money, a.icon-awards, a.i
   max-width: 1280px;
   padding-bottom: 80px; }
 
+dom-twocolumn-layout .column1, dom-twocolumn-layout .column2, dom-twocolumn-layout .column3, dom-threecolumn-layout .column1, dom-threecolumn-layout .column2, dom-threecolumn-layout .column3 {
+  color: #121a31; }
+  dom-twocolumn-layout .column1 > :first-child, dom-twocolumn-layout .column2 > :first-child, dom-twocolumn-layout .column3 > :first-child, dom-threecolumn-layout .column1 > :first-child, dom-threecolumn-layout .column2 > :first-child, dom-threecolumn-layout .column3 > :first-child {
+    margin-top: 0; }
+
+dom-twocolumn-layout .column1, dom-threecolumn-layout .column1 {
+  padding-right: 10px; }
+
+dom-twocolumn-layout .column2, dom-threecolumn-layout .column2 {
+  padding-left: 10px; }
+
+dom-threecolumn-layout .column2 {
+  padding-right: 10px; }
+
+dom-threecolumn-layout .column3 {
+  padding-left: 10px; }
+
 .footer-ctas-wrapper {
   grid-column: 1/-1;
   margin-top: 80px;
@@ -5266,7 +5283,7 @@ header .menu--main {
       overflow: visible; }
   [block="block-ucsf-main-menu-desktop"] .menu-child--wrapper {
     background: #f2f4f6;
-    height: 520px;
+    height: auto;
     right: 0;
     z-index: 1000;
     width: 999px; }
@@ -5290,7 +5307,8 @@ header .menu--main {
     -webkit-transform-origin: 13px 12px 5px;
             transform-origin: 13px 12px 5px;
     padding: 0 24px;
-    width: 520px; }
+    width: 520px;
+    margin-top: 1px; }
     [block="block-ucsf-main-menu-desktop"] [data-level="level-0"] > .menu-child--label::after {
       content: ' ';
       display: inline-block;
@@ -7734,44 +7752,53 @@ figure.align-center figcaption {
       margin-bottom: 0;
       padding-bottom: 0; }
 
-.layout-columns__2 .field-content-wrapper-content {
-  list-style: none;
-  grid-column: 1/-1;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (1fr)[2];
-      grid-template-columns: repeat(2, 1fr);
-  grid-auto-rows: auto;
-  grid-gap: 5%;
-  grid-row-gap: 0;
+.layout-columns__2 {
   padding: 80px;
   padding-bottom: 0; }
+  .layout-columns__2 .layout__heading {
+    margin-bottom: 32px; }
+  .layout-columns__2 .field-content-wrapper-content {
+    list-style: none;
+    grid-column: 1/-1;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (1fr)[2];
+        grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 5%;
+    grid-row-gap: 0; }
 
-.layout-columns__3 .field-content-wrapper-content {
-  list-style: none;
-  grid-column: 1/-1;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (1fr)[3];
-      grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: auto;
-  grid-gap: 5%;
-  grid-row-gap: 0;
+.layout-columns__3 {
   padding: 80px;
   padding-bottom: 0; }
+  .layout-columns__3 .layout__heading {
+    margin-bottom: 32px; }
+  .layout-columns__3 .field-content-wrapper-content {
+    list-style: none;
+    grid-column: 1/-1;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (1fr)[3];
+        grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 5%;
+    grid-row-gap: 0; }
 
-.layout-columns__4 .field-content-wrapper-content {
-  list-style: none;
-  grid-column: 1/-1;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (1fr)[4];
-      grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: auto;
-  grid-gap: 5%;
-  grid-row-gap: 0;
+.layout-columns__4 {
   padding: 80px;
   padding-bottom: 0; }
+  .layout-columns__4 .layout__heading {
+    margin-bottom: 32px; }
+  .layout-columns__4 .field-content-wrapper-content {
+    list-style: none;
+    grid-column: 1/-1;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (1fr)[4];
+        grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 5%;
+    grid-row-gap: 0; }
 
 .layout-column {
   margin-bottom: 0; }
