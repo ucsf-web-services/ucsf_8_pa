@@ -19,14 +19,18 @@
  *      - departmentname
  *      - baseaddress
  *      - see API examples for more options
+ *      - more.people - true/false value of if there are more results then displayable
+ * Available variables:
+ *  - searchterm - search term used on the site
  *  - websites  - list of results from websites.ucsf.edu that match search term
  *      - website.title
  *      - website.field_website_url
-        - website.field_display_name
-        - website.field_meta_title
-        - website.body
-
- *  @see UcsfsearchController::content()
+ *      - website.field_display_name
+ *      - website.field_meta_title
+ *      - website.body
+ *  - more.web - true/false value of if there are more results then displayable.
+ *
+ *  @see UcsfsearchController::search()
  */
 #}
 <div class="form-search-block-div">
@@ -34,7 +38,7 @@
         <!-- This was the Google search input box, but didn't allow some things to work right
         <!-- gcse:searchbox enableAutoComplete="true"></gcse:searchbox -->
         <form action="/search" method="get">
-            <input type="text" name="search" id="search" size="32" alt="Search text" class="searchbox" value="{{ searchterm }}" />
+            <input type="text" name="search" id="search" size="32" class="searchbox" value="{{ searchterm }}" />
             <button type="submit">Search</button>
         </form>
         {# We should style these like Zeplin mockup and have them link to other routes #}

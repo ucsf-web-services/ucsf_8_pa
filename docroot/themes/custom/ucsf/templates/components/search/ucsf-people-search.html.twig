@@ -20,12 +20,7 @@
  *      - baseaddress
  *      - see API examples for more options
  *  - websites  - list of results from websites.ucsf.edu that match search term
- *      - website.title
- *      - website.field_website_url
-        - website.field_display_name
-        - website.field_meta_title
-        - website.body
-
+ *
  *  @see UcsfsearchController::content()
  */
 #}
@@ -33,7 +28,7 @@
     <div class="search-box-container">
         <!-- This was the Google search input box, but didn't allow some things to work right
         <!-- gcse:searchbox enableAutoComplete="true"></gcse:searchbox -->
-        <form action="/search" method="get">
+        <form action="/search/people" method="get">
             <input type="text" name="search" id="search" size="32" alt="Search text" class="searchbox" value="{{ searchterm }}" />
             <button type="submit">Search</button>
         </form>
@@ -41,7 +36,7 @@
         <ul id="universalSearchTabs">
             <li><a href="/search?search={{ searchterm }}">All Results</a></li>
             <li><a href="/search/news?search={{ searchterm }}">News</a></li>
-            <li><a href="/search/people?search={{ searchterm }}">People Directory</a></li>
+            <li class="active"><a href="/search/people?search={{ searchterm }}" class="active">People Directory</a></li>
             <li><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
         </ul>
     </div>
@@ -58,30 +53,9 @@
         </li>
         {% endfor %}
         </ul>
+
         {% if more.people %}
             <a>See More People Results</a>
         {% endif %}
-
-    </div>
-    <div id="universalWebsites">
-        <h3>Websites</h3>
-        {% for website in websites %}
-            <li>
-                {{ website.title }} |
-                <a href="{{ website.field_website_url }}" target="_blank">{{ website.field_website_url }}</a>
-                {% if website.field_display_name %}, {{ website.field_display_name }}{% endif %}
-                {% if website.field_meta_title %}, {{ website.field_meta_title }}{% endif %}
-                {% if website.body %}, {{ website.body }}{% endif %}
-            </li>
-        {% endfor %}
-
-        {% if more.web %}
-            <a>See More Website Results</a>
-        {% endif %}
-    </div>
-    <div id="cse">
-        <h3>All Results</h3>
-        <!-- Google Search Results -->
-        <gcse:searchresults-only queryParameterName="search"></gcse:searchresults-only>
     </div>
 </div>

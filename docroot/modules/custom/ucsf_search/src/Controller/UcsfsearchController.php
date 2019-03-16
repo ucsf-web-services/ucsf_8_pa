@@ -133,7 +133,7 @@ class UcsfsearchController extends ControllerBase {
    */
   protected function websiteLookup($search, $limit=3) {
 
-    $base_url = 'http://local.websites.ucsf.edu';
+    $base_url = 'https://www.websites.ucsf.edu';
     //don't search anything under 3 characters, reduce lookup load
     if (strlen($search)<3) {
       return [];
