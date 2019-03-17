@@ -177,6 +177,14 @@ function seven_form_media_form_alter(&$form, FormStateInterface $form_state) {
 }
 
 /**
+ * ALL OF THESE CHANGE BELOW ARE SPECIFIC TO THE WWW.UCSF.EDU PROJECT.
+ *  - edit the entity embed dialog
+ *  - more to come
+ *
+ */
+
+
+/**
  * Hook into the entity_embed_dialog
  * Allow additional styles over left, right, center.
  * Allow the caption to support the WYSIWYG
@@ -186,12 +194,12 @@ function seven_form_media_form_alter(&$form, FormStateInterface $form_state) {
  * @param \Drupal\Core\Form\FormStateInterface $form_state
  */
 function seven_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_state) {
-  /** @var \Drupal\editor\EditorInterface $editor */
+  // \Drupal\editor\EditorInterface $editor
   $editor = $form_state->getBuildInfo()['args'][0];
 
-  /** @var \Drupal\image\Plugin\Filter\FilterImageStyle $filter */
+  // \Drupal\image\Plugin\Filter\FilterImageStyle $filter
   $filter = $editor->getFilterFormat()->filters('filter_image_style');
-
+  //get the allowed image style sets from the Image Style Options patch.
   $styles = $filter->getAllowedImageStyleOptions();
 
   // After getting the allowed image styles, filter out options we don't need.
@@ -203,14 +211,6 @@ function seven_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_s
     }
   }
 
-  /*
-   * Was going to use this to filter on them using Javascript if no other way.
-  $form['attributes']['entity-embed-filter-image-styles'] = array(
-    '#type' => 'hidden',
-    '#value' => Json::encode($styles)
-  );
-  */
-
   // Add the new styles to the Entity Embed popup.
   if (isset($form['attributes']['data-align'])) {
     $form['attributes']['data-align']['#options'] += array (
@@ -220,9 +220,11 @@ function seven_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_s
       'half-image-left-full' => t('Full Bleed Left'),
       'full-bleed-image' => t('Full Bleed')
     );
+    //change the form filed for styles to a select from a radio.
     $form['attributes']['data-align']['#type'] = 'select';
   }
 
+  //change the caption to CkEditor, remove all options but Simple HTML and Plain Text.
   if (isset($form['attributes']['data-caption'])) {
     $form['attributes']['data-caption']['#type'] = 'text_format';
     $form['attributes']['data-caption']['#allowed_formats'] = ['super_basic_html' => 'super_basic_html','plain_text'=>'plain_text'];

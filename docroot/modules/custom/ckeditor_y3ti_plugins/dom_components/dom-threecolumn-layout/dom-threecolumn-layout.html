@@ -23,26 +23,31 @@
         --bg-interactive-red: #EB093C;
         --bg-interactive-yellow: #FFDD00;
         --bg-transparent: transparent;
-        --padding-transparent: 0 !important;
-        --padding-normal: 10px 25px !important;
+        --padding-transparent: 0;
+        --padding-normal: 10px 25px;
       }
       ::slotted([slot=column1]), .column1 {
         padding: var(--column1-padding);
-        margin-bottom: 2% !important;
+        margin-bottom: 2%;
+        /*
         background-color: var(--column1-color);
         color: var(--column1-font-color);
+        */
       }
       ::slotted([slot=column2]), .column2 {
         padding: var(--column2-padding);
-
+        /*
         background-color: var(--column2-color);
         color: var(--column2-font-color);
+        */
       }
       ::slotted([slot=column3]), .column3 {
         padding: var(--column3-padding);
-        margin-top: 2% !important;
+        margin-top: 2%;
+        /*
         background-color: var(--column3-color);
         color: var(--column3-font-color);
+        */
       }
 
       @media (min-width: 769px) {
@@ -51,16 +56,16 @@
         }
         ::slotted([slot=column1]), .column1 {
           flex: 1 var(--column1-size);
-          margin-right: 2% !important;
-          margin-bottom: 0 !important;
+          margin-right: 2%;
+          margin-bottom: 0;
         }
         ::slotted([slot=column2]), .column2 {
           flex: 1 var(--column2-size);
         }
         ::slotted([slot=column3]), .column3 {
           flex: 1 var(--column3-size);
-          margin-left: 2% !important;
-          margin-top: 0 !important;
+          margin-left: 2%;
+          margin-top: 0;
         }
       }
 
@@ -85,7 +90,7 @@
   dom-threecolumn-layout .column1 p:not(.number-highlight),
   dom-threecolumn-layout .column1 a:not(.btn),
   dom-threecolumn-layout .column1 strong {
-    color: var(--column1-font-color) !important;
+    /* color: var(--column1-font-color); */
   }
   dom-threecolumn-layout .column2 h1,
   dom-threecolumn-layout .column2 h2,
@@ -96,7 +101,7 @@
   dom-threecolumn-layout .column2 p:not(.number-highlight),
   dom-threecolumn-layout .column2 a:not(.btn),
   dom-threecolumn-layout .column2 strong {
-    color: var(--column2-font-color) !important;
+    /* color: var(--column2-font-color); */
   }
   dom-threecolumn-layout .column3 h1,
   dom-threecolumn-layout .column3 h2,
@@ -107,7 +112,7 @@
   dom-threecolumn-layout .column3 p:not(.number-highlight),
   dom-threecolumn-layout .column3 a:not(.btn),
   dom-threecolumn-layout .column3 strong {
-    color: var(--column3-font-color) !important;
+    /* color: var(--column3-font-color); */
   }
 </style>
   <script>'use strict';
@@ -171,18 +176,18 @@
         column3Padding = 'transparent';
       }
       this.updateStyles({
-        '--column1-font-color': 'var(--font-' + column1FontColor + ')',
-        '--column1-color': 'var(--bg-' + this.dataColumn1Color + ')',
-        '--column1-size': 'var(--size-' + this.dataColumn1Size + ')',
-        '--column2-font-color': 'var(--font-' + column2FontColor + ')',
-        '--column2-color': 'var(--bg-' + this.dataColumn2Color + ')',
-        '--column2-size': 'var(--size-' + this.dataColumn2Size + ')',
-        '--column3-font-color': 'var(--font-' + column3FontColor + ')',
-        '--column3-color': 'var(--bg-' + this.dataColumn3Color + ')',
-        '--column3-size': 'var(--size-' + this.dataColumn3Size + ')',
-        '--column1-padding': 'var(--padding-' + column1Padding+ ')',
-        '--column2-padding': 'var(--padding-' + column2Padding + ')',
-        '--column3-padding': 'var(--padding-' + column3Padding + ')'
+        //'--column1-font-color': 'var(--font-' + column1FontColor + ')',
+        //'--column1-color': 'var(--bg-' + this.dataColumn1Color + ')',
+        //'--column1-size': 'var(--size-' + this.dataColumn1Size + ')',
+        //'--column2-font-color': 'var(--font-' + column2FontColor + ')',
+        //'--column2-color': 'var(--bg-' + this.dataColumn2Color + ')',
+        //'--column2-size': 'var(--size-' + this.dataColumn2Size + ')',
+        //'--column3-font-color': 'var(--font-' + column3FontColor + ')',
+        //'--column3-color': 'var(--bg-' + this.dataColumn3Color + ')',
+        //'--column3-size': 'var(--size-' + this.dataColumn3Size + ')',
+        //'--column1-padding': 'var(--padding-' + column1Padding+ ')',
+        //'--column2-padding': 'var(--padding-' + column2Padding + ')',
+        //'--column3-padding': 'var(--padding-' + column3Padding + ')'
       });
     }
   });
