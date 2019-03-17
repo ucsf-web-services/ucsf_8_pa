@@ -225,7 +225,11 @@ function seven_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_s
 
   if (isset($form['attributes']['data-caption'])) {
     $form['attributes']['data-caption']['#type'] = 'text_format';
+    $form['attributes']['data-caption']['#allowed_formats'] = ['super_basic_html' => 'super_basic_html','plain_text'=>'plain_text'];
+    $form['attributes']['data-caption']['#format'] = 'super_basic_html';
   }
+
+
 
 }
 
