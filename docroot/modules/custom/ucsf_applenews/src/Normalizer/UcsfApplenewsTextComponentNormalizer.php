@@ -4,6 +4,7 @@ namespace Drupal\ucsf_applenews\Normalizer;
 
 use ChapterThree\AppleNewsAPI\Document\Components\Body;
 use ChapterThree\AppleNewsAPI\Document\Components\Byline;
+use ChapterThree\AppleNewsAPI\Document\Components\EmbedWebVideo;
 use ChapterThree\AppleNewsAPI\Document\Components\Gallery;
 use ChapterThree\AppleNewsAPI\Document\Components\Heading;
 use ChapterThree\AppleNewsAPI\Document\Components\Photo;
@@ -172,7 +173,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
 
       // Toss out tags we don't care about.
       $text = $this->htmlValue($item->get('value')->getValue(),
-        '<blockquote><h1><h2><h3><h4><h5><h6><img><drupal-entity>');
+        '<blockquote><h1><h2><h3><h4><h5><h6><img><drupal-entity><iframe>');
 
       // Parse value and create components for blockquote, headers, etc.
       $inline_components = [];
@@ -182,7 +183,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
         throw new NotNormalizableValueException('Could not parse body HTML.');
       }
       $xp = new \DOMXPath($doc);
-      $xp_query = '//blockquote|//h1|//h2|//h3|//h4|//h5|//h6|//img|//drupal-entity';
+      $xp_query = '//blockquote|//h1|//h2|//h3|//h4|//h5|//h6|//img|//drupal-entity|//iframe';
       /** @var \DOMElement $element */
       foreach ($xp->query($xp_query) as $element) {
         $component = NULL;
@@ -237,6 +238,28 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
                 ->setIgnoreDocumentMargin('both')
                 ->setMargin(new Margin(15, 15));
               $component->setLayout($layout);
+            }
+            break;
+
+          case 'iframe':
+            if ($element->hasAttribute('src')) {
+              $url = $element->getAttribute('src');
+              $url_parsed = parse_url($url);
+              if (preg_match('/(youtube|vimeo)\.com$/', $url_parsed['host'])) {
+                if (empty($url_parsed['scheme'])) {
+                  $url = 'https:' . $url;
+                }
+                $component = new EmbedWebVideo($url);
+              }
+              elseif (!empty($url_parsed['path'])) {
+                $ext = pathinfo($url_parsed['path'], PATHINFO_EXTENSION);
+                if (in_array($ext, ['mp3', 'mov', 'qt'])) {
+                  if (empty($url_parsed['host'])) {
+                    $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
+                  }
+                  $component = new Video($url);
+                }
+              }
             }
             break;
 
