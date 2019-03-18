@@ -302,19 +302,28 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
           if ($element->parentNode->tagName == 'body') {
             $element->parentNode->replaceChild($token, $element);
           }
+          // Nested, insert token after top level ancestor.
           else {
-            $append_after = $element->parentNode;
-            while ($append_after->parentNode->tagName != 'body') {
-              $append_after = $append_after->parentNode;
+            $ancestor = $element->parentNode;
+            $only_child = $ancestor->childNodes->length == 1;
+            while ($ancestor->parentNode->tagName != 'body') {
+              $ancestor = $ancestor->parentNode;
+              $only_child = $only_child &&
+                $ancestor->childNodes->length == 1;
             }
-            if ($append_after->nextSibling) {
-              $append_after->parentNode->insertBefore(
-                $token, $append_after->nextSibling);
+            // Replace ancestor since element is the only descendant.
+            if ($only_child) {
+              $ancestor->parentNode->replaceChild($token, $ancestor);
+            }
+            elseif ($ancestor->nextSibling) {
+              $ancestor->parentNode->insertBefore(
+                $token, $ancestor->nextSibling);
+              $element->parentNode->removeChild($element);
             }
             else {
-              $append_after->parentNode->appendChild($token);
+              $ancestor->parentNode->appendChild($token);
+              $element->parentNode->removeChild($element);
             }
-            $element->parentNode->removeChild($element);
           }
 
         }
