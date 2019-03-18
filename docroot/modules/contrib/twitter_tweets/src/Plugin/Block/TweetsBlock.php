@@ -28,16 +28,16 @@ class TweetsBlock extends BlockBase {  /**
     $screen_name = $config->get('screen_name');
     $tweet_count = $config->get('tweet_count');
     $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-    $getfield = '?screen_name='.$screen_name.'&count=' . $tweet_count;
+    $getfield = '?screen_name='.$screen_name.'&count=' . $tweet_count.'&tweet_mode=extended';
     $requestMethod = 'GET';
     $twitter = new TwitterAPIExchange($settings);
     $tweets = $twitter->setGetfield($getfield) ->buildOauth($url, $requestMethod)->performRequest();
 
     $tweets = json_decode($tweets);
     foreach($tweets as $tweet) {
-    # print_r($tweet);
-    $tweet->text = check_markup($tweet->text, 'full_html');
-    $cleanTweets[] = $tweet;
+      $tweet->full_text = check_markup($tweet->full_text, 'full_html');
+      $tweet->full_text = preg_replace(' /https:\/\/t.co\/.*/' ,'' ,$tweet->full_text);
+      $cleanTweets[] = $tweet;
     }
 
     $params = array('tweets' => $cleanTweets);
