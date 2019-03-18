@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "262e39a5ab313071feffacd6096f9821",
+    "content-hash": "1d077a062892bce5df3bdb9aab998d0f",
     "packages": [
         {
             "name": "acquia/content-hub-php",
@@ -1795,32 +1795,34 @@
         },
         {
             "name": "drupal/anchor_link",
-            "version": "1.6.0",
+            "version": "2.0.0-alpha2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/anchor_link",
-                "reference": "8.x-1.6"
+                "reference": "8.x-2.0-alpha2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/anchor_link-8.x-1.6.zip",
-                "reference": "8.x-1.6",
-                "shasum": "89c436f459e62dbdfdaf52a92f9f9265eec1df13"
+                "url": "https://ftp.drupal.org/files/projects/anchor_link-8.x-2.0-alpha2.zip",
+                "reference": "8.x-2.0-alpha2",
+                "shasum": "0da1de26d4367a9c360bae9f57b7a8ac9064e96b"
             },
             "require": {
-                "drupal/core": "*"
+                "drupal/core": "*",
+                "drupal/fakeobjects": "*"
             },
             "type": "drupal-module",
             "extra": {
                 "branch-alias": {
-                    "dev-1.x": "1.x-dev"
+                    "dev-2.x": "2.x-dev",
+                    "dev-8.x-2.x": "8.2.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.6",
-                    "datestamp": "1509961084",
+                    "version": "8.x-2.0-alpha2",
+                    "datestamp": "1530956624",
                     "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
+                        "status": "not-covered",
+                        "message": "Alpha releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -1830,18 +1832,20 @@
             ],
             "authors": [
                 {
-                    "name": "Mohammed J. Razem",
-                    "homepage": "https://www.drupal.org/user/255384"
+                    "name": "Vardot",
+                    "homepage": "https://www.drupal.org/vardot",
+                    "role": "Maintainer"
                 },
                 {
                     "name": "RajabNatshah",
                     "homepage": "https://www.drupal.org/user/1414312"
                 }
             ],
-            "description": "This plugin module adds the better link dialog and anchor related features to CKEditor in Drupal 8",
+            "description": "This plugin module adds the better link dialog and anchor related features to CKEditor in Drupal 8.",
             "homepage": "https://www.drupal.org/project/anchor_link",
             "support": {
-                "source": "http://cgit.drupalcode.org/anchor_link"
+                "source": "http://cgit.drupalcode.org/anchor_link",
+                "issues": "https://www.drupal.org/project/issues/anchor_link"
             }
         },
         {
@@ -4213,6 +4217,9 @@
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
                     }
+                },
+                "patches_applied": {
+                    "Prevent Entity Embed Link from overriding entity_embed_container.html.yml file in the theme": "./patches/entity_embed_link.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -5647,6 +5654,57 @@
             "homepage": "https://www.drupal.org/project/inline_entity_form",
             "support": {
                 "source": "http://cgit.drupalcode.org/inline_entity_form"
+            }
+        },
+        {
+            "name": "drupal/instagram_block",
+            "version": "2.0.0-beta2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/instagram_block",
+                "reference": "8.x-2.0-beta2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/instagram_block-8.x-2.0-beta2.zip",
+                "reference": "8.x-2.0-beta2",
+                "shasum": "f90294fa109540358fc8f5b336139bbe6899b91b"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-2.x": "2.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-2.0-beta2",
+                    "datestamp": "1523290080",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Beta releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "naveenvalecha",
+                    "homepage": "https://www.drupal.org/user/2665733"
+                },
+                {
+                    "name": "yanniboi",
+                    "homepage": "https://www.drupal.org/user/1837556"
+                }
+            ],
+            "description": "Creates a block that displays images from instagram.",
+            "homepage": "https://www.drupal.org/project/instagram_block",
+            "support": {
+                "source": "http://cgit.drupalcode.org/instagram_block"
             }
         },
         {
@@ -9455,6 +9513,53 @@
             }
         },
         {
+            "name": "drupal/youtube_gallery",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/youtube_gallery",
+                "reference": "8.x-1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/youtube_gallery-8.x-1.0.zip",
+                "reference": "8.x-1.0",
+                "shasum": "ee90bae20067b28d3912ce64e610419ca4b8cc41"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0",
+                    "datestamp": "1502276643",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "cmsMinds",
+                    "homepage": "https://www.drupal.org/user/2542296"
+                }
+            ],
+            "description": "Rendering Videos From Youtube Channel",
+            "homepage": "https://www.drupal.org/project/youtube_gallery",
+            "support": {
+                "source": "http://cgit.drupalcode.org/youtube_gallery"
+            }
+        },
+        {
             "name": "drush/drush",
             "version": "8.1.18",
             "source": {
@@ -13043,7 +13148,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ucsf-web-services/sitefarm_seed/zipball/47f962299eee0542f274bc8af289134a1bab658a",
+                "url": "https://api.github.com/repos/ucsf-web-services/sitefarm_seed/zipball/9aafdf9b8737e80597a8604c0e099dfe33d3dc9a",
                 "reference": "9aafdf9b8737e80597a8604c0e099dfe33d3dc9a",
                 "shasum": ""
             },
