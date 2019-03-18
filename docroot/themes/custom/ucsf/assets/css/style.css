@@ -5503,6 +5503,13 @@ header .menu--main {
     .quicklinks {
       height: calc(100vh - 129px);
       top: 129px; } }
+  @media (min-width: 1360px) {
+    .quicklinks {
+      height: calc(100vh - 41px);
+      top: 41px; } }
+  .quicklinks:hover {
+    right: calc((100% - 100px) * -1);
+    visibility: visible; }
   .quicklinks.js-quicklinks-open {
     right: 0;
     top: 39px;
@@ -5511,7 +5518,6 @@ header .menu--main {
     @media (min-width: 600px) {
       .quicklinks.js-quicklinks-open {
         height: calc(100vh - 41px);
-        right: 0;
         top: 41px;
         width: 50%; } }
 
@@ -5574,6 +5580,8 @@ header .menu--main {
     .quicklinks-menu {
       display: table;
       padding: 0; } }
+  .quicklinks:hover .quicklinks-menu {
+    visibility: visible; }
   .quicklinks-menu.js-quicklinks-open {
     visibility: visible; }
   .quicklinks-menu a:link {

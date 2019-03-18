@@ -36,6 +36,16 @@
     top: 129px;
   }
 
+  @include breakpoint($bp-menu) {
+    height: calc(100vh - 41px);
+    top: 41px;
+  }
+
+  &:hover {
+    right: calc((100% - 100px) * -1);
+    visibility: visible;
+  }
+
   &.js-quicklinks-open {
     right: 0;
     top: 39px;
@@ -44,7 +54,6 @@
 
     @include breakpoint($bp-medium) {
       height: calc(100vh - 41px);
-      right: 0;
       top: 41px;
       width: 50%;
     }
@@ -106,6 +115,10 @@
   @include breakpoint($bp-medium) {
     display: table;
     padding: 0;
+  }
+
+  .quicklinks:hover & {
+    visibility: visible;
   }
 
   &.js-quicklinks-open {
