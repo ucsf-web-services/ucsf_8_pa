@@ -179,7 +179,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       $inline_components = [];
       $doc = new \DOMDocument();
       $libxml_previous_state = libxml_use_internal_errors(TRUE);
-      if (!$doc->loadHTML($text)) {
+      if (!$doc->loadHTML('<?xml encoding="utf-8" ?>' . $text)) {
         throw new NotNormalizableValueException('Could not parse body HTML.');
       }
       $xp = new \DOMXPath($doc);
