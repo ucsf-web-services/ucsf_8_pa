@@ -1,10 +1,10 @@
 .quicklinks {
   @include transition;
   height: calc(100vh - 47px);
-  position: absolute;
-  right: 0;
+  position: fixed;
+  right: calc((100% - 32px) * -1);
   top: 89px;
-  width: 32px;
+  width: 100%;
   z-index: $z-quicklinks-menu;
 
   @include breakpoint($bp-medium) {
@@ -12,8 +12,9 @@
   }
 
   &.js-quicklinks-open {
+    right: 0;
+    top: 39px;
     visibility: visible;
-    width: 100%;
 
     @include breakpoint($bp-medium) {
       right: 0;
@@ -63,18 +64,19 @@
 }
 
 .quicklinks-menu {
+  @include transition;
   @include ul-item-list-reset;
   background: $c-navy;
   color: $c-white;
   height: calc(100vh - 42px) ;
-  padding: 40px 32px 0;
   margin-left: 32px;
+  overflow: scroll;
+  padding: 40px 32px 0;
   visibility: hidden;
-  width: 0;
+  width: calc(100% - 32px);
 
   &.js-quicklinks-open {
     visibility: visible;
-    width: 100%;
   }
 
   a {
