@@ -226,7 +226,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
           case 'img':
             if ($element->hasAttribute('src')) {
               $url = $element->getAttribute('src');
-              $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
+              $url_parsed = parse_url($url);
+              if (empty($url_parsed['host'])) {
+                $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
+              }
               $component = new Photo($url);
               $layout = $this->getComponentLayout($data['component_layout']);
               $layout
