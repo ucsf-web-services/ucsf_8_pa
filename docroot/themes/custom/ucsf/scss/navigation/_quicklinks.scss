@@ -37,24 +37,22 @@
   }
 
   @include breakpoint($bp-menu) {
-    height: calc(100vh - 41px);
-    top: 41px;
+    height: 100vh;
+    top: 0;
   }
 
   &:hover {
-    right: calc((100% - 100px) * -1);
+    right: calc((100% - 37px) * -1);
     visibility: visible;
   }
 
   &.js-quicklinks-open {
     right: 0;
-    top: 39px;
-    height: calc(100vh - 39px);
+    top: 0;
+    height: 100vh;
     visibility: visible;
 
     @include breakpoint($bp-medium) {
-      height: calc(100vh - 41px);
-      top: 41px;
       width: 50%;
     }
   }
