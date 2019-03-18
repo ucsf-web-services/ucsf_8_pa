@@ -23,12 +23,13 @@ settings:
             - Italic
             - Superscript
             - Subscript
+            - SpecialChar
             - '-'
             - RemoveFormat
         -
           name: Linking
           items:
-            - Linkit
+            - DrupalLink
             - DrupalUnlink
         -
           name: Lists
@@ -48,6 +49,7 @@ settings:
             - Ucsfcalloutbox
             - Domtwocolumn
             - Domthreecolumn
+            - HorizontalRule
         -
           name: 'Block Formatting'
           items:
@@ -56,14 +58,15 @@ settings:
         -
           name: Tools
           items:
-            - SpecialChar
             - Undo
             - Redo
             - '-'
-            - ShowBlocks
             - Source
             - Maximize
   plugins:
+    drupallink:
+      linkit_enabled: true
+      linkit_profile: links
     language:
       language_list: un
     stylescombo:
@@ -147,8 +150,6 @@ settings:
         interactive-yellow: 0
         interactive-orange: 0
         interactive-green: 0
-    linkit:
-      linkit_profile: links
 image_upload:
   status: true
   scheme: public

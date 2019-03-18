@@ -1,0 +1,28 @@
+uuid: f613f57f-c049-44fc-afac-b5501d37d663
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - twitter_tweets
+  theme:
+    - ucsf
+id: twittertweets
+theme: ucsf
+region: content
+weight: 0
+provider: null
+plugin: twitter_tweets_block
+settings:
+  id: twitter_tweets_block
+  label: 'Twitter Tweets'
+  provider: twitter_tweets
+  label_display: visible
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      homepage: homepage
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

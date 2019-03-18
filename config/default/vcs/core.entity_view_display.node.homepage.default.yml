@@ -18,12 +18,12 @@ dependencies:
     - field.field.node.homepage.field_search_placeholder_text
     - field.field.node.homepage.field_search_supporting_links
     - field.field.node.homepage.field_search_title
-    - image.style.home_banner_two
     - node.type.homepage
+    - responsive_image.styles.homepage_hero
   module:
     - entity_reference_revisions
     - link
-    - media
+    - media_responsive_thumbnail
     - text
     - user
 id: node.homepage.default
@@ -57,10 +57,10 @@ content:
     weight: 3
     label: hidden
     settings:
-      image_style: home_banner_two
+      responsive_image_style: homepage_hero
       image_link: ''
     third_party_settings: {  }
-    type: media_thumbnail
+    type: media_responsive_thumbnail
     region: content
   field_banner_support:
     weight: 7

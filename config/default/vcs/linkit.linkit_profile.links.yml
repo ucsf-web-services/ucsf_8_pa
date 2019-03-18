@@ -7,23 +7,12 @@ dependencies:
 id: links
 label: Links
 description: ''
-attributes:
-  title:
-    id: title
-    weight: -10
-    settings:
-      automatic_title: true
-  id:
-    id: id
-    weight: -9
-    settings: {  }
 matchers:
   172be177-190b-4c21-b8bb-0ecc5d2b992b:
     uuid: 172be177-190b-4c21-b8bb-0ecc5d2b992b
     id: 'entity:node'
     weight: 0
     settings:
-      result_description: 'All Content Types'
       bundles:
         article: article
         author: author
@@ -36,3 +25,6 @@ matchers:
         trending: trending
       group_by_bundle: false
       include_unpublished: true
+      substitution_type: canonical
+      metadata: 'All Content Types'
+      limit: 200

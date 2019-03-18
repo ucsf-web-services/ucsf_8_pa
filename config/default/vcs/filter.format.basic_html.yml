@@ -7,6 +7,7 @@ dependencies:
     - editor
     - entity_embed
     - image
+    - linkit
 _core:
   default_config_hash: P8ddpAIKtawJDi5SzOwCzVnnNYqONewSTJ6Xn0dW_aQ
 name: 'Basic HTML'
@@ -19,7 +20,7 @@ filters:
     status: false
     weight: -44
     settings:
-      allowed_html: '<em> <strong> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id class=""> <h3 id class=""> <h4 id class=""> <h5 id class=""> <h6 id class=""> <br> <span> <img src alt data-entity-type data-entity-uuid data-align data-caption width height class="" data-image-style> <drupal-entity data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button> <s> <sup> <sub> <footer class=""> <blockquote class="*"> <div slot="" class=""> <cite class="*"> <p class=""> <aside class=""> <a href hreflang target accesskey id rel title class=""> <i> <table> <thead> <tr> <tbody> <td> <tfoot> <caption class=""> <dom-threecolumn-layout> <dom-twocolumn-layout>'
+      allowed_html: '<em> <strong> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id class=""> <h3 id class=""> <h4 id class=""> <h5 id class=""> <h6 id class=""> <br> <span> <img src alt data-entity-type data-entity-uuid data-entity-substitution data-align data-caption width height class="" data-image-style> <drupal-entity data-entity-type data-entity-uuid data-entity-substitution data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button> <s> <sup> <sub> <footer class=""> <blockquote class="*"> <div slot="" class=""> <cite class="*"> <p class=""> <aside class=""> <a href hreflang target accesskey id rel title class="" data-entity-type data-entity-uuid data-entity-substitution> <i> <table> <thead> <tr> <tbody> <td> <tfoot> <caption class=""> <dom-threecolumn-layout> <dom-twocolumn-layout>'
       filter_html_help: false
       filter_html_nofollow: false
   filter_align:
@@ -67,7 +68,7 @@ filters:
   filter_htmlcorrector:
     id: filter_htmlcorrector
     provider: filter
-    status: false
+    status: true
     weight: -50
     settings: {  }
   filter_url:
@@ -87,6 +88,7 @@ filters:
         full_bleed__image: full_bleed__image
         full_bleed_half__image: full_bleed_half__image
         half__image: half__image
+        quarter: quarter
   filter_cta:
     id: filter_cta
     provider: ckeditor_y3ti_plugins
@@ -99,3 +101,10 @@ filters:
     status: false
     weight: -38
     settings: {  }
+  linkit:
+    id: linkit
+    provider: linkit
+    status: true
+    weight: -45
+    settings:
+      title: true

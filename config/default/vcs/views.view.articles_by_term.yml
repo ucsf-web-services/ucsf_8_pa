@@ -5,9 +5,11 @@ dependencies:
   config:
     - core.entity_view_mode.node.card
     - node.type.article
-    - taxonomy.vocabulary.areas
+    - taxonomy.vocabulary.article_type
     - taxonomy.vocabulary.tags
     - taxonomy.vocabulary.topics
+  content:
+    - 'taxonomy_term:article_type:44f847aa-e617-488b-82de-ff2834874428'
   module:
     - datetime
     - node
@@ -139,31 +141,51 @@ display:
           entity_type: node
           entity_field: type
           plugin_id: bundle
+        field_article_type_target_id:
+          id: field_article_type_target_id
+          table: node__field_article_type
+          field: field_article_type_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: not
+          value:
+            411961: 411961
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          type: select
+          limit: true
+          vid: article_type
+          hierarchy: false
+          error_message: true
+          plugin_id: taxonomy_index_tid
       sorts:
-        field_tags_target_id:
-          id: field_tags_target_id
-          table: node__field_tags
-          field: field_tags_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          plugin_id: standard
-        field_topics_target_id:
-          id: field_topics_target_id
-          table: node__field_topics
-          field: field_topics_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          plugin_id: standard
         field_date_and_time_value:
           id: field_date_and_time_value
           table: node__field_date_and_time
@@ -201,7 +223,6 @@ display:
             node: true
             limit: true
             vids:
-              areas: areas
               tags: tags
               topics: topics
             anyall: +
@@ -270,6 +291,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - user
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -286,6 +308,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - user
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }

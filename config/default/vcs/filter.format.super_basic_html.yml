@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   module:
+    - ckeditor_y3ti_plugins
     - editor
     - entity_embed
     - image
@@ -16,9 +17,9 @@ filters:
     id: filter_html
     provider: filter
     status: true
-    weight: -50
+    weight: -49
     settings:
-      allowed_html: '<a href hreflang target class=""> <em> <strong> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id class=""> <h3 id class=""> <h4 id class=""> <h5 id class=""> <h6 id class=""> <br> <span> <img src alt data-entity-type data-entity-uuid data-align data-caption width height class="" data-image-style> <drupal-entity data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button> <s> <sup> <sub> <footer class=""> <blockquote class="*"> <div class="*"> <cite class="* blockquote-*"> <p class="*"> <aside class="*">'
+      allowed_html: '<a href hreflang target class="" data-entity-type data-entity-uuid data-entity-substitution> <em> <strong> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id class=""> <h3 id class=""> <h4 id class=""> <h5 id class=""> <h6 id class=""> <br> <span> <img src alt data-entity-type data-entity-uuid data-entity-substitution data-align data-caption width height class="" data-image-style> <s> <sup> <sub> <footer class=""> <blockquote class="*"> <div class="*"> <cite class="* blockquote-*"> <p class="*"> <aside class="*">'
       filter_html_help: false
       filter_html_nofollow: false
   filter_align:
@@ -37,49 +38,68 @@ filters:
     id: filter_html_image_secure
     provider: filter
     status: false
-    weight: -44
+    weight: -43
     settings: {  }
   editor_file_reference:
     id: editor_file_reference
     provider: editor
     status: true
-    weight: -45
+    weight: -46
     settings: {  }
   entity_embed:
     id: entity_embed
     provider: entity_embed
     status: false
-    weight: -46
+    weight: -44
     settings: {  }
   filter_html_escape:
     id: filter_html_escape
     provider: filter
     status: false
-    weight: -43
+    weight: -42
     settings: {  }
   filter_autop:
     id: filter_autop
     provider: filter
     status: false
-    weight: -42
+    weight: -41
     settings: {  }
   filter_htmlcorrector:
     id: filter_htmlcorrector
     provider: filter
     status: true
-    weight: -49
+    weight: -50
     settings: {  }
   filter_url:
     id: filter_url
     provider: filter
     status: false
-    weight: -41
+    weight: -40
     settings:
       filter_url_length: 72
   filter_image_style:
     id: filter_image_style
     provider: image
     status: true
-    weight: 1
+    weight: -45
     settings:
       allowed_styles: {  }
+  filter_cta:
+    id: filter_cta
+    provider: ckeditor_y3ti_plugins
+    status: false
+    weight: -39
+    settings: {  }
+  filter_numbercallout:
+    id: filter_numbercallout
+    provider: ckeditor_y3ti_plugins
+    status: false
+    weight: -38
+    settings: {  }
+  linkit:
+    id: linkit
+    provider: linkit
+    status: true
+    weight: -50
+    settings:
+      title: false

@@ -5,8 +5,10 @@ dependencies:
   config:
     - field.field.taxonomy_term.article_type.field_ankle_cta
     - field.field.taxonomy_term.article_type.field_taxonomy_banner_image
+    - responsive_image.styles.topic_banner
     - taxonomy.vocabulary.article_type
   module:
+    - media_responsive_thumbnail
     - text
 id: taxonomy_term.article_type.default
 targetEntityType: taxonomy_term
@@ -22,18 +24,20 @@ content:
     third_party_settings: {  }
   field_ankle_cta:
     weight: 2
-    label: above
+    label: hidden
     settings:
       link: true
+      view_mode: default
     third_party_settings: {  }
-    type: entity_reference_label
+    type: entity_reference_entity_view
     region: content
   field_taxonomy_banner_image:
     weight: 1
-    label: above
+    label: hidden
     settings:
-      link: true
+      responsive_image_style: topic_banner
+      image_link: ''
     third_party_settings: {  }
-    type: entity_reference_label
+    type: media_responsive_thumbnail
     region: content
 hidden: {  }

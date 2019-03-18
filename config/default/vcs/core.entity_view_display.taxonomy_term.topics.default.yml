@@ -4,14 +4,15 @@ status: true
 dependencies:
   config:
     - field.field.taxonomy_term.topics.field_ankle_cta
-    - field.field.taxonomy_term.topics.field_events
+    - field.field.taxonomy_term.topics.field_content_panel
     - field.field.taxonomy_term.topics.field_featured
-    - field.field.taxonomy_term.topics.field_goals_promos
     - field.field.taxonomy_term.topics.field_taxonomy_banner_image
     - field.field.taxonomy_term.topics.field_taxonomy_card_image
+    - responsive_image.styles.topic_card
     - taxonomy.vocabulary.topics
   module:
     - entity_reference_revisions
+    - media_responsive_thumbnail
     - text
 id: taxonomy_term.topics.default
 targetEntityType: taxonomy_term
@@ -21,60 +22,54 @@ content:
   description:
     label: hidden
     type: text_default
-    weight: 0
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
   field_ankle_cta:
-    weight: 11
-    label: above
+    weight: 3
+    label: hidden
     settings:
       link: true
+      view_mode: default
     third_party_settings: {  }
-    type: entity_reference_label
+    type: entity_reference_entity_view
     region: content
-  field_events:
-    weight: 10
-    label: above
-    settings: {  }
+  field_content_panel:
+    weight: 2
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
     third_party_settings: {  }
-    type: text_default
+    type: entity_reference_revisions_entity_view
     region: content
   field_featured:
-    weight: 9
-    label: above
+    type: boolean
+    weight: 4
+    region: content
+    label: hidden
     settings:
       format: default
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    type: boolean
-    region: content
-  field_goals_promos:
-    type: entity_reference_revisions_entity_view
-    weight: 12
-    label: above
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    region: content
   field_taxonomy_banner_image:
-    type: entity_reference_entity_view
-    weight: 7
-    label: above
+    type: media_responsive_thumbnail
+    weight: 0
+    label: hidden
     settings:
-      view_mode: default
-      link: false
+      responsive_image_style: topic_banner
+      image_link: ''
     third_party_settings: {  }
     region: content
   field_taxonomy_card_image:
-    type: entity_reference_entity_view
-    weight: 8
-    label: above
-    settings:
-      view_mode: default
-      link: false
-    third_party_settings: {  }
+    type: media_responsive_thumbnail
+    weight: 5
     region: content
+    label: hidden
+    settings:
+      responsive_image_style: topic_card
+      image_link: ''
+    third_party_settings: {  }
 hidden: {  }
