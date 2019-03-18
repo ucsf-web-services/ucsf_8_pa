@@ -303,22 +303,24 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             $element->parentNode->replaceChild($token, $element);
           }
           else {
-            do {
-              $append_after = $element->parentNode;
-            } while ($append_after->parentNode->tagName != 'body');
+            $append_after = $element->parentNode;
+            while ($append_after->parentNode->tagName != 'body') {
+              $append_after = $append_after->parentNode;
+            }
             if ($append_after->nextSibling) {
-              $append_after->parentNode->insertBefore($append_after->nextSibling, $token);
+              $append_after->parentNode->insertBefore(
+                $token, $append_after->nextSibling);
             }
             else {
               $append_after->parentNode->appendChild($token);
             }
-            $doc->removeChild($element);
+            $element->parentNode->removeChild($element);
           }
 
         }
         // Remove even if no component generated.
         else {
-          $doc->removeChild($element);
+          $element->parentNode->removeChild($element);
         }
 
       }
