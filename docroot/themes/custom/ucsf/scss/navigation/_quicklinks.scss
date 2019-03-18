@@ -103,6 +103,11 @@
   visibility: hidden;
   width: calc(100% - 32px);
 
+  @include breakpoint($bp-medium) {
+    display: table;
+    padding: 0;
+  }
+
   &.js-quicklinks-open {
     visibility: visible;
   }
@@ -116,6 +121,21 @@
     line-height: 1;
     float: right;
     text-align: right;
+
+    @include breakpoint($bp-medium) {
+      position: absolute;
+      top: 10vh;
+      right: 10%;
+    }
+  }
+
+  .field-quick-link-menu {
+    @include breakpoint($bp-medium) {
+      display: table-cell;
+      padding-left: 13%;
+      padding-right: 13%;
+      vertical-align: middle;
+    }
   }
 
   .field-quick-link-title {
