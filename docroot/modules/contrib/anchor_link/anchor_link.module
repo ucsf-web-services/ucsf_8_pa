@@ -22,7 +22,7 @@ function anchor_link_help($route_name, RouteMatchInterface $route_match) {
       $output .= '  <li>Context menu option to edit or remove links and anchors.</li>';
       $output .= '  <li>Ability to insert a link with the URL using multiple protocols, including an external file if a file manager is integrated.</li>';
       $output .= '</ul></p>';
-      $output .= '<p><a href="http://ckeditor.com/addon/link">http://ckeditor.com/addon/link</a></p>';
+      $output .= '<p><a href="https://ckeditor.com/addon/link">https://ckeditor.com/addon/link</a></p>';
       return $output;
 
     default:
@@ -39,9 +39,11 @@ function anchor_link_theme() {
 }
 
 /**
- * Implements hook_page_attachments().
+ * Implements hook_library_info_alter().
  */
-function anchor_link_page_attachments(array &$attachments) {
-  $config = \Drupal::config('anchor_link.settings');
-  $attachments['#attached']['library'][] = 'anchor_link/drupal.anchor_link';
+function anchor_link_library_info_alter(&$libraries, $extension) {
+  // Add support for "Libraries API" module, if exists.
+  if ($extension == 'link' && \Drupal::moduleHandler()->moduleExists('libraries')) {
+    $libraries['link']['js'] = ['/' . libraries_get_path('ckeditor_anchor_link') . '/plugin.js' => []];
+  }
 }

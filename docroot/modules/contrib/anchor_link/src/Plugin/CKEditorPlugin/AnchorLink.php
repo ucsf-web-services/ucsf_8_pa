@@ -17,12 +17,12 @@ use Drupal\ckeditor\CKEditorPluginBase;
 class AnchorLink extends CKEditorPluginBase {
 
   /**
-  * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
-  */
-  function getFile() {
-    return drupal_get_path('module', 'anchor_link') . '/js/plugins/link/plugin.js';
+   * {@inheritdoc}
+   */
+  public function getFile() {
+    return $this->getLibraryPath() . '/plugin.js';
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -31,14 +31,15 @@ class AnchorLink extends CKEditorPluginBase {
       'fakeobjects',
     ];
   }
+
   /**
    * {@inheritdoc}
    */
   public function getLibraries(Editor $editor) {
     return [];
   }
-  
-    /**
+
+  /**
    * {@inheritdoc}
    */
   public function isInternal() {
@@ -46,22 +47,24 @@ class AnchorLink extends CKEditorPluginBase {
   }
 
   /**
-   * Implements \Drupal\ckeditor\Plugin\CKEditorPluginButtonsInterface::getButtons().
+   * {@inheritdoc}
    */
-  function getButtons() {
+  public function getButtons() {
+    $path = $this->getLibraryPath();
+
     return [
       'Link' => [
         'label' => t('Link'),
-        'image' => drupal_get_path('module', 'anchor_link') . '/js/plugins/link/icons/link.png',
+        'image' => $path . '/icons/link.png',
       ],
       'Unlink' => [
         'label' => t('Unlink'),
-        'image' => drupal_get_path('module', 'anchor_link') . '/js/plugins/link/icons/unlink.png',
+        'image' => $path . '/icons/unlink.png',
       ],
       'Anchor' => [
         'label' => t('Anchor'),
-        'image' => drupal_get_path('module', 'anchor_link') . '/js/plugins/link/icons/anchor.png',
-      ]
+        'image' => $path . '/icons/anchor.png',
+      ],
     ];
   }
 
@@ -71,4 +74,20 @@ class AnchorLink extends CKEditorPluginBase {
   public function getConfig(Editor $editor) {
     return [];
   }
+
+  /**
+   * Get the CKEditor Link library path.
+   *
+   * @return string
+   *   The library path with support for the Libraries API module.
+   */
+  protected function getLibraryPath() {
+    // Support for "Libraries API" module.
+    if (\Drupal::moduleHandler()->moduleExists('libraries')) {
+      return libraries_get_path('link');
+    }
+
+    return 'libraries/link';
+  }
+
 }
