@@ -5475,7 +5475,7 @@ header .menu--main {
 .quicklinks {
   -webkit-transition: .3s ease-out all;
   transition: .3s ease-out all;
-  height: calc(100vh - 47px);
+  height: calc(100vh - 89px);
   position: fixed;
   right: calc((100% - 32px) * -1);
   top: 89px;
@@ -5483,13 +5483,16 @@ header .menu--main {
   z-index: 900; }
   @media (min-width: 600px) {
     .quicklinks {
+      height: calc(100vh - 129px);
       top: 129px; } }
   .quicklinks.js-quicklinks-open {
     right: 0;
     top: 39px;
+    height: calc(100vh - 39px);
     visibility: visible; }
     @media (min-width: 600px) {
       .quicklinks.js-quicklinks-open {
+        height: calc(100vh - 41px);
         right: 0;
         top: 41px;
         width: 50%; } }
@@ -5505,7 +5508,7 @@ header .menu--main {
   left: 0;
   letter-spacing: 1px;
   cursor: pointer;
-  height: calc(100vh - 42px);
+  height: 100%;
   position: absolute;
   padding: 0;
   text-orientation: mixed;
@@ -5534,9 +5537,9 @@ header .menu--main {
   margin: 0;
   background: #052049;
   color: #fff;
-  height: calc(100vh - 42px);
+  height: 100%;
   margin-left: 32px;
-  overflow: scroll;
+  overflow: auto;
   padding: 40px 32px 0;
   visibility: hidden;
   width: calc(100% - 32px); }
@@ -5561,6 +5564,7 @@ header .menu--main {
     color: #fff; }
   .quicklinks-menu .quicklinks-close {
     cursor: pointer;
+    line-height: 1;
     float: right;
     text-align: right; }
   .quicklinks-menu .field-quick-link-title {
