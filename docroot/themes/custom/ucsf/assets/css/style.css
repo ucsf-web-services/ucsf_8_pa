@@ -5472,6 +5472,24 @@ header .menu--main {
     border: 0;
     text-decoration: none; }
 
+.header-region {
+  position: relative; }
+  .header-region:before {
+    -webkit-transition: .3s ease-out all;
+    transition: .3s ease-out all;
+    background-color: rgba(18, 26, 49, 0.25);
+    left: 0;
+    display: block;
+    height: 100vh;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 780; }
+  .header-region.js-quicklinks-open:before {
+    content: ' ';
+    opacity: 1; }
+
 .quicklinks {
   -webkit-transition: .3s ease-out all;
   transition: .3s ease-out all;

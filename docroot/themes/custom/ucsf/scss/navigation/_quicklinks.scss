@@ -1,3 +1,27 @@
+.header-region {
+  position: relative;
+
+  &:before {
+    @include transition;
+    background-color: rgba(18, 26, 49, 0.25);
+    left: 0;
+    display: block;
+    height: 100vh;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: $z-quicklinks-open-page;
+  }
+
+  &.js-quicklinks-open {
+    &:before {
+      content: ' ';
+      opacity: 1;
+    }
+  }
+}
+
 .quicklinks {
   @include transition;
   height: calc(100vh - 89px);
