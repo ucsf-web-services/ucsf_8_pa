@@ -1,12 +1,11 @@
 <?php
-
 /**
  * @file
  * Contains ckeditor_y3ti_plugins.module.
  */
 
  use Drupal\Core\Form\FormStateInterface;
- use Drupal\editor\Entity\Editor;
+//use Drupal\editor\Entity\Editor;
 
 /**
  * Implements hook_page_attachments().
@@ -40,6 +39,8 @@ function ckeditor_y3ti_plugins_module_implements_alter(&$implementations, $hook)
  * Implements hook_form_alter().
  */
  function ckeditor_y3ti_plugins_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  /*   DOM Styles
+   *   If we need this for UCSF.edu we could move it into the Seven theme file.
 
   if ('editor_link_dialog' == $form_id) {
 
@@ -79,19 +80,22 @@ function ckeditor_y3ti_plugins_module_implements_alter(&$implementations, $hook)
     );
 
   }
-  // if ( 'editor_image_dialog' == $form_id) {
-  //   $form['attributes']['width'] = [
-  //     '#title' => t('Image Width'),
-  //     '#placeholder' => t('Image width'),
-  //     '#type' => 'textfield',
-  //
-  //     '#maxlength' => 256,
-  //   ];
-  //   $form['attributes']['height'] = [
-  //     '#title' => t('Image Height'),
-  //     '#placeholder' => t('Image height'),
-  //     '#type' => 'textfield',
-  //     '#maxlength' => 256,
-  //   ];
-  // }
+  */
+   
+   /*
+   if ( 'editor_image_dialog' == $form_id) {
+     $form['attributes']['width'] = [
+       '#title' => t('Image Width'),
+       '#placeholder' => t('Image width'),
+       '#type' => 'textfield',
+       '#maxlength' => 256,
+     ];
+     $form['attributes']['height'] = [
+       '#title' => t('Image Height'),
+       '#placeholder' => t('Image height'),
+       '#type' => 'textfield',
+       '#maxlength' => 256,
+     ];
+   }
+  */
 }
