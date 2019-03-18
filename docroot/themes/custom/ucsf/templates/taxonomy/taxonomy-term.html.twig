@@ -1,0 +1,31 @@
+<div class="topic-banner">
+  {{ content.field_taxonomy_banner_image }}
+</div>
+<main role="main" class="main">
+  <div class="topic-page">
+    <div class="topic-content-wrapper">
+      <header class="basic-header topic-page__header">
+        <p class="topic-page__eyebrow">Topic</p>
+        <h1 class="topic-page__header-title">{{ name }}</h1>
+      </header>
+
+      {% if content.description|render|striptags != '' %}
+        <div class="topic-content">
+          {{ content.description }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="topic-page-wrapper">
+          {{ content.field_content_panel }}
+
+          <div class="news-list">
+            {{ drupal_view('topics_tags_news_articles', 'block_1') }}
+          </div>
+    </div>
+  </div>
+</main>
+
+<div class="footer-ctas-wrapper">
+  {{ content.field_ankle_cta }}
+</div>

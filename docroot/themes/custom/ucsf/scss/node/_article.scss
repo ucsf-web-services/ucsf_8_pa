@@ -35,14 +35,15 @@
   }
 }
 
-.page-node-type-full-width-page { // PL: .main-article
+.page-node-type-full-width-page,
+.path-taxonomy { // PL: .main-article
   background: $c-background-gray;
 
   .main-content {
     background: $white;
   }
 
-  h2 {
+  h2{
     @include fs-articles-title;
     margin-bottom: 16px;
 
@@ -52,6 +53,15 @@
 
     &.layout__heading {
       @include fs-heading-two-md;
+    }
+  }
+}
+
+.path-taxonomy { // PL: .main-article
+  h2{
+    &.layout__heading {
+      @include fs-articles-title;
+      margin-bottom: $space-two;
     }
   }
 }
