@@ -317,7 +317,11 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
           $components[] = $inline_components[$value];
         }
         else {
-          $component = new Body($this->htmlValue($value));
+          $value = $this->htmlValue($value);
+          if (empty($value)) {
+            continue;
+          }
+          $component = new Body($value);
           $link_style = new TextStyle();
           $link_style
             ->setFontName('HelveticaNeue-Medium')
