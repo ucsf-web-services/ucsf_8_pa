@@ -14,7 +14,7 @@
 #}
 
 {% if media_type == 'image' %}
-  <figure{{ attributes }}><picture>{{ children }}</picture></figure>
+  <figure{{ attributes }}>{%if url %}<a href='{{ url }}'>{% endif %}<picture>{{ children }}</picture>{%if url %}</a>{% endif %}</figure>
 {% else %}
   <article{{ attributes }}>{{ children }}</article>
 {% endif %}
