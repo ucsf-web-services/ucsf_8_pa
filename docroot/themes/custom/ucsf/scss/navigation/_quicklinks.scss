@@ -92,7 +92,13 @@
   .field-quick-link-title {
     @include eyebrow;
     color: $c-white;
+    line-height: 16px;
     margin-bottom: 24px;
+    max-width: 190px; // This is a hack to make the wrapping a little better.
+
+    @include breakpoint($bp-medium) {
+      max-width: none;
+    }
 
     &:after {
       background: $c-white;
