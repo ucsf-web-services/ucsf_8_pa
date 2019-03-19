@@ -8879,17 +8879,10 @@ body.path-taxonomy {
   clear: both;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (auto)[2];
-      grid-template-columns: repeat(2, auto);
+  -ms-grid-columns: (auto)[1];
+      grid-template-columns: repeat(1, auto);
   -ms-grid-rows: (auto)[2];
       grid-template-rows: repeat(2, auto); }
-
-.topics-list__topics-wrapper-space-left {
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 1;
-  grid-column: 1/2;
-  height: 100%;
-  content: ' '; }
 
 .topics-list__topics-wrapper-space-bottom {
   grid-column: 1/-1;
@@ -8906,21 +8899,16 @@ body.path-taxonomy {
   clear: both;
   padding-top: 40px;
   width: 1360px;
-  -ms-grid-column-align: end;
-      justify-self: end;
-  grid-column: 2/-1;
+  grid-column: 1/-1;
   grid-row: 1/-1;
   padding-left: 0;
-  margin-top: 0;
-  margin-bottom: 20px; }
+  margin: 0 auto 20px; }
 
 .topic-card {
   display: inline-block;
-  width: 260px;
   height: 350px;
   float: left;
   position: relative;
-  margin-right: 5%;
   margin-bottom: 60px; }
   .topic-card a {
     display: inline-block;
@@ -8942,7 +8930,7 @@ body.path-taxonomy {
     display: block;
     position: absolute;
     bottom: -60px;
-    left: 0;
+    left: calc(100% - 300px);
     background: #fff;
     width: 220px;
     height: 100px;

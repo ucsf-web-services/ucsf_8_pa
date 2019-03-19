@@ -30,14 +30,8 @@
 .topics-list__topics-wrapper {
   clear: both;
   display: grid;
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: repeat(1, auto);
   grid-template-rows: repeat(2, auto);
-}
-
-.topics-list__topics-wrapper-space-left {
-  grid-column: 1/2;
-  height: 100%;
-  content: ' ';
 }
 
 .topics-list__topics-wrapper-space-bottom {
@@ -54,21 +48,17 @@
   clear: both;
   padding-top: $space-five;
   width: 1360px;
-  justify-self: end;
-  grid-column: 2/-1;
+  grid-column: 1/-1;
   grid-row: 1/-1;
   padding-left: 0;
-  margin-top: 0;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
 }
 
 .topic-card {
   display: inline-block;
-  width: 260px;
   height: 350px;
   float: left;
   position: relative;
-  margin-right: 5%;
   margin-bottom: 60px;
 
   a {
@@ -86,7 +76,7 @@
     display: block;
     position: absolute;
     bottom: -60px;
-    left: 0;
+    left: calc(100% - 300px);
     background: $white;
     width: 220px;
     height: 100px;
