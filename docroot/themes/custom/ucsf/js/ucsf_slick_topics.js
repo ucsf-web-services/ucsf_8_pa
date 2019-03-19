@@ -3,7 +3,9 @@
   Drupal.behaviors.slickTopics = {
     attach: function (context) {
   
-      $('.topics-list__topics').slick();
+      $('.topics-list__topics').slick({
+        slidesToShow: 4,
+      });
 
     }
   };

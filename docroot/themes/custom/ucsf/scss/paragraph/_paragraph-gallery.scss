@@ -25,6 +25,7 @@
 }
 
 .field-gallery-items {
+  @include slick-buttons;
   .slick-list {
     overflow: visible;
   }
@@ -39,54 +40,6 @@
       padding-left: 42px;
       padding-right: 42px;
     }
-  }
-
-  &:hover {
-    button {
-      @include visually-hidden-reset;
-      height: 28px;
-      width: 28px;
-    }
-  }
-
-  button {
-    @include visually-hidden;
-    background-size: 10px 10px;
-    border: 0;
-    border-radius: 28px;
-    font-size: 0;
-    overflow: hidden;
-    padding: 10px;
-    position: absolute;
-    text-indent: -999px;
-    top: 40px;
-    z-index: $z-gallery;
-
-    @include breakpoint($bp-small) {
-      top: 100px;
-    }
-
-    @include breakpoint($bp-medium) {
-      top: 200px;
-    }
-
-    &:after {
-      content: none;
-    }
-
-    &:hover {
-      background-color: $c-navy;
-    }
-  }
-
-  .slick-next {
-    @include background-image('cta-arrow-white.svg', center center/12px 12px , $c-blue);
-    right: 10px;
-  }
-
-  .slick-prev {
-    @include background-image('cta-arrow-white-left.svg', center center/12px 12px , $c-blue);
-    left: 10px;
   }
 
   figcaption {
