@@ -157,6 +157,9 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
    *
    * If value contains certain tags (blockquote, headers...), break up the value
    * into a series of Body and Blockquote, Heading, etc. components.
+   *
+   * @throws \Exception
+   *   Unexpected source data.
    */
   protected function normalizeBody($data, $format = NULL, array $context = []) {
     $components = [];
@@ -291,11 +294,20 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
                 $media = reset($media);
                 /** @var \Drupal\file\Entity\File $file */
                 $file = $media->get('field_media_image')->entity;
-                $component = new Photo($file->url());
-                if ($element->hasAttribute('data-caption')) {
-                  $caption = $this->textValue(
-                    $element->getAttribute('data-caption'));
-                  $component->setCaption($caption);
+                $mimetype = explode('/', $file->getMimeType());
+                if (@$mimetype[0] == 'image' &&
+                  in_array(@$mimetype[1], ['jpeg', 'gif', 'png'])
+                ) {
+                  $component = new Photo($file->url());
+                  if ($element->hasAttribute('data-caption')) {
+                    $caption = $this->textValue(
+                      $element->getAttribute('data-caption'));
+                    $component->setCaption($caption);
+                  }
+                }
+                else {
+                  throw new \Exception(
+                    'Unexpected file mime type ' . $file->getMimeType());
                 }
               }
             }
