@@ -38,6 +38,16 @@ function ucsf_theme_suggestions_form_alter(array &$suggestions, array $variables
 }
 
 /**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function ucsf_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables) {
+
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'taxonomy_term__' . $sanitized_view_mode;
+}
+
+/**
  * Implements hook_theme_suggestions_HOOK().
  */
 function ucsf_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
