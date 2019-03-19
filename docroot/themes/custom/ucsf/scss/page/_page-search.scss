@@ -1,32 +1,54 @@
-.path-search {
-  main > h2 {
+.block-views-exposed-filter-blocknews-filter-page-1 {
+  background: $c-grey-pale;
+  position: relative;
+
+  label[for=edit-combine] {
+    @include visually-hidden;
+  }
+
+  .form-item-combine {
+    margin: 0;
+  }
+
+  input {
+    height: 52px;
+    margin: 40px 16px 16px;
+    font-size: $font-size;
+    font-family: $font-helvetica-neue-light;
+    color: $gray-blue;
+    box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
+    border: 1px solid $near-white;
+
+    &::placeholder {
+      color: $gray-blue;
+    }
+  }
+
+  .js-form-item-field-date-and-time-value-1,
+  .js-form-item-field-date-and-time-value-2,
+  fieldset {
     display: none;
   }
 
-  .form-type-search::after {
-    content: none;
-  }
-
-  .search-results__count {
-    font-size: 28px;
-    line-height: 35px;
-    padding-top: 42px; // @todo Change this after filter is moved to title area.
-  }
-
-  .search-result__title {
-    margin-bottom: 11px;
-  }
-
-  ol {
-    list-style: none;
+  [data-drupal-selector="edit-submit-news-filter"] {
+    @include background-image('magnifier.svg', center);
+    appearance: none;
+    box-shadow: none;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    border: none;
+    background-size: 24px 24px;
+    text-indent: -9999px;
     padding: 0;
-  }
+    position: absolute;
+    right: 62px;
+    top: 35px;
 
-  .item-list li {
-    margin: 0 0 30px 0;
-  }
-
-  strong {
-    font-weight: $fw-medium;
+    &:hover {
+      cursor: pointer;
+      background-color: transparent;
+      border-color: transparent;
+    }
   }
 }
