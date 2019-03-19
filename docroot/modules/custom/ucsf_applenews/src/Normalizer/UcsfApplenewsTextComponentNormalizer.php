@@ -230,6 +230,20 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
               $url_parsed = parse_url($url);
               if (empty($url_parsed['host'])) {
                 $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
+                $url_parsed = parse_url($url);
+                if (isset($url_parsed['query'])) {
+                  parse_str($url_parsed['query'], $qs);
+                  if (isset($qs['itok'])) {
+                    unset($qs['itok']);
+                    if (empty($qs)) {
+                      unset($url_parsed['query']);
+                    }
+                    else {
+                      $url_parsed['query'] = http_build_query($qs);
+                    }
+                    $url = $this->unParseUrl($url_parsed);
+                  }
+                }
               }
               $component = new Photo($url);
               $layout = $this->getComponentLayout($data['component_layout']);
@@ -255,7 +269,8 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
                 $ext = pathinfo($url_parsed['path'], PATHINFO_EXTENSION);
                 if (in_array($ext, ['mp3', 'mov', 'qt'])) {
                   if (empty($url_parsed['host'])) {
-                    $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
+                    $url = Url::fromUserInput($url, ['absolute' => TRUE])
+                      ->toString();
                   }
                   $component = new Video($url);
                 }
@@ -450,6 +465,22 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
     $component->setLayout($this->getComponentLayout($data['component_layout']));
 
     return $component;
+  }
+
+  /**
+   * Inverse of parse_url().
+   */
+  protected function unParseUrl($parsed_url) {
+    $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+    $host     = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+    $port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+    $user     = isset($parsed_url['user']) ? $parsed_url['user'] : '';
+    $pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass'] : '';
+    $pass     = ($user || $pass) ? "$pass@" : '';
+    $path     = isset($parsed_url['path']) ? $parsed_url['path'] : '';
+    $query    = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
+    $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
+    return "$scheme$user$pass$host$port$path$query$fragment";
   }
 
   /**
