@@ -42,7 +42,7 @@
         item.is_expanded ? 'menu-item--expanded',
         item.is_collapsed ? 'menu-item--collapsed',
         item.in_active_trail ? 'menu-item--active-trail',
-        menu_attributes.item.class ? menu_attributes.item.class
+        menu_attributes.item.class ? menu_attributes.item.class,
       ]
       %}
       <li{{ item.attributes.addClass(classes) }}
@@ -59,7 +59,7 @@
           <i class="fas fa-angle-right"></i>
         {% endif %}
 
-        {% if item.below %}
+        {% if item.below or item.title == 'Search' %}
           <div class="menu-child--wrapper" data-level="level-{{ menu_level }}">
 
             {# Hack so About can be navy #}
@@ -70,10 +70,24 @@
             {% endif %}
             {# End Hack #}
 
+            {# Only show the side title if the menu is not search #}
+            {% if item.title != 'Search' %}
             <div data-section="section-{{ item_title_class }}" class="menu-child--label">
               {{ item.title }}
             </div>
+            {% endif %}
+
             {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+
+            {# Hack so Search can be here #}
+            {% if item.title == 'Search' %}
+            <form action="/search" accept-charset="utf-8" method="get">
+              <input type="text" name="search" id="search_menu" size="32" class="searchbox" value="{{ searchterm }}" />
+              {# this should be /images/search.svg file #}
+              <button type="submit"></button>
+            </form>
+            {% endif %}
+            {# End Hack #}
           </div>
 
         {% endif %}
@@ -81,4 +95,5 @@
     {% endfor %}
   </ul>
   {% endif %}
+  <ul>
   {% endmacro %}
