@@ -1,0 +1,8 @@
+{% set primary_area = node.field_primary_area.0.entity.label|clean_class %}
+
+<ul class="article-header__byline">
+  {% if primary_area %}
+    <li class="article-header__primary-area" data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">{{ primary_area_field ? primary_area_field : content.field_primary_area }}</li>
+  {% endif %}
+  <li class="article-header__date">{{ content.field_date_and_time }}</li>
+</ul>

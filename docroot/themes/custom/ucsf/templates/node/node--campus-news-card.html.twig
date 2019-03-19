@@ -1,0 +1,37 @@
+{# Display available on News and News Pagckage content types #}
+{# Display implemented on:
+ Fields:
+  News Center > Support Articles (news_center.field_support_articles)
+ Views:
+  articles_by_author
+  articles_by_term
+  articles_for_news_center
+  #}
+
+{% set classes = ['news-card'] %}
+
+{% set primary_area = node.field_primary_area.0.entity.label|clean_class %}
+
+<article {{ attributes.addClass(classes) }} data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
+  <a href="{{ url }}" class="news-card__link">
+
+    {% if content.field_card_image['#items'] is not empty %}
+      {{ content.field_card_image }}
+    {% else %}
+      <figure>
+        <picture>
+          <img src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image">
+        </picture>
+      </figure>
+    {% endif %}
+
+    <header class="news-card__copy">
+      {% include '@theme/article/campus-news-byline.twig' %}
+      {% if content.field_short_title|render|striptags != ''  %}
+        <h2>{{ content.field_short_title }}</h2>
+      {% else %}
+        <h2>{{ label }}</h2>
+      {% endif %}
+    </header>
+  </a>
+</article>

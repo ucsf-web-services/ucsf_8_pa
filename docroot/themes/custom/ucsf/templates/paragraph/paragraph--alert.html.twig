@@ -1,0 +1,10 @@
+{% set classes = [
+  'alert-content',
+  'overlay-' ~ paragraph.field_textbox_background_color.entity.label|clean_class,
+] %}
+
+<div{{ attributes.addClass(classes) }}>
+    {{ content|without(
+      'field_textbox_background_color'
+    ) }}
+</div>

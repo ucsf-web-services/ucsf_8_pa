@@ -4223,7 +4223,9 @@ span.ext {
     border-color: #007cbe; }
 
 .button-reverse,
-a.button-reverse {
+a.button-reverse,
+.button-reverse:link,
+a.button-reverse:link {
   background-color: transparent;
   color: #052049;
   border: 2px solid #052049;
@@ -4239,7 +4241,9 @@ a.button-reverse {
   color: #fff;
   border-color: #fff; }
   .button-reverse:hover,
-  a.button-reverse:hover {
+  a.button-reverse:hover,
+  .button-reverse:link:hover,
+  a.button-reverse:link:hover {
     background-color: #007cbe;
     color: #fff;
     border-color: #007cbe; }
@@ -6502,20 +6506,6 @@ figure.align-center figcaption {
 .promo-list__card-two .promo-list__card-more {
   line-height: 1.8em; }
 
-.overlay-purple,
-.overlay-teal,
-.overlay-blue {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.8); }
-
-.overlay-teal {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(5, 132, 136, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(5, 132, 136, 0.8); }
-
-.overlay-blue {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(0, 124, 190, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(0, 124, 190, 0.8); }
-
 .promo-list__card-two,
 .homepage .promo-list__card-two,
 .promo-list__card-two a,
@@ -6541,27 +6531,44 @@ figure.align-center figcaption {
 .promo-list__card-two .overlay-teal,
 .promo-list__card-two .overlay-blue,
 .promo-list__card-two .overlay-green,
-.promo-list__card-two .overlay-gray {
+.promo-list__card-two .overlay-gray,
+.promo-list__card-two .overlay-navy,
+.alert-content.overlay-purple,
+.alert-content.overlay-teal,
+.alert-content.overlay-blue,
+.alert-content.overlay-green,
+.alert-content.overlay-gray,
+.alert-content.overlay-navy {
   -webkit-box-shadow: inset 0 0 0 1000px #716fb2;
           box-shadow: inset 0 0 0 1000px #716fb2; }
 
-.promo-list__card-two .overlay-teal {
+.promo-list__card-two .overlay-teal,
+.alert-content.overlay-teal {
   -webkit-box-shadow: inset 0 0 0 1000px #058488;
           box-shadow: inset 0 0 0 1000px #058488; }
 
-.promo-list__card-two .overlay-blue {
+.promo-list__card-two .overlay-blue,
+.alert-content.overlay-blue {
   -webkit-box-shadow: inset 0 0 0 1000px #007cbe;
           box-shadow: inset 0 0 0 1000px #007cbe; }
 
-.promo-list__card-two .overlay-green {
+.promo-list__card-two .overlay-green,
+.alert-content.overlay-green {
   -webkit-box-shadow: inset 0 0 0 1000px #6ea400;
           box-shadow: inset 0 0 0 1000px #6ea400; }
 
-.promo-list__card-two .overlay-gray {
+.promo-list__card-two .overlay-gray,
+.alert-content.overlay-gray {
   -webkit-box-shadow: inset 0 0 0 1000px #506380;
           box-shadow: inset 0 0 0 1000px #506380; }
-  .promo-list__card-two .overlay-gray::after {
+  .promo-list__card-two .overlay-gray::after,
+  .alert-content.overlay-gray::after {
     display: none; }
+
+.promo-list__card-two .overlay-navy,
+.alert-content.overlay-navy {
+  -webkit-box-shadow: inset 0 0 0 1000px #052049;
+          box-shadow: inset 0 0 0 1000px #052049; }
 
 .lastest-events-list {
   grid-column: 1/-1;
@@ -7718,17 +7725,20 @@ figure.align-center figcaption {
 .page-node-type-trending .field-bottom-of-page-cta p {
   margin-bottom: 0; }
 
-body.path-taxonomy {
+.path-taxonomy {
   background: #f2f4f6; }
-  body.path-taxonomy .latest-events-list, body.path-taxonomy .news-list {
+  .path-taxonomy .latest-events-list, .path-taxonomy .news-list {
     padding-top: 0; }
-  body.path-taxonomy .news-list {
+  .path-taxonomy .news-list {
     padding-left: 80px;
     padding-right: 80px; }
-  body.path-taxonomy .topic-content .news-list {
+  .path-taxonomy .topic-content .news-list {
     padding-left: 0;
     padding-right: 0;
     margin-top: 80px; }
+  .path-taxonomy h2.eyebrow-title, .path-taxonomy h3.eyebrow-title {
+    font-size: 12px;
+    font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
 
 .topic-banner {
   margin: 0 auto;
@@ -7809,6 +7819,57 @@ body.path-taxonomy {
 
 .media-coverage__header h1 {
   margin-top: 80px; }
+
+.areas-content .card-four-up {
+  display: block; }
+
+.areas-content .news-list {
+  padding-top: 80px; }
+
+.areas-content .bg-white {
+  padding-bottom: 80px; }
+
+.news-center-banner_list .areas-header,
+.news-list .areas-header {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+  font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.6px;
+  color: #052049;
+  margin-bottom: 40px; }
+  @media (min-width: 600px) {
+    .news-center-banner_list .areas-header,
+    .news-list .areas-header {
+      font-size: 56px;
+      letter-spacing: -1.2px; } }
+
+.news-center-banner_list .areas-header {
+  margin-bottom: 16px; }
+
+.campus-news-card {
+  border-bottom: 1px solid #d1d3d3;
+  margin: 8px 0;
+  margin: 24px 0;
+  padding-bottom: 16px; }
+  .campus-news-card .campus-news-card__title {
+    color: #052049;
+    font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 1;
+    letter-spacing: -0.3px;
+    margin-top: 8px;
+    margin-bottom: 16px; }
+    @media (min-width: 600px) {
+      .campus-news-card .campus-news-card__title {
+        letter-spacing: -0.3px; } }
+
+.all-campus-news {
+  margin-bottom: 0; }
 
 .path-search main > h2 {
   display: none; }
@@ -8018,10 +8079,14 @@ body.path-taxonomy {
   padding-bottom: 80px;
   margin-top: 80px; }
 
+.bg-white {
+  background: #fff; }
+
 .overlay-purple,
 .overlay-teal,
 .overlay-blue,
-.overlay-green {
+.overlay-green,
+.overlay-navy {
   -webkit-box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.8);
           box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.8); }
 
@@ -8036,6 +8101,10 @@ body.path-taxonomy {
 .overlay-green {
   -webkit-box-shadow: inset 0 0 0 1000px rgba(110, 164, 0, 0.8);
           box-shadow: inset 0 0 0 1000px rgba(110, 164, 0, 0.8); }
+
+.overlay-navy {
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(5, 32, 73, 0.8);
+          box-shadow: inset 0 0 0 1000px rgba(5, 32, 73, 0.8); }
 
 .overlay-gray {
   background: #f2f4f6;
@@ -8444,6 +8513,24 @@ body.path-taxonomy {
   -ms-flex-item-align: end;
       align-self: flex-end; }
 
+.alert-content {
+  color: #fff;
+  padding: 40px;
+  text-align: center; }
+  .alert-content p {
+    font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 1;
+    letter-spacing: -0.3px; }
+    .alert-content p:first-child {
+      margin-top: 0; }
+    .alert-content p:last-child {
+      margin-bottom: 0; }
+  .alert-content a, .alert-content p a {
+    margin: 0 10px;
+    font-size: 18px; }
+
 @media (max-width: 1023px) {
   .header-region {
     margin-bottom: 12px;
@@ -8717,7 +8804,8 @@ body.path-taxonomy {
 
 .view-articles-by-author .views-infinite-scroll-content-wrapper > .item-list > ul,
 .view-articles-for-news-center .views-infinite-scroll-content-wrapper > .item-list > ul,
-.view-topics-tags-news-articles .views-infinite-scroll-content-wrapper > .item-list > ul {
+.view-topics-tags-news-articles .views-infinite-scroll-content-wrapper > .item-list > ul,
+.view-all-campus-news .views-infinite-scroll-content-wrapper > .item-list > ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -8733,19 +8821,24 @@ body.path-taxonomy {
   @media (min-width: 600px) {
     .view-articles-by-author .views-infinite-scroll-content-wrapper > .item-list > ul,
     .view-articles-for-news-center .views-infinite-scroll-content-wrapper > .item-list > ul,
-    .view-topics-tags-news-articles .views-infinite-scroll-content-wrapper > .item-list > ul {
+    .view-topics-tags-news-articles .views-infinite-scroll-content-wrapper > .item-list > ul,
+    .view-all-campus-news .views-infinite-scroll-content-wrapper > .item-list > ul {
       -ms-grid-columns: (1fr)[3];
           grid-template-columns: repeat(3, 1fr); } }
 
 .view-articles-by-author article,
 .view-articles-for-news-center article,
-.view-topics-tags-news-articles article {
+.view-topics-tags-news-articles article,
+.view-all-campus-news article {
   margin-bottom: 40px; }
 
 .view-articles-for-news-center .views-infinite-scroll-content-wrapper > .item-list > ul {
   margin: 0 auto !important;
   margin-top: 40px !important;
   max-width: 1280px; }
+
+.view-all-campus-news .views-infinite-scroll-content-wrapper > .item-list > ul {
+  margin-top: 0; }
 
 .view-articles-by-term {
   background: #fff;

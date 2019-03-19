@@ -1,0 +1,31 @@
+<div class="news-center areas-content">
+  <h1>{{ name }}</h1>
+
+  <div class="news-center-banner">
+    <div class="news-center-banner__featured">
+      {{ content.field_feature_article }}
+    </div>
+
+    <div class="news-center-banner_list">
+      <h2 class="areas-header">The Latest</h2>
+      <ul class="card-four-up">
+        {{ content.field_support_articles }}
+      </ul>
+
+      <p class="all-campus-news"><a href="#all-news" class="button--alt">View all campus news</a></p>
+    </div>
+  </div>
+
+  {{ content.field_content_panel }}
+
+  <div class="news-list">
+    <a id="all-news"></a>
+    <h2 class="areas-header">All Campus News</h2>
+      {{ drupal_view('all_campus_news', 'block_1') }}
+  </div>
+
+</div>
+
+<div class="footer-ctas-wrapper">
+  {{ content.field_ankle_cta }}
+</div>

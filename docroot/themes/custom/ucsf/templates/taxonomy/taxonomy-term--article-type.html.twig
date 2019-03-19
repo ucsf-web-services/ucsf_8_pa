@@ -1,24 +1,23 @@
 <div class="topic-banner">
   {{ content.field_taxonomy_banner_image }}
 </div>
-<main role="main" class="main">
-  <div class="topic-page">
-    <div class="topic-content-wrapper">
-      <header class="basic-header topic-page__header media-coverage__header">
-        <h1 class="topic-page__header-title">{{ name }}</h1>
-      </header>
+
+<div class="topic-page">
+  <div class="topic-content-wrapper">
+    <header class="basic-header topic-page__header media-coverage__header">
+      <h1 class="topic-page__header-title">{{ name }}</h1>
+    </header>
 
 
-        <div class="topic-content">
-          {{ content.description }}
+      <div class="topic-content">
+        {{ content.description }}
 
-          <div class="news-list">
-            {{ drupal_view('media_coverage_articles', 'block_1') }}
-          </div>
+        <div class="news-list">
+          {{ drupal_view('media_coverage_articles', 'block_1') }}
         </div>
-    </div>
+      </div>
   </div>
-</main>
+</div>
 
 <div class="footer-ctas-wrapper">
   {{ content.field_ankle_cta }}
