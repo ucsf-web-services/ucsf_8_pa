@@ -1,0 +1,31 @@
+uuid: f60a2256-5029-4ed1-83e6-377abd12bc52
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.alert.field_alert_text
+    - field.field.paragraph.alert.field_textbox_background_color
+    - paragraphs.paragraphs_type.alert
+  module:
+    - text
+id: paragraph.alert.default
+targetEntityType: paragraph
+bundle: alert
+mode: default
+content:
+  field_alert_text:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_textbox_background_color:
+    weight: 0
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+hidden: {  }

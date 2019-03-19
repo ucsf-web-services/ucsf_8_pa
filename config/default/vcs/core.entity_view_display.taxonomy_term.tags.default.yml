@@ -8,7 +8,7 @@ dependencies:
     - field.field.taxonomy_term.tags.field_featured
     - field.field.taxonomy_term.tags.field_taxonomy_banner_image
     - field.field.taxonomy_term.tags.field_taxonomy_card_image
-    - responsive_image.styles.topic_banner
+    - responsive_image.styles.topic_card
     - taxonomy.vocabulary.tags
   module:
     - entity_reference_revisions
@@ -27,7 +27,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_ankle_cta:
-    weight: 4
+    weight: 3
     label: hidden
     settings:
       link: true
@@ -44,6 +44,16 @@ content:
       link: ''
     third_party_settings: {  }
     region: content
+  field_featured:
+    type: boolean
+    weight: 4
+    region: content
+    label: hidden
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
   field_taxonomy_banner_image:
     weight: 0
     label: hidden
@@ -53,6 +63,13 @@ content:
     third_party_settings: {  }
     type: media_responsive_thumbnail
     region: content
-hidden:
-  field_featured: true
-  field_taxonomy_card_image: true
+  field_taxonomy_card_image:
+    type: media_responsive_thumbnail
+    weight: 5
+    region: content
+    label: hidden
+    settings:
+      responsive_image_style: topic_card
+      image_link: ''
+    third_party_settings: {  }
+hidden: {  }

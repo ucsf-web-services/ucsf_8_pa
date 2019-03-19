@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.taxonomy_term.topic_tag_card
     - field.storage.taxonomy_term.field_taxonomy_card_image
     - taxonomy.vocabulary.tags
     - taxonomy.vocabulary.topics
@@ -57,7 +58,10 @@ display:
       style:
         type: html_list
       row:
-        type: fields
+        type: 'entity:taxonomy_term'
+        options:
+          relationship: none
+          view_mode: topic_tag_card
       fields:
         name:
           id: name

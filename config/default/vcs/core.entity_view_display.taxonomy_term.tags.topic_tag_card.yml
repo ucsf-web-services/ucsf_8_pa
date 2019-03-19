@@ -1,0 +1,44 @@
+uuid: 1049b73d-44db-4a89-821d-d9140e9b9c89
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.taxonomy_term.topic_tag_card
+    - field.field.taxonomy_term.tags.field_ankle_cta
+    - field.field.taxonomy_term.tags.field_content_panel
+    - field.field.taxonomy_term.tags.field_featured
+    - field.field.taxonomy_term.tags.field_taxonomy_banner_image
+    - field.field.taxonomy_term.tags.field_taxonomy_card_image
+    - responsive_image.styles.topic_card
+    - taxonomy.vocabulary.tags
+  module:
+    - media_responsive_thumbnail
+id: taxonomy_term.tags.topic_tag_card
+targetEntityType: taxonomy_term
+bundle: tags
+mode: topic_tag_card
+content:
+  field_featured:
+    type: boolean
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+  field_taxonomy_card_image:
+    type: media_responsive_thumbnail
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      responsive_image_style: topic_card
+      image_link: ''
+    third_party_settings: {  }
+hidden:
+  description: true
+  field_ankle_cta: true
+  field_content_panel: true
+  field_taxonomy_banner_image: true

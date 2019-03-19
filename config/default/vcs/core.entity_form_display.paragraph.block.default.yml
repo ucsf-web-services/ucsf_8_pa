@@ -4,8 +4,10 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.block.field_block
-    - field.field.paragraph.block.field_title
+    - field.field.paragraph.block.field_block_description
     - paragraphs.paragraphs_type.block
+  module:
+    - text
 id: paragraph.block.default
 targetEntityType: paragraph
 bundle: block
@@ -20,13 +22,13 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
-  field_title:
+  field_block_description:
     weight: 0
     settings:
-      size: 60
+      rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
+    type: text_textarea
     region: content
 hidden:
   created: true

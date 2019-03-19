@@ -4,8 +4,10 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.block.field_block
-    - field.field.paragraph.block.field_title
+    - field.field.paragraph.block.field_block_description
     - paragraphs.paragraphs_type.block
+  module:
+    - text
 id: paragraph.block.default
 targetEntityType: paragraph
 bundle: block
@@ -20,12 +22,11 @@ content:
     third_party_settings: {  }
     type: entity_reference_entity_view
     region: content
-  field_title:
+  field_block_description:
     weight: 0
     label: hidden
-    settings:
-      link_to_entity: false
+    settings: {  }
     third_party_settings: {  }
-    type: string
+    type: text_default
     region: content
 hidden: {  }

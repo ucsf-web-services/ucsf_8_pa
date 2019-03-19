@@ -1,0 +1,55 @@
+uuid: 4c5ff0d7-e78e-42a6-935a-93df354fcc47
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.areas.field_ankle_cta
+    - field.field.taxonomy_term.areas.field_content_panel
+    - field.field.taxonomy_term.areas.field_feature_article
+    - field.field.taxonomy_term.areas.field_support_articles
+    - taxonomy.vocabulary.areas
+  module:
+    - entity_reference_revisions
+id: taxonomy_term.areas.default
+targetEntityType: taxonomy_term
+bundle: areas
+mode: default
+content:
+  field_ankle_cta:
+    weight: 3
+    label: hidden
+    settings:
+      link: true
+      view_mode: default
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_content_panel:
+    weight: 2
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
+  field_feature_article:
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: alt_2
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
+  field_support_articles:
+    weight: 1
+    label: hidden
+    settings:
+      view_mode: card
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+hidden:
+  description: true
