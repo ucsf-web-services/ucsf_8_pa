@@ -5286,8 +5286,13 @@ header .menu--main {
     [block="block-ucsf-main-menu-desktop"] .menu-item:hover > .menu-child--wrapper {
       clip: auto;
       overflow: visible;
-      -webkit-animation: menu-slide 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s both;
-      animation: menu-slide 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s both; }
+      -webkit-animation: menu-slide 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 200ms both;
+      animation: menu-slide 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 200ms both; }
+      [block="block-ucsf-main-menu-desktop"] .menu-item:hover > .menu-child--wrapper .menu-child--menu,
+      [block="block-ucsf-main-menu-desktop"] .menu-item:hover > .menu-child--wrapper .menu-child--label span,
+      [block="block-ucsf-main-menu-desktop"] .menu-item:hover > .menu-child--wrapper ::after {
+        -webkit-animation: fade 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s both;
+                animation: fade 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s both; }
   [block="block-ucsf-main-menu-desktop"] .menu-child--wrapper {
     background: #f2f4f6;
     height: auto;
@@ -5324,7 +5329,9 @@ header .menu--main {
       background: #052049;
       margin: 0 5px 3px; }
     [block="block-ucsf-main-menu-desktop"] [data-level="level-0"] > .menu-child--label:after {
-      background: #fff; }
+      background: #fff;
+      -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
+              animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
     [block="block-ucsf-main-menu-desktop"] [data-level="level-0"] > .menu-child--label[data-section="section-about"] {
       background: #716fb2; }
     [block="block-ucsf-main-menu-desktop"] [data-level="level-0"] > .menu-child--label[data-section="section-about-menu"] {
@@ -5507,11 +5514,15 @@ main.main {
   0% {
     clip: auto;
     overflow: visible;
+    -webkit-transform-origin: 0 top;
+            transform-origin: 0 top;
     -webkit-transform: scaleY(0);
             transform: scaleY(0); }
   100% {
     clip: auto;
     overflow: visible;
+    -webkit-transform-origin: 0 top;
+            transform-origin: 0 top;
     -webkit-transform: scaleY(1);
             transform: scaleY(1); } }
 
@@ -5519,11 +5530,15 @@ main.main {
   0% {
     clip: auto;
     overflow: visible;
+    -webkit-transform-origin: 0 top;
+            transform-origin: 0 top;
     -webkit-transform: scaleY(0);
             transform: scaleY(0); }
   100% {
     clip: auto;
     overflow: visible;
+    -webkit-transform-origin: 0 top;
+            transform-origin: 0 top;
     -webkit-transform: scaleY(1);
             transform: scaleY(1); } }
 
