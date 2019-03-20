@@ -34,7 +34,9 @@
   top: 89px;
   width: 100%;
   z-index: $z-quicklinks-menu;
-
+  .fa-caret-right {
+    display: inline-block;
+  }
   @include breakpoint($bp-medium) {
     height: calc(100vh - 129px);
     top: 129px;
@@ -53,10 +55,15 @@
   &.js-quicklinks-open {
     //right place for the trigger, but now on close need another trigger?
 
+    .field-quick-link-menu {
+      animation: fade 500ms cubic-bezier(0.59,0.22,0.86,0.71) 0s both;
+    }
+
     right: 0;
     top: 0;
     height: 100vh;
     visibility: visible;
+
 
 
     @include breakpoint($bp-medium) {
@@ -94,7 +101,7 @@
     display: none;
 
     @include breakpoint($bp-medium) {
-      display: inline;
+      display: inline-block;
     }
   }
 
@@ -126,6 +133,8 @@
 
   .quicklinks:hover & {
     visibility: visible;
+
+
   }
 
   &.js-quicklinks-open {
@@ -150,6 +159,8 @@
   }
 
   > .field-quick-link-menu {
+
+
 
     @include breakpoint($bp-medium) {
       display: table-cell;

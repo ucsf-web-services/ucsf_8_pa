@@ -1,3 +1,24 @@
+.universal-header__give {
+  display: block;
+  padding: $space 0;
+  padding-top: 10px;
+  min-width: $space-nineteen;
+  border: none;
+  background: $c-blue;
+  color: $c-white;
+  width: 100%;
+
+  @include breakpoint($bp-large) {
+    display: inline-block;
+    width: auto;
+  }
+
+  .universal-header & {
+    @include breakpoint($bp-until-large) {
+      display: none;
+    }
+  }
+}
 .universal-header-region {
   @include clearfix;
   @include fs-universal-header;
@@ -24,24 +45,4 @@
   }
 }
 
-.universal-header__give {
-  display: block;
-  padding: $space 0;
-  padding-top: 10px;
-  min-width: $space-nineteen;
-  border: none;
-  background: $c-blue;
-  color: $c-white;
-  width: 100%;
 
-  @include breakpoint($bp-large) {
-    display: inline-block;
-    width: auto;
-  }
-
-  .universal-header & {
-    @include breakpoint($bp-until-large) {
-      display: none;
-    }
-  }
-}
