@@ -73,7 +73,8 @@
             {# Only show the side title if the menu is not search #}
             {% if item.title != 'Search' %}
             <div data-section="section-{{ item_title_class }}" class="menu-child--label">
-              {{ item.title }}
+              {# added span so we can hide this during animation #}
+              <span>{{ item.title }}</span>
             </div>
             {% endif %}
 

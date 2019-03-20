@@ -1,17 +1,20 @@
 {% extends 'region.html.twig' %}
 {% block content %}
-  <div class="universal-header-region">
-    <div class="universal-header">
-      <p class="universal-header__title">University of California San Francisco</p>
-      <button class="universal-header__give">Give to UCSF</button>
+    {# need both headers wrapped together for CSS Animations #}
+    <div class="combined-header-region">
+        <div class="universal-header-region">
+            <header class="universal-header">
+                <p class="universal-header__title">University of California San Francisco</p>
+                <button class="universal-header__give">Give to UCSF</button>
+            </header>
+        </div>
+        <div class="header-region">
+            <header class="header" role="banner">
+                {% include '@theme/header/header--logo.twig' %}
+                {% include '@theme/header/header--search.twig' %}
+                <div class="slicknav-placeholder"></div>
+                {{ content }} {# main nav #}
+            </header>
+        </div>
     </div>
-  </div>
-  <div class="header-region">
-    <header class="header" role="banner">
-      {% include '@theme/header/header--logo.twig' %}
-      {% include '@theme/header/header--search.twig' %}
-      <div class="slicknav-placeholder"></div>
-      {{ content }} {# main nav #}
-    </header>
-  </div>
 {% endblock content %}

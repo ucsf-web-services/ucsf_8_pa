@@ -1,3 +1,7 @@
+.combined-header-region {
+
+}
+
 header .menu--main {
   grid-column: span 2;
 
@@ -9,7 +13,7 @@ header .menu--main {
 [block="block-ucsf-main-menu-desktop"] {
   margin: 0;
   padding-left: 0;
-
+  position: relative;
   .menu-child--wrapper {
     @include visually-hidden;
   }
@@ -17,8 +21,18 @@ header .menu--main {
   .menu-item {
     display: inline-block;
 
+
     &:hover > .menu-child--wrapper {
+
       @include visually-hidden-reset;
+      @include menu-animation;
+
+      .menu-child--menu,
+      .menu-child--label span
+      {
+        animation: fade 2.0s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.0s both;
+      }
+
     }
 
     // for debugging only.
@@ -54,6 +68,7 @@ header .menu--main {
 
     &:after {
       background: $c-white;
+      animation: fade 2.0s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.0s both;
     }
 
     @each $area, $color, $color2 in $areas {
@@ -107,6 +122,7 @@ header .menu--main {
       border-bottom: 1px solid #d5d9de;
       display: block;
       margin-left: 73px;
+
     }
 
     .menu-item--expanded {
