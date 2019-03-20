@@ -65,7 +65,25 @@
 .vertical-tab-alt {
   padding-right: 0;
 
-  ul { // PL: .vertical-tab__title
+  &.layout-left-30-70 {
+    padding-right: 0;
+
+    .field-column-30 {
+      padding-right: $space-fifteen;
+      width: 38%;
+    }
+
+    .field-column-70 {
+      padding: 56px 80px;
+      padding-bottom: 56px;
+      padding-bottom: 0;
+      background: #f2f4f6;
+      width: 62%;
+      min-height: 42em;
+    }
+  }
+
+  .vertical-tab__title { // PL: .vertical-tab__title
     padding-right: $space-fifteen;
     width: 38%;
 
@@ -77,30 +95,71 @@
 
         padding: $space-four 0;
         border-bottom: none;
+        display: block;
       }
 
       h2 {
         margin: 0;
         padding: 0;
       }
-    }
 
-    &[aria-selected="true"] a {
-      color: $blue;
-      border-top: 0;
-      position: relative;
-      background: url("../images/vertical-tab-highlight-alt.png") right center no-repeat $white;
-      margin-right: -$space-fifteen;
-      padding-right: $space-fifteen;
-      margin-top: 0;
-      display: block;
+      &[aria-selected="true"] a {
+        @include background-image('vertical-tab-highlight-alt.png', right center, $white);
+        color: $blue;
+        border-top: 0;
+        position: relative;
+        margin-right: -$space-fifteen;
+        padding-right: $space-fifteen;
+        margin-top: 0;
+        display: block;
+      }
     }
   }
 
-  .cta-list, .ext-list { // PL: .vertical-tab__content
-    padding: $space-seven $space-ten;
-    padding-bottom: 0;
-    background: $background-gray;
-    width: 62%;
+  .field-tab-content {
+    list-style: none;
+    margin: 0;
+    margin-bottom: $space-six !important;
+    padding: 0;
+    padding-right: $space-fourteen;
+    padding-bottom: $space-five;
+    height: 452px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      background-color: $c-gray-lighter;
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $c-gray-blue;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: $c-blue;
+      }
+    }
+
+    .line--list {
+      p {
+        margin-top: 0;
+        font-family: $font-helvetica-neue-medium;
+
+        a {
+          color: $c-navy;
+
+          &:hover {
+            color: $c-blue;
+          }
+        }
+      }
+    }
+  }
+
+  .field-tab-unscrollable-content {
+    :first-child {
+      margin-top: 0;
+    }
   }
 }

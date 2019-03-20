@@ -1,0 +1,12 @@
+<div class="memberships">
+  <div class="memberships__content">
+    <h2 class="memberships__title">{{ paragraph.field_membership_title.value }}</h2>
+    <div class="memberships__subtitle">{{ content.field_membership_description }}</div>
+  </div>
+
+  {{ content|without(
+    'field_membership_title',
+    'field_membership_description'
+  ) }}
+
+</div>

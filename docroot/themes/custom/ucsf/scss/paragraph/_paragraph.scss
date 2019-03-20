@@ -144,7 +144,7 @@
   .layout__heading {
     margin-bottom: $space-four;
   }
-  
+
   .field-content-wrapper-content { // PL: .layout-columns__three
     list-style: none;
     grid-column: 1/-1;
@@ -213,7 +213,8 @@
     }
 
     .cta--list,
-    .ext--list {
+    .ext--list,
+    .inline--list {
       margin-bottom: 0;
     }
   }
@@ -310,4 +311,81 @@
 
 .accent-blue {
   border-bottom: 8px solid $print-blue;
+}
+
+.nobel-card__date {
+  @include eyebrow;
+
+  margin-bottom: $space-two;
+  padding-top: $space-two;
+  line-height: 1;
+}
+
+.nobel-card__title {
+  font-size: 28px;
+  letter-spacing: -.3px;
+  font-family: $font-granjon;
+  font-weight: normal;
+  margin-bottom: $space-two;
+}
+
+.memberships {
+  @include grid;
+
+  grid-column: 1/-1;
+  padding: $space-ten;
+  padding-bottom: $space-five;
+}
+
+.memberships__content {
+  grid-column: 9/-1;
+  grid-row: 1/-1;
+}
+
+.memberships__title,
+.page-node-type-full-width-page h2.memberships__title {
+  font-family: $font-granjon;
+  line-height: 1.2;
+  margin-bottom: 0;
+  font-size: 48px;
+  letter-spacing: -1px;
+}
+
+.memberships-cards {
+  @include grid-three;
+
+  grid-column: 1/9;
+  grid-row: 1/-1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.memberships-cards__card {
+  border: 1px solid $c-gray-border;
+  margin-right: $space-three;
+  padding: $space-four;
+  min-height: 285px;
+  margin-bottom: $space-five;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.memberships-cards__title,
+.memberships-cards__subtitle {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.memberships-cards__title {
+  @include fs-display;
+
+  color: $teal;
+  margin-bottom: $space-four;
+}
+
+.memberships-cards__subtitle {
+  font-family: $font-helvetica-neue-medium;
+  line-height: 1.4;
 }

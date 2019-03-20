@@ -1,0 +1,47 @@
+.full-bleed-subbanner {
+  grid-column: 1/-1;
+  position: relative;
+}
+
+.full-bleed-subbanner__image {
+  height: 463px;
+}
+
+.full-bleed-subbanner__content {
+  width: 48%;
+  background: white;
+  height: auto;
+  padding: $space-eight $space-eleven;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.subbanner-right {
+  .full-bleed-subbanner__content {
+    left: auto;
+    right: 0;
+  }
+}
+
+.full-bleed-subbanner__title,
+.full-banner-subbanner__subtitle {
+  margin: 0;
+
+  .field-banner-section-description {
+    *:first-child {
+      margin-top: 0;
+    }
+
+    *:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.full-bleed-subbanner__title/*,
+.page-node-type-full-width-page h2.full-bleed-subbanner__title*/ {
+  @include fs-heading;
+
+  margin-bottom: $space-two;
+}
