@@ -5531,7 +5531,7 @@ main.main {
     transform: translateY(-147px);
     -webkit-box-shadow: 5px 0 0 #000;
             box-shadow: 5px 0 0 #000; }
-  50% {
+  33% {
     -webkit-transform: translateY(-147px);
     transform: translateY(-147px);
     -webkit-box-shadow: 5px 0 7px #000;
@@ -5549,7 +5549,7 @@ main.main {
     opacity: 0;
     -webkit-box-shadow: 5px 0 0 #000;
             box-shadow: 5px 0 0 #000; }
-  50% {
+  33% {
     -webkit-transform: translateY(-147px);
     transform: translateY(-147px);
     -webkit-box-shadow: 5px 0 7px #000;
@@ -5605,6 +5605,26 @@ main.main {
     -webkit-transform: scaleY(1);
             transform: scaleY(1); } }
 
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    background: transparent; }
+  to {
+    -webkit-transform: rotate(60deg);
+            transform: rotate(60deg);
+    background: red; } }
+
+@keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    background: transparent; }
+  to {
+    -webkit-transform: rotate(60deg);
+            transform: rotate(60deg);
+    background: red; } }
+
 .pager {
   list-style: none;
   padding-bottom: 47px;
@@ -5648,6 +5668,8 @@ main.main {
   .header-region:before {
     -webkit-transition: .3s ease-out all;
     transition: .3s ease-out all;
+    -webkit-transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
+    transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
     background-color: rgba(18, 26, 49, 0.25);
     left: 0;
     display: block;
@@ -5662,8 +5684,8 @@ main.main {
     opacity: 1; }
 
 .quicklinks {
-  -webkit-transition: .3s ease-out all;
-  transition: .3s ease-out all;
+  -webkit-transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
+  transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
   height: calc(100vh - 89px);
   position: fixed;
   right: calc((100% - 32px) * -1);
@@ -5691,8 +5713,8 @@ main.main {
         width: 50%; } }
 
 .quicklinks-trigger {
-  -webkit-transition: .3s ease-out all;
-  transition: .3s ease-out all;
+  -webkit-transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
+  transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
   background: #fff;
   text-align: center;
   font-size: 12px;
@@ -5725,8 +5747,8 @@ main.main {
     cursor: pointer; }
 
 .quicklinks-menu {
-  -webkit-transition: .3s ease-out all;
-  transition: .3s ease-out all;
+  -webkit-transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
+  transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
   margin: 0;
   background: #052049;
   color: #fff;
@@ -5771,12 +5793,15 @@ main.main {
         position: absolute;
         top: 10vh;
         right: 10%; } }
-  @media (min-width: 600px) {
-    .quicklinks-menu > .field-quick-link-menu {
-      display: table-cell;
-      padding-left: 13%;
-      padding-right: 13%;
-      vertical-align: middle; } }
+  .quicklinks-menu > .field-quick-link-menu {
+    -webkit-transition: .3s ease-out all;
+    transition: .3s ease-out all; }
+    @media (min-width: 600px) {
+      .quicklinks-menu > .field-quick-link-menu {
+        display: table-cell;
+        padding-left: 13%;
+        padding-right: 13%;
+        vertical-align: middle; } }
   .quicklinks-menu .field-quick-link-title {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
