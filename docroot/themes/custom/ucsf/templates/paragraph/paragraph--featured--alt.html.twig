@@ -3,7 +3,7 @@
 {% if content.field_link|render|striptags != '' %}
   {# Feature Paragraph > Overwrite Link #}
   {% set link = paragraph.field_link.value.0.uri %}
-{% elseif drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id) %}
+{% elseif drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id)|render|striptags != '' %}
    {# Feature Paragraph > News Article (News) > External URL #}
   {% set external_link = drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id) %}
   {% set link = external_link.0['#url'].uri %}
