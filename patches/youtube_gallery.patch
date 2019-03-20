@@ -1,0 +1,32 @@
+diff --git a/src/Plugin/Block/YoutubeVideoGallery.php b/src/Plugin/Block/YoutubeVideoGallery.php
+index 642652f6b..9d6e6e367 100644
+--- a/src/Plugin/Block/YoutubeVideoGallery.php
++++ b/src/Plugin/Block/YoutubeVideoGallery.php
+@@ -90,9 +90,11 @@ public function build() {
+     }
+ 
+     return [
+-      '#type' => 'markup',
+-      '#markup' => $output,
+-      '#allowed_tags' => ['iframe', 'a', 'html', 'br', 'img', 'h2'],
++      //'#type' => 'markup',
++      //'#markup' => $output,
++      //'#allowed_tags' => ['iframe', 'a', 'html', 'br', 'img', 'h2'],
++      '#content' => $content,
++      '#theme' => 'youtube-gallery'
+     ];
+ 
+   }
+diff --git a/youtube_gallery.module b/youtube_gallery.module
+index 214d871b4..0c0ba140c 100644
+--- a/youtube_gallery.module
++++ b/youtube_gallery.module
+@@ -13,7 +13,7 @@
+ function youtube_gallery_theme($existing, $type, $theme, $path) {
+ 
+   return [
+-    'youtube_gallery' => [
++    'youtube-gallery' => [
+       'variables' => [
+         'content' => NULL,
+         'currentVideo' => NULL,

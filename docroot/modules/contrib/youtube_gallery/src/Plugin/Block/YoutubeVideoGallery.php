@@ -90,9 +90,11 @@ class YoutubeVideoGallery extends BlockBase implements ContainerFactoryPluginInt
     }
 
     return [
-      '#type' => 'markup',
-      '#markup' => $output,
-      '#allowed_tags' => ['iframe', 'a', 'html', 'br', 'img', 'h2'],
+      //'#type' => 'markup',
+      //'#markup' => $output,
+      //'#allowed_tags' => ['iframe', 'a', 'html', 'br', 'img', 'h2'],
+      '#content' => $content,
+      '#theme' => 'youtube-gallery'
     ];
 
   }
