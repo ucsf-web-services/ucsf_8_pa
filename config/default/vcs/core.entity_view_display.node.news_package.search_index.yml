@@ -1,0 +1,113 @@
+uuid: cb3b75ed-ce80-472d-9876-da60c9768a2a
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.search_index
+    - field.field.node.news_package.body
+    - field.field.node.news_package.field_ankle_cta
+    - field.field.node.news_package.field_apple_news_title
+    - field.field.node.news_package.field_areas
+    - field.field.node.news_package.field_article_type
+    - field.field.node.news_package.field_banner_image
+    - field.field.node.news_package.field_date_and_time
+    - field.field.node.news_package.field_exclude
+    - field.field.node.news_package.field_facebook_description
+    - field.field.node.news_package.field_facebook_image
+    - field.field.node.news_package.field_facebook_title
+    - field.field.node.news_package.field_featured
+    - field.field.node.news_package.field_hide_article
+    - field.field.node.news_package.field_include
+    - field.field.node.news_package.field_locations
+    - field.field.node.news_package.field_organizations
+    - field.field.node.news_package.field_people
+    - field.field.node.news_package.field_primary_area
+    - field.field.node.news_package.field_short_title
+    - field.field.node.news_package.field_sub_title
+    - field.field.node.news_package.field_tags
+    - field.field.node.news_package.field_textured_background_image
+    - field.field.node.news_package.field_topics
+    - field.field.node.news_package.field_twitter_description
+    - field.field.node.news_package.field_twitter_image
+    - field.field.node.news_package.field_twitter_title
+    - image.style.news_card__image
+    - node.type.news_package
+  module:
+    - datetime
+    - media
+    - text
+    - user
+id: node.news_package.search_index
+targetEntityType: node
+bundle: news_package
+mode: search_index
+content:
+  body:
+    type: text_default
+    weight: 4
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_banner_image:
+    type: media_thumbnail
+    weight: 5
+    region: content
+    label: hidden
+    settings:
+      image_style: news_card__image
+      image_link: ''
+    third_party_settings: {  }
+  field_date_and_time:
+    weight: 0
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: news_date
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_primary_area:
+    weight: 1
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_short_title:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_sub_title:
+    type: text_default
+    weight: 3
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_ankle_cta: true
+  field_apple_news_title: true
+  field_areas: true
+  field_article_type: true
+  field_exclude: true
+  field_facebook_description: true
+  field_facebook_image: true
+  field_facebook_title: true
+  field_featured: true
+  field_hide_article: true
+  field_include: true
+  field_locations: true
+  field_organizations: true
+  field_people: true
+  field_tags: true
+  field_textured_background_image: true
+  field_topics: true
+  field_twitter_description: true
+  field_twitter_image: true
+  field_twitter_title: true
+  links: true
