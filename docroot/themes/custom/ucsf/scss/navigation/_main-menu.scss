@@ -31,9 +31,12 @@ header .menu--main {
       .menu-child--label span,
       ::after
       {
-        animation: fade 1.0s cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s both;
+        animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both;
       }
 
+      .menu-child--wrapper {
+        animation: none;
+      }
     }
 
     // for debugging only.
@@ -56,6 +59,9 @@ header .menu--main {
 
   [data-level="level-0"] > .menu-child--label {
     @include eyebrow;
+    &:after {
+      background: $c-white;
+    }
     color: $c-white;
     background: $c-teal;
     float: left;
@@ -67,10 +73,6 @@ header .menu--main {
     width: 520px;
     margin-top: 1px;
 
-    &:after {
-      background: $c-white;
-      animation: fade 2.0s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.0s both;
-    }
 
     @each $area, $color, $color2 in $areas {
       &[data-section="section-#{$area}"] {
@@ -177,7 +179,7 @@ header .menu--main {
       padding-right: 80px;
       padding-left: 0;
       width: 100%;
-
+      animation: none;
       .menu-item {
         margin-left: 80px;
       }
