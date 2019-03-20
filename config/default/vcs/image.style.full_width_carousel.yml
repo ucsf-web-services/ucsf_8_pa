@@ -1,8 +1,20 @@
 uuid: 4e5b2be6-0227-4660-93d4-4b3c8d5b9055
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - image_effects
 name: full_width_carousel
 label: '(789 x 526) Full-Width Carousel'
-effects: {  }
+effects:
+  bce07197-98e4-4cb9-b830-cca368b2ad14:
+    uuid: bce07197-98e4-4cb9-b830-cca368b2ad14
+    id: image_effects_scale_and_smart_crop
+    weight: 1
+    data:
+      width: '789'
+      height: '526'
+      upscale: false
+      simulate: false
+      algorithm: entropy_slice
 pipeline: __default__

@@ -7,9 +7,11 @@ dependencies:
     - field.field.paragraph.nobel_winner_card.field_nobel_winner_description
     - field.field.paragraph.nobel_winner_card.field_nobel_winner_image
     - field.field.paragraph.nobel_winner_card.field_nobel_winner_name
+    - image.style.nobel_winner_card
     - paragraphs.paragraphs_type.nobel_winner_card
   module:
     - datetime
+    - media
     - text
 id: paragraph.nobel_winner_card.default
 targetEntityType: paragraph
@@ -17,33 +19,33 @@ bundle: nobel_winner_card
 mode: default
 content:
   field_nobel_winner_date:
-    weight: 0
-    label: above
+    weight: 1
+    label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: html_year
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_nobel_winner_description:
-    weight: 2
-    label: above
+    weight: 3
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
   field_nobel_winner_image:
-    type: entity_reference_entity_view
-    weight: 3
-    label: above
+    type: media_thumbnail
+    weight: 0
+    label: hidden
     settings:
-      view_mode: default
-      link: false
+      image_style: nobel_winner_card
+      image_link: ''
     third_party_settings: {  }
     region: content
   field_nobel_winner_name:
-    weight: 1
-    label: above
+    weight: 2
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }

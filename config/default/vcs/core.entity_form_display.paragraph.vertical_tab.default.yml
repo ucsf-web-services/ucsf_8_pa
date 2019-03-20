@@ -5,9 +5,25 @@ dependencies:
   config:
     - field.field.paragraph.vertical_tab.field_tab_content
     - field.field.paragraph.vertical_tab.field_tab_title
+    - field.field.paragraph.vertical_tab.field_tab_unscrollable_content
     - paragraphs.paragraphs_type.vertical_tab
   module:
+    - field_group
     - text
+third_party_settings:
+  field_group:
+    group_non_scrolling_text_used_in:
+      children:
+        - field_tab_unscrollable_content
+      parent_name: ''
+      weight: 2
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: false
+        required_fields: true
+      label: 'Non-Scrolling Text Used in Gray Tabs'
 id: paragraph.vertical_tab.default
 targetEntityType: paragraph
 bundle: vertical_tab
@@ -28,6 +44,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_tab_unscrollable_content:
+    weight: 3
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
     region: content
 hidden:
   created: true

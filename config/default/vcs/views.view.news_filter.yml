@@ -3,11 +3,14 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.search_index
     - field.storage.node.body
     - field.storage.node.field_card_image
     - field.storage.node.field_date_and_time
     - field.storage.node.field_primary_area
     - image.style.card_row__image
+    - node.type.article
+    - node.type.news_package
     - taxonomy.vocabulary.areas
     - taxonomy.vocabulary.article_type
     - taxonomy.vocabulary.topics
@@ -187,12 +190,12 @@ display:
                 rewrite:
                   filter_rewrite_values: ''
             field_date_and_time_value_1:
-              bef_format: bef_datepicker
+              bef_format: default
               more_options:
                 is_secondary: false
                 placeholder_text: ''
             field_date_and_time_value_2:
-              bef_format: bef_datepicker
+              bef_format: default
               more_options:
                 is_secondary: false
                 placeholder_text: ''
@@ -219,43 +222,16 @@ display:
             offset_label: Offset
           quantity: 9
       style:
-        type: table
+        type: default
         options:
-          grouping: {  }
           row_class: ''
           default_row_class: true
-          override: true
-          sticky: false
-          caption: ''
-          summary: ''
-          description: ''
-          columns:
-            title: title
-            body: body
-          info:
-            title:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            body:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: '-1'
-          empty_table: false
+          uses_fields: true
       row:
-        type: fields
+        type: 'entity:node'
         options:
-          inline: {  }
-          separator: ''
-          hide_empty: false
-          default_field_elements: true
+          relationship: none
+          view_mode: search_index
       fields:
         title:
           id: title
@@ -373,6 +349,47 @@ display:
           field: field_date_and_time
           plugin_id: field
       filters:
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: in
+          value:
+            article: article
+            news_package: news_package
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
         combine:
           id: combine
           table: views
@@ -814,7 +831,7 @@ display:
                   max: ''
               4:
                 title: '2014'
-                operator: '='
+                operator: '>='
                 value:
                   type: date
                   value: '2014-01-01'
@@ -822,7 +839,7 @@ display:
                   max: ''
               5:
                 title: '2013'
-                operator: '='
+                operator: '>='
                 value:
                   type: date
                   value: '2013-01-01'
@@ -830,7 +847,7 @@ display:
                   max: ''
               6:
                 title: '2012'
-                operator: '='
+                operator: '>='
                 value:
                   type: date
                   value: '2012-01-01'
@@ -838,7 +855,7 @@ display:
                   max: ''
               7:
                 title: '2011'
-                operator: '='
+                operator: '>='
                 value:
                   type: date
                   value: '2011-01-01'
@@ -846,7 +863,7 @@ display:
                   max: ''
               8:
                 title: ''
-                operator: '='
+                operator: '>='
                 value:
                   type: date
                   value: ''
@@ -1112,7 +1129,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: news_filter
+      path: news/filter
       exposed_block: true
       fields:
         field_date_and_time:

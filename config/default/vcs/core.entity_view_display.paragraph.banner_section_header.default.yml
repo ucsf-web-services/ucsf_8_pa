@@ -5,9 +5,13 @@ dependencies:
   config:
     - field.field.paragraph.banner_section_header.field_banner_section_description
     - field.field.paragraph.banner_section_header.field_banner_section_image
+    - field.field.paragraph.banner_section_header.field_banner_section_position
     - field.field.paragraph.banner_section_header.field_banner_section_title
     - paragraphs.paragraphs_type.banner_section_header
+    - responsive_image.styles.banner_section
   module:
+    - media_responsive_thumbnail
+    - options
     - text
 id: paragraph.banner_section_header.default
 targetEntityType: paragraph
@@ -16,23 +20,30 @@ mode: default
 content:
   field_banner_section_description:
     weight: 2
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
   field_banner_section_image:
-    type: entity_reference_entity_view
+    type: media_responsive_thumbnail
     weight: 1
-    label: above
+    label: hidden
     settings:
-      view_mode: default
-      link: false
+      responsive_image_style: banner_section
+      image_link: ''
     third_party_settings: {  }
+    region: content
+  field_banner_section_position:
+    weight: 3
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_key
     region: content
   field_banner_section_title:
     weight: 0
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }

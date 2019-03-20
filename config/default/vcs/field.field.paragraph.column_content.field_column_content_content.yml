@@ -4,19 +4,15 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_column_content_content
-    - paragraphs.paragraphs_type.block
-    - paragraphs.paragraphs_type.blockquote
     - paragraphs.paragraphs_type.column_content
     - paragraphs.paragraphs_type.content_promotional
     - paragraphs.paragraphs_type.fact_promotional_card
     - paragraphs.paragraphs_type.featured
     - paragraphs.paragraphs_type.image
-    - paragraphs.paragraphs_type.menu
+    - paragraphs.paragraphs_type.nobel_winner_card
     - paragraphs.paragraphs_type.promotional
     - paragraphs.paragraphs_type.promotional_with_image
-    - paragraphs.paragraphs_type.related_content
     - paragraphs.paragraphs_type.text_block
-    - paragraphs.paragraphs_type.view
   module:
     - entity_reference_revisions
 id: paragraph.column_content.field_column_content_content
@@ -36,138 +32,137 @@ settings:
     target_bundles:
       text_block: text_block
       image: image
-      blockquote: blockquote
-      related_content: related_content
-      view: view
-      menu: menu
-      block: block
       content_promotional: content_promotional
-      fact_promotional_card: fact_promotional_card
-      featured: featured
-      promotional: promotional
       promotional_with_image: promotional_with_image
+      fact_promotional_card: fact_promotional_card
+      promotional: promotional
+      nobel_winner_card: nobel_winner_card
+      featured: featured
     target_bundles_drag_drop:
       text_block:
         enabled: true
-        weight: -23
+        weight: -85
       image:
         enabled: true
-        weight: -22
-      blockquote:
-        enabled: true
-        weight: -21
-      related_content:
-        enabled: true
-        weight: -20
-      column_content:
-        weight: -19
-        enabled: false
-      author:
-        weight: -18
-        enabled: false
-      custom_author:
-        weight: -16
-        enabled: false
-      column_wrapper:
-        weight: -15
-        enabled: false
-      featured_image:
-        weight: -14
-        enabled: false
-      featured_video:
-        weight: -13
-        enabled: false
-      view:
-        enabled: true
-        weight: 25
-      menu:
-        enabled: true
-        weight: 26
-      block:
-        enabled: true
-        weight: 27
-      featured_card_image:
-        weight: 32
-        enabled: false
-      gallery:
-        weight: 35
-        enabled: false
-      gallery_item:
-        weight: 36
-        enabled: false
+        weight: -84
       content_promotional:
         enabled: true
-        weight: 37
-      events:
-        weight: 39
-        enabled: false
-      related_external_link:
-        weight: 39
-        enabled: false
-      fact_promotional_card:
-        enabled: true
-        weight: 40
-      featured:
-        enabled: true
-        weight: 41
-      source:
-        weight: 42
-        enabled: false
-      achievements_banner_carousel:
-        weight: 42
-        enabled: false
-      promotional:
-        enabled: true
-        weight: 42
-      banner_section_header:
-        weight: 44
-        enabled: false
-      three_column_25_25_50:
-        weight: 44
-        enabled: false
-      three_column_25_50_25:
-        weight: 45
-        enabled: false
-      three_column_50_25_25:
-        weight: 46
-        enabled: false
-      two_column_content_row_25_75:
-        weight: 47
-        enabled: false
-      location:
-        weight: 48
-        enabled: false
-      two_column_content_row_75_25:
-        weight: 48
-        enabled: false
-      vertical_tab:
-        weight: 60
-        enabled: false
-      membership_card:
-        weight: 61
-        enabled: false
-      vertical_tabs:
-        weight: 61
-        enabled: false
-      membership_cards:
-        weight: 62
-        enabled: false
-      nobel_winner_card:
-        weight: 64
-        enabled: false
+        weight: -83
       promotional_with_image:
         enabled: true
-        weight: 66
+        weight: -82
+      fact_promotional_card:
+        enabled: true
+        weight: -81
+      promotional:
+        enabled: true
+        weight: -80
+      nobel_winner_card:
+        enabled: true
+        weight: -79
+      featured:
+        enabled: true
+        weight: -78
+      blockquote:
+        weight: -77
+        enabled: false
+      related_content:
+        weight: -76
+        enabled: false
+      column_content:
+        weight: -75
+        enabled: false
+      author:
+        weight: -74
+        enabled: false
+      custom_author:
+        weight: -73
+        enabled: false
+      column_wrapper:
+        weight: -72
+        enabled: false
+      featured_image:
+        weight: -71
+        enabled: false
+      featured_video:
+        weight: -70
+        enabled: false
+      view:
+        weight: -69
+        enabled: false
+      menu:
+        weight: -68
+        enabled: false
+      block:
+        weight: -67
+        enabled: false
+      featured_card_image:
+        weight: -66
+        enabled: false
+      gallery:
+        weight: -65
+        enabled: false
+      gallery_item:
+        weight: -64
+        enabled: false
+      events:
+        weight: -63
+        enabled: false
+      related_external_link:
+        weight: -62
+        enabled: false
+      source:
+        weight: -61
+        enabled: false
+      achievements_banner_carousel:
+        weight: -60
+        enabled: false
+      alert:
+        weight: -59
+        enabled: false
+      banner_section_header:
+        weight: -58
+        enabled: false
+      three_column_25_25_50:
+        weight: -57
+        enabled: false
+      three_column_25_50_25:
+        weight: -56
+        enabled: false
+      three_column_50_25_25:
+        weight: -55
+        enabled: false
+      two_column_content_row_25_75:
+        weight: -54
+        enabled: false
+      location:
+        weight: -53
+        enabled: false
+      two_column_content_row_75_25:
+        weight: -52
+        enabled: false
+      vertical_tab:
+        weight: -51
+        enabled: false
+      vertical_tabs:
+        weight: -50
+        enabled: false
+      membership_card:
+        weight: -49
+        enabled: false
+      membership_cards:
+        weight: -48
+        enabled: false
       quick_link_menu:
-        weight: 67
+        weight: -47
         enabled: false
       quick_link_menus:
-        weight: 68
+        weight: -46
         enabled: false
       two_column_content_row_30_70:
-        weight: 77
+        weight: -45
         enabled: false
       two_column_content_row_70_30:
-        weight: 78
+        weight: -44
         enabled: false
 field_type: entity_reference_revisions
