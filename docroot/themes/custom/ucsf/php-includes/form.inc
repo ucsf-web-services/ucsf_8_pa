@@ -2,12 +2,20 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\Component\Utility\Html;
 
-function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id)
+{
 
   if ($form['#id'] == 'views-exposed-form-news-filter-page-1') {
 
-    // Create the Advanced button.
+    // Set globals.
+    global $pager_total_items;
+
+    // Attach library.
+    $form['#attached']['library'][] = 'ucsf/search_news';
+
+    // Advanced button.
     $form['advanced'] = [
       '#type' => 'link',
       '#url' => Url::fromUri('internal:#open'),
@@ -18,5 +26,65 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
         ]
       ]
     ];
+
+    // Result Count.
+    $result_count = $pager_total_items[0] ? Html::escape($pager_total_items[0]) : '0';
+    $form['count'] = [
+      '#type' => 'container',
+      'count_markup' => ['#markup' => $result_count . ' Results'],
+      '#attributes' => [
+        'class' => [
+          'count'
+        ]
+      ]
+    ];
+
+    // Create top container.
+    $form['top'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'search_top'
+        ]
+      ],
+      '#weight' => -10,
+    ];
+
+    // Assign items to top container.
+    $inputbox = $form['combine'];
+    $actions = $form['actions'];
+    $advanced_toggle = $form['advanced'];
+    $count = $form['count'];
+    $form['top']['inputbox'] = $inputbox;
+    $form['top']['actions'] = $actions;
+    $form['top']['advanced_toggle'] = $advanced_toggle;
+    $form['top']['search_top'] = $count;
+
+    // Create dropdown container.
+    $form['dropdown'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'search_dropdown'
+        ],
+      ],
+      '#weight' => -10,
+    ];
+
+    // Assign items to dropdown container.
+    $tid = $form['tid'];
+    $tid_1 = $form['tid_1'];
+    $field_primary_area_target_id = $form['field_primary_area_target_id'];
+    $field_topics_target_id = $form['field_topics_target_id'];
+    $field_date_and_time_value_1 = $form['field_date_and_time_value_1'];
+    $field_date_and_time_value_2 = $form['field_date_and_time_value_2'];
+
+    $form['dropdown']['tid'] = $tid;
+    $form['dropdown']['tid_1'] = $tid_1;
+    $form['dropdown']['field_primary_area_target_id'] = $field_primary_area_target_id;
+    $form['dropdown']['field_topics_target_id'] = $field_topics_target_id;
+    $form['dropdown']['field_date_and_time_value_1'] = $field_date_and_time_value_1;
+    $form['dropdown']['field_date_and_time_value_2'] = $field_date_and_time_value_2;
+
   }
 }
