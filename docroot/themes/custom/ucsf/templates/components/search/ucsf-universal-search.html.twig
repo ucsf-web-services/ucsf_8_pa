@@ -34,13 +34,11 @@
  */
 #}
 <div class="form-search-block-div">
-    <div class="search-box-container">
+    <div class="search-box-container home-search__form">
         <!-- This was the Google search input box, but didn't allow some things to work right
         <!-- gcse:searchbox enableAutoComplete="true"></gcse:searchbox -->
-        <form action="/search" method="get">
-            <input type="text" name="search" id="search" size="32" class="searchbox" value="{{ searchterm }}" />
-            <button type="submit">Search</button>
-        </form>
+
+        {% include '@theme/search/search-form.html.twig' %}
         {# We should style these like Zeplin mockup and have them link to other routes #}
         <ul id="universalSearchTabs">
             <li class="active"><a href="/search?search={{ searchterm }}">All Results</a></li>
@@ -86,10 +84,19 @@
     </div>
     {% endif %}
 
+
+
     <div id="cse" style="padding-top: 50px;">
         <h3>All Results</h3>
         <!-- Google Search Results -->
         <gcse:searchresults-only queryParameterName="search"></gcse:searchresults-only>
+
+        {% if searchterm is empty %}
+            <p>No search term(s) provided, please try again.</p>
+        {% endif %}
+
     </div>
+
+
 
 </div>
