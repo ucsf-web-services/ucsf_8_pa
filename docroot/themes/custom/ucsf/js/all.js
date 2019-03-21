@@ -27,23 +27,28 @@
 
       // Set dropdown heights based on the content within.
       var dropdown = $('[data-level="level-0"]');
-  
+
       dropdown.each(function() {
-        
+
         var self = $(this);
-        var childMenuHeight = self.find('.menu-child--menu').height();
-        var grandChildMenuHeight = self.find('[data-level="level-1"] > .menu-child--menu').height();
-        
-        if (grandChildMenuHeight > childMenuHeight) {
-          var dropdDownHeight = grandChildMenuHeight + 160;
-        } else {
-          var dropdDownHeight = childMenuHeight + 128;
-        }
-        
-        self.height(dropdDownHeight);
-        self.find('.menu-child--label').width(dropdDownHeight - 48);
-        
-      })
+        var mainHeight = self.height();
+        var childMenu = self.find('.menu-child--wrapper');
+        var totalHeight = mainHeight;
+        var childHeight = 0;
+
+        childMenu.each(function() {
+            childHeight = $(this)[0].clientHeight;
+            if ((childHeight + 48) >= mainHeight) {
+              totalHeight = childHeight;
+            }
+        });
+        childMenu.each(function() {
+          $(this).height(totalHeight);
+        });
+        self.height(totalHeight + 58);
+        self.find('.menu-child--label').width(totalHeight + 10);
+        //return false;
+      });
     }
   };
 
