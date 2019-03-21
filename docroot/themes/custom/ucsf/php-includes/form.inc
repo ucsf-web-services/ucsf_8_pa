@@ -20,7 +20,7 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
       '#type' => 'container',
       '#attributes' => [
         'class' => [
-          'search_top'
+          'search-filter__top'
         ]
       ],
       '#weight' => -10,
@@ -41,7 +41,7 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
       '#title' => t('Advanced'),
       '#attributes' => [
         'class' => [
-          'advanced'
+          'search-filter__advanced'
         ]
       ]
     ];
@@ -63,7 +63,7 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
       '#type' => 'container',
       '#attributes' => [
         'class' => [
-          'search_dropdown'
+          'search-filter__dropdown'
         ],
       ],
       '#weight' => -10,

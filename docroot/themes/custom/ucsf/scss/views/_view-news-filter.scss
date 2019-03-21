@@ -1,12 +1,17 @@
 // Exposed Filter
 .block-views-exposed-filter-blocknews-filter-page-1 {
-  background: $c-grey-pale;
 
-  .search_top {
-    position: relative;
+  .form--inline .form-item {
+    margin: 0;
   }
 
-  .search_dropdown {
+  .search-filter__top {
+    background: $c-grey-pale;
+    position: relative;
+    padding: 40px 16px;
+  }
+
+  .search-filter__dropdown {
     display: none;
   }
 
@@ -14,43 +19,58 @@
     @include visually-hidden;
   }
 
-  .advanced {
+  .search-filter__advanced {
     @include background-image('filter.svg', left);
-    background-size: 16px 16px;
+    background-size: 24px 24px;
+    position: absolute;
+    right: 16px;
+    text-indent: -999px;
+    top: 55px;
+    height: 24px;
+    width: 24px;
   }
 
   .form-item-combine {
     margin: 0;
   }
 
-  input {
-    height: 52px;
-    margin: 40px 16px 16px;
-    font-size: $font-size;
-    font-family: $font-helvetica-neue-light;
-    color: $gray-blue;
-    box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
+  // Text Input.
+  [data-drupal-selector="edit-combine"] {
     border: 1px solid $near-white;
+    box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
+    color: $gray-blue;
+    font-family: $font-helvetica-neue-light;
+    font-size: $font-size;
+    height: 52px;
+    margin-bottom: 16px;
+    width: calc(100% - 52px);
 
     &::placeholder {
       color: $gray-blue;
     }
   }
 
+  // Actions wrapper.
+  [data-drupal-selector="edit-actions"] {
+    margin: 0;
+  }
+
+  // Submit button.
   [data-drupal-selector="edit-submit-news-filter"] {
     @include background-image('magnifier.svg', center);
     appearance: none;
+    background-size: 24px 24px;
+    border: 0;
     box-shadow: none;
-    width: 24px;
     height: 24px;
     margin: 0;
-    border: none;
-    background-size: 24px 24px;
-    text-indent: -9999px;
+    min-height: auto;
     padding: 0;
     position: absolute;
-    right: 62px;
-    top: 35px;
+    right: 84px;
+    text-indent: -9999px;
+    top: 56px;
+    width: 24px;
 
     &:hover {
       cursor: pointer;
@@ -59,6 +79,12 @@
     }
   }
 
+  // Results count.
+  [data-drupal-selector="edit-count"] {
+    @include eyebrow;
+  }
+
+  // Reset button.
   [data-drupal-selector="edit-reset"] {
     display: none;
   }

@@ -4,7 +4,7 @@
     attach: function (context) {
       
       $(".advanced", context).click(function() {
-        $(".search_dropdown").toggle();
+        $(".search-filter__dropdown").toggle();
       });
       
     }
