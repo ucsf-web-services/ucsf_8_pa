@@ -7,7 +7,7 @@
         </br>{% if tweet.retweeted_status.user.screen_name %}@{{tweet.retweeted_status.user.screen_name}}{% else %}@{{tweet.user.screen_name}}{% endif %} {{ tweet.created_at|time_diff|preg_replace('/ |[a-c,e-g,i-l,n-z]/','')}}</p>
         {# If hashtags will be in Tweets it will appear else nothing will show up. #}
         {# Other Tweets Information can be fetched like Followers, Status_count... #}
-<p><a target="_blank" href="{{ tweet.entities.urls.url }}">{% if tweet.retweeted_status.full_text %}{{tweet.retweeted_status.full_text}}{% else %}{{ tweet.full_text }}{% endif %}{% if tweet.retweeted_status.entities.hashtag %} {{tweet.retweeted_status.entities.hashtag}}{% else %} {{ tweet.entities.hashtags }}{% endif %}</a></p>
+<p>{# <a target="_blank" href="{{ tweet.entities.urls.url }}"> #}{% if tweet.retweeted_status.full_text %}{{tweet.retweeted_status.full_text}}{% else %}{{ tweet.full_text }}{% endif %}{% if tweet.retweeted_status.entities.hashtag %} {{tweet.retweeted_status.entities.hashtag}}{% else %} {{ tweet.entities.hashtags }}{% endif %}{# </a> #}</p>
     </div>
   </li>
   {% endfor %}
