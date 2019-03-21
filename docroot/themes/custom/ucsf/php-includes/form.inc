@@ -15,30 +15,6 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     // Attach library.
     $form['#attached']['library'][] = 'ucsf/search_news';
 
-    // Advanced button.
-    $form['advanced'] = [
-      '#type' => 'link',
-      '#url' => Url::fromUri('internal:#open'),
-      '#title' => t('Advanced'),
-      '#attributes' => [
-        'class' => [
-          'advanced'
-        ]
-      ]
-    ];
-
-    // Result Count.
-    $result_count = $pager_total_items[0] ? Html::escape($pager_total_items[0]) : '0';
-    $form['count'] = [
-      '#type' => 'container',
-      'count_markup' => ['#markup' => $result_count . ' Results'],
-      '#attributes' => [
-        'class' => [
-          'count'
-        ]
-      ]
-    ];
-
     // Create top container.
     $form['top'] = [
       '#type' => 'container',
@@ -51,14 +27,36 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     ];
 
     // Assign items to top container.
-    $inputbox = $form['combine'];
+    $combine = $form['combine'];
     $actions = $form['actions'];
-    $advanced_toggle = $form['advanced'];
-    $count = $form['count'];
-    $form['top']['inputbox'] = $inputbox;
+    $form['top']['combine'] = $combine;
     $form['top']['actions'] = $actions;
-    $form['top']['advanced_toggle'] = $advanced_toggle;
-    $form['top']['search_top'] = $count;
+    unset($form['combine']);
+    unset($form['actions']);
+
+    // Top Container - Advanced button.
+    $form['top']['advanced'] = [
+      '#type' => 'link',
+      '#url' => Url::fromUri('internal:#open'),
+      '#title' => t('Advanced'),
+      '#attributes' => [
+        'class' => [
+          'advanced'
+        ]
+      ]
+    ];
+
+    // Top Container - Result Count.
+    $result_count = $pager_total_items[0] ? Html::escape($pager_total_items[0]) : '0';
+    $form['top']['count'] = [
+      '#type' => 'container',
+      'count_markup' => ['#markup' => $result_count . ' Results'],
+      '#attributes' => [
+        'class' => [
+          'count'
+        ]
+      ]
+    ];
 
     // Create dropdown container.
     $form['dropdown'] = [
@@ -85,6 +83,13 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     $form['dropdown']['field_topics_target_id'] = $field_topics_target_id;
     $form['dropdown']['field_date_and_time_value_1'] = $field_date_and_time_value_1;
     $form['dropdown']['field_date_and_time_value_2'] = $field_date_and_time_value_2;
+
+    unset($form['tid']);
+    unset($form['tid_1']);
+    unset($form['field_primary_area_target_id']);
+    unset($form['field_topics_target_id']);
+    unset($form['field_date_and_time_value_1']);
+    unset($form['field_date_and_time_value_2']);
 
   }
 }
