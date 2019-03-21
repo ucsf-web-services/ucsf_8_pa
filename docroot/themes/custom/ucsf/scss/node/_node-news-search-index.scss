@@ -1,0 +1,42 @@
+.node--view-mode-search-index {
+  border-bottom: 1px solid #D5D9DE; // @todo Color should be a variable.
+  padding: 25px 0;
+
+  @include breakpoint($bp-medium) {
+    padding: 16px 0;
+  }
+
+  a {
+    @include link-colors($c-navy, $c-blue);
+  }
+
+  .search-result__copy {
+    @include breakpoint($bp-medium) {
+      float: left;
+      width: 340px;
+    }
+  }
+
+  h2 {
+    @include fs-heading-three;
+  }
+
+  .search-result__image {
+    display: none;
+
+    @include breakpoint($bp-medium) {
+      display: block;
+      float: right;
+      width: 263px;
+    }
+  }
+
+  .search-result__image-placeholder {
+    height: 175px;
+    width: 263px;
+  }
+
+  .field-sub-title {
+    @include fs-small-body;
+  }
+}

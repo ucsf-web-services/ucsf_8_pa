@@ -1,1 +1,50 @@
-{{ label }}
+{# @todo
+  Originally themed for News and News Center.
+  May need to extend or refactor for other Content Types.
+#}
+
+{% set primary_area = node.field_primary_area.0.entity.label|clean_class %}
+
+{% set campus_news_subs = ['announcements', 'happenings', 'honors--awards', 'spotlight'] %}
+{% if primary_area in campus_news_subs %}
+  {% set primary_area = 'campus-news' %}
+  {% set primary_area_field = 'Campus News'|t %}
+{% endif %}
+
+{%
+  set classes = [
+  'node--type-' ~ node.bundle|clean_class,
+  view_mode ? 'node--type-' ~ node.bundle|clean_class ~ '--' ~ view_mode|clean_class,
+  not node.isPublished() ? 'node--unpublished',
+  view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  'search-result',
+  'clearfix'
+]
+%}
+
+<article {{ attributes.addClass(classes) }} data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
+  <a href="{{ url }}">
+
+    <div class="search-result__copy">
+      {% include '@theme/article/byline.twig' %}
+      {% if content.field_short_title|render|striptags != ''  %}
+        <h2>{{ content.field_short_title }}</h2>
+      {% else %}
+        <h2>{{ label }}</h2>
+      {% endif %}
+      {{ content.field_sub_title }}
+    </div>
+
+    <div class="search-result__image">
+      {% if content.field_card_image['#items'] is not empty %}
+        {{ content.field_card_image }}
+      {% else %}
+        <figure class="search-index__image-placeholder">
+          <picture>
+            <img src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image">
+          </picture>
+        </figure>
+      {% endif %}
+    </div>
+  </a>
+</article>
