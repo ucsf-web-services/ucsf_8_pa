@@ -31,7 +31,7 @@
             <li><a href="/search?search={{ searchterm }}">All Results</a></li>
             <li><a href="/search/news?search={{ searchterm }}">News</a></li>
             <li><a href="/search/people?search={{ searchterm }}">People Directory</a></li>
-            <li><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
+            <li class="active"><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
         </ul>
     </div>
     {% spaceless %}
@@ -46,6 +46,11 @@
                 {% if website.field_owner_name %}, Owner: {{ website.field_owner_name }}{% endif %}
             </li>
         {% endfor %}
+
+        {% if websites is empty %}
+            <p>Sorry no results were found.</p>
+        {% endif %}
+
     </div>
     {% endspaceless %}
 

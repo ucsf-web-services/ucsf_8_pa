@@ -43,15 +43,15 @@
         </form>
         {# We should style these like Zeplin mockup and have them link to other routes #}
         <ul id="universalSearchTabs">
-            <li><a href="/search?search={{ searchterm }}">All Results</a></li>
+            <li class="active"><a href="/search?search={{ searchterm }}">All Results</a></li>
             <li><a href="/search/news?search={{ searchterm }}">News</a></li>
             <li><a href="/search/people?search={{ searchterm }}">People Directory</a></li>
             <li><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
         </ul>
     </div>
-
-    <div id="universalDirectory">
-        <h3>People Directory</h3>
+    {% if directory is not empty %}
+    <div id="universalDirectory" style="padding-top: 50px;">
+        <h3>People</h3>
         <ul>
         {% for person in directory %}
         <li>
@@ -63,11 +63,13 @@
         {% endfor %}
         </ul>
         {% if more.people %}
-            <a>See More People Results</a>
+            <a>See More</a>
         {% endif %}
-
     </div>
-    <div id="universalWebsites">
+    {% endif %}
+
+    {% if websites is not empty %}
+    <div id="universalWebsites" style="padding-top: 50px;">
         <h3>Websites</h3>
         {% for website in websites %}
             <li>
@@ -78,14 +80,16 @@
                 {% if website.body %}, {{ website.body }}{% endif %}
             </li>
         {% endfor %}
-
         {% if more.web %}
-            <a>See More Website Results</a>
+            <a>See More</a>
         {% endif %}
     </div>
-    <div id="cse">
+    {% endif %}
+
+    <div id="cse" style="padding-top: 50px;">
         <h3>All Results</h3>
         <!-- Google Search Results -->
         <gcse:searchresults-only queryParameterName="search"></gcse:searchresults-only>
     </div>
+
 </div>
