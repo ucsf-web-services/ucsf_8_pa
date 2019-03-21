@@ -6,19 +6,29 @@
     padding: 16px 0;
   }
 
-  a {
-    @include link-colors($c-navy, $c-blue);
+  p {
+    color: $c-gray-blue;
+    margin: 0;
   }
 
   .search-result__copy {
     @include breakpoint($bp-medium) {
       float: left;
-      width: 340px;
+      width: calc(100% - 340px);
     }
+  }
+
+  .article-header__byline {
+    padding-bottom: 7px;
   }
 
   h2 {
     @include fs-heading-three;
+    margin-bottom: 8px;
+
+    a {
+      @include link-colors($c-navy, $c-blue);
+    }
   }
 
   .search-result__image {
