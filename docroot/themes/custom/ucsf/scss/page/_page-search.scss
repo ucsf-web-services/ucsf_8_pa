@@ -1,9 +1,23 @@
 .block-views-exposed-filter-blocknews-filter-page-1 {
   background: $c-grey-pale;
-  position: relative;
+
+  .search_top {
+    position: relative;
+    background: yellow;
+  }
+
+  .search_dropdown {
+    background: green;
+    display: none;
+  }
 
   label[for=edit-combine] {
     @include visually-hidden;
+  }
+
+  .advanced {
+    @include background-image('filter.svg', left);
+    background-size: 16px 16px;
   }
 
   .form-item-combine {
@@ -22,12 +36,6 @@
     &::placeholder {
       color: $gray-blue;
     }
-  }
-
-  .js-form-item-field-date-and-time-value-1,
-  .js-form-item-field-date-and-time-value-2,
-  fieldset {
-    display: none;
   }
 
   [data-drupal-selector="edit-submit-news-filter"] {
