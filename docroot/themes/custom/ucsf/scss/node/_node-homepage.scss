@@ -373,9 +373,26 @@
 
     .news-card {
       margin-bottom: $space-five;
+      overflow: hidden;
     }
   }
+
+  .news-card:hover {
+
+    .news-card__image {
+      transition: .5s ease-out all;
+      transform: scale(1.1);
+    }
+
+    h2 {
+      transition: .5s ease-out all;
+      color: $c-teal;
+    }
+  }
+
 }
+
+
 
 .home-talking-about__title {
   @include fs-heading;
