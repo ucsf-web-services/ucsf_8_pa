@@ -46,8 +46,8 @@
         childMenu.each(function () {
           $(this).height(totalHeight);
         });
-        self.height(totalHeight + 58);
-        self.find('.menu-child--label').width(totalHeight + 10);
+        self.height(totalHeight + 78);
+        self.find('.menu-child--label').width(totalHeight + 30);
         //return false;
       });
     }
