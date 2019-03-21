@@ -3,8 +3,8 @@
   Drupal.behaviors.search_news = {
     attach: function (context) {
       
-      $(".advanced", context).click(function() {
-        $(".search-filter__dropdown").toggle();
+      $(".search-filter__advanced", context).click(function() {
+        $(".search-filter__dropdown").toggleClass('js-search_flter__dropdown-open');
       });
       
     }

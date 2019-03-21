@@ -12,7 +12,14 @@
   }
 
   .search-filter__dropdown {
-    display: none;
+    @include transition;
+    height: 0;
+    visibility: hidden;
+
+    &.js-search_flter__dropdown-open {
+      height: auto;
+      visibility: visible;
+    }
   }
 
   label[for=edit-combine] {

@@ -4960,7 +4960,13 @@ figure.align-center figcaption {
   padding: 40px 16px; }
 
 .block-views-exposed-filter-blocknews-filter-page-1 .search-filter__dropdown {
-  display: none; }
+  -webkit-transition: .3s ease-out all;
+  transition: .3s ease-out all;
+  height: 0;
+  visibility: hidden; }
+  .block-views-exposed-filter-blocknews-filter-page-1 .search-filter__dropdown.js-search_flter__dropdown-open {
+    height: auto;
+    visibility: visible; }
 
 .block-views-exposed-filter-blocknews-filter-page-1 label[for=edit-combine] {
   position: absolute !important;
