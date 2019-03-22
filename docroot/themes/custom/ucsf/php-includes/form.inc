@@ -70,6 +70,13 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     ];
 
     // Assign items to dropdown container.
+    $form['tid']['#title'] = $form['#info']['filter-tid']['label'];
+    $form['tid_1']['#title'] = $form['#info']['filter-tid_1']['label'];
+    $form['field_primary_area_target_id']['#title'] = $form['#info']['filter-field_primary_area_target_id']['label'];
+    $form['field_topics_target_id']['#title'] = $form['#info']['filter-field_topics_target_id']['label'];
+    $form['field_date_and_time_value_1']['#title'] = $form['#info']['filter-field_date_and_time_value_1']['label'];
+    $form['field_date_and_time_value_2']['#title'] = $form['#info']['filter-field_date_and_time_value_2']['label'];
+
     $tid = $form['tid'];
     $tid_1 = $form['tid_1'];
     $field_primary_area_target_id = $form['field_primary_area_target_id'];

@@ -11,17 +11,6 @@
     padding: 40px 16px;
   }
 
-  .search-filter__dropdown {
-    @include transition;
-    height: 0;
-    visibility: hidden;
-
-    &.js-search_flter__dropdown-open {
-      height: auto;
-      visibility: visible;
-    }
-  }
-
   label[for=edit-combine] {
     @include visually-hidden;
   }
@@ -94,6 +83,30 @@
   // Reset button.
   [data-drupal-selector="edit-reset"] {
     display: none;
+  }
+}
+
+// Dropdown filters.
+.search-filter__dropdown {
+  @include transition;
+  height: 0;
+  visibility: hidden;
+  padding: 30px 16px 40px;
+
+  &.js-search_filter__dropdown-open {
+    height: auto;
+    visibility: visible;
+  }
+
+  .fieldset-wrapper {
+    @include transition;
+    height: 0;
+    visibility: hidden;
+
+    &.js-search_filter__category-open {
+      height: auto;
+      visibility: visible;
+    }
   }
 }
 

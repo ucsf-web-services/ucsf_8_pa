@@ -6,7 +6,11 @@
     attach: function attach(context) {
 
       $(".search-filter__advanced", context).click(function () {
-        $(".search-filter__dropdown").toggleClass('js-search_flter__dropdown-open');
+        $(".search-filter__dropdown").toggleClass('js-search_filter__dropdown-open');
+      });
+
+      $(".search-filter__dropdown legend", context).click(function () {
+        $(this).siblings(".fieldset-wrapper").toggleClass('js-search_filter__category-open');
       });
     }
   };
