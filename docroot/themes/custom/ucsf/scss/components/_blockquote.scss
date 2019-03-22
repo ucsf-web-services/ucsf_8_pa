@@ -53,13 +53,17 @@
 // In WYSIWYG.
 .page_narrow blockquote,
 .paragraph-text-block blockquote,
-.ckpullquote  {
+.ckpullquote,
+.wysiwyg_quote,
+.narrow-page-header__subheading blockquote {
   background: $background-gray;
 
   &.blockquote--half-left,
   &.blockquote--half-right,
   &.ckpullquote-left,
-  &.ckpullquote-right {
+  &.ckpullquote-right,
+  &.align--left,
+  &.align--center {
     float: left;
     width: 50%;
     left: auto;
@@ -70,7 +74,8 @@
   }
 
   .blockquote-content__text,
-  .ckpullquote--quote {
+  .ckpullquote--quote,
+  .wysiwyg_quote--content {
     @include fs-heading-blockquote;
     font-size: 31px;
     line-height: 1.2em;
@@ -88,7 +93,8 @@
   }
 
   .blockquote-content__cite,
-  .ckpullquote--author {
+  .ckpullquote--author,
+  .wysiwyg_quote--author {
     @include eyebrow;
 
     font-style: normal;
@@ -101,7 +107,8 @@
   }
 
   &.blockquote--half-right,
-  &.ckpullquote-right {
+  &.ckpullquote-right,
+  &.align--right {
     float: right;
     right: auto;
     margin-right: -20%;
@@ -125,11 +132,22 @@
   }
 }
 
-.ckpullquote {
+.ckpullquote, {
   padding-bottom: 50px;
   margin-bottom: 24px;
 }
 
-.ckpullquote--author {
+.ckpullquote--author,
+.wysiwyg_quote--author {
   margin-top: 2rem;
+}
+
+.wysiwyg_quote--author {
+  margin-bottom: 50px;
+}
+
+.wysiwyg_quote--org {
+  margin-top: -55px;
+  margin-bottom: 50px;
+  font-size: 16px;
 }

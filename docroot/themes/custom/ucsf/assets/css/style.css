@@ -2033,7 +2033,8 @@ figure.align-center,
 figure[class="embedded-entity"],
 figure[class="image"],
 figure.image-2014_inline_4-col,
-figure.image-2014_inline_5-col {
+figure.image-2014_inline_5-col,
+.image-2014_wysiwyg_full {
   margin: 40px;
   margin-top: 0;
   margin-bottom: 32px;
@@ -2044,7 +2045,8 @@ figure.image-2014_inline_5-col {
   figure[class="embedded-entity"] figcaption,
   figure[class="image"] figcaption,
   figure.image-2014_inline_4-col figcaption,
-  figure.image-2014_inline_5-col figcaption {
+  figure.image-2014_inline_5-col figcaption,
+  .image-2014_wysiwyg_full figcaption {
     display: table-caption;
     caption-side: bottom; }
 
@@ -3383,16 +3385,20 @@ figure.align-center figcaption {
       .field-footer-tabs-events-columne h2 {
         font-size: 56px;
         letter-spacing: -1.2px; } }
-  .field-footer-tabs-events-columne .layout-columns__3 {
+  .field-footer-tabs-events-columne .layout-columns__3,
+  .field-footer-tabs-events-columne .layout-columns__2 {
     padding: 0;
     padding-top: 80px; }
-    .field-footer-tabs-events-columne .layout-columns__3 .field-content-wrapper-content {
+    .field-footer-tabs-events-columne .layout-columns__3 .field-content-wrapper-content,
+    .field-footer-tabs-events-columne .layout-columns__2 .field-content-wrapper-content {
       padding: 0; }
   .field-footer-tabs-events-columne .layout-left-70-30 {
     padding-left: 0;
     padding-right: 0; }
   .field-footer-tabs-events-columne .field-column-content-content .paragraph-text-block {
     padding: 0; }
+  .field-footer-tabs-events-columne .field__item:last-child {
+    margin-bottom: 80px; }
 
 .news-center {
   margin-top: 56px; }
@@ -5025,17 +5031,35 @@ figure.align-center figcaption {
 
 .page_narrow blockquote,
 .paragraph-text-block blockquote,
-.ckpullquote {
+.ckpullquote,
+.wysiwyg_quote,
+.narrow-page-header__subheading blockquote {
   background: #f2f4f6; }
-  .page_narrow blockquote.blockquote--half-left, .page_narrow blockquote.blockquote--half-right, .page_narrow blockquote.ckpullquote-left, .page_narrow blockquote.ckpullquote-right,
+  .page_narrow blockquote.blockquote--half-left, .page_narrow blockquote.blockquote--half-right, .page_narrow blockquote.ckpullquote-left, .page_narrow blockquote.ckpullquote-right, .page_narrow blockquote.align--left, .page_narrow blockquote.align--center,
   .paragraph-text-block blockquote.blockquote--half-left,
   .paragraph-text-block blockquote.blockquote--half-right,
   .paragraph-text-block blockquote.ckpullquote-left,
   .paragraph-text-block blockquote.ckpullquote-right,
+  .paragraph-text-block blockquote.align--left,
+  .paragraph-text-block blockquote.align--center,
   .ckpullquote.blockquote--half-left,
   .ckpullquote.blockquote--half-right,
   .ckpullquote.ckpullquote-left,
-  .ckpullquote.ckpullquote-right {
+  .ckpullquote.ckpullquote-right,
+  .ckpullquote.align--left,
+  .ckpullquote.align--center,
+  .wysiwyg_quote.blockquote--half-left,
+  .wysiwyg_quote.blockquote--half-right,
+  .wysiwyg_quote.ckpullquote-left,
+  .wysiwyg_quote.ckpullquote-right,
+  .wysiwyg_quote.align--left,
+  .wysiwyg_quote.align--center,
+  .narrow-page-header__subheading blockquote.blockquote--half-left,
+  .narrow-page-header__subheading blockquote.blockquote--half-right,
+  .narrow-page-header__subheading blockquote.ckpullquote-left,
+  .narrow-page-header__subheading blockquote.ckpullquote-right,
+  .narrow-page-header__subheading blockquote.align--left,
+  .narrow-page-header__subheading blockquote.align--center {
     float: left;
     width: 50%;
     left: auto;
@@ -5045,10 +5069,19 @@ figure.align-center figcaption {
     margin-top: 0; }
   .page_narrow blockquote .blockquote-content__text,
   .page_narrow blockquote .ckpullquote--quote,
+  .page_narrow blockquote .wysiwyg_quote--content,
   .paragraph-text-block blockquote .blockquote-content__text,
   .paragraph-text-block blockquote .ckpullquote--quote,
+  .paragraph-text-block blockquote .wysiwyg_quote--content,
   .ckpullquote .blockquote-content__text,
-  .ckpullquote .ckpullquote--quote {
+  .ckpullquote .ckpullquote--quote,
+  .ckpullquote .wysiwyg_quote--content,
+  .wysiwyg_quote .blockquote-content__text,
+  .wysiwyg_quote .ckpullquote--quote,
+  .wysiwyg_quote .wysiwyg_quote--content,
+  .narrow-page-header__subheading blockquote .blockquote-content__text,
+  .narrow-page-header__subheading blockquote .ckpullquote--quote,
+  .narrow-page-header__subheading blockquote .wysiwyg_quote--content {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -5065,18 +5098,36 @@ figure.align-center figcaption {
     @media (min-width: 600px) {
       .page_narrow blockquote .blockquote-content__text,
       .page_narrow blockquote .ckpullquote--quote,
+      .page_narrow blockquote .wysiwyg_quote--content,
       .paragraph-text-block blockquote .blockquote-content__text,
       .paragraph-text-block blockquote .ckpullquote--quote,
+      .paragraph-text-block blockquote .wysiwyg_quote--content,
       .ckpullquote .blockquote-content__text,
-      .ckpullquote .ckpullquote--quote {
+      .ckpullquote .ckpullquote--quote,
+      .ckpullquote .wysiwyg_quote--content,
+      .wysiwyg_quote .blockquote-content__text,
+      .wysiwyg_quote .ckpullquote--quote,
+      .wysiwyg_quote .wysiwyg_quote--content,
+      .narrow-page-header__subheading blockquote .blockquote-content__text,
+      .narrow-page-header__subheading blockquote .ckpullquote--quote,
+      .narrow-page-header__subheading blockquote .wysiwyg_quote--content {
         font-size: 40px;
         letter-spacing: -1px; } }
     .page_narrow blockquote .blockquote-content__text::before,
     .page_narrow blockquote .ckpullquote--quote::before,
+    .page_narrow blockquote .wysiwyg_quote--content::before,
     .paragraph-text-block blockquote .blockquote-content__text::before,
     .paragraph-text-block blockquote .ckpullquote--quote::before,
+    .paragraph-text-block blockquote .wysiwyg_quote--content::before,
     .ckpullquote .blockquote-content__text::before,
-    .ckpullquote .ckpullquote--quote::before {
+    .ckpullquote .ckpullquote--quote::before,
+    .ckpullquote .wysiwyg_quote--content::before,
+    .wysiwyg_quote .blockquote-content__text::before,
+    .wysiwyg_quote .ckpullquote--quote::before,
+    .wysiwyg_quote .wysiwyg_quote--content::before,
+    .narrow-page-header__subheading blockquote .blockquote-content__text::before,
+    .narrow-page-header__subheading blockquote .ckpullquote--quote::before,
+    .narrow-page-header__subheading blockquote .wysiwyg_quote--content::before {
       content: '“ ';
       display: inline-block;
       margin-left: -24px;
@@ -5084,10 +5135,19 @@ figure.align-center figcaption {
       font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif; }
   .page_narrow blockquote .blockquote-content__cite,
   .page_narrow blockquote .ckpullquote--author,
+  .page_narrow blockquote .wysiwyg_quote--author,
   .paragraph-text-block blockquote .blockquote-content__cite,
   .paragraph-text-block blockquote .ckpullquote--author,
+  .paragraph-text-block blockquote .wysiwyg_quote--author,
   .ckpullquote .blockquote-content__cite,
-  .ckpullquote .ckpullquote--author {
+  .ckpullquote .ckpullquote--author,
+  .ckpullquote .wysiwyg_quote--author,
+  .wysiwyg_quote .blockquote-content__cite,
+  .wysiwyg_quote .ckpullquote--author,
+  .wysiwyg_quote .wysiwyg_quote--author,
+  .narrow-page-header__subheading blockquote .blockquote-content__cite,
+  .narrow-page-header__subheading blockquote .ckpullquote--author,
+  .narrow-page-header__subheading blockquote .wysiwyg_quote--author {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -5101,10 +5161,19 @@ figure.align-center figcaption {
     padding-right: 15%; }
     .page_narrow blockquote .blockquote-content__cite::after,
     .page_narrow blockquote .ckpullquote--author::after,
+    .page_narrow blockquote .wysiwyg_quote--author::after,
     .paragraph-text-block blockquote .blockquote-content__cite::after,
     .paragraph-text-block blockquote .ckpullquote--author::after,
+    .paragraph-text-block blockquote .wysiwyg_quote--author::after,
     .ckpullquote .blockquote-content__cite::after,
-    .ckpullquote .ckpullquote--author::after {
+    .ckpullquote .ckpullquote--author::after,
+    .ckpullquote .wysiwyg_quote--author::after,
+    .wysiwyg_quote .blockquote-content__cite::after,
+    .wysiwyg_quote .ckpullquote--author::after,
+    .wysiwyg_quote .wysiwyg_quote--author::after,
+    .narrow-page-header__subheading blockquote .blockquote-content__cite::after,
+    .narrow-page-header__subheading blockquote .ckpullquote--author::after,
+    .narrow-page-header__subheading blockquote .wysiwyg_quote--author::after {
       content: ' ';
       display: inline-block;
       width: 40px;
@@ -5115,60 +5184,124 @@ figure.align-center figcaption {
               animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
   .page_narrow blockquote .ckpullquote--org,
   .paragraph-text-block blockquote .ckpullquote--org,
-  .ckpullquote .ckpullquote--org {
+  .ckpullquote .ckpullquote--org,
+  .wysiwyg_quote .ckpullquote--org,
+  .narrow-page-header__subheading blockquote .ckpullquote--org {
     font-size: 14px;
     padding-right: 15%; }
-  .page_narrow blockquote.blockquote--half-right, .page_narrow blockquote.ckpullquote-right,
+  .page_narrow blockquote.blockquote--half-right, .page_narrow blockquote.ckpullquote-right, .page_narrow blockquote.align--right,
   .paragraph-text-block blockquote.blockquote--half-right,
   .paragraph-text-block blockquote.ckpullquote-right,
+  .paragraph-text-block blockquote.align--right,
   .ckpullquote.blockquote--half-right,
-  .ckpullquote.ckpullquote-right {
+  .ckpullquote.ckpullquote-right,
+  .ckpullquote.align--right,
+  .wysiwyg_quote.blockquote--half-right,
+  .wysiwyg_quote.ckpullquote-right,
+  .wysiwyg_quote.align--right,
+  .narrow-page-header__subheading blockquote.blockquote--half-right,
+  .narrow-page-header__subheading blockquote.ckpullquote-right,
+  .narrow-page-header__subheading blockquote.align--right {
     float: right;
     right: auto;
     margin-right: -20%;
     margin-left: 10%; }
     .page_narrow blockquote.blockquote--half-right .blockquote-content__text,
     .page_narrow blockquote.blockquote--half-right .ckpullquote--quote, .page_narrow blockquote.ckpullquote-right .blockquote-content__text,
-    .page_narrow blockquote.ckpullquote-right .ckpullquote--quote,
+    .page_narrow blockquote.ckpullquote-right .ckpullquote--quote, .page_narrow blockquote.align--right .blockquote-content__text,
+    .page_narrow blockquote.align--right .ckpullquote--quote,
     .paragraph-text-block blockquote.blockquote--half-right .blockquote-content__text,
     .paragraph-text-block blockquote.blockquote--half-right .ckpullquote--quote,
     .paragraph-text-block blockquote.ckpullquote-right .blockquote-content__text,
     .paragraph-text-block blockquote.ckpullquote-right .ckpullquote--quote,
+    .paragraph-text-block blockquote.align--right .blockquote-content__text,
+    .paragraph-text-block blockquote.align--right .ckpullquote--quote,
     .ckpullquote.blockquote--half-right .blockquote-content__text,
     .ckpullquote.blockquote--half-right .ckpullquote--quote,
     .ckpullquote.ckpullquote-right .blockquote-content__text,
-    .ckpullquote.ckpullquote-right .ckpullquote--quote {
+    .ckpullquote.ckpullquote-right .ckpullquote--quote,
+    .ckpullquote.align--right .blockquote-content__text,
+    .ckpullquote.align--right .ckpullquote--quote,
+    .wysiwyg_quote.blockquote--half-right .blockquote-content__text,
+    .wysiwyg_quote.blockquote--half-right .ckpullquote--quote,
+    .wysiwyg_quote.ckpullquote-right .blockquote-content__text,
+    .wysiwyg_quote.ckpullquote-right .ckpullquote--quote,
+    .wysiwyg_quote.align--right .blockquote-content__text,
+    .wysiwyg_quote.align--right .ckpullquote--quote,
+    .narrow-page-header__subheading blockquote.blockquote--half-right .blockquote-content__text,
+    .narrow-page-header__subheading blockquote.blockquote--half-right .ckpullquote--quote,
+    .narrow-page-header__subheading blockquote.ckpullquote-right .blockquote-content__text,
+    .narrow-page-header__subheading blockquote.ckpullquote-right .ckpullquote--quote,
+    .narrow-page-header__subheading blockquote.align--right .blockquote-content__text,
+    .narrow-page-header__subheading blockquote.align--right .ckpullquote--quote {
       padding-right: 0;
       padding-left: 15%; }
     .page_narrow blockquote.blockquote--half-right .blockquote-content__cite,
     .page_narrow blockquote.blockquote--half-right .ckpullquote--author,
     .page_narrow blockquote.blockquote--half-right .ckpullquote--org, .page_narrow blockquote.ckpullquote-right .blockquote-content__cite,
     .page_narrow blockquote.ckpullquote-right .ckpullquote--author,
-    .page_narrow blockquote.ckpullquote-right .ckpullquote--org,
+    .page_narrow blockquote.ckpullquote-right .ckpullquote--org, .page_narrow blockquote.align--right .blockquote-content__cite,
+    .page_narrow blockquote.align--right .ckpullquote--author,
+    .page_narrow blockquote.align--right .ckpullquote--org,
     .paragraph-text-block blockquote.blockquote--half-right .blockquote-content__cite,
     .paragraph-text-block blockquote.blockquote--half-right .ckpullquote--author,
     .paragraph-text-block blockquote.blockquote--half-right .ckpullquote--org,
     .paragraph-text-block blockquote.ckpullquote-right .blockquote-content__cite,
     .paragraph-text-block blockquote.ckpullquote-right .ckpullquote--author,
     .paragraph-text-block blockquote.ckpullquote-right .ckpullquote--org,
+    .paragraph-text-block blockquote.align--right .blockquote-content__cite,
+    .paragraph-text-block blockquote.align--right .ckpullquote--author,
+    .paragraph-text-block blockquote.align--right .ckpullquote--org,
     .ckpullquote.blockquote--half-right .blockquote-content__cite,
     .ckpullquote.blockquote--half-right .ckpullquote--author,
     .ckpullquote.blockquote--half-right .ckpullquote--org,
     .ckpullquote.ckpullquote-right .blockquote-content__cite,
     .ckpullquote.ckpullquote-right .ckpullquote--author,
-    .ckpullquote.ckpullquote-right .ckpullquote--org {
+    .ckpullquote.ckpullquote-right .ckpullquote--org,
+    .ckpullquote.align--right .blockquote-content__cite,
+    .ckpullquote.align--right .ckpullquote--author,
+    .ckpullquote.align--right .ckpullquote--org,
+    .wysiwyg_quote.blockquote--half-right .blockquote-content__cite,
+    .wysiwyg_quote.blockquote--half-right .ckpullquote--author,
+    .wysiwyg_quote.blockquote--half-right .ckpullquote--org,
+    .wysiwyg_quote.ckpullquote-right .blockquote-content__cite,
+    .wysiwyg_quote.ckpullquote-right .ckpullquote--author,
+    .wysiwyg_quote.ckpullquote-right .ckpullquote--org,
+    .wysiwyg_quote.align--right .blockquote-content__cite,
+    .wysiwyg_quote.align--right .ckpullquote--author,
+    .wysiwyg_quote.align--right .ckpullquote--org,
+    .narrow-page-header__subheading blockquote.blockquote--half-right .blockquote-content__cite,
+    .narrow-page-header__subheading blockquote.blockquote--half-right .ckpullquote--author,
+    .narrow-page-header__subheading blockquote.blockquote--half-right .ckpullquote--org,
+    .narrow-page-header__subheading blockquote.ckpullquote-right .blockquote-content__cite,
+    .narrow-page-header__subheading blockquote.ckpullquote-right .ckpullquote--author,
+    .narrow-page-header__subheading blockquote.ckpullquote-right .ckpullquote--org,
+    .narrow-page-header__subheading blockquote.align--right .blockquote-content__cite,
+    .narrow-page-header__subheading blockquote.align--right .ckpullquote--author,
+    .narrow-page-header__subheading blockquote.align--right .ckpullquote--org {
       padding-left: 15%; }
   .page_narrow blockquote footer,
   .paragraph-text-block blockquote footer,
-  .ckpullquote footer {
+  .ckpullquote footer,
+  .wysiwyg_quote footer,
+  .narrow-page-header__subheading blockquote footer {
     margin-bottom: 50px; }
 
 .ckpullquote {
   padding-bottom: 50px;
   margin-bottom: 24px; }
 
-.ckpullquote--author {
+.ckpullquote--author,
+.wysiwyg_quote--author {
   margin-top: 2rem; }
+
+.wysiwyg_quote--author {
+  margin-bottom: 50px; }
+
+.wysiwyg_quote--org {
+  margin-top: -55px;
+  margin-bottom: 50px;
+  font-size: 16px; }
 
 .ucsfcallout {
   background: #f2f4f6;
