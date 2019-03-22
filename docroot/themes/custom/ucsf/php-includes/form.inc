@@ -26,13 +26,11 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
       '#weight' => -10,
     ];
 
-    // Assign items to top container.
+    // Organize and build items in top container.
     $combine = $form['combine'];
     $actions = $form['actions'];
     $form['top']['combine'] = $combine;
     $form['top']['actions'] = $actions;
-    unset($form['combine']);
-    unset($form['actions']);
 
     // Top Container - Advanced button.
     $form['top']['advanced'] = [
@@ -69,7 +67,7 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
       '#weight' => -10,
     ];
 
-    // Assign items to dropdown container.
+    // Organize and build items in dropdown container.
     $form['tid']['#title'] = $form['#info']['filter-tid']['label'];
     $form['tid_1']['#title'] = $form['#info']['filter-tid_1']['label'];
     $form['field_primary_area_target_id']['#title'] = $form['#info']['filter-field_primary_area_target_id']['label'];
@@ -88,15 +86,21 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     $form['dropdown']['tid_1'] = $tid_1;
     $form['dropdown']['field_primary_area_target_id'] = $field_primary_area_target_id;
     $form['dropdown']['field_topics_target_id'] = $field_topics_target_id;
-    $form['dropdown']['field_date_and_time_value_1'] = $field_date_and_time_value_1;
-    $form['dropdown']['field_date_and_time_value_2'] = $field_date_and_time_value_2;
+    $form['dropdown']['pub_year']['#type'] = 'fieldset';
+    $form['dropdown']['pub_year']['#title'] = t('Year of Publication');
+    $form['dropdown']['pub_year']['#attributes'] = ['class' => ['fieldgroup']];
+    $form['dropdown']['pub_year']['field_date_and_time_value_1'] = $field_date_and_time_value_1;
+    $form['dropdown']['pub_year']['field_date_and_time_value_2'] = $field_date_and_time_value_2;
+    $form['dropdown']['actions'] = $actions;
 
+    // Unset duplicate arrays.
+    unset($form['combine']);
     unset($form['tid']);
     unset($form['tid_1']);
     unset($form['field_primary_area_target_id']);
     unset($form['field_topics_target_id']);
     unset($form['field_date_and_time_value_1']);
     unset($form['field_date_and_time_value_2']);
-
+    unset($form['actions']);
   }
 }

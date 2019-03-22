@@ -6,11 +6,6 @@
     margin: 0;
   }
 
-  .search-filter__top {
-    position: relative;
-    padding: 40px 16px;
-  }
-
   label[for=edit-combine] {
     @include visually-hidden;
   }
@@ -51,6 +46,21 @@
     margin: 0;
   }
 
+  // Results count.
+  [data-drupal-selector="edit-count"] {
+    @include eyebrow;
+  }
+
+  // Reset button.
+  [data-drupal-selector="edit-reset"] {
+    display: none;
+  }
+}
+
+.search-filter__top {
+  position: relative;
+  padding: 40px 16px;
+
   // Submit button.
   [data-drupal-selector="edit-submit-news-filter"] {
     @include background-image('magnifier.svg', center);
@@ -74,21 +84,12 @@
       border-color: transparent;
     }
   }
-
-  // Results count.
-  [data-drupal-selector="edit-count"] {
-    @include eyebrow;
-  }
-
-  // Reset button.
-  [data-drupal-selector="edit-reset"] {
-    display: none;
-  }
 }
 
 // Dropdown filters.
 .search-filter__dropdown {
   @include transition;
+  background: $c-grey-pale;
   box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.44);
   height: 0;
   visibility: hidden;
@@ -132,6 +133,14 @@
         @include fs-option-label;
       }
     }
+  }
+
+  // Submit button.
+  [data-drupal-selector="edit-actions"] input {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
   }
 }
 
