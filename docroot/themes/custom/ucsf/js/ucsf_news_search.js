@@ -5,6 +5,7 @@
       
       $(".search-filter__advanced", context).click(function() {
         $(".search-filter__dropdown").toggleClass('js-search_filter__dropdown-open');
+        $(".fieldset-wrapper").removeClass('js-search_filter__category-open');
       });
 
       $(".search-filter__dropdown legend", context).click(function() {
