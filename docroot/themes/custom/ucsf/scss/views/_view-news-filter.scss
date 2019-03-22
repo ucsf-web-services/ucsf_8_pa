@@ -19,6 +19,18 @@
     top: 55px;
     height: 24px;
     width: 24px;
+
+    @include breakpoint($bp-medium) {
+      padding-left: 32px;
+      right: 70px;
+      text-indent: 0;
+      top: 190px;
+      width: auto;
+    }
+
+    @include breakpoint($bp-medium-plus) {
+      left: 776px;
+    }
   }
 
   .form-item-combine {
@@ -35,6 +47,12 @@
     height: 52px;
     margin-bottom: 16px;
     width: calc(100% - 52px);
+
+    @include breakpoint($bp-medium) {
+      height: 96px;
+      max-width: 827px;
+      width: 100%;
+    }
 
     &::placeholder {
       color: $gray-blue;
@@ -61,6 +79,10 @@
   position: relative;
   padding: 40px 16px;
 
+  @include breakpoint($bp-medium) {
+    padding: 80px 70px;
+  }
+
   // Submit button.
   [data-drupal-selector="edit-submit-news-filter"] {
     @include background-image('magnifier.svg', center);
@@ -77,6 +99,18 @@
     text-indent: -9999px;
     top: 56px;
     width: 24px;
+
+    @include breakpoint($bp-medium) {
+      background-size: 32px 32px;
+      height: 32px;
+      right: 84px;
+      top: 110px;
+      width: 32px;
+    }
+
+    @include breakpoint($bp-medium-plus) {
+      left: 827px;
+    }
 
     &:hover {
       cursor: pointer;
