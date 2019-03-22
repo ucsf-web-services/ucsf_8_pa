@@ -1,12 +1,12 @@
 // Exposed Filter
 .block-views-exposed-filter-blocknews-filter-page-1 {
+  background: $c-grey-pale;
 
   .form--inline .form-item {
     margin: 0;
   }
 
   .search-filter__top {
-    background: $c-grey-pale;
     position: relative;
     padding: 40px 16px;
   }
@@ -89,23 +89,48 @@
 // Dropdown filters.
 .search-filter__dropdown {
   @include transition;
+  box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.44);
   height: 0;
   visibility: hidden;
-  padding: 30px 16px 40px;
 
   &.js-search_filter__dropdown-open {
     height: auto;
+    padding: 0 16px 40px;
     visibility: visible;
+  }
+
+  fieldset legend {
+    border-bottom: 2px solid $c-navy;
+    display: block;
+    padding: 9px 0;
+    width: 100%;
+
+    span {
+      @include fs-filter-label;
+    }
   }
 
   .fieldset-wrapper {
     @include transition;
     height: 0;
+    max-height: 192px;
+    overflow: auto;
     visibility: hidden;
 
     &.js-search_filter__category-open {
       height: auto;
       visibility: visible;
+    }
+
+    .form-type-radio,
+    .form-type-checkbox {
+      border-bottom: 2px solid $c-navy;
+      margin-right: 20px;
+      padding: 7px 0;
+
+      label {
+        @include fs-option-label;
+      }
     }
   }
 }
