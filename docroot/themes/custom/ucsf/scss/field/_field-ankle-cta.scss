@@ -1,8 +1,7 @@
 .footer-ctas-wrapper { // PL: .footer-ctas-wrapper
   grid-column: 1/-1;
   margin-top: $space-ten;
-  padding: $space-ten;
-  padding-bottom: 0;
+  padding: 0 $space-ten;
   background: $white;
 
   .page-node-type-article &,
@@ -17,17 +16,27 @@
   @include grid-two;
 
   grid-gap: 0;
-  background: $background-gray;
-  padding: $space-five 0;
+  padding: 0;
+  padding-top: $space-ten;
   list-style: none;
   max-width: $xl;
   margin: 0 auto;
 
   > .field__item { // PL: .footer-cta
     padding: $space-five $space-fifteen;
+    background: $background-gray;
+
+    .field--type-text-with-summary {
+      padding: $space-five 0;
+    }
 
     &:first-child {
-      border-right: 1px solid $gray-lighter;
+      padding-right: 0;
+
+      .field--type-text-with-summary  {
+        border-right: 1px solid $gray-lighter;
+        padding-right: $space-fifteen;
+      }
     }
 
     h2 {

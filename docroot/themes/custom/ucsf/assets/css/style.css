@@ -1580,8 +1580,7 @@ header .menu--main {
 .footer-ctas-wrapper {
   grid-column: 1/-1;
   margin-top: 80px;
-  padding: 80px;
-  padding-bottom: 0;
+  padding: 0 80px;
   background: #fff; }
   .page-node-type-article .footer-ctas-wrapper,
   .page-node-type-news-center .footer-ctas-wrapper,
@@ -1596,8 +1595,8 @@ header .menu--main {
   grid-gap: 5%;
   grid-row-gap: 0;
   grid-gap: 0;
-  background: #f2f4f6;
-  padding: 40px 0;
+  padding: 0;
+  padding-top: 80px;
   list-style: none;
   max-width: 1280px;
   margin: 0 auto; }
@@ -1609,9 +1608,15 @@ header .menu--main {
         -ms-grid-column-align: end;
             justify-self: end; } }
   .field-ankle-cta > .field__item {
-    padding: 40px 120px; }
+    padding: 40px 120px;
+    background: #f2f4f6; }
+    .field-ankle-cta > .field__item .field--type-text-with-summary {
+      padding: 40px 0; }
     .field-ankle-cta > .field__item:first-child {
-      border-right: 1px solid #d1d3d3; }
+      padding-right: 0; }
+      .field-ankle-cta > .field__item:first-child .field--type-text-with-summary {
+        border-right: 1px solid #d1d3d3;
+        padding-right: 120px; }
     .field-ankle-cta > .field__item h2 {
       margin: 0;
       margin-bottom: 16px; }
@@ -3717,8 +3722,7 @@ figure.align-center figcaption {
   margin: 0; }
 
 .page-node-type-trending .narrow-page .page_narrow:last-child {
-  padding-bottom: 80px;
-  margin-bottom: 80px; }
+  padding-bottom: 80px; }
   .page-node-type-trending .narrow-page .page_narrow:last-child > :last-child {
     margin-bottom: 0;
     padding-bottom: 0; }

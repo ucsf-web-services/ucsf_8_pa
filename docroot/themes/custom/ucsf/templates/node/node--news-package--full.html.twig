@@ -1,5 +1,6 @@
 {% set classes = ['main'] %}
 
+{% block content %}
 <main role="main" {{ attributes.addClass(classes) }}>
   <a id="main-content" tabindex="-1"></a>
   <div class="news-package-banner">
@@ -29,6 +30,8 @@
     </div>
   </div>
 </main>
+{% endblock content %}
+
 <div class="footer-ctas-wrapper">
   {{ content.field_ankle_cta }}
 </div>
