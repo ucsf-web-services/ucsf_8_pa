@@ -75,6 +75,7 @@
   }
 }
 
+// Top of Filter.
 .search-filter__top {
   position: relative;
   padding: 40px 16px;
@@ -126,7 +127,13 @@
   background: $c-grey-pale;
   box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.44);
   height: 0;
+  padding: 0 80px 85px;
   visibility: hidden;
+
+  @include breakpoint($bp-medium) {
+    height: auto;
+    visibility: visible;
+  }
 
   &.js-search_filter__dropdown-open {
     height: auto;
@@ -140,6 +147,11 @@
     padding: 9px 0;
     width: 100%;
 
+    @include breakpoint($bp-medium) {
+      @include eyebrow;
+      border: 0;
+    }
+
     span {
       @include fs-filter-label;
     }
@@ -152,6 +164,12 @@
     overflow: auto;
     visibility: hidden;
 
+    @include breakpoint($bp-medium) {
+      height: auto;
+      max-height: none;
+      visibility: visible;
+    }
+
     &.js-search_filter__category-open {
       height: auto;
       visibility: visible;
@@ -162,6 +180,12 @@
       border-bottom: 2px solid $c-navy;
       margin-right: 20px;
       padding: 7px 0;
+
+      @include breakpoint($bp-medium) {
+        border: 0;
+        max-height: none;
+        visibility: visible;
+      }
 
       label {
         @include fs-option-label;
