@@ -86,7 +86,68 @@ a {
   }
 
   .text-formatted & {
-    @include link-colors($c-blue);
+    @include link-colors($c-blue-link);
+  }
+}
+//link style for text areas of articles, full-width, and narrow pages
+.narrow-page,
+.article-header,
+.full-width-page-wrapper,
+.full-width-page-banner {
+  a {
+  color: $c-blue-link;
+  background-color: transparent;
+  text-decoration: none;
+  transition: background 0.15s cubic-bezier(0.33,0.66,0.66,1);
+  border-bottom: 1px solid $c-blue-link;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  word-wrap: break-word;
+    &:hover {
+      background: $c-blue-link-rollover;
+      border-bottom: 1px solid $c-blue-link-rollover;
+    }
+  }
+}
+
+.tags-menu,
+.footer-ctas-wrapper,
+.event-card__title {
+  a {
+    border-bottom: 1px solid transparent;
+
+    &:hover {
+      background: transparent;
+      border-bottom: 1px solid $c-blue-link;
+      text-decoration: none;
+    }
+  }
+}
+
+.event-card__title {
+  a {
+    &:hover {
+      border-bottom: none;
+    }
+  }
+}
+
+a.link--cta,
+.narrow-page a.link--cta,
+.full-width-page-wrapper a.link--cta,
+.link--cta a {
+  display: inline-block;
+  background: url('../images/cta-arrow.svg') right center no-repeat transparent;
+  background-size: 14px 10px;
+  padding-right: $space-three;
+  text-decoration: none;
+  font-family: $font-helvetica-neue-medium;
+  border-bottom: none;
+
+  &:hover {
+    background: url('../images/cta-arrow.svg') right center no-repeat transparent;
+    background-size: 14px 10px;
+    border-bottom: none;
   }
 }
 
@@ -97,15 +158,6 @@ span.ext {
   a:hover & {
     @include background-image('external-link-hover.svg', right center);
   }
-}
-
-.link--cta {
-  display: inline-block;
-  background: url('../images/cta-arrow.svg') right center no-repeat transparent;
-  background-size: 14px 10px;
-  padding-right: $space-three;
-  text-decoration: none;
-  font-family: $font-helvetica-neue-medium;
 }
 
 .button {

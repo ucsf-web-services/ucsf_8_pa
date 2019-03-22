@@ -165,13 +165,13 @@ p {
 a {
   text-decoration: none; }
   a:link {
-    color: #007cbe; }
+    color: #0071ad; }
   a:visited, a:link:visited {
-    color: #007cbe; }
+    color: #0071ad; }
   a:focus {
-    color: #007cbe; }
+    color: #0071ad; }
   a.is-active, a:active, a.active-trail {
-    color: #007cbe; }
+    color: #0071ad; }
   a:hover {
     text-decoration: none; }
   a.cta {
@@ -194,27 +194,72 @@ a {
     a.cta:hover::after {
       background: url("../../images/cta/cta-triangle-textgrey.svg") no-repeat; }
   .text-formatted a:link {
-    color: #007cbe; }
+    color: #0071ad; }
   .text-formatted a:visited, .text-formatted a:link:visited {
-    color: #007cbe; }
+    color: #0071ad; }
   .text-formatted a:focus {
-    color: #007cbe; }
+    color: #0071ad; }
   .text-formatted a.is-active, .text-formatted a:active, .text-formatted a.active-trail {
-    color: #007cbe; }
+    color: #0071ad; }
+
+.narrow-page a,
+.article-header a,
+.full-width-page-wrapper a,
+.full-width-page-banner a {
+  color: #0071ad;
+  background-color: transparent;
+  text-decoration: none;
+  -webkit-transition: background 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
+  transition: background 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
+  border-bottom: 1px solid #0071ad;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  word-wrap: break-word; }
+  .narrow-page a:hover,
+  .article-header a:hover,
+  .full-width-page-wrapper a:hover,
+  .full-width-page-banner a:hover {
+    background: #e8f4fa;
+    border-bottom: 1px solid #e8f4fa; }
+
+.tags-menu a,
+.footer-ctas-wrapper a,
+.event-card__title a {
+  border-bottom: 1px solid transparent; }
+  .tags-menu a:hover,
+  .footer-ctas-wrapper a:hover,
+  .event-card__title a:hover {
+    background: transparent;
+    border-bottom: 1px solid #0071ad;
+    text-decoration: none; }
+
+.event-card__title a:hover {
+  border-bottom: none; }
+
+a.link--cta,
+.narrow-page a.link--cta,
+.full-width-page-wrapper a.link--cta,
+.link--cta a {
+  display: inline-block;
+  background: url("../images/cta-arrow.svg") right center no-repeat transparent;
+  background-size: 14px 10px;
+  padding-right: 24px;
+  text-decoration: none;
+  font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  border-bottom: none; }
+  a.link--cta:hover,
+  .narrow-page a.link--cta:hover,
+  .full-width-page-wrapper a.link--cta:hover,
+  .link--cta a:hover {
+    background: url("../images/cta-arrow.svg") right center no-repeat transparent;
+    background-size: 14px 10px;
+    border-bottom: none; }
 
 span.ext {
   background: url("/themes/custom/ucsf/assets/images/external-link.svg") no-repeat right center transparent;
   padding-right: 20px; }
   a:hover span.ext {
     background: url("/themes/custom/ucsf/assets/images/external-link-hover.svg") no-repeat right center transparent; }
-
-.link--cta {
-  display: inline-block;
-  background: url("../images/cta-arrow.svg") right center no-repeat transparent;
-  background-size: 14px 10px;
-  padding-right: 24px;
-  text-decoration: none;
-  font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
 
 .button {
   background-color: transparent;
@@ -523,43 +568,55 @@ a.icon-education, a.icon-doctor, a.icon-campus, a.icon-money, a.icon-awards, a.i
   padding-left: 40px;
   display: inline-block; }
   a.icon-education:hover, a.icon-doctor:hover, a.icon-campus:hover, a.icon-money:hover, a.icon-awards:hover, a.icon-support:hover, a.icon-caduceus:hover, a.icon-heart:hover, a.icon-comprehensive:hover, a.icon-media:hover, a.icon-microscope:hover, a.icon-directions:hover, a.icon-transit:hover {
-    text-decoration: underline; }
+    background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent; }
 
-.icon-doctor {
-  background-image: url(/themes/custom/ucsf/assets/images/card/doctor.svg); }
+.icon-media,
+a.icon-media:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/media.svg) left center no-repeat transparent; }
 
-.icon-campus {
-  background-image: url(/themes/custom/ucsf/assets/images/card/campus.svg); }
+.icon-doctor,
+a.icon-doctor:hover {
+  background-image: url(/themes/custom/ucsf/assets/images/card/doctor.svg) left center no-repeat transparent; }
 
-.icon-money {
-  background-image: url(/themes/custom/ucsf/assets/images/card/money.svg); }
+.icon-campus,
+a.icon-campus:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/campus.svg) left center no-repeat transparent; }
 
-.icon-awards {
-  background-image: url(/themes/custom/ucsf/assets/images/card/awards.svg); }
+.icon-money,
+a.icon-money:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/money.svg) left center no-repeat transparent; }
 
-.icon-support {
-  background-image: url(/themes/custom/ucsf/assets/images/card/support.svg); }
+.icon-awards,
+a.icon-awards:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/awards.svg) left center no-repeat transparent; }
 
-.icon-caduceus {
-  background-image: url(/themes/custom/ucsf/assets/images/card/caduceus.svg); }
+.icon-support,
+a.icon-support:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/support.svg) left center no-repeat transparent; }
 
-.icon-heart {
-  background-image: url(/themes/custom/ucsf/assets/images/card/heart.svg); }
+.icon-caduceus,
+a.icon-caduceus:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/caduceus.svg) left center no-repeat transparent; }
 
-.icon-comprehensive {
-  background-image: url(/themes/custom/ucsf/assets/images/card/comprehensive.svg); }
+.icon-heart,
+a.icon-heart:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/heart.svg) left center no-repeat transparent; }
 
-.icon-media {
-  background-image: url(/themes/custom/ucsf/assets/images/card/media.svg); }
+.icon-comprehensive,
+a.icon-comprehensive:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/comprehensive.svg) left center no-repeat transparent; }
 
-.icon-microscope {
-  background-image: url(/themes/custom/ucsf/assets/images/card/microscope.svg); }
+.icon-microscope,
+a.icon-microscope:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent; }
 
-.icon-directions {
-  background-image: url(/themes/custom/ucsf/assets/images/card/directions.svg); }
+.icon-directions,
+a.icon-directions:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/directions.svg) left center no-repeat transparent; }
 
-.icon-transit {
-  background-image: url(/themes/custom/ucsf/assets/images/card/transit.svg); }
+.icon-transit,
+a.icon-transit:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/transit.svg) left center no-repeat transparent; }
 
 [data-primary-area="pa-about"] figure,
 [data-primary-area="pa-campus-news"] figure,
@@ -594,7 +651,7 @@ a.icon-education, a.icon-doctor, a.icon-campus, a.icon-money, a.icon-awards, a.i
 
 [data-primary-area="pa-research"] figure {
   background-image: url(/themes/custom/ucsf/assets/images/card/microscope-reverse.svg);
-  background-color: #058488; }
+  background-color: #058488 left center no-repeat transparent; }
 
 .vertical-tab {
   grid-column: 1/-1; }
@@ -1880,7 +1937,7 @@ header .menu--main {
           grid-template-columns: repeat(15, 1fr);
       grid-gap: 0; } }
   .article-feature-banner .article-header {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
     grid-column: 2 / -1;
     grid-row: 2 / -1;
     padding: 5% 5% 0 8%; }
@@ -2004,13 +2061,11 @@ header .menu--main {
   width: 64%;
   margin-top: 8px;
   margin-bottom: 0;
-  padding-bottom: 32px;
-  border-bottom: 1px solid #d1d3d3; }
+  padding-bottom: 32px; }
   .article-header__author > * {
     display: inline; }
   .article-header__author a {
-    color: #506380;
-    text-decoration: underline; }
+    color: #506380; }
     .article-header__author a:hover {
       text-decoration: none; }
 
@@ -2162,8 +2217,6 @@ figure.align-center figcaption {
       border-radius: 50%; }
     .tags-menu-region .tags-menu .tags-menu__item:first-child::before {
       display: none; }
-  .tags-menu-region .tags-menu .tags-menu__item a:hover {
-    text-decoration: underline; }
 
 .tags-menu__title {
   -webkit-font-smoothing: antialiased;
@@ -2835,6 +2888,9 @@ figure.align-center figcaption {
 .full-width-page-wrapper .paragraph-text-block {
   padding: 80px;
   padding-bottom: 0; }
+
+.full-width-page-wrapper .field-column-content-content .paragraph-text-block {
+  padding: 0; }
 
 .full-width-page-banner {
   display: -ms-grid;
