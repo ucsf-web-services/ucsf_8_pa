@@ -831,7 +831,7 @@ a.icon-transit:hover {
             justify-self: end; } }
   .universal-header .universal-header__title {
     margin: 0;
-    padding: 8px 0 8px 8px; }
+    padding: 8px 0; }
     @media (min-width: 600px) {
       .universal-header .universal-header__title {
         display: inline-block; } }
@@ -1843,6 +1843,9 @@ header .menu--main {
     .page-node-type-trending .small-title + * {
       margin-top: 0; }
 
+.page-node-type-narrow-page .narrow-page {
+  margin-bottom: 80px; }
+
 .page-node-type-full-width-page,
 .path-taxonomy {
   background: #f2f4f6; }
@@ -2394,7 +2397,8 @@ figure.align-center figcaption {
 .wysiwyg_twocols {
   clear: both;
   float: left;
-  width: 100%; }
+  width: 100%;
+  margin-bottom: 40px; }
   .wysiwyg_twocols.layout--60-40 .wysiwyg_twocols--first {
     width: 58%;
     margin-right: 2%; }
@@ -3687,6 +3691,13 @@ figure.align-center figcaption {
     background: #506380;
     margin: 0 10px 3px 7px;
     border-radius: 50%; }
+
+a[href*="http"] .field-featured-media-article .news-card__date,
+a[href*="http"] .media-coverage__list-date,
+a[href*="http"] .article-header__date {
+  padding-right: 30px;
+  background: url("../images/ext-link-gray.svg") right center no-repeat transparent;
+  background-size: 20px; }
 
 .media-coverage__featured .news-card__copy {
   margin-left: 0;
@@ -9928,8 +9939,8 @@ dom-threecolumn-layout .column3 {
   max-width: 1280px; }
   @media (min-width: 600px) {
     .footer {
-      -ms-grid-columns: (1fr)[4];
-          grid-template-columns: repeat(4, 1fr); } }
+      -ms-grid-columns: (1fr)[3];
+          grid-template-columns: repeat(3, 1fr); } }
   .footer h2 {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -9964,10 +9975,6 @@ dom-threecolumn-layout .column3 {
       font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
   .footer a:hover {
     text-decoration: underline; }
-  .footer *:last-child {
-    -ms-flex-item-align: end;
-        -ms-grid-row-align: end;
-        align-self: end; }
 
 .footer-logo {
   width: 100px;
@@ -10025,5 +10032,15 @@ dom-threecolumn-layout .column3 {
       margin: 0;
       padding: 0;
       margin-left: 24px; }
+
+#block-footer2resources .menu {
+  -webkit-columns: 2;
+          columns: 2; }
+  #block-footer2resources .menu .menu-item:first-child {
+    margin-top: 0; }
+    #block-footer2resources .menu .menu-item:first-child a {
+      display: block;
+      margin-right: 156px;
+      white-space: nowrap; }
 
 /*# sourceMappingURL=style.css.map */

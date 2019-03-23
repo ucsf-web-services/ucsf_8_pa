@@ -19,10 +19,14 @@
   </div>
 </main>
 
+{% if content.field_footer_tabs_events_columne|render|striptags != ''  %}
 <div class="narrow-page-full-width-wrapper">
   {{ content.field_footer_tabs_events_columne }}
 </div>
+{% endif %}
 
+{% if content.field_ankle_cta|render|striptags != ''  %}
 <div class="footer-ctas-wrapper">
   {{ content.field_ankle_cta }}
 </div>
+{% endif %}
