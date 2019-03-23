@@ -344,14 +344,44 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
 
         }
 
-        // Replace element with a token.
+        $inline_component = new \stdClass();
+        $inline_component->element = $element;
+        $inline_component->component = $component;
+        $inline_component->children = [];
+        $inline_components[spl_object_hash($element)] = $inline_component;
+
+      }
+
+      // Convert $inline_components into a tree.
+      $tree = [];
+      foreach ($inline_components as $key => $inline_component) {
+        $ancestor = $inline_component->element->parentNode;
+        while ($ancestor) {
+          $ancestor_key = spl_object_hash($ancestor);
+          if (isset($inline_components[$ancestor_key])) {
+            $ancestor_component = $inline_components[$ancestor_key];
+            $ancestor_component->children[$key] = $inline_component;
+            continue 2;
+          }
+          $ancestor = $ancestor->parentNode;
+        }
+        $tree[$key] = $inline_component;
+      }
+
+      // Replace original element with a token element.
+      $tokenize = function ($inline_component) use (&$tokenize, $doc) {
+        foreach ($inline_component->children as $child) {
+          $tokenize($child);
+        }
+        /** @var \ChapterThree\AppleNewsAPI\Document\Components\Component $component */
+        $component = $inline_component->component;
+        /** @var \DOMElement $element */
+        $element = $inline_component->element;
         if ($component) {
 
-          // Value of the component is the index of the component in
-          // $inline_components.
-          $token = $doc->createElement('applenews_component',
-            count($inline_components));
-          $inline_components[] = $component;
+          $key = spl_object_hash($element);
+          $token = $doc->createElement('applenews_component');
+          $token->setAttribute('id', $key);
 
           // Replace with token, making sure the token is at the root level of
           // the value html.
@@ -360,22 +390,28 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
           }
           // Nested, insert token after top level ancestor.
           else {
-            $ancestor = $element->parentNode;
-            $only_child = $ancestor->childNodes->length == 1;
-            while ($ancestor->parentNode->tagName != 'body') {
+            if (!$ancestor = $element->parentNode) {
+              throw new \Exception(
+                'Could not determine parent node for element ' .
+                $doc->saveHTML($element));
+            }
+            while ($ancestor->parentNode &&
+              $ancestor->parentNode->tagName != 'body'
+            ) {
               $ancestor = $ancestor->parentNode;
-              $only_child = $only_child &&
-                $ancestor->childNodes->length == 1;
             }
-            // Replace ancestor since element is the only descendant.
-            if ($only_child) {
-              $ancestor->parentNode->replaceChild($token, $ancestor);
+            if (!$ancestor->parentNode) {
+              throw new \Exception(
+                'Could not determine parent node for element ' .
+                $doc->saveHTML($element));
             }
-            elseif ($ancestor->nextSibling) {
+            // Insert after ancestor.
+            if ($ancestor->nextSibling) {
               $ancestor->parentNode->insertBefore(
                 $token, $ancestor->nextSibling);
               $element->parentNode->removeChild($element);
             }
+            // Append to root element.
             else {
               $ancestor->parentNode->appendChild($token);
               $element->parentNode->removeChild($element);
@@ -387,31 +423,15 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
         else {
           $element->parentNode->removeChild($element);
         }
+      };
+      array_map($tokenize, $tree);
 
-      }
-
-      $text = preg_replace('/<[!\?][^>]+>/', '', $doc->saveHTML());
-      $text = str_replace(
-        array('<html>', '</html>', '<body>', '</body>'),
-        array('', '', '', ''),
-        $text);
-
-      libxml_clear_errors();
-      libxml_use_internal_errors($libxml_previous_state);
-
-      // Split value into multiple Body components and insert other components
-      // in the correct place.
-      $text = preg_split('/<\/?applenews_component>/', $text);
-      foreach ($text as $i => $value) {
-        if ($i % 2) {
-          $components[] = $inline_components[$value];
-        }
-        else {
-          $value = $this->htmlValue($value);
-          if (empty($value)) {
-            continue;
-          }
-          $component = new Body($value);
+      // Generate body components and assemble all components into return value.
+      $xp_query = '/html/body/*';
+      $current_body = '';
+      $append_body = function () use (&$current_body, &$components, &$data) {
+        if (!empty($current_body)) {
+          $component = new Body($current_body);
           $link_style = new TextStyle();
           $link_style
             ->setFontName('HelveticaNeue-Medium')
@@ -436,7 +456,23 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
           $component->setLayout($this->getComponentLayout($data['component_layout']));
           $components[] = $component;
         }
+        $current_body = '';
+      };
+      /** @var \DOMElement $element */
+      foreach ($xp->query($xp_query) as $element) {
+        if ($element->tagName == 'applenews_component') {
+          $append_body();
+          $id = $element->getAttribute('id');
+          $components[] = $inline_components[$id]->component;
+        }
+        else {
+          $current_body .= $this->htmlValue($doc->saveHTML($element));
+        }
       }
+      $append_body();
+
+      libxml_clear_errors();
+      libxml_use_internal_errors($libxml_previous_state);
     }
 
     return $components;
