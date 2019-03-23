@@ -96,11 +96,14 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             $video_field = $video_paragraph
               ->get('field_media_video_embed_field')->get(0);
             if ($url = $video_field->get('value')->getString()) {
-              $component = new Video($url);
+              $component = $this->getVideoComponent($url);
               /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $caption */
-              $caption = $paragraph->get('field_video_caption')->get(0);
-              $caption = $this->textValue($caption->get('value')->getValue());
-              $component->setCaption($caption);
+              if ($caption = $paragraph->get('field_video_caption')->get(0)) {
+                /** @var string $caption */
+                if ($caption = $this->textValue($caption->get('value')->getValue())) {
+                  $component->setCaption($caption);
+                }
+              }
               $component->setLayout(
                 $this->getComponentLayout($data['component_layout']));
               $components[] = $component;
@@ -132,9 +135,13 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             /** @var \Drupal\file\Entity\File $file */
             $file = $media->get('field_media_image')->entity;
             $component = new GalleryItem($file->url());
-            $caption = $video_paragraph->get('field_gallery_caption')->get(0);
-            $caption = $this->textValue($caption->get('value')->getValue());
-            $component->setCaption($caption);
+            /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $caption */
+            if ($caption = $video_paragraph->get('field_gallery_caption')->get(0)) {
+              /** @var string $caption */
+              if ($caption = $this->textValue($caption->get('value')->getValue())) {
+                $component->setCaption($caption);
+              }
+            }
             $gallery_items[] = $component;
           }
           $component = new Gallery($gallery_items);
@@ -261,23 +268,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
           case 'iframe':
             if ($element->hasAttribute('src')) {
               $url = $element->getAttribute('src');
-              $url_parsed = parse_url($url);
-              if (preg_match('/(youtube|vimeo)\.com$/', $url_parsed['host'])) {
-                if (empty($url_parsed['scheme'])) {
-                  $url = 'https:' . $url;
-                }
-                $component = new EmbedWebVideo($url);
-              }
-              elseif (!empty($url_parsed['path'])) {
-                $ext = pathinfo($url_parsed['path'], PATHINFO_EXTENSION);
-                if (in_array($ext, ['mp3', 'mov', 'qt'])) {
-                  if (empty($url_parsed['host'])) {
-                    $url = Url::fromUserInput($url, ['absolute' => TRUE])
-                      ->toString();
-                  }
-                  $component = new Video($url);
-                }
-              }
+              $component = $this->getVideoComponent($url);
             }
             break;
 
@@ -292,22 +283,37 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
               if ($media) {
                 /** @var \Drupal\media\Entity\Media $media */
                 $media = reset($media);
-                /** @var \Drupal\file\Entity\File $file */
-                $file = $media->get('field_media_image')->entity;
-                $mimetype = explode('/', $file->getMimeType());
-                if (@$mimetype[0] == 'image' &&
-                  in_array(@$mimetype[1], ['jpeg', 'gif', 'png'])
-                ) {
-                  $component = new Photo($file->url());
-                  if ($element->hasAttribute('data-caption')) {
-                    $caption = $this->textValue(
-                      $element->getAttribute('data-caption'));
-                    $component->setCaption($caption);
+                if ($media->hasField('field_media_image')) {
+                  /** @var \Drupal\file\Plugin\Field\FieldType\FileFieldItemList $file */
+                  $file = $media->get('field_media_image');
+                  /** @var \Drupal\file\Entity\File $file */
+                  $file = $file->entity;
+                  if ($file) {
+                    $mimetype = explode('/', $file->getMimeType());
+                    if (@$mimetype[0] == 'image' &&
+                      in_array(@$mimetype[1], ['jpeg', 'gif', 'png'])
+                    ) {
+                      $component = new Photo($file->url());
+                      if ($element->hasAttribute('data-caption')) {
+                        $caption = $this->textValue(
+                          $element->getAttribute('data-caption'));
+                        if ($caption) {
+                          $component->setCaption($caption);
+                        }
+                      }
+                    }
+                    else {
+                      throw new \Exception(
+                        'Unexpected file mime type ' . $file->getMimeType());
+                    }
                   }
                 }
-                else {
-                  throw new \Exception(
-                    'Unexpected file mime type ' . $file->getMimeType());
+                elseif ($media->hasField('field_media_video_embed_field')) {
+                  /** @var \Drupal\Core\Field\FieldItemList $video_field */
+                  $video_field = $media->get('field_media_video_embed_field');
+                  if ($url = $video_field->get(0)->getString()) {
+                    $component = $this->getVideoComponent($url);
+                  }
                 }
               }
             }
@@ -518,6 +524,30 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       ),
       " \t\n\r\0\x0B\xC2\xA0"
     );
+  }
+
+  /**
+   * Generates proper video component for a url.
+   */
+  protected function getVideoComponent($url) {
+    $url_parsed = parse_url($url);
+    if (preg_match('/(youtube|vimeo)\.com$/', $url_parsed['host'])) {
+      if (empty($url_parsed['scheme'])) {
+        $url = 'https:' . $url;
+      }
+      return new EmbedWebVideo($url);
+    }
+    elseif (!empty($url_parsed['path'])) {
+      $ext = pathinfo($url_parsed['path'], PATHINFO_EXTENSION);
+      if (in_array($ext, ['mp3', 'mov', 'qt'])) {
+        if (empty($url_parsed['host'])) {
+          $url = Url::fromUserInput($url, ['absolute' => TRUE])
+            ->toString();
+        }
+        return new Video($url);
+      }
+    }
+    return NULL;
   }
 
 }
