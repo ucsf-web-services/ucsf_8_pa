@@ -127,18 +127,41 @@
   background: $c-grey-pale;
   box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.44);
   height: 0;
-  padding: 0 80px 85px;
   visibility: hidden;
 
-  @include breakpoint($bp-medium) {
-    height: auto;
-    visibility: visible;
+  [data-drupal-selector="edit-pub-year"] { // Year of Publication.
+    @include breakpoint($bp-medium) {
+      grid-column: 3/5;
+    }
+  }
+
+  [data-drupal-selector="edit-tid-1"] { // Health and Science Topics.
+    @include breakpoint($bp-medium) {
+      columns: 3;
+      grid-column: 1/4;
+    }
   }
 
   &.js-search_filter__dropdown-open {
     height: auto;
     padding: 0 16px 40px;
     visibility: visible;
+
+    @include breakpoint($bp-medium) {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-row-gap: 55px;
+      height: auto;
+      padding: 0 80px 85px;
+    }
+
+    .fieldset-wrapper {
+      @include breakpoint($bp-medium) {
+        height: auto;
+        max-height: none;
+        visibility: visible;
+      }
+    }
   }
 
   fieldset legend {
@@ -164,12 +187,6 @@
     overflow: auto;
     visibility: hidden;
 
-    @include breakpoint($bp-medium) {
-      height: auto;
-      max-height: none;
-      visibility: visible;
-    }
-
     &.js-search_filter__category-open {
       height: auto;
       visibility: visible;
@@ -184,6 +201,7 @@
       @include breakpoint($bp-medium) {
         border: 0;
         max-height: none;
+        padding: 0;
         visibility: visible;
       }
 
@@ -194,11 +212,18 @@
   }
 
   // Submit button.
-  [data-drupal-selector="edit-actions"] input {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 40px;
+  [data-drupal-selector="edit-actions"] {
+    @include breakpoint($bp-medium) {
+      grid-column: 1/-1;
+      margin-top: 0;
+    }
+
+    input {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 40px;
+    }
   }
 }
 

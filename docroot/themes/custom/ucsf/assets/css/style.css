@@ -5075,16 +5075,37 @@ figure.align-center figcaption {
   -webkit-box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.44);
           box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.44);
   height: 0;
-  padding: 0 80px 85px;
   visibility: hidden; }
   @media (min-width: 600px) {
-    .search-filter__dropdown {
-      height: auto;
-      visibility: visible; } }
+    .search-filter__dropdown [data-drupal-selector="edit-pub-year"] {
+      -ms-grid-column: 3;
+      -ms-grid-column-span: 2;
+      grid-column: 3/5; } }
+  @media (min-width: 600px) {
+    .search-filter__dropdown [data-drupal-selector="edit-tid-1"] {
+      -webkit-columns: 3;
+              columns: 3;
+      -ms-grid-column: 1;
+      -ms-grid-column-span: 3;
+      grid-column: 1/4; } }
   .search-filter__dropdown.js-search_filter__dropdown-open {
     height: auto;
     padding: 0 16px 40px;
     visibility: visible; }
+    @media (min-width: 600px) {
+      .search-filter__dropdown.js-search_filter__dropdown-open {
+        display: -ms-grid;
+        display: grid;
+        -ms-grid-columns: (1fr)[4];
+            grid-template-columns: repeat(4, 1fr);
+        grid-row-gap: 55px;
+        height: auto;
+        padding: 0 80px 85px; } }
+    @media (min-width: 600px) {
+      .search-filter__dropdown.js-search_filter__dropdown-open .fieldset-wrapper {
+        height: auto;
+        max-height: none;
+        visibility: visible; } }
   .search-filter__dropdown fieldset legend {
     border-bottom: 2px solid #052049;
     display: block;
@@ -5125,11 +5146,6 @@ figure.align-center figcaption {
     max-height: 192px;
     overflow: auto;
     visibility: hidden; }
-    @media (min-width: 600px) {
-      .search-filter__dropdown .fieldset-wrapper {
-        height: auto;
-        max-height: none;
-        visibility: visible; } }
     .search-filter__dropdown .fieldset-wrapper.js-search_filter__category-open {
       height: auto;
       visibility: visible; }
@@ -5143,6 +5159,7 @@ figure.align-center figcaption {
         .search-filter__dropdown .fieldset-wrapper .form-type-checkbox {
           border: 0;
           max-height: none;
+          padding: 0;
           visibility: visible; } }
       .search-filter__dropdown .fieldset-wrapper .form-type-radio label,
       .search-filter__dropdown .fieldset-wrapper .form-type-checkbox label {
@@ -5150,6 +5167,10 @@ figure.align-center figcaption {
         font-size: 14px;
         letter-spacing: .16px;
         line-height: 14px; }
+  @media (min-width: 600px) {
+    .search-filter__dropdown [data-drupal-selector="edit-actions"] {
+      grid-column: 1/-1;
+      margin-top: 0; } }
   .search-filter__dropdown [data-drupal-selector="edit-actions"] input {
     display: block;
     margin-left: auto;
