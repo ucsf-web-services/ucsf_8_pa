@@ -41,7 +41,7 @@ class UcsfApplenewsImageComponentNormalizer extends ApplenewsImageComponentNorma
     foreach ($field->referencedEntities() as $media) {
       break;
     }
-    if (!$media) {
+    if (empty($media)) {
       return NULL;
     }
     /** @var \Drupal\file\Entity\File $file */
