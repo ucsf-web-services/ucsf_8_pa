@@ -36,7 +36,7 @@ class TweetsBlock extends BlockBase {  /**
     $tweets = json_decode($tweets);
     foreach($tweets as $tweet) {
       $tweet->full_text = check_markup($tweet->full_text, 'full_html');
-      $tweet->full_text = preg_replace(' /https:\/\/t.co\/.*/' ,'' ,$tweet->full_text);
+      $tweet->full_text = preg_replace('/https:\/\/t.co\/.*/' ,'' ,$tweet->full_text);
       $cleanTweets[] = $tweet;
     }
 
