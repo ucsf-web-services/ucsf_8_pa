@@ -178,6 +178,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         ),
         'B' => 
         array (
+            'Brumann\\Polyfill\\' => 17,
             'Behat\\Mink\\Driver\\' => 18,
             'Behat\\Mink\\' => 11,
         ),
@@ -523,6 +524,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'ChapterThree\\AppleNewsAPI\\' => 
         array (
             0 => __DIR__ . '/..' . '/chapter-three/apple-news-api/src',
+        ),
+        'Brumann\\Polyfill\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/brumann/polyfill-unserialize/src',
         ),
         'Behat\\Mink\\Driver\\' => 
         array (
