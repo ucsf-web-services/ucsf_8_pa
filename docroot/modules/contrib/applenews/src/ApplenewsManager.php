@@ -303,11 +303,13 @@ class ApplenewsManager {
     $document = $this->serializer->normalize($entity, 'applenews', $context);
 
     /** @var \ChapterThree\AppleNewsAPI\Document\Components\Text $component */
-    foreach ($document['components'] as $index => $component) {
-      if (!$component instanceof Text) {
-        continue;
+    if (!empty($document['components'])) {
+      foreach ($document['components'] as $index => $component) {
+        if (!$component instanceof Text) {
+          continue;
+        }
+        $component->setText(Html::transformRootRelativeUrlsToAbsolute($component->getText(), $base_url));
       }
-      $component->setText(Html::transformRootRelativeUrlsToAbsolute($component->getText(), $base_url));
     }
     return Json::encode($document);
   }
