@@ -15,9 +15,11 @@ module.exports = {
         browers: [
           'last 2 versions',
           '>= 1%',
-          'ie >= 10'
+          'ie >= 11',
+          'safari >= 7'
         ],
         grid: true,
+        strict: "grid"
       },
       removeSourceComments: true,
       flattenDest: true,
@@ -68,7 +70,7 @@ module.exports = {
     enabled: true,
     baseDir: './',
     startPath: '',
-    domain: 'http://ucsf-main.local',
+    domain: 'http://local.ucsf8.edu',
     startupBehavior: false,
     ui: false,
   }
