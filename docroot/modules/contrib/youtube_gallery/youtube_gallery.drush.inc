@@ -43,15 +43,6 @@ function youtube_gallery_drush_help($section) {
 }
 
 /**
- * Implements drush_hook_post_pm_enable().
- */
-function drush_youtube_gallery_post_pm_enable() {
-  if (drush_confirm(dt('Do you want to install the libraries (in /libraries) ?'))) {
-    drush_youtube_gallery_plugins();
-  }
-}
-
-/**
  * Command to download the Youtube Uploader plugins.
  */
 function drush_youtube_gallery_plugins() {
