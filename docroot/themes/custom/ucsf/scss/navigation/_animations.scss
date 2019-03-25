@@ -27,10 +27,13 @@
 
 
 
-.article-header__byline,
 .article-header__author,
 .article-header h1 {
-  animation: header-fade 3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+  animation: header-fade 3s  0ms forwards;
+  animation-name: header-fade;
+  animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+  animation-fill-mode: forwards;
+  transition: 2s;
 }
 
 /**
@@ -124,4 +127,35 @@
   100% {
     opacity: 1;
   }
+}
+
+// NEWS CARDS
+
+.news-card {
+  overflow: hidden;
+
+  .field-card-image,
+  .news-card__image {
+    overflow: hidden;
+    display: block;
+  }
+
+  .news-card__image img,
+  .field-card-image img {
+    transition: .5s ease-out all;
+  }
+  h2 {
+    transition: .5s ease-out all;
+  }
+  &:hover {
+    .news-card__image img,
+    .field-card-image img {
+      transform: scale(1.1);
+    }
+    h2 {
+      color: $c-teal;
+    }
+  }
+
+
 }

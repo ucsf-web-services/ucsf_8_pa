@@ -6,19 +6,15 @@
 .video-list__header {
   margin: 0 auto;
   max-width: $xl;
-}
-
-.video-list__title,
-.page-node-type-news-center .video-list__title {
-  @include fs-heading;
-
-  margin: 0;
-  color: $white;
-  float: left;
+  position: relative;
+  height: 106px;
 }
 
 .video-list__youtube {
-  float: right;
+  //float: right;
+  position: absolute;
+  right: 25px;
+  bottom: 0px;
 
   a {
     color: $white;
@@ -41,12 +37,74 @@
   }
 }
 
-.video-list__videos {
-  p {
+.video-list__title,
+.page-node-type-news-center .video-list__title {
+  @include fs-heading;
+  top: 0;
+  margin: 0;
+  color: $white;
+  left: 80px;
+  position: absolute;
+}
+
+#block-youtubegallery {
+  .slick-slider {
+    margin: 0;
+  }
+  img {
+    border: none;
+    border-radius: 0;
+  }
+
+  a.video_link,
+  a:link.video_link,
+  a:visited.video_link {
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.33;
+    letter-spacing: 0.2px;
+    color: #ffffff;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  li {
     color: white;
     margin: 0 auto;
     clear: both;
     max-width: $xl;
     padding-bottom: $space-ten;
+    min-height: 200px;
   }
+
+  .slick-arrow {
+    position: absolute;
+    top: 22%;
+    z-index: 800;
+    border-radius: 50%;
+    border: 1px solid $dark-navy;
+    background-color: $c-blue;
+  }
+
+  .slick-prev {
+    left: 0;
+  }
+  .slick-next {
+    right: 0;
+  }
+
+  .slick-list {
+
+    .slick-slide {
+      margin: 0 15px;
+      width: 263px;
+      border: none;
+      border-radius: 0 0;
+    }
+  }
+
 }

@@ -6,7 +6,7 @@
     attach: function attach(context) {
 
       $('.youtube-list__videos').slick({
-        slidesToShow: 5,
+        slidesToShow: 4,
         infinite: false
       });
     }

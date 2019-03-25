@@ -16,18 +16,19 @@
  *
  */
 #}
-{% set classes = ['youtube-list__videos']%}
+{% set classes = ['youtube-list__videos'] %}
 
 {{ attach_library('ucsf/slick_youtube') }}
-<div{{ attributes.addClass(classes) }}>
+<ul{{ attributes.addClass(classes) }}>
 {% for key, value in content.items %}
-	<p class="video-item__youtube" sytle="margin:32px">
-		<a target= "_blank" href="https://www.youtube.com/watch?v={{ value.snippet.resourceId.videoId }}">
+	<li class="video-item__youtube">
+		<a target="_blank" href="https://www.youtube.com/watch?v={{ value.snippet.resourceId.videoId }}">
 			<img src={{ value.snippet.thumbnails.medium.url }} />
-		</a></br>
-		<a target= "_blank" href="https://www.youtube.com/watch?v={{ value.snippet.resourceId.videoId}}">
+		</a>
+
+		<a target="_blank" href="https://www.youtube.com/watch?v={{ value.snippet.resourceId.videoId}}" class="video_link">
 			{{ value.snippet.title}}
 		</a>
-	</p>
+	</li>
 {% endfor %}
-</div>
+</ul>
