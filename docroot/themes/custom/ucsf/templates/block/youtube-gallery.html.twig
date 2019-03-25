@@ -22,11 +22,11 @@
 <ul{{ attributes.addClass(classes) }}>
 {% for key, value in content.items %}
 	<li class="video-item__youtube">
-		<a target="_blank" href="https://www.youtube.com/watch?v={{ value.snippet.resourceId.videoId }}">
+		<a href="https://www.youtube.com/watch?v={{ value.snippet.resourceId.videoId }}" target="_blank">
 			<img src={{ value.snippet.thumbnails.medium.url }} />
 		</a>
 
-		<a target="_blank" href="https://www.youtube.com/watch?v={{ value.snippet.resourceId.videoId}}" class="video_link">
+		<a href="https://www.youtube.com/watch?v={{ value.snippet.resourceId.videoId}}" class="video_link" target="_blank">
 			{{ value.snippet.title}}
 		</a>
 	</li>
