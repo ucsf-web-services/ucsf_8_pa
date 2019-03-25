@@ -24,10 +24,14 @@
 ]
 %}
 
-<article {{ attributes.addClass(classes) }} data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
+<article {{ attributes.addClass(classes) }}">
 
   <header class="search-result__copy">
-    {% include '@theme/article/byline.twig' %}
+    {% if article_type == 'media-coverage' %}
+      {% include '@theme/article/byline-media.twig' %}
+    {% else %}
+      {% include '@theme/article/byline.twig' %}
+    {% endif %}
     {% if content.field_short_title|render|striptags != ''  %}
       <h2><a href="{{ url }}">{{ content.field_short_title }}</a></h2>
     {% else %}
@@ -41,11 +45,13 @@
     {% if content.field_card_image['#items'] is not empty %}
       {{ content.field_card_image }}
     {% else %}
-      <figure class="search-index__image-placeholder">
-        <picture>
-          <img src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image">
-        </picture>
-      </figure>
+      <div data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
+        <figure class="search-index__image-placeholder">
+          <picture>
+            <img src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image">
+          </picture>
+        </figure>
+      </div>
     {% endif %}
   </div>
   {% endif %}
