@@ -165,7 +165,10 @@
 
   &.media {
     color: $gray-blue;
-    white-space: nowrap;
+
+    @include breakpoint($bp-medium) {
+      white-space: nowrap;
+    }
 
     i {
       font-size: 12px;
