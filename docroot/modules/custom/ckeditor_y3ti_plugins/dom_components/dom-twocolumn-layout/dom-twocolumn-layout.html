@@ -1,50 +1,49 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-
 <dom-module id="dom-twocolumn-layout">
   <template>
+    <custom-style>
+      <style>
+        dom-twocolumn-layout {
+          --font-white: #FFF;
+          --font-black: #000;
+          --size-50: 50%;
+          --size-20: 20%;
+          --size-30: 30%;
+          --size-40: 40%;
+          --size-60: 60%;
+          --size-70: 70%;
+          --size-80: 80%;
+          --bg-interactive-blue: #0071ad;
+          --bg-interactive-dark-blue: #052049;
+          --bg-interactive-light-navy: #506380;
+          --bg-interactive-green: #6EA400;
+          --bg-interactive-dark-grey: #737373;
+          --bg-interactive-orange: #F26D04;
+          --bg-interactive-teal: #058488;
+          --bg-interactive-purple: #716FB2;
+          --bg-interactive-red: #EB093C;
+          --bg-interactive-yellow: #FFDD00;
+          --bg-transparent: transparent;
+          --padding-transparent: 0;
+          --padding-normal: 10px 25px;
+        }
+      </style>
+    </custom-style>
     <style>
       :host {
         margin: 2% 0;
         display: flex;
         flex-direction: column;
-        --font-white: #FFF;
-        --font-black: #000;
-        --size-50: 50%;
-        --size-20: 20%;
-        --size-30: 30%;
-        --size-40: 40%;
-        --size-60: 60%;
-        --size-70: 70%;
-        --size-80: 80%;
-        --bg-interactive-blue: #0071ad;
-        --bg-interactive-dark-blue: #052049;
-        --bg-interactive-light-navy: #506380;
-        --bg-interactive-green: #6EA400;
-        --bg-interactive-dark-grey: #737373;
-        --bg-interactive-orange: #F26D04;
-        --bg-interactive-teal: #058488;
-        --bg-interactive-purple: #716FB2;
-        --bg-interactive-red: #EB093C;
-        --bg-interactive-yellow: #FFDD00;
-        --bg-transparent: transparent;
-        --padding-transparent: 0;
-        --padding-normal: 10px 25px;
       }
+
       ::slotted([slot=column1]), .column1 {
         padding: var(--column1-padding);
         margin-bottom: 2%;
-        /*
-        background-color: var(--column1-color);
-        color: var(--column1-font-color);
-        */
       }
       ::slotted([slot=column2]), .column2 {
         padding: var(--column2-padding);
-        /*
-        background-color: var(--column2-color);
-        color: var(--column2-font-color);
-        */
       }
+
       @media (min-width: 769px) {
         :host {
           flex-direction: row;
@@ -54,46 +53,20 @@
           margin-right: 2%;
           margin-bottom: 0;
         }
+
         ::slotted([slot=column2]), .column2 {
           flex: 1 var(--column2-size);
         }
-
       }
+
 
     </style>
     <slot name="column1" class="column1"></slot>
     <slot name="column2" class="column2"></slot>
   </template>
 </dom-module>
-<style>
-  dom-twocolumn-layout .column1 > *:last-child,
-  dom-twocolumn-layout .column2 > *:last-child {
-    margin-bottom: 0;
-  }
-  dom-twocolumn-layout .column1 h1,
-  dom-twocolumn-layout .column1 h2,
-  dom-twocolumn-layout .column1 h3,
-  dom-twocolumn-layout .column1 h4,
-  dom-twocolumn-layout .column1 h5,
-  dom-twocolumn-layout .column1 h6,
-  dom-twocolumn-layout .column1 p:not(.number-highlight),
-  dom-twocolumn-layout .column1 a:not(.btn),
-  dom-twocolumn-layout .column1 strong {
-    /* color: var(--column1-font-color); */
-  }
-  dom-twocolumn-layout .column2 h1,
-  dom-twocolumn-layout .column2 h2,
-  dom-twocolumn-layout .column2 h3,
-  dom-twocolumn-layout .column2 h4,
-  dom-twocolumn-layout .column2 h5,
-  dom-twocolumn-layout .column2 h6,
-  dom-twocolumn-layout .column2 p:not(.number-highlight),
-  dom-twocolumn-layout .column2 a:not(.btn),
-  dom-twocolumn-layout .column2 strong {
-    /* color: var(--column2-font-color); */
-  }
-</style>
-  <script>'use strict';
+<script>
+  'use strict';
 
 /**
  * `column-layout`
@@ -132,12 +105,12 @@
       var column1Padding = 'normal';
       var column2Padding = 'normal';
       if (this.dataColumn1Color == 'transparent' || this.dataColumn1Color == 'interactive-yellow') {
-        column1FontColor = 'inherit';
-        column1Padding = 'transparent';
+        //column1FontColor = 'inherit';
+        //column1Padding = 'transparent';
       }
       if (this.dataColumn2Color == 'transparent' || this.dataColumn2Color == 'interactive-yellow') {
-        column2FontColor = 'inherit';
-        column2Padding = 'transparent';
+        //column2FontColor = 'inherit';
+        //column2Padding = 'transparent';
       }
       this.updateStyles({
         //'--column1-font-color': 'var(--font-' + column1FontColor + ')',

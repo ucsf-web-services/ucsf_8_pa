@@ -2,11 +2,9 @@
 
 <dom-module id="dom-threecolumn-layout">
   <template>
-    <style>
-      :host {
-        margin: 2% 0;
-        display: flex;
-        flex-direction: column;
+    <custom-style>
+      <style>
+        dom-threecolumn-layout {
         --font-white: #FFF;
         --font-black: #404040;
         --size-33: 33%;
@@ -25,6 +23,14 @@
         --bg-transparent: transparent;
         --padding-transparent: 0;
         --padding-normal: 10px 25px;
+        }
+      </style>
+    </custom-style>
+    <style>
+      :host {
+        margin: 2% 0;
+        display: flex;
+        flex-direction: column;
       }
       ::slotted([slot=column1]), .column1 {
         padding: var(--column1-padding);
@@ -79,7 +85,7 @@
   dom-threecolumn-layout .column1 > *:last-child,
   dom-threecolumn-layout .column2 > *:last-child,
   dom-threecolumn-layout .column3 > *:last-child {
-    margin-bottom: 0;
+    /* margin-bottom: 0; */
   }
   dom-threecolumn-layout .column1 h1,
   dom-threecolumn-layout .column1 h2,
@@ -115,7 +121,8 @@
     /* color: var(--column3-font-color); */
   }
 </style>
-  <script>'use strict';
+  <script>
+    'use strict';
 
 /**
  * `column-layout`
@@ -157,23 +164,23 @@
       }
     },
     ready: function ready() {
-      var column1FontColor = 'white';
-      var column2FontColor = 'white';
-      var column3FontColor = 'white';
-      var column1Padding = 'normal';
-      var column2Padding = 'normal';
-      var column3Padding = 'normal';
+      //var column1FontColor = 'white';
+      //var column2FontColor = 'white';
+      //var column3FontColor = 'white';
+      //var column1Padding = 'normal';
+      //var column2Padding = 'normal';
+      //var column3Padding = 'normal';
       if (this.dataColumn1Color == 'transparent' || this.dataColumn1Color == 'interactive-yellow') {
-        column1FontColor = 'black';
-        column1Padding = 'transparent';
+        //column1FontColor = 'black';
+        //column1Padding = 'transparent';
       }
       if (this.dataColumn2Color == 'transparent' || this.dataColumn2Color == 'interactive-yellow') {
-        column2FontColor = 'black';
-        column2Padding = 'transparent';
+        //column2FontColor = 'black';
+        //column2Padding = 'transparent';
       }
       if (this.dataColumn3Color == 'transparent' || this.dataColumn3Color == 'interactive-yellow') {
-        column3FontColor = 'black';
-        column3Padding = 'transparent';
+        //column3FontColor = 'black';
+        //column3Padding = 'transparent';
       }
       this.updateStyles({
         //'--column1-font-color': 'var(--font-' + column1FontColor + ')',
