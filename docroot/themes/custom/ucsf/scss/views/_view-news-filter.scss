@@ -121,6 +121,36 @@
   }
 }
 
+// Top filter - Open.
+.js-search_filter__top-open {
+  background: $c-grey-pale;
+  height: 90px;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: $z-news-search-filter;
+
+  // Submit button.
+  [data-drupal-selector="edit-submit-news-filter"] {
+    right: 64px;
+    top: 16px;
+  }
+
+  // Results count.
+  [data-drupal-selector="edit-count"] {
+    @include visually-hidden;
+  }
+
+  .search-filter__advanced {
+    @include background-image('x-large.svg', left);
+    right: 12px;
+    top: 16px;
+  }
+}
+
+
 // Dropdown filters.
 .search-filter__dropdown {
   @include transition;
