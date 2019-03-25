@@ -1,0 +1,24 @@
+diff --git a/core/modules/views/src/Plugin/views/row/RssFields.php b/core/modules/views/src/Plugin/views/row/RssFields.php
+index 1b56aae..824dd2d 100644
+--- a/core/modules/views/src/Plugin/views/row/RssFields.php
++++ b/core/modules/views/src/Plugin/views/row/RssFields.php
+@@ -55,7 +55,7 @@ public function buildOptionsForm(&$form, FormStateInterface $form_state) {
+     $form['link_field'] = [
+       '#type' => 'select',
+       '#title' => $this->t('Link field'),
+-      '#description' => $this->t('The field that is going to be used as the RSS item link for each row. This must be a drupal relative path.'),
++      '#description' => $this->t('The field that is going to be used as the RSS item link for each row.'),
+       '#options' => $view_fields_labels,
+       '#default_value' => $this->options['link_field'],
+       '#required' => TRUE,
+@@ -139,9 +139,7 @@ public function render($row) {
+     // Create the RSS item object.
+     $item = new \stdClass();
+     $item->title = $this->getField($row_index, $this->options['title_field']);
+-    // @todo Views should expect and store a leading /. See:
+-    //   https://www.drupal.org/node/2423913
+-    $item->link = Url::fromUserInput('/' . $this->getField($row_index, $this->options['link_field']))->setAbsolute()->toString();
++    $item->link = Url::fromUri($this->getField($row_index, $this->options['link_field']))->setAbsolute()->toString();
+ 
+     $field = $this->getField($row_index, $this->options['description_field']);
+     $item->description = is_array($field) ? $field : ['#markup' => $field];
