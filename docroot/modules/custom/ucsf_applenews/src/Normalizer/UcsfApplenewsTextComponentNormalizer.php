@@ -201,37 +201,51 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
         switch ($element->tagName) {
 
           case 'blockquote':
-            $component = new Quote($this->textValue($element->textContent));
+            if ($value = $this->textValue($element->textContent)) {
+              $component = new Quote($value);
+            }
             break;
 
           case 'h1':
-            $component = new Heading($this->textValue($element->textContent));
-            $component->setRole('heading1');
+            if ($value = $this->textValue($element->textContent)) {
+              $component = new Heading($value);
+              $component->setRole('heading1');
+            }
             break;
 
           case 'h2':
-            $component = new Heading($this->textValue($element->textContent));
-            $component->setRole('heading2');
+            if ($value = $this->textValue($element->textContent)) {
+              $component = new Heading($value);
+              $component->setRole('heading2');
+            }
             break;
 
           case 'h3':
-            $component = new Heading($this->textValue($element->textContent));
-            $component->setRole('heading3');
+            if ($value = $this->textValue($element->textContent)) {
+              $component = new Heading($value);
+              $component->setRole('heading3');
+            }
             break;
 
           case 'h4':
-            $component = new Heading($this->textValue($element->textContent));
-            $component->setRole('heading4');
+            if ($value = $this->textValue($element->textContent)) {
+              $component = new Heading($value);
+              $component->setRole('heading4');
+            }
             break;
 
           case 'h5':
-            $component = new Heading($this->textValue($element->textContent));
-            $component->setRole('heading5');
+            if ($value = $this->textValue($element->textContent)) {
+              $component = new Heading($value);
+              $component->setRole('heading5');
+            }
             break;
 
           case 'h6':
-            $component = new Heading($this->textValue($element->textContent));
-            $component->setRole('heading6');
+            if ($value = $this->textValue($element->textContent)) {
+              $component = new Heading($value);
+              $component->setRole('heading6');
+            }
             break;
 
           case 'img':
