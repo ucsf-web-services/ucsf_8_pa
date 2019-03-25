@@ -26,6 +26,9 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \Exception
+   *   Unexpected content issue.
    */
   public function normalize($data, $format = NULL, array $context = []) {
 
@@ -253,7 +256,13 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
               $url = $element->getAttribute('src');
               $url_parsed = parse_url($url);
               if (empty($url_parsed['host'])) {
-                $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
+                try {
+                  $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
+                }
+                catch (\InvalidArgumentException $e) {
+                  \Drupal::logger('ucsf_applenews')->error('throwing out HTML containing invalid src attribute ' . $doc->saveHTML($element));
+                  continue;
+                }
                 $url_parsed = parse_url($url);
                 if (isset($url_parsed['query'])) {
                   parse_str($url_parsed['query'], $qs);
