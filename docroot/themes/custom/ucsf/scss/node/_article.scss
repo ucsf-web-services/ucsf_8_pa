@@ -9,17 +9,12 @@
   background: $c-background-gray;
 
   .main-content {
-    @include grid;
-
     background: $white;
 
     &.narrow-page {
-      @include grid-fifteen;
-
       background: transparent;
+      position: relative;
     }
-
-    grid-template-rows: auto auto;
   }
 
   h2 {
@@ -32,6 +27,18 @@
 
   .small-title {
     @include fs-small-title;
+  }
+
+  @include breakpoint($new-large) {
+    .main-content {
+      @include grid;
+
+      &.narrow-page {
+        @include grid-fifteen;
+      }
+
+      grid-template-rows: auto auto;
+    }
   }
 }
 

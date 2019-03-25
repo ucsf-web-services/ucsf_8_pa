@@ -12,6 +12,7 @@
   @include breakpoint($bp-large) {
     display: inline-block;
     width: auto;
+    float: right;
   }
 
   .universal-header & {
@@ -31,9 +32,11 @@
 }
 
 .universal-header {
-  @include grid-two;
+  //@include grid-two;
+
   margin-bottom: 0;
-  max-width: $bp-xl;
+  max-width: $full-width-elements;
+  padding: 0 20px;
   vertical-align: middle;
 
   .universal-header__title {

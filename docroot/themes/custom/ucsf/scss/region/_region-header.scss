@@ -1,7 +1,8 @@
 .header-region {
   @include breakpoint($bp-until-large) {
-    margin-bottom: 12px;
-    margin-top: 11px;
+    background: $white;
+    padding-bottom: 12px;
+    padding-top: 11px;
   }
 
   @include breakpoint($bp-large) {
@@ -13,7 +14,10 @@
 
 .header {
   @include wrapper;
-  @include grid-four;
+  max-width: $full-width-elements;
+  padding: 0 20px;
+
+
   @include breakpoint($bp-until-large) {
     line-height: 26px;
     margin-bottom: 0;
@@ -23,8 +27,7 @@
   }
 
   @include breakpoint($bp-large) {
-
-    max-width: $xl;
+    @include grid-two-auto;
     margin-bottom: 0;
   }
 }
@@ -42,7 +45,6 @@
     width: 83px;
     height: 40px;
     margin-bottom: $space-three;
-    grid-column: 1 / span 2;
   }
 }
 

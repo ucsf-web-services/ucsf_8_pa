@@ -2,34 +2,87 @@
   @include clearfix;
 
   &.blockquote-full-width {
-    grid-column: 2 / -3;
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    grid-template-rows: $space-four auto $space-four;
     background: $white;
     margin: 0;
 
-    .field-blockquote-image { // PL: .blockquote-image
-      grid-column: 1 / 2;
-      grid-row: 1 / -1;
+    .field-blockquote-body {
+      margin-left: 0;
     }
 
-    .blockquote-content {
-      grid-column: 1 / -1;
-      grid-row: 2 / -2;
-      padding-left: 50%;
-      padding-right: 10%;
+    .field-blockquote-source,
+    .field-blockquote-source-org {
+      margin-left: 30%;
+    }
+
+    .field-blockquote-image {
+      width: 25%;
+      margin-top: -12%;
     }
 
     & + * {
       padding-top: $space;
     }
+
+    @include breakpoint($new-small) {
+      .field-blockquote-body,
+      .field-blockquote-source,
+      .field-blockquote-source-org {
+        margin-left: 30%;
+      }
+
+      .field-blockquote-image {
+        margin-top: -30%;
+      }
+    }
+
+    @include breakpoint($new-large) {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      grid-template-rows: $space-four auto $space-four;
+      grid-column: 1 / -2;
+
+      .field-blockquote-image { // PL: .blockquote-image
+        grid-column: 1 / 2;
+        grid-row: 1 / -1;
+        width: auto;
+        margin-top: 0;
+      }
+
+      .field-blockquote-body,
+      .field-blockquote-source,
+      .field-blockquote-source-org {
+        margin-left: 0;
+      }
+
+      .blockquote-content {
+        grid-column: 1 / -1;
+        grid-row: 2 / -2;
+        padding-left: 47%;
+        padding-right: 8%;
+      }
+    }
+
+    @include breakpoint($new-xl) {
+      grid-column: 2 / -3;
+    }
   }
 
   .blockquote-content {
     background: $background-gray;
-    padding: $space-six $space-ten;
-    padding-right: 15%;
+    padding: $space-five;
+
+    @include breakpoint($new-small-max) {
+      .field-blockquote-body {
+        p:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+
+    @include breakpoint($new-small) {
+      padding: $space-six $space-ten;
+      padding-right: 15%;
+    }
   }
 
   .field-blockquote-body p:first-child { // PL: .blockquote-content__text.
@@ -65,11 +118,11 @@
   &.align--left,
   &.align--center {
     float: left;
-    width: 50%;
+    width: 100%;
     left: auto;
     padding-top: 0;
-    margin-left: -20%;
-    margin-right: 10%;
+    margin-left: -20px;
+    margin-right: 20px;
     margin-top: 0;
   }
 
@@ -90,6 +143,13 @@
       padding-right: $space;
       font-family: $font-granjon;
     }
+
+    @include breakpoint($new-small-max) {
+      padding-top: $space-five;
+      padding-left: $space-five;
+      padding-right: $space-five;
+      padding-bottom: 0;
+    }
   }
 
   .blockquote-content__cite,
@@ -99,6 +159,10 @@
 
     font-style: normal;
     padding-right: 15%;
+
+    @include breakpoint($new-small-max) {
+      padding-left: $space-five;
+    }
   }
 
   .ckpullquote--org {
@@ -111,24 +175,71 @@
   &.align--right {
     float: right;
     right: auto;
-    margin-right: -20%;
-    margin-left: 10%;
+    margin-right: -20px;
+    margin-left: 20px;
 
     .blockquote-content__text,
     .ckpullquote--quote {
       padding-right: 0;
       padding-left: 15%;
+
+      @include breakpoint($new-small-max) {
+        padding-top: $space-five;
+        padding-left: $space-five;
+        padding-right: $space-five;
+        padding-bottom: 0;
+      }
     }
 
     .blockquote-content__cite,
     .ckpullquote--author,
     .ckpullquote--org {
       padding-left: 15%;
+
+      @include breakpoint($new-small-max) {
+        padding-left: $space-five;
+      }
     }
   }
 
   footer {
     margin-bottom: 50px;
+  }
+
+  @include breakpoint($new-small) {
+
+    &.blockquote--half-left,
+    &.ckpullquote-left,
+    &.align--left,
+    &.align--center {
+      margin-left: -14%;
+      padding-left: 56px;
+      width: 50%;
+    }
+    &.blockquote--half-right,
+    &.ckpullquote-right,
+    &.align--right {
+      margin-right: -14%;
+      padding-right: 56px;
+      width: 50%;
+    }
+  }
+
+  @include breakpoint($new-large) {
+
+    &.blockquote--half-left,
+    &.ckpullquote-left,
+    &.align--left,
+    &.align--center {
+      margin-left: -20%;
+      padding-left: 0;
+    }
+    &.blockquote--half-right,
+    &.ckpullquote-right,
+    &.align--right {
+      margin-right: -20%;
+      padding-right: 0;
+    }
   }
 }
 

@@ -1,19 +1,34 @@
 .page_narrow,
 .page-node-type-narrow-page .paragraph-text-block, //PL: .page_narrow
 .page-node-type-article .paragraph-text-block { //PL: .page_narrow
-  background: $white;
-  padding: 0 11%;
+  padding: 0 20px;
   position: relative;
-  grid-column: 3 / -3;
 
   > :first-child {
     padding-top: $space-four;
     margin-top: 0;
   }
+
+  @include breakpoint($new-small) {
+    padding: 0 11%;
+  }
+
+  @include breakpoint($new-large) {
+    background: $white;
+    grid-column: 2 / -2;
+  }
+
+  @include breakpoint($new-xl) {
+    grid-column: 3 / -3;
+  }
 }
 
 .article-feature-content > .page_narrow {
-  padding-top: $space-six;
+  padding-top: 0;
+
+  @include breakpoint($new-large) {
+    padding-top: $space-six;
+  }
 }
 
 .article-feature-content > .page_narrow ~ .page_narrow {
@@ -21,46 +36,93 @@
 }
 
 .article-header {
-  grid-column: 3 / -3;
-  grid-row: 1;
-  background: $c-white;
   margin-top: $space-decuple;
   padding: $space-decuple 11%;
   padding-bottom: 0;
+  background: url('../images/gray-sq.svg') right top no-repeat $c-white;
+  background-size: 80px;
+
+  @include breakpoint ($new-small-max) {
+    background-size: 32px;
+    padding: 20px;
+    padding-bottom: 0;
+  }
 
   &.article-medium-header {
-    margin-top: -32%;
+    margin-top: -25%;
+    margin-right: $space-ten;
+    background: $c-white;
+
+    @include breakpoint ($new-small-max) {
+      margin-top: -$space-four;
+      margin-right: $space-four;
+      padding: 20px;
+      padding-bottom: 0;
+    }
+
+    @include breakpoint($new-large) {
+      margin-top: -32%;
+      margin-right: 0;
+    }
   }
 
   h1 {
     @include fs-article-medium-h1;
   }
+
+  @include breakpoint($new-large) {
+    grid-column: 2 / -2;
+    background: $c-white;
+  }
+
+  @include breakpoint($new-xl) {
+    grid-column: 3 / -3;
+  }
 }
 
 .article-feature-banner {
-  @include grid-fifteen;
-
-  grid-template-rows: repeat(2, auto);
-  grid-gap: 0;
 
   .article-header {
-    background-color: rgba(255, 255, 255, 0.9);
-    grid-column: 2 / -1;
-    grid-row: 2 / -1;
-    padding: 5% 5% 0 8%;
+    margin-top: -25%;
+    margin-right: $space-ten;
+    background: $c-white;
+    position: relative;
 
-    h1 {
-      font-size: 82px;
+    @include breakpoint ($new-small-max) {
+      margin-top: -$space-four;
+      margin-right: $space-four;
+      padding: 20px;
+      padding-bottom: 0;
     }
+  }
 
-    .field-sub-title { // .article-header__subheading
-      width: 64%;
-      margin: 0;
-    }
+  @include breakpoint($new-large) {
+    @include grid-fifteen;
 
-    .article-header__author {
-      border-bottom: none;
-      margin-bottom: 0;
+    grid-template-rows: repeat(2, auto);
+    grid-gap: 0;
+
+    .article-header {
+      background-color: rgba(255, 255, 255, 0.9);
+      grid-column: 2 / -1;
+      grid-row: 2 / -1;
+      padding: 5% 5% 0 8%;
+      margin-top: 0;
+      margin-right: 0;
+
+      h1 {
+        font-size: 82px;
+      }
+
+      .field-sub-title { // .article-header__subheading
+        width: 64%;
+        margin: 0;
+      }
+
+      .article-header__author {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
     }
   }
 }
@@ -151,7 +213,10 @@
   width: 64%;
   margin-top: $space;
   margin-bottom: 0;
-  padding-bottom: $space-four;
+
+  @include breakpoint($new-large) {
+    padding-bottom: $space-four;
+  }
 
   > * {
     display: inline;
@@ -170,33 +235,95 @@
 figure.half-image-left,
 figure.half-image-right {
   float: left;
-  margin: $space-decuple;
+  margin: 20px;
   margin-top: 0;
-  margin-left: -25%;
   margin-bottom: $space-quadruple;
-  width: 487px;
+  display:table;
+  max-width: 480px;
+  margin-left: -20px;
+  & + * {
+    clear: both;
+  }
 
   figcaption { //PL: .half-image-left__caption
     float: right;
     font-size: $font-size-xsm;
     color: $gray-blue;
     padding-top: $space-double;
-    padding-left: 42.5%;
     font-family: $font-helvetica-neue-roman;
     font-weight: 500;
     line-height: 1.6em;
+    display:table-caption;
+    margin-left: 20px;
+  }
+
+  @include breakpoint($new-small) {
+    margin: $space-decuple;
+    margin-left: -14%;
+    max-width: 50%;
+    margin-top: 0;
+    margin-bottom: $space-quadruple;
+    & + * {
+      clear: none;
+    }
+
+    figcaption {
+      padding-left: 29%;
+    }
+  }
+
+  @include breakpoint($new-large) {
+    margin-left: -20%;
+    max-width: 55%;
+
+    figcaption {
+      padding-left: 37%;
+    }
+  }
+
+  @include breakpoint($new-xl) {
+    margin-left: -25%;
+    max-width: 480px;
+
+    figcaption {
+      padding-left: 42.5%;
+    }
   }
 }
 
 figure.half-image-right {
   float: right;
-  margin-right: -25%;
   margin-left: $space-decuple;
+  margin-right: -20px;
 
   figcaption {
     float: left;
-    padding-right: 42.5%;
     padding-left: 0;
+    padding-right: 20px;
+  }
+
+  @include breakpoint($new-small) {
+    margin-right: -14%;
+
+    figcaption {
+      padding-right: 29%;
+    }
+  }
+
+  @include breakpoint($new-large) {
+    margin-right: -20%;
+
+    figcaption {
+      padding-right: 37%;
+    }
+  }
+
+  @include breakpoint($new-xl) {
+    margin-right: -25%;
+
+    figcaption {
+      padding-right: 42.5%;
+    }
   }
 }
 
@@ -205,25 +332,86 @@ figure.half-image-left-full {
   float: right;
   margin: $space-decuple;
   margin-top: 0;
-  margin-right: -305px;
   margin-bottom: $space-quadruple;
-  width: 680px;
+  display:table;
+  max-width: 680px;
+  margin-right: -20px;
+  margin-left: 20px;
+  & + * {
+    clear: both;
+  }
 
   figcaption {
     float: right;
-    padding-right: 305px;
+    padding-right: 20px;
+    display:table-caption;
+  }
+
+  @include breakpoint($new-small) {
+    margin-right: -14%;
+    max-width: 55%;
+    & + * {
+      clear: none;
+    }
+
+    figcaption {
+      padding-right: 26%;
+    }
+  }
+
+  @include breakpoint($new-large) {
+    margin-right: -20%;
+    max-width: 75%;
+
+    figcaption {
+      padding-right: 26%;
+    }
+  }
+
+  @include breakpoint($new-xl) {
+    margin-right: -30%;
+    max-width: 680px;
+
+    figcaption {
+      padding-right: 36%;
+    }
   }
 }
 
 figure.half-image-left-full {
   float: left;
-  margin-right: $space-decuple;
-  margin-left: -305px;
+  margin-right: 20px;
+  margin-left: -20px;
 
   figcaption {
     float: left;
-    padding-left: 305px;
     padding-right: 0;
+    padding-left: 20px;
+  }
+
+  @include breakpoint($new-small) {
+    margin-left: -14%;
+    margin-right: $space-decuple;
+
+    figcaption {
+      padding-left: 26%;
+    }
+  }
+
+  @include breakpoint($new-large) {
+    margin-left: -20%;
+
+    figcaption {
+      padding-left: 26%;
+    }
+  }
+
+  @include breakpoint($new-xl) {
+    margin-left: -30%;
+
+    figcaption {
+      padding-left: 36%;
+    }
   }
 }
 
@@ -271,27 +459,76 @@ figure figure[class="image"] {
 }
 
 .video.article-full-width {
-  grid-column: 3 / -3;
   margin: 0;
+
+  @include breakpoint($new-large) {
+    grid-column: 2 / -2;
+  }
+
+  @include breakpoint($new-xl) {
+    grid-column: 3 / -3;
+  }
 }
 
 .article-full-width__space {
   content: ' ';
   display: block;
   background: $white;
-  grid-column: 3 / -3;
-  height: $space-five;
+  height: 0;
+
+  @include breakpoint($new-small) {
+    height: $space-five;
+  }
+
+  @include breakpoint($new-large) {
+    grid-column: 2 / -2;
+  }
+
+  @include breakpoint($new-xl) {
+    grid-column: 3 / -3;
+  }
 }
 
 .full-bleed-image {
-  margin: 80px;
-  margin-left: -25%;
-  margin-right: -25%;
+  margin: $space-four 0;
+  margin-left: -20px;
+  margin-right: -20px;
 
   figcaption {
     padding-top: $space-double;
-    padding-left: 17%;
-    padding-right: 17%;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  @include breakpoint($new-small) {
+    margin-left: -14%;
+    margin-right: -14%;
+    margin: $space-ten 0;
+
+    figcaption {
+      padding-left: 11%;
+      padding-right: 11%;
+    }
+  }
+
+  @include breakpoint($new-large) {
+    margin-left: -20%;
+    margin-right: -20%;
+
+    figcaption {
+      padding-left: 14.5%;
+      padding-right: 14.5%;
+    }
+  }
+
+  @include breakpoint($new-xl) {
+    margin-left: -25%;
+    margin-right: -25%;
+
+    figcaption {
+      padding-left: 17%;
+      padding-right: 17%;
+    }
   }
 }
 
@@ -314,9 +551,20 @@ figure.align-center {
 // Field Tags.
 .tags-menu-region {
   background: $white;
-  grid-column: 3 / -3;
-  padding: $space-decuple 11%;
-  padding-top: $space-quadruple;
+  padding: $space-four 20px;
+
+  @include breakpoint($new-small) {
+    padding: $space-ten 11%;
+    padding-top: $space-four;
+  }
+
+  @include breakpoint($new-large) {
+    grid-column: 2 / -2;
+  }
+
+  @include breakpoint($new-xl) {
+    grid-column: 3 / -3;
+  }
 }
 
 .tags-menu-region .tags-menu {

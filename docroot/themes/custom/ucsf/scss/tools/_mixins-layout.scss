@@ -18,10 +18,14 @@
 
   @include breakpoint($bp-medium) {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
 
-    *:last-child {
-      justify-self: end;
-    }
+@mixin grid-two-auto {
+  @include grid-base;
+
+  @include breakpoint($bp-medium) {
+    grid-template-columns: repeat(2, auto);
   }
 }
 

@@ -4,18 +4,66 @@
   margin-top: $space-two;
 
   .view-content { // PL: .card-three-up
-    @include card-three-up;
-    @include card-three-up-constrained;
 
     .news-card__copy {
       padding-bottom: 0;
     }
   }
+
+  @include breakpoint($new-small-max) {
+    .news-card {
+      border-bottom: 1px solid $gray-lighter;
+      padding-bottom: $space-four;
+
+      figure {
+        display: none;
+      }
+
+      .news-card__copy {
+        margin-top: $space-four;
+        margin-left: 0;
+        padding-left: 0;
+        padding-top: 0;
+      }
+    }
+  }
+
+  @include breakpoint($new-small) {
+    .view-content {
+      .views-row {
+        float: left;
+        width: 31%;
+        margin-right: 3%;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+  }
+
+  @include breakpoint($new-large) {
+    .view-content { // PL: .card-three-up
+      @include card-three-up;
+      @include card-three-up-constrained;
+
+      .views-row {
+        float: none;
+        width: auto;
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 .has-recommended-article .view-articles-by-term { // .recommended-articles_list
-  padding: 0 90px;
+  padding: 0 80px;
   margin-top: 0;
+
+  @include breakpoint($new-small-max) {
+      padding: 20px;
+  }
 
   .view-content {
     margin-top: $space-ten;

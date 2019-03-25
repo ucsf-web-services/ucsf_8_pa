@@ -1,17 +1,17 @@
 .article-meta-share {
-  grid-column: 2 / 3;
-  grid-row: 2;
   list-style: none;
   margin: 0;
-  padding: 0 40%;
   font-size: 26px;
   width: 0;
+  position: absolute;
+  z-index: 1;
 
   li {
     margin-bottom: $space;
 
     a {
       color: $gray-blue;
+      border-bottom: none;
 
       .indent-text {
         position: absolute;
@@ -22,7 +22,25 @@
       .fa-print {
         font-size: 24px;
       }
+
+      &:hover {
+        border-bottom: none;
+      }
     }
+  }
+
+  @include breakpoint ($new-small-max) {
+    display: none;
+  }
+
+  @include breakpoint($new-large) {
+    margin-top: $space-three;
+  }
+
+  @include breakpoint($new-xl) {
+    grid-column: 2 / 3;
+    grid-row: 2;
+    padding: 0 40%;
   }
 }
 

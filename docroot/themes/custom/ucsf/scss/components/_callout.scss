@@ -3,8 +3,8 @@
   margin: 10%;
   margin-top: 0;
   margin-bottom: $space-quadruple;
-  width: 50%;
-  padding: 80px 10%;
+  width: 100%;
+  padding: $space-five;
 
   .callout-left__title,
   .callout__title h3,
@@ -15,16 +15,35 @@
   p:last-child {
     margin-bottom: 0;
   }
+
+  @include breakpoint($new-small) {
+    width: 50%;
+    padding: 80px 10%;
+  }
 }
 
 .callout-left {
   float: left;
-  margin-left: -20%;
+  margin-left: -20px;
+
+  @include breakpoint($new-small) {
+    margin-left: -14%
+  }
+  @include breakpoint($new-large) {
+    margin-left: -20%;
+  }
 }
 
 .callout-right {
   float: right;
-  margin-right: -20%;
+  margin-right: -20px;
+
+  @include breakpoint($new-small) {
+    margin-right: -14%
+  }
+  @include breakpoint($new-large) {
+    margin-right: -20%;
+  }
 }
 
 .hidden {

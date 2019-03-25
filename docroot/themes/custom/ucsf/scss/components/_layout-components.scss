@@ -1,24 +1,28 @@
 dom-twocolumn-layout, dom-threecolumn-layout {
-  .column1, .column2, .column3 {
-    > :first-child {
-      margin-top: 0;
+  @include breakpoint($new-small) {
+    .column1, .column2, .column3 {
+      > :first-child {
+        margin-top: 0;
+      }
     }
-  }
 
-  .column1 {
-    padding-right: 10px;
-  }
+    .column1 {
+      padding-right: 10px;
+    }
 
-  .column2 {
-    padding-left: 10px;
+    .column2 {
+      padding-left: 10px;
+    }
   }
 }
 dom-threecolumn-layout {
-  .column2 {
-    padding-right: 10px;
-  }
-  
-  .column3 {
-    padding-left: 10px;
+  @include breakpoint($new-small) {
+    .column2 {
+      padding-right: 10px;
+    }
+
+    .column3 {
+      padding-left: 10px;
+    }
   }
 }

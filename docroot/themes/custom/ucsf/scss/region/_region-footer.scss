@@ -2,6 +2,8 @@
   background: $dark-navy;
   color: $white;
   font-size: $font-size-xsm;
+  clear: both;
+  padding-bottom: $space-five;
 
   a {
     @include link-colors($c-white);
@@ -9,12 +11,11 @@
 }
 
 .footer {
-  @include grid-three;
-
+  max-width: $full-width-elements;
+  padding: 0 20px;
   clear: both;
   margin-bottom: 0;
-  padding-top: $space-decuple;
-  max-width: $xl;
+  padding-top: $space-five;
 
   h2 {
     @include eyebrow;
@@ -29,6 +30,7 @@
     margin-left: 0;
     padding: 0;
     margin-bottom: 0;
+    padding-bottom: $space-five;
 
     li {
       margin-top: $space;
@@ -39,6 +41,38 @@
 
   a:hover {
     text-decoration: underline;
+  }
+
+  @include breakpoint($new-small) {
+    float: left;
+    width: 100%;
+    padding-top: $space-ten;
+
+    .logo-follow,
+    #block-ucsf-footer,
+    #block-footer2resources {
+      float: left;
+      width: 25%;
+      margin-right: 4%;
+    }
+
+    #block-footer2resources {
+      float: left;
+      width: 40%;
+      margin-right: 0;
+    }
+  }
+
+  @include breakpoint($new-large) {
+    @include grid-three;
+    float: none;
+
+    .logo-follow,
+    #block-ucsf-footer,
+    #block-footer2resources {
+      float: none;
+      width: auto;
+    }
   }
 }
 
@@ -58,6 +92,7 @@
     padding: 0;
     list-style: none;
     display: inline-block;
+    padding-bottom: $space-five;
 
     li {
       display: inline-block;
@@ -79,14 +114,17 @@
 }
 
 .footer-bottom {
-  @include grid-two;
-
+  max-width: $full-width-elements;
+  padding: 0 20px;
   border-top: 1px solid $gray-blue;
-  margin-top: $space-decuple;
   padding-top: $space-double;
-  max-width: $xl;
   padding-bottom: $space-three;
   margin-bottom: 0;
+  clear: both;
+
+  a:hover {
+    text-decoration: underline;
+  }
 
   p {
     margin: 0;
@@ -98,24 +136,61 @@
     padding: 0;
 
     li {
-      display: inline-block;
       margin: 0;
       padding: 0;
-      margin-left: $space-triple;
+      margin-left: 0;
+    }
+  }
+
+  @include breakpoint($new-small) {
+
+    p {
+      float: left;
+    }
+
+    ul {
+      float: right;
+
+      li {
+        display: inline-block;
+        margin-left: $space-triple;
+      }
+    }
+  }
+
+  @include breakpoint($new-large) {
+    @include grid-two;
+
+    p {
+      float: none;
+    }
+
+    ul {
+      float: none;
     }
   }
 }
 
-#block-footer2resources {
-  .menu {
-    columns: 2;
+@include breakpoint($new-small) {
+  #block-footer2resources {
+    .menu {
+      columns: 2;
 
-    .menu-item:first-child {
-      margin-top: 0;
-      a {
-        display: block;
-        margin-right: 156px;
-        white-space: nowrap;
+      .menu-item:first-child {
+        margin-top: 0;
+        a {
+          display: block;
+
+          @include breakpoint($new-large) {
+            margin-right: 100px;
+            white-space: nowrap;
+          }
+
+          @include breakpoint($new-xl) {
+            margin-right: 156px;
+            white-space: nowrap;
+          }
+        }
       }
     }
   }

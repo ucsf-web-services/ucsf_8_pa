@@ -1,13 +1,6 @@
 .paragraph--type--gallery {
-  @include grid-fifteen;
   background: $c-white;
-  grid-column: 3 / -3;
   overflow: hidden;
-
-  @include breakpoint($bp-medium) {
-    background: transparent;
-    grid-column: 1 / -1;
-  }
 
   .gallery-container {
     background: $c-white;
@@ -15,11 +8,22 @@
     padding-right: 16px;
     min-width: 0;
     min-height: 0;
+  }
 
-    @include breakpoint($bp-small) {
-      grid-column: 3 / -3;
+  @include breakpoint($new-large) {
+    @include grid-fifteen;
+    background: transparent;
+    grid-column: 1 / -1;
+
+    .gallery-container {
+        grid-column: 2 / -2;
       overflow: visible;
       padding: 0 11%;
+    }
+  }
+  @include breakpoint($new-xl) {
+    .gallery-container {
+      grid-column: 3 / -3;
     }
   }
 }
@@ -36,7 +40,7 @@
     padding-right: 16px;
     width: 961px;
 
-    @include breakpoint($bp-small) {
+    @include breakpoint($new-small) {
       padding-left: 42px;
       padding-right: 42px;
     }
@@ -70,7 +74,11 @@
         padding-right: 13%;
       }
 
-      @include breakpoint($bp-large) {
+      @include breakpoint($new-small) {
+        max-width: 800px;
+      }
+
+      @include breakpoint($new-large) {
         max-width: 602px;
         padding-left: 0;
         padding-right: 0;
@@ -78,4 +86,3 @@
     }
   }
 }
-
