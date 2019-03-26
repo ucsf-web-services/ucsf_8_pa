@@ -31,7 +31,7 @@
           var filter_id = $(this).attr('data-tid');
 
           // Uncheck term filter.
-          $('[data-drupal-selector="edit-tid-' + filter_id + '"]').prop("checked", false);
+          $('[value="' + filter_id + '"]').prop("checked", false);
 
           // Submit filter.
           $('[block="block-exposedformnews-filterpage-1"]').submit();

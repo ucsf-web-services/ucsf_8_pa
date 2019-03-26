@@ -1,7 +1,15 @@
+{# Get arrays of term IDs by filter group. #}
 {% set article_type_list = view.exposed_data.tid %}
+{% set area_focus_list = view.exposed_data.field_primary_area_target_id %}
+{% set health_list = view.exposed_data.tid_1 %}
+{% set campus_list = view.exposed_data.field_topics_target_id %}
 
+{# Merge all arrays into a super array. #}
+{% set all_terms = article_type_list|merge(area_focus_list)|merge(health_list)|merge(campus_list) %}
+
+{# Render list. #}
 <ul class="search-filter__indicator-list">
-  {% for key,tid in article_type_list %}
+  {% for key,tid in all_terms %}
     {% if tid != 0 %}
       {% set term = drupal_entity('taxonomy_term', tid) %}
       {% set term_name = term['#taxonomy_term'].name.value %}
