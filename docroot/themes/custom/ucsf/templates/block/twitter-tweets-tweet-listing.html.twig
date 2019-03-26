@@ -1,14 +1,38 @@
+    {# If hashtags will be in Tweets it will appear else nothing will show up. #}
+        {# Other Tweets Information can be fetched like Followers, Status_count... #}
+        {# <a target="_blank" href="{{ tweet.entities.urls.url }}"> #}{# </a> #}
+
+
 {% block tweet %}
   {% for tweet in params.tweets %}
   <li>
-    <div class="tweet">
       <img class="oval" src='{% if tweet.retweeted_status.user.profile_image_url %}{{tweet.retweeted_status.user.profile_image_url }}{% else %}{{ tweet.user.profile_image_url }}{% endif %}'/>
-        <p>{% if tweet.retweeted_status.user.name %} {{tweet.retweeted_status.user.name}} {% else %} {{ tweet.user.name }} {% endif %}
-        </br>{% if tweet.retweeted_status.user.screen_name %}@{{tweet.retweeted_status.user.screen_name}}{% else %}@{{tweet.user.screen_name}}{% endif %} {{ tweet.created_at|time_diff|preg_replace('/ |[a-c,e-g,i-l,n-z]/','')}}</p>
-        {# If hashtags will be in Tweets it will appear else nothing will show up. #}
-        {# Other Tweets Information can be fetched like Followers, Status_count... #}
-        <p>{# <a target="_blank" href="{{ tweet.entities.urls.url }}"> #}{% if tweet.retweeted_status.full_text %}{{tweet.retweeted_status.full_text}}{% else %}{{ tweet.full_text }}{% endif %}{# </a> #}</p>
-    </div>
+      <ul>
+          <li class="twitter_user">
+              {% if tweet.retweeted_status.user.name %}
+                  {{tweet.retweeted_status.user.name}}
+              {% else %}
+                  {{ tweet.user.name }}
+              {% endif %}
+          </li>
+          <li>
+          {% if tweet.retweeted_status.user.screen_name %}
+              @{{tweet.retweeted_status.user.screen_name}}
+          {% else %}
+              @{{tweet.user.screen_name}}
+          {% endif %}
+          {{ tweet.created_at|time_diff|preg_replace('/ |[a-c,e-g,i-l,n-z]/','')}}
+          </li>
+      </ul>
+
+      <p class="twitter_text">
+      {% if tweet.retweeted_status.full_text %}
+        {{tweet.retweeted_status.full_text}}
+      {% else %}
+        {{ tweet.full_text }}
+      {% endif %}
+      </p>
+
   </li>
   {% endfor %}
 {% endblock %}

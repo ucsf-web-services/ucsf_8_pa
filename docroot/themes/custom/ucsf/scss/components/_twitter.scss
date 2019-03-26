@@ -1,7 +1,7 @@
 .twitter-wrapper {
   background: $twitter-blue;
-  display: grid;
-  grid-template-columns: repeat(3, auto);
+  //display: grid;
+  //grid-template-columns: repeat(3, auto);
 }
 
 .twitter-wrapper__space {
@@ -12,7 +12,7 @@
 
 .twitter {
   display: grid;
-  grid-template-columns: repeat(2, auto);
+  //grid-template-columns: repeat(2, auto);
   justify-self: end;
   padding: $space-nine 0;
   padding-left: $space-fifteen;
@@ -38,13 +38,31 @@
 }
 
 .twitter__tweets {
-  grid-column: 2/-1;
+  display: grid;
+  //grid-column: 2/-1;
   list-style: none;
   margin: 0;
   padding: 0;
   grid-template-columns: repeat(3, 1fr);
-
+  .twitter_user {
+    font-weight: bold;
+  }
   li {
     margin-right: $space-five;
+  }
+  ul {
+    list-style: none;
+
+    li {
+      margin: 0;
+    }
+  }
+  img.oval {
+    border-radius: 50%;
+    float: left;
+    margin: 10px;
+  }
+  p {
+   
   }
 }

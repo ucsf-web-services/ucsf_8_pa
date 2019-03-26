@@ -6462,11 +6462,7 @@ a[href*="http"] .article-header__date {
   margin-top: 80px; }
 
 .twitter-wrapper {
-  background: #f0faff;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (auto)[3];
-      grid-template-columns: repeat(3, auto); }
+  background: #f0faff; }
 
 .twitter-wrapper__space {
   -ms-grid-column: 1;
@@ -6478,8 +6474,6 @@ a[href*="http"] .article-header__date {
 .twitter {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (auto)[2];
-      grid-template-columns: repeat(2, auto);
   -ms-grid-column-align: end;
       justify-self: end;
   padding: 72px 0;
@@ -6523,14 +6517,25 @@ a[href*="http"] .article-header__date {
   margin: 0; }
 
 .twitter__tweets {
-  grid-column: 2/-1;
+  display: -ms-grid;
+  display: grid;
   list-style: none;
   margin: 0;
   padding: 0;
   -ms-grid-columns: (1fr)[3];
       grid-template-columns: repeat(3, 1fr); }
+  .twitter__tweets .twitter_user {
+    font-weight: bold; }
   .twitter__tweets li {
     margin-right: 40px; }
+  .twitter__tweets ul {
+    list-style: none; }
+    .twitter__tweets ul li {
+      margin: 0; }
+  .twitter__tweets img.oval {
+    border-radius: 50%;
+    float: left;
+    margin: 10px; }
 
 .video-list {
   background: #121a31;
@@ -6581,6 +6586,48 @@ a[href*="http"] .article-header__date {
       font-size: 56px;
       letter-spacing: -1.2px; } }
 
+#block-youtubegallery:hover button {
+  clip: auto;
+  overflow: visible;
+  height: 28px;
+  width: 28px; }
+
+#block-youtubegallery button {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  overflow: hidden;
+  height: 1px;
+  width: 1px;
+  word-wrap: normal;
+  background-size: 10px 10px;
+  border: 0;
+  border-radius: 28px;
+  font-size: 0;
+  overflow: hidden;
+  padding: 10px;
+  position: absolute;
+  text-indent: -999px;
+  top: 40px;
+  z-index: 700; }
+  @media (min-width: 480px) {
+    #block-youtubegallery button {
+      top: 100px; } }
+  @media (min-width: 600px) {
+    #block-youtubegallery button {
+      top: 200px; } }
+  #block-youtubegallery button:after {
+    content: none; }
+  #block-youtubegallery button:hover {
+    background-color: #052049; }
+
+#block-youtubegallery .slick-next {
+  background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #007cbe;
+  right: 10px; }
+
+#block-youtubegallery .slick-prev {
+  background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #007cbe;
+  left: 10px; }
+
 #block-youtubegallery .slick-slider {
   margin: 0; }
 
@@ -6617,12 +6664,6 @@ a[href*="http"] .article-header__date {
   border-radius: 50%;
   border: 1px solid #121a31;
   background-color: #007cbe; }
-
-#block-youtubegallery .slick-prev {
-  left: 0; }
-
-#block-youtubegallery .slick-next {
-  right: 0; }
 
 #block-youtubegallery .slick-list .slick-slide {
   margin: 0 15px;
