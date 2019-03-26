@@ -326,6 +326,40 @@
   }
 }
 
+// Search Indicator List
+.search-filter__indicator-list {
+  @include fs-filter-label;
+
+  label {
+    display: inline-block;
+    padding: 16px;
+  }
+
+  ul {
+    @include ul-item-list-reset;
+
+    @include breakpoint($bp-medium) {
+      padding-left: 0;
+    }
+  }
+
+  li {
+    display: inline-block;
+  }
+
+  a {
+    background: $c-border-grey-blue;
+    border-radius: 3px;
+    display: inline-block;
+    margin: 5px 24px 5px 0;
+    padding: 5px 24px;
+
+    &:hover {
+      background: darken($c-border-grey-blue, 30%);
+    }
+  }
+}
+
 // Kill contextual links when filter is open.
 .js-search_filter__is-open {
   .contextual-region {

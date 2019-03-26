@@ -34,6 +34,12 @@
           // Submit filter.
           $('[block="block-exposedformnews-filterpage-1"]').submit();
         })
+
+        // Hide label if there are no active filters.
+        if (filter_item.length > 0) {
+          console.log(filter_item);
+          $('.search-filter__indicator-list label').removeClass('visually-hidden')
+        }
       }
 
       removeFilter();

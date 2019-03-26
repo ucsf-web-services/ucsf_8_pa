@@ -8,12 +8,15 @@
 {% set all_terms = article_type_list|merge(area_focus_list)|merge(health_list)|merge(campus_list) %}
 
 {# Render list. #}
-<ul class="search-filter__indicator-list">
-  {% for key,tid in all_terms %}
-    {% if tid != 0 %}
-      {% set term = drupal_entity('taxonomy_term', tid) %}
-      {% set term_name = term['#taxonomy_term'].name.value %}
-      <li><a class="search-filter__indicator-item" data-tid="{{ tid }}">{{ term_name }} x </a></li>
-    {% endif %}
-  {% endfor %}
-</ul>
+<div class="search-filter__indicator-list">
+  <ul>
+    <li><label class="visually-hidden">{{ "Advanced Search Filters"|t }}:</label></li>
+    {% for key,tid in all_terms %}
+      {% if tid != 0 %}
+        {% set term = drupal_entity('taxonomy_term', tid) %}
+        {% set term_name = term['#taxonomy_term'].name.value %}
+        <li><a class="search-filter__indicator-item" data-tid="{{ tid }}">{{ term_name }} x </a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>
