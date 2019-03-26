@@ -1,6 +1,5 @@
 // Exposed Filter
 .block-views-exposed-filter-blocknews-filter-page-1 {
-  background: $c-grey-pale;
 
   .form--inline .form-item {
     margin: 0;
@@ -77,6 +76,7 @@
 
 // Top of Filter.
 .search-filter__top {
+  background: $c-grey-pale;
   position: relative;
   padding: 40px 16px;
 
@@ -121,6 +121,7 @@
   }
 }
 
+
 // Hide Campus News children form elements.
 .form-item-field-primary-area-target-id-1011 {
   display: none;
@@ -135,11 +136,66 @@
   display: none;
 }
 
+
+// Top filter - Open.
+.js-search_filter__top-open {
+  height: 90px;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: $z-news-search-filter;
+
+  @include breakpoint($bp-medium) {
+    height: 129px;
+  }
+
+  // Text Input.
+  [data-drupal-selector="edit-combine"] {
+    @include breakpoint($bp-medium) {
+      max-width: none;
+      padding-left: 118px;
+      width: calc(100% - 189px);
+    }
+  }
+
+  // Submit button.
+  [data-drupal-selector="edit-submit-news-filter"] {
+    right: 64px;
+    top: 16px;
+
+    @include breakpoint($bp-medium) {
+      left: 80px;
+      right: auto;
+      top: 32px;
+    }
+  }
+
+  // Results count.
+  [data-drupal-selector="edit-count"] {
+    @include visually-hidden;
+  }
+
+  .search-filter__advanced {
+    @include background-image('x-large.svg', left);
+    right: 12px;
+    top: 16px;
+
+    @include breakpoint($bp-medium) {
+      left: auto;
+      right: 28px;
+      top: 39px;
+    }
+  }
+}
+
+
+
 // Dropdown filters.
 .search-filter__dropdown {
   @include transition;
   background: $c-grey-pale;
-  box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.44);
   height: 0;
   visibility: hidden;
 
@@ -166,7 +222,8 @@
       grid-template-columns: repeat(4, 1fr);
       grid-row-gap: 55px;
       height: auto;
-      padding: 0 80px 85px;
+      padding: 64px 80px 85px;
+      position: absolute;
     }
 
     .fieldset-wrapper {

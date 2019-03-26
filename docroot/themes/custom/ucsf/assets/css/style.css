@@ -2165,6 +2165,17 @@ a.icon-transit:hover {
   .article-header__byline .article-header__date,
   .news-card__byline .article-header__date {
     color: #506380; }
+  .article-header__byline.media,
+  .news-card__byline.media {
+    color: #506380; }
+    @media (min-width: 600px) {
+      .article-header__byline.media,
+      .news-card__byline.media {
+        white-space: nowrap; } }
+    .article-header__byline.media i,
+    .news-card__byline.media i {
+      font-size: 12px;
+      padding-right: 8px; }
 
 [data-primary-area^="pa-"] + .news-card__date::before,
 [data-primary-area^="pa-"] + .article-header__date::before {
@@ -5307,85 +5318,91 @@ a[href*="http"] .article-header__date {
 .view-articles-for-news-center article {
   margin-bottom: 40px; }
 
-.block-views-exposed-filter-blocknews-filter-page-1 {
-  background: #f2f4f6; }
-  .block-views-exposed-filter-blocknews-filter-page-1 .form--inline .form-item {
-    margin: 0; }
-  .block-views-exposed-filter-blocknews-filter-page-1 label[for=edit-combine] {
-    position: absolute !important;
-    clip: rect(1px, 1px, 1px, 1px);
-    overflow: hidden;
+.block-views-exposed-filter-blocknews-filter-page-1 .form--inline .form-item {
+  margin: 0; }
+
+.block-views-exposed-filter-blocknews-filter-page-1 label[for=edit-combine] {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  overflow: hidden;
+  height: 1px;
+  width: 1px;
+  word-wrap: normal; }
+
+.block-views-exposed-filter-blocknews-filter-page-1 .search-filter__advanced {
+  background: url("/themes/custom/ucsf/assets/images/filter.svg") no-repeat left transparent;
+  background-size: 24px 24px;
+  position: absolute;
+  right: 16px;
+  text-indent: -999px;
+  top: 55px;
+  height: 24px;
+  width: 24px; }
+  @media (min-width: 600px) {
+    .block-views-exposed-filter-blocknews-filter-page-1 .search-filter__advanced {
+      padding-left: 32px;
+      right: 70px;
+      text-indent: 0;
+      top: 190px;
+      width: auto; } }
+  @media (min-width: 970px) {
+    .block-views-exposed-filter-blocknews-filter-page-1 .search-filter__advanced {
+      left: 776px; } }
+
+.block-views-exposed-filter-blocknews-filter-page-1 .form-item-combine {
+  margin: 0; }
+
+.block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"] {
+  border: 1px solid #efefef;
+  -webkit-box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
+          box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
+  color: #506380;
+  font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 18px;
+  height: 52px;
+  margin-bottom: 16px;
+  width: calc(100% - 52px); }
+  @media (min-width: 600px) {
+    .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"] {
+      height: 96px;
+      max-width: 827px;
+      width: 100%; } }
+  .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"]::-webkit-input-placeholder {
+    color: #506380; }
+  .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"]::-ms-input-placeholder {
+    color: #506380; }
+  .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"]::placeholder {
+    color: #506380; }
+
+.block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-actions"] {
+  margin: 0; }
+
+.block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-count"] {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+  font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  line-height: 1.4em;
+  color: #052049;
+  text-transform: uppercase; }
+  .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-count"]::after {
+    content: ' ';
+    display: inline-block;
+    width: 40px;
     height: 1px;
-    width: 1px;
-    word-wrap: normal; }
-  .block-views-exposed-filter-blocknews-filter-page-1 .search-filter__advanced {
-    background: url("/themes/custom/ucsf/assets/images/filter.svg") no-repeat left transparent;
-    background-size: 24px 24px;
-    position: absolute;
-    right: 16px;
-    text-indent: -999px;
-    top: 55px;
-    height: 24px;
-    width: 24px; }
-    @media (min-width: 600px) {
-      .block-views-exposed-filter-blocknews-filter-page-1 .search-filter__advanced {
-        padding-left: 32px;
-        right: 70px;
-        text-indent: 0;
-        top: 190px;
-        width: auto; } }
-    @media (min-width: 970px) {
-      .block-views-exposed-filter-blocknews-filter-page-1 .search-filter__advanced {
-        left: 776px; } }
-  .block-views-exposed-filter-blocknews-filter-page-1 .form-item-combine {
-    margin: 0; }
-  .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"] {
-    border: 1px solid #efefef;
-    -webkit-box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
-            box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
-    color: #506380;
-    font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-    font-size: 18px;
-    height: 52px;
-    margin-bottom: 16px;
-    width: calc(100% - 52px); }
-    @media (min-width: 600px) {
-      .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"] {
-        height: 96px;
-        max-width: 827px;
-        width: 100%; } }
-    .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"]::-webkit-input-placeholder {
-      color: #506380; }
-    .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"]::-ms-input-placeholder {
-      color: #506380; }
-    .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"]::placeholder {
-      color: #506380; }
-  .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-actions"] {
-    margin: 0; }
-  .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-count"] {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-    font-weight: 500;
-    font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-    font-size: 12px;
-    letter-spacing: 1.6px;
-    line-height: 1.4em;
-    color: #052049;
-    text-transform: uppercase; }
-    .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-count"]::after {
-      content: ' ';
-      display: inline-block;
-      width: 40px;
-      height: 1px;
-      background: #052049;
-      margin: 0 5px 3px;
-      -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-              animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
-  .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-reset"] {
-    display: none; }
+    background: #052049;
+    margin: 0 5px 3px;
+    -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
+            animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+
+.block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-reset"] {
+  display: none; }
 
 .search-filter__top {
+  background: #f2f4f6;
   position: relative;
   padding: 40px 16px; }
   @media (min-width: 600px) {
@@ -5436,12 +5453,51 @@ a[href*="http"] .article-header__date {
 .form-item-field-primary-area-target-id-1026 {
   display: none; }
 
+.js-search_filter__top-open {
+  height: 90px;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1100; }
+  @media (min-width: 600px) {
+    .js-search_filter__top-open {
+      height: 129px; } }
+  @media (min-width: 600px) {
+    .js-search_filter__top-open [data-drupal-selector="edit-combine"] {
+      max-width: none;
+      padding-left: 118px;
+      width: calc(100% - 189px); } }
+  .js-search_filter__top-open [data-drupal-selector="edit-submit-news-filter"] {
+    right: 64px;
+    top: 16px; }
+    @media (min-width: 600px) {
+      .js-search_filter__top-open [data-drupal-selector="edit-submit-news-filter"] {
+        left: 80px;
+        right: auto;
+        top: 32px; } }
+  .js-search_filter__top-open [data-drupal-selector="edit-count"] {
+    position: absolute !important;
+    clip: rect(1px, 1px, 1px, 1px);
+    overflow: hidden;
+    height: 1px;
+    width: 1px;
+    word-wrap: normal; }
+  .js-search_filter__top-open .search-filter__advanced {
+    background: url("/themes/custom/ucsf/assets/images/x-large.svg") no-repeat left transparent;
+    right: 12px;
+    top: 16px; }
+    @media (min-width: 600px) {
+      .js-search_filter__top-open .search-filter__advanced {
+        left: auto;
+        right: 28px;
+        top: 39px; } }
+
 .search-filter__dropdown {
   -webkit-transition: .3s ease-out all;
   transition: .3s ease-out all;
   background: #f2f4f6;
-  -webkit-box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.44);
-          box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.44);
   height: 0;
   visibility: hidden; }
   @media (min-width: 600px) {
@@ -5468,7 +5524,8 @@ a[href*="http"] .article-header__date {
             grid-template-columns: repeat(4, 1fr);
         grid-row-gap: 55px;
         height: auto;
-        padding: 0 80px 85px; } }
+        padding: 64px 80px 85px;
+        position: absolute; } }
     @media (min-width: 600px) {
       .search-filter__dropdown.js-search_filter__dropdown-open .fieldset-wrapper {
         height: auto;
