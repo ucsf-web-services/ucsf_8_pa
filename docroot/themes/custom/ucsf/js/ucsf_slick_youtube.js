@@ -3,7 +3,7 @@
   Drupal.behaviors.slickYoutube = {
     attach: function (context) {
 
-      $('.youtube-list__videos').slick({
+      $('.youtube-list__videos').not('.slick-initialized').slick({
         slidesToShow: 4,
         infinite: false
       });

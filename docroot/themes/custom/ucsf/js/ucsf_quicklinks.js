@@ -1,5 +1,12 @@
 /* eslint-disable */
 (function ($) {
+
+  $(document).ready(function() {
+        setTimeout(function() {
+          $('body').removeClass('loading');
+        }, 2500);
+  });
+
   Drupal.behaviors.quicklinks = {
     attach: function (context) {
   

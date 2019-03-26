@@ -1,7 +1,14 @@
-"use strict";
+'use strict';
 
 /* eslint-disable */
 (function ($) {
+
+  $(document).ready(function () {
+    setTimeout(function () {
+      $('body').removeClass('loading');
+    }, 2500);
+  });
+
   Drupal.behaviors.quicklinks = {
     attach: function attach(context) {
 

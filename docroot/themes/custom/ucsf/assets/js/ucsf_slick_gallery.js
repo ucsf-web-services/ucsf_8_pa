@@ -5,7 +5,7 @@
   Drupal.behaviors.slickGallery = {
     attach: function attach(context) {
 
-      $('.paragraph--type--gallery .gallery-container > .field-gallery-items').slick();
+      $('.paragraph--type--gallery .gallery-container > .field-gallery-items').not('.slick-initialized').slick();
     }
   };
 })(jQuery);

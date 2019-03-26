@@ -26,8 +26,7 @@
 
 .quicklinks {
   //@include transition;
-  transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
-
+  //transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
   height: calc(100vh - 89px);
   position: fixed;
   right: calc((100% - 32px) * -1);
@@ -74,7 +73,7 @@
 
 .quicklinks-trigger {
   // @include transition;
-  transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
+  //transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
   background: $white;
   text-align: center;
   font-size: $font-size-xxsm;
@@ -150,7 +149,7 @@
     line-height: 1;
     float: right;
     text-align: right;
-
+    z-index: 200;
     @include breakpoint($bp-medium) {
       position: absolute;
       top: 10vh;
@@ -160,14 +159,13 @@
 
   > .field-quick-link-menu {
 
-
-
     @include breakpoint($bp-medium) {
       display: table-cell;
       padding-left: 13%;
       padding-right: 13%;
       vertical-align: middle;
     }
+
   }
 
   .field-quick-link-title {
@@ -195,5 +193,23 @@
     @include breakpoint($bp-medium) {
       column-count: 2;
     }
+  }
+}
+
+
+body.loading .quicklinks  {
+  transition: 2s;
+  animation-name: quicklinks-intro;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+
+@keyframes quicklinks-intro {
+  0% {
+    right: -300px;
+  }
+  100% {
+    right: calc((100% - 32px) * -1);
   }
 }

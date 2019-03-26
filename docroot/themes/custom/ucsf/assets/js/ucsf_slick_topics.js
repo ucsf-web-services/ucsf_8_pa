@@ -5,7 +5,7 @@
   Drupal.behaviors.slickTopics = {
     attach: function attach(context) {
 
-      $('.topics-list__topics').slick({
+      $('.topics-list__topics').not('.slick-initialized').slick({
         slidesToShow: 4
       });
     }
