@@ -52,5 +52,23 @@
       });
     }
   };
+
+  Drupal.behaviors.searchMenuAction = {
+
+    attach: function attach(context, settings) {
+      $('.menu-parent--wrapper .menu-item.search a', context).click(function (e) {
+        e.preventDefault();
+        $('.wrapper--search-menu').toggleClass('active');
+      });
+
+      $('.menu-parent--wrapper .menu-item', context).hover(function (e) {
+        if ($(this).hasClass('search')) {
+          //console.log('search menu');
+        } else {
+          $('.wrapper--search-menu').removeClass('active');
+        }
+      });
+    }
+  };
 })(jQuery);
 //# sourceMappingURL=all.js.map

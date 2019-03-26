@@ -25,7 +25,7 @@ header .menu--main {
       background-size: 28px 28px;
 
       &:hover {
-        background: url(/themes/custom/ucsf/assets/images/x-large.svg) no-repeat 50px 10px #fff;
+        //background: url(/themes/custom/ucsf/assets/images/x-large.svg) no-repeat 50px 10px #fff;
       }
 
       > a {
@@ -36,10 +36,16 @@ header .menu--main {
 
     }
 
-    &:hover > .menu-child--wrapper {
+    &:hover > .menu-child--wrapper,
+    &:active > .menu-child--wrapper {
       //border: 1px solid red;
       @include visually-hidden-reset;
       @include menu-animation;
+
+      &.wrapper--search-menu {
+        @include visually-hidden;
+        animation: none;
+      }
 
       .menu-child--menu,
       .menu-child--label span,
@@ -51,8 +57,21 @@ header .menu--main {
       .menu-child--wrapper {
         animation: none;
       }
+
+
     }
 
+    .menu-child--wrapper {
+      &.wrapper--search-menu {
+        @include visually-hidden;
+        animation: none;
+
+        &.active {
+          @include visually-hidden-reset;
+          @include menu-animation;
+        }
+      }
+    }
     // for debugging only.
     //&.research > .menu-child--wrapper {
     //  @include visually-hidden-reset;
@@ -71,15 +90,19 @@ header .menu--main {
     width: 999px;
 
     &.wrapper--search-menu {
-      width: auto;
       background: none;
-
+      width: 650px !important;
+      right: -82px;
+      //border: 1px solid #ececec;
       .home-search__form {
         position: relative;
+        .home-search__form-input {
+          width: 100%;
+        }
         .home-search__form-submit {
           position: absolute;
           top: 10px;
-          right: 15px;
+          right: 5px;
         }
       }
     }
