@@ -13,6 +13,13 @@
       $(".search-filter__dropdown legend", context).click(function () {
         $(this).siblings(".fieldset-wrapper").toggleClass('js-search_filter__category-open');
       });
+
+      $("#edit-field-primary-area-target-id-1006", context).click(function () {
+        $("#edit-field-primary-area-target-id-1016", context).click();
+        $("#edit-field-primary-area-target-id-1011", context).click();
+        $("#edit-field-primary-area-target-id-1021", context).click();
+        $("#edit-field-primary-area-target-id-1026", context).click();
+      });
     }
   };
 })(jQuery);
