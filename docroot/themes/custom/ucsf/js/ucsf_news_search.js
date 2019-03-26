@@ -21,6 +21,23 @@
         $("#edit-field-primary-area-target-id-1026", context).click();
       });
 
+      // Remove filter using filter indicators.
+      function removeFilter() {
+        const filter_item = $('.search-filter__indicator-item');
+    
+        filter_item.click(function () {
+          const filter_id = $(this).attr('data-tid');
+          
+          // Uncheck term filter.
+          $('[data-drupal-selector="edit-tid-' + filter_id + '"]').prop("checked", false);
+  
+          // Submit filter.
+          $('[block="block-exposedformnews-filterpage-1"]').submit();
+        })
+      }
+
+      removeFilter();
+
     }
   };
 
