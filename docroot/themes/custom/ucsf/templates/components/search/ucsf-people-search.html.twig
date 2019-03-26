@@ -33,33 +33,36 @@
             <button type="submit" class="home-search__form-submit">Search</button>
         </form>
         {# We should style these like Zeplin mockup and have them link to other routes #}
-        <ul id="universalSearchTabs">
-            <li><a href="/search?search={{ searchterm }}">All Results</a></li>
-            <li><a href="/search/news?search={{ searchterm }}">News</a></li>
-            <li class="active"><a href="/search/people?search={{ searchterm }}" class="active">People Directory</a></li>
-            <li><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
-        </ul>
     </div>
+    <ul id="universalSearchTabs">
+        <li><a href="/search?search={{ searchterm }}">All Results</a></li>
+        <li><a href="/search/news?search={{ searchterm }}">News</a></li>
+        <li class="active"><a href="/search/people?search={{ searchterm }}" class="active">People Directory</a></li>
+        <li><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
+    </ul>
+    <div class="results-wrapper">
+      <div class="results-wrapper__content">
+        <div id="universalDirectory">
+            <h3 class="eyebrow-title">People Directory</h3>
+            <ul class="search-people">
+            {% for person in directory %}
+            <li>
+                <a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a> |
+                {% if person.mail %} {{ person.mail }}, {% endif %}
+                {% if person.telephonenumber %} {{ person.telephonenumber }}, {% endif %}
+                {{ person.departmentname }}
+            </li>
+            {% endfor %}
+            </ul>
 
-    <div id="universalDirectory">
-        <h3>People Directory</h3>
-        <ul>
-        {% for person in directory %}
-        <li>
-            <a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a> |
-            {% if person.mail %} {{ person.mail }}, {% endif %}
-            {% if person.telephonenumber %} {{ person.telephonenumber }}, {% endif %}
-            {{ person.departmentname }}
-        </li>
-        {% endfor %}
-        </ul>
+            {% if directory is empty %}
+                <p>Sorry no results were found.</p>
+            {% endif %}
 
-        {% if directory is empty %}
-            <p>Sorry no results were found.</p>
-        {% endif %}
-
-        {% if more.people %}
-            <a>See More People Results</a>
-        {% endif %}
+            {% if more.people %}
+                <a class="link--cta">See More People Results</a>
+            {% endif %}
+        </div>
+      </div>
     </div>
 </div>

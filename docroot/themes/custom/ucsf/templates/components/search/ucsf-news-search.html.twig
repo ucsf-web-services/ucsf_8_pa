@@ -17,17 +17,20 @@
             <input type="text" name="search" id="search" size="32" alt="Search text" class="searchbox home-search__form-input" value="{{ searchterm }}" />
             <button type="submit" class="home-search__form-submit">Search</button>
         </form>
-
-        <ul id="universalSearchTabs">
-            <li><a href="/search?search={{ searchterm }}">All Results</a></li>
-            <li class="active"><a href="/search/news?search={{ searchterm }}" class="active">News</a></li>
-            <li><a href="/search/people?search={{ searchterm }}">People Directory</a></li>
-            <li><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
-        </ul>
     </div>
-    <div id="cse">
-        <h3>News Results</h3>
-        <!-- Google Search Results -->
-        <gcse:searchresults-only queryParameterName="search" defaultToRefinement="news"></gcse:searchresults-only>
+    <ul id="universalSearchTabs">
+        <li><a href="/search?search={{ searchterm }}">All Results</a></li>
+        <li class="active"><a href="/search/news?search={{ searchterm }}" class="active">News</a></li>
+        <li><a href="/search/people?search={{ searchterm }}">People Directory</a></li>
+        <li><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
+    </ul>
+    <div class="results-wrapper">
+      <div class="results-wrapper__content">
+        <div id="cse">
+            <h3 class="eyebrow-title">News Results</h3>
+            <!-- Google Search Results -->
+            <gcse:searchresults-only queryParameterName="search" defaultToRefinement="news"></gcse:searchresults-only>
+        </div>
+      </div>
     </div>
 </div>

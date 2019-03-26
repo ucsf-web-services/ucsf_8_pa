@@ -26,37 +26,43 @@
             <input type="text" name="search" id="search" size="32" alt="Search text" class="searchbox home-search__form-input" value="{{ searchterm }}" />
             <button type="submit" class="home-search__form-submit">Search</button>
         </form>
-
-        <ul id="universalSearchTabs">
-            <li><a href="/search?search={{ searchterm }}">All Results</a></li>
-            <li><a href="/search/news?search={{ searchterm }}">News</a></li>
-            <li><a href="/search/people?search={{ searchterm }}">People Directory</a></li>
-            <li class="active"><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
-        </ul>
     </div>
-    {% spaceless %}
-    <div id="websiteSearchResults">
-        <h3>Websites</h3>
-        {% for website in websites %}
-            <li>
-                {{ website.title }} |
-                <a href="{{ website.field_website_url }}" target="_blank">{{ website.field_website_url }}</a>
-                {% if website.field_display_name %}, {{ website.field_display_name }}{% endif %}
-                {% if website.field_meta_title %}, {{ website.field_meta_title }}{% endif %}
-                {% if website.body %}, {{ website.body }}{% endif %}
-                {% if website.field_owner_name %}, Owner: {{ website.field_owner_name }}{% endif %}
-            </li>
-        {% endfor %}
+    <ul id="universalSearchTabs">
+        <li><a href="/search?search={{ searchterm }}">All Results</a></li>
+        <li><a href="/search/news?search={{ searchterm }}">News</a></li>
+        <li><a href="/search/people?search={{ searchterm }}">People Directory</a></li>
+        <li class="active"><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
+    </ul>
 
-        {% if websites is empty %}
-            <p>Sorry no results were found.</p>
+    <div class="results-wrapper">
+      <div class="results-wrapper__content">
+      {% spaceless %}
+        <div id="websiteSearchResults">
+            <h3 class="eyebrow-title">Websites</h3>
+            <ul class="search-websites">
+            {% for website in websites %}
+                <li>
+                    {{ website.title }} |
+                    <a href="{{ website.field_website_url }}" target="_blank">{{ website.field_website_url }}</a>
+                    {% if website.field_display_name %}, {{ website.field_display_name }}{% endif %}
+                    {% if website.field_meta_title %}, {{ website.field_meta_title }}{% endif %}
+                    {% if website.body %}, {{ website.body }}{% endif %}
+                    {% if website.field_owner_name %}, Owner: {{ website.field_owner_name }}{% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+
+            {% if websites is empty %}
+                <p>Sorry no results were found.</p>
+            {% endif %}
+
+        </div>
+        {% endspaceless %}
+
+        {% if more.web %}
+            <a class="link--cta">See More Website Results</a>
         {% endif %}
-
+      </div>
     </div>
-    {% endspaceless %}
-
-    {% if more.web %}
-        <a>See More Website Results</a>
-    {% endif %}
 
 </div>

@@ -40,61 +40,69 @@
 
         {% include '@theme/search/search-form.html.twig' %}
         {# We should style these like Zeplin mockup and have them link to other routes #}
-        <ul id="universalSearchTabs">
-            <li class="active"><a href="/search?search={{ searchterm }}">All Results</a></li>
-            <li><a href="/search/news?search={{ searchterm }}">News</a></li>
-            <li><a href="/search/people?search={{ searchterm }}">People Directory</a></li>
-            <li><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
-        </ul>
     </div>
-    {% if directory is not empty %}
-    <div id="universalDirectory" style="padding-top: 50px;">
-        <h3>People</h3>
-        <ul>
-        {% for person in directory %}
-        <li>
-            <a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a> |
-            {% if person.mail %} {{ person.mail }}, {% endif %}
-            {% if person.telephonenumber %} {{ person.telephonenumber }}, {% endif %}
-            {{ person.departmentname }}
-        </li>
-        {% endfor %}
-        </ul>
-        {% if more.people %}
-            <a href="https://directory.ucsf.edu">See More</a>
-        {% endif %}
-    </div>
-    {% endif %}
+    <ul id="universalSearchTabs">
+        <li class="active"><a href="/search?search={{ searchterm }}">All Results</a></li>
+        <li><a href="/search/news?search={{ searchterm }}">News</a></li>
+        <li><a href="/search/people?search={{ searchterm }}">People Directory</a></li>
+        <li><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
+    </ul>
 
-    {% if websites is not empty %}
-    <div id="universalWebsites" style="padding-top: 50px;">
-        <h3>Websites</h3>
-        {% for website in websites %}
+
+    <div class="results-wrapper">
+      <div class="results-wrapper__content">
+        {% if directory is not empty %}
+        <div id="universalDirectory">
+            <h3 class="eyebrow-title">People</h3>
+            <ul class="search-people">
+            {% for person in directory %}
             <li>
-                {{ website.title }} |
-                <a href="{{ website.field_website_url }}" target="_blank">{{ website.field_website_url }}</a>
-                {% if website.field_display_name %}, {{ website.field_display_name }}{% endif %}
-                {% if website.field_meta_title %}, {{ website.field_meta_title }}{% endif %}
-                {% if website.body %}, {{ website.body }}{% endif %}
+                <a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a> |
+                {% if person.mail %} {{ person.mail }}, {% endif %}
+                {% if person.telephonenumber %} {{ person.telephonenumber }}, {% endif %}
+                {{ person.departmentname }}
             </li>
-        {% endfor %}
-        {% if more.web %}
-            <a href="https://websites.ucsf.edu/azlist?combine={{ searchterm }}" target="_blank">See More</a>
-        {% endif %}
-    </div>
-    {% endif %}
-
-
-
-    <div id="cse" style="padding-top: 50px;">
-        <h3>All Results</h3>
-        <!-- Google Search Results -->
-        <gcse:searchresults-only queryParameterName="search"></gcse:searchresults-only>
-
-        {% if searchterm is empty %}
-            <p>No search term(s) provided, please try again.</p>
+            {% endfor %}
+            </ul>
+            {% if more.people %}
+                <a href="https://directory.ucsf.edu" class="link--cta">View All People Results</a>
+            {% endif %}
+        </div>
         {% endif %}
 
+        {% if websites is not empty %}
+        <div id="universalWebsites">
+            <h3 class="eyebrow-title">Websites</h3>
+            <ul class="search-websites">
+            {% for website in websites %}
+                <li>
+                    {{ website.title }} |
+                    <a href="{{ website.field_website_url }}" target="_blank">{{ website.field_website_url }}</a>
+                    {% if website.field_display_name %}, {{ website.field_display_name }}{% endif %}
+                    {% if website.field_meta_title %}, {{ website.field_meta_title }}{% endif %}
+                    {% if website.body %}, {{ website.body }}{% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+            {% if more.web %}
+                <a href="https://websites.ucsf.edu/azlist?combine={{ searchterm }}" target="_blank" class="link--cta">View All Websites Results</a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+
+
+        <div id="cse">
+            <h3 class="eyebrow-title">All Results</h3>
+            <!-- Google Search Results -->
+            <gcse:searchresults-only queryParameterName="search"></gcse:searchresults-only>
+
+            {% if searchterm is empty %}
+                <p>No search term(s) provided, please try again.</p>
+            {% endif %}
+
+        </div>
+      </div>
     </div>
 
 
