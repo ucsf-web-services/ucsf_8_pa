@@ -15,6 +15,20 @@
  * @see template_preprocess_views_view_unformatted()
  */
 #}
+{#{{ kint(view.exposed_data) }}#}
+
+{# Applied Filter List #}
+{% set article_type_list = view.exposed_data.tid %}
+
+{% for key,tid in article_type_list %}
+  {% if tid != 0 %}
+    {% set term = drupal_entity('taxonomy_term', tid) %}
+    {% set term_name = term['#taxonomy_term'].name.value %}
+    {{ term_name }}
+  {% endif %}
+{% endfor %}
+{# End Applied Filter List #}
+
 <ul>
   {% for row in rows %}
     <li>
