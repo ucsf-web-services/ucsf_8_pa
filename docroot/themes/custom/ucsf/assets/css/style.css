@@ -1306,6 +1306,15 @@ a.icon-transit:hover {
   -webkit-animation: header-swoosh 2s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
           animation: header-swoosh 2s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
 
+.topics-list__topics .slick-slide .topic-card {
+  -webkit-transition: .5s ease-out all;
+  transition: .5s ease-out all; }
+
+.topics-list__topics .slick-slide:hover li.topic-card {
+  background-size: 101%;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards; }
+
 .article-header__author,
 .article-header h1 {
   -webkit-animation: header-fade 3s  0ms forwards;
@@ -1383,6 +1392,7 @@ a.icon-transit:hover {
             transform-origin: 0 top;
     -webkit-transform: scaleY(1);
             transform: scaleY(1); } }
+
 @keyframes menu-slide {
   0% {
     clip: auto;
@@ -1538,8 +1548,6 @@ a.icon-transit:hover {
     opacity: 1; }
 
 .quicklinks {
-  -webkit-transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
-  transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
   height: calc(100vh - 89px);
   position: fixed;
   right: calc((100% - 32px) * -1);
@@ -1572,8 +1580,6 @@ a.icon-transit:hover {
         width: 50%; } }
 
 .quicklinks-trigger {
-  -webkit-transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
-  transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
   background: #fff;
   text-align: center;
   font-size: 12px;
@@ -1646,7 +1652,8 @@ a.icon-transit:hover {
     cursor: pointer;
     line-height: 1;
     float: right;
-    text-align: right; }
+    text-align: right;
+    z-index: 200; }
     @media (min-width: 600px) {
       .quicklinks-menu .quicklinks-close {
         position: absolute;
@@ -1696,6 +1703,28 @@ a.icon-transit:hover {
       .quicklinks-menu .field-quick-link-link {
         -webkit-column-count: 2;
                 column-count: 2; } }
+
+body.loading .quicklinks {
+  -webkit-transition: 2s;
+  transition: 2s;
+  -webkit-animation-name: quicklinks-intro;
+          animation-name: quicklinks-intro;
+  -webkit-animation-timing-function: ease-in;
+          animation-timing-function: ease-in;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards; }
+
+@-webkit-keyframes quicklinks-intro {
+  0% {
+    right: -300px; }
+  100% {
+    right: calc((100% - 32px) * -1); } }
+
+@keyframes quicklinks-intro {
+  0% {
+    right: -300px; }
+  100% {
+    right: calc((100% - 32px) * -1); } }
 
 .footer-ctas-wrapper {
   grid-column: 1/-1;
@@ -5726,7 +5755,8 @@ a[href*="http"] .article-header__date {
   height: 350px;
   float: left;
   position: relative;
-  margin-bottom: 60px; }
+  margin-bottom: 60px;
+  overflow: hidden; }
   .topic-card a {
     display: inline-block;
     height: 350px;
