@@ -55,7 +55,7 @@ class RssFields extends RowPluginBase {
     $form['link_field'] = [
       '#type' => 'select',
       '#title' => $this->t('Link field'),
-      '#description' => $this->t('The field that is going to be used as the RSS item link for each row. This must be a drupal relative path.'),
+      '#description' => $this->t('The field that is going to be used as the RSS item link for each row.'),
       '#options' => $view_fields_labels,
       '#default_value' => $this->options['link_field'],
       '#required' => TRUE,
@@ -139,8 +139,6 @@ class RssFields extends RowPluginBase {
     // Create the RSS item object.
     $item = new \stdClass();
     $item->title = $this->getField($row_index, $this->options['title_field']);
-    // @todo Views should expect and store a leading /. See:
-    //   https://www.drupal.org/node/2423913
     $item->link = Url::fromUri($this->getField($row_index, $this->options['link_field']))->setAbsolute()->toString();
 
     $field = $this->getField($row_index, $this->options['description_field']);
