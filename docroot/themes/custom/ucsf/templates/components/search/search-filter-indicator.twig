@@ -1,0 +1,11 @@
+{% set article_type_list = view.exposed_data.tid %}
+
+<ul class="search-filter__indicator-list">
+  {% for key,tid in article_type_list %}
+    {% if tid != 0 %}
+      {% set term = drupal_entity('taxonomy_term', tid) %}
+      {% set term_name = term['#taxonomy_term'].name.value %}
+      <li><a class="search-filter__indicator-item" data-tid="{{ tid }}">{{ term_name }} x </a></li>
+    {% endif %}
+  {% endfor %}
+</ul>
