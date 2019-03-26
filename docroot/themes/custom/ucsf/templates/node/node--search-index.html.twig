@@ -37,7 +37,13 @@
     {% else %}
       <h2><a href="{{ url }}">{{ label }}</a></h2>
     {% endif %}
-    {{ content.field_sub_title }}
+
+    {% if content.body['#items'][0].summary|render|striptags != ''  %}
+    <p class="search-result__body">{{ content.body['#items'][0].summary }}</p>
+    {% else %}
+    {% set text = content.body|render|striptags|trim %}
+    <p class="search-result__body">{{ (text|length > 200 ? text|slice(0, 201)|split(' ')|slice(0, -1)|join(' ') ~ '&hellip;' : text)|raw }}</p>
+    {% endif %}
   </header>
 
   {% if article_type != 'media-coverage' %}

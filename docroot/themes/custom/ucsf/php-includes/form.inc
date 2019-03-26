@@ -48,7 +48,7 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     $result_count = $pager_total_items[0] ? Html::escape($pager_total_items[0]) : '0';
     $form['top']['count'] = [
       '#type' => 'container',
-      'count_markup' => ['#markup' => $result_count . ' Results'],
+      'count_markup' => ['#markup' => $result_count . ' Results <span class="desktop-results">in the UCSF News Center<span>'],
       '#attributes' => [
         'class' => [
           'count'
@@ -85,7 +85,7 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     $form['dropdown']['tid'] = $tid; // Type of Article
     $form['dropdown']['field_primary_area_target_id'] = $field_primary_area_target_id; // Area of Focus
     $form['dropdown']['pub_year']['#type'] = 'fieldset';
-    $form['dropdown']['pub_year']['#title'] = t('Year of Publication');
+    $form['dropdown']['pub_year']['#title'] = t('Date of Publication');
     $form['dropdown']['pub_year']['#attributes'] = ['class' => ['fieldgroup']];
     $form['dropdown']['pub_year']['field_date_and_time_value_1'] = $field_date_and_time_value_1;
     $form['dropdown']['pub_year']['field_date_and_time_value_2'] = $field_date_and_time_value_2;

@@ -16,8 +16,9 @@
     right: 16px;
     text-indent: -999px;
     top: 55px;
-    height: 24px;
+    height: 32px;
     width: 24px;
+    font-family: $font-helvetica-neue-medium;
 
     @include breakpoint($bp-medium) {
       padding-left: 32px;
@@ -102,11 +103,11 @@
     width: 24px;
 
     @include breakpoint($bp-medium) {
-      background-size: 32px 32px;
-      height: 32px;
+      background-size: 28px;
+      height: 80px;
       right: 84px;
-      top: 110px;
-      width: 32px;
+      top: 90px;
+      width: 45px;
     }
 
     @include breakpoint($bp-medium-plus) {
@@ -118,6 +119,14 @@
       background-color: transparent;
       border-color: transparent;
     }
+  }
+}
+
+//this is jank for now
+.desktop-results {
+  display:none;
+  @include breakpoint($new-small) {
+    display: inline;
   }
 }
 
@@ -231,6 +240,7 @@
         height: auto;
         max-height: none;
         visibility: visible;
+        overflow: visible;
       }
     }
   }
@@ -302,6 +312,7 @@
 .view-news-filter {
   margin: 0 auto;
   max-width: 827px;
+  margin-top: $space-five;
 
   .view-header { // @todo Remove from view.
     display: none;
