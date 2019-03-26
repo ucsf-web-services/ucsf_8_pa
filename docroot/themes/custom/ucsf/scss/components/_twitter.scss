@@ -13,56 +13,58 @@
 .twitter {
   display: grid;
   //grid-template-columns: repeat(2, auto);
-  justify-self: end;
-  padding: $space-nine 0;
-  padding-left: $space-fifteen;
-  background-color: #f0faff;
-  grid-column: 2/-1;
-
   @include breakpoint($bp-full) {
     width: 1360px;
   }
 }
 
-.twitter-wrapper .twitter__title {
-  @include eyebrow;
-
-  grid-column: 1/2;
-  margin: 0;
-  margin-bottom: $space-three;
-}
-
-.twitter__follow {
-  grid-column: 1/2;
-  margin: 0;
-}
-
-.twitter__tweets {
-  display: grid;
-  //grid-column: 2/-1;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  grid-template-columns: repeat(3, 1fr);
-  .twitter_user {
-    font-weight: bold;
-  }
-  li {
-    margin-right: $space-five;
-  }
-  ul {
+.twitter-wrapper {
+  .twitter__tweets {
+    display: grid;
+    justify-self: end;
+    background-color: #f0faff;
+    grid-column: 2/-1;
+    //grid-column: 2/-1;
     list-style: none;
+    margin: 0;
+    padding: 48px 15px 20px 15px;
+    //grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+
+
+    .twitter__title {
+      @include eyebrow;
+      float: right;
+      margin: 0;
+      //margin-bottom: $space-three;
+      //grid-column: 2/-1;
+    }
+
+
+    .twitter__follow {
+      //grid-column: 1/2;
+      margin: 20px 0;
+      clear: both;
+      float: right;
+    }
+
+    .twitter_user {
+      font-weight: bold;
+    }
 
     li {
-      margin: 0;
+      margin-right: $space-five;
     }
-  }
-  img.oval {
-    border-radius: 50%;
-    float: left;
-    margin: 10px;
-  }
-  p {
-   
+    ul {
+      list-style: none;
+      li {
+        margin: 0;
+      }
+    }
+    img.oval {
+      border-radius: 50%;
+      float: left;
+      margin: 10px;
+    }
   }
 }

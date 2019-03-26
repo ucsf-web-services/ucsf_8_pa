@@ -45,6 +45,7 @@
         menu_attributes.item.class ? menu_attributes.item.class,
       ]
       %}
+
       <li{{ item.attributes.addClass(classes) }}
         {% if menu_attributes.item.id %}
           {{ item.attributes.setAttribute('id', menu_attributes.item.id) }}
@@ -60,15 +61,16 @@
         {% endif %}
 
         {% if item.below or item.title == 'Search' %}
-          <div class="menu-child--wrapper" data-level="level-{{ menu_level }}">
-
-            {# Hack so About can be navy #}
-            {% if item.title == 'About' %}
-              {% set item_title_class = 'about-menu' %}
-            {% else %}
-              {% set item_title_class = item.title|clean_class %}
-            {% endif %}
-            {# End Hack #}
+        {# Hack so About can be navy #}
+        {% if item.title == 'About' %}
+          {% set item_title_class = 'about-menu' %}
+        {% elseif item.title == 'Search' %}
+          {% set item_title_class = 'search-menu' %}
+        {% else %}
+          {% set item_title_class = item.title|clean_class %}
+        {% endif %}
+          {# End Hack #}
+          <div class="menu-child--wrapper wrapper--{{ item_title_class }}" data-level="level-{{ menu_level }}">
 
             {# Only show the side title if the menu is not search #}
             {% if item.title != 'Search' %}
@@ -82,12 +84,14 @@
 
             {# Hack so Search can be here #}
             {% if item.title == 'Search' %}
-            <form action="/search" accept-charset="utf-8" method="get">
-              <input type="text" name="search" id="search_menu" size="32" class="searchbox" value="{{ searchterm }}" />
-              {# this should be /images/search.svg file #}
-              <button type="submit"></button>
-            </form>
-            {% endif %}
+            <div class="home-search__form">
+              <form action="/search" accept-charset="utf-8" method="get" class="search__form">
+                <input type="text" name="search" id="search" size="32" class="home-search__form-input" value="{{ searchterm }}" placeholder="Search people, places, ideas" />
+                {# this should be /images/search.svg file #}
+                <input type="submit" id="edit-submit" name="op" value="Search" class="home-search__form-submit">
+              </form>
+            </div>
+        {% endif %}
             {# End Hack #}
           </div>
 

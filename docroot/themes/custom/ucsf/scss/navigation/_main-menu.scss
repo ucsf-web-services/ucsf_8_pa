@@ -20,6 +20,21 @@ header .menu--main {
   .menu-item {
     display: inline-block;
 
+    &.search {
+      background: url(/themes/custom/ucsf/assets/images/magnifier.svg) no-repeat 50px 5px #fff;
+      background-size: 28px 28px;
+
+      &:hover {
+        background: url(/themes/custom/ucsf/assets/images/x-large.svg) no-repeat 50px 10px #fff;
+      }
+
+      > a {
+        //text-indent: -9999px;
+        min-width: 28px;
+        color: transparent;
+      }
+
+    }
 
     &:hover > .menu-child--wrapper {
       //border: 1px solid red;
@@ -54,6 +69,20 @@ header .menu--main {
     right: 0;
     z-index: $z-dropdown;
     width: 999px;
+
+    &.wrapper--search-menu {
+      width: auto;
+      background: none;
+
+      .home-search__form {
+        position: relative;
+        .home-search__form-submit {
+          position: absolute;
+          top: 10px;
+          right: 15px;
+        }
+      }
+    }
   }
 
   [data-level="level-0"] > .menu-child--label {

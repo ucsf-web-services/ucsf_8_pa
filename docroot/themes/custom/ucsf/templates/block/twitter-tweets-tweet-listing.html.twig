@@ -7,7 +7,7 @@
   {% for tweet in params.tweets %}
   <li>
       <img class="oval" src='{% if tweet.retweeted_status.user.profile_image_url %}{{tweet.retweeted_status.user.profile_image_url }}{% else %}{{ tweet.user.profile_image_url }}{% endif %}'/>
-      <ul>
+      <ul class="twitter_status">
           <li class="twitter_user">
               {% if tweet.retweeted_status.user.name %}
                   {{tweet.retweeted_status.user.name}}
@@ -24,7 +24,7 @@
           {{ tweet.created_at|time_diff|preg_replace('/ |[a-c,e-g,i-l,n-z]/','')}}
           </li>
       </ul>
-
+      {% autoescape false %}
       <p class="twitter_text">
       {% if tweet.retweeted_status.full_text %}
         {{tweet.retweeted_status.full_text}}
@@ -32,7 +32,7 @@
         {{ tweet.full_text }}
       {% endif %}
       </p>
-
+      {% endautoescape %}
   </li>
   {% endfor %}
 {% endblock %}
