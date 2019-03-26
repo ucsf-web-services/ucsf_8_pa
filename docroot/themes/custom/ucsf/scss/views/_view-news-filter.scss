@@ -224,6 +224,8 @@
   &.js-search_filter__dropdown-open {
     height: auto;
     padding: 0 16px 40px;
+    position: absolute;
+    top: 90px;
     visibility: visible;
 
     @include breakpoint($bp-medium) {
@@ -232,7 +234,7 @@
       grid-row-gap: 55px;
       height: auto;
       padding: 64px 80px 85px;
-      position: absolute;
+      top: 129px;
     }
 
     .fieldset-wrapper {
@@ -321,5 +323,12 @@
   ul {
     @include ul-item-list-reset;
     padding: 0 16px;
+  }
+}
+
+// Kill contextual links when filter is open.
+.js-search_filter__is-open {
+  .contextual-region {
+    position: inherit;
   }
 }

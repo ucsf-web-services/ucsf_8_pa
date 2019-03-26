@@ -7,6 +7,7 @@
         $(".search-filter__dropdown").toggleClass('js-search_filter__dropdown-open');
         $(".search-filter__top").toggleClass('js-search_filter__top-open');
         $(".fieldset-wrapper").removeClass('js-search_filter__category-open');
+        $("body").toggleClass('js-search_filter__is-open');
       });
 
       $(".search-filter__dropdown legend", context).click(function() {
