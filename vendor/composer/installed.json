@@ -4575,6 +4575,7 @@
                 "UCSF FilterCaption - Fix decode entities on FilterCaption": "./patches/core-filtercaption.patch",
                 "2973706 - Styles dropdown configuration permit multiple tags": "https://www.drupal.org/files/issues/2018-05-18/allow-multiple-elements-2973706-2.patch",
                 "2492171 - Provide options to sanitize filenames": "https://www.drupal.org/files/issues/2019-03-20/2492171-279.patch",
+                "2918784 - Views RSS row plugin incorrectly assumes links are relative": "./patches/2918784_allow_rss_link_absolute_urls.patch",
                 "Drupalimage calling drupallink functions without checking if the plugin is loaded #13": "https://www.drupal.org/files/issues/edit_drupalimage-2855521-13.patch"
             }
         },
@@ -10843,6 +10844,73 @@
         }
     },
     {
+        "name": "drupal/views_rss",
+        "version": "dev-2.x",
+        "version_normalized": "dev-2.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/views_rss",
+            "reference": "046a35ea8021854dc3ad929488ba50756dfd45b6"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-2.x": "2.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-2.x-dev",
+                "datestamp": "1511025185",
+                "security-coverage": {
+                    "status": "not-covered",
+                    "message": "Project has not opted into security advisory coverage!"
+                }
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "David Goode",
+                "homepage": "https://www.drupal.org/user/291318"
+            },
+            {
+                "name": "MiSc",
+                "homepage": "https://www.drupal.org/user/382892"
+            },
+            {
+                "name": "Nate_S",
+                "homepage": "https://www.drupal.org/user/3531716"
+            },
+            {
+                "name": "Will White",
+                "homepage": "https://www.drupal.org/user/32237"
+            },
+            {
+                "name": "alex_b",
+                "homepage": "https://www.drupal.org/user/53995"
+            },
+            {
+                "name": "maciej.zgadzaj",
+                "homepage": "https://www.drupal.org/user/271491"
+            },
+            {
+                "name": "rsoden",
+                "homepage": "https://www.drupal.org/user/226437"
+            }
+        ],
+        "description": "Extends the possibilites to create RSS with Views",
+        "homepage": "https://www.drupal.org/project/views_rss",
+        "support": {
+            "source": "http://cgit.drupalcode.org/views_rss"
+        }
+    },
+    {
         "name": "drupal/wbm2cm",
         "version": "2.0.0-beta1",
         "version_normalized": "2.0.0.0-beta1",
@@ -12531,7 +12599,9 @@
         "version_normalized": "1.8.2.0",
         "dist": {
             "type": "tar",
-            "url": "https://registry.npmjs.org/blazy/-/blazy-1.8.2.tgz"
+            "url": "https://registry.npmjs.org/blazy/-/blazy-1.8.2.tgz",
+            "reference": null,
+            "shasum": null
         },
         "type": "npm-asset",
         "installation-source": "dist",
@@ -12545,7 +12615,9 @@
         "version_normalized": "1.8.7.0",
         "dist": {
             "type": "tar",
-            "url": "https://registry.npmjs.org/chosen-js/-/chosen-js-1.8.7.tgz"
+            "url": "https://registry.npmjs.org/chosen-js/-/chosen-js-1.8.7.tgz",
+            "reference": null,
+            "shasum": null
         },
         "type": "npm-asset",
         "installation-source": "dist",
@@ -12559,7 +12631,9 @@
         "version_normalized": "5.5.1.0",
         "dist": {
             "type": "tar",
-            "url": "https://registry.npmjs.org/dropzone/-/dropzone-5.5.1.tgz"
+            "url": "https://registry.npmjs.org/dropzone/-/dropzone-5.5.1.tgz",
+            "reference": null,
+            "shasum": null
         },
         "type": "npm-asset",
         "installation-source": "dist",
@@ -12573,7 +12647,9 @@
         "version_normalized": "3.3.1.0",
         "dist": {
             "type": "tar",
-            "url": "https://registry.npmjs.org/jquery/-/jquery-3.3.1.tgz"
+            "url": "https://registry.npmjs.org/jquery/-/jquery-3.3.1.tgz",
+            "reference": null,
+            "shasum": null
         },
         "type": "npm-asset",
         "installation-source": "dist",
@@ -12587,7 +12663,9 @@
         "version_normalized": "1.6.4.0",
         "dist": {
             "type": "tar",
-            "url": "https://registry.npmjs.org/jquery-colorbox/-/jquery-colorbox-1.6.4.tgz"
+            "url": "https://registry.npmjs.org/jquery-colorbox/-/jquery-colorbox-1.6.4.tgz",
+            "reference": null,
+            "shasum": null
         },
         "require": {
             "npm-asset/jquery": ">=1.3.2"
@@ -12604,7 +12682,9 @@
         "version_normalized": "1.4.1.0",
         "dist": {
             "type": "tar",
-            "url": "https://registry.npmjs.org/jquery.easing/-/jquery.easing-1.4.1.tgz"
+            "url": "https://registry.npmjs.org/jquery.easing/-/jquery.easing-1.4.1.tgz",
+            "reference": null,
+            "shasum": null
         },
         "type": "npm-asset",
         "installation-source": "dist",
@@ -12618,7 +12698,9 @@
         "version_normalized": "1.8.1.0",
         "dist": {
             "type": "tar",
-            "url": "https://registry.npmjs.org/slick-carousel/-/slick-carousel-1.8.1.tgz"
+            "url": "https://registry.npmjs.org/slick-carousel/-/slick-carousel-1.8.1.tgz",
+            "reference": null,
+            "shasum": null
         },
         "type": "npm-asset",
         "installation-source": "dist",

@@ -1,23 +1,28 @@
-uuid: 39546438-93fa-41e1-b37c-e316f1be44ef
+uuid: 6e158f91-d3c7-4874-8315-943066184ba1
 langcode: en
 status: true
 dependencies:
   config:
+    - block_content.type.basic
     - field.storage.paragraph.field_block
     - paragraphs.paragraphs_type.block
 id: paragraph.block.field_block
 field_name: field_block
 entity_type: paragraph
 bundle: block
-label: Block
+label: 'Custom Blocks Created by Editors'
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: 'default:block'
+  handler: 'default:block_content'
   handler_settings:
-    target_bundles: null
+    target_bundles:
+      basic: basic
+    sort:
+      field: _none
     auto_create: false
+    auto_create_bundle: ''
 field_type: entity_reference
