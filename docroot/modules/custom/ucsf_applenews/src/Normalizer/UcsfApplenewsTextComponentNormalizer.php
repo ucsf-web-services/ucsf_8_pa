@@ -25,6 +25,24 @@ use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormalizer {
 
   /**
+   * List of div classes to remove from body content.
+   *
+   * @var array
+   */
+  protected $divClassBlacklist = [
+    'wysiwyg_quote',
+    'wysiwyg_twocols',
+    'wysiwyg_threecols',
+    'wysiwyg_dottedlist',
+    'cke-videolightbox-wrapper',
+    'about-cta',
+    'wysiwyg_cta',
+    'btn',
+    'border--blue',
+    'ckgreybox',
+  ];
+
+  /**
    * {@inheritdoc}
    *
    * @throws \Exception
@@ -186,7 +204,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
 
       // Toss out tags we don't care about.
       $text = $this->htmlValue($item->get('value')->getValue(),
-        '<blockquote><h1><h2><h3><h4><h5><h6><img><drupal-entity><iframe>');
+        '<blockquote><h1><h2><h3><h4><h5><h6><img><drupal-entity><iframe><div>');
 
       // Parse value and create components for blockquote, headers, etc.
       $inline_components = [];
@@ -196,6 +214,23 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
         throw new NotNormalizableValueException('Could not parse body HTML.');
       }
       $xp = new \DOMXPath($doc);
+
+      // Remove certain div's.
+      $xp_query = '//div';
+      /** @var \DOMElement $element */
+      foreach ($xp->query($xp_query) as $element) {
+        if (!$element->parentNode) {
+          continue;
+        }
+        if ($element->hasAttribute('class') &&
+          ($classes = preg_split('/\s\s+/', $element->getAttribute('class'))) &&
+          count(array_intersect($classes, $this->divClassBlacklist))
+        ) {
+          $element->parentNode->removeChild($element);
+        }
+      }
+
+      // Create components.
       $xp_query = '//blockquote|//h1|//h2|//h3|//h4|//h5|//h6|//img|//drupal-entity|//iframe';
       /** @var \DOMElement $element */
       foreach ($xp->query($xp_query) as $element) {
