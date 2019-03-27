@@ -135,7 +135,8 @@ a {
 .link--cta,
 .narrow-page a.link--cta,
 .full-width-page-wrapper a.link--cta,
-.link--cta a {
+.link--cta a,
+.full-width-page-banner__header a.link--cta {
   display: inline-block;
   background: url('../images/cta-arrow.svg') right center no-repeat transparent;
   background-size: 14px 10px;
@@ -171,11 +172,23 @@ span.ext {
   }
 }
 
-.button {
+.button,
+.full-width-page-wrapper .button,
+.full-width-page-wrapper .button:first-child,
+.full-width-page-wrapper .button:last-child,
+.layout-column .button:first-child,
+.layout-column .button:last-child,
+.narrow-page .button {
   @include button;
 }
 
-.button--alt {
+.button--alt,
+.full-width-page-wrapper .button--alt,
+.full-width-page-wrapper .button--alt:first-child,
+.full-width-page-wrapper .button--alt:last-child,
+.narrow-page .button--alt,
+.layout-column .button--alt:first-child,
+.layout-column .button--alt:last-child {
   @include button-alt;
 }
 
@@ -184,7 +197,13 @@ a.button-reverse,
 .button-reverse:link,
 a.button-reverse:link,
 .button-reverse:visited,
-a.button-reverse:visited {
+a.button-reverse:visited,
+.full-width-page-wrapper .button-reverse,
+.full-width-page-wrapper a.button-reverse,
+.full-width-page-wrapper .button-reverse:link,
+.full-width-page-wrapper a.button-reverse:link,
+.full-width-page-wrapper .button-reverse:visited,
+.full-width-page-wrapper a.button-reverse:visited {
   @include button;
 
   color: $white;
