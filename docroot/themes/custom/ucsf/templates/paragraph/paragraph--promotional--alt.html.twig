@@ -3,7 +3,7 @@
   'overlay-' ~ paragraph.field_textbox_background_color.entity.label|clean_class,
 ] %}
 
-<li{{ attributes.addClass(classes) }} style="background: url('{{ file_url(paragraph.field_image_media.entity.field_media_image.entity.uri.value) }}') no-repeat left bottom  / cover transparent;">
+<li{{ attributes.addClass(classes) }} style="background: url('{{ file_url(paragraph.field_image_media.entity.field_media_image.entity.uri.value | image_style('homepage_promo_list__card')) }}') no-repeat left bottom  / cover transparent;">
   <a class="promo-list__card-link" href="{{ paragraph.field_promo_cta.0.url }}">
     <h3 class="promo-list__card-title">{{ paragraph.field_title.value }}</h3>
     {{ content|without(

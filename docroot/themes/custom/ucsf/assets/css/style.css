@@ -3039,6 +3039,8 @@ figure.align-center figcaption {
   .homepage .promo-list__card .promo-list__card-more {
     margin-bottom: 0;
     margin-top: 12px; }
+  .homepage .promo-list__card .promo-list__card-two-content {
+    margin-top: auto; }
 
 .homepage .promo-list__card.promo-list__card-two a {
   -ms-flex-item-align: end;
@@ -5268,6 +5270,11 @@ a[href*="http"] .article-header__date {
     .promo-list__card .promo-list__card-title::after {
       background: #fff; }
 
+.promo-list__card-two {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center; }
+
 .promo-list__card-two,
 .homepage .promo-list__card-two,
 .promo-list__card-two a,
@@ -5279,17 +5286,39 @@ a[href*="http"] .article-header__date {
   color: #fff;
   text-decoration: none;
   width: 100%; }
+  .promo-list__card-two::after,
+  .homepage .promo-list__card-two::after,
+  .promo-list__card-two a::after,
+  .homepage .promo-list__card-two a::after {
+    display: none; }
 
-.promo-list__card-two-content {
+.promo-list__card-two-content,
+.promo-list__card-two-content:last-child,
+.promo-list__card-two-content:first-child {
   -ms-flex-line-pack: end;
       align-content: flex-end;
   margin-top: auto;
   padding: 24px;
-  width: 100%; }
-  .promo-list__card-two-content .promo-list__card-content .field-promo-text {
+  width: 100%;
+  margin-top: 100%; }
+  .promo-list__card-two-content .promo-list__card-content .field-promo-text,
+  .promo-list__card-two-content:last-child .promo-list__card-content .field-promo-text,
+  .promo-list__card-two-content:first-child .promo-list__card-content .field-promo-text {
     margin: 0; }
-  .promo-list__card-two-content p {
+  .promo-list__card-two-content p,
+  .promo-list__card-two-content:last-child p,
+  .promo-list__card-two-content:first-child p {
     margin: 0; }
+  .promo-list__card-two-content .promo-list__card-more,
+  .promo-list__card-two-content .promo-list__card-more:first-child
+.promo-list__card-more:last-child,
+  .promo-list__card-two-content:last-child .promo-list__card-more,
+  .promo-list__card-two-content:last-child .promo-list__card-more:first-child
+.promo-list__card-more:last-child,
+  .promo-list__card-two-content:first-child .promo-list__card-more,
+  .promo-list__card-two-content:first-child .promo-list__card-more:first-child
+.promo-list__card-more:last-child {
+    margin-top: 12px; }
 
 .homepage .promo-list__card.promo-list__card-two a {
   -ms-flex-item-align: end;

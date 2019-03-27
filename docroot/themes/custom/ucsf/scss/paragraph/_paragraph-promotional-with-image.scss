@@ -1,3 +1,9 @@
+.promo-list__card-two{
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
 .promo-list__card-two,
 .homepage .promo-list__card-two,
 .promo-list__card-two a,
@@ -8,13 +14,20 @@
   color: $white;
   text-decoration: none;
   width: 100%;
+
+  &::after {
+    display: none;
+  }
 }
 
-.promo-list__card-two-content {
+.promo-list__card-two-content,
+.promo-list__card-two-content:last-child,
+.promo-list__card-two-content:first-child {
   align-content: flex-end;
   margin-top: auto;
   padding: $space-three;
   width: 100%;
+  margin-top: 100%;
 
   .promo-list__card-content .field-promo-text {
     margin: 0;
@@ -22,6 +35,12 @@
 
   p {
     margin: 0;
+  }
+
+  .promo-list__card-more,
+  .promo-list__card-more:first-child
+  .promo-list__card-more:last-child {
+    margin-top: 12px;
   }
 }
 
