@@ -5,3 +5,277 @@
  * Contains ucsf_applenews.module.
  */
 
+use ChapterThree\AppleNewsAPI\Document\ContentInset;
+use ChapterThree\AppleNewsAPI\Document\Layouts\ComponentLayout;
+use ChapterThree\AppleNewsAPI\Document\Margin;
+use ChapterThree\AppleNewsAPI\Document\Styles\ComponentTextStyle;
+use ChapterThree\AppleNewsAPI\Document\Styles\TextStyle;
+
+/**
+ * Component layouts.
+ *
+ * Entity fields, etc. that are normalized via custom normalizers don't get
+ * their layout from config. I've centralized them here.
+ */
+
+/**
+ * Generates layout for gallery components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Layouts\ComponentLayout
+ */
+function _ucsf_applenews_gallery_component_layout() {
+  $layout = new ComponentLayout();
+  $layout
+    ->setColumnStart(1)
+    ->setColumnSpan(7)
+    ->setMargin(new Margin(25, 25))
+    ->setIgnoreDocumentMargin('both');
+  return $layout;
+}
+
+/**
+ * Generates layout for header components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Layouts\ComponentLayout
+ */
+function _ucsf_applenews_header_component_layout() {
+  $inset = new ContentInset();
+  $inset
+    ->setBottom(FALSE)
+    ->setLeft(FALSE)
+    ->setRight(FALSE)
+    ->setTop(FALSE);
+  $layout = new ComponentLayout();
+  $layout
+    ->setColumnStart(1)
+    ->setColumnSpan(5)
+    ->setMargin(new Margin(15, 15))
+    ->setContentInset($inset)
+    ->setIgnoreDocumentMargin('both')
+    ->setIgnoreDocumentGutter('none');
+  return $layout;
+}
+
+/**
+ * Generates layout for photo components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Layouts\ComponentLayout
+ */
+function _ucsf_applenews_photo_component_layout() {
+  $inset = new ContentInset();
+  $inset
+    ->setBottom(FALSE)
+    ->setLeft(FALSE)
+    ->setRight(FALSE)
+    ->setTop(FALSE);
+  $layout = new ComponentLayout();
+  $layout
+    ->setColumnSpan(9)
+    ->setMargin(new Margin(15, 15))
+    ->setContentInset($inset)
+    ->setIgnoreDocumentMargin('both')
+    ->setIgnoreDocumentGutter('both');
+  return $layout;
+}
+
+/**
+ * Generates layout for quote components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Layouts\ComponentLayout
+ */
+function _ucsf_applenews_quote_component_layout() {
+  $inset = new ContentInset();
+  $inset
+    ->setBottom(FALSE)
+    ->setLeft(FALSE)
+    ->setRight(FALSE)
+    ->setTop(FALSE);
+  $layout = new ComponentLayout();
+  $layout
+    ->setColumnStart(3)
+    ->setColumnSpan(4)
+    ->setMargin(new Margin(15, 15))
+    ->setContentInset($inset);
+  return $layout;
+}
+
+/**
+ * Generates layout for title components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Layouts\ComponentLayout
+ */
+function _ucsf_applenews_title_component_layout() {
+  $inset = new ContentInset();
+  $inset
+    ->setBottom(FALSE)
+    ->setLeft(FALSE)
+    ->setRight(FALSE)
+    ->setTop(FALSE);
+  $layout = new ComponentLayout();
+  $layout
+    ->setColumnSpan(7)
+    ->setMargin(new Margin(15, 8))
+    ->setContentInset($inset)
+    ->setIgnoreDocumentMargin('none')
+    ->setIgnoreDocumentGutter('none');
+  return $layout;
+}
+
+/**
+ * Generates layout for video components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Layouts\ComponentLayout
+ */
+function _ucsf_applenews_video_component_layout() {
+  $inset = new ContentInset();
+  $inset
+    ->setBottom(FALSE)
+    ->setLeft(FALSE)
+    ->setRight(FALSE)
+    ->setTop(FALSE);
+  $layout = new ComponentLayout();
+  $layout
+    ->setColumnSpan(9)
+    ->setMargin(new Margin(15, 15))
+    ->setContentInset($inset)
+    ->setIgnoreDocumentMargin('both')
+    ->setIgnoreDocumentGutter('both');
+  return $layout;
+}
+
+/**
+ * Component text styles.
+ *
+ * @todo Migrate to config via admin/config/services/applenews/text-style/add
+ */
+
+/**
+ * Generates base link style for components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Styles\TextStyle
+ */
+function _ucsf_applenews_base_component_link_style() {
+  $link_style = new TextStyle();
+  $link_style
+    ->setFontName('HelveticaNeue-Medium')
+    ->setFontSize(18)
+    ->setTextColor('#0071AD')
+    ->setUnderline(FALSE);
+  return $link_style;
+}
+
+/**
+ * Generates base text style for components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Styles\ComponentTextStyle
+ */
+function _ucsf_applenews_base_component_text_style() {
+  $style = new ComponentTextStyle();
+  $style
+    ->setFontName('HelveticaNeue')
+    ->setFontSize(18)
+    ->setHyphenation(FALSE)
+    ->setLineHeight(26)
+    ->setStrikethrough(FALSE)
+    ->setTextAlignment('left')
+    ->setTextColor('#000000')
+    ->setTextTransform('none')
+    ->setUnderline(FALSE)
+    ->setVerticalAlignment('baseline');
+  return $style;
+}
+
+/**
+ * Generates text style for author components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Styles\ComponentTextStyle
+ */
+function _ucsf_applenews_author_component_text_style() {
+  $style = _ucsf_applenews_base_component_text_style();
+  $style
+    ->setFontName('HelveticaNeue-Italic')
+    ->setFontSize(14)
+    ->setTextColor('#646464');
+  return $style;
+}
+
+/**
+ * Generates text style for body components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Styles\ComponentTextStyle
+ */
+function _ucsf_applenews_body_component_text_style() {
+  $style = _ucsf_applenews_base_component_text_style();
+  $style
+    ->setLinkStyle(_ucsf_applenews_base_component_link_style())
+    ->setFontName('HelveticaNeue-Italic')
+    ->setFontSize(14)
+    ->setTextColor('#646464');
+  return $style;
+}
+
+/**
+ * Generates text style for heading components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Styles\ComponentTextStyle
+ */
+function _ucsf_applenews_heading_component_text_style($level) {
+  $style = _ucsf_applenews_base_component_text_style();
+  $style
+    ->setFontName('HelveticaNeue-Bold');
+  switch ($level) {
+
+    case 1:
+      $style->setFontSize(24);
+      break;
+
+    case 2:
+      $style->setFontSize(20);
+      break;
+
+    case 3:
+      $style->setFontSize(18);
+      break;
+
+    case 4:
+      $style->setFontSize(14);
+      break;
+
+    case 5:
+      $style->setFontSize(12);
+      break;
+
+    case 6:
+      $style->setFontSize(10);
+      break;
+
+  }
+  return $style;
+}
+
+/**
+ * Generates text style for title components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Styles\ComponentTextStyle
+ */
+function _ucsf_applenews_title_component_text_style() {
+  $style = _ucsf_applenews_base_component_text_style();
+  $style
+    ->setFontName('HelveticaNeue-Light')
+    ->setFontSize(40);
+  return $style;
+}
+
+/**
+ * Generates text style for quote components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Styles\ComponentTextStyle
+ */
+function _ucsf_applenews_title_component_quote_style() {
+  $style = _ucsf_applenews_base_component_text_style();
+  $style
+    ->setFontName('HelveticaNeue-Bold')
+    ->setFontSize(48)
+    ->setTextAlignment('center');
+  return $style;
+}

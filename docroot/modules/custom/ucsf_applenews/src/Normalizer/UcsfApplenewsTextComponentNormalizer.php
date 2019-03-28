@@ -11,9 +11,6 @@ use ChapterThree\AppleNewsAPI\Document\Components\Photo;
 use ChapterThree\AppleNewsAPI\Document\Components\Quote;
 use ChapterThree\AppleNewsAPI\Document\Components\Video;
 use ChapterThree\AppleNewsAPI\Document\GalleryItem;
-use ChapterThree\AppleNewsAPI\Document\Margin;
-use ChapterThree\AppleNewsAPI\Document\Styles\ComponentTextStyle;
-use ChapterThree\AppleNewsAPI\Document\Styles\TextStyle;
 use Drupal\applenews\Normalizer\ApplenewsTextComponentNormalizer;
 use Drupal\Core\TypedData\Exception\MissingDataException;
 use Drupal\Core\Url;
@@ -103,8 +100,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             $text .= $this->htmlValue($item->get('value')->getValue());
           }
           $component = new Quote($text);
+          $component->setTextStyle(
+            _ucsf_applenews_title_component_quote_style());
           $component->setLayout(
-            $this->getComponentLayout($data['component_layout']));
+            _ucsf_applenews_quote_component_layout());
           $components[] = $component;
           break;
 
@@ -126,7 +125,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
                 }
               }
               $component->setLayout(
-                $this->getComponentLayout($data['component_layout']));
+                _ucsf_applenews_video_component_layout());
               $components[] = $component;
               break;
             }
@@ -167,7 +166,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
           }
           $component = new Gallery($gallery_items);
           $component->setLayout(
-            $this->getComponentLayout($data['component_layout']));
+            _ucsf_applenews_gallery_component_layout());
           $components[] = $component;
           break;
 
@@ -241,6 +240,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
           case 'blockquote':
             if ($value = $this->textValue($element->textContent)) {
               $component = new Quote($value);
+              $component->setTextStyle(
+                _ucsf_applenews_title_component_quote_style());
+              $component->setLayout(
+                _ucsf_applenews_quote_component_layout());
             }
             break;
 
@@ -248,6 +251,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             if ($value = $this->textValue($element->textContent)) {
               $component = new Heading($value);
               $component->setRole('heading1');
+              $component->setTextStyle(
+                _ucsf_applenews_heading_component_text_style(1));
+              $component->setLayout(
+                _ucsf_applenews_header_component_layout());
             }
             break;
 
@@ -255,6 +262,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             if ($value = $this->textValue($element->textContent)) {
               $component = new Heading($value);
               $component->setRole('heading2');
+              $component->setTextStyle(
+                _ucsf_applenews_heading_component_text_style(2));
+              $component->setLayout(
+                _ucsf_applenews_header_component_layout());
             }
             break;
 
@@ -262,6 +273,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             if ($value = $this->textValue($element->textContent)) {
               $component = new Heading($value);
               $component->setRole('heading3');
+              $component->setTextStyle(
+                _ucsf_applenews_heading_component_text_style(3));
+              $component->setLayout(
+                _ucsf_applenews_header_component_layout());
             }
             break;
 
@@ -269,6 +284,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             if ($value = $this->textValue($element->textContent)) {
               $component = new Heading($value);
               $component->setRole('heading4');
+              $component->setTextStyle(
+                _ucsf_applenews_heading_component_text_style(4));
+              $component->setLayout(
+                _ucsf_applenews_header_component_layout());
             }
             break;
 
@@ -276,6 +295,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             if ($value = $this->textValue($element->textContent)) {
               $component = new Heading($value);
               $component->setRole('heading5');
+              $component->setTextStyle(
+                _ucsf_applenews_heading_component_text_style(5));
+              $component->setLayout(
+                _ucsf_applenews_header_component_layout());
             }
             break;
 
@@ -283,6 +306,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             if ($value = $this->textValue($element->textContent)) {
               $component = new Heading($value);
               $component->setRole('heading6');
+              $component->setTextStyle(
+                _ucsf_applenews_heading_component_text_style(6));
+              $component->setLayout(
+                _ucsf_applenews_header_component_layout());
             }
             break;
 
@@ -314,12 +341,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
                 }
               }
               $component = new Photo($url);
-              $layout = $this->getComponentLayout($data['component_layout']);
-              $layout
-                ->setIgnoreDocumentGutter('both')
-                ->setIgnoreDocumentMargin('both')
-                ->setMargin(new Margin(15, 15));
-              $component->setLayout($layout);
+              $component->setLayout(_ucsf_applenews_photo_component_layout());
             }
             break;
 
@@ -359,6 +381,8 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
                           $component->setCaption($caption);
                         }
                       }
+                      $component->setLayout(
+                        _ucsf_applenews_photo_component_layout());
                     }
                     else {
                       throw new \Exception(
@@ -371,6 +395,8 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
                   $video_field = $media->get('field_media_video_embed_field');
                   if ($url = $video_field->get(0)->getString()) {
                     $component = $this->getVideoComponent($url);
+                    $component->setLayout(
+                      _ucsf_applenews_video_component_layout());
                   }
                 }
               }
@@ -467,26 +493,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       $append_body = function () use (&$current_body, &$components, &$data) {
         if (!empty($current_body)) {
           $component = new Body($current_body);
-          $link_style = new TextStyle();
-          $link_style
-            ->setFontName('HelveticaNeue-Medium')
-            ->setFontSize(18)
-            ->setTextColor('#0071AD')
-            ->setUnderline(FALSE);
-          $style = new ComponentTextStyle();
-          $style
-            ->setFontName('HelveticaNeue')
-            ->setFontSize(18)
-            ->setHyphenation(FALSE)
-            ->setLineHeight(26)
-            ->setLinkStyle($link_style)
-            ->setStrikethrough(FALSE)
-            ->setTextAlignment('left')
-            ->setTextColor('#000')
-            ->setTextTransform('none')
-            ->setUnderline(FALSE)
-            ->setVerticalAlignment('baseline');
-          $component->setTextStyle($style);
+          $component->setTextStyle(_ucsf_applenews_base_component_text_style());
           $component->setFormat($data['component_data']['format']);
           $component->setLayout($this->getComponentLayout($data['component_layout']));
           $components[] = $component;
@@ -559,20 +566,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
     $component = new Byline("By " . implode(', ', $names) .
       ' on ' . $date . '.');
 
-    // Text style.
-    $style = new ComponentTextStyle();
-    $style
-      ->setFontName("HelveticaNeue-Italic")
-      ->setFontSize(14)
-      ->setHyphenation(FALSE)
-      ->setStrikethrough(FALSE)
-      ->setTextAlignment('left')
-      ->setTextColor('#646464')
-      ->setTextTransform('none')
-      ->setUnderline(FALSE)
-      ->setVerticalAlignment('baseline');
-    $component->setTextStyle($style);
-
+    $component->setTextStyle(_ucsf_applenews_author_component_text_style());
     $component->setFormat($data['component_data']['format']);
     $component->setLayout($this->getComponentLayout($data['component_layout']));
 
