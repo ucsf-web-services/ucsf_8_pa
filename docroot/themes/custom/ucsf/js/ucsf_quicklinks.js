@@ -11,10 +11,12 @@
     attach: function (context) {
   
       $(".quicklinks-trigger, .quicklinks-close", context).click(function() {
-        $(".quicklinks-menu").toggleClass('js-quicklinks-open');
+        //$(".quicklinks-menu").toggleClass('js-quicklinks-open');
         $(".quicklinks").toggleClass('js-quicklinks-open');
         $(".header-region").toggleClass('js-quicklinks-open');
       });
+
+
 
     }
   };

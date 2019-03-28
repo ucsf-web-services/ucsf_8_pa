@@ -3,7 +3,6 @@
 
   &:before {
     @include transition;
-    transition: 300ms cubic-bezier(0.77, 0, 0.175, 1) all;
     background-color: rgba(18, 26, 49, 0.25);
     left: 0;
     display: block;
@@ -13,7 +12,6 @@
     top: 0;
     width: 100%;
     z-index: $z-quicklinks-open-page;
-
   }
 
   &.js-quicklinks-open {
@@ -47,8 +45,10 @@
   }
 
   &:hover {
-    right: calc((100% - 42px) * -1);
-    visibility: visible;
+    //right: calc((100% - 42px) * -1);
+    //.quicklinks-menu {
+      //visibility: visible;
+    //}
   }
 
   &.js-quicklinks-open {
@@ -65,12 +65,21 @@
     @include breakpoint($bp-medium) {
       width: 50%;
     }
+
+    .quicklinks-menu {
+      visibility: visible;
+    }
+
+    .quicklinks-trigger:hover {
+      //animation: none;
+      left:0;
+    }
   }
 }
 
 .quicklinks-trigger {
-  // @include transition;
-  transition: 500ms cubic-bezier(0.77, 0, 0.175, 1) both;
+  @include transition;
+  //transition: 500ms cubic-bezier(0.77, 0, 0.175, 1) both;
   background: $white;
   text-align: center;
   font-size: $font-size-xxsm;
@@ -86,6 +95,11 @@
   writing-mode: vertical-rl;
   width: auto;
   z-index: $z-quicklinks-menu;
+
+  &:hover {
+    left: -10px;
+    border-right: 10px solid $c-navy;
+  }
 
   .fa-caret-up {
     @include breakpoint($bp-medium) {
@@ -125,14 +139,6 @@
   @include breakpoint($bp-medium) {
     display: table;
     padding: 0;
-  }
-
-  .quicklinks:hover & {
-    visibility: visible;
-  }
-
-  &.js-quicklinks-open {
-    visibility: visible;
   }
 
   a {
