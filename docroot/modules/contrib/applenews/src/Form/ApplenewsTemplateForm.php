@@ -43,12 +43,12 @@ class ApplenewsTemplateForm extends EntityForm {
    *
    * @param \Drupal\applenews\Plugin\ApplenewsComponentTypeManager $component_type_manager
    *   Component type manager.
-   * @param \Drupal\Core\Entity\EntityTypeManager $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity type manager.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer.
    */
-  public function __construct(ApplenewsComponentTypeManager $component_type_manager, EntityTypeManager $entity_type_manager, RendererInterface $renderer) {
+  public function __construct(ApplenewsComponentTypeManager $component_type_manager, EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer) {
     $this->applenewsComponentTypeManager = $component_type_manager;
     $this->entityTypeManager = $entity_type_manager;
     $this->renderer = $renderer;
