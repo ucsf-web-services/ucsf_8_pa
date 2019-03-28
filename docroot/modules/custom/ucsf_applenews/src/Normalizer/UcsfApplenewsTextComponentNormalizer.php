@@ -22,6 +22,33 @@ use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormalizer {
 
   /**
+   * Markup elements that can't be empty.
+   *
+   * @var array
+   */
+  protected $elementsNotEmpty = [
+    'p',
+    'strong',
+    'b',
+    'em',
+    'i',
+    'a',
+    'ul',
+    'ol',
+    'li',
+    'sub',
+    'sup',
+    'del',
+    's',
+    'pre',
+    'code',
+    'samp',
+    'footer',
+    'aside',
+    'blockquote',
+  ];
+
+  /**
    * List of div classes to remove from body content.
    *
    * @var array
@@ -261,6 +288,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
    * Parse markup into a series of components.
    */
   protected function normalizeMarkup($data, $html) {
+    $components = [];
 
     // Toss out tags we don't care about.
     $html = $this->htmlValue($html,
@@ -548,6 +576,15 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
     };
     array_map($tokenize, $tree);
 
+    // Remove empty elements.
+    $xp_query = '/html/body/*';
+    /** @var \DOMElement $element */
+    foreach ($xp->query($xp_query) as $element) {
+      if ($this->empty($element)) {
+        $element->parentNode->removeChild($element);
+      }
+    }
+
     // Generate body components and assemble all components into return value.
     $xp_query = '/html/body/*';
     $current_body = '';
@@ -601,11 +638,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
    */
   protected function htmlValue($str, $additional_elements = '') {
     $allowed_elements = self::ALLOWED_HTML_ELEMENTS . $additional_elements;
-    return trim(
+    return $this->trim(
       html_entity_decode(
         strip_tags($str, $allowed_elements)
-      ),
-      " \t\n\r\0\x0B\xC2\xA0"
+      )
     );
   }
 
@@ -613,12 +649,45 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
    * Strips tags and html entities, trims whitespace.
    */
   protected function textValue($str) {
-    return trim(
+    return $this->trim(
       html_entity_decode(
         strip_tags($str)
-      ),
-      " \t\n\r\0\x0B\xC2\xA0"
+      )
     );
+  }
+
+  /**
+   * Trims whitespace.
+   */
+  protected function trim($str) {
+    return trim($str, " \t\n\r\0\x0B\xC2\xA0");
+  }
+
+  /**
+   * Detects empty DOM elements.
+   */
+  protected function empty(\DOMNode $element) {
+    // This element can be empty.
+    if ($element instanceof \DOMElement &&
+      !in_array($element->tagName, $this->elementsNotEmpty)
+    ) {
+      return FALSE;
+    }
+    if ($element->childNodes) {
+      /** @var \DOMElement $child */
+      foreach ($element->childNodes as $child) {
+        // Contains text content.
+        if ($child instanceof \DOMText && $this->trim($child->textContent) != ''
+        ) {
+          return FALSE;
+        }
+        // Recurse.
+        elseif (!$this->empty($child)) {
+          return FALSE;
+        }
+      }
+    }
+    return TRUE;
   }
 
   /**
