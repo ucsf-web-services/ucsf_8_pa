@@ -4,8 +4,6 @@ namespace Drupal\ucsf_applenews\Normalizer;
 
 use ChapterThree\AppleNewsAPI\Document\Components\Photo;
 use Drupal\applenews\Normalizer\ApplenewsImageComponentNormalizer;
-use Drupal\Core\TypedData\Exception\MissingDataException;
-use Drupal\Driver\Exception\Exception;
 
 /**
  * Override ApplenewsImageComponentNormalizer for UCSF exports.
