@@ -674,10 +674,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       return FALSE;
     }
     if ($element->childNodes) {
-      /** @var \DOMElement $child */
       foreach ($element->childNodes as $child) {
         // Contains text content.
-        if ($child instanceof \DOMText && $this->trim($child->textContent) != ''
+        if ($child instanceof \DOMText &&
+          $this->trim($child->textContent) != ''
         ) {
           return FALSE;
         }
