@@ -9,6 +9,7 @@ use ChapterThree\AppleNewsAPI\Document\ContentInset;
 use ChapterThree\AppleNewsAPI\Document\Layouts\ComponentLayout;
 use ChapterThree\AppleNewsAPI\Document\Margin;
 use ChapterThree\AppleNewsAPI\Document\Styles\ComponentTextStyle;
+use ChapterThree\AppleNewsAPI\Document\Styles\DropCapStyle;
 use ChapterThree\AppleNewsAPI\Document\Styles\TextStyle;
 
 /**
@@ -173,9 +174,7 @@ function _ucsf_applenews_base_component_text_style() {
   $style = new ComponentTextStyle();
   $style
     ->setFontName('HelveticaNeue')
-    ->setFontSize(18)
     ->setHyphenation(FALSE)
-    ->setLineHeight(26)
     ->setStrikethrough(FALSE)
     ->setTextAlignment('left')
     ->setTextColor('#000000')
@@ -209,8 +208,16 @@ function _ucsf_applenews_body_component_text_style() {
   $style
     ->setLinkStyle(_ucsf_applenews_base_component_link_style())
     ->setFontName('HelveticaNeue-Italic')
-    ->setFontSize(14)
+    ->setFontSize(18)
+    ->setLineHeight(26)
     ->setTextColor('#646464');
+  $dropcap_style = new DropCapStyle(2);
+  $dropcap_style
+    ->setNumberOfCharacters(1)
+    ->setFontName('HelveticaNeue-Light')
+    ->setTextColor('#0071AD')
+    ->setBackgroundColor('#ffffff');
+  $style->setDropCapStyle($dropcap_style);
   return $style;
 }
 

@@ -591,7 +591,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
     $append_body = function () use (&$current_body, &$components, &$data) {
       if (!empty($current_body)) {
         $component = new Body($current_body);
-        $component->setTextStyle(_ucsf_applenews_base_component_text_style());
+        $component->setTextStyle(_ucsf_applenews_body_component_text_style());
         $component->setFormat($data['component_data']['format']);
         $component->setLayout($this->getComponentLayout($data['component_layout']));
         $components[] = $component;
