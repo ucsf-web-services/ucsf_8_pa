@@ -133,15 +133,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
           break;
 
         case 'text_block':
-          $text = '';
           foreach ($paragraph->get('field_text_body') as $item) {
-            $text .= $this->htmlValue($item->get('value')->getValue());
+            $components = array_merge($components,
+              $this->normalizeMarkup($data, $item->get('value')->getValue()));
           }
-          $component = new Body($text);
-          $component->setFormat('html');
-          $component->setLayout(
-            $this->getComponentLayout($data['component_layout']));
-          $components[] = $component;
           break;
 
         case 'gallery':
@@ -201,320 +196,9 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
     $field = $entity->get($field_name);
     foreach ($field as $item) {
 
-      // Toss out tags we don't care about.
-      $text = $this->htmlValue($item->get('value')->getValue(),
-        '<blockquote><h1><h2><h3><h4><h5><h6><img><drupal-entity><iframe><div>');
+      $components = array_merge($components,
+        $this->normalizeMarkup($data, $item->get('value')->getValue()));
 
-      // Parse value and create components for blockquote, headers, etc.
-      $inline_components = [];
-      $doc = new \DOMDocument();
-      $libxml_previous_state = libxml_use_internal_errors(TRUE);
-      if (!$doc->loadHTML('<?xml encoding="utf-8" ?>' . $text)) {
-        throw new NotNormalizableValueException('Could not parse body HTML.');
-      }
-      $xp = new \DOMXPath($doc);
-
-      // Remove certain div's.
-      $xp_query = '//div';
-      /** @var \DOMElement $element */
-      foreach ($xp->query($xp_query) as $element) {
-        if (!$element->parentNode) {
-          continue;
-        }
-        if ($element->hasAttribute('class') &&
-          ($classes = preg_split('/\s\s+/', $element->getAttribute('class'))) &&
-          count(array_intersect($classes, $this->divClassBlacklist))
-        ) {
-          $element->parentNode->removeChild($element);
-        }
-      }
-
-      // Create components.
-      $xp_query = '//blockquote|//h1|//h2|//h3|//h4|//h5|//h6|//img|//drupal-entity|//iframe';
-      /** @var \DOMElement $element */
-      foreach ($xp->query($xp_query) as $element) {
-        $component = NULL;
-
-        switch ($element->tagName) {
-
-          case 'blockquote':
-            if ($value = $this->textValue($element->textContent)) {
-              $component = new Quote($value);
-              $component->setTextStyle(
-                _ucsf_applenews_title_component_quote_style());
-              $component->setLayout(
-                _ucsf_applenews_quote_component_layout());
-            }
-            break;
-
-          case 'h1':
-            if ($value = $this->textValue($element->textContent)) {
-              $component = new Heading($value);
-              $component->setRole('heading1');
-              $component->setTextStyle(
-                _ucsf_applenews_heading_component_text_style(1));
-              $component->setLayout(
-                _ucsf_applenews_header_component_layout());
-            }
-            break;
-
-          case 'h2':
-            if ($value = $this->textValue($element->textContent)) {
-              $component = new Heading($value);
-              $component->setRole('heading2');
-              $component->setTextStyle(
-                _ucsf_applenews_heading_component_text_style(2));
-              $component->setLayout(
-                _ucsf_applenews_header_component_layout());
-            }
-            break;
-
-          case 'h3':
-            if ($value = $this->textValue($element->textContent)) {
-              $component = new Heading($value);
-              $component->setRole('heading3');
-              $component->setTextStyle(
-                _ucsf_applenews_heading_component_text_style(3));
-              $component->setLayout(
-                _ucsf_applenews_header_component_layout());
-            }
-            break;
-
-          case 'h4':
-            if ($value = $this->textValue($element->textContent)) {
-              $component = new Heading($value);
-              $component->setRole('heading4');
-              $component->setTextStyle(
-                _ucsf_applenews_heading_component_text_style(4));
-              $component->setLayout(
-                _ucsf_applenews_header_component_layout());
-            }
-            break;
-
-          case 'h5':
-            if ($value = $this->textValue($element->textContent)) {
-              $component = new Heading($value);
-              $component->setRole('heading5');
-              $component->setTextStyle(
-                _ucsf_applenews_heading_component_text_style(5));
-              $component->setLayout(
-                _ucsf_applenews_header_component_layout());
-            }
-            break;
-
-          case 'h6':
-            if ($value = $this->textValue($element->textContent)) {
-              $component = new Heading($value);
-              $component->setRole('heading6');
-              $component->setTextStyle(
-                _ucsf_applenews_heading_component_text_style(6));
-              $component->setLayout(
-                _ucsf_applenews_header_component_layout());
-            }
-            break;
-
-          case 'img':
-            if ($element->hasAttribute('src')) {
-              $url = $element->getAttribute('src');
-              $url_parsed = parse_url($url);
-              if (empty($url_parsed['host'])) {
-                try {
-                  $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
-                }
-                catch (\InvalidArgumentException $e) {
-                  \Drupal::logger('ucsf_applenews')->error('throwing out HTML containing invalid src attribute ' . $doc->saveHTML($element));
-                  continue;
-                }
-                $url_parsed = parse_url($url);
-                if (isset($url_parsed['query'])) {
-                  parse_str($url_parsed['query'], $qs);
-                  if (isset($qs['itok'])) {
-                    unset($qs['itok']);
-                    if (empty($qs)) {
-                      unset($url_parsed['query']);
-                    }
-                    else {
-                      $url_parsed['query'] = http_build_query($qs);
-                    }
-                    $url = $this->unParseUrl($url_parsed);
-                  }
-                }
-              }
-              $component = new Photo($url);
-              $component->setLayout(_ucsf_applenews_photo_component_layout());
-            }
-            break;
-
-          case 'iframe':
-            if ($element->hasAttribute('src')) {
-              $url = $element->getAttribute('src');
-              $component = $this->getVideoComponent($url);
-            }
-            break;
-
-          case 'drupal-entity':
-            if ($element->hasAttribute('data-entity-type') &&
-              $element->getAttribute('data-entity-type') == 'media' &&
-              $element->hasAttribute('data-entity-uuid')
-            ) {
-              $uuid = $element->getAttribute('data-entity-uuid');
-              $media = \Drupal::entityTypeManager()->getStorage('media')
-                ->loadByProperties(['uuid' => $uuid]);
-              if ($media) {
-                /** @var \Drupal\media\Entity\Media $media */
-                $media = reset($media);
-                if ($media->hasField('field_media_image')) {
-                  /** @var \Drupal\file\Plugin\Field\FieldType\FileFieldItemList $file */
-                  $file = $media->get('field_media_image');
-                  /** @var \Drupal\file\Entity\File $file */
-                  $file = $file->entity;
-                  if ($file) {
-                    $mimetype = explode('/', $file->getMimeType());
-                    if (@$mimetype[0] == 'image' &&
-                      in_array(@$mimetype[1], ['jpeg', 'gif', 'png'])
-                    ) {
-                      $component = new Photo($file->url());
-                      if ($element->hasAttribute('data-caption')) {
-                        $caption = $this->textValue(
-                          $element->getAttribute('data-caption'));
-                        if ($caption) {
-                          $component->setCaption($caption);
-                        }
-                      }
-                      $component->setLayout(
-                        _ucsf_applenews_photo_component_layout());
-                    }
-                    else {
-                      throw new \Exception(
-                        'Unexpected file mime type ' . $file->getMimeType());
-                    }
-                  }
-                }
-                elseif ($media->hasField('field_media_video_embed_field')) {
-                  /** @var \Drupal\Core\Field\FieldItemList $video_field */
-                  $video_field = $media->get('field_media_video_embed_field');
-                  if ($url = $video_field->get(0)->getString()) {
-                    $component = $this->getVideoComponent($url);
-                    $component->setLayout(
-                      _ucsf_applenews_video_component_layout());
-                  }
-                }
-              }
-            }
-            break;
-
-        }
-
-        $inline_component = new \stdClass();
-        $inline_component->element = $element;
-        $inline_component->component = $component;
-        $inline_component->children = [];
-        $inline_components[spl_object_hash($element)] = $inline_component;
-
-      }
-
-      // Convert $inline_components into a tree.
-      $tree = [];
-      foreach ($inline_components as $key => $inline_component) {
-        $ancestor = $inline_component->element->parentNode;
-        while ($ancestor) {
-          $ancestor_key = spl_object_hash($ancestor);
-          if (isset($inline_components[$ancestor_key])) {
-            $ancestor_component = $inline_components[$ancestor_key];
-            $ancestor_component->children[$key] = $inline_component;
-            continue 2;
-          }
-          $ancestor = $ancestor->parentNode;
-        }
-        $tree[$key] = $inline_component;
-      }
-
-      // Replace original element with a token element.
-      $tokenize = function ($inline_component) use (&$tokenize, $doc) {
-        foreach ($inline_component->children as $child) {
-          $tokenize($child);
-        }
-        /** @var \ChapterThree\AppleNewsAPI\Document\Components\Component $component */
-        $component = $inline_component->component;
-        /** @var \DOMElement $element */
-        $element = $inline_component->element;
-        if ($component) {
-
-          $key = spl_object_hash($element);
-          $token = $doc->createElement('applenews_component');
-          $token->setAttribute('id', $key);
-
-          // Replace with token, making sure the token is at the root level of
-          // the value html.
-          if ($element->parentNode->tagName == 'body') {
-            $element->parentNode->replaceChild($token, $element);
-          }
-          // Nested, insert token after top level ancestor.
-          else {
-            if (!$ancestor = $element->parentNode) {
-              throw new \Exception(
-                'Could not determine parent node for element ' .
-                $doc->saveHTML($element));
-            }
-            while ($ancestor->parentNode &&
-              $ancestor->parentNode->tagName != 'body'
-            ) {
-              $ancestor = $ancestor->parentNode;
-            }
-            if (!$ancestor->parentNode) {
-              throw new \Exception(
-                'Could not determine parent node for element ' .
-                $doc->saveHTML($element));
-            }
-            // Insert after ancestor.
-            if ($ancestor->nextSibling) {
-              $ancestor->parentNode->insertBefore(
-                $token, $ancestor->nextSibling);
-              $element->parentNode->removeChild($element);
-            }
-            // Append to root element.
-            else {
-              $ancestor->parentNode->appendChild($token);
-              $element->parentNode->removeChild($element);
-            }
-          }
-
-        }
-        // Remove even if no component generated.
-        else {
-          $element->parentNode->removeChild($element);
-        }
-      };
-      array_map($tokenize, $tree);
-
-      // Generate body components and assemble all components into return value.
-      $xp_query = '/html/body/*';
-      $current_body = '';
-      $append_body = function () use (&$current_body, &$components, &$data) {
-        if (!empty($current_body)) {
-          $component = new Body($current_body);
-          $component->setTextStyle(_ucsf_applenews_base_component_text_style());
-          $component->setFormat($data['component_data']['format']);
-          $component->setLayout($this->getComponentLayout($data['component_layout']));
-          $components[] = $component;
-        }
-        $current_body = '';
-      };
-      /** @var \DOMElement $element */
-      foreach ($xp->query($xp_query) as $element) {
-        if ($element->tagName == 'applenews_component') {
-          $append_body();
-          $id = $element->getAttribute('id');
-          $components[] = $inline_components[$id]->component;
-        }
-        else {
-          $current_body .= $this->htmlValue($doc->saveHTML($element));
-        }
-      }
-      $append_body();
-
-      libxml_clear_errors();
-      libxml_use_internal_errors($libxml_previous_state);
     }
 
     return $components;
@@ -571,6 +255,329 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
     $component->setLayout($this->getComponentLayout($data['component_layout']));
 
     return $component;
+  }
+
+  /**
+   * Parse markup into a series of components.
+   */
+  protected function normalizeMarkup($data, $html) {
+
+    // Toss out tags we don't care about.
+    $html = $this->htmlValue($html,
+      '<blockquote><h1><h2><h3><h4><h5><h6><img><drupal-entity><iframe><div>');
+
+    // Parse value and create components for blockquote, headers, etc.
+    $inline_components = [];
+    $doc = new \DOMDocument();
+    $libxml_previous_state = libxml_use_internal_errors(TRUE);
+    if (!$doc->loadHTML('<?xml encoding="utf-8" ?>' . $html)) {
+      throw new NotNormalizableValueException('Could not parse body HTML.');
+    }
+    $xp = new \DOMXPath($doc);
+
+    // Remove certain div's.
+    $xp_query = '//div';
+    /** @var \DOMElement $element */
+    foreach ($xp->query($xp_query) as $element) {
+      if (!$element->parentNode) {
+        continue;
+      }
+      if ($element->hasAttribute('class') &&
+        ($classes = preg_split('/\s\s+/', $element->getAttribute('class'))) &&
+        count(array_intersect($classes, $this->divClassBlacklist))
+      ) {
+        $element->parentNode->removeChild($element);
+      }
+    }
+
+    // Create components.
+    $xp_query = '//blockquote|//h1|//h2|//h3|//h4|//h5|//h6|//img|//drupal-entity|//iframe';
+    /** @var \DOMElement $element */
+    foreach ($xp->query($xp_query) as $element) {
+      $component = NULL;
+
+      switch ($element->tagName) {
+
+        case 'blockquote':
+          if ($value = $this->textValue($element->textContent)) {
+            $component = new Quote($value);
+            $component->setTextStyle(
+              _ucsf_applenews_title_component_quote_style());
+            $component->setLayout(
+              _ucsf_applenews_quote_component_layout());
+          }
+          break;
+
+        case 'h1':
+          if ($value = $this->textValue($element->textContent)) {
+            $component = new Heading($value);
+            $component->setRole('heading1');
+            $component->setTextStyle(
+              _ucsf_applenews_heading_component_text_style(1));
+            $component->setLayout(
+              _ucsf_applenews_header_component_layout());
+          }
+          break;
+
+        case 'h2':
+          if ($value = $this->textValue($element->textContent)) {
+            $component = new Heading($value);
+            $component->setRole('heading2');
+            $component->setTextStyle(
+              _ucsf_applenews_heading_component_text_style(2));
+            $component->setLayout(
+              _ucsf_applenews_header_component_layout());
+          }
+          break;
+
+        case 'h3':
+          if ($value = $this->textValue($element->textContent)) {
+            $component = new Heading($value);
+            $component->setRole('heading3');
+            $component->setTextStyle(
+              _ucsf_applenews_heading_component_text_style(3));
+            $component->setLayout(
+              _ucsf_applenews_header_component_layout());
+          }
+          break;
+
+        case 'h4':
+          if ($value = $this->textValue($element->textContent)) {
+            $component = new Heading($value);
+            $component->setRole('heading4');
+            $component->setTextStyle(
+              _ucsf_applenews_heading_component_text_style(4));
+            $component->setLayout(
+              _ucsf_applenews_header_component_layout());
+          }
+          break;
+
+        case 'h5':
+          if ($value = $this->textValue($element->textContent)) {
+            $component = new Heading($value);
+            $component->setRole('heading5');
+            $component->setTextStyle(
+              _ucsf_applenews_heading_component_text_style(5));
+            $component->setLayout(
+              _ucsf_applenews_header_component_layout());
+          }
+          break;
+
+        case 'h6':
+          if ($value = $this->textValue($element->textContent)) {
+            $component = new Heading($value);
+            $component->setRole('heading6');
+            $component->setTextStyle(
+              _ucsf_applenews_heading_component_text_style(6));
+            $component->setLayout(
+              _ucsf_applenews_header_component_layout());
+          }
+          break;
+
+        case 'img':
+          if ($element->hasAttribute('src')) {
+            $url = $element->getAttribute('src');
+            $url_parsed = parse_url($url);
+            if (empty($url_parsed['host'])) {
+              try {
+                $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
+              }
+              catch (\InvalidArgumentException $e) {
+                \Drupal::logger('ucsf_applenews')->error('throwing out HTML containing invalid src attribute ' . $doc->saveHTML($element));
+                continue;
+              }
+              $url_parsed = parse_url($url);
+              if (isset($url_parsed['query'])) {
+                parse_str($url_parsed['query'], $qs);
+                if (isset($qs['itok'])) {
+                  unset($qs['itok']);
+                  if (empty($qs)) {
+                    unset($url_parsed['query']);
+                  }
+                  else {
+                    $url_parsed['query'] = http_build_query($qs);
+                  }
+                  $url = $this->unParseUrl($url_parsed);
+                }
+              }
+            }
+            $component = new Photo($url);
+            $component->setLayout(_ucsf_applenews_photo_component_layout());
+          }
+          break;
+
+        case 'iframe':
+          if ($element->hasAttribute('src')) {
+            $url = $element->getAttribute('src');
+            $component = $this->getVideoComponent($url);
+          }
+          break;
+
+        case 'drupal-entity':
+          if ($element->hasAttribute('data-entity-type') &&
+            $element->getAttribute('data-entity-type') == 'media' &&
+            $element->hasAttribute('data-entity-uuid')
+          ) {
+            $uuid = $element->getAttribute('data-entity-uuid');
+            $media = \Drupal::entityTypeManager()->getStorage('media')
+              ->loadByProperties(['uuid' => $uuid]);
+            if ($media) {
+              /** @var \Drupal\media\Entity\Media $media */
+              $media = reset($media);
+              if ($media->hasField('field_media_image')) {
+                /** @var \Drupal\file\Plugin\Field\FieldType\FileFieldItemList $file */
+                $file = $media->get('field_media_image');
+                /** @var \Drupal\file\Entity\File $file */
+                $file = $file->entity;
+                if ($file) {
+                  $mimetype = explode('/', $file->getMimeType());
+                  if (@$mimetype[0] == 'image' &&
+                    in_array(@$mimetype[1], ['jpeg', 'gif', 'png'])
+                  ) {
+                    $component = new Photo($file->url());
+                    if ($element->hasAttribute('data-caption')) {
+                      $caption = $this->textValue(
+                        $element->getAttribute('data-caption'));
+                      if ($caption) {
+                        $component->setCaption($caption);
+                      }
+                    }
+                    $component->setLayout(
+                      _ucsf_applenews_photo_component_layout());
+                  }
+                  else {
+                    throw new \Exception(
+                      'Unexpected file mime type ' . $file->getMimeType());
+                  }
+                }
+              }
+              elseif ($media->hasField('field_media_video_embed_field')) {
+                /** @var \Drupal\Core\Field\FieldItemList $video_field */
+                $video_field = $media->get('field_media_video_embed_field');
+                if ($url = $video_field->get(0)->getString()) {
+                  $component = $this->getVideoComponent($url);
+                  $component->setLayout(
+                    _ucsf_applenews_video_component_layout());
+                }
+              }
+            }
+          }
+          break;
+
+      }
+
+      $inline_component = new \stdClass();
+      $inline_component->element = $element;
+      $inline_component->component = $component;
+      $inline_component->children = [];
+      $inline_components[spl_object_hash($element)] = $inline_component;
+
+    }
+
+    // Convert $inline_components into a tree.
+    $tree = [];
+    foreach ($inline_components as $key => $inline_component) {
+      $ancestor = $inline_component->element->parentNode;
+      while ($ancestor) {
+        $ancestor_key = spl_object_hash($ancestor);
+        if (isset($inline_components[$ancestor_key])) {
+          $ancestor_component = $inline_components[$ancestor_key];
+          $ancestor_component->children[$key] = $inline_component;
+          continue 2;
+        }
+        $ancestor = $ancestor->parentNode;
+      }
+      $tree[$key] = $inline_component;
+    }
+
+    // Replace original element with a token element.
+    $tokenize = function ($inline_component) use (&$tokenize, $doc) {
+      foreach ($inline_component->children as $child) {
+        $tokenize($child);
+      }
+      /** @var \ChapterThree\AppleNewsAPI\Document\Components\Component $component */
+      $component = $inline_component->component;
+      /** @var \DOMElement $element */
+      $element = $inline_component->element;
+      if ($component) {
+
+        $key = spl_object_hash($element);
+        $token = $doc->createElement('applenews_component');
+        $token->setAttribute('id', $key);
+
+        // Replace with token, making sure the token is at the root level of
+        // the value html.
+        if ($element->parentNode->tagName == 'body') {
+          $element->parentNode->replaceChild($token, $element);
+        }
+        // Nested, insert token after top level ancestor.
+        else {
+          if (!$ancestor = $element->parentNode) {
+            throw new \Exception(
+              'Could not determine parent node for element ' .
+              $doc->saveHTML($element));
+          }
+          while ($ancestor->parentNode &&
+            $ancestor->parentNode->tagName != 'body'
+          ) {
+            $ancestor = $ancestor->parentNode;
+          }
+          if (!$ancestor->parentNode) {
+            throw new \Exception(
+              'Could not determine parent node for element ' .
+              $doc->saveHTML($element));
+          }
+          // Insert after ancestor.
+          if ($ancestor->nextSibling) {
+            $ancestor->parentNode->insertBefore(
+              $token, $ancestor->nextSibling);
+            $element->parentNode->removeChild($element);
+          }
+          // Append to root element.
+          else {
+            $ancestor->parentNode->appendChild($token);
+            $element->parentNode->removeChild($element);
+          }
+        }
+
+      }
+      // Remove even if no component generated.
+      else {
+        $element->parentNode->removeChild($element);
+      }
+    };
+    array_map($tokenize, $tree);
+
+    // Generate body components and assemble all components into return value.
+    $xp_query = '/html/body/*';
+    $current_body = '';
+    $append_body = function () use (&$current_body, &$components, &$data) {
+      if (!empty($current_body)) {
+        $component = new Body($current_body);
+        $component->setTextStyle(_ucsf_applenews_base_component_text_style());
+        $component->setFormat($data['component_data']['format']);
+        $component->setLayout($this->getComponentLayout($data['component_layout']));
+        $components[] = $component;
+      }
+      $current_body = '';
+    };
+    /** @var \DOMElement $element */
+    foreach ($xp->query($xp_query) as $element) {
+      if ($element->tagName == 'applenews_component') {
+        $append_body();
+        $id = $element->getAttribute('id');
+        $components[] = $inline_components[$id]->component;
+      }
+      else {
+        $current_body .= $this->htmlValue($doc->saveHTML($element));
+      }
+    }
+    $append_body();
+
+    libxml_clear_errors();
+    libxml_use_internal_errors($libxml_previous_state);
+
+    return $components;
   }
 
   /**
