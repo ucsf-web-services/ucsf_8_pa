@@ -8,6 +8,7 @@ use ChapterThree\AppleNewsAPI\Document;
 use ChapterThree\AppleNewsAPI\Document\Metadata;
 use Drupal\Core\Language\LanguageInterface;
 use ChapterThree\AppleNewsAPI\Document\Components\Component;
+use ChapterThree\AppleNewsAPI\Document\Components\Title;
 use Drupal\node\Entity\Node;
 
 /**
@@ -19,7 +20,19 @@ class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormali
    * {@inheritdoc}
    */
   public function normalize($data, $format = NULL, array $context = []) {
-    // @todo check cache
+    /** @var \Drupal\node\Entity\Node $data */
+
+    /** @var \Drupal\Core\Field\Plugin\Field\FieldType\StringItem $title_field */
+    foreach ($data->get('field_apple_news_title') as $title_field) {
+      if ($title = $title_field->getString()) {
+        break;
+      }
+    }
+    if (empty($title)) {
+      $title = $data->getTitle();
+    }
+
+    /** @var \Drupal\applenews\Entity\ApplenewsTemplate $template */
     $template = $this->entityTypeManager->getStorage('applenews_template')
       ->load($context['template_id']);
     $layout = new Layout($template->columns, $template->width);
@@ -31,9 +44,8 @@ class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormali
     $layout
       ->setMargin($template->margin)
       ->setGutter($template->gutter);
-    $document = new Document($data->uuid(), $data->getTitle(), $langcode, $layout);
+    $document = new Document($data->uuid(), $title, $langcode, $layout);
 
-    // Customized to add metadata.
     $metadata = new Metadata();
     if ($data instanceof Node) {
       $info = system_get_info('module', 'applenews');
@@ -50,7 +62,11 @@ class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormali
         ->setGeneratorIdentifier($version);
     }
     $document->setMetadata($metadata);
-    // End customization.
+
+    $component = new Title($title);
+    $component->setTextStyle(_ucsf_applenews_title_component_text_style());
+    $component->setLayout(_ucsf_applenews_title_component_layout());
+    $document->addComponent($component);
 
     $context['entity'] = $data;
     foreach ($template->getComponents() as $component) {
