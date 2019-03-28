@@ -18,8 +18,8 @@ module.exports = {
           'ie >= 11',
           'safari >= 7'
         ],
-        grid: true,
-        strict: "grid"
+        grid: false
+        //strict: "grid"
       },
       removeSourceComments: true,
       flattenDest: true,

@@ -97,9 +97,13 @@
   z-index: $z-quicklinks-menu;
 
   &:hover {
-    left: -10px;
-    border-right: 10px solid $c-navy;
-  }
+    left: -5px;
+    border-right: 5px solid $c-navy;
+
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        left:10px;
+      }
+    }
 
   .fa-caret-up {
     @include breakpoint($bp-medium) {
