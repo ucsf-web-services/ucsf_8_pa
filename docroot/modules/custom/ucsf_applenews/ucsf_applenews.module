@@ -40,20 +40,9 @@ function _ucsf_applenews_gallery_component_layout() {
  * @return \ChapterThree\AppleNewsAPI\Document\Layouts\ComponentLayout
  */
 function _ucsf_applenews_header_component_layout() {
-  $inset = new ContentInset();
-  $inset
-    ->setBottom(FALSE)
-    ->setLeft(FALSE)
-    ->setRight(FALSE)
-    ->setTop(FALSE);
   $layout = new ComponentLayout();
   $layout
-    ->setColumnStart(1)
-    ->setColumnSpan(5)
-    ->setMargin(new Margin(15, 15))
-    ->setContentInset($inset)
-    ->setIgnoreDocumentMargin('both')
-    ->setIgnoreDocumentGutter('none');
+    ->setMargin(new Margin(15, 15));
   return $layout;
 }
 
