@@ -285,7 +285,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       return FALSE;
     }
     $component = new Byline("By " . implode(', ', $names) .
-      ' on ' . $date . '.');
+      ' on ' . $date);
 
     $component->setTextStyle(_ucsf_applenews_author_component_text_style());
     $component->setFormat($data['component_data']['format']);
