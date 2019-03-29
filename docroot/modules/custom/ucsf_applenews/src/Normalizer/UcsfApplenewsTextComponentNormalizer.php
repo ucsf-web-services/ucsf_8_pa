@@ -127,10 +127,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             $text .= $this->htmlValue($item->get('value')->getValue());
           }
           $component = new Quote($text);
-          $component->setTextStyle(
-            _ucsf_applenews_title_component_quote_style());
-          $component->setLayout(
-            _ucsf_applenews_quote_component_layout());
+          $component
+            ->setFormat('html')
+            ->setTextStyle(_ucsf_applenews_quote_component_text_style())
+            ->setLayout(_ucsf_applenews_quote_component_layout());
           $components[] = $component;
           break;
 
@@ -327,12 +327,16 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       switch ($element->tagName) {
 
         case 'blockquote':
-          if ($value = $this->textValue($element->textContent)) {
+          $value = '';
+          foreach ($element->childNodes as $node) {
+            $value .= $this->htmlValue($doc->saveHTML($node));
+          }
+          if ($value) {
             $component = new Quote($value);
-            $component->setTextStyle(
-              _ucsf_applenews_title_component_quote_style());
-            $component->setLayout(
-              _ucsf_applenews_quote_component_layout());
+            $component
+              ->setFormat('html')
+              ->setTextStyle(_ucsf_applenews_quote_component_text_style())
+              ->setLayout(_ucsf_applenews_quote_component_layout());
           }
           break;
 
