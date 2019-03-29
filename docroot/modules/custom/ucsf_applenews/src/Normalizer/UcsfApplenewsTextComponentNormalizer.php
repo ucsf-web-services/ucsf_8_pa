@@ -121,17 +121,27 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       switch ($paragraph->getType()) {
 
         case 'blockquote':
-          $text = '';
-          /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $item */
-          foreach ($paragraph->get('field_blockquote_body') as $item) {
-            $text .= $this->htmlValue($item->get('value')->getValue());
+          $html = '';
+          /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $value */
+          if ($value = $paragraph->get('field_blockquote_body')->get(0)) {
+            /** @var \Drupal\Core\TypedData\Plugin\DataType\StringData $string */
+            if ($string = $value->get('value')) {
+              $html = $this->htmlValue($string->getString());
+            }
           }
-          $component = new Quote($text);
-          $component
-            ->setFormat('html')
-            ->setTextStyle(_ucsf_applenews_quote_component_text_style())
-            ->setLayout(_ucsf_applenews_quote_component_layout());
-          $components[] = $component;
+          if ($html) {
+            /** @var \Drupal\Core\Field\Plugin\Field\FieldType\StringItem $value */
+            if ($value = $paragraph->get('field_blockquote_source')->get(0)) {
+              $string = $value->getString();
+              $html .= $this->htmlValue("<p>&mdash;$string</p>");
+            }
+            $component = new Quote($html);
+            $component
+              ->setFormat('html')
+              ->setTextStyle(_ucsf_applenews_quote_component_text_style())
+              ->setLayout(_ucsf_applenews_quote_component_layout());
+            $components[] = $component;
+          }
           break;
 
         case 'featured_video':
