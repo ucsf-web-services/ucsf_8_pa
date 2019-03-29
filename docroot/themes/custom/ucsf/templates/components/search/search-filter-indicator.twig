@@ -4,11 +4,16 @@
 {% set health_list = view.exposed_data.tid_1 %}
 {% set campus_list = view.exposed_data.field_topics_target_id %}
 
+{# Get years from Date filter. #}
+{% set date_start = view.exposed_data.field_date_and_time_value_1.value|date("Y") %}
+{% set date_end = view.exposed_data.field_date_and_time_value_2.value|date("Y") %}
+
 {# Merge all arrays into a super array. #}
 {% set all_terms = article_type_list|merge(area_focus_list)|merge(health_list)|merge(campus_list) %}
 
-{# Render list. #}
 <div class="search-filter__indicator-list">
+
+  {# Render list. #}
   <ul>
     <li><label class="visually-hidden">{{ "Advanced Search Filters"|t }}:</label></li>
     {% for key,tid in all_terms %}
@@ -19,4 +24,13 @@
       {% endif %}
     {% endfor %}
   </ul>
+
+  {# Render date info. #}
+  {% if date_start == 2011 and date_end == now|date("Y") %}
+  {% else %}
+    <p class="small-text">
+      {{ "Showing news published from"|t }} {{ date_start }} {{ "to"|t }} {{ date_end }}. <a class="search-filter__advanced-date" href="#">{{ "Change"|t }}</a>
+    </p>
+  {% endif %}
+
 </div>

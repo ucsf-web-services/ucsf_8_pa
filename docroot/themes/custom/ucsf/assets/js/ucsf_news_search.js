@@ -5,13 +5,12 @@
   Drupal.behaviors.search_news = {
     attach: function attach(context) {
 
+      // Toggle Advanced Filter by Advanced Filter Icon.
       $(".search-filter__advanced", context).click(function () {
-        $(".search-filter__dropdown").toggleClass('js-search_filter__dropdown-open');
-        $(".search-filter__top").toggleClass('js-search_filter__top-open');
-        $(".fieldset-wrapper").removeClass('js-search_filter__category-open');
-        $("body").toggleClass('js-search_filter__is-open');
+        openAdvancedFilter();
       });
 
+      // Toggle Subcategory by Label.
       $(".search-filter__dropdown legend", context).click(function () {
         $(this).siblings(".fieldset-wrapper").toggleClass('js-search_filter__category-open');
       });
@@ -22,6 +21,25 @@
         $("#edit-field-primary-area-target-id-1021", context).click();
         $("#edit-field-primary-area-target-id-1026", context).click();
       });
+
+      // Toggle Advanced Filter and Focus on Date input by Date Change link.
+      $(".search-filter__advanced-date", context).click(function () {
+        openAdvancedFilter(true);
+      });
+
+      // Toggle Advanced Filter Function.
+      function openAdvancedFilter(dateFocus) {
+        $(".search-filter__dropdown").toggleClass('js-search_filter__dropdown-open');
+        $(".search-filter__top").toggleClass('js-search_filter__top-open');
+        $(".fieldset-wrapper").removeClass('js-search_filter__category-open');
+        $("body").toggleClass('js-search_filter__is-open');
+
+        if (dateFocus == true) {
+          setTimeout(function () {
+            $('[data-drupal-selector="edit-field-date-and-time-value-1"]').focus();
+          }, 350);
+        }
+      }
 
       // Remove filter using filter indicators.
       function removeFilter() {
