@@ -5,10 +5,19 @@
     margin: 0;
   }
 
+  form {
+    background: $c-grey-pale;
+
+    @include breakpoint($new-medium) {
+      padding: 0 40px;
+    }
+  }
+
   label[for=edit-combine] {
     @include visually-hidden;
   }
 
+  // Advanced.
   .search-filter__advanced {
     @include background-image('filter.svg', left);
     background-size: 24px 24px;
@@ -22,14 +31,20 @@
 
     @include breakpoint($bp-medium) {
       padding-left: 32px;
-      right: 70px;
+      right: 23px;
       text-indent: 0;
-      top: 190px;
+      top: 145px;
       width: auto;
     }
 
-    @include breakpoint($bp-medium-plus) {
-      left: 776px;
+    @include breakpoint($new-medium) {
+      right: 18px;
+      top: 185px;
+    }
+
+    @include breakpoint($new-large) {
+      left: 709px;
+      right: auto;
     }
   }
 
@@ -50,8 +65,11 @@
 
     @include breakpoint($bp-medium) {
       height: 96px;
-      max-width: 827px;
       width: 100%;
+    }
+
+    @include breakpoint($new-large) {
+      max-width: 827px;
     }
 
     &::placeholder {
@@ -62,27 +80,6 @@
   // Actions wrapper.
   [data-drupal-selector="edit-actions"] {
     margin: 0;
-  }
-
-  // Results count.
-  [data-drupal-selector="edit-count"] {
-    @include eyebrow;
-  }
-
-  // Reset button.
-  [data-drupal-selector="edit-reset"] {
-    display: none;
-  }
-}
-
-// Top of Filter.
-.search-filter__top {
-  background: $c-grey-pale;
-  position: relative;
-  padding: 40px 16px;
-
-  @include breakpoint($bp-medium) {
-    padding: 80px 70px;
   }
 
   // Submit button.
@@ -105,13 +102,20 @@
     @include breakpoint($bp-medium) {
       background-size: 28px;
       height: 80px;
-      right: 84px;
-      top: 90px;
+      right: 23px;
+      top: 47px;
       width: 45px;
     }
 
-    @include breakpoint($bp-medium-plus) {
-      left: 827px;
+    @include breakpoint($new-medium) {
+      right: 44px;
+      top: 90px;
+    }
+
+    @include breakpoint($new-large) {
+      left: 757px;
+      right: auto;
+      top: 90px;
     }
 
     &:hover {
@@ -120,6 +124,34 @@
       border-color: transparent;
     }
   }
+
+  // Reset button.
+  [data-drupal-selector="edit-reset"] {
+    display: none;
+  }
+
+  // Results count.
+  [data-drupal-selector="edit-count"] {
+    @include eyebrow;
+  }
+}
+
+// Top of Filter.
+.search-filter__top {
+  background: $c-grey-pale;
+  position: relative;
+  padding: 40px 16px;
+
+  @include breakpoint($new-medium) {
+    margin: 0 auto;
+    max-width: 1300px;
+    padding: 80px 16px 74px;
+  }
+
+  @include breakpoint($new-large) {
+    padding: 80px 0 74px;
+  }
+
 }
 
 //this is jank for now
