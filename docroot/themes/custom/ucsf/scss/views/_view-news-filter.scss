@@ -206,6 +206,7 @@
   @include transition;
   background: $c-grey-pale;
   height: 0;
+  width: 100%;
   visibility: hidden;
 
   [data-drupal-selector="edit-pub-year"] { // Year of Publication.
@@ -360,8 +361,15 @@
   }
 }
 
-// Kill contextual links when filter is open.
 .js-search_filter__is-open {
+
+  // Hide content when filter is open.
+  .block-system-main-block,
+  .footer-region {
+    display: none;
+  }
+
+  // Kill contextual links when filter is open.
   .contextual-region {
     position: inherit;
   }
