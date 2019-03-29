@@ -343,66 +343,60 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
         case 'h1':
           if ($value = $this->textValue($element->textContent)) {
             $component = new Heading($value);
-            $component->setRole('heading1');
-            $component->setTextStyle(
-              _ucsf_applenews_heading_component_text_style(1));
-            $component->setLayout(
-              _ucsf_applenews_header_component_layout());
+            $component
+              ->setRole('heading1')
+              ->setTextStyle(_ucsf_applenews_heading_component_text_style(1))
+              ->setLayout(_ucsf_applenews_header_component_layout());
           }
           break;
 
         case 'h2':
           if ($value = $this->textValue($element->textContent)) {
             $component = new Heading($value);
-            $component->setRole('heading2');
-            $component->setTextStyle(
-              _ucsf_applenews_heading_component_text_style(2));
-            $component->setLayout(
-              _ucsf_applenews_header_component_layout());
+            $component
+              ->setRole('heading2')
+              ->setTextStyle(_ucsf_applenews_heading_component_text_style(2))
+              ->setLayout(_ucsf_applenews_header_component_layout());
           }
           break;
 
         case 'h3':
           if ($value = $this->textValue($element->textContent)) {
             $component = new Heading($value);
-            $component->setRole('heading3');
-            $component->setTextStyle(
-              _ucsf_applenews_heading_component_text_style(3));
-            $component->setLayout(
-              _ucsf_applenews_header_component_layout());
+            $component
+              ->setRole('heading3')
+              ->setTextStyle(_ucsf_applenews_heading_component_text_style(3))
+              ->setLayout(_ucsf_applenews_header_component_layout());
           }
           break;
 
         case 'h4':
           if ($value = $this->textValue($element->textContent)) {
             $component = new Heading($value);
-            $component->setRole('heading4');
-            $component->setTextStyle(
-              _ucsf_applenews_heading_component_text_style(4));
-            $component->setLayout(
-              _ucsf_applenews_header_component_layout());
+            $component
+              ->setRole('heading4')
+              ->setTextStyle(_ucsf_applenews_heading_component_text_style(4))
+              ->setLayout(_ucsf_applenews_header_component_layout());
           }
           break;
 
         case 'h5':
           if ($value = $this->textValue($element->textContent)) {
             $component = new Heading($value);
-            $component->setRole('heading5');
-            $component->setTextStyle(
-              _ucsf_applenews_heading_component_text_style(5));
-            $component->setLayout(
-              _ucsf_applenews_header_component_layout());
+            $component
+              ->setRole('heading5')
+              ->setTextStyle(_ucsf_applenews_heading_component_text_style(5))
+              ->setLayout(_ucsf_applenews_header_component_layout());
           }
           break;
 
         case 'h6':
           if ($value = $this->textValue($element->textContent)) {
             $component = new Heading($value);
-            $component->setRole('heading6');
-            $component->setTextStyle(
-              _ucsf_applenews_heading_component_text_style(6));
-            $component->setLayout(
-              _ucsf_applenews_header_component_layout());
+            $component
+              ->setRole('heading6')
+              ->setTextStyle(_ucsf_applenews_heading_component_text_style(6))
+              ->setLayout(_ucsf_applenews_header_component_layout());
           }
           break;
 
