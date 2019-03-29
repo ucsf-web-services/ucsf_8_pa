@@ -1,5 +1,6 @@
 // Exposed Filter
 .block-views-exposed-filter-blocknews-filter-page-1 {
+  background: $c-grey-pale;
 
   .form--inline .form-item {
     margin: 0;
@@ -180,6 +181,7 @@
 // Top filter - Open.
 .js-search_filter__top-open {
   height: 90px;
+  max-width: none;
   padding: 0;
   position: absolute;
   top: 0;
@@ -208,7 +210,7 @@
     @include breakpoint($bp-medium) {
       left: 80px;
       right: auto;
-      top: 32px;
+      top: 8px;
     }
   }
 
@@ -403,5 +405,9 @@
   // Kill contextual links when filter is open.
   .contextual-region {
     position: inherit;
+  }
+
+  form {
+    padding: 0;
   }
 }
