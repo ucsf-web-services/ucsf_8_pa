@@ -70,7 +70,7 @@ module.exports = {
     enabled: true,
     baseDir: './',
     startPath: '',
-    domain: 'http://ucsf-main.local',
+    domain: 'http://local.ucsf8.edu',
     startupBehavior: false,
     ui: false,
   }
