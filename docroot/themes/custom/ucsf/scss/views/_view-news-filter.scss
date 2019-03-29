@@ -82,6 +82,33 @@
     margin: 0;
   }
 
+  // Reset button.
+  [data-drupal-selector="edit-reset"] {
+    display: none;
+  }
+
+  // Results count.
+  [data-drupal-selector="edit-count"] {
+    @include eyebrow;
+  }
+}
+
+// Top of Filter.
+.search-filter__top {
+  background: $c-grey-pale;
+  position: relative;
+  padding: 40px 16px;
+
+  @include breakpoint($new-medium) {
+    margin: 0 auto;
+    max-width: 1300px;
+    padding: 80px 16px 74px;
+  }
+
+  @include breakpoint($new-large) {
+    padding: 80px 0 74px;
+  }
+
   // Submit button.
   [data-drupal-selector="edit-submit-news-filter"] {
     @include background-image('magnifier.svg', center);
@@ -124,34 +151,6 @@
       border-color: transparent;
     }
   }
-
-  // Reset button.
-  [data-drupal-selector="edit-reset"] {
-    display: none;
-  }
-
-  // Results count.
-  [data-drupal-selector="edit-count"] {
-    @include eyebrow;
-  }
-}
-
-// Top of Filter.
-.search-filter__top {
-  background: $c-grey-pale;
-  position: relative;
-  padding: 40px 16px;
-
-  @include breakpoint($new-medium) {
-    margin: 0 auto;
-    max-width: 1300px;
-    padding: 80px 16px 74px;
-  }
-
-  @include breakpoint($new-large) {
-    padding: 80px 0 74px;
-  }
-
 }
 
 //this is jank for now
