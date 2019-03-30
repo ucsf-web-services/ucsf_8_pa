@@ -4,7 +4,18 @@
   .latest-events-list {
     background: $white;
     margin-top: 0;
-    padding-top: $space-ten;
+    padding: 0 20px;
+    padding-top: 20px;
+
+    @include breakpoint($new-small) {
+      padding: 0 $space-five;
+      padding-top: $space-five;
+    }
+
+    @include breakpoint($new-large) {
+      padding: 0 $space-ten;
+      padding-top: $space-ten;
+    }
   }
 }
 
@@ -15,32 +26,43 @@
 }
 
 .home-banner-wrapper__space {
-  grid-column: 1/2;
-  height: 100%;
-  content: ' ';
-  width: $space-ten;
+  display: none;
+
+  @include breakpoint($new-large) {
+    grid-column: 1/2;
+    height: 100%;
+    content: ' ';
+    width: $space-ten;
+    display: block;
+  }
 }
 
 .home-banner {
-  @include grid;
-
-  grid-column: 2/-1;
-  grid-template-rows: repeat(3, auto);
   max-width: 1360px;
   //justify-self: end;
 
   img {
     width: 100%;
   }
+
+  @include breakpoint($new-large) {
+    @include grid;
+
+    grid-column: 2/-1;
+    grid-template-rows: repeat(3, auto);
+  }
 }
 
 .home-banner-two .home-banner,
 .home-banner-three .home-banner {
-  @include grid-eighteen;
 
-  grid-column: 1/-1;
-  justify-self: start;
-  max-width: $full;
+  @include breakpoint($new-large) {
+    @include grid-eighteen;
+
+    grid-column: 1/-1;
+    justify-self: start;
+    max-width: $full;
+  }
 }
 
 .home-banner__image {
@@ -61,38 +83,61 @@
 }
 
 .home-banner__header {
-  grid-column: 1/6;
-  grid-row: 2/3;
-  padding: $space-eight;
-  padding-left: 0;
-  background: url(/themes/custom/ucsf/assets/images/banner-overlay-left.png) left top repeat-y rgba(255, 255, 255, 0.925);
+  padding: 20px;
+  background: $white;
+  position: relative;
+  margin-top: -$space-seven;
+  margin-right: $space-two;
 
   h1 {
     @include fs-display;
   }
+
+  @include breakpoint($new-small) {
+    padding: $space-five;
+    margin-top: -$space-ten;
+    margin-right: $space-ten;
+  }
+
+  @include breakpoint($new-large) {
+    grid-column: 1/6;
+    grid-row: 2/3;
+    padding-left: 0;
+    background: url(/themes/custom/ucsf/assets/images/banner-overlay-left.png) left top repeat-y rgba(255, 255, 255, 0.925);
+    margin-top: 0;
+    margin-right: 0;
+  }
+
+  @include breakpoint($new-xl) {
+    padding: $space-eight;
+    padding-left: 0;
+  }
 }
 
 .home-banner-two .home-banner__header {
-  @include grid-sixteen;
+  @include breakpoint($new-large) {
+    @include grid-sixteen;
 
-  grid-column: 2/-1;
-  grid-row: 3/3;
-  padding-left: $space-three;
-  padding-right: $space-eight;
-  padding-bottom: 0;
-  background: url(/themes/custom/ucsf/assets/images/banner-overlay-bottom.png) left bottom repeat-x rgba(255, 255, 255, 0.925);
+    padding-left: $space-three;
+    padding-right: $space-eight;
+    padding-bottom: 0;
+    grid-column: 2/-1;
+    grid-row: 3/3;
+    background: url(/themes/custom/ucsf/assets/images/banner-overlay-bottom.png) left bottom repeat-x rgba(255, 255, 255, 0.925);
 
-  h1 {
-    grid-column: 2/12;
-    border-right: 1px solid $navy;
-    margin-right: $space-ten;
-    padding-right: $space-ten;
-  }
+    h1 {
+      grid-column: 2/12;
+      border-right: 1px solid $navy;
+      margin-right: $space-ten;
+      padding-right: $space-ten;
+    }
 
-  .field-banner-description { // PL: .home-banner__subheading
-    grid-column: 12/-1;
-    margin: auto 0;
-    padding-right: $space;
+    .field-banner-description { // PL: .home-banner__subheading
+      grid-column: 12/-1;
+      margin: auto 0;
+      padding-right: $space;
+    }
+
   }
 }
 
@@ -103,69 +148,86 @@
 .home-banner-three {
   .home-banner {
     .home-banner__header {
-      grid-column: 1/13;
-      grid-row: 3/3;
-      padding: $space-eight;
-      padding-bottom: 0;
-      padding-left: $space-ten;
-      padding-top: $space-six;
-      background: url(/themes/custom/ucsf/assets/images/banner-overlay-bottom.png) left bottom repeat-x rgba(255, 255, 255, 0.925);
+      @include breakpoint($new-large) {
+        grid-column: 1/13;
+        grid-row: 3/3;
+        padding: $space-eight;
+        padding-bottom: 0;
+        padding-left: $space-ten;
+        padding-top: $space-six;
+        background: url(/themes/custom/ucsf/assets/images/banner-overlay-bottom.png) left bottom repeat-x rgba(255, 255, 255, 0.925);
+      }
     }
   }
 }
 
 .home-banner-two .home-banner-support-wrapper {
-  @include grid-eighteen;
 
-  .home-banner-support {
-    @include grid-sixteen;
+  @include breakpoint($new-large) {
+    @include grid-eighteen;
 
-    grid-column: 2/-1;
-    padding-left: $space-three;
+    .home-banner-support {
+      @include grid-sixteen;
 
-    .home-banner-support__title {
-      grid-column: 2/5;
-    }
+      grid-column: 2/-1;
+      padding-left: $space-three;
 
-    .home-banner-support__links {
-      grid-column: 5/-1;
+      .home-banner-support__title {
+        grid-column: 2/5;
+      }
+
+      .home-banner-support__links {
+        grid-column: 5/-1;
+      }
     }
   }
 }
 
 .home-banner-support {
-  @include grid-eighteen;
-
   background: $white;
   max-width: 1360px;
-  padding: $space-ten;
-  padding-left: $space;
-  grid-gap: 4%;
+  padding: 20px;
+  float: left;
+
+  @include breakpoint($new-small) {
+    padding: $space-five;
+  }
+
+  @include breakpoint($new-large) {
+    @include grid-eighteen;
+    grid-gap: 4%;
+    float: none;
+    padding: $space-ten;
+    padding-left: $space;
+  }
 }
 
 .home-banner-support__title {
   @include eyebrow;
-
   line-height: 1.8em;
   margin: 0;
-  grid-column: 2/5;
+  margin-bottom: $space-three;
   font-size: $font-size-xxsm;
+
+  @include breakpoint($new-large) {
+    grid-column: 2/5;
+  }
 }
 
 .home-banner-support__links {
-  grid-column: 5/-1;
   font-family: $font-helvetica-neue-medium;
   list-style-type: none;
   counter-reset: li;
   list-style-position: outside;
   margin: 0;
-  padding: 0;
+  padding: 0 $space-five;
 
   li {
     display: inline-block;
-    width: 26%;
+    width: 100%;
     float: left;
-    margin-left: 8%;
+    margin-left: -10px;
+    margin-bottom: $space-three;
 
     &::before {
       counter-increment: li;
@@ -178,7 +240,7 @@
     }
 
     &:first-child {
-      margin-left: 5%;
+      margin-left: -10px;
     }
   }
 
@@ -191,6 +253,29 @@
     color: $blue;
     text-decoration: none;
   }
+
+  @include breakpoint($new-small) {
+    li {
+      width: 29%;
+      float: left;
+      margin-left: 7%;
+      margin-bottom: 0;
+    }
+  }
+
+  @include breakpoint($new-large) {
+    grid-column: 5/-1;
+    padding: 0;
+
+    li {
+      width: 26%;
+      margin-left: 8%;
+
+      &:first-child {
+        margin-left: 5%;
+      }
+    }
+  }
 }
 
 .map-home-wrapper {
@@ -199,10 +284,6 @@
 }
 
 .map-home {
-  @include grid;
-
-  grid-template-rows: repeat(3, auto);
-  max-width: 1360px;
 
   ul {
     margin-bottom: 0;
@@ -215,6 +296,13 @@
       }
     }
   }
+
+  @include breakpoint($new-large) {
+    @include grid;
+
+    grid-template-rows: repeat(3, auto);
+    max-width: 1360px;
+  }
 }
 
 .field-map-image { // PL: .map-home__image
@@ -225,11 +313,11 @@
 }
 
 .field-map-text { // PL: .map-home__content
-  grid-column: 8/-1;
-  grid-row: 2/3;
-  padding: $space-eight;
-  padding-right: 0;
-  background: url(/themes/custom/ucsf/assets/images/banner-overlay-right.png) right top repeat-y rgba(255, 255, 255, 0.925);
+  padding: 20px;
+  background: $white;
+  position: relative;
+  margin-top: -$space-seven;
+  margin-right: $space-two;
   color: $c-gray-blue;
 
   h2 {
@@ -237,6 +325,28 @@
 
     font-family: $font-granjon;
     margin: 0;
+  }
+
+
+  @include breakpoint($new-small) {
+    padding: $space-five;
+    margin-top: -$space-ten;
+    margin-right: $space-ten;
+  }
+
+  @include breakpoint($new-large) {
+    padding-right: 0;
+    grid-column: 8/-1;
+    grid-row: 2/3;
+    padding: $space-five;
+    margin-top: 0;
+    margin-right: 0;
+    background: url(/themes/custom/ucsf/assets/images/banner-overlay-right.png) right top repeat-y rgba(255, 255, 255, 0.925);
+  }
+
+  @include breakpoint($new-xl) {
+    padding: $space-eight;
+    padding-right: 0;
   }
 }
 
@@ -278,26 +388,47 @@
 .home-search {
   text-align: center;
   margin-top: $space-ten;
+  clear: both;
+  padding: 20px;
+
+  @include breakpoint($new-small) {
+    padding: $space-five;
+  }
+
+  @include breakpoint($new-large) {
+    padding: 0;
+    margin-top: $space-ten;
+  }
 }
 
 .home-search .home-search__title {
   @include fs-heading;
 
-  margin-top: 56px;
-  margin-bottom: 16px;
+  margin-top: 20px;
+  margin-bottom: $space-two;
+
+  @include breakpoint($new-small) {
+    margin-top: $space-five;
+  }
+
+  @include breakpoint($new-large) {
+    margin-top: $space-seven;
+  }
 }
 
 .home-search__form {
   .home-search__form-input {
-    height: 100px;
+    height: 80px;
     margin: 0;
     padding-right: 80px;
-    padding-left: 32px;
-    font-size: $font-size-bg;
-    font-family: $font-helvetica-neue-light;
+    padding-left: $space-two;
+    font-size: $font-size;
+    font-family: $font-helvetica-neue-roman;
     color: $gray-blue;
     box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
     border: 1px solid $near-white;
+    width: 100%;
+    max-width: 850px;
 
     &::-webkit-input-placeholder {
       color: $gray-blue;
@@ -314,18 +445,15 @@
     &::placeholder {
       color: $gray-blue;
     }
-
-    @include breakpoint($bp-medium) {
-      width: 850px;
-    }
   }
 
   .home-search__form-submit {
     @include background-image('magnifier.svg', center, $white);
-    width: 100px;
-    height: 80px;
+    width: 40px;
+    height: 40px;
     margin: 0;
-    margin-left: -110px;
+    margin-left: -75px;
+    margin-right: 15px;
     border: none;
     background-size: 28px;
     text-indent: -9999px;
@@ -336,6 +464,22 @@
       background-color: transparent;
       color: auto;
       border-color: transparent;
+    }
+  }
+
+  @include breakpoint($new-small) {
+    .home-search__form-input {
+      height: 100px;
+      padding-left: 32px;
+      font-size: $font-size-bg;
+      font-family: $font-helvetica-neue-light;
+
+      .home-search__form-submit {
+        @include background-image('magnifier.svg', center, $white);
+        width: 100px;
+        height: 80px;
+        margin-left: -110px;
+      }
     }
   }
 }
@@ -352,43 +496,113 @@
 }
 
 .home-search__presearch-links {
-  list-style: none;
-  margin: 0;
-  margin-top: $space-two;
-  padding: 0;
-  font-family: $font-helvetica-neue-medium;
+  display: none;
 
-  li {
-    display: inline-block;
+  @include breakpoint($new-small) {
+    display: block;
+    list-style: none;
+    margin: 0;
+    margin-top: $space-two;
+    padding: 0;
+    font-family: $font-helvetica-neue-medium;
 
-    a {
-      color: $blue;
-      text-decoration: none;
-      display: block;
-      @include background-image('magnifier.svg', left);
-      background-size: 16px 16px;
-      padding-left: 24px;
-      margin-right: 24px;
+    li {
+      display: inline-block;
+
+      a {
+        color: $blue;
+        text-decoration: none;
+        display: block;
+        @include background-image('magnifier.svg', left);
+        background-size: 16px 16px;
+        padding-left: 24px;
+        margin-right: 24px;
+      }
     }
   }
 }
 
 .home-talking-about {
   background: $white;
-  margin-top: $space-ten;
+  margin-top: $space-five;
+  float: left;
 
   .card-three-up {
-    @include card-three-up;
-    margin: 0 auto;
-    max-width: $xl;
+    margin: 0 20px;
+    display: block;
+
+    > li {
+      float: none;
+      width: 100%;
+    }
 
     .news-card {
-      margin-bottom: $space-five;
+      margin-bottom: 0;
+
+      .news-card__image img {
+        float: right;
+      }
+      @include breakpoint($new-x-small-max) {
+        .news-card__copy {
+          margin-right: 10%;
+          margin-left: 0;
+        }
+      }
     }
   }
 
+  @include breakpoint($new-x-small) {
+    margin-top: $space-five;
 
+    .card-three-up {
+      display: block;
 
+      > li {
+        float: left;
+        width: 46%;
+        margin-left: 2%;
+
+        &:nth-child(odd) {
+          clear: left;
+          margin-right: 2%;
+          margin-left: 0;
+        }
+      }
+
+      .news-card {
+        margin-bottom: 0;
+
+        .news-card__image img {
+          float: none;
+        }
+      }
+    }
+  }
+
+  @include breakpoint($new-small) {
+    .card-three-up {
+      margin: 0 $space-five;
+    }
+  }
+
+  @include breakpoint($new-large) {
+    margin-top: $space-ten;
+    float: none;
+
+    .card-three-up {
+      @include card-three-up;
+      margin: 0 $space-ten;
+
+      > li {
+        float: none;
+        width: 100%;
+      }
+
+      .news-card {
+        margin-bottom: $space-five;
+      }
+    }
+  }
 }
 
 
@@ -396,15 +610,33 @@
 .home-talking-about__title {
   @include fs-heading;
 
-  margin: 0 auto;
+  margin: 0;
   margin-bottom: $space-two;
-  padding-top: $space-ten;
-  max-width: $xl;
+  padding: 20px;
+  padding-bottom: 0;
+
+  @include breakpoint($new-small) {
+    padding: $space-five;
+    padding-bottom: 0;
+  }
+
+  @include breakpoint($new-large) {
+    padding: $space-ten;
+    padding-bottom: 0;
+  }
 }
 
 .home-talking-about__description {
-  margin: 0 auto;
-  max-width: $xl;
+  padding: 0 20px;
   color: $gray-blue;
   margin-bottom: $space-four;
+  margin-top: 0;
+
+  @include breakpoint($new-small) {
+    padding: 0 $space-five;
+  }
+
+  @include breakpoint($new-large) {
+    padding: 0 $space-ten;
+  }
 }

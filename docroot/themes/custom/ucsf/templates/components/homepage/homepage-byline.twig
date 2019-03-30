@@ -1,4 +1,3 @@
-{% set primary_area = node.field_primary_area.0.entity.label|clean_class %}
 {% set primary_area = paragraph.field_news_article.entity.field_primary_area.0.entity.label|clean_class %}
 {% set source = paragraph.field_news_article.entity.field_source.0.entity.label %}
 
@@ -12,7 +11,14 @@
   {% if source %}
     <li class="news-card__media">{{ source }}</li>
   {% elseif primary_area %}
-    <li class="news-card__primary-area" data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">{{ drupal_field('field_primary_area', 'node', paragraph.field_news_article.target_id) }}</li>
+    <li class="news-card__primary-area" data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
+      {% set campus_news = ['campus-news'] %}
+      {% if primary_area in campus_news %}
+        {{ primary_area_field ? primary_area_field : content.field_primary_area }}
+      {% else %}
+        {{ drupal_field('field_primary_area', 'node', paragraph.field_news_article.target_id) }}
+      {% endif %}
+    </li>
   {% endif %}
   <li class="news-card__date article-header__date">{{ drupal_field('field_date_and_time', 'node', paragraph.field_news_article.target_id) }}</li>
 </ul>

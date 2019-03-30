@@ -2,6 +2,12 @@
   padding-top: $space-ten;
   grid-column: 1/-1;
   margin-top: $space-ten;
+  float: left;
+  width: 100%;
+
+  & + * {
+    clear: both;
+  }
 }
 
 .lastest-events-list__header {
@@ -10,20 +16,81 @@
 }
 
 .lastest-events-list__heading {
-  float: left;
+  @include fs-articles-title;
   margin-top: 0;
+  margin-bottom: 0;
+
+  @include breakpoint($new-small) {
+    float: left;
+    margin-bottom: $space-four;
+  }
 }
 
 .lastest-events-list__view-all {
-  float: right;
   margin: 0;
   margin-top: $space;
+  margin-bottom: $space-four;
+
+  @include breakpoint($new-small) {
+    float: right;
+    margin-bottom: 0;
+  }
 }
 
 .lastest-events-list__cards {
   clear: both;
   margin: 0 auto;
   max-width: $xl;
+  list-style: none;
+  padding: 0;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+
+  @include breakpoint($new-small) {
+
+  }
+
+  @include breakpoint($new-large) {
+
+  }
+
+  &.card-three-up {
+    display: block;
+
+    @include breakpoint($new-large) {
+      @include card-three-up;
+      white-space: normal;
+    }
+  }
+}
+
+.event-card {
+  padding-bottom: $space-four;
+  float: left;
+  width: 100%;
+  padding-right: $space-five;
+  vertical-align: top;
+
+  @include breakpoint($new-small-max) {
+    padding-right: 20px;
+    max-width: 300px;
+    min-width: 250px;
+    display: inline-block;
+    float: none;
+  }
+
+  @include breakpoint($new-small) {
+    padding-right: 5%;
+    width: 33%;
+  }
+
+  @include breakpoint($new-large) {
+    float: none;
+    padding-right: 15%;
+    width: 100%;
+  }
 }
 
 .event-card__icon {
@@ -52,6 +119,7 @@
   float: right;
   width: 75%;
   letter-spacing: 0.2px;
+  white-space: normal;
 }
 
 .event-card__title {

@@ -5,27 +5,27 @@
 
 {% block tweet %}
   {% for tweet in params.tweets %}
-  <li>
-      <img class="oval" src='{% if tweet.retweeted_status.user.profile_image_url %}{{tweet.retweeted_status.user.profile_image_url }}{% else %}{{ tweet.user.profile_image_url }}{% endif %}'/>
-      <ul class="twitter_status">
-          <li class="twitter_user">
-              {% if tweet.retweeted_status.user.name %}
-                  {{tweet.retweeted_status.user.name}}
-              {% else %}
-                  {{ tweet.user.name }}
-              {% endif %}
-          </li>
-          <li>
-          {% if tweet.retweeted_status.user.screen_name %}
-              @{{tweet.retweeted_status.user.screen_name}}
+  <li class="twitter__tweet">
+      <img class="twitter-icon" src='{% if tweet.retweeted_status.user.profile_image_url %}{{tweet.retweeted_status.user.profile_image_url }}{% else %}{{ tweet.user.profile_image_url }}{% endif %}'/>
+
+      <h3 class="twitter__user">
+          {% if tweet.retweeted_status.user.name %}
+              {{tweet.retweeted_status.user.name}}
           {% else %}
-              @{{tweet.user.screen_name}}
+              {{ tweet.user.name }}
           {% endif %}
-          {{ tweet.created_at|time_diff|preg_replace('/ |[a-c,e-g,i-l,n-z]/','')}}
-          </li>
-      </ul>
+      </h3>
+      <p class="tweeter__handle-time">
+      {% if tweet.retweeted_status.user.screen_name %}
+          @{{tweet.retweeted_status.user.screen_name}}
+      {% else %}
+          @{{tweet.user.screen_name}}
+      {% endif %}
+      <span class="tweeter_time">{{ tweet.created_at|time_diff|preg_replace('/ |[a-c,e-g,i-l,n-z]/','')}}</span>
+      </p>
+
       {% autoescape false %}
-      <p class="twitter_text">
+      <p class="twitter__text">
       {% if tweet.retweeted_status.full_text %}
         {{tweet.retweeted_status.full_text}}
       {% else %}
