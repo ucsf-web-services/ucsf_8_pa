@@ -22,9 +22,11 @@ use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormalizer {
 
   /**
-   * Markup elements that can't be empty.
+   * Markup elements that if empty, are removed.
    *
    * @var array
+   *
+   * @see $this->>empty()
    */
   protected $elementsNotEmpty = [
     'p',
@@ -44,8 +46,14 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
     'code',
     'samp',
     'footer',
-    'aside',
     'blockquote',
+  ];
+
+  /**
+   * List of elements to remove.
+   */
+  protected $elementBlacklist = [
+    'aside',
   ];
 
   /**
@@ -99,7 +107,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
   }
 
   /**
-   * Body from field_content_panel.
+   * Normalizes field_content_panel into a list of components.
    *
    * @throws \Exception
    *   Unexpected paragraph type.
@@ -324,6 +332,17 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
         ($classes = preg_split('/\s\s+/', $element->getAttribute('class'))) &&
         count(array_intersect($classes, $this->divClassBlacklist))
       ) {
+        $element->parentNode->removeChild($element);
+      }
+    }
+
+    // Remove certain elements.
+    $xp_query = implode('|', array_map(function ($e) {
+      return "//$e";
+    }, $this->elementBlacklist));
+    /** @var \DOMElement $element */
+    foreach ($xp->query($xp_query) as $element) {
+      if ($element->parentNode) {
         $element->parentNode->removeChild($element);
       }
     }
