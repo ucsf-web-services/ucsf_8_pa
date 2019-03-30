@@ -1,0 +1,37 @@
+uuid: 1b1928e2-a1fd-4333-9f63-2bb6dd787521
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.news_feeds
+  module:
+    - ctools
+    - system
+    - views
+  theme:
+    - ucsf
+id: exposedformnews_feedspage_1
+theme: ucsf
+region: content
+weight: -5
+provider: null
+plugin: 'views_exposed_filter_block:news_feeds-page_1'
+settings:
+  id: 'views_exposed_filter_block:news_feeds-page_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: /news/rss-news-feeds
+    negate: false
+    context_mapping: {  }
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      narrow_page: narrow_page
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
