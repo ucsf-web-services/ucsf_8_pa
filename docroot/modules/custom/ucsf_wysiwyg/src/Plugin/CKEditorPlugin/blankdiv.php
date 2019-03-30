@@ -63,7 +63,7 @@ class blankdiv extends CKEditorPluginBase {
   public function getButtons() {
     return [
       'blankdiv' => [
-        'label' => t('Pull Quote'),
+        'label' => t('BlankDiv'),
         'image' => drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/blankdiv/icons/blankdiv.png'
       ]
     ];
