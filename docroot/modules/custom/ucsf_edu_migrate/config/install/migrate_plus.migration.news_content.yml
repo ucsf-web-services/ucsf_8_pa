@@ -129,6 +129,10 @@ source:
       name: updated-date
       label: 'date the content was updated'
       selector: updated-date
+    -
+      name: ex-url
+      label: 'url to referenced article'
+      selector: external-url
 
   constants:
     file_directory: public://
@@ -187,6 +191,13 @@ process:
     source: pub_date
 
   changed: updated-date
+
+  field_external_url:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: ex-url
+      message: 'there was an empty field'
 
   field_areas:
     -
