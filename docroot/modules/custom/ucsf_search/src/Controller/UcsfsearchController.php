@@ -1,30 +1,30 @@
 <?php
-/**
- * User: Eric Guerin
- * Date: 2/6/19
- * Time: 1:22 PM
- */
+
 namespace Drupal\ucsf_search\Controller;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\Request as Post;
-use Symfony\Component\Cache;
+use Symfony\Component\HttpFoundation\Request as GetReq;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+//use Symfony\Component\Cache;
+//use GuzzleHttp\Psr7\Request;
 
 class UcsfsearchController extends ControllerBase {
 
-  public function search(Post $request) {
+  public function search(GetReq $request) {
 
     $searchterm = '';
-    //@todo try using symfony request object instead of direct get request
-    if(isset($_GET['search'])) {
-      $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $_GET['search']);
+    $websites = [ 'results'=>[], 'more'=>false ];
+    $people   = [ 'results'=>[], 'more'=>false ];
+
+    if($request->query->get('search')) {
+      $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $request->query->get('search'));
       $searchterm = Xss::filter(htmlspecialchars($searchterm, ENT_QUOTES));
+
+      $websites = $this->websiteLookup($searchterm);
+      $people   = $this->directoryLookup($searchterm);
     }
-    $websites  = $this->websiteLookup($searchterm);
-    $people = $this->directoryLookup($searchterm);
 
     return [
       '#theme' => 'ucsf_universal_search',
@@ -41,12 +41,12 @@ class UcsfsearchController extends ControllerBase {
 
   }
 
-  public function news(Post $request) {
+  public function news(GetReq $request) {
 
     $searchterm = '';
-    //@todo try using symfony request object instead of direct get request
-    if(isset($_GET['search'])) {
-      $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $_GET['search']);
+
+    if($request->query->get('search')) {
+      $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $request->query->get('search'));
       $searchterm = Xss::filter(htmlspecialchars($searchterm, ENT_QUOTES));
     }
 
@@ -63,16 +63,17 @@ class UcsfsearchController extends ControllerBase {
     ];
   }
 
-  public function people(Post $request) {
+  public function people(GetReq $request) {
 
     $searchterm = '';
-    //@todo try using symfony request object instead of direct get request
-    if(isset($_GET['search'])) {
-      $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $_GET['search']);
-      $searchterm = Xss::filter(htmlspecialchars($searchterm, ENT_QUOTES));
-    }
+    $directory = [ 'results'=>[], 'more'=>false ];
 
-    $directory = $this->directoryLookup($searchterm, 25);
+
+    if($request->query->get('search')) {
+      $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $request->query->get('search'));
+      $searchterm = Xss::filter(htmlspecialchars($searchterm, ENT_QUOTES));
+      $directory = $this->directoryLookup($searchterm, 25);
+    }
 
     return [
       '#theme' => 'ucsf_people_search',
@@ -88,16 +89,17 @@ class UcsfsearchController extends ControllerBase {
     ];
   }
 
-  public function websites(Post $request) {
+  public function websites(GetReq $request) {
 
     $searchterm = '';
-    //@todo try using symfony request object instead of direct get request
-    if(isset($_GET['search'])) {
-      $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $_GET['search']);
+    $websites = [ 'results'=>[], 'more'=>false ];
+
+    if($request->query->get('search')) {
+      $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $request->query->get('search'));
       $searchterm = Xss::filter(htmlspecialchars($searchterm, ENT_QUOTES));
+      $websites = $this->websiteLookup($searchterm, 25);
     }
 
-    $websites = $this->websiteLookup($searchterm, 25);
 
     return [
       '#theme' => 'ucsf_websites_search',
@@ -113,9 +115,6 @@ class UcsfsearchController extends ControllerBase {
     ];
   }
   /**
-   * First check if the search string looks like a domain, if it does
-   * and it doesn't match our domain(s) then ignore the search
-   * /ucsf.edu|ucsfmedicalcenter.org|ucsfhealth.org/
    *
    * If doesn't appear to be a domain, then do a string lookup
    * check the meta title, title, and description fields in the
@@ -133,22 +132,37 @@ class UcsfsearchController extends ControllerBase {
    */
   protected function websiteLookup($search, $limit=3) {
 
-    $base_url = 'https://websites.ucsf.edu';
     //don't search anything under 3 characters, reduce lookup load
     if (strlen($search)<3) {
       return [];
     }
-    //url encode the string for searching
-    //@todo make #search the cache key, $directory the cache items
-    $search = urlencode($search);
 
-    if (preg_match('#^([\w-]+\.)+(ucsfopenresearch\.org|ucsfmedicalcenter\.org|ucsfnursing\.org|ucsfhealth\.org|immunetolerance\.org|ucsf\.edu|ucsfdentalcenter\.org|ucsfcme\.com)+(\:|\/)+([\w-./?%&=\#\$~,_\[\]:()@\^+.]*)?$#', $search, $matches)) {
-      // might be a domain lookup
+    //make sure file system is available for the Cache Adapter
+    $path = \Drupal::service('file_system')->realpath(file_default_scheme() . "://");
+    $path .= '/cache';
+    if (file_prepare_directory($path, FILE_CREATE_DIRECTORY)) {
+      $cache = new FilesystemAdapter('', 86400, $path);
+    } else {
+      $messenger = \Drupal::messenger();
+      $messenger->addMessage('Cache directory is not writable.');
+      return false;
     }
 
+    //url encode the string for searching
+    $search   = urlencode($search);
+    $cachekey = "websites.{$search}";
 
-    //@todo - check the cache for the results
+    $cachedItem = $cache->getItem($cachekey);
+    if ($cache->hasItem($cachekey)) {
+      $results = $cachedItem->get();
+      $resultSlice = array_slice($results['results'], 0, $limit);
+
+      \Drupal::logger('ucsf_search')->notice('Used cached result for key: '. $cachekey);
+      return ['results'=>$resultSlice, 'more'=>$results['more']];
+    }
+
     //call GuzzleHTTP for the lookup and JSON decode the body request
+    $base_url = 'https://websites.ucsf.edu';
     $client       = new Client(array('base_uri' => $base_url));
     $res          = $client->request('GET', "/azlist/json?combine={$search}");
     $jsonresponse = json_decode($res->getBody(), TRUE);
@@ -162,10 +176,18 @@ class UcsfsearchController extends ControllerBase {
       foreach ($jsonresponse['nodes'] as $key=>$node) {
           $results[] = $node['node'];
           $cnt++;
-          if ($cnt==($limit)) break;
+          if ($cnt==24) break;
       }
-      //dpm($results);
-      return ['results'=>$results, 'more'=>$more];
+
+      $resultSet = ['results'=>$results, 'more'=>$more];
+      $cachedItem->set($resultSet);
+      $cache->save($cachedItem);
+      \Drupal::logger('ucsf_search')->notice('Saved search cache: '. $cachekey);
+
+      //only return the limit, but store 25 results
+      $resultSlice = array_slice($results, 0, $limit);
+
+      return ['results'=>$resultSlice, 'more'=>$more];
     } else {
       return ['results'=>[], 'more'=>false];
     }
@@ -182,16 +204,39 @@ class UcsfsearchController extends ControllerBase {
     if (strlen($search)<3) {
       return [];
     }
+
+    //make sure file system is available for the Cache Adapter
+    $path = \Drupal::service('file_system')->realpath(file_default_scheme() . "://");
+    $path .= '/cache';
+    if (file_prepare_directory($path, FILE_CREATE_DIRECTORY)) {
+      $cache = new FilesystemAdapter('', 86400, $path);
+    } else {
+      $messenger = \Drupal::messenger();
+      $messenger->addMessage('Cache directory is not writable.');
+      return false;
+    }
+
     //url encode the string for searching
     //@todo make #search the cache key, $directory the cache items
     $search = urlencode($search);
+    $cachekey = "people.{$search}";
 
-    //@todo - check the cache for the results
+    $cachedItem = $cache->getItem($cachekey);
+    if ($cache->hasItem($cachekey)) {
+      //we always get the 25 results back so depending on limit, shorten it
+      $results = $cachedItem->get();
+      $resultSlice = array_slice($results['results'], 0, $limit);
+      \Drupal::logger('ucsf_search')->notice('Used cached result for key: '. $cachekey);
+
+      return ['results'=>$resultSlice, 'more'=>$results['more']];
+    }
+
+
     //call GuzzleHTTP for the lookup and JSON decode the body request
     $client       = new Client(array('base_uri' => 'https://directory.ucsf.edu'));
     $res          = $client->request('GET', "/people/search/name/{$search}/json");
     $jsonresponse = json_decode($res->getBody(), TRUE);
-
+    //dpm("https://directory.ucsf.edu/people/search/name/{$search}/json");
     $cnt=0;
     $directory = [];
     $items = count($jsonresponse['data']);
@@ -206,13 +251,18 @@ class UcsfsearchController extends ControllerBase {
         }
         $directory[] = $person;
         $cnt++;
-        if ($cnt==($limit)) break;
+        if ($cnt==24) break;
       }
 
-      //@todo add a see more here to take you to the directory.ucsf.edu website results
+      $resultSet = ['results'=>$directory, 'more'=>$more];
+      $cachedItem->set($resultSet);
+      $cache->save($cachedItem);
+      \Drupal::logger('ucsf_search')->notice('Saved cache for key: '. $cachekey);
 
-      //@todo store the results in the cache using the key for further lookup
-      return ['results'=>$directory, 'more'=>$more];
+      //fix return length after storing the 25 results for the big page
+      $resultSlice = array_slice($directory, 0, $limit);
+
+      return ['results'=>$resultSlice, 'more'=>$more];
     } else {
       return ['results'=>[], 'more'=>false];
     }
