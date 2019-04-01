@@ -14,6 +14,7 @@
  *      - website.field_display_name
  *      - website.field_meta_title
  *      - website.body
+ *       - website.owner
  *  - more - true/false value of if there are more results then displayable
  *  so you can place a more button on the page to goto the websites.ucsf.edu/azlist
  *
@@ -42,12 +43,7 @@
             <ul class="search-websites">
             {% for website in websites %}
                 <li>
-                    {{ website.title }} |
-                    <a href="{{ website.field_website_url }}" target="_blank">{{ website.field_website_url }}</a>
-                    {% if website.field_display_name %}, {{ website.field_display_name }}{% endif %}
-                    {% if website.field_meta_title %}, {{ website.field_meta_title }}{% endif %}
-                    {% if website.body %}, {{ website.body }}{% endif %}
-                    {% if website.field_owner_name %}, Owner: {{ website.field_owner_name }}{% endif %}
+                    {{ website.title }} | <a href="{{ website.field_website_url }}" target="_blank">{{ website.field_website_url }}</a>{% if website.field_display_name %}, {{ website.field_display_name|replace({'_': " "}) }}{% endif %}
                 </li>
             {% endfor %}
             </ul>

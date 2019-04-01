@@ -58,9 +58,9 @@
             {% for person in directory %}
             <li>
                 <a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a> |
-                {% if person.mail %} {{ person.mail }}, {% endif %}
-                {% if person.telephonenumber %} {{ person.telephonenumber }}, {% endif %}
-                {{ person.departmentname }}
+                {% if person.mail %}{{ person.mail }}, {% endif %}
+                {% if person.telephonenumber %}{{ person.telephonenumber }}, {% endif %}
+                {{ person.departmentname|title|replace({'_': " "}) }}
             </li>
             {% endfor %}
             </ul>
@@ -76,11 +76,7 @@
             <ul class="search-websites">
             {% for website in websites %}
                 <li>
-                    {{ website.title }} |
-                    <a href="{{ website.field_website_url }}" target="_blank">{{ website.field_website_url }}</a>
-                    {% if website.field_display_name %}, {{ website.field_display_name }}{% endif %}
-                    {% if website.field_meta_title %}, {{ website.field_meta_title }}{% endif %}
-                    {% if website.body %}, {{ website.body }}{% endif %}
+                    {{ website.title }} | <a href="{{ website.field_website_url }}" target="_blank">{{ website.field_website_url }}</a>{% if website.field_display_name %}, {{ website.field_display_name|replace({'_': " "}) }}{% endif %}
                 </li>
             {% endfor %}
             </ul>

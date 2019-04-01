@@ -50,7 +50,7 @@
                 <a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a> |
                 {% if person.mail %} {{ person.mail }}, {% endif %}
                 {% if person.telephonenumber %} {{ person.telephonenumber }}, {% endif %}
-                {{ person.departmentname }}
+                {{ person.departmentname|title|replace({'_': " "}) }}
             </li>
             {% endfor %}
             </ul>
