@@ -1,9 +1,14 @@
+{% if paragraph.field_remove_top_space[0].value == '1' %}
+  {% set remove = 'remove-top-space' %}
+{% endif %}
+
 {% set classes = [
   'layout-left-30-70',
   paragraph.field_background_color.value,
-  'clearfix'
+  'clearfix',
+  remove
 ] %}
 
 <div{{ attributes.addClass(classes) }}>
-  {{ content|without('field_background_color') }}
+  {{ content|without('field_background_color', 'field_remove_top_space') }}
 </div>
