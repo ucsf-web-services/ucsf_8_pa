@@ -15,16 +15,47 @@
         // If large screen.
         if (mediaQuery.matches) {
 
-          // Create tabs.
-          $(".js-tabs").tabs().addClass("ui-helper-clearfix");
+          // Show/hide headers.
+          $(".vertical-tab__title").show();
+          $(".js-accordion > h3").hide();
+
+          // Destroy accordion if it exists.
+          if ($('.ui-accordion').length > 0) {
+            $(".js-accordion").accordion('destroy');
+
+            // Create tabs.
+            $(".js-tabs").tabs().addClass('ui-helper-clearfix vertical-tab-active layout-left-30-70');
+          } else {
+
+            // Create tabs.
+            $(".js-tabs").tabs().addClass('ui-helper-clearfix layout-left-30-70');
+          }
 
           // If small screen.
         } else {
 
+          // Show/hide headers.
+          $(".vertical-tab__title").hide();
+          $(".js-accordion > h3").show();
+
           // Destroy tabs if they exist.
           if ($('.ui-tabs').length > 0) {
             $(".js-tabs").tabs('destroy');
+
+            // Create accordion.
+            $(".js-accordion").accordion({
+              header: "h3"
+            });
+          } else {
+
+            // Create accordion.
+            $(".js-accordion").accordion({
+              header: "h3"
+            });
           }
+
+          // Remove style elements for
+          $(".js-tabs").removeClass('layout-left-30-70');
         }
       }
 

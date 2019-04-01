@@ -19,10 +19,13 @@
   </ul>
 
   {# content #}
+  <div class="js-accordion">
   {% for paragraph_vertical_tab in paragraph.field_tabs %}
+    <h3 href="#tabs-{{ loop.index }}">{{ paragraph_vertical_tab.entity.field_tab_title.value }}</h3>
     <div id="tabs-{{ loop.index }}" class="field-column-70">
-        {{ drupal_field('field_tab_unscrollable_content','paragraph', paragraph_vertical_tab.value.target_id) }}
+      {{ drupal_field('field_tab_unscrollable_content','paragraph', paragraph_vertical_tab.value.target_id) }}
       {{ drupal_field('field_tab_content','paragraph', paragraph_vertical_tab.value.target_id) }}
     </div>
   {% endfor %}
+  </div>
 </div>
