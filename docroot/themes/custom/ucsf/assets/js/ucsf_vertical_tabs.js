@@ -7,6 +7,12 @@
     attach: function attach(context, settings) {
 
       var mediaQuery = window.matchMedia('(min-width: 850px)');
+      var accordionElement = $(".js-accordion");
+      var tabsElement = $(".js-tabs");
+      var accordionTitles = $(".js-accordion > h3");
+      var tabsTitles = $(".vertical-tab__title");
+      var accordionActive = $('.ui-accordion');
+      var tabsActive = $('.ui-tabs');
 
       mediaQuery.addListener(tabAccordionSwitch);
 
@@ -16,47 +22,45 @@
         if (mediaQuery.matches) {
 
           // Show/hide headers.
-          $(".vertical-tab__title").show();
-          $(".js-accordion > h3").hide();
+          tabsTitles.show();
+          accordionTitles.hide();
 
           // Destroy accordion if it exists.
-          if ($('.ui-accordion').length > 0) {
-            $(".js-accordion").accordion('destroy');
-
-            // Create tabs.
-            $(".js-tabs").tabs().addClass('ui-helper-clearfix vertical-tab-active layout-left-30-70');
+          if (accordionActive.length > 0) {
+            accordionElement.accordion('destroy');
+            createTabs();
           } else {
-
-            // Create tabs.
-            $(".js-tabs").tabs().addClass('ui-helper-clearfix layout-left-30-70');
+            createTabs();
           }
 
           // If small screen.
         } else {
 
           // Show/hide headers.
-          $(".vertical-tab__title").hide();
-          $(".js-accordion > h3").show();
+          tabsTitles.hide();
+          accordionTitles.show();
 
           // Destroy tabs if they exist.
-          if ($('.ui-tabs').length > 0) {
-            $(".js-tabs").tabs('destroy');
-
-            // Create accordion.
-            $(".js-accordion").accordion({
-              header: "h3"
-            });
+          if (tabsActive.length > 0) {
+            tabsElement.tabs('destroy');
+            createAccordion();
           } else {
-
-            // Create accordion.
-            $(".js-accordion").accordion({
-              header: "h3"
-            });
+            createAccordion();
           }
 
           // Remove style elements for
-          $(".js-tabs").removeClass('layout-left-30-70');
+          tabsElement.removeClass('layout-left-30-70');
         }
+      }
+
+      function createAccordion() {
+        accordionElement.accordion({
+          header: "h3"
+        });
+      }
+
+      function createTabs() {
+        tabsElement.tabs().addClass('ui-helper-clearfix layout-left-30-70');
       }
 
       tabAccordionSwitch(mediaQuery);
