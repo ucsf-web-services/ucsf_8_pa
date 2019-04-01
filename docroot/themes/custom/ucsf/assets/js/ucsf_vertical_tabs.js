@@ -55,7 +55,9 @@
 
       function createAccordion() {
         accordionElement.accordion({
-          header: "h3"
+          header: "h3",
+          active: false,
+          collapsible: true
         });
       }
 
