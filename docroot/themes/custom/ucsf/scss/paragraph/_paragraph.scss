@@ -119,8 +119,10 @@
 }
 
 .layout-columns__2 {
-  padding: $space-ten;
-  padding-bottom: 0;
+  padding: 20px;
+  padding-bottom: 40px;
+  clear: both;
+  float: left;
 
   .layout__heading {
     margin-bottom: $space-four;
@@ -128,12 +130,66 @@
 
   .field-content-wrapper-content { // PL: .layout-columns__two
     list-style: none;
-    grid-column: 1/-1;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: auto;
-    grid-gap: 5%;
-    grid-row-gap: 0;
+    clear: both;
+
+    .layout-column {
+      clear: both;
+      margin-top: $space-five;
+
+      &first-child {
+        margin-top: 0;
+      }
+    }
+  }
+
+  @include breakpoint($new-medium) {
+    padding: $space-five;
+
+    .field-content-wrapper-content {
+      clear: none;
+      float: left;
+
+      .layout-column {
+        clear: none;
+        float: left;
+        width: 48%;
+        margin-right: 2%;
+        margin-left: 0;
+        margin-top: 0;
+
+        &:last-child {
+          margin-right: 0;
+          margin-left: 2%;
+        }
+      }
+    }
+  }
+
+  @include breakpoint($new-large) {
+    float: none;
+    padding: $space-ten;
+
+    .field-content-wrapper-content {
+      float: none;
+      grid-column: 1/-1;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: auto;
+      grid-gap: 5%;
+      grid-row-gap: 0;
+
+      .layout-column {
+        float: none;
+        width: auto;
+        margin-right: 0;
+        margin-left: 0;
+
+        &:last-child {
+          margin-right: 0;
+          margin-left: 0;
+        }
+      }
+    }
   }
 }
 
@@ -398,4 +454,13 @@
 .memberships-cards__subtitle {
   font-family: $font-helvetica-neue-medium;
   line-height: 1.4;
+}
+
+#block-instagramblock {
+  .group {
+    display: inline-block;
+    overflow: hidden;
+    max-height: 32%;
+    max-width: 32%;
+  }
 }

@@ -1,9 +1,21 @@
 .latest-events-list { //PL: .lastest-events-list
-  padding-top: $space-ten;
-  grid-column: 1/-1;
-  margin-top: $space-ten;
   float: left;
   width: 100%;
+  margin-top: 0;
+  padding: 0 20px;
+  padding-top: 20px;
+
+  @include breakpoint($new-small) {
+    padding: $space-five;
+    padding-top: $space-five;
+  }
+
+  @include breakpoint($new-large) {
+    padding: $space-ten;
+    padding-top: $space-ten;
+    grid-column: 1/-1;
+    float: none;
+  }
 
   & + * {
     clear: both;
