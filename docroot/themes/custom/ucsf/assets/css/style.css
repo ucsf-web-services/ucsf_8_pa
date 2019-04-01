@@ -2450,7 +2450,9 @@ body.loading .quicklinks {
   color: #506380;
   width: 64%;
   margin-top: 8px;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  border-bottom: 1px solid #d1d3d3;
+  padding-bottom: 20px; }
   @media (min-width: 1050px) {
     .article-header__author {
       padding-bottom: 32px; } }
@@ -4931,24 +4933,61 @@ a[href*="http"] .article-header__date {
       margin-bottom: 0;
       padding-bottom: 0; }
 
+.layout-columns__1 {
+  padding: 20px;
+  padding-bottom: 0;
+  clear: both;
+  float: left; }
+  .layout-columns__1 .layout__heading {
+    margin-bottom: 32px; }
+  .layout-columns__1 .field-content-wrapper-content {
+    list-style: none;
+    clear: both; }
+    .layout-columns__1 .field-content-wrapper-content .layout-column {
+      clear: both;
+      margin-top: 0; }
+      .layout-columns__1 .field-content-wrapper-content .layout-columnfirst-child {
+        margin-top: 0; }
+  @media (min-width: 850px) {
+    .layout-columns__1 {
+      padding: 40px;
+      padding-bottom: 0; } }
+  @media (min-width: 1050px) {
+    .layout-columns__1 {
+      float: none;
+      padding: 80px;
+      padding-bottom: 0; }
+      .layout-columns__1 .field-content-wrapper-content {
+        float: none;
+        grid-column: 1/-1;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-auto-rows: auto;
+        grid-gap: 0;
+        grid-row-gap: 0; } }
+
 .layout-columns__2 {
   padding: 20px;
   padding-bottom: 40px;
+  padding-bottom: 0;
   clear: both;
   float: left; }
   .layout-columns__2 .layout__heading {
-    margin-bottom: 32px; }
+    margin-bottom: 32px;
+    padding-bottom: 0; }
   .layout-columns__2 .field-content-wrapper-content {
     list-style: none;
     clear: both; }
     .layout-columns__2 .field-content-wrapper-content .layout-column {
       clear: both;
-      margin-top: 40px; }
+      margin-top: 40px;
+      padding-bottom: 0; }
       .layout-columns__2 .field-content-wrapper-content .layout-columnfirst-child {
         margin-top: 0; }
   @media (min-width: 850px) {
     .layout-columns__2 {
-      padding: 40px; }
+      padding: 40px;
+      padding-bottom: 0; }
       .layout-columns__2 .field-content-wrapper-content {
         clear: none;
         float: left; }
@@ -4965,7 +5004,8 @@ a[href*="http"] .article-header__date {
   @media (min-width: 1050px) {
     .layout-columns__2 {
       float: none;
-      padding: 80px; }
+      padding: 80px;
+      padding-bottom: 0; }
       .layout-columns__2 .field-content-wrapper-content {
         float: none;
         grid-column: 1/-1;

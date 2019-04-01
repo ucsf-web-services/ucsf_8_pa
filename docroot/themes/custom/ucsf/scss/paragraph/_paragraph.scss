@@ -118,9 +118,9 @@
   }
 }
 
-.layout-columns__2 {
+.layout-columns__1 {
   padding: 20px;
-  padding-bottom: 40px;
+  padding-bottom: 0;
   clear: both;
   float: left;
 
@@ -134,7 +134,7 @@
 
     .layout-column {
       clear: both;
-      margin-top: $space-five;
+      margin-top: 0;
 
       &first-child {
         margin-top: 0;
@@ -144,6 +144,57 @@
 
   @include breakpoint($new-medium) {
     padding: $space-five;
+    padding-bottom: 0;
+  }
+
+  @include breakpoint($new-large) {
+    float: none;
+    padding: $space-ten;
+    padding-bottom: 0;
+
+    .field-content-wrapper-content {
+      float: none;
+      grid-column: 1/-1;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      grid-auto-rows: auto;
+      grid-gap: 0;
+      grid-row-gap: 0;
+    }
+  }
+
+}
+
+.layout-columns__2 {
+  padding: 20px;
+  padding-bottom: 40px;
+  padding-bottom: 0;
+  clear: both;
+  float: left;
+
+  .layout__heading {
+    margin-bottom: $space-four;
+    padding-bottom: 0;
+  }
+
+  .field-content-wrapper-content { // PL: .layout-columns__two
+    list-style: none;
+    clear: both;
+
+    .layout-column {
+      clear: both;
+      margin-top: $space-five;
+      padding-bottom: 0;
+
+      &first-child {
+        margin-top: 0;
+      }
+    }
+  }
+
+  @include breakpoint($new-medium) {
+    padding: $space-five;
+    padding-bottom: 0;
 
     .field-content-wrapper-content {
       clear: none;
@@ -168,6 +219,7 @@
   @include breakpoint($new-large) {
     float: none;
     padding: $space-ten;
+    padding-bottom: 0;
 
     .field-content-wrapper-content {
       float: none;
