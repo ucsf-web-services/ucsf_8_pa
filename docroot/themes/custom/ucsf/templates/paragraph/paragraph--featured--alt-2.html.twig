@@ -5,6 +5,7 @@
 {% block wrapper_top %}
   <!-- nid: {{ paragraph.field_news_article.target_id }}  -->
   <article{{ attributes.addClass('news-card') }}>
+  <a href="{{ link }}" class="news-card__link">
 {% endblock wrapper_top %}
 
 {% block article_image %}
@@ -21,16 +22,17 @@
 
     {% if content.field_text_body|render|striptags != '' %}
       {# Feature Paragraph - Banner Description #}
-      {{ content.field_text_body }}
+      <div class="news-card__desc">{{ content.field_text_body }}</div>
     {% else %}
       {# Feature Paragraph > News Article (News) > Sub Title #}
-      {{ drupal_field('field_sub_title', 'node', paragraph.field_news_article.target_id) }}
+      <div class="news-card__desc">{{ drupal_field('field_sub_title', 'node', paragraph.field_news_article.target_id) }}</div>
     {% endif %}
 
-    <p class="news-card__more">
+    <p class="news-card__more link--cta">
       {# todo conditional link and link text needed. #}
-      <a href="{{ link }}" class="link link--cta">{{ paragraph.banner.cta_text.value ? paragraph.banner.cta_text.value : 'Continue Reading'|t }}</a>
+      {{ paragraph.banner.cta_text.value ? paragraph.banner.cta_text.value : 'Continue Reading'|t }}
     </p>
     </header>
+    </a>
   </article>
 {% endblock wrapper_bottom %}

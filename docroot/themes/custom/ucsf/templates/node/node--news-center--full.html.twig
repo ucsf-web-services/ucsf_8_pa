@@ -17,14 +17,18 @@
   {% include '@theme/search/search-news-center.twig' %}
 
   <div class="media-coverage">
+  <div class="media-coverage__mobile-header">
+  <h2 class="media-coverage__list-title">{{ "UCSF in the News"|t }}</h2>
+  <p class="media-coverage__mobile-header-more"><a href="/news/media-coverage" class="link link--cta">{{ "View more"|t }}</a></p>
+  </div>
+    <div class="media-coverage__featured">
+      {{ content.field_featured_media_article }}
+    </div>
+
     <div class="media-coverage__list">
       <h2 class="media-coverage__list-title">{{ "UCSF in the News"|t }}</h2>
         {{ content.field_supporting_media_articles }}
-      <p class="media-coverage__list-more"><a href="" class="link link--cta">{{ "View more"|t }}</a></p>
-    </div>
-
-    <div class="media-coverage__featured">
-      {{ content.field_featured_media_article }}
+      <p class="media-coverage__list-more"><a href="/news/media-coverage" class="link link--cta">{{ "View more"|t }}</a></p>
     </div>
   </div>
   {{ drupal_view('topic_tag_featured_carousel', 'block_2') }}

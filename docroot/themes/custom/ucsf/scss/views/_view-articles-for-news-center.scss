@@ -1,6 +1,93 @@
 .view-articles-for-news-center {
   .views-infinite-scroll-content-wrapper > .item-list > ul {
-    @include card-three-up;
+      margin: 0 20px;
+      display: block;
+
+      > li {
+        float: none;
+        width: 100%;
+      }
+
+      .news-card {
+        margin-bottom: 0;
+
+        .news-card__image img {
+          float: right;
+        }
+      }
+
+      @include breakpoint($new-x-small-max) {
+        margin-top: 0 !important;
+
+        .news-card {
+          border-bottom: 1px solid $gray-lighter;
+          padding-bottom: 0;
+
+          figure {
+            display: none;
+          }
+
+          .news-card__link {
+            margin-top: $space-two;
+            padding-bottom: $space-two;
+          }
+
+          .news-card__copy {
+            margin-top: $space-two;
+            margin-left: 0;
+            padding-left: 0;
+            padding-top: 0;
+            margin-right: 0;
+            padding-bottom: $space-two;
+          }
+        }
+      }
+
+
+    @include breakpoint($new-x-small) {
+      margin-top: $space-five;
+      display: block;
+
+        > li {
+          float: left;
+          width: 46%;
+          margin-left: 2%;
+
+          &:nth-child(odd) {
+            clear: left;
+            margin-right: 2%;
+            margin-left: 0;
+          }
+        }
+
+        .news-card {
+          margin-bottom: 0;
+
+          .news-card__image img {
+            float: none;
+          }
+        }
+    }
+
+    @include breakpoint($new-small) {
+        margin: 0 $space-five;
+    }
+
+    @include breakpoint($new-large) {
+      margin-top: $space-ten;
+      float: none;
+        @include card-three-up;
+        margin: 0 $space-ten;
+
+        > li {
+          float: none;
+          width: 100%;
+        }
+
+        .news-card {
+          margin-bottom: $space-five;
+        }
+    }
   }
 
   article {
