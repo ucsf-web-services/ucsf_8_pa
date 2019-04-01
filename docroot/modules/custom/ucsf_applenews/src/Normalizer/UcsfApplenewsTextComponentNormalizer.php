@@ -356,6 +356,25 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       switch ($element->tagName) {
 
         case 'blockquote':
+          // Prefix author with emdash.
+          /** @var \DOMElement $bq_element */
+          foreach ($xp->query('//*') as $bq_element) {
+            if ($bq_element->hasAttribute('class') &&
+              ($classes = preg_split('/\s\s+/', $bq_element->getAttribute('class'))) &&
+              in_array('blockquote-content__cite', $classes)
+            ) {
+              foreach ($bq_element->childNodes as $bq_child) {
+                if ($bq_child instanceof \DOMText &&
+                  !empty($bq_child->wholeText)
+                ) {
+                  $bq_element->replaceChild(
+                    new \DOMText('&mdash;' . $bq_child->wholeText),
+                    $bq_child);
+                  break;
+                }
+              }
+            }
+          }
           $value = '';
           foreach ($element->childNodes as $node) {
             $value .= $this->htmlValue($doc->saveHTML($node));
