@@ -54,7 +54,11 @@
           {{ item.attributes.setAttribute('style', menu_attributes.item.style) }}
         {% endif %}
       >
-        {{ link(item.title, item.url, menu_attributes.link) }}
+        {% set title_wrap %}
+          <span>{{ item.title }}</span>
+        {% endset %}
+
+        {{ link(title_wrap, item.url, menu_attributes.link) }}
 
         {% if menu_level > 0 and item.is_expanded %}
           <i class="fas fa-angle-right"></i>

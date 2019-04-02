@@ -21,17 +21,25 @@ header .menu--main {
     display: inline-block;
 
     &.search {
-      background: url(/themes/custom/ucsf/assets/images/magnifier.svg) no-repeat 50px 5px #fff;
-      background-size: 28px 28px;
 
       &:hover {
-        //background: url(/themes/custom/ucsf/assets/images/x-large.svg) no-repeat 50px 10px #fff;
+
       }
 
       > a {
         //text-indent: -9999px;
+        background: url(/themes/custom/ucsf/assets/images/magnifier.svg) no-repeat 0 7px #fff;
+        background-size: 28px 28px;
         min-width: 28px;
-        color: transparent;
+        &.active {
+          background: url(/themes/custom/ucsf/assets/images/x-large.svg) no-repeat 0 7px #fff;
+          background-size: 28px 28px;
+          min-width: 28px;
+        }
+        span {
+          color: transparent;
+        }
+
       }
 
     }

@@ -56,9 +56,11 @@
   Drupal.behaviors.searchMenuAction = {
 
     attach: function attach(context, settings) {
-      $('.menu-parent--wrapper .menu-item.search a', context).click(function (e) {
+      $('.menu-parent--wrapper .menu-item.search > a', context).click(function (e) {
         e.preventDefault();
         $('.wrapper--search-menu').toggleClass('active');
+        $('.menu-parent--wrapper .menu-item.search > a').toggleClass('active');
+        $('.wrapper--search-menu .home-search__form-input').focus();
       });
 
       $('.menu-parent--wrapper .menu-item', context).hover(function (e) {
@@ -66,6 +68,7 @@
           //console.log('search menu');
         } else {
           $('.wrapper--search-menu').removeClass('active');
+          $('.menu-parent--wrapper .menu-item.search > a').removeClass('active');
         }
       });
     }
