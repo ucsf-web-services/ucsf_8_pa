@@ -15,7 +15,7 @@
       });
 
       var bounds = new google.maps.LatLngBounds();
-      
+
       //getting the node title to pass to maps_api.php instead of using nid
       var pagedata;
       pagedata = $("div.title").text();
@@ -23,7 +23,6 @@
       //var nid = Drupal.settings.nid;
       //you must double escape the newlines coming from the Google copy/paste so they look like this [ \\n ]
       $.getJSON('/maps_api.php?name='+pagedata, function(data) {
-        console.log(pagedata);
         console.dir(data);
         var locations = {};
         var infoWindows = [];
