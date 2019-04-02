@@ -18,8 +18,8 @@ gulp.task('polymerLibraryTranpilation', () => {
 
 gulp.task('webcomponentsTranspilation', () => {
 	return gulp.src([
-			'./nursing_components/**/*.html',
-     	'./bower_components/**/*.html',
+					'./nursing_components/**/*.html',
+     				'./bower_components/**/*.html',
 			'!' + './bower_components/webcomponentsjs/**/*.html',
 			'!' + './bower_components/polymer/**/*.html',
                 ])
