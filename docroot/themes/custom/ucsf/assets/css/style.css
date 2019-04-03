@@ -964,15 +964,16 @@ a.icon-transit:hover {
       width: 100%;
       vertical-align: middle; } }
   @media (min-width: 850px) {
-    .header body:not(.explorer) {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-      grid-gap: 5%;
-      grid-row-gap: 0;
-      margin-bottom: 0; } }
-  @media (min-width: 850px) and (min-width: 600px) {
-    .header body:not(.explorer) {
-      grid-template-columns: repeat(2, auto); } }
+    .header {
+      margin-bottom: 0; }
+      .header body:not(.explorer) {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 5%;
+        grid-row-gap: 0; } }
+    @media (min-width: 850px) and (min-width: 600px) {
+      .header body:not(.explorer) {
+        grid-template-columns: repeat(2, auto); } }
 
 @media (max-width: 849px) {
   .header--logo {
@@ -7850,7 +7851,7 @@ a[href*="http"] .article-header__date {
     .twitter-wrapper {
       float: none; } }
   @media (min-width: 1050px) {
-    .twitter-wrapper {
+    .twitter-wrapper body:not(.explorer) {
       float: none;
       padding: 72px;
       padding-left: 8%;
@@ -7875,15 +7876,13 @@ a[href*="http"] .article-header__date {
 .twitter__tweets {
   list-style: none;
   margin: 0;
-  padding: 0; }
-  @media (max-width: 768px) {
-    .twitter__tweets {
-      overflow-x: scroll;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      white-space: nowrap; } }
+  padding: 0;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap; }
   @media (min-width: 1050px) {
-    .twitter__tweets {
+    .twitter__tweets body:not(.explorer) {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       white-space: normal; } }
@@ -7907,9 +7906,10 @@ a[href*="http"] .article-header__date {
       width: 33%; } }
   @media (min-width: 1050px) {
     .twitter__tweet {
-      float: none;
-      padding-right: 15%;
-      width: 100%; } }
+      padding-right: 15%; }
+      .twitter__tweet body:not(.explorer) {
+        float: none;
+        width: 100%; } }
 
 img.twitter-icon {
   border-radius: 50%;

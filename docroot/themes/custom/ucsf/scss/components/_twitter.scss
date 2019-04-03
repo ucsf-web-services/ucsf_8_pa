@@ -32,11 +32,13 @@
   }
 
   @include breakpoint($new-large) {
-    float: none;
-    padding: $space-nine;
-    padding-left: 8%;
-    padding-right: 0;
-    padding-bottom: $space-five;
+    body:not(.explorer) {
+      float: none;
+      padding: $space-nine;
+      padding-left: 8%;
+      padding-right: 0;
+      padding-bottom: $space-five;
+    }
   }
 }
 
@@ -64,18 +66,18 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
 
-  @include breakpoint($new-small-max) {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
-  }
 
   @include breakpoint($new-large) {
-    display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(200px, 1fr) );
-    white-space: normal;
+    body:not(.explorer) {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      white-space: normal;
+    }
   }
 }
 
@@ -100,9 +102,11 @@
   }
 
   @include breakpoint($new-large) {
-    float: none;
+    body:not(.explorer) {
+      float: none;
+      width: 100%;
+    }
     padding-right: 15%;
-    width: 100%;
   }
 }
 
