@@ -1,5 +1,6 @@
 .vertical-tab {
   grid-column: 1/-1;
+  clear: both;
 
   .vertical-tab__title {
     display: inline-block;
@@ -64,6 +65,7 @@
 
 .vertical-tab-alt {
   padding-right: 0;
+  clear: both;
 
   &.layout-left-30-70 {
     padding-right: 0;
@@ -117,30 +119,36 @@
     }
   }
 
+  &.layout-left-30-70 {
+
+    .field-tab-content {
+      padding-right: $space-fourteen;
+      padding-bottom: $space-five;
+      margin-bottom: $space-six !important;
+      height: 452px;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+        background-color: $c-gray-lighter;
+        border-radius: 5px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $c-gray-blue;
+        border-radius: 5px;
+
+        &:hover {
+          background-color: $c-blue;
+        }
+      }
+    }
+  }
+
   .field-tab-content {
     list-style: none;
     margin: 0;
-    margin-bottom: $space-six !important;
     padding: 0;
-    padding-right: $space-fourteen;
-    padding-bottom: $space-five;
-    height: 452px;
-    overflow-y: scroll;
-
-    &::-webkit-scrollbar {
-      width: 5px;
-      background-color: $c-gray-lighter;
-      border-radius: 5px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: $c-gray-blue;
-      border-radius: 5px;
-
-      &:hover {
-        background-color: $c-blue;
-      }
-    }
 
     .line--list {
       p {
@@ -167,17 +175,52 @@
 
 .ui-accordion {
   > h3 {
-   @include fs-heading-three;
-    padding: 15px;
-    margin: 15px;
+   @include fs-small-title;
+    padding: 20px;
+    padding-right: 70px;
+    margin: 0;
+    border-bottom: 1px solid $c-gray-lighter;
 
-    i  {
-      float: right;
-      font-size: 13px;
+    &:first-child {
+      border-top: 1px solid $c-gray-lighter;
+    }
+
+    &.ui-accordion-header-collapsed {
+      background: url('../images/accordion-button-open.png') right center no-repeat transparent;
+      background-size: 60px 40px;
+    }
+
+    &.ui-accordion-header-active {
+      background: url('../images/accordion-button-close.png') right center no-repeat transparent;
+      background-size: 60px 40px;
+      border-bottom: none;
+      color: $c-blue-link;
+      box-shadow: -4px 6px 11px 0 rgba(213, 217, 222, 0.35);
+    }
+
+    .vertical-tab-alt & {
+      background-color: #f2f4f6;
+      font-family: $font-granjon;
+      font-size: 28px;
+      line-height: 1.14;
+      letter-spacing: -0.7px;
     }
   }
 }
 
 .ui-accordion-content {
-  padding: 30px;
+  padding: 30px 20px;
+  height: auto !important;
+  border-bottom: 1px solid $c-gray-lighter;
+
+  .vertical-tab-alt & {
+    background: #f2f4f6;
+  }
+
+  .field-tab-content {
+    > :first-child {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
 }

@@ -728,7 +728,8 @@ a.icon-transit:hover {
   background-color: #058488 left center no-repeat transparent; }
 
 .vertical-tab {
-  grid-column: 1/-1; }
+  grid-column: 1/-1;
+  clear: both; }
   .vertical-tab .vertical-tab__title {
     display: inline-block;
     float: left;
@@ -771,7 +772,8 @@ a.icon-transit:hover {
     padding-top: 0; }
 
 .vertical-tab-alt {
-  padding-right: 0; }
+  padding-right: 0;
+  clear: both; }
   .vertical-tab-alt.layout-left-30-70 {
     padding-right: 0; }
     .vertical-tab-alt.layout-left-30-70 .field-column-30 {
@@ -819,24 +821,25 @@ a.icon-transit:hover {
         padding-right: 120px;
         margin-top: 0;
         display: block; }
-  .vertical-tab-alt .field-tab-content {
-    list-style: none;
-    margin: 0;
-    margin-bottom: 48px !important;
-    padding: 0;
+  .vertical-tab-alt.layout-left-30-70 .field-tab-content {
     padding-right: 112px;
     padding-bottom: 40px;
+    margin-bottom: 48px !important;
     height: 452px;
     overflow-y: scroll; }
-    .vertical-tab-alt .field-tab-content::-webkit-scrollbar {
+    .vertical-tab-alt.layout-left-30-70 .field-tab-content::-webkit-scrollbar {
       width: 5px;
       background-color: #d1d3d3;
       border-radius: 5px; }
-    .vertical-tab-alt .field-tab-content::-webkit-scrollbar-thumb {
+    .vertical-tab-alt.layout-left-30-70 .field-tab-content::-webkit-scrollbar-thumb {
       background-color: #506380;
       border-radius: 5px; }
-      .vertical-tab-alt .field-tab-content::-webkit-scrollbar-thumb:hover {
+      .vertical-tab-alt.layout-left-30-70 .field-tab-content::-webkit-scrollbar-thumb:hover {
         background-color: #007cbe; }
+  .vertical-tab-alt .field-tab-content {
+    list-style: none;
+    margin: 0;
+    padding: 0; }
     .vertical-tab-alt .field-tab-content .line--list p {
       margin-top: 0;
       font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
@@ -848,23 +851,44 @@ a.icon-transit:hover {
     margin-top: 0; }
 
 .ui-accordion > h3 {
-  color: #052049;
-  font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
-  font-size: 28px;
-  font-weight: normal;
-  line-height: 1;
-  letter-spacing: -0.3px;
-  padding: 15px;
-  margin: 15px; }
-  @media (min-width: 600px) {
-    .ui-accordion > h3 {
-      letter-spacing: -0.3px; } }
-  .ui-accordion > h3 i {
-    float: right;
-    font-size: 13px; }
+  font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 18px;
+  margin-top: 8px;
+  letter-spacing: -0.2px;
+  padding: 20px;
+  padding-right: 70px;
+  margin: 0;
+  border-bottom: 1px solid #d1d3d3; }
+  .ui-accordion > h3 + * {
+    margin-top: 0; }
+  .ui-accordion > h3:first-child {
+    border-top: 1px solid #d1d3d3; }
+  .ui-accordion > h3.ui-accordion-header-collapsed {
+    background: url("../images/accordion-button-open.png") right center no-repeat transparent;
+    background-size: 60px 40px; }
+  .ui-accordion > h3.ui-accordion-header-active {
+    background: url("../images/accordion-button-close.png") right center no-repeat transparent;
+    background-size: 60px 40px;
+    border-bottom: none;
+    color: #0071ad;
+    -webkit-box-shadow: -4px 6px 11px 0 rgba(213, 217, 222, 0.35);
+            box-shadow: -4px 6px 11px 0 rgba(213, 217, 222, 0.35); }
+  .vertical-tab-alt .ui-accordion > h3 {
+    background-color: #f2f4f6;
+    font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
+    font-size: 28px;
+    line-height: 1.14;
+    letter-spacing: -0.7px; }
 
 .ui-accordion-content {
-  padding: 30px; }
+  padding: 30px 20px;
+  height: auto !important;
+  border-bottom: 1px solid #d1d3d3; }
+  .vertical-tab-alt .ui-accordion-content {
+    background: #f2f4f6; }
+  .ui-accordion-content .field-tab-content > :first-child {
+    margin-top: 0;
+    padding-top: 0; }
 
 .universal-header__give {
   display: block;
@@ -3478,7 +3502,8 @@ figure.align-center figcaption {
 
 .full-width-page {
   padding: 0;
-  padding-bottom: 40px; }
+  padding-bottom: 40px;
+  padding-top: 1px; }
   .full-width-page .field-content-panel {
     grid-column: 1/-1; }
     .full-width-page .field-content-panel .field__item:first-child .latest-events-list {
