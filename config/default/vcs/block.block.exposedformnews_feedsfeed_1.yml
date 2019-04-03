@@ -1,4 +1,4 @@
-uuid: 1b1928e2-a1fd-4333-9f63-2bb6dd787521
+uuid: 48674fb5-54b9-4a67-8689-1bd6498d5c7a
 langcode: en
 status: true
 dependencies:
@@ -10,24 +10,19 @@ dependencies:
     - views
   theme:
     - ucsf
-id: exposedformnews_feedspage_1
+id: exposedformnews_feedsfeed_1
 theme: ucsf
 region: content
-weight: -5
+weight: 0
 provider: null
-plugin: 'views_exposed_filter_block:news_feeds-page_1'
+plugin: 'views_exposed_filter_block:news_feeds-feed_1'
 settings:
-  id: 'views_exposed_filter_block:news_feeds-page_1'
+  id: 'views_exposed_filter_block:news_feeds-feed_1'
   label: ''
   provider: views
-  label_display: '0'
+  label_display: visible
   views_label: ''
 visibility:
-  request_path:
-    id: request_path
-    pages: /news/rss-news-feeds
-    negate: false
-    context_mapping: {  }
   'entity_bundle:node':
     id: 'entity_bundle:node'
     bundles:
@@ -35,3 +30,8 @@ visibility:
     negate: false
     context_mapping:
       node: '@node.node_route_context:node'
+  request_path:
+    id: request_path
+    pages: /news/rss-news-feeds
+    negate: false
+    context_mapping: {  }

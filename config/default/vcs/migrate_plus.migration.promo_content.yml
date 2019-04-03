@@ -1,0 +1,84 @@
+uuid: 5757f599-c364-4f26-9221-ac48be6f6855
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - ucsf_edu_migrate
+_core:
+  default_config_hash: HZFUZID5wRHoRyRIhSvyQi8fnKwpU8eJM0Ad4V20bno
+id: promo_content
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: content_import
+label: 'Migrate the promo content type into the new ucsf.edu website'
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  urls: 'http://ucsfpa1dev.prod.acquia-sites.com/promoxml'
+  item_selector: /nodes/node
+  ids:
+    nid:
+      type: integer
+  fields:
+    -
+      name: nid
+      label: 'node id'
+      selector: Nid
+    -
+      name: title
+      label: 'author node title'
+      selector: title
+    -
+      name: body
+      label: 'body of the news package'
+      selector: Body
+    -
+      name: boxcolor
+      label: 'the textbox background color for the promo pages'
+      selector: Textbox-Background-Color
+    -
+      name: image
+      label: 'image for the about pages'
+      selector: image
+  constants:
+    file_directory: 'public://'
+process:
+  type:
+    plugin: default_value
+    default_value: page
+  title: title
+  nid: nid
+  body/value: body
+  body/format:
+    plugin: default_value
+    default_value: full_html
+  field_image:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: in_file
+      message: 'there was an empty field'
+    -
+      plugin: file_copy
+      source:
+        - in_file
+        - '@destination_path'
+    -
+      plugin: entity_generate
+  destination_basename:
+    plugin: callback
+    callable: basename
+    source: in_file
+  destination_path:
+    plugin: concat
+    source:
+      - constants/file_directory
+      - '@destination_basename'
+destination:
+  plugin: 'entity:node'
+  default_bundle: page
+migration_dependencies: {  }

@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.column_wrapper.field_background_color
     - field.field.paragraph.column_wrapper.field_content_wrapper_content
+    - field.field.paragraph.column_wrapper.field_remove_top_space
     - field.field.paragraph.column_wrapper.field_title
     - paragraphs.paragraphs_type.column_wrapper
   module:
@@ -22,7 +23,7 @@ content:
     region: content
   field_content_wrapper_content:
     type: entity_reference_paragraphs
-    weight: 2
+    weight: 3
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -32,8 +33,15 @@ content:
       default_paragraph_type: ''
     third_party_settings: {  }
     region: content
-  field_title:
+  field_remove_top_space:
     weight: 1
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_title:
+    weight: 2
     settings:
       size: 60
       placeholder: ''

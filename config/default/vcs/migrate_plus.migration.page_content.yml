@@ -1,0 +1,114 @@
+uuid: e7a849c5-a236-4772-865a-13898fcef18a
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - ucsf_edu_migrate
+_core:
+  default_config_hash: W_fc9pqPU6lXD6pWpbm65V9-n6FVgFOgyEL4PXBUX6c
+id: page_content
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: content_import
+label: 'Migrate the news package content type into the new ucsf.edu website'
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  urls: 'https://www.ucsf.edu/pagexml'
+  item_selector: /nodes/node
+  ids:
+    nid:
+      type: integer
+  fields:
+    -
+      name: nid
+      label: 'node id'
+      selector: Nid
+    -
+      name: title
+      label: 'author node title'
+      selector: title
+    -
+      name: topics_tax
+      label: 'media coverage topic taxonomy reference'
+      selector: Topics
+    -
+      name: orgs_tax
+      label: 'media coverage organizations taxonomy reference'
+      selector: Organizations
+    -
+      name: people_tax
+      label: 'media coverage people taxonomy reference'
+      selector: People
+    -
+      name: loc_tax
+      label: 'media coverage locations taxonomy reference'
+      selector: Locations
+    -
+      name: body
+      label: 'body of the news package'
+      selector: Body
+    -
+      name: in_file
+      label: 'featured image for the news package'
+      selector: Inline-Files
+  constants:
+    file_directory: 'public://'
+process:
+  type:
+    plugin: default_value
+    default_value: page
+  title: title
+  nid: nid
+  field_topics:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: topics_tax
+      message: 'there was an empty field'
+    -
+      plugin: explode
+      source: topics_tax
+      delimiter: ','
+  field_organizations:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: orgs_tax
+      message: 'there was an empty field'
+    -
+      plugin: explode
+      source: orgs_tax
+      delimiter: ','
+  field_people:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: people_tax
+      message: 'there was an empty field'
+    -
+      plugin: explode
+      source: people_tax
+      delimiter: ','
+  field_locations:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: loc_tax
+      message: 'there was an empty field'
+    -
+      plugin: explode
+      source: loc_tax
+      delimiter: ','
+  body/value: body
+  body/format:
+    plugin: default_value
+    default_value: full_html
+destination:
+  plugin: 'entity:node'
+  default_bundle: page
+migration_dependencies: {  }

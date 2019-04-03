@@ -6,8 +6,10 @@ dependencies:
     - field.field.paragraph.image.field_image_caption
     - field.field.paragraph.image.field_image_image
     - field.field.paragraph.image.field_image_media
+    - image.style.article_featured_banner__image
     - paragraphs.paragraphs_type.image
   module:
+    - media
     - text
 id: paragraph.image.default
 targetEntityType: paragraph
@@ -25,10 +27,10 @@ content:
     weight: 0
     label: hidden
     settings:
-      link: true
-      view_mode: default
+      image_style: article_featured_banner__image
+      image_link: ''
     third_party_settings: {  }
-    type: entity_reference_entity_view
+    type: media_thumbnail
     region: content
 hidden:
   field_image_image: true

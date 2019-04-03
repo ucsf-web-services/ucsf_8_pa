@@ -4,17 +4,36 @@ status: true
 dependencies:
   config:
     - image.style.article_feature_banner__image
+    - image.style.featur_banner_x_small
+    - image.style.featur_banner_x_small_2x
     - image.style.feature_banner_2x
+    - image.style.feature_banner_large
+    - image.style.feature_banner_medium
+    - image.style.feature_banner_medium_2x
+    - image.style.feature_banner_narrow
+    - image.style.feature_banner_narrow_2x
+    - image.style.feature_banner_small
+    - image.style.feature_banner_small_2x
   theme:
     - ucsf
 id: feature_banner
 label: 'Feature Banner'
 image_style_mappings:
   -
-    breakpoint_id: ucsf.large_screen
+    breakpoint_id: ucsf.full_screen
     multiplier: 1x
     image_mapping_type: image_style
     image_mapping: article_feature_banner__image
+  -
+    breakpoint_id: ucsf.full_screen
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: feature_banner_2x
+  -
+    breakpoint_id: ucsf.large_screen
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: feature_banner_large
   -
     breakpoint_id: ucsf.large_screen
     multiplier: 2x
@@ -24,31 +43,41 @@ image_style_mappings:
     breakpoint_id: ucsf.medium_screen
     multiplier: 1x
     image_mapping_type: image_style
-    image_mapping: article_feature_banner__image
+    image_mapping: feature_banner_medium
   -
     breakpoint_id: ucsf.medium_screen
     multiplier: 2x
     image_mapping_type: image_style
-    image_mapping: feature_banner_2x
+    image_mapping: feature_banner_medium_2x
   -
     breakpoint_id: ucsf.narrow_screen
     multiplier: 1x
     image_mapping_type: image_style
-    image_mapping: article_feature_banner__image
+    image_mapping: feature_banner_narrow
   -
     breakpoint_id: ucsf.narrow_screen
     multiplier: 2x
     image_mapping_type: image_style
-    image_mapping: article_feature_banner__image
+    image_mapping: feature_banner_narrow_2x
   -
     breakpoint_id: ucsf.small_screen
     multiplier: 1x
     image_mapping_type: image_style
-    image_mapping: article_feature_banner__image
+    image_mapping: feature_banner_small
   -
     breakpoint_id: ucsf.small_screen
     multiplier: 2x
     image_mapping_type: image_style
-    image_mapping: article_feature_banner__image
+    image_mapping: feature_banner_small_2x
+  -
+    breakpoint_id: ucsf.x-small_screen
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: featur_banner_x_small
+  -
+    breakpoint_id: ucsf.x-small_screen
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: featur_banner_x_small_2x
 breakpoint_group: ucsf
 fallback_image_style: article_feature_banner__image

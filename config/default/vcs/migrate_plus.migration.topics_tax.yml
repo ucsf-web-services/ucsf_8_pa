@@ -1,0 +1,64 @@
+uuid: b959708d-d541-457b-9831-d32910a02d3b
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - ucsf_edu_migrate
+_core:
+  default_config_hash: 1sl0-a-HAgcezJ7qpsgyCWvmjhE5UcAV7C9oOdkxukw
+id: topics_tax
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: taxnomy
+label: 'Migreate the topics taxnomy into the new ucsf.edu website'
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  urls: 'public://topics_tax.xml'
+  item_selector: /taxonomy/terms
+  fields:
+    -
+      name: tax_title
+      label: 'tax title'
+      selector: title
+    -
+      name: tax_id
+      label: 'tax ID'
+      selector: Term_ID
+    -
+      name: tax_description
+      label: 'tax description'
+      selector: description
+    -
+      name: mesh_id
+      label: 'Mesh ID'
+      selector: MeSH_ID
+    -
+      name: mesh_name
+      label: 'Mesh Name'
+      selector: Mesh_Name
+    -
+      name: tax_parent
+      label: 'tax parent'
+      selector: Parent_id
+  constants:
+    file_directory: 'public://'
+  ids:
+    tax_id:
+      type: integer
+process:
+  type:
+    plugin: default_value
+    default_value: topics
+  name: tax_title
+  tid: tax_id
+  description/value: tax_description
+  parent: tax_parent
+destination:
+  plugin: 'entity:taxonomy_term'
+  default_bundle: topics
+migration_dependencies: {  }
