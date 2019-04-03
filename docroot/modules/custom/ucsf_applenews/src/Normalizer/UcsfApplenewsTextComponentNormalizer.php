@@ -47,6 +47,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
     'samp',
     'footer',
     'blockquote',
+    'div',
   ];
 
   /**
@@ -309,7 +310,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
     $components = [];
 
     // Toss out tags we don't care about.
-    $html = $this->htmlValue($html,
+    $html = $this->htmlValue($html, self::ALLOWED_HTML_ELEMENTS .
       '<blockquote><h1><h2><h3><h4><h5><h6><img><drupal-entity><iframe><div>');
 
     // Parse value and create components for blockquote, headers, etc.
@@ -347,8 +348,68 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       }
     }
 
+    // Normalize DOM to ensure one-to-one mapping between elements and
+    // components.
+    $tag_names = [
+      'div',
+    ];
+    $xp_query = implode('|', array_map(function ($e) {
+      return "//$e";
+    }, $tag_names));
+    /** @var \DOMElement $element */
+    foreach ($xp->query($xp_query) as $element) {
+
+      // Make sure element ancestors haven't been removed.
+      $ancestor_node = $element->parentNode;
+      while ($ancestor_node &&
+        $ancestor_node->parentNode &&
+        $ancestor_node->tagName != 'body'
+      ) {
+        $ancestor_node = $ancestor_node->parentNode;
+      }
+      if ($ancestor_node->tagName != 'body') {
+        continue;
+      }
+
+      switch ($element->tagName) {
+
+        case 'div':
+          $classes = $element->hasAttribute('class')
+            ? preg_split('/\s\s+/', $element->getAttribute('class'))
+            : [];
+          // Contains 2 p elements, first contains an image, second contains
+          // caption. Replace with a figure element.
+          if (in_array('ckimagebox', $classes)) {
+            $images = $xp->query('p[1]/img', $element);
+            $captions = $xp->query('p[2]', $element);
+            if ($images && $images->length == 1 &&
+              $captions && $captions->length
+            ) {
+              /** @var \DOMElement $image */
+              $image = $images->item(0);
+              $caption = $this->textValue($captions->item(0)->textContent);
+              if ($caption) {
+                $image->setAttribute('applenews_caption', $caption);
+                $element->removeChild($captions->item(0));
+              }
+            }
+          }
+          break;
+
+      }
+    }
+
     // Create components.
-    $xp_query = '//blockquote|//h1|//h2|//h3|//h4|//h5|//h6|//img|//drupal-entity|//iframe';
+    $tag_names = [
+      'blockquote',
+      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+      'img',
+      'drupal-entity',
+      'iframe',
+    ];
+    $xp_query = implode('|', array_map(function ($e) {
+      return "//$e";
+    }, $tag_names));
     /** @var \DOMElement $element */
     foreach ($xp->query($xp_query) as $element) {
       $component = NULL;
@@ -451,32 +512,14 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
         case 'img':
           if ($element->hasAttribute('src')) {
             $url = $element->getAttribute('src');
-            $url_parsed = parse_url($url);
-            if (empty($url_parsed['host'])) {
-              try {
-                $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
-              }
-              catch (\InvalidArgumentException $e) {
-                \Drupal::logger('ucsf_applenews')->error('throwing out HTML containing invalid src attribute ' . $doc->saveHTML($element));
-                continue;
-              }
-              $url_parsed = parse_url($url);
-              if (isset($url_parsed['query'])) {
-                parse_str($url_parsed['query'], $qs);
-                if (isset($qs['itok'])) {
-                  unset($qs['itok']);
-                  if (empty($qs)) {
-                    unset($url_parsed['query']);
-                  }
-                  else {
-                    $url_parsed['query'] = http_build_query($qs);
-                  }
-                  $url = $this->unParseUrl($url_parsed);
-                }
-              }
+            if (!$component = $this->getImageComponent($url)) {
+              \Drupal::logger('ucsf_applenews')->error('throwing out HTML containing invalid src attribute ' . $doc->saveHTML($element));
+              continue;
             }
-            $component = new Photo($url);
             $component->setLayout(_ucsf_applenews_photo_component_layout());
+          }
+          if ($element->hasAttribute('applenews_caption')) {
+            $component->setCaption($element->getAttribute('applenews_caption'));
           }
           break;
 
@@ -687,8 +730,10 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
   /**
    * Apple news HTML subset.
    */
-  protected function htmlValue($str, $additional_elements = '') {
-    $allowed_elements = self::ALLOWED_HTML_ELEMENTS . $additional_elements;
+  protected function htmlValue(
+    $str,
+    $allowed_elements = self::ALLOWED_HTML_ELEMENTS
+  ) {
     return $this->trim(
       html_entity_decode(
         strip_tags($str, $allowed_elements)
@@ -739,6 +784,38 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       }
     }
     return TRUE;
+  }
+
+  /**
+   * Generates a image component.
+   *
+   * @return \ChapterThree\AppleNewsAPI\Document\Components\Image
+   */
+  protected function getImageComponent($url) {
+    $url_parsed = parse_url($url);
+    if (empty($url_parsed['host'])) {
+      try {
+        $url = Url::fromUserInput($url, ['absolute' => TRUE])->toString();
+      }
+      catch (\InvalidArgumentException $e) {
+        return NULL;
+      }
+      $url_parsed = parse_url($url);
+      if (isset($url_parsed['query'])) {
+        parse_str($url_parsed['query'], $qs);
+        if (isset($qs['itok'])) {
+          unset($qs['itok']);
+          if (empty($qs)) {
+            unset($url_parsed['query']);
+          }
+          else {
+            $url_parsed['query'] = http_build_query($qs);
+          }
+          $url = $this->unParseUrl($url_parsed);
+        }
+      }
+    }
+    return new Photo($url);
   }
 
   /**
