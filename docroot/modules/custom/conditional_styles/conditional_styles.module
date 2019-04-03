@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * @file
+ * Adds conditional CSS from the .info file.
+ */
+
+use \Drupal\Component\Utility\Unicode;
+
+/**
+ * Implements hook_css_alter().
+ */
+function conditional_styles_css_alter(&$css, \Drupal\Core\Asset\AttachedAssetsInterface $assets) {
+
+  //dpm($css);
+  /**
+   * This concept doesn't work cause the likely hood of the wrong stylesheet
+   * getting cached and served to the wrong browser is supper high.
+
+
+  if (preg_match("/(Trident\/(\d{2,}|7|8|9)(.*)rv:(\d{2,}))|(MSIE\ (\d{2,}|8|9)(.*)Tablet\ PC)|(Trident\/(\d{2,}|7|8|9))/", $_SERVER["HTTP_USER_AGENT"], $match) != 0) {
+    //dpm('You are using Internet Explorer 11, we encourage you to upgrade to Mozilla Firefox or Google Chrome!');
+    unset($css['themes/custom/ucsf/assets/css/style.css']);
+    $css['themes/custom/ucsf/explorer/assets/style.css'] = [
+      'group' => CSS_THEME,
+      'weight' => 100,
+      'type' => 'file',
+      'preprocess' => TRUE,
+      'data' => 'themes/custom/ucsf/explorer/assets/style.css',
+      'media' => 'all'
+    ];
+  }
+   */
+
+  /**
+   * IE 11 doesn't actually support this at all, so we are repurposing this module.
+  $theme_handler = \Drupal::service('theme_handler');
+  $current_theme = $theme_handler->getDefault();
+  $path = drupal_get_path('theme', $current_theme);
+  $info = $theme_handler->getTheme($current_theme)->info;
+  if (!empty($info['conditional-stylesheets'])) {
+    foreach ($info['conditional-stylesheets'] as $version => $media) {
+      foreach ($media as $key => $file_path) {
+        $full_path = "{$path}/{$file_path}";
+        $css[$full_path] = [
+          'group' => CSS_THEME,
+          'weight' => 999,
+          'type' => 'file',
+          'preprocess' => TRUE,
+          'data' => $full_path,
+          'media' => $key,
+          'every_page' => TRUE,
+          'browsers' => [
+            'IE'  => $version,
+            '!IE' => (Unicode::strpos($version, '!IE') !== FALSE),
+          ],
+        ];
+      }
+    }
+  }
+  */
+}

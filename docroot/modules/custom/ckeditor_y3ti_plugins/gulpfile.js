@@ -20,8 +20,8 @@ gulp.task('webcomponentsTranspilation', () => {
 	return gulp.src([
 					'./nursing_components/**/*.html',
      				'./bower_components/**/*.html',
-			'!' + './bower_components/webcomponentsjs/**/*.html',
-			'!' + './bower_components/polymer/**/*.html',
+					'!' + './bower_components/webcomponentsjs/**/*.html',
+					'!' + './bower_components/polymer/**/*.html',
                 ])
 		.pipe(sourcesHtmlSplitter.split())
 		.pipe( gulpif( /\.js$/, babel({ "presets": ['babel-preset-es2015']}) ) )

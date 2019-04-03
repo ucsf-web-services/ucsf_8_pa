@@ -27,8 +27,10 @@
   }
 
   @include breakpoint($bp-large) {
-    @include grid-two-auto;
-    margin-bottom: 0;
+    body:not(.explorer) {
+      @include grid-two-auto;
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -42,9 +44,9 @@
   }
 
   @include breakpoint($bp-large) {
-    width: 83px;
-    height: 40px;
-    margin-bottom: $space-three;
+      width: 83px;
+      height: 40px;
+      margin-bottom: $space-three;
   }
 }
 
@@ -61,6 +63,6 @@
   }
 
   @include breakpoint($bp-large) {
-    display: none;
+      display: none;
   }
 }
