@@ -165,7 +165,7 @@
       clear: both;
       margin-top: 0;
 
-      &first-child {
+      &:first-child {
         margin-top: 0;
       }
     }
@@ -215,7 +215,7 @@
       margin-top: $space-five;
       padding-bottom: 0;
 
-      &first-child {
+      &:first-child {
         margin-top: 0;
       }
     }
@@ -589,16 +589,30 @@
 }
 
 .memberships {
-  @include grid;
+  padding: 20px;
+  padding-bottom: 0;
 
-  grid-column: 1/-1;
-  padding: $space-ten;
-  padding-bottom: $space-five;
+  @include breakpoint($new-medium) {
+    padding: $space-five;
+    padding-bottom: 0;
+  }
+
+  @include breakpoint($new-large) {
+    @include grid;
+
+    grid-column: 1/-1;
+    padding: $space-ten;
+    padding-bottom: 0;
+  }
 }
 
 .memberships__content {
-  grid-column: 9/-1;
-  grid-row: 1/-1;
+
+
+  @include breakpoint($new-large) {
+    grid-column: 9/-1;
+    grid-row: 1/-1;
+  }
 }
 
 .memberships__title,
@@ -611,13 +625,33 @@
 }
 
 .memberships-cards {
-  @include grid-three;
-
-  grid-column: 1/9;
-  grid-row: 1/-1;
   list-style: none;
   margin: 0;
   padding: 0;
+  columns: 1;
+
+  @include breakpoint($new-small-max) {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    float: none;
+  }
+
+  @include breakpoint($new-small) {
+    columns: 2;
+  }
+
+  @include breakpoint($new-medium) {
+    columns: 3;
+  }
+
+  @include breakpoint($new-large) {
+    @include grid-three;
+
+    grid-column: 1/9;
+    grid-row: 1/-1;
+  }
 }
 
 .memberships-cards__card {
@@ -629,12 +663,26 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  vertical-align: top;
+
+  @include breakpoint($new-small-max) {
+    padding-right: 40px;
+    max-width: 240px;
+    min-width: 200px;
+    display: inline-block;
+    float: none;
+  }
+
+  @include breakpoint($new-large) {
+    padding: 10%;
+  }
 }
 
 .memberships-cards__title,
 .memberships-cards__subtitle {
   margin-top: 0;
   margin-bottom: 0;
+  white-space: normal;
 }
 
 .memberships-cards__title {

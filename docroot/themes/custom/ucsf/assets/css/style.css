@@ -5340,7 +5340,7 @@ a[href*="http"] .article-header__date {
     .layout-columns__1 .field-content-wrapper-content .layout-column {
       clear: both;
       margin-top: 0; }
-      .layout-columns__1 .field-content-wrapper-content .layout-columnfirst-child {
+      .layout-columns__1 .field-content-wrapper-content .layout-column:first-child {
         margin-top: 0; }
   @media (min-width: 850px) {
     .layout-columns__1 {
@@ -5376,7 +5376,7 @@ a[href*="http"] .article-header__date {
       clear: both;
       margin-top: 40px;
       padding-bottom: 0; }
-      .layout-columns__2 .field-content-wrapper-content .layout-columnfirst-child {
+      .layout-columns__2 .field-content-wrapper-content .layout-column:first-child {
         margin-top: 0; }
   @media (min-width: 850px) {
     .layout-columns__2 {
@@ -5666,20 +5666,29 @@ a[href*="http"] .article-header__date {
   font-size: 40px; }
 
 .memberships {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-gap: 5%;
-  grid-row-gap: 0;
-  grid-column: 1/-1;
-  padding: 80px;
-  padding-bottom: 40px; }
-  @media (min-width: 600px) {
+  padding: 20px;
+  padding-bottom: 0; }
+  @media (min-width: 850px) {
+    .memberships {
+      padding: 40px;
+      padding-bottom: 0; } }
+  @media (min-width: 1050px) {
+    .memberships {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      grid-gap: 5%;
+      grid-row-gap: 0;
+      grid-column: 1/-1;
+      padding: 80px;
+      padding-bottom: 0; } }
+  @media (min-width: 1050px) and (min-width: 600px) {
     .memberships {
       grid-template-columns: repeat(12, 1fr); } }
 
-.memberships__content {
-  grid-column: 9/-1;
-  grid-row: 1/-1; }
+@media (min-width: 1050px) {
+  .memberships__content {
+    grid-column: 9/-1;
+    grid-row: 1/-1; } }
 
 .memberships__title,
 .page-node-type-full-width-page h2.memberships__title {
@@ -5690,16 +5699,35 @@ a[href*="http"] .article-header__date {
   letter-spacing: -1px; }
 
 .memberships-cards {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-gap: 5%;
-  grid-row-gap: 0;
-  grid-column: 1/9;
-  grid-row: 1/-1;
   list-style: none;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  -webkit-columns: 1;
+          columns: 1; }
+  @media (max-width: 768px) {
+    .memberships-cards {
+      overflow-x: scroll;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+      float: none; } }
+  @media (min-width: 769px) {
+    .memberships-cards {
+      -webkit-columns: 2;
+              columns: 2; } }
   @media (min-width: 850px) {
+    .memberships-cards {
+      -webkit-columns: 3;
+              columns: 3; } }
+  @media (min-width: 1050px) {
+    .memberships-cards {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      grid-gap: 5%;
+      grid-row-gap: 0;
+      grid-column: 1/9;
+      grid-row: 1/-1; } }
+  @media (min-width: 1050px) and (min-width: 850px) {
     .memberships-cards {
       grid-template-columns: repeat(3, 1fr); } }
 
@@ -5718,12 +5746,24 @@ a[href*="http"] .article-header__date {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
-          flex-direction: column; }
+          flex-direction: column;
+  vertical-align: top; }
+  @media (max-width: 768px) {
+    .memberships-cards__card {
+      padding-right: 40px;
+      max-width: 240px;
+      min-width: 200px;
+      display: inline-block;
+      float: none; } }
+  @media (min-width: 1050px) {
+    .memberships-cards__card {
+      padding: 10%; } }
 
 .memberships-cards__title,
 .memberships-cards__subtitle {
   margin-top: 0;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  white-space: normal; }
 
 .memberships-cards__title {
   -webkit-font-smoothing: antialiased;
@@ -7809,11 +7849,13 @@ a[href*="http"] .article-header__date {
 .twitter__tweets {
   list-style: none;
   margin: 0;
-  padding: 0;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  white-space: nowrap; }
+  padding: 0; }
+  @media (max-width: 768px) {
+    .twitter__tweets {
+      overflow-x: scroll;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap; } }
   @media (min-width: 1050px) {
     .twitter__tweets {
       display: grid;
