@@ -9,8 +9,19 @@
 
   .paragraph-text-block,
   .paragraph--type--block {
-    padding: $space-ten;
+    padding: 40px 20px;
     padding-bottom: 0;
+    clear: both;
+
+    @include breakpoint($new-medium) {
+      padding: $space-five;
+      padding-bottom: 0;
+    }
+
+    @include breakpoint($new-large) {
+      padding: $space-ten;
+      padding-bottom: 0;
+    }
   }
 
   .field-column-content-content {
@@ -22,11 +33,6 @@
 }
 
 .full-width-page-banner {
-  @include grid-fifteen;
-
-  grid-column: 1/-1;
-  grid-template-rows: $space-ten auto;
-  max-width: $full;
   width: 100%;
   margin: 0 auto;
 
@@ -34,11 +40,20 @@
     display: none;
   }
 
-  figure { // PL: .full-width-page-banner-photo
-    grid-column: 8/-1;
-    grid-row: 1/-1;
-    justify-self: end;
+  &.full-width-has-image {
     background: $white;
+
+    @include breakpoint($new-large) {
+      background: transparent;
+    }
+  }
+
+  figure { // PL: .full-width-page-banner-photo
+    img {
+      margin: 0 0 0 auto;
+    }
+
+    background: $c-background-gray;
   }
 
   .field-banner-description {
@@ -47,14 +62,40 @@
       margin-top: 0;
     }
   }
+
+  @include breakpoint($new-large) {
+    @include grid-fifteen;
+
+    grid-column: 1/-1;
+    grid-template-rows: $space-ten auto;
+    max-width: $full;
+
+    figure { // PL: .full-width-page-banner-photo
+      grid-column: 8/-1;
+      grid-row: 1/-1;
+      justify-self: end;
+      background: $white;
+
+      img {
+        margin: 0;
+      }
+    }
+  }
 }
 
 .full-width-page-banner__header {
   grid-column: 1/9;
   grid-row: 2/-1;
   background: $white;
-  padding: $space-ten;
-  padding-bottom: 0;
+  padding: $space-four 20px;
+  padding-bottom: 1px;
+  margin-right: $space-four;
+  position: relative;
+  margin-top: $space-five;
+
+  .full-width-has-image & {
+    margin-top: -$space-four;
+  }
 
   * {
     margin: 0;
@@ -63,12 +104,35 @@
   p, ul {
     margin-bottom: 2rem;
   }
+
+  @include breakpoint($new-medium) {
+    padding: $space-five;
+    padding-bottom: 1px;
+    margin-right: $space-ten;
+    margin-top: $space-ten;
+
+    .full-width-has-image & {
+      margin-top: -$space-fifteen;
+    }
+  }
+
+  @include breakpoint($new-large) {
+    grid-column: 1/9;
+    grid-row: 2/-1;
+    padding: $space-ten;
+    padding-bottom: 1px;
+    margin-right: 0;
+    margin-top: 0;
+
+    .full-width-has-image & {
+      margin-top: 0;
+    }
+  }
 }
 
 .full-width-page__header-title {
-  @include fs-heading-two;
-  line-height: 67.2px;
-  letter-spacing: -2px;
+  @include fs-article-medium-h1;
+
   margin-bottom: $space-two;
 }
 

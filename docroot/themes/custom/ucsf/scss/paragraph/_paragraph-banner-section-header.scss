@@ -1,20 +1,41 @@
 .full-bleed-subbanner {
-  grid-column: 1/-1;
+  clear: both;
   position: relative;
+  padding-top: $space-five;
+
+  @include breakpoint($new-large) {
+    grid-column: 1/-1;
+    padding-top: $space-ten;
+  }
 }
 
 .full-bleed-subbanner__image {
-  height: 463px;
+  background-size: auto 100%;
+
+  @include breakpoint($new-medium) {
+    height: 463px;
+  }
 }
 
 .full-bleed-subbanner__content {
-  width: 48%;
-  background: white;
+  width: 100%;
   height: auto;
-  padding: $space-eight $space-eleven;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  padding: $space-fifteen 20px;
+  padding-left: 0;
+  padding-bottom: 0;
+
+  @include breakpoint($new-medium) {
+    background: white;
+    width: 73%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: $space-eight $space-eleven;
+  }
+
+  @include breakpoint($new-large) {
+    width: 48%;
+  }
 }
 
 .subbanner-right {
@@ -37,11 +58,22 @@
       margin-bottom: 0;
     }
   }
+
+  @include breakpoint($bp-until-large) {
+    background: white;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 .full-bleed-subbanner__title/*,
 .page-node-type-full-width-page h2.full-bleed-subbanner__title*/ {
   @include fs-heading;
 
-  margin-bottom: $space-two;
+  padding-bottom: $space-two;
+  margin-bottom: 0 !important;
+
+  @include breakpoint($bp-until-large) {
+    padding-top: 20px;
+  }
 }

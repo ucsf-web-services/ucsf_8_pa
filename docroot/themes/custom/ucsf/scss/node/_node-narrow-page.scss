@@ -5,26 +5,70 @@
 }
 
 .narrow-page-header {
-  grid-column: 3 / -3;
-  grid-row: 1;
-  background: $white;
-  margin-top: $space-ten;
-  padding: $space-decuple 11%;
-  padding-bottom: 0;
+  margin-top: $space-five;
 
   h1 {
     @include fs-display;
 
+    background: $white;
     margin-top: 0;
+    padding: $space-decuple 11%;
+    padding-bottom: 0;
+    background: url('../images/gray-sq.svg') right top no-repeat $c-white;
+    background-size: 80px;
+
+    @include breakpoint ($new-small-max) {
+      background-size: 32px;
+      padding: 32px 20px;
+      padding-bottom: 0;
+    }
   }
 
   .narrow-page-header__subheading {
-    //margin-bottom: $space-four;
-  }
-}
+    background: $white;
+    padding: 20px;
+    padding-bottom: 0;
+    padding-top: 0;
 
-.narrow-page-header-banner {
-  margin-top: -$space-fifteen;
+    @include breakpoint ($new-small) {
+      padding: $space-decuple 11%;
+      padding-bottom: 0;
+      padding-top: 0;
+    }
+  }
+
+  @include breakpoint($new-medium) {
+    margin-top: $space-ten;
+  }
+
+  @include breakpoint($new-large) {
+    grid-column: 2 / -2;
+    background: $c-white;
+    grid-row: 1;
+  }
+
+  @include breakpoint($new-xl) {
+    grid-column: 3 / -3;
+  }
+
+  &.narrow-page-header-banner {
+    margin-top: 0;
+
+    h1 {
+      background: $white;
+      margin-right: $space-four;
+      margin-top: -$space-six;
+
+      @include breakpoint ($new-small) {
+        margin-right: $space-ten;
+        margin-top: -$space-fifteen;
+      }
+
+      @include breakpoint($new-large) {
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 .narrow-page-full-width-wrapper {
@@ -34,7 +78,7 @@
 
 .field-footer-tabs-events-columne { // PL: .narrow-page-full-width
   margin: 0 auto;
-  max-width: $xl;
+  max-width: $full-width-elements;
   background: $white;
 
   h2 {
@@ -43,19 +87,25 @@
     margin-bottom: $space-four;
   }
 
+  .layout-columns__1,
+  .layout-columns__2,
   .layout-columns__3,
-  .layout-columns__2 { //.layout-columns__three
-    padding: 0;
-    padding-top: $space-ten;
+  .layout-columns__4,
+  .layout-left-70-30,
+  .layout-left-30-70,
+  .vertical-tab,
+  .latest-events-list { //.layout-columns__three
+    padding: 20px;
+    padding-top: $space;
+    padding-bottom: 0;
 
     .field-content-wrapper-content {
       padding: 0;
     }
-  }
 
-  .layout-left-70-30 {
-    padding-left: 0;
-    padding-right: 0;
+    @include breakpoint($new-small) {
+      padding-top: $space-six;
+    }
   }
 
   .field-column-content-content {
@@ -64,7 +114,7 @@
     }
   }
 
-  .field__item:last-child {
-    margin-bottom: $space-ten;
+  > .field__item:last-child {
+    padding-bottom: $space-ten;
   }
 }

@@ -2,6 +2,7 @@
 .page-node-type-narrow-page .paragraph-text-block, //PL: .page_narrow
 .page-node-type-article .paragraph-text-block { //PL: .page_narrow
   padding: 0 20px;
+  padding-bottom: 1px;
   position: relative;
 
   > :first-child {
@@ -11,6 +12,7 @@
 
   @include breakpoint($new-small) {
     padding: 0 11%;
+    padding-bottom: 1px;
   }
 
   @include breakpoint($new-large) {
@@ -23,7 +25,8 @@
   }
 }
 
-.page-node-type-article {
+.page-node-type-article,
+.page-node-type-narrow-page {
   .main {
     margin-bottom: 0;
     background: $white;

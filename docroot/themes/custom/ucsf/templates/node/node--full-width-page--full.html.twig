@@ -1,6 +1,10 @@
 {{ content.field_breadcrumbs }}
 
-<header class="basic-header full-width-page-banner">
+{% if node.field_banner_image is not empty %}
+  {% set banner_image = "full-width-has-image" %}
+{% endif %}
+
+<header class="basic-header full-width-page-banner {{ banner_image }}">
   {{ content.field_banner_image }}
   <div class="full-width-page-banner__header">
     <h1 class="full-width-page__header-title">{{ label }}</h1>
