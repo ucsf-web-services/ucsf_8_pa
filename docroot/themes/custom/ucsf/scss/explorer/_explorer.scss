@@ -1,0 +1,74 @@
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  // Your custom CSS fixes goe here
+  picture {
+    img {
+      width: 100%;
+    }
+  }
+
+  img {
+    width: 100%;
+  }
+
+  .header .menu--main {
+    //-ms-grid-column: 2;
+    //-ms-grid-column-span: 3;
+  }
+
+  .home-banner-wrapper {
+    //-ms-grid-rows: 1fr 1fr 1fr;
+  }
+
+
+  .home-banner {
+    max-width: 1360px;
+    //justify-self: end;
+
+    img {
+      width: 100%;
+    }
+
+    @include breakpoint($new-large) {
+      grid: none !important;
+      display: inline-block;
+      //grid-column: 2/-1;
+      //grid-template-rows: repeat(3, auto);
+    }
+  }
+
+
+  .home-banner-two .home-banner,
+  .home-banner-three .home-banner {
+
+    @include breakpoint($new-large) {
+      grid: none;
+      max-width: $full;
+      display: inline-block;
+    }
+  }
+
+
+
+  .home-banner__header {
+    //not sure how to get this to place as before but need to force which grid column and row will overlap.
+    //-ms-grid-row: 2;
+    //-ms-grid-column: 1;
+  }
+
+  .home-banner__image {
+    //-ms-grid-row:1;
+    //-ms-grid-column:1;
+    //-ms-grid-column-span:12;
+    display: inline-block;
+    grid: none;
+    img {
+      width: 100%;
+    }
+
+  }
+
+  .home-banner-support-links {
+    //-ms-grid-column-span: 18;
+  }
+
+}

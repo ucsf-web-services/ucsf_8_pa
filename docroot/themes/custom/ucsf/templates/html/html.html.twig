@@ -39,8 +39,12 @@
   <head-placeholder token="{{ placeholder_token }}">
     <title>{{ head_title|safe_join(' | ') }}</title>
     <css-placeholder token="{{ placeholder_token }}">
-    <js-placeholder token="{{ placeholder_token }}">
+
+    <script>if (!window.customElements) { document.write('<!--'); }</script>
+    <script type="text/javascript" src="/modules/custom/ckeditor_y3ti_plugins/bower_components/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <!--! do not remove -->
     <link name="polymer_platform" href="{{ ckeditor_y3ti_plugins }}" rel="import" />
+      <js-placeholder token="{{ placeholder_token }}">
 </head>
 <body{{ attributes.addClass(body_classes) }}>
 {#
