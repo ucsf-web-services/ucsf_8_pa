@@ -16,7 +16,7 @@
   theme.settings.image_shape ? theme.settings.image_shape,
   theme.settings.image_responsive ? 'img-responsive',
 ] %}
-<img{{ attributes.addClass(classes) }} />
+<img{{ attributes.addClass(classes).removeClass('lazyload') }} />
 {% if old_attributes %}
 <noscript>
   <img{{ old_attributes.addClass(classes) }} />

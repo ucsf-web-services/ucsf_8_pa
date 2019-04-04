@@ -9,7 +9,7 @@
     width: 100%;
   }
 
-  @include breakpoint($new-small) {
+  @include breakpoint($new-small)    {
     padding-left: $space-five;
   }
 
@@ -32,11 +32,12 @@
   }
 
   @include breakpoint($new-large) {
-    float: none;
-    padding: $space-nine;
-    padding-left: 8%;
-    padding-right: 0;
-    padding-bottom: $space-five;
+      float: none;
+      padding: $space-nine;
+      padding-left: 8%;
+      padding-right: 0;
+      padding-bottom: $space-five;
+
   }
 }
 
@@ -64,18 +65,16 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
 
-  @include breakpoint($new-small-max) {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
-  }
 
   @include breakpoint($new-large) {
-    display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(200px, 1fr) );
-    white-space: normal;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      white-space: normal;
   }
 }
 
@@ -101,8 +100,8 @@
 
   @include breakpoint($new-large) {
     float: none;
-    padding-right: 15%;
     width: 100%;
+    padding-right: 15%;
   }
 }
 

@@ -7905,13 +7905,11 @@ a[href*="http"] .article-header__date {
 .twitter__tweets {
   list-style: none;
   margin: 0;
-  padding: 0; }
-  @media (max-width: 768px) {
-    .twitter__tweets {
-      overflow-x: scroll;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      white-space: nowrap; } }
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap; }
   @media (min-width: 1050px) {
     .twitter__tweets {
       display: grid;
@@ -7938,8 +7936,8 @@ a[href*="http"] .article-header__date {
   @media (min-width: 1050px) {
     .twitter__tweet {
       float: none;
-      padding-right: 15%;
-      width: 100%; } }
+      width: 100%;
+      padding-right: 15%; } }
 
 img.twitter-icon {
   border-radius: 50%;
@@ -12376,8 +12374,10 @@ h3.twitter_user {
     width: 100%; }
   .header .menu--main {
     display: block; }
-  .home-banner-wrapper {
+  .home-banner__image {
     display: block; }
+    .home-banner__image img {
+      width: 100%; }
   .home-banner {
     max-width: 1360px;
     display: block; }
@@ -12392,11 +12392,5 @@ h3.twitter_user {
   .home-banner-three .home-banner {
     display: block;
     max-width: 1440px; } }
-
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  .home-banner__image {
-    display: block; }
-    .home-banner__image img {
-      width: 100%; } }
 
 /*# sourceMappingURL=style.css.map */

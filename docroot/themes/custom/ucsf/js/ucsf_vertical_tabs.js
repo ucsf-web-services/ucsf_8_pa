@@ -25,7 +25,7 @@
 
           // Destroy accordion if it exists.
           if (accordionActive.length > 0) {
-            accordionElement.accordion('destroy')
+            accordionElement.accordion('destroy');
             createTabs();
           } else {
             createTabs();
@@ -77,7 +77,7 @@
               currHeader.children('.ui-icon').toggleClass('ui-icon-triangle-1-e',isPanelSelected).toggleClass('ui-icon-triangle-1-s',!isPanelSelected);
 
                // Toggle the panel's content
-              currContent.toggleClass('accordion-content-active',!isPanelSelected)
+              currContent.toggleClass('accordion-content-active',!isPanelSelected);
               if (isPanelSelected) { currContent.slideUp(); }  else { currContent.slideDown(); }
 
               return false; // Cancels the default action
