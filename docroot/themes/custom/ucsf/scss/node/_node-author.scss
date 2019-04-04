@@ -1,52 +1,85 @@
+.page-node-type-author .main-content {
+  display: block;
+}
 .author-page-wrapper {
   margin: 0 auto;
-  margin-top: $space-twenty;
+  margin-top: 140px;
   max-width: $full;
   background: $white;
 
   &::before {
     content: ' ';
     display: block;
-    height: 80px;
-    width: 88%;
+    height: 40px;
+    width: 95%;
     background: $white;
     position: relative;
-    top: -80px;
+    top: -70px;
+  }
+
+  @include breakpoint($new-medium) {
+    margin-top: $space-twenty;
+
+    &::before {
+      height: 80px;
+      width: 88%;
+      top: -80px;
+    }
   }
 }
 
 .author-page {
   margin: 0 auto;
-  max-width: $xl;
+  max-width: $bp-full;
   margin-top: -80px;
 }
 
 .author-page__header {
-  grid-column: 1/-1;
   margin-bottom: $space-five;
+  padding: 0 20px;
 
   h1 {
     @include fs-heading-two;
   }
+
+  @include breakpoint($new-medium) {
+    padding: 0 $space-five;
+  }
+
+  @include breakpoint($new-large) {
+    grid-column: 1/-1;
+    padding: 0 $space-ten;
+  }
 }
 
 .author-card {
-  @include grid;
+  padding: 0 20px;
 
-  grid-column: 1/-1;
+  @include breakpoint($new-medium) {
+    padding: 0 $space-five;
+  }
+
+  @include breakpoint($new-large) {
+    @include grid;
+    grid-column: 1/-1;
+    padding: 0 $space-ten;
+  }
 }
 
 .author-card__copy {
-  grid-column: 1/-2;
-
   p {
     margin-top: 0;
+  }
+
+  @include breakpoint($new-large) {
+    grid-column: 1/-2;
   }
 }
 
 .has-image {
-  figure { // .author-card__image in PL.
-    grid-column: 1/5;
+
+  figure {
+    margin-bottom: $space-four;
     position: relative;
 
     img {
@@ -59,16 +92,55 @@
       top: 0;
       right: 0;
       background: #fff;
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
     }
   }
 
-  .author-card__copy {
-    grid-column: 5/-2;
+  @include breakpoint($new-small) {
+    figure {
+      float: left;
+      width: 20%;
+      margin-bottom: 0;
 
-    p {
-      margin-top: 0;
+      &::after {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .author-card__copy {
+      float: left;
+      width: 75%;
+      padding-left: 5%;
+    }
+
+  }
+
+  @include breakpoint($new-large) {
+    figure { // .author-card__image in PL.
+      grid-column: 1/5;
+      float: none;
+      width: auto;
+
+      img {
+        width: 100%;
+      }
+
+      &::after {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .author-card__copy {
+      grid-column: 5/-2;
+      float: none;
+      width: auto;
+
+      p {
+        margin-top: 0;
+      }
     }
   }
 }
