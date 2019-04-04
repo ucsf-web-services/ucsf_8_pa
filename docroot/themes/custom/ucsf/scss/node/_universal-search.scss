@@ -5,46 +5,121 @@
 }
 
 .search-box-container {
-  max-width: $full-width-elements;
-  padding: 0 20px;
-  margin: 0 auto;
-  margin-top: $space-ten;
-  margin-bottom: $space-fourteen;
+
+  padding: $space-five 20px;
+  margin: 0;
+
+  .home-search__form,
+  form {
+    max-width: $new-xl;
+    margin: 0 auto;
+  }
+
+  @include breakpoint($new-x-small-max) {
+    .home-search__form,
+    form {
+      #search {
+        font-size: $font-size;
+        height: 52px;
+        width: calc(100% - 52px);
+      }
+      .home-search__form-submit {
+        min-height: 40px;
+        padding: 6px;
+        margin-left: -58px;
+        background-size: 23px;
+      }
+    }
+  }
+
+  @include breakpoint($new-medium) {
+    padding: $space-ten;
+  }
 }
 
 #universalSearchTabs,
 .results-wrapper__content {
-  max-width: $new-xl;
+  max-width: $bp-full;
   margin: 0 auto;
   background: $white;
 }
 
 #universalSearchTabs {
-  padding: $space-six;
-  padding-left: $space-twelve;
+  padding: $space-five;
   padding-bottom: 0;
+  background: url("../images/gray-sq.svg") right top no-repeat $white;
+  background-size: 20px;
+
+  @include breakpoint($new-medium) {
+    background: url("../images/gray-sq.svg") left top no-repeat $white;
+    background-size: 80px;
+    padding-left: 200px;
+  }
 }
 
-.results-wrapper {
+.results-wrapper__float {
+  padding: $space-five;
+  float: left;
   background: $white;
-}
+  width: 100%;
 
-.results-wrapper__content {
-  padding: $space-twelve;
-  padding-top: $space-seven;
+  @include breakpoint($new-medium) {
+    padding: $space-twelve 200px;
+    padding-top: $space-seven;
+    padding-right: 150px;
+  }
 }
 
 #universalDirectory,
 #universalWebsites,
 #cse {
   padding-top: $space-five;
+  clear: both;
+
+  .eyebrow-title {
+    float: left;
+    padding-top: $space;
+    width: 20%;
+    //white-space: nowrap;
+  }
+
+  .results-content {
+    float: left;
+    vertical-align: top;
+    padding-left: $space-five;
+    width: 80%;
+  }
+
+  @include breakpoint($new-x-small-max) {
+    .eyebrow-title {
+      float: none;
+      width: 100%;
+      //white-space: nowrap;
+    }
+
+    .results-content {
+      float: none;
+      padding-left: 0;
+      width: 100%;
+    }
+  }
 }
 
 .search-websites,
 .search-people {
   list-style: none;
   padding-left: 0;
+  margin: 0;
+  padding-bottom: $space-two;
+  border-bottom: 1px solid #d1d3d3;
 }
+
+.search-more {
+  margin: 1rem 0;
+  margin-bottom: 0;
+}
+
+//GOOGLE SEARCH FIXES
 .gsc-wrapper {
   .gsc-webResult {
     border-bottom: 1px solid $c-gray-border !important;
@@ -63,7 +138,8 @@
       }
     }
 
-    .gs-title,
+    a.gs-title,
+    a.gs-title b,
     &.gs-result a.gs-title:link b,
     .gsc-control-cse .gs-result .gs-title *,
     a b {
@@ -74,8 +150,39 @@
       color: $c-navy !important;
       text-decoration: none !important;
     }
+
+    a.gs-title {
+      &:hover {
+        color: $c-blue-link !important;
+
+        b {
+          color: $c-blue-link !important;
+        }
+      }
+    }
   }
 }
-.gcsc-more-maybe-branding-root {
+.gcsc-more-maybe-branding-root,
+.gsc-table-cell-thumbnail /* remove once we figure out thumbnail placement*/ {
   display: none !important;
+}
+
+.results-content {
+
+  .gsc-result-info {
+    padding: 0;
+  }
+
+  .cse .gsc-control-cse, .gsc-control-cse {
+    padding: 0;
+  }
+
+  .gs-webResult div.gs-visibleUrl {
+    color: $navy;
+  }
+
+  .gsc-table-cell-snippet-close,
+  .gsc-table-cell-snippet-close * {
+    color: $c-gray-blue !important;
+  }
 }

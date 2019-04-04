@@ -42,8 +42,11 @@
     </ul>
     <div class="results-wrapper">
       <div class="results-wrapper__content">
+      <div class="results-wrapper__float">
         <div id="universalDirectory">
             <h3 class="eyebrow-title">People Directory</h3>
+
+            <div class="results-content">
             <ul class="search-people">
             {% for person in directory %}
             <li>
@@ -62,7 +65,9 @@
             {% if more.people %}
                 <a class="link--cta" href="http://directory.ucsf.edu/people/search/name/{{ searchterm }}">See More</a>
             {% endif %}
+            </div>
         </div>
+      </div>
       </div>
     </div>
 </div>
