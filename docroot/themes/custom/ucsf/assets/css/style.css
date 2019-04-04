@@ -6623,7 +6623,7 @@ a[href*="http"] .article-header__date {
     background: #f2f4f6; }
     @media (min-width: 850px) {
       .block-views-exposed-filter-blocknews-filter-page-1 form {
-        padding: 0 40px; } }
+        padding: 0 80px; } }
   .block-views-exposed-filter-blocknews-filter-page-1 label[for=edit-combine] {
     position: absolute !important;
     clip: rect(1px, 1px, 1px, 1px);
@@ -6709,15 +6709,18 @@ a[href*="http"] .article-header__date {
 .search-filter__top {
   background: #f2f4f6;
   position: relative;
-  padding: 40px 16px; }
+  padding: 40px 16px;
+  padding-bottom: 80px; }
   @media (min-width: 850px) {
     .search-filter__top {
       margin: 0 auto;
-      max-width: 1300px;
-      padding: 80px 16px 74px; } }
+      max-width: 1280px;
+      padding: 80px 0 74px;
+      padding-bottom: 160px; } }
   @media (min-width: 1050px) {
     .search-filter__top {
-      padding: 80px 0 74px; } }
+      padding: 80px 0 74px;
+      padding-bottom: 160px; } }
   .search-filter__top [data-drupal-selector="edit-submit-news-filter"] {
     background: url("/themes/custom/ucsf/assets/images/magnifier.svg") no-repeat center transparent;
     -webkit-appearance: none;
@@ -6810,7 +6813,8 @@ a[href*="http"] .article-header__date {
   .js-search_filter__top-open .search-filter__advanced {
     background: url("/themes/custom/ucsf/assets/images/x-large.svg") no-repeat left transparent;
     right: 12px;
-    top: 16px; }
+    top: 16px;
+    background-size: 18px; }
     @media (min-width: 600px) {
       .js-search_filter__top-open .search-filter__advanced {
         left: auto;
@@ -6924,14 +6928,29 @@ a[href*="http"] .article-header__date {
     margin-top: 40px; }
 
 .view-news-filter {
-  margin: 0 auto;
-  max-width: 827px;
-  margin-top: 40px; }
+  background: #fff;
+  background: #f2f4f6; }
   .view-news-filter .view-header {
     display: none; }
+  .view-news-filter .view-content {
+    max-width: 1440px;
+    background: url("../images/gray-sq.svg") right top no-repeat #fff;
+    background-size: 16px;
+    margin: 0 auto;
+    margin-top: -40px;
+    padding-top: 40px;
+    position: relative; }
+    @media (min-width: 850px) {
+      .view-news-filter .view-content {
+        background: url("../images/gray-sq.svg") left top no-repeat #fff;
+        background-size: 80px;
+        margin-top: -80px;
+        padding-top: 80px; } }
   .view-news-filter ul {
     margin: 0;
-    padding: 0 16px; }
+    padding: 0 16px;
+    margin: 0 auto;
+    max-width: 827px; }
     .view-news-filter ul ul {
       margin: 0; }
     .view-news-filter ul li {
@@ -6941,13 +6960,23 @@ a[href*="http"] .article-header__date {
       line-height: inherit;
       list-style: none;
       padding: 0; }
+  .view-news-filter .pager,
+  .view-news-filter .view-empty {
+    max-width: 1440px;
+    margin: 0 auto;
+    background: #fff; }
+  .view-news-filter .view-empty {
+    padding: 40px;
+    margin-top: -80px; }
 
 .search-filter__indicator-list {
   font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   font-size: 12px;
   letter-spacing: 1.6px;
   line-height: 16px;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  margin: 0 auto;
+  max-width: 827px; }
   .search-filter__indicator-list label {
     display: inline-block;
     padding: 16px; }
@@ -7851,7 +7880,7 @@ a[href*="http"] .article-header__date {
     .twitter-wrapper {
       float: none; } }
   @media (min-width: 1050px) {
-    .twitter-wrapper body:not(.explorer) {
+    .twitter-wrapper {
       float: none;
       padding: 72px;
       padding-left: 8%;
@@ -7876,13 +7905,15 @@ a[href*="http"] .article-header__date {
 .twitter__tweets {
   list-style: none;
   margin: 0;
-  padding: 0;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  white-space: nowrap; }
+  padding: 0; }
+  @media (max-width: 768px) {
+    .twitter__tweets {
+      overflow-x: scroll;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap; } }
   @media (min-width: 1050px) {
-    .twitter__tweets body:not(.explorer) {
+    .twitter__tweets {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       white-space: normal; } }
@@ -7906,10 +7937,9 @@ a[href*="http"] .article-header__date {
       width: 33%; } }
   @media (min-width: 1050px) {
     .twitter__tweet {
-      padding-right: 15%; }
-      .twitter__tweet body:not(.explorer) {
-        float: none;
-        width: 100%; } }
+      float: none;
+      padding-right: 15%;
+      width: 100%; } }
 
 img.twitter-icon {
   border-radius: 50%;

@@ -10,7 +10,7 @@
     background: $c-grey-pale;
 
     @include breakpoint($new-medium) {
-      padding: 0 40px;
+      padding: 0 $space-ten;
     }
   }
 
@@ -99,15 +99,18 @@
   background: $c-grey-pale;
   position: relative;
   padding: 40px 16px;
+  padding-bottom: 80px;
 
   @include breakpoint($new-medium) {
     margin: 0 auto;
-    max-width: 1300px;
-    padding: 80px 16px 74px;
+    max-width: $new-xl;
+    padding: 80px 0 74px;
+    padding-bottom: 160px;
   }
 
   @include breakpoint($new-large) {
     padding: 80px 0 74px;
+    padding-bottom: 160px;
   }
 
   // Submit button.
@@ -223,6 +226,7 @@
     @include background-image('x-large.svg', left);
     right: 12px;
     top: 16px;
+    background-size: 18px;
 
     @include breakpoint($bp-medium) {
       left: auto;
@@ -337,30 +341,63 @@
       display: block;
       margin-left: auto;
       margin-right: auto;
-      margin-top: 40px;
+      margin-top: $space-five;
     }
   }
 }
 
 // Results
 .view-news-filter {
-  margin: 0 auto;
-  max-width: 827px;
-  margin-top: $space-five;
+  background: $white;
+  background: $c-grey-pale;
 
   .view-header { // @todo Remove from view.
     display: none;
   }
 
+  .view-content {
+    max-width: $bp-full;
+    background: url("../images/gray-sq.svg") right top no-repeat $white;
+    background-size: 16px;
+    margin: 0 auto;
+    margin-top: -$space-five;
+    padding-top: $space-five;
+    position: relative;
+
+    @include breakpoint($new-medium) {
+      background: url("../images/gray-sq.svg") left top no-repeat $white;
+      background-size: 80px;
+      margin-top: -$space-ten;
+      padding-top: $space-ten;
+    }
+  }
+
   ul {
     @include ul-item-list-reset;
-    padding: 0 16px;
+    padding: 0 $space-two;
+    margin: 0 auto;
+    max-width: 827px;
+  }
+
+  .pager,
+  .view-empty {
+    max-width: $bp-full;
+    margin: 0 auto;
+    background: $white;
+  }
+
+  .view-empty {
+    padding: $space-five;
+    margin-top: -$space-ten;
   }
 }
 
 // Search Indicator List
 .search-filter__indicator-list {
   @include fs-filter-label;
+
+  margin: 0 auto;
+  max-width: 827px;
 
   label {
     display: inline-block;
