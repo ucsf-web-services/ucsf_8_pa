@@ -7905,11 +7905,13 @@ a[href*="http"] .article-header__date {
 .twitter__tweets {
   list-style: none;
   margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  white-space: nowrap; }
+  padding: 0; }
+  @media (max-width: 768px) {
+    .twitter__tweets {
+      overflow-x: scroll;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap; } }
   @media (min-width: 1050px) {
     .twitter__tweets {
       display: grid;
@@ -7936,8 +7938,8 @@ a[href*="http"] .article-header__date {
   @media (min-width: 1050px) {
     .twitter__tweet {
       float: none;
-      width: 100%;
-      padding-right: 15%; } }
+      padding-right: 15%;
+      width: 100%; } }
 
 img.twitter-icon {
   border-radius: 50%;
