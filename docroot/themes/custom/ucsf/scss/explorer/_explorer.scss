@@ -375,25 +375,14 @@
       text-align: center;
     }
 
-    .event-card__month {
-      font-size: $font-size-xxsm;
-      font-family: $font-helvetica-neue-bold;
-      border-bottom: 1px solid $navy;
-      text-transform: uppercase;
-    }
+
 
     .event-card__icon-date {
       @include fs-heading-two;
-
       margin-top: $space;
     }
 
-    .event-card__content {
-      float: right;
-      width: 75%;
-      letter-spacing: 0.2px;
-      white-space: normal;
-    }
+
 
     .event-card__title {
       margin: 0;
@@ -493,20 +482,403 @@
 
 
     /**
-* Header and main body animation
-*/
+    *  ------- ANIMATION RESETS ----------
+    */
     .page-node-type-news-center .combined-header-region,
     .alias-home .combined-header-region,
     .page-node-type-article  .combined-header-region {
+      -webkit-animation: none;
       animation: none;
     }
     .alias-home main.main {
+      -webkit-animation: none;
      animation: none;
     }
     .alias-home .narrow-page-header  {
+      -webkit-animation: none;
       animation: none;
     }
 
+
+
+
+    /**
+    *  ------- NEWS CENTER  ISSUES ----------
+    */
+    .news-center {
+      margin-top: $space-seven;
+
+      h1 {
+        @include fs-display;
+
+        margin: 0 auto;
+        padding: 0 20px;
+        max-width: $full-width-elements;
+        margin-bottom: $space-sixteen;
+      }
+
+      .twitter-background {
+        background: $dark-navy;
+        clear: both;
+      }
+    }
+
+    .news-center-banner,
+    .media-coverage {
+      float: left;
+      width: 100%;
+      padding-bottom: $space-five;
+
+      @include breakpoint($new-large) {
+
+        display: block;
+        float: left;
+        width: auto;
+        padding-bottom: 0;
+      }
+    }
+
+    .news-center-banner {
+      background: $white;
+    }
+
+    .news-center-banner__featured,
+    .media-coverage__featured {
+      margin-top: -$space-ten;
+      float: left;
+      width: 40%;
+      //border: 1px solid greenyellow;
+
+      .news-card__more {
+        display: none;
+      }
+
+
+      @include breakpoint($new-medium) {
+        float: left;
+        width: 45%;
+      }
+
+      @include breakpoint($new-large) {
+        float: left;
+        width: 45%;
+        .news-card__copy {
+          padding-right: 0;
+        }
+      }
+    }
+
+    .news-center-banner_list {
+      margin: $space-five 20px;
+
+      @include breakpoint($new-medium) {
+        margin: $space-ten 0;
+        margin-right: 20px;
+        float: right;
+        width: 45%;
+      }
+
+      @include breakpoint($new-large) {
+        margin: $space-ten 0;
+        margin-right: 20px;
+        float: right;
+        width: 45%;
+      }
+    }
+
+
+    .media-coverage__list {
+      margin-left: 20px;
+
+      .media-coverage__list-title {
+        display: none;
+      }
+
+      @include breakpoint($new-medium) {
+        .media-coverage__list-title {
+          display: block;
+        }
+      }
+
+      @include breakpoint($new-large) {
+        .media-coverage__list-title {
+          display: block;
+        }
+        display: block;
+        margin-left: 3%;
+        float: left;
+        width: 45%;
+        padding-right: 0;
+      }
+    }
+
+    .media-coverage .media-coverage__list-title {
+      @include fs-heading;
+
+      margin: 0;
+      padding: 0;
+      margin-bottom: $space;
+      line-height: 1.2;
+    }
+
+
+
+    .media-coverage__featured {
+      margin-top: 0;
+
+      @include breakpoint($new-large) {
+        display: block;
+        float: right;
+        padding-left: 0;
+
+        .news-card__copy {
+          margin-left: 0;
+          padding-left: 0;
+          margin-right: 10%;
+        }
+      }
+    }
+
+    .news-list {
+      background: $white;
+      padding: $space-five 20px;
+      padding-bottom: 1px;
+
+      .card-three-up {
+        margin: 0 auto;
+        margin-top: $space-five;
+      }
+
+
+      @include breakpoint($new-large) {
+        padding: $space-ten;
+        padding-bottom: 1px;
+      }
+    }
+
+    .news-list .news-list__title {
+      @include fs-heading;
+      margin: 0 auto;
+      max-width: $xl;
+    }
+
+
+    .areas-header {
+      @include breakpoint($new-medium) {
+        display: block;
+      }
+    }
+
+    .view-articles-for-news-center,
+    .view-all-campus-news {
+      .views-infinite-scroll-content-wrapper > .item-list > ul {
+        margin: 0;
+        display: block;
+
+        > li {
+          float: none;
+          width: 100%;
+        }
+
+        .news-card {
+          margin-bottom: 0;
+
+          .news-card__image img {
+            float: right;
+          }
+        }
+
+        @include breakpoint($new-large) {
+          display: block;
+          margin-top: $space-five;
+          float: none;
+
+          > li {
+            float: left;
+            width: 46%;
+            margin-left: 2%;
+          }
+
+          .news-card {
+            margin-bottom: $space-five;
+          }
+        }
+      }
+
+      article {
+        margin-bottom: 40px;
+      }
+    }
+
+    #block-youtubegallery .slick-arrow {
+      top: 25%;
+    }
+
+    .block-youtube-gallery {
+      overflow: hidden;
+    }
+    .slick-slider {
+      overflow: hidden;
+      height: auto;
+
+    }
+    #block-youtubegallery {
+      .slick-slide {
+        margin: 0 5px;
+      }
+    }
+
+
+    @include breakpoint($new-large) {
+      .card-four-up {
+        //border: 1px solid red;
+        display: block;
+        float: left;
+        width: auto;
+        > li {
+          float: left;
+          width: 47%;
+          margin: 8px;
+        }
+      }
+    }
+
+
+
+
+    /**
+    *  ------- FIELD ANKLE CTAS FIXES ----------
+    */
+
+    .footer-ctas-wrapper { // PL: .footer-ctas-wrapper
+      display: block;
+      overflow: auto;
+      margin-top: 0;
+      padding: 0 $space-ten;
+      background: $white;
+      clear: both;
+    }
+
+    .field-ankle-cta { // PL: .footer-ctas
+      padding: 0;
+      padding-top: $space-ten;
+      list-style: none;
+      max-width: $xl;
+      margin: 0 auto;
+
+      > .field__item { // PL: .footer-cta
+        padding: $space-five $space-ten;
+        background: $background-gray;
+
+        &:first-child {
+          padding-right: 0;
+        }
+
+        &:last-child {
+          padding-left: 0;
+        }
+
+      }
+
+      @include breakpoint($bp-until-large) {
+        padding-top: $space-four;
+
+        > .field__item { // PL: .footer-cta
+          padding: 20px;
+
+          &:last-child {
+            padding-left: 20px;
+
+            .field--type-text-with-summary  {
+              padding: 0;
+              border-left: none;
+              text-align: center;
+            }
+          }
+        }
+
+      }
+
+      @include breakpoint($new-medium) {
+        > .field__item { // PL: .footer-cta
+          float: left;
+          width: 50%;
+
+          &:first-child {
+            .field--type-text-with-summary  {
+              padding-left: 0;
+            }
+          }
+
+          &:last-child {
+            padding-left: 0;
+
+            .field--type-text-with-summary  {
+              padding-right: 0;
+            }
+          }
+        }
+      }
+
+      @include breakpoint($new-large) {
+
+        > .field__item { // PL: .footer-cta
+          float: left;
+          width: 49%;
+
+          &:first-child {
+            padding-right: 0;
+
+            .field--type-text-with-summary  {
+              border-right: 1px solid $gray-lighter;
+              padding-right: $space-two;
+            }
+          }
+
+          &:last-child {
+            padding-left: 0;
+
+            .field--type-text-with-summary  {
+              border-left: 1px solid $gray-lighter;
+              padding-left: $space-two;
+              margin-left: -1px;
+            }
+          }
+        }
+      }
+
+      @include breakpoint($new-xl) {
+        > .field__item { // PL: .footer-cta
+          padding: $space-five $space-ten;
+
+          &:first-child {
+            .field--type-text-with-summary  {
+              padding-right: $space-ten;
+            }
+          }
+
+          &:last-child {
+            .field--type-text-with-summary  {
+              padding-left: $space-ten;
+            }
+          }
+        }
+      }
+    }
+
+    @include breakpoint($new-large) {
+
+      .layout-columns__3 {
+        overflow: auto;
+          .field-content-wrapper-content .layout-column {
+            float: left;
+            width: 31%;
+            margin-right: 2%;
+            margin-left: 0;
+            margin-top: 0;
+        }
+      }
+    }
 
     //end of fixes.
   }
