@@ -195,3 +195,31 @@
     }
   }
 }
+
+//all your IE troubles
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .explorer {
+    @include breakpoint($new-large) {
+
+      .footer-bottom {
+        p {
+          float: left;
+        }
+        .menu {
+          columns: 0;
+          float: left;
+          width: 40%;
+          ul {
+            float: right;
+            li {
+              display: inline-block;
+              margin-left: $space-triple;
+            }
+          }
+        }
+      }
+    }
+
+
+  }
+}

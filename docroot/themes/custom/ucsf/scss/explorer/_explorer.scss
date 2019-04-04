@@ -1,57 +1,513 @@
 //all your IE troubles
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  // Your custom CSS fixes goe here
-  .home-banner-wrapper {
-    display: block;
-    background: $white;
-  }
+  .explorer {
 
-  picture {
+    /**
+    *  ------- HEADER ISSUES ----------
+    */
+    .header {
+      @include wrapper;
+      max-width: $new-medium;
+      padding: 0 0;
+      min-height: 75px;
+      @include breakpoint($bp-until-large) {
+        line-height: 26px;
+        margin-bottom: 0;
+        position: relative;
+        width: 100%;
+        vertical-align: middle;
+        //background-color: red;
+      }
+
+      @include breakpoint($bp-large) {
+        display: block;
+        margin-bottom: 0;
+        line-height: 26px;
+        margin-bottom: 0;
+        position: relative;
+        width: 100%;
+        vertical-align: middle;
+      }
+
+      nav.menu--main {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        //border: 1px solid red;
+      }
+    }
+
+    .header--logo {
+      @include breakpoint($bp-until-large) {
+        display: inline-block;
+        line-height: 26px;
+        height: 26px;
+        width: 54px;
+        vertical-align: middle;
+        margin-bottom: 0;
+      }
+
+      @include breakpoint($bp-large) {
+        width: 83px;
+        height: 40px;
+        margin-bottom: 0;
+      }
+    }
+
+
+    /**
+    *  ------- HOMEPAGE ISSUES ----------
+    */
+    .home-banner-wrapper {
+      display: block;
+      background: $white;
+    }
+
+    picture {
+      img {
+        width: 100%;
+      }
+    }
+
     img {
       width: 100%;
     }
-  }
 
-  img {
-    width: 100%;
-  }
-
-  .header .menu--main {
-    display: block;
-  }
-
-
-  .home-banner__image {
-    display: block;
-
-    img {
-      width: 100%;
-    }
-
-  }
-
-  .home-banner {
-    max-width: 1360px;
-    display: block;
-    img {
-      width: 100%;
-    }
-
-    @include breakpoint($new-large) {
+    .header .menu--main {
       display: block;
     }
-  }
 
-
-  .home-banner-two .home-banner,
-  .home-banner-three .home-banner {
-
-    @include breakpoint($new-large) {
+    .home-banner__image {
       display: block;
-      max-width: $full;
+
+      img {
+        width: 100%;
+      }
+
     }
+
+    .home-banner {
+      max-width: 1360px;
+      position: relative;
+      //justify-self: end;
+
+      img {
+        width: 100%;
+      }
+
+      @include breakpoint($new-large) {
+        display: block;
+      }
+    }
+    .home-banner__header {
+      padding: 20px;
+      background: $white;
+      position: relative;
+      margin-top: -$space-seven;
+      margin-right: $space-two;
+      margin-right: 80px;
+      //border: 1px solid blue;
+      h1 {
+        @include fs-display;
+      }
+
+
+
+      @include breakpoint($new-large) {
+        background: url(/themes/custom/ucsf/assets/images/banner-overlay-left.png) left top repeat-y rgba(255, 255, 255, 0.925);
+        padding: 20px;
+        background: $white;
+        position: relative;
+        margin-top: -$space-seven;
+        margin-right: $space-two;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 80%;
+      }
+
+      @include breakpoint($new-xl) {
+        background: url(/themes/custom/ucsf/assets/images/banner-overlay-left.png) left top repeat-y rgba(255, 255, 255, 0.925);
+        padding: 20px;
+        background: $white;
+        position: relative;
+        margin-top: -$space-seven;
+        margin-right: $space-two;
+        width: 90%;
+      }
+    }
+
+    .home-banner-two .home-banner,
+    .home-banner-three .home-banner {
+
+      @include breakpoint($new-large) {
+        display: block;
+        max-width: $full;
+      }
+    }
+
+
+    .home-banner-support {
+      background: $white;
+      max-width: 1360px;
+      padding: 20px;
+      float: left;
+      overflow: auto;
+
+      @include breakpoint($new-small) {
+        padding: $space-five;
+      }
+
+      @include breakpoint($new-large) {
+        display: block;
+        float: left;
+        padding: $space-ten;
+        padding-left: $space;
+      }
+    }
+
+    .home-search .home-search__title {
+      @include fs-heading;
+
+      padding-top: 60px;
+      margin-bottom: $space-two;
+
+      @include breakpoint($new-small) {
+        //margin-top: $space-five;
+        padding-top: 60px;
+        margin-bottom: $space-two;
+      }
+
+      @include breakpoint($new-large) {
+        //margin-top: $space-seven;
+        padding-top: 60px;
+        margin-bottom: $space-two;
+      }
+    }
+
+
+    .home-talking-about {
+      background: $white;
+      margin-top: $space-five;
+      float: none;
+      overflow: auto;
+      .card-three-up {
+        margin: 0 20px;
+        display: block;
+
+        > li {
+          float: none;
+          width: 100%;
+        }
+
+        .news-card {
+          margin-bottom: 0;
+
+          .news-card__image img {
+            float: right;
+          }
+          @include breakpoint($new-x-small-max) {
+            .news-card__copy {
+              margin-right: 10%;
+              margin-left: 0;
+            }
+          }
+        }
+      }
+
+      @include breakpoint($new-x-small) {
+        margin-top: $space-five;
+
+        .card-three-up {
+          display: block;
+
+          > li {
+            float: left;
+            width: 46%;
+            margin-left: 2%;
+
+            &:nth-child(odd) {
+              clear: left;
+              margin-right: 2%;
+              margin-left: 0;
+            }
+          }
+
+          .news-card {
+            margin-bottom: 0;
+
+            .news-card__image img {
+              float: none;
+            }
+          }
+        }
+      }
+
+      @include breakpoint($new-small) {
+        .card-three-up {
+          margin: 0 $space-five;
+        }
+      }
+
+      @include breakpoint($new-large) {
+        margin-top: $space-ten;
+        float: none;
+
+        .card-three-up {
+          display: block;
+          margin: 0 $space-ten;
+
+          > li {
+            float: left;
+            width: 46%;
+            margin-left: 2%;
+            &:nth-child(odd) {
+              clear: left;
+              margin-right: 2%;
+              margin-left: 0;
+            }
+          }
+
+          .news-card {
+            margin-bottom: $space-five;
+          }
+        }
+      }
+    }
+
+
+    .topics-list__topics-wrapper-space-bottom {
+      background-color: transparent;
+    }
+
+    .topic-card {
+      margin-bottom: 0px;
+    }
+
+
+    .latest-events-list { //PL: .lastest-events-list
+      float: left;
+      width: 100%;
+      margin-top: 0;
+      padding: 0 20px;
+      padding-top: 20px;
+
+      @include breakpoint($new-small) {
+        padding: $space-five;
+        padding-top: $space-five;
+      }
+
+      @include breakpoint($new-large) {
+        padding: $space-ten;
+        padding-top: $space-ten;
+        grid-column: 1/-1;
+        float: none;
+      }
+
+      & + * {
+        clear: both;
+      }
+    }
+
+    .lastest-events-list__header {
+      margin: 0 auto;
+      max-width: $xl;
+    }
+
+    .lastest-events-list__heading {
+      @include fs-articles-title;
+      margin-top: 0;
+      margin-bottom: 0;
+
+
+    }
+
+    .lastest-events-list__view-all {
+      margin: 0;
+      margin-top: $space;
+      margin-bottom: $space-four;
+
+
+    }
+
+    .lastest-events-list__cards {
+      clear: both;
+      margin: 0 auto;
+      max-width: $xl;
+      list-style: none;
+      padding: 0;
+
+
+      &.card-three-up {
+        display: block;
+
+        @include breakpoint($new-large) {
+          display: block;
+          white-space: normal;
+        }
+      }
+    }
+
+    .event-card {
+      padding-bottom: $space-four;
+      float: left;
+      width: 100%;
+      padding-right: $space-five;
+      vertical-align: top;
+
+
+
+
+
+      @include breakpoint($new-large) {
+        float: left;
+        padding-right: 15%;
+        width: 33%;
+      }
+    }
+
+    .event-card__icon {
+      float: left;
+      width: 20%;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .event-card__month {
+      font-size: $font-size-xxsm;
+      font-family: $font-helvetica-neue-bold;
+      border-bottom: 1px solid $navy;
+      text-transform: uppercase;
+    }
+
+    .event-card__icon-date {
+      @include fs-heading-two;
+
+      margin-top: $space;
+    }
+
+    .event-card__content {
+      float: right;
+      width: 75%;
+      letter-spacing: 0.2px;
+      white-space: normal;
+    }
+
+    .event-card__title {
+      margin: 0;
+      font-size: $font-size;
+      font-family: $font-helvetica-neue-medium;
+      font-weight: 500;
+      margin-bottom: $space;
+      line-height: 1.4;
+      letter-spacing: 0.2px;
+
+      a {
+        @include link-colors($c-navy, $c-blue);
+        text-decoration: none;
+        //color: $navy;
+      }
+    }
+
+    .event-card__date-location {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: $font-size-xsm;
+      color: $gray-blue;
+      line-height: 1.6;
+    }
+
+    .bg-gray {
+      .event-card__date-location {
+        color: $navy;
+      }
+    }
+
+    .event-card__date,
+    .event-card__location {
+      padding-left: 25px;
+
+      span {
+        margin-left: -25px;
+        display: inline-block;
+        width: 25px;
+        text-align: center;
+        font-size: $font-size-xxsm;
+      }
+    }
+
+    #lclst_widget_footer {
+      display: none;
+    }
+
+    .map-home {
+      position: relative;
+
+      .field-map-text { // PL: .map-home__content
+        padding: 20px;
+        background: $white;
+        position: relative;
+        margin-top: -$space-seven;
+        margin-right: $space-two;
+        color: $c-gray-blue;
+
+        h2 {
+          @include fs-heading;
+
+          font-family: $font-granjon;
+          margin: 0;
+        }
+
+
+
+        @include breakpoint($new-large) {
+          padding-right: 0;
+          position: absolute;
+          right: 0;
+          bottom: 70px;
+          padding: $space-five;
+          margin-top: 0;
+          margin-right: 0;
+          background: url(/themes/custom/ucsf/assets/images/banner-overlay-right.png) right top repeat-y rgba(255, 255, 255, 0.925);
+          width: 50%
+        }
+
+        @include breakpoint($new-xl) {
+          padding: $space-eight;
+          padding-right: 0;
+          padding-right: 0;
+          position: absolute;
+          right: 0;
+          bottom: 70px;
+          padding: $space-five;
+          margin-top: 0;
+          margin-right: 0;
+          background: url(/themes/custom/ucsf/assets/images/banner-overlay-right.png) right top repeat-y rgba(255, 255, 255, 0.925);
+        }
+      }
+    }
+
+
+
+    /**
+* Header and main body animation
+*/
+    .page-node-type-news-center .combined-header-region,
+    .alias-home .combined-header-region,
+    .page-node-type-article  .combined-header-region {
+      animation: none;
+    }
+    .alias-home main.main {
+     animation: none;
+    }
+    .alias-home .narrow-page-header  {
+      animation: none;
+    }
+
+
+    //end of fixes.
   }
-
-
-
 }

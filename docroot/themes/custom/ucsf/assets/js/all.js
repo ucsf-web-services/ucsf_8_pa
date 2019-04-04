@@ -82,13 +82,12 @@
      */
     Drupal.behaviors.fixExplorer = {
         attach: function attach(context, settings) {
-            /*
+
             if (detectIE()) {
                 $('body').addClass('explorer');
             }
-             var inclusionQuery = '(min-width: 1050px)';
-             hideAllMediaQueries(inclusionQuery);
-            */
+            //var inclusionQuery = '(min-width: 1050px)';
+            //hideAllMediaQueries(inclusionQuery);
         }
     };
 

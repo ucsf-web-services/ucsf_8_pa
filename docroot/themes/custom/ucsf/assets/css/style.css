@@ -3515,7 +3515,8 @@ figure.align-center figcaption {
     background: #fff;
     margin-top: 0;
     padding: 0 20px;
-    padding-top: 20px; }
+    padding-top: 20px;
+    overflow: auto; }
     @media (min-width: 769px) {
       .homepage .latest-events-list {
         padding: 0 40px;
@@ -7961,7 +7962,8 @@ a[href*="http"] .article-header__date {
   padding-left: 40px;
   padding-right: 0;
   padding-bottom: 8px;
-  float: left; }
+  float: left;
+  overflow: auto; }
   @media (max-width: 768px) {
     .twitter-wrapper {
       float: none; } }
@@ -8053,6 +8055,41 @@ h3.twitter_user {
   margin: 0;
   line-height: 1.7;
   white-space: normal; }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .explorer .twitter__tweets {
+    list-style: none;
+    margin: 0;
+    padding: 0; } }
+  @media all and (-ms-high-contrast: none) and (max-width: 768px), (-ms-high-contrast: active) and (max-width: 768px) {
+    .explorer .twitter__tweets {
+      overflow-x: scroll;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap; } }
+  @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
+    .explorer .twitter__tweets {
+      display: block;
+      white-space: normal; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .explorer .twitter__tweet {
+    padding-bottom: 32px;
+    float: left;
+    width: 100%;
+    padding-right: 40px;
+    vertical-align: top; } }
+  @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
+    .explorer .twitter__tweet {
+      padding-right: 40px;
+      max-width: 300px;
+      min-width: 250px;
+      display: inline-block;
+      float: left; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .explorer img.twitter-icon {
+    width: 25%; } }
 
 .video-list {
   background: #121a31;
@@ -8427,6 +8464,20 @@ h3.twitter_user {
         #block-footer2resources .menu .menu-item:first-child a {
           margin-right: 156px;
           white-space: nowrap; } }
+
+@media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
+  .explorer .footer-bottom p {
+    float: left; }
+  .explorer .footer-bottom .menu {
+    -webkit-columns: 0;
+            columns: 0;
+    float: left;
+    width: 40%; }
+    .explorer .footer-bottom .menu ul {
+      float: right; }
+      .explorer .footer-bottom .menu ul li {
+        display: inline-block;
+        margin-left: 24px; } }
 
 @font-face {
   font-family: "GranjonLTW01-Roman";
@@ -12453,32 +12504,429 @@ h3.twitter_user {
   font-family: 'Font Awesome 5 Brands'; }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  .home-banner-wrapper {
-    display: block;
-    background: #fff; }
-  picture img {
-    width: 100%; }
-  img {
-    width: 100%; }
-  .header .menu--main {
-    display: block; }
-  .home-banner__image {
-    display: block; }
-    .home-banner__image img {
-      width: 100%; }
-  .home-banner {
-    max-width: 1360px;
-    display: block; }
-    .home-banner img {
-      width: 100%; } }
-  @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
-    .home-banner {
-      display: block; } }
+  .explorer {
+ }
+    .explorer .header {
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      max-width: 850px;
+      padding: 0 0;
+      min-height: 75px; } }
+    @media all and (-ms-high-contrast: none) and (max-width: 849px), (-ms-high-contrast: active) and (max-width: 849px) {
+      .explorer .header {
+        line-height: 26px;
+        margin-bottom: 0;
+        position: relative;
+        width: 100%;
+        vertical-align: middle; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 850px), (-ms-high-contrast: active) and (min-width: 850px) {
+      .explorer .header {
+        display: block;
+        margin-bottom: 0;
+        line-height: 26px;
+        margin-bottom: 0;
+        position: relative;
+        width: 100%;
+        vertical-align: middle; } }
 
-@media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
-  .home-banner-two .home-banner,
-  .home-banner-three .home-banner {
-    display: block;
-    max-width: 1440px; } }
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      .explorer .header nav.menu--main {
+        position: absolute;
+        right: 0;
+        bottom: 0; } }
+  @media all and (-ms-high-contrast: none) and (max-width: 849px), (-ms-high-contrast: active) and (max-width: 849px) {
+    .explorer .header--logo {
+      display: inline-block;
+      line-height: 26px;
+      height: 26px;
+      width: 54px;
+      vertical-align: middle;
+      margin-bottom: 0; } }
+  @media all and (-ms-high-contrast: none) and (min-width: 850px), (-ms-high-contrast: active) and (min-width: 850px) {
+    .explorer .header--logo {
+      width: 83px;
+      height: 40px;
+      margin-bottom: 0; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .explorer .home-banner-wrapper {
+      display: block;
+      background: #fff; }
+    .explorer picture img {
+      width: 100%; }
+    .explorer img {
+      width: 100%; }
+    .explorer .header .menu--main {
+      display: block; }
+    .explorer .home-banner__image {
+      display: block; }
+      .explorer .home-banner__image img {
+        width: 100%; }
+    .explorer .home-banner {
+      max-width: 1360px;
+      position: relative; }
+      .explorer .home-banner img {
+        width: 100%; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
+      .explorer .home-banner {
+        display: block; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .explorer .home-banner__header {
+      padding: 20px;
+      background: #fff;
+      position: relative;
+      margin-top: -56px;
+      margin-right: 16px;
+      margin-right: 80px; }
+      .explorer .home-banner__header h1 {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+        font-weight: 500;
+        font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
+        font-size: 40px;
+        line-height: 1;
+        letter-spacing: -1px; } }
+      @media all and (-ms-high-contrast: none) and (min-width: 600px), (-ms-high-contrast: active) and (min-width: 600px) {
+        .explorer .home-banner__header h1 {
+          font-size: 82px;
+          letter-spacing: -2px; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
+      .explorer .home-banner__header {
+        background: url(/themes/custom/ucsf/assets/images/banner-overlay-left.png) left top repeat-y rgba(255, 255, 255, 0.925);
+        padding: 20px;
+        background: #fff;
+        position: relative;
+        margin-top: -56px;
+        margin-right: 16px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 80%; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 1280px), (-ms-high-contrast: active) and (min-width: 1280px) {
+      .explorer .home-banner__header {
+        background: url(/themes/custom/ucsf/assets/images/banner-overlay-left.png) left top repeat-y rgba(255, 255, 255, 0.925);
+        padding: 20px;
+        background: #fff;
+        position: relative;
+        margin-top: -56px;
+        margin-right: 16px;
+        width: 90%; } }
+  @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
+    .explorer .home-banner-two .home-banner,
+    .explorer .home-banner-three .home-banner {
+      display: block;
+      max-width: 1440px; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .explorer .home-banner-support {
+      background: #fff;
+      max-width: 1360px;
+      padding: 20px;
+      float: left;
+      overflow: auto; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 769px), (-ms-high-contrast: active) and (min-width: 769px) {
+      .explorer .home-banner-support {
+        padding: 40px; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
+      .explorer .home-banner-support {
+        display: block;
+        float: left;
+        padding: 80px;
+        padding-left: 8px; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .explorer .home-search .home-search__title {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+      font-weight: 500;
+      font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+      font-size: 32px;
+      line-height: 1;
+      letter-spacing: -0.6px;
+      color: #052049;
+      padding-top: 60px;
+      margin-bottom: 16px; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 600px), (-ms-high-contrast: active) and (min-width: 600px) {
+      .explorer .home-search .home-search__title {
+        font-size: 56px;
+        letter-spacing: -1.2px; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 769px), (-ms-high-contrast: active) and (min-width: 769px) {
+      .explorer .home-search .home-search__title {
+        padding-top: 60px;
+        margin-bottom: 16px; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
+      .explorer .home-search .home-search__title {
+        padding-top: 60px;
+        margin-bottom: 16px; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .explorer .home-talking-about {
+      background: #fff;
+      margin-top: 40px;
+      float: none;
+      overflow: auto; }
+      .explorer .home-talking-about .card-three-up {
+        margin: 0 20px;
+        display: block; }
+        .explorer .home-talking-about .card-three-up > li {
+          float: none;
+          width: 100%; }
+        .explorer .home-talking-about .card-three-up .news-card {
+          margin-bottom: 0; }
+          .explorer .home-talking-about .card-three-up .news-card .news-card__image img {
+            float: right; } }
+        @media all and (-ms-high-contrast: none) and (max-width: 599px), (-ms-high-contrast: active) and (max-width: 599px) {
+          .explorer .home-talking-about .card-three-up .news-card .news-card__copy {
+            margin-right: 10%;
+            margin-left: 0; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 600px), (-ms-high-contrast: active) and (min-width: 600px) {
+      .explorer .home-talking-about {
+        margin-top: 40px; }
+        .explorer .home-talking-about .card-three-up {
+          display: block; }
+          .explorer .home-talking-about .card-three-up > li {
+            float: left;
+            width: 46%;
+            margin-left: 2%; }
+            .explorer .home-talking-about .card-three-up > li:nth-child(odd) {
+              clear: left;
+              margin-right: 2%;
+              margin-left: 0; }
+          .explorer .home-talking-about .card-three-up .news-card {
+            margin-bottom: 0; }
+            .explorer .home-talking-about .card-three-up .news-card .news-card__image img {
+              float: none; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 769px), (-ms-high-contrast: active) and (min-width: 769px) {
+      .explorer .home-talking-about .card-three-up {
+        margin: 0 40px; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
+      .explorer .home-talking-about {
+        margin-top: 80px;
+        float: none; }
+        .explorer .home-talking-about .card-three-up {
+          display: block;
+          margin: 0 80px; }
+          .explorer .home-talking-about .card-three-up > li {
+            float: left;
+            width: 46%;
+            margin-left: 2%; }
+            .explorer .home-talking-about .card-three-up > li:nth-child(odd) {
+              clear: left;
+              margin-right: 2%;
+              margin-left: 0; }
+          .explorer .home-talking-about .card-three-up .news-card {
+            margin-bottom: 40px; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .explorer .topics-list__topics-wrapper-space-bottom {
+      background-color: transparent; }
+    .explorer .topic-card {
+      margin-bottom: 0px; }
+    .explorer .latest-events-list {
+      float: left;
+      width: 100%;
+      margin-top: 0;
+      padding: 0 20px;
+      padding-top: 20px; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 769px), (-ms-high-contrast: active) and (min-width: 769px) {
+      .explorer .latest-events-list {
+        padding: 40px;
+        padding-top: 40px; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
+      .explorer .latest-events-list {
+        padding: 80px;
+        padding-top: 80px;
+        grid-column: 1/-1;
+        float: none; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      .explorer .latest-events-list + * {
+        clear: both; }
+    .explorer .lastest-events-list__header {
+      margin: 0 auto;
+      max-width: 1280px; }
+    .explorer .lastest-events-list__heading {
+      font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+      font-size: 24px;
+      line-height: 1.4;
+      letter-spacing: -0.8px;
+      margin-top: 0;
+      margin-bottom: 0; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 600px), (-ms-high-contrast: active) and (min-width: 600px) {
+      .explorer .lastest-events-list__heading {
+        font-size: 36px; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .explorer .lastest-events-list__view-all {
+      margin: 0;
+      margin-top: 8px;
+      margin-bottom: 32px; }
+    .explorer .lastest-events-list__cards {
+      clear: both;
+      margin: 0 auto;
+      max-width: 1280px;
+      list-style: none;
+      padding: 0; }
+      .explorer .lastest-events-list__cards.card-three-up {
+        display: block; } }
+      @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
+        .explorer .lastest-events-list__cards.card-three-up {
+          display: block;
+          white-space: normal; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .explorer .event-card {
+      padding-bottom: 32px;
+      float: left;
+      width: 100%;
+      padding-right: 40px;
+      vertical-align: top; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
+      .explorer .event-card {
+        float: left;
+        padding-right: 15%;
+        width: 33%; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .explorer .event-card__icon {
+      float: left;
+      width: 20%;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      text-align: center; }
+    .explorer .event-card__month {
+      font-size: 12px;
+      font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+      border-bottom: 1px solid #052049;
+      text-transform: uppercase; }
+    .explorer .event-card__icon-date {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+      font-weight: 500;
+      font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1;
+      letter-spacing: -0.6px;
+      color: #052049;
+      margin-top: 8px; } }
+    @media all and (-ms-high-contrast: none) and (min-width: 600px), (-ms-high-contrast: active) and (min-width: 600px) {
+      .explorer .event-card__icon-date {
+        font-size: 56px;
+        letter-spacing: -1.2px; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .explorer .event-card__content {
+      float: right;
+      width: 75%;
+      letter-spacing: 0.2px;
+      white-space: normal; }
+    .explorer .event-card__title {
+      margin: 0;
+      font-size: 18px;
+      font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+      font-weight: 500;
+      margin-bottom: 8px;
+      line-height: 1.4;
+      letter-spacing: 0.2px; }
+      .explorer .event-card__title a {
+        text-decoration: none; }
+        .explorer .event-card__title a:link {
+          color: #052049; }
+        .explorer .event-card__title a:visited, .explorer .event-card__title a:link:visited {
+          color: #052049; }
+        .explorer .event-card__title a:focus {
+          color: #052049; }
+        .explorer .event-card__title a.active:hover, .explorer .event-card__title a.is-active:hover, .explorer .event-card__title a.active-trail:hover, .explorer .event-card__title a.visited:hover, .explorer .event-card__title a:hover {
+          color: #007cbe; }
+        .explorer .event-card__title a.is-active, .explorer .event-card__title a:active, .explorer .event-card__title a.active-trail {
+          color: #052049; }
+    .explorer .event-card__date-location {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 14px;
+      color: #506380;
+      line-height: 1.6; }
+    .explorer .bg-gray .event-card__date-location {
+      color: #052049; }
+    .explorer .event-card__date,
+    .explorer .event-card__location {
+      padding-left: 25px; }
+      .explorer .event-card__date span,
+      .explorer .event-card__location span {
+        margin-left: -25px;
+        display: inline-block;
+        width: 25px;
+        text-align: center;
+        font-size: 12px; }
+    .explorer #lclst_widget_footer {
+      display: none; }
+    .explorer .map-home {
+      position: relative; }
+      .explorer .map-home .field-map-text {
+        padding: 20px;
+        background: #fff;
+        position: relative;
+        margin-top: -56px;
+        margin-right: 16px;
+        color: #506380; }
+        .explorer .map-home .field-map-text h2 {
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+          font-weight: 500;
+          font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+          font-size: 32px;
+          line-height: 1;
+          letter-spacing: -0.6px;
+          color: #052049;
+          font-family: "GranjonLTW01-Roman", Garamond, "Times New Roman", serif;
+          margin: 0; } }
+        @media all and (-ms-high-contrast: none) and (min-width: 600px), (-ms-high-contrast: active) and (min-width: 600px) {
+          .explorer .map-home .field-map-text h2 {
+            font-size: 56px;
+            letter-spacing: -1.2px; } }
+      @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
+        .explorer .map-home .field-map-text {
+          padding-right: 0;
+          position: absolute;
+          right: 0;
+          bottom: 70px;
+          padding: 40px;
+          margin-top: 0;
+          margin-right: 0;
+          background: url(/themes/custom/ucsf/assets/images/banner-overlay-right.png) right top repeat-y rgba(255, 255, 255, 0.925);
+          width: 50%; } }
+      @media all and (-ms-high-contrast: none) and (min-width: 1280px), (-ms-high-contrast: active) and (min-width: 1280px) {
+        .explorer .map-home .field-map-text {
+          padding: 64px;
+          padding-right: 0;
+          padding-right: 0;
+          position: absolute;
+          right: 0;
+          bottom: 70px;
+          padding: 40px;
+          margin-top: 0;
+          margin-right: 0;
+          background: url(/themes/custom/ucsf/assets/images/banner-overlay-right.png) right top repeat-y rgba(255, 255, 255, 0.925); } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .explorer .page-node-type-news-center .combined-header-region,
+    .explorer .alias-home .combined-header-region,
+    .explorer .page-node-type-article .combined-header-region {
+      -webkit-animation: none;
+              animation: none; }
+    .explorer .alias-home main.main {
+      -webkit-animation: none;
+              animation: none; }
+    .explorer .alias-home .narrow-page-header {
+      -webkit-animation: none;
+              animation: none; } }
 
 /*# sourceMappingURL=style.css.map */
