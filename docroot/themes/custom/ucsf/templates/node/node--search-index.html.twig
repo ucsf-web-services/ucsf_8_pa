@@ -24,6 +24,12 @@
 ]
 %}
 
+{% if node.field_external_url.uri|render|striptags != ''  %}
+  {% set article_url = node.field_external_url.uri|render|striptags %}
+{% else %}
+  {% set article_url =  url %}
+{% endif %}
+
 <article {{ attributes.addClass(classes) }}">
 
   <header class="search-result__copy">
@@ -33,9 +39,9 @@
       {% include '@theme/article/byline.twig' %}
     {% endif %}
     {% if content.field_short_title|render|striptags != ''  %}
-      <h2><a href="{{ url }}">{{ content.field_short_title }}</a></h2>
+      <h2><a href="{{ article_url }}">{{ content.field_short_title }}</a></h2>
     {% else %}
-      <h2><a href="{{ url }}">{{ label }}</a></h2>
+      <h2><a href="{{ article_url }}">{{ label }}</a></h2>
     {% endif %}
 
     {% if content.body['#items'][0].summary|render|striptags != ''  %}
