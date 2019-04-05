@@ -95,12 +95,16 @@ header .menu--main {
     height: auto;
     right: 0;
     z-index: $z-dropdown;
-    width: 999px;
+    width: 800px;
+
+    @include breakpoint($new-large) {
+      width: 999px;
+    }
 
     &.wrapper--search-menu {
       background: none;
       width: 650px !important;
-      right: -82px;
+      //right: -82px;
       //border: 1px solid #ececec;
       .home-search__form {
         position: relative;
@@ -182,7 +186,11 @@ header .menu--main {
   [data-level="level-0"] > .menu-child--menu {
     display: block;
     //margin-top: 64px;
-    width: 464px;
+    width: 350px;
+
+    @include breakpoint($new-large) {
+      width: 464px;
+    }
 
     .menu-item {
       border-bottom: 1px solid #d5d9de;
@@ -242,7 +250,11 @@ header .menu--main {
     position: absolute;
     right: 0;
     top: 48px;
-    width: 535px;
+    width: 450px;
+
+    @include breakpoint($new-large) {
+      width: 535px;
+    }
 
     .menu-child--menu {
       padding-right: 80px;
