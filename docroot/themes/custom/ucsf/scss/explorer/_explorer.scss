@@ -933,7 +933,8 @@
       margin: 0 auto;
       display: block;
       max-width: $full;
-
+      //border: 1px solid lawngreen;
+      position: relative;
       &.full-width-has-image {
         background: $white;
 
@@ -956,6 +957,7 @@
       @include breakpoint($new-large) {
         display: block;
         max-width: $full;
+        position: relative;
         figure { // PL: .full-width-page-banner-photo
           width: 60%;
           display: block;
@@ -975,15 +977,27 @@
       padding: $space-four 20px;
       padding-bottom: 1px;
       margin-right: 6 * $space-four;
-      margin-top: -316px;
+
       @include breakpoint($new-large) {
         padding: $space-five;
         padding-bottom: 1px;
         margin-right: $space-ten;
-        margin-top: -316px;
-        width: 50%;
+        //width: 50%;
         .full-width-has-image & {
           margin-top: -$space-fifteen;
+        }
+      }
+    }
+
+    &.alias-news-media-resources-for-journalists {
+      .full-width-page-banner__header {
+        position: absolute;
+        bottom: 0;
+        left:0;
+        @include breakpoint($new-large) {
+          position: absolute;
+          bottom: 0;
+          left:0;
         }
       }
     }
@@ -1042,7 +1056,7 @@
       .article-header__date {
         padding-right: 30px;
         background: url('../images/ext-link-gray.svg') right center no-repeat transparent;
-        background-size: 20px;
+        background-size: 20px 20px;
       }
     }
 

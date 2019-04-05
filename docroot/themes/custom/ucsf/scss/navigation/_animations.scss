@@ -36,12 +36,13 @@
 
 
 .article-header__author,
-.article-header h1 {
-  animation: header-fade 3s  0ms forwards;
+.article-header h1,
+.article-header__byline {
+  animation: header-fade 1s 0ms forwards;
   animation-name: header-fade;
   animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
   animation-fill-mode: forwards;
-  transition: 2s;
+  //transition: 2s;
 }
 
 
@@ -49,10 +50,9 @@
   h1 {
     animation: header-fade 2.0s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
   }
-  .news-center-banner_list {
-    animation: header-swoosh 3.0s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-  }
-  .news-center-banner__featured {
+  .news-center-banner_list,
+  .news-center-banner__featured,
+  .news-search {
     animation: header-swoosh 2.0s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
   }
 }
@@ -182,10 +182,10 @@
 
   .news-card__image img,
   .field-card-image img {
-    transition: .5s ease-out all;
+    transition: .3s ease-out all;
   }
   h2 {
-    transition: .5s ease-out all;
+    transition: .3s ease-out all;
   }
   &:hover {
     .news-card__image img,
