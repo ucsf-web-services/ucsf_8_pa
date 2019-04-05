@@ -28,18 +28,14 @@
 }
 
 .card-row {
-  @include grid-base;
-
-  @include medium {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   margin-bottom: $space-ten;
+  float: left;
 
   .card-row__image {
-    grid-column: 1 / 2;
     display: block;
     position: relative;
+    float: left;
+    width: 50%;
 
     &::after {
       content: ' ';
@@ -50,20 +46,85 @@
       width: $space-five;
       height: $space-five;
     }
-
-    img {
-      max-height: 275px;
-    }
   }
 
   .card-row__copy {
-    grid-column: 2 / 3;
+    float: right;
+    width: 50%;
     padding-left: 5%;
+
+    .article-header__subheading,
+    .card-row__body {
+      color: $c-navy;
+    }
   }
 
   .card-row__body {
     margin-bottom: 1rem;
     margin-top: 0;
+  }
+
+  @include breakpoint($new-small-max) {
+    margin-bottom: 0;
+    width: 100%;
+
+    li::before {
+      display: none;
+    }
+
+    .card-row__image {
+      float: none;
+      width: auto;
+
+      img {
+        margin: 0 0 0 auto;
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .card-row__copy {
+      padding-left: $space-three;
+      float: none;
+      width: auto;
+      padding: 20px;
+      margin-right: 20px;
+      margin-top: -56px;
+      background: $white;
+      position: relative;
+
+      .article-header__subheading,
+      .card-row__link,
+      .card-row__body {
+        display: none;
+      }
+    }
+  }
+
+  @include breakpoint($new-large) {
+    @include grid-base;
+    float: none;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    .card-row__image {
+      grid-column: 1 / 2;
+      float: none;
+      width: auto;
+
+      img {
+        max-height: 275px;
+      }
+    }
+
+    .card-row__copy {
+      grid-column: 2 / 3;
+      float: none;
+      width: auto;
+      padding-left: 5%;
+    }
   }
 }
 
@@ -74,6 +135,7 @@
   li {
     counter-increment: item;
     margin-bottom: 5px;
+    clear: both;
 
     &::before {
       @include fs-heading-three;
@@ -82,10 +144,73 @@
       margin-left: -$space-five;
       float: left;
       font-size: 28px;
+      clear: left;
     }
   }
 
-  .card-row {
+  .card-row__image {
+    float: right;
+  }
+
+  .card-row__copy {
+    float: left;
+    padding-right: 5%;
+    padding-left: 0;
+  }
+
+  @include breakpoint($new-small-max) {
+
+    li::before {
+      display: none;
+    }
+
+    .card-row__image {
+      float: none;
+      width: auto;
+
+      img {
+        margin: 0 0 0 auto;
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+
+    article {
+      margin-bottom: 0;
+      width: 100%;
+    }
+
+    .card-row__copy {
+      padding-left: $space-three;
+      float: none;
+      width: auto;
+      padding: 20px;
+      margin-right: 20px;
+      margin-top: -56px;
+      background: $white;
+      position: relative;
+
+      .article-header__subheading,
+      .card-row__link {
+        display: none;
+      }
+
+      &::before {
+        @include fs-heading-three;
+
+        content: counter(item) '.';
+        margin-left: -$space-three;
+        float: left;
+        font-size: 28px;
+        clear: left;
+        padding-top: 2px;
+      }
+    }
+  }
+
+  @include breakpoint($new-large) {
     .card-row__image {
       grid-column: 2 / 3;
       grid-row: 1;
@@ -94,8 +219,8 @@
     .card-row__copy {
       grid-column: 1 / 2;
       grid-row: 1;
-      padding-right: 5%;
       padding-left: 0;
+      padding-right: 5%;
     }
   }
 }

@@ -6,6 +6,15 @@
   position: absolute;
   z-index: 1;
 
+  .page-node-type-article & {
+    margin-top: -200px;
+    z-index: 0;
+
+    @include breakpoint($new-large) {
+      margin-top: $space-four;
+    }
+  }
+
   li {
     margin-bottom: $space;
 
@@ -34,19 +43,20 @@
   }
 
   @include breakpoint($new-large) {
-    margin-top: $space-three;
+    grid-row: 2;
   }
 
   @include breakpoint($new-xl) {
     grid-column: 2 / 3;
-    grid-row: 2;
     padding: 0 40%;
   }
 }
 
 .article-feature-content {
-  .article-meta-share {
-    grid-row: 1;
-    margin-top: $space-ten;
+  @include breakpoint($new-large) {
+    .article-meta-share {
+      grid-row: 1;
+      margin-top: $space-ten;
+    }
   }
 }

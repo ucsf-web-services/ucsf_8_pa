@@ -1,8 +1,19 @@
-.page-node-type-trending {
+.page-node-type-trending,
+.page-node-type-news-package {
+  .article-header h1 {
+    margin-bottom: 0;
+  }
+
   .narrow-page {
     .page_narrow {
+      float: left;
+      background: white;
+
       &:last-child {
-        padding-bottom: $space-ten;
+
+        @include breakpoint($new-large) {
+          padding-bottom: $space-ten;
+        }
         //margin-bottom: $space-ten;
 
         & > :last-child {

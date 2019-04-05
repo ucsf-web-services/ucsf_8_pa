@@ -9,6 +9,7 @@
 %}
 
 <li>
+<a href="{{ url }}">
   <article {{ attributes.addClass(classes) }}>
     <div class="card-row__image">
       {{ content.field_card_image }}
@@ -18,9 +19,10 @@
         <h2>{{ label }}</h2>
       </header>
       {{ content.field_sub_title }}
-      <a href="{{ url }}" class="card-row__link link--cta">
+      <p class="card-row__link link--cta">
         {{ "Continue reading"|t }}
-      </a>
+      </p>
     </div>
   </article>
+</a>
 </li>
