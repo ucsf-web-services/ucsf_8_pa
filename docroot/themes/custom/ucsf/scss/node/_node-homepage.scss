@@ -222,6 +222,7 @@
   list-style-position: outside;
   margin: 0;
   padding: 0 $space-five;
+  padding-right: 0;
 
   li {
     display: inline-block;
@@ -256,6 +257,8 @@
   }
 
   @include breakpoint($new-small) {
+    padding: 0 $space-five;
+
     li {
       width: 29%;
       float: left;
@@ -644,5 +647,11 @@
 
   @include breakpoint($new-large) {
     padding: 0 $space-ten;
+  }
+}
+
+.mobile-break {
+  @include breakpoint($new-x-small-max) {
+    display: block;
   }
 }

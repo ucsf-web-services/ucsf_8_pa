@@ -19,8 +19,12 @@
 {% endif %}
 
 <article {{ attributes.addClass(classes) }} data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
-  <a href="{{ link }}" class="news-card__link">
 
+<p>{{ url }}/<br />
+{{ link }}</p>
+
+
+  <a href="{{ link }}" class="news-card__link">
     {% if content.field_card_image['#items'] is not empty %}
       {{ content.field_card_image }}
     {% else %}
