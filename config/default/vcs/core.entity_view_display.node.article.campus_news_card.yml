@@ -45,11 +45,11 @@ dependencies:
     - field.field.node.article.field_twitter_description
     - field.field.node.article.field_twitter_image
     - field.field.node.article.field_twitter_title
-    - image.style.news_card__image
     - node.type.article
+    - responsive_image.styles.homepage_news_card
   module:
     - datetime
-    - media
+    - media_responsive_thumbnail
     - user
 _core:
   default_config_hash: ChmU3AVqDKU32A_fyChG0W9dTRKmVBR58B6OClCLvZI
@@ -59,12 +59,12 @@ bundle: article
 mode: campus_news_card
 content:
   field_card_image:
-    type: media_thumbnail
+    type: media_responsive_thumbnail
     weight: 0
     region: content
     label: hidden
     settings:
-      image_style: news_card__image
+      responsive_image_style: homepage_news_card
       image_link: ''
     third_party_settings: {  }
   field_date_and_time:
