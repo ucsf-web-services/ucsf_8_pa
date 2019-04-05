@@ -42,8 +42,6 @@
     display: block;
   }
 
-
-
   /* old/replace with full-height
   @include breakpoint($bp-medium) {
     height: calc(100vh - 129px);
@@ -59,7 +57,7 @@
     //right: calc((100% - 42px) * -1);
     //.quicklinks-menu {
       //visibility: visible;
-    //}
+   // }
   }
 
   &.js-quicklinks-open {
@@ -67,10 +65,11 @@
     top: 0;
     height: 100vh;
     visibility: visible;
-
+    //animation: fade 500ms cubic-bezier(0.59,0.22,0.86,0.71) 0s both;
     //right place for the trigger, but now on close need another trigger?
     .field-quick-link-menu {
-      animation: fade 500ms cubic-bezier(0.59,0.22,0.86,0.71) 0s both;
+      //animation: fade 500ms cubic-bezier(0.59,0.22,0.86,0.71) 0s both;
+      //-webkit-animation-iteration-count: 1;
     }
 
     @include breakpoint($bp-medium) {
@@ -83,14 +82,15 @@
 
     .quicklinks-trigger:hover {
       //animation: none;
-      left:0;
+      border-right: none;
+      left: 0;
     }
   }
 }
 
 .quicklinks-trigger {
-  @include transition;
-  //transition: 500ms cubic-bezier(0.77, 0, 0.175, 1) both;
+  //@include transition;
+  transition: 1000ms cubic-bezier(0.77, 0, 0.175, 1) both;
   background: $white;
   text-align: center;
   font-size: $font-size-xxsm;
@@ -106,15 +106,17 @@
   writing-mode: vertical-rl;
   width: auto;
   z-index: $z-quicklinks-menu;
-
   &:hover {
-    left: -5px;
-    border-right: 5px solid $c-navy;
-
-    @media screen and (-webkit-min-device-pixel-ratio:0) {
-        left:10px;
-      }
+    transition: 1000ms cubic-bezier(0.77, 0, 0.175, 1) both;
+    //transform: scaleX(1.2);
+    transform-origin: top right;
+    background-color: #efefef;
+    border-right: 8px solid $c-navy;
+    left: -16px;
+    @supports (-moz-appearance:none) {
+      left: -8px;
     }
+  }
 
   .fa-caret-up {
     @include breakpoint($bp-medium) {

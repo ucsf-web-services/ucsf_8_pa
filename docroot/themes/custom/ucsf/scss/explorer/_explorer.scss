@@ -7,7 +7,7 @@
     */
     .header {
       @include wrapper;
-      max-width: $new-medium;
+      max-width: $new-large;
       padding: 0 0;
       min-height: 75px;
       @include breakpoint($bp-until-large) {
@@ -16,7 +16,6 @@
         position: relative;
         width: 100%;
         vertical-align: middle;
-        //background-color: red;
       }
 
       @include breakpoint($bp-large) {
@@ -33,7 +32,6 @@
         position: absolute;
         right: 0;
         bottom: 0;
-        //border: 1px solid red;
       }
     }
 
@@ -304,31 +302,9 @@
         float: none;
       }
 
-      & + * {
-        clear: both;
-      }
     }
 
-    .lastest-events-list__header {
-      margin: 0 auto;
-      max-width: $xl;
-    }
 
-    .lastest-events-list__heading {
-      @include fs-articles-title;
-      margin-top: 0;
-      margin-bottom: 0;
-
-
-    }
-
-    .lastest-events-list__view-all {
-      margin: 0;
-      margin-top: $space;
-      margin-bottom: $space-four;
-
-
-    }
 
     .lastest-events-list__cards {
       clear: both;
@@ -355,10 +331,6 @@
       padding-right: $space-five;
       vertical-align: top;
 
-
-
-
-
       @include breakpoint($new-large) {
         float: left;
         padding-right: 15%;
@@ -375,14 +347,10 @@
       text-align: center;
     }
 
-
-
     .event-card__icon-date {
       @include fs-heading-two;
       margin-top: $space;
     }
-
-
 
     .event-card__title {
       margin: 0;
@@ -396,7 +364,6 @@
       a {
         @include link-colors($c-navy, $c-blue);
         text-decoration: none;
-        //color: $navy;
       }
     }
 
@@ -450,8 +417,6 @@
           margin: 0;
         }
 
-
-
         @include breakpoint($new-large) {
           padding-right: 0;
           position: absolute;
@@ -498,8 +463,6 @@
       -webkit-animation: none;
       animation: none;
     }
-
-
 
 
     /**
@@ -866,19 +829,223 @@
       }
     }
 
+
+  /**
+   *  ------- FOOTER FIXES ----------
+   */
     @include breakpoint($new-large) {
 
       .layout-columns__3 {
         overflow: auto;
           .field-content-wrapper-content .layout-column {
             float: left;
-            width: 31%;
+            width: 25%;
             margin-right: 2%;
             margin-left: 0;
             margin-top: 0;
         }
       }
     }
+
+
+    .layout-columns__4 {
+      padding: $space-five 20px;
+      padding-bottom: 0;
+      float: left;
+      width: 100%;
+
+      .layout__heading {
+        margin-bottom: $space-four;
+      }
+
+      .field-content-wrapper-content { // PL: .layout-columns__three
+        list-style: none;
+
+        > .layout-column {
+          margin-bottom: 2em;
+        }
+      }
+
+      @include breakpoint($new-medium) {
+        padding: $space-five;
+        padding-bottom: 0;
+
+        .field-content-wrapper-content {
+          clear: none;
+
+          > .layout-column {
+            clear: none;
+            float: left;
+            width: 23%;
+            margin-right: 2%;
+            margin-left: 0;
+            margin-top: 0;
+
+            &:last-child {
+              margin-right: 0;
+              margin-left: 2%;
+            }
+          }
+        }
+      }
+
+      @include breakpoint($new-large) {
+        padding: $space-five 20px;
+        padding-bottom: 0;
+        float: none;
+        width: auto;
+        margin-right: 2%;
+        margin-left: 0;
+        margin-top: 0;
+
+        .field-content-wrapper-content { // PL: .layout-columns__three
+
+          display: block;
+
+          .layout-column {
+            float: left;
+            width: 23%;
+            margin-left: 0;
+
+            &:last-child {
+              margin-right: 0;
+              margin-left: 2%;
+            }
+          }
+        }
+      }
+    }
+
+    .field-footer-tabs-events-columne {
+      padding-bottom: 80px;
+    }
+
+    .field-localist-code {
+      padding-top: 50px;
+    }
+
+    /**
+     *  ------- RESOURCES FOR JOURNALIST FIXES ----------
+     */
+
+    .full-width-page-banner {
+      width: 100%;
+      margin: 0 auto;
+      display: block;
+      max-width: $full;
+
+      &.full-width-has-image {
+        background: $white;
+
+        @include breakpoint($new-large) {
+          background: transparent;
+        }
+      }
+
+      figure { // PL: .full-width-page-banner-photo
+        width: 60%;
+        display: block;
+        margin: 0 0 0 auto;
+        img {
+          margin: 0;
+        }
+        background: $c-background-gray;
+      }
+
+
+      @include breakpoint($new-large) {
+        display: block;
+        max-width: $full;
+        figure { // PL: .full-width-page-banner-photo
+          width: 60%;
+          display: block;
+          margin: 0 0 0 auto;
+          img {
+            margin: 0;
+          }
+          background: $c-background-gray;
+        }
+      }
+    }
+
+    .full-width-page-banner__header {
+      display: block;
+      background: $white;
+      width: 50%;
+      padding: $space-four 20px;
+      padding-bottom: 1px;
+      margin-right: 6 * $space-four;
+      margin-top: -316px;
+      @include breakpoint($new-large) {
+        padding: $space-five;
+        padding-bottom: 1px;
+        margin-right: $space-ten;
+        margin-top: -316px;
+        width: 50%;
+        .full-width-has-image & {
+          margin-top: -$space-fifteen;
+        }
+      }
+    }
+
+    .article-meta-share {
+      list-style: none;
+      display: block;
+      margin: 0;
+      font-size: 26px;
+      width: 0;
+      position: absolute;
+      z-index: 1;
+      left: -50px;
+
+      li {
+        margin-bottom: $space;
+      }
+
+
+      @include breakpoint($new-large) {
+        margin-top: $space-three;
+      }
+
+      @include breakpoint($new-xl) {
+        left: -50px;
+        display: block;
+        padding: 0;
+      }
+    }
+
+    .view-articles-by-term { // .recommended-articles_list
+      background: $white;
+      padding: 0 $space-ten;
+      margin-top: $space-two;
+      padding-bottom: $space-four;
+      overflow: auto;
+
+      @include breakpoint($new-large) {
+        .view-content { // PL: .card-three-up
+          list-style: none;
+          padding: 0;
+          margin-top: $space-ten;
+
+          .views-row {
+            float: left;
+            width: 30%;
+            margin-right: 3%;
+          }
+        }
+      }
+    }
+
+    a[href*="http"] {
+      .field-featured-media-article .news-card__date,
+      .media-coverage__list-date,
+      .article-header__date {
+        padding-right: 30px;
+        background: url('../images/ext-link-gray.svg') right center no-repeat transparent;
+        background-size: 20px;
+      }
+    }
+
 
     //end of fixes.
   }
