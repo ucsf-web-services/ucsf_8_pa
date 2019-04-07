@@ -1,4 +1,4 @@
-// This is a hack so we don't have to worry about the gallery resizing the background color white
+// This is a hack so we don't have to worry about the gallery resizing the background color white for the section.
 // which it should not be part of anyhow, should be its own grid area.
 .gallery-background-fill {
   height: 800px;
@@ -44,8 +44,6 @@
     //padding-right: 16px;
     min-width: 0;
     min-height: 0;
-
-
   }
 
   @include breakpoint($new-large) {
@@ -95,22 +93,18 @@
   @include slick-buttons;
 
   button {
-      top: calc(50% - 100px);
+    top: calc(50% - 100px);
 
     @include breakpoint($bp-small) {
-      &:hover {
         display: none;
-      }
+
     }
     @include breakpoint($new-x-small) {
-      &:hover {
         display: none;
-      }
+
     }
     @include breakpoint($new-small) {
-      &:hover {
         display: none;
-      }
     }
   }
 
@@ -152,21 +146,15 @@
     overflow: visible;
   }
   .field-gallery-image {
+    //this is the white "overlay" magic
     background-color: #fff;
-    //border: 1px solid red;
   }
   img {
     filter: blur(3px);
     margin: 0 auto;
     padding-left: 0px;
     padding-right: 0px;
-    //width: 961px;
     opacity: 0.5;
-
-    @include breakpoint($new-small) {
-
-    }
-
   }
 
   figcaption {
@@ -192,6 +180,7 @@
       //padding-left: 16px;
       height: auto;
       width: auto;
+      //prevent jumping of content below
       min-height: 125px;
       padding-left: 10%;
       padding-right: 0;
@@ -199,26 +188,27 @@
       @include breakpoint($bp-xs-medium) {
         padding-left: 10%;
         margin: 0 auto;
+        //prevent jumping of content below
+        min-height: 180px;
       }
       @include breakpoint($bp-small) {
         padding-left: 10%;
         margin: 0 auto;
+        min-height: 180px;
       }
       @include breakpoint($bp-small) {
         margin: 0 auto;
         padding-left: 10%;
+        min-height: 140px;
       }
       @include breakpoint($new-x-small) {
         padding-left: 10%;
       }
-
-
       @include breakpoint($new-small) {
         max-width: 800px;
         padding-left: 13%;
         padding-right: 13%;
       }
-
       @include breakpoint($new-large) {
         max-width: 602px;
         padding-left: 13%;

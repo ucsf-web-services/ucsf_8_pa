@@ -9,6 +9,7 @@
         slidesToShow: 4,
         slidesToScroll: 1,
         infinite: false,
+        variableWidth: true,
         responsive: [{
           breakpoint: 1050,
           settings: {
@@ -18,19 +19,19 @@
         }, {
           breakpoint: 850,
           settings: {
-            slidesToShow: 3,
+            slidesToShow: 4,
             slidesToScroll: 1
           }
         }, {
           breakpoint: 769,
           settings: {
-            slidesToShow: 2,
+            slidesToShow: 1.5,
             slidesToScroll: 1
           }
         }, {
           breakpoint: 320,
           settings: {
-            slidesToShow: 1,
+            slidesToShow: 1.5,
             slidesToScroll: 1
           }
         }]
