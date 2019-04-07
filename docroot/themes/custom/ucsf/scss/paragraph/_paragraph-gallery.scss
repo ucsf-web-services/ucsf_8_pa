@@ -1,13 +1,43 @@
+// This is a hack so we don't have to worry about the gallery resizing the background color white
+// which it should not be part of anyhow, should be its own grid area.
+.gallery-background-fill {
+  height: 800px;
+  background-color: #fff;
+  //border: 1px solid #00c9ff;
+  z-index: -100;
+  margin-bottom: -800px;
+  @include breakpoint($bp-small) {
+    margin-bottom: -418px;
+    height: 418px;
+  }
+  @include breakpoint($new-x-small) {
+    margin-bottom: -418px;
+    height: 418px;
+  }
+  @include breakpoint($new-small) {
+    margin-bottom: -450px;
+    height: 450px;
+  }
+  @include breakpoint($new-medium) {
+    margin-bottom: -670px;
+    height: 670px;
+  }
+  @include breakpoint($new-xl) {
+    margin-bottom: -800px;
+    height: 800px;
+  }
+}
 .paragraph--type--gallery {
-  background: $c-white;
+  //background: $c-white;
   overflow: hidden;
 
   .gallery-container {
-    background: $c-white;
     overflow: hidden;
-    padding-right: 16px;
+    //padding-right: 16px;
     min-width: 0;
     min-height: 0;
+
+
   }
 
   @include breakpoint($new-large) {
@@ -16,7 +46,7 @@
     grid-column: 1 / -1;
 
     .gallery-container {
-        grid-column: 2 / -2;
+      grid-column: 2 / -2;
       overflow: visible;
       padding: 0 11%;
     }
@@ -29,21 +59,65 @@
 }
 
 .field-gallery-items {
+
+
+
   @include slick-buttons;
+
+  .slick-prev,
+  .slick-next,
+  .slick-arrow {
+    top: calc(50% - 100px);
+  }
+
+  .slick-slide {
+    margin: 0em 1.5em;
+    width: 823px;
+
+    @include breakpoint($bp-small) {
+      //width: calc(100vw - 0vw);
+      width: calc(100vw - 40px);
+    }
+
+    @include breakpoint($new-x-small) {
+      width: calc(100vw - 40px);
+      //margin: 0 20px 0 20px;
+    }
+
+    @include breakpoint($new-small) {
+      width: calc(100vw - 20vw);
+    }
+
+    @include breakpoint($new-medium) {
+      width: 823px;
+      margin: 0 1.5em;
+    }
+
+    @include breakpoint($new-xl) {
+      width: 823px;
+      margin: 0 1.5em;
+    }
+  }
+
   .slick-list {
     overflow: visible;
   }
-
+  .field-gallery-image {
+    background-color: #fff;
+    //border: 1px solid red;
+  }
   img {
     filter: blur(3px);
     margin: 0 auto;
-    padding-right: 16px;
-    width: 961px;
+    padding-left: 0px;
+    padding-right: 0px;
+    //width: 961px;
+    opacity: 0.5;
 
     @include breakpoint($new-small) {
-      padding-left: 42px;
-      padding-right: 42px;
+
     }
+
   }
 
   figcaption {
@@ -58,16 +132,18 @@
   .slick-active {
     img {
       filter: blur(0);
+      opacity: 1.0;
+      @include transitionset(1s);
     }
 
     figcaption {
       position: relative;
       clip: auto;
       overflow: visible;
-      padding-left: 16px;
+      //padding-left: 16px;
       height: auto;
       width: auto;
-
+      min-height: 125px;
       @include breakpoint($bp-small) {
         margin: 0 auto;
         padding-left: 13%;
@@ -86,3 +162,4 @@
     }
   }
 }
+
