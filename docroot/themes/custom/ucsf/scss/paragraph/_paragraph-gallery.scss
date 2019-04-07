@@ -6,6 +6,10 @@
   //border: 1px solid #00c9ff;
   z-index: -100;
   margin-bottom: -800px;
+  @include breakpoint($bp-xs-medium) {
+    margin-bottom: -400px;
+    height: 400px;
+  }
   @include breakpoint($bp-small) {
     margin-bottom: -418px;
     height: 418px;
@@ -62,55 +66,79 @@
   }
 }
 
+
 .field-gallery-items {
 
+  .slick-track {
+    left: 0;
+    @include breakpoint($bp-xs-medium) {
+      left: -30px;
+    }
+    @include breakpoint($bp-small) {
+      left: -30px;
+    }
+    @include breakpoint($new-x-small) {
+      left: -30px;
+    }
+    @include breakpoint($new-medium) {
+      left: 0;
+    }
+    @include breakpoint($new-large) {
+      left: 0;
+    }
+    @include breakpoint($new-xl) {
+      left: 0;
+    }
+  }
 
 
   @include slick-buttons;
 
-  .slick-prev,
-  .slick-next,
-  .slick-arrow {
-    top: calc(50% - 100px);
+  button {
+      top: calc(50% - 100px);
 
     @include breakpoint($bp-small) {
+      &:hover {
         display: none;
+      }
     }
-
     @include breakpoint($new-x-small) {
-      display: none;
+      &:hover {
+        display: none;
+      }
     }
-
     @include breakpoint($new-small) {
-      display: none;
+      &:hover {
+        display: none;
+      }
     }
   }
 
   .slick-slide {
-    margin: 0em 1.5em;
-    width: 823px;
-
+    margin: 0 1.5em;
+    width: calc(100vw - 40px);
+    //added for certain iPhones!
+    @include breakpoint($bp-xs-medium) {
+      margin: 0 0.5em;
+      width: calc(100vw - 40px);
+    }
     @include breakpoint($bp-small) {
-      //width: calc(100vw - 0vw);
+      margin: 0 0.8em;
       width: calc(100vw - 40px);
     }
-
     @include breakpoint($new-x-small) {
+      margin: 0 1.0em;
       width: calc(100vw - 40px);
-      //margin: 0 20px 0 20px;
     }
-
+    //desktop like sizes
     @include breakpoint($new-small) {
       width: calc(100vw - 20vw);
     }
-
     @include breakpoint($new-medium) {
       width: calc(100vw - 20vw);
       margin: 0 1.5em;
     }
-
     @include breakpoint($new-large) {
-      //width: 823px;
       width: 823px;
       margin: 0 1.5em;
     }
@@ -165,20 +193,36 @@
       height: auto;
       width: auto;
       min-height: 125px;
+      padding-left: 10%;
+      padding-right: 0;
+      //added for certain iPhones!
+      @include breakpoint($bp-xs-medium) {
+        padding-left: 10%;
+        margin: 0 auto;
+      }
+      @include breakpoint($bp-small) {
+        padding-left: 10%;
+        margin: 0 auto;
+      }
       @include breakpoint($bp-small) {
         margin: 0 auto;
+        padding-left: 10%;
+      }
+      @include breakpoint($new-x-small) {
+        padding-left: 10%;
+      }
+
+
+      @include breakpoint($new-small) {
+        max-width: 800px;
         padding-left: 13%;
         padding-right: 13%;
       }
 
-      @include breakpoint($new-small) {
-        max-width: 800px;
-      }
-
       @include breakpoint($new-large) {
         max-width: 602px;
-        padding-left: 0;
-        padding-right: 0;
+        padding-left: 13%;
+        padding-right: 13%;
       }
     }
   }
