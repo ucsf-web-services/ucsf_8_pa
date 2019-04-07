@@ -24,13 +24,18 @@
 
 .slicknav_nav {
   background: $c-grey-pale;
-  position: absolute;
+  position: fixed;
   right: 0;
+  top: 90px;
   width: calc(100% - 16px);
   z-index: $z-dropdown;
 
   .menu-parent-wrapper {
     padding-left: 24px;
+
+    .search {
+      display: none;
+    }
   }
 }
 
@@ -58,6 +63,7 @@
 }
 
 .slicknav_nav .slicknav_item a,
+.slicknav_nav .slicknav_item [data-drupal-link-system-path],
 [role="menuitem"] {
   @include link-colors($c-navy, $c-blue);
   display: inline-block;

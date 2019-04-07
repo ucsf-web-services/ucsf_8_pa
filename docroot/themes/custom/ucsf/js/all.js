@@ -19,6 +19,10 @@
                 openedSymbol: '<i class="fas fa-angle-up">',
                 closedSymbol: '<i class="fas fa-angle-down">',
             });
+
+            var height = $(window).height();
+            $('#block-ucsf-main-menu').css({'height': height - 90});
+            $('.menu-parent-wrapper').css({'height': height - 150, 'overflow-y':'scroll'});
         }
     };
 

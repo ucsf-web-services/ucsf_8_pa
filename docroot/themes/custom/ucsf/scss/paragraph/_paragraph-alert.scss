@@ -1,9 +1,18 @@
+.alert-wrapper {
+  padding-top: $space-five;
+  clear: both;
+  background: $white;
+
+  @include breakpoint($new-large) {
+    padding-top: $space-ten;
+  }
+}
+
 .alert-content {
   color: $white;
   padding: $space-five;
   text-align: center;
   clear: both;
-  margin-top: $space-five;
 
   p {
     font-family: $font-granjon;
@@ -22,12 +31,13 @@
   }
 
   a, p a {
-    margin: 0 10px;
+    margin: 10px;
     font-size: $font-size;
-  }
 
-  @include breakpoint($new-large) {
-    margin-top: $space-ten;
+    @include breakpoint($new-x-small-max) {
+      margin-top: 20px;
+      display: block !important;
+    }
   }
 
 }
