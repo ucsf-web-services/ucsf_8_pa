@@ -22,6 +22,10 @@
     margin-bottom: -670px;
     height: 670px;
   }
+  @include breakpoint($new-large) {
+    margin-bottom: -725px;
+    height: 725px;
+  }
   @include breakpoint($new-xl) {
     margin-bottom: -800px;
     height: 800px;
@@ -68,6 +72,18 @@
   .slick-next,
   .slick-arrow {
     top: calc(50% - 100px);
+
+    @include breakpoint($bp-small) {
+        display: none;
+    }
+
+    @include breakpoint($new-x-small) {
+      display: none;
+    }
+
+    @include breakpoint($new-small) {
+      display: none;
+    }
   }
 
   .slick-slide {
@@ -89,10 +105,15 @@
     }
 
     @include breakpoint($new-medium) {
-      width: 823px;
+      width: calc(100vw - 20vw);
       margin: 0 1.5em;
     }
 
+    @include breakpoint($new-large) {
+      //width: 823px;
+      width: 823px;
+      margin: 0 1.5em;
+    }
     @include breakpoint($new-xl) {
       width: 823px;
       margin: 0 1.5em;
