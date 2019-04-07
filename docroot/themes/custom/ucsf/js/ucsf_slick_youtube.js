@@ -24,16 +24,16 @@
             }
           },
           {
-            breakpoint: 769,
+            breakpoint: 599,
             settings: {
-              slidesToShow: 1.5,
+              slidesToShow: 1.3,
               slidesToScroll: 1
             }
           },
           {
             breakpoint: 320,
             settings: {
-              slidesToShow: 1.5,
+              slidesToShow: 1.2,
               slidesToScroll: 1
             }
           }
