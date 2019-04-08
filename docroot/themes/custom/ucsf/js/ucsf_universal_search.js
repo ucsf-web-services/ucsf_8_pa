@@ -11,13 +11,14 @@
 
             var waypoint = $('#universalDirectory', context).waypoint({
                 handler: function (direction) {
-                    console.log('Hit midpoint of my context: ' + direction);
-                    if (direction == 'down') {
-                        $('.search-box-container').addClass('scrolled');
-                    } else {
-                        $('.search-box-container').removeClass('scrolled');
+                    //console.log('Hit midpoint of my context: ' + direction);
+                    if ($(window).width() <= 600) {
+                        if (direction == 'down') {
+                            $('.search-box-container').addClass('scrolled');
+                        } else {
+                            $('.search-box-container').removeClass('scrolled');
+                        }
                     }
-
                 },
                 offset: '0%'
                 //context: '.results-wrapper',
@@ -34,13 +35,23 @@
                 if ($(this).hasClass('active')) {
                     $('.search-box-container fieldset').removeClass('active');
                     $(this).removeClass('active');
-                    console.log('goodbye');
+                    //console.log('goodbye');
                 } else {
                     $('.search-box-container fieldset').addClass('active');
                     $(this).addClass('active');
-                    console.log('hhellllo');
+                    //console.log('hhellllo');
                 }
             });
+
+            $('.home-search__form-submit-advanced', context).click(function(e) {
+                e.preventDefault();
+                var option = $('input[name="searchSelect"]:checked').val();
+                //console.log(option);
+                $('#universal-search').attr('action', '/search'+option);
+                $('#universal-search').submit();
+            });
+
+
         }
 
     };

@@ -1,5 +1,5 @@
 <div class="home-search__form">
-    <form action="/search{{ location }}" method="get">
+    <form action="/search{{ location }}" method="get" id="universal-search">
         <input type="text" name="search" id="search" size="32" class="searchbox home-search__form-input" value="{{ searchterm }}" placeholder="{{ placeholder }}" />
         <button type="submit" class="home-search__form-submit" id="home-search__form-submit">Search</button>
         <button type="button" id="home-search-button__advanced" class="home-search__advanced-search">Advanced</button>
@@ -8,22 +8,22 @@
 
     <fieldset>
         <label>
-            <input type="radio" name="searchSelect" value="all" />
+            <input type="radio" name="searchSelect" value="" />
             All Results
         </label>
 
         <label>
-            <input type="radio" name="searchSelect" value="news" />
+            <input type="radio" name="searchSelect" value="/news" />
             News
         </label>
 
         <label>
-            <input type="radio" name="searchSelect" value="people" />
+            <input type="radio" name="searchSelect" value="/people" />
             People Directory
         </label>
 
         <label>
-            <input type="radio" name="searchSelect" value="websites" />
+            <input type="radio" name="searchSelect" value="/websites" />
             Websites
         </label>
 
