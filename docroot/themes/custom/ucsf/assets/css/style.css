@@ -6627,53 +6627,40 @@ a[href*="http"] .article-header__date {
     .field-gallery-items .slick-track {
       left: 0; } }
 
-.field-gallery-items:hover button {
-  clip: auto;
-  overflow: visible;
-  height: 28px;
-  width: 28px; }
-  @media (max-width: 599px) {
-    .field-gallery-items:hover button {
-      display: none; } }
+.field-gallery-items:hover {
+ }
 
 .field-gallery-items button {
-  position: absolute !important;
-  clip: rect(1px, 1px, 1px, 1px);
-  overflow: hidden;
-  height: 1px;
-  width: 1px;
-  word-wrap: normal;
+  display: block;
+  height: 28px;
+  width: 28px;
   background-size: 10px 10px;
   border: 0;
-  border-radius: 28px;
   font-size: 0;
-  overflow: hidden;
   padding: 10px;
   position: absolute;
   text-indent: -999px;
-  top: 40px;
+  top: 35%;
   z-index: 700; }
   @media (max-width: 599px) {
     .field-gallery-items button {
       display: none; } }
   @media (min-width: 480px) {
     .field-gallery-items button {
-      top: 100px; } }
+      top: 30%; } }
   @media (min-width: 600px) {
     .field-gallery-items button {
-      top: 200px; } }
+      top: 35%; } }
   .field-gallery-items button:after {
     content: none; }
-  .field-gallery-items button:hover {
-    background-color: #052049; }
 
 .field-gallery-items .slick-next {
   background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #007cbe;
-  right: 10px; }
+  right: 0; }
 
 .field-gallery-items .slick-prev {
   background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #007cbe;
-  left: 10px; }
+  left: 0; }
 
 .field-gallery-items button {
   top: calc(50% - 100px); }
@@ -7684,50 +7671,6 @@ a[href*="http"] .article-header__date {
   padding-bottom: 0;
   padding-right: 0;
   overflow: hidden; }
-  .topics-list:hover button {
-    clip: auto;
-    overflow: visible;
-    height: 28px;
-    width: 28px; }
-    @media (max-width: 599px) {
-      .topics-list:hover button {
-        display: none; } }
-  .topics-list button {
-    position: absolute !important;
-    clip: rect(1px, 1px, 1px, 1px);
-    overflow: hidden;
-    height: 1px;
-    width: 1px;
-    word-wrap: normal;
-    background-size: 10px 10px;
-    border: 0;
-    border-radius: 28px;
-    font-size: 0;
-    overflow: hidden;
-    padding: 10px;
-    position: absolute;
-    text-indent: -999px;
-    top: 40px;
-    z-index: 700; }
-    @media (max-width: 599px) {
-      .topics-list button {
-        display: none; } }
-    @media (min-width: 480px) {
-      .topics-list button {
-        top: 100px; } }
-    @media (min-width: 600px) {
-      .topics-list button {
-        top: 200px; } }
-    .topics-list button:after {
-      content: none; }
-    .topics-list button:hover {
-      background-color: #052049; }
-  .topics-list .slick-next {
-    background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #007cbe;
-    right: 10px; }
-  .topics-list .slick-prev {
-    background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #007cbe;
-    left: 10px; }
   @media (min-width: 769px) {
     .topics-list {
       padding: 40px;
@@ -7740,9 +7683,6 @@ a[href*="http"] .article-header__date {
       padding-left: 0;
       padding-bottom: 0;
       padding-right: 0; } }
-  @media (max-width: 599px) {
-    .topics-list {
-      display: block; } }
 
 .topics-list__header {
   padding: 0 20px; }
@@ -7802,22 +7742,55 @@ a[href*="http"] .article-header__date {
       align-self: end;
   margin-bottom: 0; }
 
-.topics-list__topics {
+.topics-list__topics-wrapper {
+  position: relative; }
+
+.topics-list__topics.slick-slider {
   clear: both;
   padding-top: 40px;
-  width: 1360px;
-  grid-column: 1/-1;
-  grid-row: 1/-1;
+  position: initial;
   padding-left: 0;
   margin: 0 auto 20px;
   margin-bottom: 0;
-  overflow: hidden; }
-  .topics-list__topics .slick-slide {
+  overflow: hidden;
+  display: block; }
+  .topics-list__topics.slick-slider:hover {
+ }
+  .topics-list__topics.slick-slider button {
+    display: block;
+    height: 28px;
+    width: 28px;
+    background-size: 10px 10px;
+    border: 0;
+    font-size: 0;
+    padding: 10px;
+    position: absolute;
+    text-indent: -999px;
+    top: 35%;
+    z-index: 700; }
+    @media (max-width: 599px) {
+      .topics-list__topics.slick-slider button {
+        display: none; } }
+    @media (min-width: 480px) {
+      .topics-list__topics.slick-slider button {
+        top: 30%; } }
+    @media (min-width: 600px) {
+      .topics-list__topics.slick-slider button {
+        top: 35%; } }
+    .topics-list__topics.slick-slider button:after {
+      content: none; }
+  .topics-list__topics.slick-slider .slick-next {
+    background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #007cbe;
+    right: 0; }
+  .topics-list__topics.slick-slider .slick-prev {
+    background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #007cbe;
+    left: 0; }
+  .topics-list__topics.slick-slider .slick-slide {
     width: 340px; }
   @media (max-width: 599px) {
-    .topics-list__topics .slick-track {
+    .topics-list__topics.slick-slider .slick-track {
       left: -25px; }
-    .topics-list__topics .slick-slide {
+    .topics-list__topics.slick-slider .slick-slide {
       width: 320px; } }
 
 .topic-card {
@@ -8726,53 +8699,40 @@ h3.twitter_user {
       font-size: 56px;
       letter-spacing: -1.2px; } }
 
-#block-youtubegallery:hover button {
-  clip: auto;
-  overflow: visible;
-  height: 28px;
-  width: 28px; }
-  @media (max-width: 599px) {
-    #block-youtubegallery:hover button {
-      display: none; } }
+#block-youtubegallery:hover {
+ }
 
 #block-youtubegallery button {
-  position: absolute !important;
-  clip: rect(1px, 1px, 1px, 1px);
-  overflow: hidden;
-  height: 1px;
-  width: 1px;
-  word-wrap: normal;
+  display: block;
+  height: 28px;
+  width: 28px;
   background-size: 10px 10px;
   border: 0;
-  border-radius: 28px;
   font-size: 0;
-  overflow: hidden;
   padding: 10px;
   position: absolute;
   text-indent: -999px;
-  top: 40px;
+  top: 35%;
   z-index: 700; }
   @media (max-width: 599px) {
     #block-youtubegallery button {
       display: none; } }
   @media (min-width: 480px) {
     #block-youtubegallery button {
-      top: 100px; } }
+      top: 30%; } }
   @media (min-width: 600px) {
     #block-youtubegallery button {
-      top: 200px; } }
+      top: 35%; } }
   #block-youtubegallery button:after {
     content: none; }
-  #block-youtubegallery button:hover {
-    background-color: #052049; }
 
 #block-youtubegallery .slick-next {
   background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #007cbe;
-  right: 10px; }
+  right: 0; }
 
 #block-youtubegallery .slick-prev {
   background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #007cbe;
-  left: 10px; }
+  left: 0; }
 
 #block-youtubegallery .slick-slider {
   margin: 0; }

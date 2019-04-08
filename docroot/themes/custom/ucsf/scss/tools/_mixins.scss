@@ -145,40 +145,43 @@
 }
 
 @mixin slick-buttons { // Apply to same class as slick().
-  &:hover {
-    button {
-      @include visually-hidden-reset;
-      height: 28px;
-      width: 28px;
 
+  &:hover {
+    /*
+    button {
+      //@include visually-hidden-reset;
       @include breakpoint($new-x-small-max) {
         display: none;
       }
     }
+    */
   }
 
   button {
-    @include visually-hidden;
+    //@include visually-hidden;
+    display: block;
+    height: 28px;
+    width: 28px;
     background-size: 10px 10px;
     border: 0;
-    border-radius: 28px;
+    //border-radius: 28px;
     font-size: 0;
-    overflow: hidden;
+    //overflow: hidden;
     padding: 10px;
     position: absolute;
     text-indent: -999px;
-    top: 40px;
+    top: 35%;
     z-index: $z-gallery;
 
     @include breakpoint($new-x-small-max) {
       display: none;
     }
     @include breakpoint($bp-small) {
-      top: 100px;
+      top: 30%;
     }
 
     @include breakpoint($bp-medium) {
-      top: 200px;
+      top: 35%;
     }
 
     &:after {
@@ -186,18 +189,18 @@
     }
 
     &:hover {
-      background-color: $c-navy;
+      //background-color: $c-navy;
     }
   }
 
   .slick-next {
     @include background-image('cta-arrow-white.svg', center center/12px 12px , $c-blue);
-    right: 10px;
+    right: 0;
   }
 
   .slick-prev {
     @include background-image('cta-arrow-white-left.svg', center center/12px 12px , $c-blue);
-    left: 10px;
+    left: 0;
   }
 
 }
