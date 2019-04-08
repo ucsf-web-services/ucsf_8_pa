@@ -23,7 +23,7 @@
 
   //removing for mobile deliver till we fix
   @include breakpoint($new-x-small-max) {
-    display: none;
+    display: block;
   }
 
 }
@@ -94,6 +94,23 @@
   margin: 0 auto 20px;
   margin-bottom: 0;
   overflow: hidden;
+
+  .slick-slide {
+    width: 340px;
+  }
+  @include breakpoint($new-x-small-max) {
+    .slick-track {
+      left: -25px;
+    }
+
+    .slick-slide {
+      width: 320px;
+    }
+
+  }
+
+
+
 }
 
 .topic-card {
@@ -118,7 +135,7 @@
     display: block;
     position: absolute;
     bottom: -12px;
-    left: calc(100% - 300px);
+    left: calc(100% - 301px);
     background: $white;
     width: 220px;
     height: 100px;

@@ -9,10 +9,10 @@
       $('.topics-list__topics').not('.slick-initialized').slick({
         slidesToShow: 4,
         slidesToScroll: 1,
-        //mobileFirst: true,
         lazyLoad: 'progressive',
         infinite: false,
-        dots: false
+        dots: false,
+        variableWidth: true
         /*
         responsive: [
           {
