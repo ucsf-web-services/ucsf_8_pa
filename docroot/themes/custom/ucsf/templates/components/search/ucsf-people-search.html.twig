@@ -25,14 +25,9 @@
  */
 #}
 <div class="form-search-block-div">
-    <div class="search-box-container home-search__form">
-        <!-- This was the Google search input box, but didn't allow some things to work right
-        <!-- gcse:searchbox enableAutoComplete="true"></gcse:searchbox -->
-        <form action="/search/people" method="get">
-            <input type="text" name="search" id="search" size="32" alt="Search text" class="searchbox home-search__form-input" value="{{ searchterm }}" />
-            <button type="submit" class="home-search__form-submit">Search</button>
-        </form>
-        {# We should style these like Zeplin mockup and have them link to other routes #}
+    <div class="search-box-container">
+    {% set formvars = {'searchterm': searchterm, 'location' : '/people', 'placeholder' : 'Search people, places, ideas'} %}
+    {% include '@theme/search/search-form.html.twig' with formvars %}
     </div>
     <ul id="universalSearchTabs">
         <li><a href="/search?search={{ searchterm }}">All Results</a></li>
@@ -50,7 +45,7 @@
             <ul class="search-people">
             {% for person in directory %}
             <li>
-                <a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a> |
+                <strong><a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a></strong> |
                 {% if person.mail %} {{ person.mail }}, {% endif %}
                 {% if person.telephonenumber %} {{ person.telephonenumber }}, {% endif %}
                 {{ person.departmentname|title|replace({'_': " "}) }}

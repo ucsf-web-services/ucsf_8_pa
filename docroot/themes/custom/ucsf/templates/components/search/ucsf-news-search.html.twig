@@ -12,11 +12,9 @@
  */
 #}
 <div class="form-search-block-div">
-    <div class="search-box-container home-search__form">
-        <form action="/search/news" method="get">
-            <input type="text" name="search" id="search" size="32" alt="Search text" class="searchbox home-search__form-input" value="{{ searchterm }}" />
-            <button type="submit" class="home-search__form-submit">Search</button>
-        </form>
+    <div class="search-box-container">
+        {% set formvars = {'searchterm': searchterm, 'location' : '/news', 'placeholder' : 'Search people, places, ideas'} %}
+        {% include '@theme/search/search-form.html.twig' with formvars %}
     </div>
     <ul id="universalSearchTabs">
         <li><a href="/search?search={{ searchterm }}">All Results</a></li>

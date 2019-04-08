@@ -121,9 +121,7 @@ h6 {
     width: 40px;
     height: 1px;
     background: #052049;
-    margin: 0 5px 3px;
-    -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-            animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+    margin: 0 5px 3px; }
 
 p {
   letter-spacing: .2px;
@@ -1361,9 +1359,7 @@ a.icon-hospital:hover {
       width: 40px;
       height: 1px;
       background: #052049;
-      margin: 0 5px 3px;
-      -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-              animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+      margin: 0 5px 3px; }
     [block="block-ucsf-main-menu-desktop"] [data-level="level-0"] > .menu-child--label:after {
       background: #fff; }
     [block="block-ucsf-main-menu-desktop"] [data-level="level-0"] > .menu-child--label[data-section="section-about"] {
@@ -1497,9 +1493,7 @@ a.icon-hospital:hover {
       width: 40px;
       height: 1px;
       background: #052049;
-      margin: 0 5px 3px;
-      -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-              animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+      margin: 0 5px 3px; }
     [block="block-ucsf-main-menu-desktop"] [data-level="level-1"] .menu-child--label:after {
       content: none; }
 
@@ -1960,9 +1954,7 @@ a.icon-hospital:hover {
       width: 40px;
       height: 1px;
       background: #052049;
-      margin: 0 5px 3px;
-      -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-              animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+      margin: 0 5px 3px; }
     @media (min-width: 600px) {
       .quicklinks-menu .field-quick-link-title {
         max-width: none; } }
@@ -2194,9 +2186,7 @@ body.loading .quicklinks {
       width: 40px;
       height: 1px;
       background: #052049;
-      margin: 0 5px 3px;
-      -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-              animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+      margin: 0 5px 3px; }
   .page-node-type-author .small-title,
   .page-node-type-article .small-title,
   .page-node-type-narrow-page .small-title,
@@ -2879,9 +2869,7 @@ figure.align-center figcaption {
     width: 40px;
     height: 1px;
     background: #052049;
-    margin: 0 5px 3px;
-    -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-            animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+    margin: 0 5px 3px; }
 
 .media--type-image {
   position: static; }
@@ -2933,9 +2921,7 @@ figure.align-center figcaption {
     width: 40px;
     height: 1px;
     background: #052049;
-    margin: 0 5px 3px;
-    -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-            animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+    margin: 0 5px 3px; }
 
 .wysiwyg_cta .readmore, .about-cta .readmore {
   display: inline-block;
@@ -3019,9 +3005,7 @@ figure.align-center figcaption {
       width: 40px;
       height: 1px;
       background: #052049;
-      margin: 0 5px 3px;
-      -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-              animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+      margin: 0 5px 3px; }
 
 [style~="color:#8D8580"],
 [style~="color:#729ABD"],
@@ -3986,9 +3970,7 @@ figure.align-center figcaption {
     width: 40px;
     height: 1px;
     background: #052049;
-    margin: 0 5px 3px;
-    -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-            animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+    margin: 0 5px 3px; }
   @media (min-width: 1050px) {
     .home-banner-support__title {
       grid-column: 2/5; } }
@@ -5097,23 +5079,45 @@ a[href*="http"] .article-header__date {
   background: #f2f4f6; }
 
 .search-box-container {
-  padding: 40px 20px;
-  margin: 0; }
+  margin: 0;
+  -webkit-box-shadow: 0 10px 20px #000000;
+  box-shadow: 0 10px 20px #000000; }
+  .search-box-container.scrolled {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    width: 100vw;
+    background-color: #f2f4f6; }
+  .search-box-container fieldset {
+    border: none;
+    display: none; }
+    .search-box-container fieldset.active {
+      display: block; }
+    .search-box-container fieldset label {
+      width: 100%;
+      display: block;
+      border-bottom: 1px solid #121a31;
+      padding: 1em 0.5em; }
+    .search-box-container fieldset input[type=radio] {
+      border: 2px solid #121a31;
+      background-color: #fff; }
+  .search-box-container button.home-search__form-submit-advanced {
+    margin: 1.5em auto;
+    display: block; }
   .search-box-container .home-search__form,
   .search-box-container form {
     max-width: 1280px;
     margin: 0 auto; }
   @media (max-width: 599px) {
-    .search-box-container .home-search__form #search,
-    .search-box-container form #search {
+    .search-box-container #search {
       font-size: 18px;
       height: 52px;
-      width: calc(100% - 52px); }
-    .search-box-container .home-search__form .home-search__form-submit,
-    .search-box-container form .home-search__form-submit {
+      width: calc(100% - 60px); }
+    .search-box-container .home-search__form-submit {
       min-height: 40px;
       padding: 6px;
-      margin-left: -58px;
+      margin-left: -60px;
       background-size: 23px; } }
   @media (min-width: 850px) {
     .search-box-container {
@@ -5124,6 +5128,32 @@ a[href*="http"] .article-header__date {
   max-width: 1440px;
   margin: 0 auto;
   background: #fff; }
+
+#universalSearchTabs {
+  display: none; }
+  @media (min-width: 600px) {
+    #universalSearchTabs {
+      display: block; } }
+
+.home-search__advanced-search {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background: url("../images/filter.svg") center center no-repeat transparent;
+  background-size: 36px 36px;
+  font-size: 0.5em;
+  height: 52px;
+  width: 52px;
+  min-height: 52px;
+  text-indent: -9999px; }
+  @media (min-width: 600px) {
+    .home-search__advanced-search {
+      display: none; } }
+  .home-search__advanced-search:hover {
+    background-color: transparent; }
+  .home-search__advanced-search.active {
+    background: url("../images/x-large.svg") center center no-repeat transparent;
+    background-size: 36px 36px; }
 
 #universalSearchTabs {
   padding: 40px;
@@ -5225,6 +5255,9 @@ a[href*="http"] .article-header__date {
 
 .results-content .cse .gsc-control-cse, .results-content .gsc-control-cse {
   padding: 0; }
+
+.results-content .gs-webResult .gs-visibleUrl-long {
+  font-size: 0.7em; }
 
 .results-content .gs-webResult div.gs-visibleUrl {
   color: #052049; }
@@ -5616,9 +5649,7 @@ a[href*="http"] .article-header__date {
     width: 40px;
     height: 1px;
     background: #052049;
-    margin: 0 5px 3px;
-    -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-            animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+    margin: 0 5px 3px; }
   @media (min-width: 850px) {
     .topic-page__eyebrow {
       padding-top: 40px; } }
@@ -6129,9 +6160,7 @@ a[href*="http"] .article-header__date {
     width: 40px;
     height: 1px;
     background: #052049;
-    margin: 0 5px 3px;
-    -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-            animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+    margin: 0 5px 3px; }
 
 .nobel-card__title {
   font-size: 28px;
@@ -6835,9 +6864,7 @@ a[href*="http"] .article-header__date {
       width: 40px;
       height: 1px;
       background: #052049;
-      margin: 0 5px 3px;
-      -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-              animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+      margin: 0 5px 3px; }
     .promo-list__card .promo-list__card-title::after {
       background: #fff; }
 
@@ -7327,9 +7354,7 @@ a[href*="http"] .article-header__date {
       width: 40px;
       height: 1px;
       background: #052049;
-      margin: 0 5px 3px;
-      -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-              animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+      margin: 0 5px 3px; }
 
 .search-filter__top {
   background: #f2f4f6;
@@ -7505,9 +7530,7 @@ a[href*="http"] .article-header__date {
           width: 40px;
           height: 1px;
           background: #052049;
-          margin: 0 5px 3px;
-          -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-                  animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; } }
+          margin: 0 5px 3px; } }
     .search-filter__dropdown fieldset legend span {
       font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
       font-size: 12px;
@@ -7913,9 +7936,7 @@ a[href*="http"] .article-header__date {
     width: 40px;
     height: 1px;
     background: #052049;
-    margin: 0 5px 3px;
-    -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-            animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+    margin: 0 5px 3px; }
 
 .page_narrow blockquote,
 .paragraph-text-block blockquote,
@@ -8088,9 +8109,7 @@ a[href*="http"] .article-header__date {
       width: 40px;
       height: 1px;
       background: #052049;
-      margin: 0 5px 3px;
-      -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-              animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+      margin: 0 5px 3px; }
     @media (max-width: 768px) {
       .page_narrow blockquote .blockquote-content__cite,
       .page_narrow blockquote .ckpullquote--author,
@@ -8410,9 +8429,7 @@ a[href*="http"] .article-header__date {
       width: 40px;
       height: 1px;
       background: #052049;
-      margin: 0 5px 3px;
-      -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-              animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+      margin: 0 5px 3px; }
   .ucsfcallout p:last-child {
     margin-bottom: 0; }
   @media (min-width: 769px) {
@@ -8882,9 +8899,7 @@ h3.twitter_user {
       width: 40px;
       height: 1px;
       background: #052049;
-      margin: 0 5px 3px;
-      -webkit-animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
-              animation: fade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both; }
+      margin: 0 5px 3px; }
   .footer ul {
     list-style: none;
     margin-left: 0;

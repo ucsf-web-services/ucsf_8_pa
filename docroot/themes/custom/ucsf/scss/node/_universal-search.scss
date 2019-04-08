@@ -5,9 +5,53 @@
 }
 
 .search-box-container {
-
-  padding: $space-five 20px;
+  //padding: $space-five 20px;
   margin: 0;
+  -webkit-box-shadow: 0 10px 20px #000000;
+  box-shadow: 0 10px 20px #000000;
+
+
+  &.scrolled {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    width: 100vw;
+    background-color: $c-background-gray;
+
+  }
+
+
+  @include breakpoint($new-x-small) {
+
+  }
+
+  fieldset {
+    border: none;
+    display: none;
+    &.active {
+      display: block;
+    }
+
+    label {
+      width: 100%;
+      display: block;
+      border-bottom: 1px solid $c-dark-navy;
+      padding: 1em 0.5em;
+    }
+
+    input[type=radio] {
+      border: 2px solid $c-dark-navy;
+      background-color: $white;
+
+    }
+  }
+
+  button.home-search__form-submit-advanced {
+    margin: 1.5em auto;
+    display: block;
+  }
+
 
   .home-search__form,
   form {
@@ -16,32 +60,63 @@
   }
 
   @include breakpoint($new-x-small-max) {
-    .home-search__form,
-    form {
-      #search {
-        font-size: $font-size;
-        height: 52px;
-        width: calc(100% - 52px);
-      }
-      .home-search__form-submit {
-        min-height: 40px;
-        padding: 6px;
-        margin-left: -58px;
-        background-size: 23px;
-      }
+
+    #search {
+      font-size: $font-size;
+      height: 52px;
+      width: calc(100% - 60px);
     }
+
+    .home-search__form-submit {
+      min-height: 40px;
+      padding: 6px;
+      margin-left: -60px;
+      background-size: 23px;
+      //border: 1px solid blue;
+    }
+
   }
 
   @include breakpoint($new-medium) {
     padding: $space-ten;
   }
 }
-
 #universalSearchTabs,
 .results-wrapper__content {
   max-width: $bp-full;
   margin: 0 auto;
   background: $white;
+}
+
+#universalSearchTabs {
+  display: none;
+  @include breakpoint($bp-medium) {
+    display: block;
+  }
+
+}
+
+.home-search__advanced-search {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background: url("../images/filter.svg") center center no-repeat transparent;
+  background-size: 36px 36px;
+  font-size: 0.5em;
+  height: 52px;
+  width: 52px;
+  min-height: 52px;
+  text-indent: -9999px;
+  @include breakpoint($new-x-small) {
+    display: none;
+  }
+  &:hover {
+    background-color: transparent;
+  }
+  &.active {
+    background: url("../images/x-large.svg") center center no-repeat transparent;
+    background-size: 36px 36px;
+  }
 }
 
 #universalSearchTabs {
@@ -177,8 +252,13 @@
     padding: 0;
   }
 
-  .gs-webResult div.gs-visibleUrl {
-    color: $navy;
+  .gs-webResult {
+    .gs-visibleUrl-long {
+      font-size: 0.7em;
+    }
+    div.gs-visibleUrl {
+      color: $navy;
+    }
   }
 
   .gsc-table-cell-snippet-close,

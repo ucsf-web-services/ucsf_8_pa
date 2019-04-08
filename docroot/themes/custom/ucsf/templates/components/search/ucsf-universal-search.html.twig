@@ -33,12 +33,12 @@
  *  @see UcsfsearchController::search()
  */
 #}
+{{ attach_library('ucsf/universalsearch') }}
 <div class="form-search-block-div">
-    <div class="search-box-container home-search__form">
-        <!-- This was the Google search input box, but didn't allow some things to work right
-        <!-- gcse:searchbox enableAutoComplete="true"></gcse:searchbox -->
-
-        {% include '@theme/search/search-form.html.twig' %}
+    <div class="search-box-container">
+        <!-- This was the Google search input box, but didn't allow some things to work right -->
+        {% set formvars = {'searchterm': searchterm, 'location' : '', 'placeholder' : 'Search people, places, ideas'} %}
+        {% include '@theme/search/search-form.html.twig' with formvars %}
         {# We should style these like Zeplin mockup and have them link to other routes #}
     </div>
     <ul id="universalSearchTabs">
@@ -59,7 +59,7 @@
               <ul class="search-people">
               {% for person in directory %}
               <li>
-                  <a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a> |
+                  <strong><a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a></strong> |
                   {% if person.mail %}{{ person.mail }}, {% endif %}
                   {% if person.telephonenumber %}{{ person.telephonenumber }}, {% endif %}
                   {{ person.departmentname|title|replace({'_': " "}) }}
@@ -81,7 +81,7 @@
               <ul class="search-websites">
               {% for website in websites %}
                   <li>
-                      {{ website.title }} | <a href="{{ website.field_website_url }}" target="_blank">{{ website.field_website_url }}</a>{% if website.field_display_name %}, {{ website.field_display_name|replace({'_': " "}) }}{% endif %}
+                      <strong>{{ website.title }}</strong> | <a href="{{ website.field_website_url }}" target="_blank">{{ website.field_website_url }}</a>{% if website.field_display_name %}, {{ website.field_display_name|replace({'_': " "}) }}{% endif %}
                   </li>
               {% endfor %}
               </ul>

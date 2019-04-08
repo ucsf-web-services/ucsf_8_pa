@@ -95,45 +95,6 @@
         }
     };
 
-    /**
-     * This would be cool if it worked but I think the recursive is much deeper here.
-     * Could not get results I was expecting.
-     * @param inclusionQuery
-     */
-    function hideAllMediaQueries(inclusionQuery) {
-        var numberOfMediaQueries = 0;
-        var currentQuery = {index: 0, rule: null, mediaText: null};
-        //var inclusionQuery = "(min-width: 0px)";
-        var exclusionQuery = "(min-width: 99999px)";
-        //this might change so this seems fragile
-        var rules = document.styleSheets[2].cssRules;
-        console.dir(document.styleSheets[2].cssRules);
-        var firstQueryIndex = 0; // show this query
-        var queryIndex = 0;
-        var numberOfRules = rules != null ? rules.length : 0;
-
-        // loop through rules and hide media queries except selected
-        for (var i = 0; i < numberOfRules; i++) {
-            var rule = rules[i];
-
-            if (rule.media != null) {
-                if (queryIndex == firstQueryIndex) {
-                    currentQuery.mediaText = rule.conditionText;
-                    currentQuery.index = firstQueryIndex;
-                    currentQuery.rule = rule;
-                    rule.conditionText = inclusionQuery;
-                    console.log('keeping condition: ' +  currentQuery.mediaText);
-                }
-                else {
-                    rule.conditionText = exclusionQuery;
-                    console.log('removing condition: ' +  rule.conditionText);
-                }
-                queryIndex++;
-            }
-        }
-        numberOfMediaQueries = queryIndex;
-        console.log('numberOfMediaQueries: ' + numberOfMediaQueries);
-    }
 
     /**
      * detect IE

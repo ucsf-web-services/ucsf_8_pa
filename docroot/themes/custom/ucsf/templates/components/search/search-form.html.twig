@@ -1,7 +1,34 @@
 <div class="home-search__form">
-    <form action="/search" method="get">
-        <input type="text" name="search" id="search" size="32" class="searchbox home-search__form-input" value="{{ searchterm }}" placeholder="Search people, places, ideas" />
-        <button type="submit" class="home-search__form-submit">Search</button>
-    </form>
+    <form action="/search{{ location }}" method="get">
+        <input type="text" name="search" id="search" size="32" class="searchbox home-search__form-input" value="{{ searchterm }}" placeholder="{{ placeholder }}" />
+        <button type="submit" class="home-search__form-submit" id="home-search__form-submit">Search</button>
+        <button type="button" id="home-search-button__advanced" class="home-search__advanced-search">Advanced</button>
+
     <div class="gsc-result-info__new"></div>
+
+    <fieldset>
+        <label>
+            <input type="radio" name="searchSelect" value="all" />
+            All Results
+        </label>
+
+        <label>
+            <input type="radio" name="searchSelect" value="news" />
+            News
+        </label>
+
+        <label>
+            <input type="radio" name="searchSelect" value="people" />
+            People Directory
+        </label>
+
+        <label>
+            <input type="radio" name="searchSelect" value="websites" />
+            Websites
+        </label>
+
+        <button type="submit" class="home-search__form-submit-advanced">Filter Search Results</button>
+
+    </fieldset>
+    </form>
 </div>
