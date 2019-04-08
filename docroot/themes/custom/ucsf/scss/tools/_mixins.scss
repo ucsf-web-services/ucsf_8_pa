@@ -150,6 +150,10 @@
       @include visually-hidden-reset;
       height: 28px;
       width: 28px;
+
+      @include breakpoint($new-x-small-max) {
+        display: none;
+      }
     }
   }
 
@@ -166,6 +170,9 @@
     top: 40px;
     z-index: $z-gallery;
 
+    @include breakpoint($new-x-small-max) {
+      display: none;
+    }
     @include breakpoint($bp-small) {
       top: 100px;
     }

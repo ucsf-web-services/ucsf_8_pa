@@ -8,34 +8,16 @@
         slidesToShow: 4,
         slidesToScroll: 1,
         lazyLoad: 'progressive',
-        infinite: false,
+        infinite: true,
         dots: false,
         variableWidth: true,
-        /*
-        responsive: [
-          {
-            breakpoint: 999,
-            settings: {
-              slidesToShow: 4,
-              slidesToScroll: 4
-            }
-          },
-          {
-            breakpoint: 849,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 2
-            }
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1
-            }
+        arrows: true,
+        reponsive: [{
+          breakpoint: 599,
+          settings: {
+            arrows: false
           }
-        ]
-        */
+        }]
       });
     }
   };
