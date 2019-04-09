@@ -193,89 +193,88 @@
   margin: 1rem 0;
   margin-bottom: 0;
 }
+.results-content {
+  //GOOGLE SEARCH FIXES
+  .gsc-wrapper {
+    .gsc-webResult {
+      border-bottom: 1px solid $c-gray-border;
 
-//GOOGLE SEARCH FIXES
-.gsc-wrapper {
-  .gsc-webResult {
-    border-bottom: 1px solid $c-gray-border !important;
+      .gsc-result {
+        padding: $space-three 0;
 
-    .gsc-result {
-      padding: $space-three 0;
+        .gsc-thumbnail-inside,
+        .gsc-url-top {
+          padding-left: 0;
+          padding-right: 0;
+        }
 
-      .gsc-thumbnail-inside,
-      .gsc-url-top {
-        padding-left: 0;
-        padding-right: 0;
+        .gs-title {
+          text-decoration: none;
+        }
       }
 
-      .gs-title {
+      a.gs-title,
+      a.gs-title b,
+      &.gs-result a.gs-title:link b,
+      .gsc-control-cse .gs-result .gs-title *,
+      a b {
+        font-size: 28px;
+        font-family: $font-granjon;
+        text-decoration: none;
+        line-height: 1.4;
+        color: $c-navy;
         text-decoration: none;
       }
-    }
 
-    a.gs-title,
-    a.gs-title b,
-    &.gs-result a.gs-title:link b,
-    .gsc-control-cse .gs-result .gs-title *,
-    a b {
-      font-size: 28px !important;
-      font-family: $font-granjon !important;
-      text-decoration: none;
-      line-height: 1.4 !important;
-      color: $c-navy !important;
-      text-decoration: none !important;
-    }
-
-    a.gs-title {
-      &:hover {
-        color: $c-blue-link !important;
-
-        b {
-          color: $c-blue-link !important;
+      a.gs-title {
+        &:hover {
+          color: $c-blue-link;
+          text-decoration: underline;
+          b {
+            color: $c-blue-link;
+          }
         }
       }
     }
   }
-}
-.gcsc-more-maybe-branding-root,
-.gsc-table-cell-thumbnail /* remove once we figure out thumbnail placement*/ {
-  display: none !important;
-}
-
-.results-content {
-
-  .gsc-result-info {
-    padding: 0;
+  .gcsc-more-maybe-branding-root,
+  .gsc-table-cell-thumbnail /* remove once we figure out thumbnail placement*/
+  {
+    display: none !important;
   }
 
-  .cse .gsc-control-cse, .gsc-control-cse {
-    padding: 0;
-  }
-
-  .gs-webResult {
-    .gs-visibleUrl-long {
-      font-size: 0.7em;
+    .gsc-result-info {
+      padding: 0;
     }
-    div.gs-visibleUrl {
-      color: $navy;
+
+    .cse .gsc-control-cse, .gsc-control-cse {
+      padding: 0;
     }
-  }
 
-  .gsc-table-cell-snippet-close,
-  .gsc-table-cell-snippet-close * {
-    color: $c-gray-blue !important;
-  }
-
-  .gsc-control-cse {
-    font-family: $font-helvetica-neue-medium;
-    font-size: $font-size;
-
-    .gsc-cursor-page {
-      margin-right: $space-two !important;
-
-      &.gsc-cursor-current-page {
+    .gs-webResult {
+      .gs-visibleUrl-long {
+        font-size: 0.7em;
+      }
+      div.gs-visibleUrl {
         color: $navy;
       }
     }
-  }
+
+    .gsc-table-cell-snippet-close,
+    .gsc-table-cell-snippet-close * {
+      color: $c-gray-blue !important;
+    }
+
+    .gsc-control-cse {
+      font-family: $font-helvetica-neue-medium;
+      font-size: $font-size;
+
+      .gsc-cursor-page {
+        margin-right: $space-two !important;
+
+        &.gsc-cursor-current-page {
+          color: $navy;
+        }
+      }
+    }
 }
