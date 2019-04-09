@@ -18,7 +18,13 @@
                 prependTo: '.slicknav-placeholder',
                 label: '',
                 openedSymbol: '<i class="fas fa-angle-up">',
-                closedSymbol: '<i class="fas fa-angle-down">'
+                closedSymbol: '<i class="fas fa-angle-down">',
+                beforeOpen: function beforeOpen() {
+                    $('.combined-header-region').addClass('fixed');
+                },
+                beforeClose: function beforeClose() {
+                    $('.combined-header-region').removeClass('fixed');
+                }
             });
 
             var height = $(window).height();
