@@ -271,6 +271,7 @@ figure.half-image-right {
   display:table;
   max-width: 480px;
   margin-left: -20px;
+  margin-right: 0;
   & + * {
     clear: both;
   }
@@ -323,17 +324,20 @@ figure.half-image-right {
 
 figure.half-image-right {
   float: right;
-  margin-left: $space-decuple;
+  margin-left: 0;
   margin-right: -20px;
+
 
   figcaption {
     float: left;
     padding-left: 0;
     padding-right: 20px;
+    margin-left: 0;
   }
 
   @include breakpoint($new-small) {
     margin-right: -14%;
+    margin-left: $space-ten;
 
     figcaption {
       padding-right: 29%;
@@ -366,7 +370,7 @@ figure.half-image-left-full {
   display:table;
   max-width: 680px;
   margin-right: -20px;
-  margin-left: 20px;
+  margin-left: 0;
   & + * {
     clear: both;
   }
@@ -378,7 +382,10 @@ figure.half-image-left-full {
   }
 
   @include breakpoint($new-small) {
+    margin: $space-decuple;
     margin-right: -14%;
+    margin-top: 0;
+    margin-bottom: $space-quadruple;
     max-width: 55%;
     & + * {
       clear: none;
@@ -410,7 +417,7 @@ figure.half-image-left-full {
 
 figure.half-image-left-full {
   float: left;
-  margin-right: 20px;
+  margin-right: 0;
   margin-left: -20px;
 
   figcaption {
@@ -450,6 +457,7 @@ figure.align-left,
 figure.align-center,
 figure[class="embedded-entity"],
 figure[class="image"],
+figure.image-2014_inline_2-col,
 figure.image-2014_inline_4-col,
 figure.image-2014_inline_5-col,
 .image-2014_wysiwyg_full {
@@ -531,9 +539,9 @@ figure figure[class="image"] {
   }
 
   @include breakpoint($new-small) {
+    margin: $space-ten 0;
     margin-left: -14%;
     margin-right: -14%;
-    margin: $space-ten 0;
 
     figcaption {
       padding-left: 11%;
@@ -629,6 +637,7 @@ figure.align-center {
 .tags-menu__title {
   @include eyebrow;
   display: inline-block;
+  margin-bottom: 0;
 }
 
 // Top Image
@@ -654,20 +663,35 @@ figure.align-center {
   width: 50%;
 }
 
-.wysiwyg_cta, .about-cta {
-  &.align--left, &.about-cta-right {
+.wysiwyg_cta,
+.about-cta {
+  &.align--left, &.about-cta-right, &.align--right {
     background: $c-background-gray;
-    margin-right: 10%;
+    margin-right: 0;
     margin-top: 0;
     margin-bottom: $space-four;
-    margin-left: -20%;
-    width: 50%;
-    padding: $space-ten 10%;
+    margin-left: -20px;
+    width: calc(100% + 20px);
+    padding: $space-five;
   }
 
-  &.about-cta-right {
-    margin-left: 10%;
-    margin-right: -20%;
+  &.about-cta-right, &.align--right {
+    margin-left: 0;
+    margin-right: -20px;
+  }
+
+  @include breakpoint($new-small) {
+    &.align--left, &.about-cta-right, &.align--right {
+      margin-left: -20%;
+      width: 50%;
+      padding: 80px 10%;
+      margin-right: 10%;
+    }
+
+    &.about-cta-right, &.align--right {
+      margin-left: 10%;
+      margin-right: -20%;
+    }
   }
 
   .wysiwyg_cta__image {

@@ -3,7 +3,7 @@
   margin: 10%;
   margin-top: 0;
   margin-bottom: $space-quadruple;
-  width: 100%;
+  width: calc(100% + 20px);
   padding: $space-five;
 
   .callout-left__title,
@@ -26,6 +26,10 @@
   float: left;
   margin-left: -20px;
 
+  @include breakpoint($new-small-max) {
+    margin-right: 0;
+  }
+
   @include breakpoint($new-small) {
     margin-left: -14%
   }
@@ -37,6 +41,10 @@
 .callout-right {
   float: right;
   margin-right: -20px;
+
+  @include breakpoint($new-small-max) {
+    margin-left: 0;
+  }
 
   @include breakpoint($new-small) {
     margin-right: -14%

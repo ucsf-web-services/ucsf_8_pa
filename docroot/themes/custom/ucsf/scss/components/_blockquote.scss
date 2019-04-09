@@ -118,11 +118,11 @@
   &.align--left,
   &.align--center {
     float: left;
-    width: 100%;
+    width: calc(100% + 20px);
     left: auto;
     padding-top: 0;
     margin-left: -20px;
-    margin-right: 20px;
+    margin-right: 0;
     margin-top: 0;
   }
 
@@ -176,10 +176,11 @@
     float: right;
     right: auto;
     margin-right: -20px;
-    margin-left: 20px;
+    margin-left: 0;
 
     .blockquote-content__text,
-    .ckpullquote--quote {
+    .ckpullquote--quote,
+    .wysiwyg_quote--content {
       padding-right: 0;
       padding-left: 15%;
 
@@ -193,7 +194,8 @@
 
     .blockquote-content__cite,
     .ckpullquote--author,
-    .ckpullquote--org {
+    .ckpullquote--org,
+    .wysiwyg_quote--author {
       padding-left: 15%;
 
       @include breakpoint($new-small-max) {
@@ -213,6 +215,7 @@
     &.align--left,
     &.align--center {
       margin-left: -14%;
+      margin-right: $space-ten;
       padding-left: 56px;
       width: 50%;
     }
@@ -220,6 +223,7 @@
     &.ckpullquote-right,
     &.align--right {
       margin-right: -14%;
+      margin-left: $space-ten;
       padding-right: 56px;
       width: 50%;
     }
@@ -265,4 +269,8 @@
   margin-top: -55px;
   margin-bottom: 50px;
   font-size: 16px;
+  padding-right: 15%;
+  @include breakpoint($new-small-max) {
+    padding-left: $space-five;
+  }
 }
