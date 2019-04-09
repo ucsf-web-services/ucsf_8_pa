@@ -8,6 +8,26 @@
   }
 }
 
+
+a.video_preview {
+  position: relative;
+}
+a.video_preview::before {
+  position: absolute;
+  background: url('../images/play.svg') center center no-repeat transparent;
+  width: 94px;
+  height: 92px;
+  //display: block;
+  object-fit: contain;
+  //box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  content: '\00BB \0020';
+  left: 90px;
+  top: 40px;
+  z-index: 1000;
+}
+
+
+
 .video-list__header {
   margin: 0 auto;
   max-width: $xl;
@@ -20,6 +40,12 @@
   position: absolute;
   right: 25px;
   bottom: 0px;
+
+  @include breakpoint($new-x-small-max) {
+    right: auto;
+    left: 20px;
+
+  }
 
   a {
     color: $white;

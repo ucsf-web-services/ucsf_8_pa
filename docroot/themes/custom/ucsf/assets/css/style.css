@@ -8661,6 +8661,21 @@ h3.twitter_user {
     .video-list {
       display: block; } }
 
+a.video_preview {
+  position: relative; }
+
+a.video_preview::before {
+  position: absolute;
+  background: url("../images/play.svg") center center no-repeat transparent;
+  width: 94px;
+  height: 92px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  content: '\00BB \0020';
+  left: 90px;
+  top: 40px;
+  z-index: 1000; }
+
 .video-list__header {
   margin: 0 auto;
   max-width: 1280px;
@@ -8671,6 +8686,10 @@ h3.twitter_user {
   position: absolute;
   right: 25px;
   bottom: 0px; }
+  @media (max-width: 599px) {
+    .video-list__youtube {
+      right: auto;
+      left: 20px; } }
   .video-list__youtube a {
     color: #fff; }
     .video-list__youtube a.link--cta {
