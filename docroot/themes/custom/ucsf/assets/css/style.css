@@ -1895,8 +1895,8 @@ a.icon-hospital:hover {
     cursor: pointer; }
 
 .quicklinks-menu {
-  -webkit-transition: 1000ms ease-in all;
-  transition: 1000ms ease-in all;
+  -webkit-transition: 1000ms cubic-bezier(0.77, 0, 0.175, 1) all;
+  transition: 1000ms cubic-bezier(0.77, 0, 0.175, 1) all;
   margin: 0;
   background: #052049;
   color: #fff;
@@ -1904,7 +1904,6 @@ a.icon-hospital:hover {
   margin-left: 32px;
   overflow: auto;
   padding: 40px 32px 0;
-  visibility: hidden;
   width: calc(100% - 32px); }
   .quicklinks-menu ul {
     margin: 0; }
@@ -1985,26 +1984,46 @@ a.icon-hospital:hover {
                 column-count: 2; } }
 
 body.loading .quicklinks {
-  -webkit-animation: quicklinks-intro 3s ease-in forwards;
-          animation: quicklinks-intro 3s ease-in forwards;
+  -webkit-animation: quicklinks-intro 2.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+          animation: quicklinks-intro 2.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
   -webkit-animation-name: quicklinks-intro;
           animation-name: quicklinks-intro;
-  -webkit-animation-timing-function: ease-in;
-          animation-timing-function: ease-in;
+  -webkit-animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+          animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards; }
 
 @-webkit-keyframes quicklinks-intro {
   0% {
-    margin-right: -160px; }
+    margin-right: -80px; }
+  20% {
+    margin-right: 10px; }
+  40% {
+    margin-right: 5px; }
+  60% {
+    margin-right: 20px; }
+  60% {
+    margin-right: 0px; }
+  80% {
+    margin-right: 10px; }
   100% {
-    margin-right: 0; } }
+    margin-right: 0px; } }
 
 @keyframes quicklinks-intro {
   0% {
-    margin-right: -160px; }
+    margin-right: -80px; }
+  20% {
+    margin-right: 10px; }
+  40% {
+    margin-right: 5px; }
+  60% {
+    margin-right: 20px; }
+  60% {
+    margin-right: 0px; }
+  80% {
+    margin-right: 10px; }
   100% {
-    margin-right: 0; } }
+    margin-right: 0px; } }
 
 .footer-ctas-wrapper {
   grid-column: 1/-1;
