@@ -60,6 +60,15 @@
                 self.find('.menu-child--label').width(totalHeight + 20);
                 //return false;
             });
+
+            var nolink = $('.menu-item a.nolink');
+            nolink.each(function() {
+                $(this).on('click', function(event){
+                    event.preventDefault();
+                });
+
+            });
+
         }
     };
 
