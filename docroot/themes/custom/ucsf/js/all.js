@@ -111,6 +111,28 @@
         }
     };
 
+    Drupal.behaviors.fixHeights = {
+        attach: function (context, settings) {
+
+            // Select and loop the container element of the elements you want to equalise
+            $('.layout-columns__3, .layout-columns__4').each(function(){
+
+                // Cache the highest
+                var highestBox = 0;
+
+                // Select and loop the elements you want to equalise
+                $('.fact-card, .promo-list__card', this).each(function() {
+                    // If this box is higher than the cached highest then store it
+                    if($(this).height() > highestBox) {
+                        highestBox = $(this).height();
+                    }
+                });
+                //console.log('setting card height to : ' + highestBox);
+                // Set the height of all those children to whichever was highest
+                $('.fact-card, .promo-list__card',this).height(highestBox);
+            });
+        }
+    };
 
     /**
      * detect IE
