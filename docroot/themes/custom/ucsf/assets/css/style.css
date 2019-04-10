@@ -1851,6 +1851,8 @@ a.icon-hospital:hover {
 .quicklinks-trigger {
   -webkit-transition: 1000ms cubic-bezier(0.77, 0, 0.175, 1) both;
   transition: 1000ms cubic-bezier(0.77, 0, 0.175, 1) both;
+  -webkit-box-shadow: -3px 0px 8px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: -3px 0px 8px 0px rgba(0, 0, 0, 0.2);
   background: #fff;
   text-align: center;
   font-size: 12px;
@@ -1873,7 +1875,6 @@ a.icon-hospital:hover {
     transition: 1000ms cubic-bezier(0.77, 0, 0.175, 1) both;
     -webkit-transform-origin: top right;
             transform-origin: top right;
-    background-color: #efefef;
     border-right: 8px solid #052049;
     left: -16px; }
     @supports (-moz-appearance: none) {
@@ -1927,11 +1928,14 @@ a.icon-hospital:hover {
   .quicklinks-menu a.is-active, .quicklinks-menu a:active, .quicklinks-menu a.active-trail {
     color: #fff; }
   .quicklinks-menu .quicklinks-close {
+    display: block;
     cursor: pointer;
     line-height: 1;
     float: right;
-    text-align: right;
-    z-index: 200; }
+    text-align: center;
+    z-index: 200;
+    width: 50px;
+    height: 50px; }
     @media (min-width: 600px) {
       .quicklinks-menu .quicklinks-close {
         position: absolute;
@@ -7878,6 +7882,8 @@ a[href*="http"] .article-header__date {
     left: 0; }
   .topics-list__topics.slick-slider .slick-slide {
     width: 340px; }
+  .topics-list__topics.slick-slider .topic-card span {
+    padding: 16px 0; }
   @media (max-width: 599px) {
     .topics-list__topics.slick-slider .slick-track {
       left: -25px; }
