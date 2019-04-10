@@ -110,23 +110,19 @@
 
     Drupal.behaviors.fixHeights = {
         attach: function attach(context, settings) {
-            $(document).ready(function () {
-                // Select and loop the container element of the elements you want to equalise
-                $('.layout-columns__3, .layout-columns__4').each(function () {
-                    // Cache the highest
-                    var highestBox = 0;
+            // Select and loop the container element of the elements you want to equalise
+            resizeCards();
+            var intstop = 0;
+            var intervals = setInterval(function () {
+                resizeCards();
+                intstop++;
+                //console.log('interval number: '+ intstop);
+                if (intstop == 2) clearInterval(intervals);
+            }, 3500);
 
-                    // Select and loop the elements you want to equalise
-                    $('.fact-card, .promo-list__card', this).each(function () {
-                        // If this box is higher than the cached highest then store it
-                        if ($(this).height() > highestBox) {
-                            highestBox = $(this).height();
-                        }
-                    });
-                    //console.log('setting card height to : ' + highestBox);
-                    // Set the height of all those children to whichever was highest
-                    $('.fact-card, .promo-list__card', this).height(highestBox);
-                });
+            $(window).resize(function () {
+                //this isn't always working, but not sure why
+                resizeCards();
             });
         }
     };
@@ -152,6 +148,24 @@
         }
         // other browser
         return false;
+    }
+
+    function resizeCards() {
+        $('.layout-columns__3, .layout-columns__4').each(function () {
+            // Cache the highest
+            var highestBox = 0;
+
+            // Select and loop the elements you want to equalise
+            $('.fact-card, .promo-list__card', this).each(function () {
+                // If this box is higher than the cached highest then store it
+                if ($(this).height() > highestBox) {
+                    highestBox = $(this).height();
+                }
+            });
+            //console.log('setting card height to : ' + highestBox);
+            // Set the height of all those children to whichever was highest
+            $('.fact-card, .promo-list__card', this).height(highestBox);
+        });
     }
 })(jQuery);
 //# sourceMappingURL=all.js.map
