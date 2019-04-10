@@ -1552,8 +1552,8 @@ a.icon-hospital:hover {
           animation: header-swoosh 2s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
 
 .topics-list__topics .slick-slide .topic-card {
-  -webkit-transition: .5s ease-out all;
-  transition: .5s ease-out all; }
+  -webkit-transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1) all;
+  transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1) all; }
 
 .topics-list__topics .slick-slide:hover li.topic-card {
   background-size: 101%;
@@ -2607,7 +2607,8 @@ figure.half-image-right {
         clear: none; }
       figure.half-image-left figcaption,
       figure.half-image-right figcaption {
-        padding-left: 29%; } }
+        padding-left: 29%;
+        margin-left: 0; } }
   @media (min-width: 1050px) {
     figure.half-image-left,
     figure.half-image-right {
@@ -2666,7 +2667,7 @@ figure.half-image-left-full {
     clear: both; }
   figure.half-image-right-full figcaption,
   figure.half-image-left-full figcaption {
-    float: right;
+    float: left;
     padding-right: 20px;
     display: table-caption; }
   @media (min-width: 769px) {
@@ -2993,9 +2994,22 @@ figure.align-center figcaption {
 .ckgreybox[style~="float:right"],
 .ckgreybox[style~="right;"],
 .ckgreybox[style~="float:right;"] {
-  margin: 80px;
+  margin: 40px;
   margin-right: 0;
-  margin-top: 0; }
+  margin-top: 0;
+  margin-bottom: 32px; }
+  @media (min-width: 769px) {
+    .image-2014_wysiwyg_full[style~="float:right"], .image-2014_wysiwyg_full[style~="right;"], .image-2014_wysiwyg_full[style~="float:right;"],
+    .ckimagebox[style~="float:right"],
+    .ckimagebox[style~="right;"],
+    .ckimagebox[style~="float:right;"],
+    .wysiwyg-full[style~="float:right"],
+    .wysiwyg-full[style~="right;"],
+    .wysiwyg-full[style~="float:right;"],
+    .ckgreybox[style~="float:right"],
+    .ckgreybox[style~="right;"],
+    .ckgreybox[style~="float:right;"] {
+      margin-left: 80px; } }
 
 .image-2014_wysiwyg_full[style~="float:left"], .image-2014_wysiwyg_full[style~="left;"], .image-2014_wysiwyg_full[style~="float:left;"],
 .ckimagebox[style~="float:left"],
@@ -3007,9 +3021,22 @@ figure.align-center figcaption {
 .ckgreybox[style~="float:left"],
 .ckgreybox[style~="left;"],
 .ckgreybox[style~="float:left;"] {
-  margin: 80px;
+  margin: 40px;
   margin-left: 0;
-  margin-top: 0; }
+  margin-top: 0;
+  margin-bottom: 32px; }
+  @media (min-width: 769px) {
+    .image-2014_wysiwyg_full[style~="float:left"], .image-2014_wysiwyg_full[style~="left;"], .image-2014_wysiwyg_full[style~="float:left;"],
+    .ckimagebox[style~="float:left"],
+    .ckimagebox[style~="left;"],
+    .ckimagebox[style~="float:left;"],
+    .wysiwyg-full[style~="float:left"],
+    .wysiwyg-full[style~="left;"],
+    .wysiwyg-full[style~="float:left;"],
+    .ckgreybox[style~="float:left"],
+    .ckgreybox[style~="left;"],
+    .ckgreybox[style~="float:left;"] {
+      margin-right: 80px; } }
 
 .image-2014_wysiwyg_full p,
 .ckimagebox p {

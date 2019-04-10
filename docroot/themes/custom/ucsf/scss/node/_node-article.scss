@@ -300,6 +300,7 @@ figure.half-image-right {
 
     figcaption {
       padding-left: 29%;
+      margin-left: 0;
     }
   }
 
@@ -376,7 +377,7 @@ figure.half-image-left-full {
   }
 
   figcaption {
-    float: right;
+    float: left;
     padding-right: 20px;
     display:table-caption;
   }
@@ -732,17 +733,27 @@ figure.align-center {
   &[style~="float:right"],
   &[style~="right;"],
   &[style~="float:right;"] {
-    margin: $space-ten;
+    margin: $space-five;
     margin-right: 0;
     margin-top: 0;
+    margin-bottom: $space-four;
+
+    @include breakpoint($new-small) {
+      margin-left: $space-ten;
+    }
   }
 
   &[style~="float:left"],
   &[style~="left;"],
   &[style~="float:left;"] {
-    margin: $space-ten;
+    margin: $space-five;
     margin-left: 0;
     margin-top: 0;
+    margin-bottom: $space-four;
+
+    @include breakpoint($new-small) {
+      margin-right: $space-ten;
+    }
   }
 }
 
