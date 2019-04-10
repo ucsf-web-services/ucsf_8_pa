@@ -39,26 +39,56 @@ class TweetsBlock extends BlockBase {  /**
     $reg_Url = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
     //$reg_Url = "/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/";
     //http://twitter.com/' + username
-    $reg_User = "/[@]+[A-Za-z0-9-_]+/";
+    $reg_User = "/([@]+[A-Za-z0-9-_]+)/i";
     // http://search.twitter.com/search?q= + tag
-    $reg_Hash = "/[#]+[A-Za-z0-9-_]+/";
+    $reg_Hash = "/[#]+[A-Za-z0-9-_]+/i";
+
+    //dvm($tweets);
 
     foreach($tweets as $tweet) {
       //$tweet->full_text = check_markup($tweet->full_text, 'full_html');
       //$tweet->full_text = '   ';
       $tweet->full_text = preg_replace('~[\r\n]~', ' ', $tweet->full_text);
-
+      if($tweet->retweeted_status!=null){
+        $retweet_urls = $tweet->retweeted_status->entities->urls;
+        foreach($retweet_urls as $retweet_url) {
+          $pattern = $retweet_url->url;
+          $pattern = preg_replace("/https:\/\/t\.co\//","",$pattern);
+          $pattern = "/https:\/\/t\.co\/$pattern/i";
+          if(preg_match($pattern, $tweet->retweeted_status->full_text, $url)) {
+            $tweet->retweeted_status->full_text =  preg_replace($pattern, "<a href=\"{$url[0]}\">{$url[0]}</a>", $tweet->retweeted_status->full_text);
+          }
+        }
+      }
       if(preg_match($reg_Url, $tweet->full_text, $url)) {
         $tweet->full_text =  preg_replace($reg_Url, "<a href=\"{$url[0]}\">{$url[0]}</a>", $tweet->full_text);
       }
-
-      if(preg_match($reg_User, $tweet->full_text, $url)) {
-        $tweet->full_text =  preg_replace($reg_User, "<a href=\"http://twitter.com/{$url[0]}\">{$url[0]}</a>", $tweet->full_text);
+      
+      if($tweet->retweeted_status!=null){
+        if(preg_match_all($reg_User, $tweet->retweeted_status->full_text, $url)) {
+          foreach($url[0] as $user){
+            $tweet->retweeted_status->full_text =  preg_replace("/$user/", "<a href=\"http://twitter.com/{$user}\">{$user}</a>", $tweet->retweeted_status->full_text);
+          }
+        }
       }
-
-      if(preg_match($reg_Hash, $tweet->full_text, $url)) {
-        $hash = str_ireplace('#','', $url[0]);
-        $tweet->full_text =  preg_replace($reg_Hash, "<a href=\"https://twitter.com/hashtag/{$hash}?src=hash\">{$url[0]}</a>", $tweet->full_text);
+      if(preg_match_all($reg_User, $tweet->full_text, $url)) {
+        foreach($url[0] as $user){
+          $tweet->full_text =  preg_replace("/$user/", "<a href=\"http://twitter.com/{$user}\">{$user}</a>", $tweet->full_text);
+        }
+      }
+      if($tweet->retweeted_status!=null){
+        if(preg_match_all($reg_Hash, $tweet->retweeted_status->full_text, $url)) {
+           foreach($url[0] as $hash){
+             $tag = substr($hash,1);
+             $tweet->retweeted_status->full_text =  preg_replace("/$hash/", "<a href=\"https://twitter.com/hashtag/{$tag}?src=hash\">{$hash}</a>", $tweet->retweeted_status->full_text);
+           }
+        }
+      }
+      if(preg_match_all($reg_Hash, $tweet->full_text, $url)) {
+        foreach($url[0] as $hash){
+          $tag = substr($hash,1);
+          $tweet->full_text =  preg_replace("/$hash/", "<a href=\"https://twitter.com/hashtag/{$tag}?src=hash\">{$hash}</a>", $tweet->full_text);
+        }
       }
 
       //$tweet->full_text = preg_replace('/https:\/\/t.co\/.*/' ,'' ,$tweet->full_text);
