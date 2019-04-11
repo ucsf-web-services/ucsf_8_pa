@@ -2,6 +2,8 @@
   background: $white;
   padding: 0 $space-ten;
   margin-top: $space-two;
+  float: left;
+  padding-top: 40px;
 
   .view-content { // PL: .card-three-up
 
@@ -11,6 +13,8 @@
   }
 
   @include breakpoint($new-small-max) {
+    padding: 20px;
+    
     .news-card {
       border-bottom: 1px solid $gray-lighter;
       padding-bottom: $space-four;
@@ -44,6 +48,9 @@
   }
 
   @include breakpoint($new-large) {
+    float: none;
+    padding-top: 0;
+
     .view-content { // PL: .card-three-up
       @include card-three-up;
       @include card-three-up-constrained;

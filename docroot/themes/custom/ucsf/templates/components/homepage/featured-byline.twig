@@ -1,0 +1,23 @@
+{% set primary_area = paragraph.field_news_article.entity.field_primary_area.0.entity.label|clean_class %}
+{% set source = paragraph.field_news_article.entity.field_source.0.entity.label %}
+
+{% set campus_news_subs = ['announcements', 'happenings', 'honors--awards', 'spotlight'] %}
+{% if primary_area in campus_news_subs %}
+  {% set primary_area = 'campus-news' %}
+  {% set primary_area_field = 'Campus News'|t %}
+{% endif %}
+
+<ul class="news-card__byline">
+  {% if source %}
+    <li class="news-card__media">{{ source }}</li>
+  {% elseif primary_area %}
+    <li class="news-card__primary-area" data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
+      {% set campus_news = ['campus-news'] %}
+      {% if primary_area in campus_news %}
+        {{ primary_area_field ? primary_area_field : content.field_primary_area }}
+      {% else %}
+        {{ drupal_field('field_primary_area', 'node', paragraph.field_news_article.target_id) }}
+      {% endif %}
+    </li>
+  {% endif %}
+</ul>
