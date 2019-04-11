@@ -119,7 +119,7 @@
     Drupal.behaviors.fixHeights = {
         attach: function (context, settings) {
             // Select and loop the container element of the elements you want to equalise
-            resizeCards();
+            //resizeCards();
             var intstop = 0;
             var intervals = setInterval(function() {
                 resizeCards();
