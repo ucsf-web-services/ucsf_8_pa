@@ -142,8 +142,12 @@ a.video_preview::before {
     margin: 0 auto;
     clear: both;
     max-width: $xl;
-    padding-bottom: $space-ten;
+    padding-bottom: $space-five;
     min-height: 200px;
+
+    @include breakpoint($new-small) {
+      padding-bottom: $space-ten;
+    }
   }
 
   .slick-arrow {
