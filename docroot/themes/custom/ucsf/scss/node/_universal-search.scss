@@ -100,13 +100,9 @@
   border: none;
   border-radius: 0;
   padding: 0;
-  background: url("../images/filter.svg") center center no-repeat transparent;
+  background: url("../images/filter.svg") left center no-repeat transparent;
   background-size: 36px 36px;
-  font-size: 0.5em;
-  height: 52px;
-  width: 52px;
   min-height: 52px;
-  text-indent: -9999px;
   @include breakpoint($new-x-small) {
     display: none;
   }
@@ -116,6 +112,44 @@
   &.active {
     background: url("../images/x-large.svg") center center no-repeat transparent;
     background-size: 36px 36px;
+  }
+}
+
+
+.form-search-block-div {
+
+  .home-search__advanced-search {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    background: url("../images/filter.svg") center center no-repeat transparent;
+    background-size: 36px 36px;
+    font-size: 0.5em;
+    height: 52px;
+    width: 52px;
+    min-height: 52px;
+    text-indent: -9999px;
+    @include breakpoint($new-x-small) {
+      display: none;
+    }
+    &:hover {
+      background-color: transparent;
+    }
+
+    &.active {
+      background: url("../images/x-large.svg") center center no-repeat transparent;
+      background-size: 36px 36px;
+    }
+  }
+
+
+}
+
+.home-search__presearch-links {
+  .home-search__advanced-search {
+    width: auto;
+    height: auto;
+    background-image: none;
   }
 }
 

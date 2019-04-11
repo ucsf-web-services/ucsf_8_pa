@@ -15,7 +15,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
   font-weight: 500;
-  margin: 0; }
+  margin: 0;
+  width: 100%; }
 
 h1 {
   color: #052049;
@@ -1516,20 +1517,23 @@ a.icon-hospital:hover {
     [block="block-ucsf-main-menu-desktop"] [data-level="level-1"] .menu-child--label:after {
       content: none; }
 
-@media (max-width: 849px) {
-  .universal-header__give-mobile {
-    position: absolute;
-    bottom: 0;
-    width: 100%; }
-    .universal-header__give-mobile a.universal-header__give {
-      color: #fff;
-      width: 100%;
-      padding: 16px 24px;
-      text-align: left;
-      font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-      background: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg) no-repeat #007cbe;
-      background-size: 32px;
-      background-position: calc(100% - 24px); } }
+.universal-header__give-mobile {
+  display: none; }
+  @media (max-width: 849px) {
+    .universal-header__give-mobile {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      width: 100%; }
+      .universal-header__give-mobile a.universal-header__give {
+        color: #fff;
+        width: 100%;
+        padding: 16px 24px;
+        text-align: left;
+        font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+        background: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg) no-repeat #007cbe;
+        background-size: 32px;
+        background-position: calc(100% - 24px); } }
 
 .page-node-type-news-center .combined-header-region,
 .alias-home .combined-header-region,
@@ -5304,13 +5308,9 @@ a[href*="http"] .article-header__date {
   border: none;
   border-radius: 0;
   padding: 0;
-  background: url("../images/filter.svg") center center no-repeat transparent;
+  background: url("../images/filter.svg") left center no-repeat transparent;
   background-size: 36px 36px;
-  font-size: 0.5em;
-  height: 52px;
-  width: 52px;
-  min-height: 52px;
-  text-indent: -9999px; }
+  min-height: 52px; }
   @media (min-width: 600px) {
     .home-search__advanced-search {
       display: none; } }
@@ -5319,6 +5319,31 @@ a[href*="http"] .article-header__date {
   .home-search__advanced-search.active {
     background: url("../images/x-large.svg") center center no-repeat transparent;
     background-size: 36px 36px; }
+
+.form-search-block-div .home-search__advanced-search {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background: url("../images/filter.svg") center center no-repeat transparent;
+  background-size: 36px 36px;
+  font-size: 0.5em;
+  height: 52px;
+  width: 52px;
+  min-height: 52px;
+  text-indent: -9999px; }
+  @media (min-width: 600px) {
+    .form-search-block-div .home-search__advanced-search {
+      display: none; } }
+  .form-search-block-div .home-search__advanced-search:hover {
+    background-color: transparent; }
+  .form-search-block-div .home-search__advanced-search.active {
+    background: url("../images/x-large.svg") center center no-repeat transparent;
+    background-size: 36px 36px; }
+
+.home-search__presearch-links .home-search__advanced-search {
+  width: auto;
+  height: auto;
+  background-image: none; }
 
 #universalSearchTabs {
   padding: 40px;
@@ -6668,6 +6693,8 @@ a[href*="http"] .article-header__date {
 
 .fact-card {
   border: 1px solid #9ba6b6;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
   height: 100%;
   padding: 64px 64px 80px 32px;
   margin-bottom: 40px; }
@@ -7455,7 +7482,7 @@ a[href*="http"] .article-header__date {
     height: 1px;
     width: 1px;
     word-wrap: normal; }
-  .block-views-exposed-filter-blocknews-filter-page-1 .search-filter__advanced {
+  .block-views-exposed-filter-blocknews-filter-page-1 #universal-search .search-filter__advanced {
     background: url("/themes/custom/ucsf/assets/images/filter.svg") no-repeat left transparent;
     background-size: 24px 24px;
     position: absolute;
@@ -7466,18 +7493,18 @@ a[href*="http"] .article-header__date {
     width: 24px;
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
     @media (min-width: 600px) {
-      .block-views-exposed-filter-blocknews-filter-page-1 .search-filter__advanced {
+      .block-views-exposed-filter-blocknews-filter-page-1 #universal-search .search-filter__advanced {
         padding-left: 32px;
         right: 23px;
         text-indent: 0;
         top: 145px;
         width: auto; } }
     @media (min-width: 850px) {
-      .block-views-exposed-filter-blocknews-filter-page-1 .search-filter__advanced {
+      .block-views-exposed-filter-blocknews-filter-page-1 #universal-search .search-filter__advanced {
         right: 18px;
         top: 185px; } }
     @media (min-width: 1050px) {
-      .block-views-exposed-filter-blocknews-filter-page-1 .search-filter__advanced {
+      .block-views-exposed-filter-blocknews-filter-page-1 #universal-search .search-filter__advanced {
         left: 709px;
         right: auto; } }
   .block-views-exposed-filter-blocknews-filter-page-1 .form-item-combine {
