@@ -1,13 +1,20 @@
 .video-list {
   background: $dark-navy;
-  padding-top: $space-ten;
+  padding-top: $space-five;
 
   //removing for mobile deliver till we fix
   @include breakpoint($new-x-small-max) {
     display: block;
   }
+
+  @include breakpoint($new-large) {
+    padding-top: $space-ten;
+  }
 }
 
+.video-list__videos {
+  clear: both;
+}
 
 a.video_preview {
   position: relative;
@@ -21,30 +28,35 @@ a.video_preview::before {
   object-fit: contain;
   //box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
   content: '\00BB \0020';
-  left: 90px;
-  top: 40px;
+  left: 55px;
+  top: 35px;
   z-index: 1000;
+
+  @include breakpoint($new-small) {
+    left: 90px;
+    top: 40px;
+  }
 }
 
-
-
 .video-list__header {
-  margin: 0 auto;
-  max-width: $xl;
-  position: relative;
-  height: 106px;
+  margin: 0;
 }
 
 .video-list__youtube {
-  //float: right;
-  position: absolute;
-  right: 25px;
   bottom: 0px;
+  padding-left: 20px;
+  margin-top: 0;
 
-  @include breakpoint($new-x-small-max) {
-    right: auto;
-    left: 20px;
+  @include breakpoint($new-small) {
+    float: right;
+    padding-right: $space-five;
+    margin-top: 40px;
+    margin-bottom: 0;
+    padding-bottom: 40px;
+  }
 
+  @include breakpoint($new-large) {
+    padding-right: $space-ten;
   }
 
   a {
@@ -74,11 +86,17 @@ a.video_preview::before {
   top: 0;
   margin: 0;
   color: $white;
-  left: 80px;
-  position: absolute;
+  padding-left: 20px;
+  padding-bottom: $space;
 
-  @include breakpoint($new-x-small-max) {
-    left: 20px;
+  @include breakpoint($new-small) {
+    padding-left: $space-five;
+    padding-bottom: $space-five;
+    float: left;
+  }
+
+  @include breakpoint($new-large) {
+    padding-left: $space-ten;
   }
 }
 
@@ -86,6 +104,15 @@ a.video_preview::before {
   @include slick-buttons;
   .slick-slider {
     margin: 0;
+    padding-left: 20px;
+
+    @include breakpoint($new-small) {
+      padding-left: $space-five;
+    }
+
+    @include breakpoint($new-large) {
+      padding-left: $space-ten;
+    }
   }
   img {
     border: none;
@@ -102,6 +129,8 @@ a.video_preview::before {
     line-height: 1.33;
     letter-spacing: 0.2px;
     color: #ffffff;
+    margin-top: 16px;
+    display: block;
   }
 
   a:hover {
@@ -130,10 +159,16 @@ a.video_preview::before {
   .slick-list {
 
     .slick-slide {
-      margin: 0 15px;
-      width: 263px;
+      margin: 0 16px;
+      margin-right: 16px;
+      width: 208px;
       border: none;
       border-radius: 0 0;
+
+      @include breakpoint($new-small) {
+        margin-right: 48px;
+        width: 263px;
+      }
     }
   }
 
