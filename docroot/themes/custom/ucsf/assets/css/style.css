@@ -1147,14 +1147,19 @@ a.icon-hospital:hover {
   background: #f2f4f6;
   position: fixed;
   right: 0;
+  left: 0;
   top: 90px;
-  width: calc(100% - 16px);
+  bottom: 0;
+  width: 100%;
   z-index: 1000; }
-  .slicknav_nav .menu-parent-wrapper {
-    padding-left: 24px; }
-    .slicknav_nav .menu-parent-wrapper .menu-child-wrapper a.is-active {
+  .slicknav_nav ul.menu-parent-wrapper {
+    padding-left: 24px;
+    width: calc(100% - 15px);
+    height: calc(100% - 80px);
+    overflow-y: auto; }
+    .slicknav_nav ul.menu-parent-wrapper .menu-child-wrapper a.is-active {
       color: #007cbe; }
-    .slicknav_nav .menu-parent-wrapper .search {
+    .slicknav_nav ul.menu-parent-wrapper .search {
       display: none; }
 
 .slicknav_btn {
@@ -1242,13 +1247,15 @@ a.icon-hospital:hover {
 .slicknav_arrow {
   display: inline-block; }
 
+.fixed {
+  position: fixed; }
+
 .combined-header-region.fixed {
-  z-index: 100; }
-  .combined-header-region.fixed.fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0; }
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0; }
 
 @media (max-width: 849px) {
   header .menu--main {
@@ -1507,12 +1514,11 @@ a.icon-hospital:hover {
     [block="block-ucsf-main-menu-desktop"] [data-level="level-1"] .menu-child--label:after {
       content: none; }
 
-@media (max-width: 768px) {
+@media (max-width: 849px) {
   .universal-header__give-mobile {
     position: absolute;
     bottom: 0;
-    width: 100%;
-    margin-left: -24px; }
+    width: 100%; }
     .universal-header__give-mobile a.universal-header__give {
       color: #fff;
       width: 100%;

@@ -1,5 +1,6 @@
 [block="block-ucsf-main-menu"] {
   display: none;
+
 }
 
 .slicknav-placeholder {
@@ -26,13 +27,18 @@
   background: $c-grey-pale;
   position: fixed;
   right: 0;
+  left: 0;
   top: 90px;
-  width: calc(100% - 16px);
+  bottom: 0;
+  width: 100%;
   z-index: $z-dropdown;
 
-  .menu-parent-wrapper {
+  ul.menu-parent-wrapper {
     padding-left: 24px;
+    width: calc(100% - 15px);
+    height: calc(100% - 80px);
 
+    overflow-y: auto;
     .menu-child-wrapper {
       a.is-active {
         color: #007cbe;
@@ -95,15 +101,15 @@
 .slicknav_arrow {
   display: inline-block;
 }
+
+.fixed {
+  position: fixed;
+}
 //need to keep the header in place when scrolling, otherwise menu looses its head.
 .combined-header-region.fixed {
   z-index: 100;
-  &.fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-
-
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }

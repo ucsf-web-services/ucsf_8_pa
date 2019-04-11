@@ -58,13 +58,12 @@
           {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
         {% endif %}
       </li>
-      {% if loop.last and (menu_level == 0)%}
-        <li class="universal-header__give-mobile">
-          <a class="universal-header__give" href="https://makeagift.ucsf.edu/site/SPageServer?pagename=A1_API_GeneralGivingForm">Give to UCSF</a>
-        </li>
-      {% endif %}
     {% endfor %}
     </ul>
+    <div class="universal-header__give-mobile">
+      <a class="universal-header__give" href="https://makeagift.ucsf.edu/site/SPageServer?pagename=A1_API_GeneralGivingForm">Give to UCSF</a>
+    </div>
+
   {% endif %}
 {% endmacro %}
 

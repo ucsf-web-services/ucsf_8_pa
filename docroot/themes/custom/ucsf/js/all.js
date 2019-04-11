@@ -20,17 +20,18 @@
                 closedSymbol: '<i class="fas fa-angle-down">'
             });
 
-            var height = $(window).height();
-            $('#block-ucsf-main-menu').css({'height': height - 90});
-            $('.menu-parent-wrapper').css({'height': height - 150, 'overflow-y':'scroll'});
+            //var height = $(window).height();
+            //$('#block-ucsf-main-menu').css({'height': height - 90});
+            //$('.menu-parent-wrapper').css({'height': height - 150, 'overflow-y':'scroll'});
 
             $('.slicknav_menu .slicknav_btn').on('click', function() {
                if ($(this).hasClass('slicknav_collapsed')) {
                    //console.log('menu is being closed');
                    $('.combined-header-region').removeClass('fixed');
+                   $('body').removeClass('fixed');
                } else {
                    //console.log('menu is being opened');
-                   $('.combined-header-region').addClass('fixed');
+                   $('body').addClass('fixed');
                }
             });
 
