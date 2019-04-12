@@ -1170,6 +1170,104 @@
       }
     }
 
+    .blockquote {
+      @include clearfix;
+
+      &.blockquote-full-width {
+        background: $white;
+        margin: 0;
+
+        .field-blockquote-body {
+          margin-left: 0;
+        }
+
+        .field-blockquote-source,
+        .field-blockquote-source-org {
+          margin-left: 30%;
+        }
+
+        .field-blockquote-image {
+          width: 25%;
+          margin-top: -12%;
+        }
+
+        & + * {
+          padding-top: $space;
+        }
+
+        @include breakpoint($new-small) {
+          .field-blockquote-body,
+          .field-blockquote-source,
+          .field-blockquote-source-org {
+            margin-left: 30%;
+          }
+
+          .field-blockquote-image {
+            margin-top: -30%;
+          }
+        }
+
+        @include breakpoint($new-large) {
+          .field-blockquote-body,
+          .field-blockquote-source,
+          .field-blockquote-source-org {
+            margin-left: 30%;
+          }
+
+          .field-blockquote-image {
+            margin-top: -30%;
+          }
+        }
+
+        @include breakpoint($new-xl) {
+          .field-blockquote-body,
+          .field-blockquote-source,
+          .field-blockquote-source-org {
+            margin-left: 30%;
+          }
+
+          .field-blockquote-image {
+            margin-top: -30%;
+          }
+        }
+      }
+
+      .blockquote-content {
+        background: $background-gray;
+        padding: $space-five;
+
+        @include breakpoint($new-small-max) {
+          .field-blockquote-body {
+            p:first-child {
+              margin-top: 0;
+            }
+          }
+        }
+
+        @include breakpoint($new-small) {
+          padding: $space-six $space-ten;
+          padding-right: 15%;
+        }
+      }
+
+      .field-blockquote-body p:first-child { // PL: .blockquote-content__text.
+        @include fs-heading-blockquote;
+
+        &::before {
+          content: '“ ';
+          display: inline-block;
+          margin-left: -$space-three;
+          padding-right: $space;
+          font-family: $font-granjon;
+        }
+      }
+
+      .field-blockquote-source {
+        @include eyebrow;
+        font-style: normal;
+      }
+    }
+
 
     //end of fixes.
   }
