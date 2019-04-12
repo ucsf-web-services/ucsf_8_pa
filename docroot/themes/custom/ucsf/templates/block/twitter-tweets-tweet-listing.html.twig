@@ -6,7 +6,7 @@
 {% block tweet %}
   {% for tweet in params.tweets %}
   <li class="twitter__tweet">
-      <img class="twitter-icon" src='{% if tweet.retweeted_status.user.profile_image_url %}{{tweet.retweeted_status.user.profile_image_url }}{% else %}{{ tweet.user.profile_image_url }}{% endif %}'/>
+      <img class="twitter-icon" alt="twitter account icon" src='{% if tweet.retweeted_status.user.profile_image_url %}{{tweet.retweeted_status.user.profile_image_url }}{% else %}{{ tweet.user.profile_image_url }}{% endif %}'/>
 
       <h3 class="twitter__user">
           {% if tweet.retweeted_status.user.name %}
