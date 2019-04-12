@@ -22,7 +22,7 @@ class UcsfsearchController extends ControllerBase {
       $searchterm = preg_replace("/\r\n|\r|\n/", ' ', $request->query->get('search'));
       $searchterm = Xss::filter(htmlspecialchars($searchterm, ENT_QUOTES));
 
-      $websites = $this->websiteLookup($searchterm);
+      //$websites = $this->websiteLookup($searchterm);
       $people   = $this->directoryLookup($searchterm);
     }
 
