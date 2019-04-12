@@ -634,6 +634,10 @@
       }
     }
 
+
+
+
+
     .view-articles-for-news-center,
     .view-all-campus-news,
     .path-taxonomy {
@@ -651,6 +655,21 @@
 
           .news-card__image img {
             float: right;
+          }
+        }
+        @include breakpoint($new-small) {
+          display: block;
+          margin-top: $space-five;
+          float: none;
+
+          > li {
+            float: left;
+            width: 46%;
+            margin-left: 2%;
+          }
+
+          .news-card {
+            margin-bottom: $space-five;
           }
         }
 
