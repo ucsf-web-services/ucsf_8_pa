@@ -110,9 +110,10 @@
             if (detectIE()) {
                 $('body').addClass('explorer');
 
-                $('.path-frontpage .skip-link').after('<div class="ie-message">' +
+                $('.skip-link').after('<div class="ie-message">' +
                     'Looks like you’re visiting us on Internet Explorer. For the best UCSF.edu experience, ' +
-                    'please use Chrome or Firefox, or upgrade to the latest Microsoft browser.'+
+                    'please use <a href="https://www.google.com/chrome/" target="_blank">Chrome</a> or <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">Firefox</a>, ' +
+                    'or upgrade to the latest <a href="https://www.microsoft.com/en-us/windows/microsoft-edge" target="_blank">Microsoft browser</a>.'+
                 '</div>');
             }
             //var inclusionQuery = '(min-width: 1050px)';
