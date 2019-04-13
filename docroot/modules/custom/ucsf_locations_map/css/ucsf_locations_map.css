@@ -66,9 +66,9 @@ body.page-node-type-map {
   color: white;
 }
 
-input[type=checkbox] { display:none; }
-input[type=checkbox] + label:before {
-  font-family: FontAwesome;
+.loading input[type=checkbox] { display:none; }
+.loading input[type=checkbox] + label:before {
+  font-family: "Font Awesome 5 Free";
   display: inline-block;
   right: 50px;
   position: absolute;
@@ -79,13 +79,22 @@ input[type=checkbox] + label:before {
   height: 40px;
 }
 
-input[type=checkbox] + label:before { content: "\f096"; }
-input[type=checkbox] + label:before { letter-spacing: 10px; }
+.loading input[type=checkbox] + label:before
+{
+  content: "\f0c8";
 
-input[type=checkbox]:checked + label:before { content: "\f046"; }
-input[type=checkbox]:checked + label:before { letter-spacing: 5px; }
+}
+.loading input[type=checkbox]:checked + label:before {
+  content: "\f14a";
+}
+.loading input[type=checkbox] + label:before {
+  letter-spacing: 10px;
+}
 
-input[type=checkbox] + label:before {
+
+.loading input[type=checkbox]:checked + label:before { letter-spacing: 5px; }
+
+.loading input[type=checkbox] + label:before {
   pointer-events: none;
 }
 
@@ -183,7 +192,4 @@ input[type=checkbox] + label:before {
   }
 }
 
-@media screen and (max-width: 769px) {
-
-}
 
