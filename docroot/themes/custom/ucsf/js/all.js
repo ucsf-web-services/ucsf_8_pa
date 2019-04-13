@@ -109,6 +109,11 @@
 
             if (detectIE()) {
                 $('body').addClass('explorer');
+
+                $('.path-frontpage .skip-link').after('<div class="ie-message">' +
+                    'Looks like you’re visiting us on Internet Explorer. For the best UCSF.edu experience, ' +
+                    'please use Chrome or Firefox, or upgrade to the latest Microsoft browser.'+
+                '</div>');
             }
             //var inclusionQuery = '(min-width: 1050px)';
             //hideAllMediaQueries(inclusionQuery);
