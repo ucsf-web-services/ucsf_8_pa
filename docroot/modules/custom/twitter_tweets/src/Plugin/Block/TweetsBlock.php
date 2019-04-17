@@ -43,7 +43,7 @@ class TweetsBlock extends BlockBase {  /**
     // http://search.twitter.com/search?q= + tag
     $reg_Hash = "/[#]+[A-Za-z0-9-_]+/i";
 
-    //dvm($tweets);
+    dvm($tweets);
 
     foreach($tweets as $tweet) {
       //$tweet->full_text = check_markup($tweet->full_text, 'full_html');

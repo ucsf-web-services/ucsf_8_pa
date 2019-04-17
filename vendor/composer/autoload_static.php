@@ -173,6 +173,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'Composer\\Semver\\' => 16,
             'Composer\\Installers\\' => 20,
             'CommerceGuys\\Addressing\\' => 24,
+            'CloudFlarePhpSdk\\' => 17,
             'Cheppers\\GatherContent\\' => 23,
             'ChapterThree\\AppleNewsAPI\\' => 26,
         ),
@@ -516,6 +517,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'CommerceGuys\\Addressing\\' => 
         array (
             0 => __DIR__ . '/..' . '/commerceguys/addressing/src',
+        ),
+        'CloudFlarePhpSdk\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/d8-contrib-modules/cloudflarephpsdk/src',
         ),
         'Cheppers\\GatherContent\\' => 
         array (
