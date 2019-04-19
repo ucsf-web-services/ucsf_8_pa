@@ -311,7 +311,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
 
     // Toss out tags we don't care about.
     $html = $this->htmlValue($html, self::ALLOWED_HTML_ELEMENTS .
-      '<blockquote><h1><h2><h3><h4><h5><h6><img><drupal-entity><iframe><div>');
+      '<blockquote><h1><h2><h3><h4><h5><h6><img><drupal-entity><iframe><div><figure><figcaption>');
 
     // Parse value and create components for blockquote, headers, etc.
     $inline_components = [];
@@ -352,6 +352,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
     // components.
     $tag_names = [
       'div',
+      'figure',
     ];
     $xp_query = implode('|', array_map(function ($e) {
       return "//$e";
@@ -378,7 +379,8 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             ? preg_split('/\s\s+/', $element->getAttribute('class'))
             : [];
           // Contains 2 p elements, first contains an image, second contains
-          // caption. Replace with a figure element.
+          // caption. Replace with an img element with a custom attribute
+          // containing caption.
           if (in_array('ckimagebox', $classes)) {
             $images = $xp->query('p[1]/img', $element);
             $captions = $xp->query('p[2]', $element);
@@ -392,6 +394,21 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
                 $image->setAttribute('applenews_caption', $caption);
                 $element->removeChild($captions->item(0));
               }
+            }
+          }
+          break;
+
+        // Figure element, replace with an img element with a custom attribute
+        // containing caption.
+        case 'figure':
+          if ($images = $xp->query('img[@src]', $element)) {
+            /** @var \DOMElement $image */
+            $image = $images->item(0);
+            if (
+              ($captions = $xp->query('figcaption', $element)) &&
+              ($caption = $this->textValue($doc->saveHTML($captions->item(0))))
+            ) {
+              $image->setAttribute('applenews_caption', $caption);
             }
           }
           break;
@@ -789,7 +806,8 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
   /**
    * Generates a image component.
    *
-   * @return \ChapterThree\AppleNewsAPI\Document\Components\Image
+   * @return \ChapterThree\AppleNewsAPI\Document\Components\ScalableImage
+   *   An image component with url set.
    */
   protected function getImageComponent($url) {
     $url_parsed = parse_url($url);
