@@ -1,10 +1,10 @@
 .video-list {
   background: $dark-navy;
   padding-top: $space-five;
-
+  overflow: hidden;
   //removing for mobile deliver till we fix
   @include breakpoint($new-x-small-max) {
-    display: block;
+
   }
 
   @include breakpoint($new-large) {
@@ -114,6 +114,7 @@ a.video_preview::before {
       padding-left: $space-ten;
     }
   }
+
   img {
     border: none;
     border-radius: 0;
@@ -160,20 +161,18 @@ a.video_preview::before {
   }
 
 
-  .slick-list {
 
-    .slick-slide {
-      margin: 0 16px;
-      margin-right: 16px;
-      width: 208px;
-      border: none;
-      border-radius: 0 0;
+  .slick-slide {
+     margin: 0 16px;
+     margin-right: 16px;
+     width: 326px;
+     border: none;
+     border-radius: 0 0;
 
-      @include breakpoint($new-small) {
-        margin-right: 48px;
-        width: 263px;
-      }
-    }
-  }
+     @include breakpoint($new-small) {
+       margin-right: 48px;
+       width: 263px;
+     }
+   }
 
 }
