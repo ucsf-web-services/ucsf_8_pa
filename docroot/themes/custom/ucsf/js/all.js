@@ -1,5 +1,7 @@
 /* eslint-disable */
 (function ($) {
+    'use strict';
+
     Drupal.behaviors.dieToolbardie = {
         attach: function (context) {
             window.matchMedia('(min-width: 975px)').addListener(function (event) {
@@ -108,9 +110,8 @@
         attach: function (context, settings) {
 
             if (detectIE()) {
-                $('body').addClass('explorer');
-
-                $('.skip-link').after('<div class="ie-message">' +
+                $('body').once('fixExplorer').addClass('explorer');
+                $('.skip-link').once('fixExplorer').after('<div class="ie-message">' +
                     'Looks like you’re visiting us on Internet Explorer. For the best UCSF.edu experience, ' +
                     'please use <a href="https://www.google.com/chrome/" target="_blank">Chrome</a> or <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">Firefox</a>, ' +
                     'or upgrade to the latest <a href="https://www.microsoft.com/en-us/windows/microsoft-edge" target="_blank">Microsoft browser</a>.'+
@@ -166,7 +167,7 @@
     }
 
     function resizeCards() {
-        $('.layout-columns__3, .layout-columns__4').each(function() {
+        $('.layout-columns__2, .layout-columns__3, .layout-columns__4').each(function() {
             // Cache the highest
             var highestBox = 0;
 
