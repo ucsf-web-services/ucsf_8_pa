@@ -5,10 +5,8 @@
 }
 
 .search-box-container {
-  //padding: $space-five 20px;
+  padding: $space-three $space-two;
   margin: 0;
-
-
 
   &.scrolled {
     position: fixed;
@@ -21,37 +19,82 @@
     box-shadow: 0 10px 20px #000000;
   }
 
+fieldset {
+  display: none;
+}
 
-  @include breakpoint($new-x-small) {
-
-  }
-
+@include breakpoint($new-x-small-max) {
   fieldset {
     border: none;
     display: none;
+
     &.active {
       display: block;
-    }
+      margin: 0;
+      padding: 0;
 
-    label {
-      width: 100%;
-      display: block;
-      border-bottom: 1px solid $c-dark-navy;
-      padding: 1em 0.5em;
-    }
+      // to hide the radios but keep them accessible
+      input[type=radio] {
+        position: absolute;
+        top: auto;
+        overflow: hidden;
+        clip: rect(1px 1px 1px 1px); /* IE 6/7 */
+        clip: rect(1px, 1px, 1px, 1px);
+        white-space: nowrap; /* https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe */
+        width: 100%;
+        height: 64px;
+        z-index: 2;
+      }
 
-    input[type=radio] {
-      border: 2px solid $c-dark-navy;
-      background-color: $white;
+      input[type=radio] + label {
+        display: block;
+        border-bottom: 1px solid $c-dark-navy;
+        padding: 1em 0.5em;
+        padding-left: 2em;
+        max-width: 100%;
+        cursor: pointer;
+        height: 64px;
+        z-index: 1;
+      }
 
+      input[type=radio] + label:before {
+        content: '';
+        background: #fff;
+        border: .1em solid $c-dark-navy;
+        background-color: $white;
+        display: block;
+        box-sizing: border-box;
+        float: left;
+        width: 1em;
+        height: 1em;
+        margin-left: -1.5em;
+        margin-top: .15em;
+        vertical-align: top;
+        cursor: pointer;
+        text-align: center;
+        transition: all .1s ease-out;
+      }
+
+      input[type=radio] + label:before {
+        border-radius: 100%;
+        margin-top: $space;
+        margin-right: $space-two;
+      }
+
+      input[type=radio]:checked + label:before {
+        background-color: $c-dark-navy;
+        box-shadow: inset 0 0 0 .15em $white;
+      }
     }
   }
+}
 
   button.home-search__form-submit-advanced {
-    margin: 1.5em auto;
+    margin: $space-four auto;
+    margin-bottom: $space;
     display: block;
+    width: 100%;
   }
-
 
   .home-search__form,
   form {
@@ -60,11 +103,10 @@
   }
 
   @include breakpoint($new-x-small-max) {
-
     #search {
       font-size: $font-size;
       height: 52px;
-      width: calc(100% - 60px);
+      width: calc(100% - 46px);
     }
 
     .home-search__form-submit {
@@ -72,15 +114,14 @@
       padding: 6px;
       margin-left: -60px;
       background-size: 23px;
-      //border: 1px solid blue;
     }
-
   }
 
   @include breakpoint($new-medium) {
     padding: $space-ten;
   }
 }
+
 #universalSearchTabs,
 .results-wrapper__content {
   max-width: $bp-full;
@@ -115,7 +156,6 @@
   }
 }
 
-
 .form-search-block-div {
 
   .home-search__advanced-search {
@@ -123,11 +163,11 @@
     border-radius: 0;
     padding: 0;
     background: url("../images/filter.svg") center center no-repeat transparent;
-    background-size: 36px 36px;
+    background-size: $space-three;
     font-size: 0.5em;
-    height: 52px;
-    width: 52px;
-    min-height: 52px;
+    height: $space-five;
+    width: $space-five;
+    min-height: $space-five;
     text-indent: -9999px;
     @include breakpoint($new-x-small) {
       display: none;
@@ -138,11 +178,9 @@
 
     &.active {
       background: url("../images/x-large.svg") center center no-repeat transparent;
-      background-size: 36px 36px;
+      background-size: $space-three;
     }
   }
-
-
 }
 
 .home-search__presearch-links {
