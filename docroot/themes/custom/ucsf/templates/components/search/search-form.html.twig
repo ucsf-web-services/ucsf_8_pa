@@ -7,18 +7,25 @@
     <div class="gsc-result-info__new"></div>
 
     <fieldset>
+            <label for="all">
             <input type="radio" name="searchSelect" id="all" {{ allchecked }} value="" />
-            <label for="all" onclick="">All Results</label>
+            <span>All Results</span>
+            </label>
 
+            <label for="news">
             <input type="radio" name="searchSelect" id="news" {{ newschecked }} value="/news" />
-            <label for="news" onclick="">News</label>
+            <span>News</span>
+            </label>
 
-            <input type="radio" name="searchSelect" id="people" {{ peoplechecked }} value="/people" />
-            <label for="people" onclick="">People Directory</label>
+            <label for="people"><input type="radio" name="searchSelect" id="people" {{ peoplechecked }} value="/people" />
+            <span>People Directory</span>
+            </label>
 
         {#
+            <label for="websites">
             <input type="radio" name="searchSelect" id="websites" {{ websiteschecked }} value="/websites" />
-            <label for="websites" onclick="">Websites</label>
+            <span>Websites</span>
+            </label>
         #}
 
         <button type="submit" class="home-search__form-submit-advanced">Filter Search Results</button>
