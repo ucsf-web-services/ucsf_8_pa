@@ -138,7 +138,8 @@ a {
 .narrow-page a.link--cta,
 .full-width-page-wrapper a.link--cta,
 .link--cta a,
-.full-width-page-banner__header a.link--cta {
+.full-width-page-banner__header a.link--cta,
+.promo-list__card-two .link--cta {
   display: inline-block;
   background: url('../images/cta-arrow.svg') right center no-repeat transparent;
   background-size: 14px 10px;
@@ -163,6 +164,14 @@ a {
       background: transparent;
     }
   }
+}
+
+.promo-list__card-two:hover .link--cta {
+  @include transition;
+    background: url('../images/cta-arrow.svg') right center no-repeat transparent;
+    background-size: 14px 10px;
+    padding-right: $space-four;
+    text-decoration: underline;
 }
 
 span.ext {

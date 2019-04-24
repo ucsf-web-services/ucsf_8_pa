@@ -245,7 +245,8 @@ a {
 .narrow-page a.link--cta,
 .full-width-page-wrapper a.link--cta,
 .link--cta a,
-.full-width-page-banner__header a.link--cta {
+.full-width-page-banner__header a.link--cta,
+.promo-list__card-two .link--cta {
   display: inline-block;
   background: url("../images/cta-arrow.svg") right center no-repeat transparent;
   background-size: 14px 10px;
@@ -259,7 +260,8 @@ a {
   .narrow-page a.link--cta:hover,
   .full-width-page-wrapper a.link--cta:hover,
   .link--cta a:hover,
-  .full-width-page-banner__header a.link--cta:hover {
+  .full-width-page-banner__header a.link--cta:hover,
+  .promo-list__card-two .link--cta:hover {
     background: url("../images/cta-arrow.svg") right center no-repeat transparent;
     background-size: 14px 10px;
     padding-right: 32px; }
@@ -269,6 +271,14 @@ a {
   .promo-list__card a:hover {
     border-bottom: 0;
     background: transparent; }
+
+.promo-list__card-two:hover .link--cta {
+  -webkit-transition: .3s ease-out all;
+  transition: .3s ease-out all;
+  background: url("../images/cta-arrow.svg") right center no-repeat transparent;
+  background-size: 14px 10px;
+  padding-right: 32px;
+  text-decoration: underline; }
 
 span.ext {
   background: url("/themes/custom/ucsf/assets/images/external-link.svg") no-repeat right center transparent;
@@ -971,6 +981,8 @@ a.icon-hospital:hover {
   color: #fff;
   width: 100%;
   text-align: center; }
+  .universal-header__give:hover {
+    background: #0071ad; }
   @media (min-width: 850px) {
     .universal-header__give {
       display: inline-block;
@@ -8097,19 +8109,10 @@ a[href*="http"] .article-header__date {
   position: relative;
   margin-bottom: 60px; }
   .topic-card a {
+    color: #052049;
     display: inline-block;
     height: 350px;
     width: 260px; }
-    .topic-card a:link {
-      color: #052049; }
-    .topic-card a:visited, .topic-card a:link:visited {
-      color: #052049; }
-    .topic-card a:focus {
-      color: #052049; }
-    .topic-card a.active:hover, .topic-card a.is-active:hover, .topic-card a.active-trail:hover, .topic-card a.visited:hover, .topic-card a:hover {
-      color: #007cbe; }
-    .topic-card a.is-active, .topic-card a:active, .topic-card a.active-trail {
-      color: #052049; }
     .topic-card a:hover {
       color: #007cbe; }
   .topic-card span {
@@ -8121,7 +8124,6 @@ a[href*="http"] .article-header__date {
     width: 220px;
     height: 100px;
     padding: 16px;
-    color: #052049;
     text-decoration: none;
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     line-height: 1.4; }
@@ -8849,6 +8851,16 @@ a[href*="http"] .article-header__date {
         font-size: 24px; }
       .article-meta-share li a:hover {
         border-bottom: none; }
+      .article-meta-share li a[title="Facebook"]:hover {
+        color: #3b5998; }
+      .article-meta-share li a[title="Twitter"]:hover {
+        color: #1da1f2; }
+      .article-meta-share li a[title="Reddit"]:hover {
+        color: #ff4500; }
+      .article-meta-share li a[title="Email Article"]:hover {
+        color: #6ea400; }
+      .article-meta-share li a[title="Print Article"]:hover {
+        color: #058488; }
   @media (max-width: 768px) {
     .article-meta-share {
       display: block;
