@@ -7760,8 +7760,8 @@ a[href*="http"] .article-header__date {
       grid-column: 3/5; } }
   @media (min-width: 600px) {
     .search-filter__dropdown [data-drupal-selector="edit-tid-1"] {
-      -webkit-columns: 3;
-              columns: 3;
+      -webkit-columns: 3 12em;
+              columns: 3 12em;
       grid-column: 1/4; } }
   .search-filter__dropdown.js-search_filter__dropdown-open {
     height: auto;
@@ -7835,7 +7835,10 @@ a[href*="http"] .article-header__date {
           border: 0;
           max-height: none;
           padding: 0;
-          visibility: visible; } }
+          visibility: visible;
+          -webkit-column-break-inside: avoid;
+          page-break-inside: avoid;
+          break-inside: avoid; } }
       .search-filter__dropdown .fieldset-wrapper .form-type-radio label,
       .search-filter__dropdown .fieldset-wrapper .form-type-checkbox label {
         font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;

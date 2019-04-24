@@ -258,7 +258,7 @@
 
   [data-drupal-selector="edit-tid-1"] { // Health and Science Topics.
     @include breakpoint($bp-medium) {
-      columns: 3;
+      columns: 3 12em;
       grid-column: 1/4;
     }
   }
@@ -328,6 +328,9 @@
         max-height: none;
         padding: 0;
         visibility: visible;
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        break-inside: avoid;
       }
 
       label {
