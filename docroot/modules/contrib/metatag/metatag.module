@@ -491,20 +491,41 @@ function metatag_get_default_tags($entity = NULL) {
     if (!empty($entity) && $entity instanceof ContentEntityInterface) {
       $entity_metatags = $global_metatag_manager->load($entity->getEntityTypeId());
       if ($entity_metatags != NULL) {
+        // Clear any empty value in entity_metatags to avoid overriding global.
+        $entity_metatags = array_filter($entity_metatags->get('tags'), function($value) { return $value !== ''; });
         // Merge with global defaults.
-        $metatags->overwriteTags($entity_metatags->get('tags'));
+       $metatags->overwriteTags($entity_metatags);
       }
 
       // Finally, check if bundle overrides should be added.
       $bundle_metatags = $global_metatag_manager->load($entity->getEntityTypeId() . '__' . $entity->bundle());
       if ($bundle_metatags != NULL) {
         // Merge with existing defaults.
-        $metatags->overwriteTags($bundle_metatags->get('tags'));
+        $metatags->overwriteTags($bundle_metatags);
+
       }
     }
   }
 
+  //dvm($metatags->get('tags'));
+
   return $metatags->get('tags');
+}
+
+/**
+ * Removes tags that generate empty strings to prevent them from overwriting potentially non-empty parent tags.
+ *
+ * @return mixed
+ *   Array of tags;
+ */
+function metatag_filter_empty_tokens($tags, $entity) {
+  foreach ($tags as $key => $value) {
+    $replaced = \Drupal::token()->replace($value, [$entity->getEntityType()->id() => $entity], ['clear' => TRUE]);
+    if(empty($replaced)) {
+      unset($tags[$key]);
+    }
+  }
+  return $tags;
 }
 
 /**
