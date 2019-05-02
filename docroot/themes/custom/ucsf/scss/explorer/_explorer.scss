@@ -813,12 +813,19 @@
 
       .layout-columns__3 {
         overflow: auto;
+        clear:both;
           .field-content-wrapper-content .layout-column {
             float: left;
             width: 25%;
             margin-right: 2%;
             margin-left: 0;
             margin-top: 0;
+
+            & .layout-column {
+              width: 100%;
+              margin-right: 0;
+              float: none;
+            }
         }
       }
     }
@@ -1367,6 +1374,3 @@
 .ie-message {
   display: none;
 }
-
-
-
