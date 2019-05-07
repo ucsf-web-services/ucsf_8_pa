@@ -67,7 +67,7 @@ module.exports = {
     }
   },
   browserSync: {
-    enabled: true,
+    enabled: false,
     baseDir: './',
     startPath: '',
     domain: 'http://local.ucsf8.edu',
