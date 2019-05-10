@@ -552,15 +552,23 @@ class MetatagManager implements MetatagManagerInterface {
           }
 
           foreach ($output as $index => $element) {
-
-            //UCSFD8-323 - only display the first valid token from left to right order in the Metatag field(s)
-            $single_value_tags = ['og_title','og_description','og_image','twitter_cards_title','twitter_cards_description','twitter_cards_image'];
-            if (in_array($tag_name, $single_value_tags) && ($index > 0)) {
-               continue;
+            // UCSFD8-323 - only display the first valid token from left to right order in the Metatag field(s)
+            $single_tags = ['og_title','og_description','og_image','twitter_cards_title','twitter_cards_description','twitter_cards_image'];
+            // String elements might be empty, so we need to skip over those
+            if (in_array($tag_name, $single_tags)) {
+              if (trim($element['#attributes']['content'])=='') {
+                continue;
+              }
+              // Check if raw tag is created there should only be one value
+              if (isset($rawTags[$tag_name])) {
+                continue;
+              }
+              // Create a tag with no index appendended
+              $index_tag_name = $tag_name;
+            } else {
+              // Add index to tag name as suffix to avoid having same key.
+              $index_tag_name = $tag->multiple() ? $tag_name . '_' . $index : $tag_name;
             }
-
-            // Add index to tag name as suffix to avoid having same key.
-            $index_tag_name = $tag->multiple() ? $tag_name . '_' . $index : $tag_name;
             $rawTags[$index_tag_name] = $element;
           }
         }
