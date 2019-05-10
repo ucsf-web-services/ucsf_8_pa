@@ -552,6 +552,13 @@ class MetatagManager implements MetatagManagerInterface {
           }
 
           foreach ($output as $index => $element) {
+
+            //UCSFD8-323 - only display the first valid token from left to right order in the Metatag field(s)
+            $single_value_tags = ['og_title','og_description','og_image','twitter_cards_title','twitter_cards_description','twitter_cards_image'];
+            if (in_array($tag_name, $single_value_tags) && ($index > 0)) {
+               continue;
+            }
+
             // Add index to tag name as suffix to avoid having same key.
             $index_tag_name = $tag->multiple() ? $tag_name . '_' . $index : $tag_name;
             $rawTags[$index_tag_name] = $element;
@@ -560,7 +567,6 @@ class MetatagManager implements MetatagManagerInterface {
       }
     }
     //dpm($rawTags);
-
     return $rawTags;
   }
 
