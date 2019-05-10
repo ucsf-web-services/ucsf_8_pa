@@ -6,15 +6,22 @@
 {% block tweet %}
   {% for tweet in params.tweets %}
   <li class="twitter__tweet">
-      <img class="twitter-icon" alt="twitter account icon" src='{% if tweet.retweeted_status.user.profile_image_url %}{{tweet.retweeted_status.user.profile_image_url|replace({"http://":"https://"}) }}{% else %}{{ tweet.user.profile_image_url|replace({"http://":"https://"}) }}{% endif %}'/>
-
-      <h3 class="twitter__user">
+      <a href="https://twitter.com/
+        {% if tweet.retweeted_status.user.screen_name %}
+          {{tweet.retweeted_status.user.screen_name}}
+        {% else %}
+          {{tweet.user.screen_name}}
+        {% endif %}/status/{{tweet.id}}">
+        <img class="twitter-icon" alt="twitter account icon" src='{% if tweet.retweeted_status.user.profile_image_url %}{{tweet.retweeted_status.user.profile_image_url|replace({"http://":"https://"}) }}{% else %}{{ tweet.user.profile_image_url|replace({"http://":"https://"}) }}{% endif %}'/>
+      
+        <h3 class="twitter__user">
           {% if tweet.retweeted_status.user.name %}
               {{tweet.retweeted_status.user.name}}
           {% else %}
               {{ tweet.user.name }}
           {% endif %}
-      </h3>
+        </h3>
+      </a>
       <p class="tweeter__handle-time">
       {% if tweet.retweeted_status.user.screen_name %}
           @{{tweet.retweeted_status.user.screen_name}}
