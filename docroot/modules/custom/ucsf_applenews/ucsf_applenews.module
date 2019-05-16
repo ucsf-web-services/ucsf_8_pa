@@ -277,3 +277,28 @@ function _ucsf_applenews_quote_component_text_style() {
     ->setTextAlignment('center');
   return $style;
 }
+
+/**
+ * Generates a below the image caption layout.
+ *
+ *    "default-caption": {
+      "fontName": "IowanOldStyle-Italic",
+      "fontSize": 12,
+      "lineHeight": 16,
+      "paragraphSpacingBefore": 12,
+      "paragraphSpacingAfter": 12,
+      "textColor": "#53585F"
+      }
+ */
+function _ucsf_applenews_text_caption() {
+  $style = _ucsf_applenews_base_component_text_style();
+  $style
+    ->setFontName('HelveticaNeue-Light')
+    ->setFontSize(12)
+    ->setLineHeight(16)
+    ->setTextColor('#53585F')
+    ->setTextAlignment('left')
+    ->setLineHeight(15);
+
+  return $style;
+}
