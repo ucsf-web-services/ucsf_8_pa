@@ -12,4 +12,16 @@
     margin-top: auto;
     padding-bottom: 10%;
   }
+
+  dom-twocolumn-layout,
+  dom-threecolumn-layout {
+    clear: both;
+    @include breakpoint($new-small) {
+      .column1,
+      .column2,
+      .column3 {
+        float: left;
+      }
+    }
+  }
 }
