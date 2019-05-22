@@ -163,6 +163,77 @@
   }
 }
 
+//for when the scroll kicks in
+.alias-news-filter {
+  .page {
+    background: $c-background-gray;
+  }
+}
+
+.news-search-scroll {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.08);
+
+  &.block-views-exposed-filter-blocknews-filter-page-1 form {
+    padding: 0 ;
+  }
+
+  .search-filter__top {
+    padding: 0;
+    max-width: 1440px;
+
+   [data-drupal-selector="edit-submit-news-filter"] {
+      top: 8px;
+      left: calc(100% - 245px);
+
+      @include breakpoint($new-x-small-max) {
+        top: 12px;
+        left: calc(100% - 96px);
+      }
+    }
+
+   [data-drupal-selector="edit-combine"] {
+     max-width: calc(100% - 168px);
+     padding-right: 80px;
+
+     @include breakpoint($new-x-small-max) {
+       max-width: 100%;
+       padding-right: 40px;
+     }
+   }
+
+   .search-filter__advanced {
+     left: auto;
+     right: 24px;
+     top: 24px;
+     margin-left: 24px;
+
+     @include breakpoint($new-x-small-max) {
+       right: 16px;
+       top: 12px;
+       margin-left: 8px;
+     }
+   }
+
+   #edit-count {
+     height: 32px;
+     padding: 0 20px;
+     padding-bottom: 8px;
+   }
+  }
+
+  & + #block-ucsf-content {
+    padding-top: 327px;
+
+    @include breakpoint($new-x-small-max) {
+      padding-top: 225px;
+    }
+  }
+}
+
 //this is jank for now
 .desktop-results {
   display:none;

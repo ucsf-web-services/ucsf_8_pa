@@ -65,5 +65,19 @@
       removeFilter();
     }
   };
+
+  $(function () {
+    //caches a jQuery object containing the header element
+    var header = $(".block-views-exposed-filter-blocknews-filter-page-1");
+    $(window).scroll(function () {
+      var scroll = $(window).scrollTop();
+
+      if (scroll >= 175) {
+        header.addClass("news-search-scroll");
+      } else {
+        header.removeClass("news-search-scroll");
+      }
+    });
+  });
 })(jQuery);
 //# sourceMappingURL=ucsf_news_search.js.map
