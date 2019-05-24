@@ -1,0 +1,65 @@
+.emergency-alert {
+  background: $c-yellow;
+  padding: $space-five 0;
+
+  .emergency-alert__header,
+  .emergency-alert__content {
+    margin: 0 auto;
+    max-width: $full-width-elements;
+    padding: 0 20px;
+  }
+
+  .emergency-alert__header {
+    font-family: $font-helvetica-neue-light;
+    font-size: 36px;
+    margin-bottom: 0;
+    background: url("../images/accordion-arrow-open.svg") no-repeat transparent;
+    background-size: 24px 24px;
+    background-position: right 20px center;
+    cursor: pointer;
+
+    @include breakpoint($new-x-small-max) {
+      font-size: 24px;
+      background-size: 20px 20px;
+    }
+  }
+
+  .emergency-alert__content {
+    margin-top: $space-three;
+
+    &  > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    color: $c-navy;
+  }
+
+  .link--cta {
+    background: url("../images/cta-arrow-navy.svg") right center no-repeat transparent;
+    background-size: 14px 10px;
+  }
+
+  &.emergency-alert__collapsed {
+    padding: $space-two 0;
+
+    .emergency-alert__header {
+      background: url("../images/accordion-arrow-closed.svg") no-repeat transparent;
+      background-size: 24px 24px;
+      background-position: right 20px center;
+
+      @include breakpoint($new-x-small-max) {
+        background-size: 20px 20px;
+      }
+    }
+
+    .emergency-alert__content {
+      display: none;
+    }
+  }
+
+  .alias-news-filter & {
+    display: none;
+  }
+}

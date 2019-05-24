@@ -1,0 +1,13 @@
+
+{{ attach_library('ucsf/vertical_tabs') }}
+
+<div class="emergency-alert">
+  {{ title_prefix }}
+  {% if label %}
+    <h2 class="emergency-alert__header">{{ label }}</h2>
+  {% endif %}
+  {{ title_suffix }}
+  {% block content %}
+    {{ content }}
+  {% endblock %}
+</div>
