@@ -66,7 +66,7 @@
   };
 
   $(function() {
-      var waypoint = $('.view-content').waypoint({
+      var waypoint = $('#edit-count').waypoint({
           handler: function (direction) {
 
                   if (direction == 'down') {

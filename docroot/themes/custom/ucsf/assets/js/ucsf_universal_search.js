@@ -11,7 +11,7 @@
     Drupal.behaviors.mobileUniversalSearch = {
         attach: function attach(context, settings) {
 
-            var waypoint = $('.results-wrapper', context).waypoint({
+            var waypoint = $('.gsc-result-info__new', context).waypoint({
                 handler: function handler(direction) {
 
                     if (direction == 'down') {

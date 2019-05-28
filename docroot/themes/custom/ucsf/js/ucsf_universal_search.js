@@ -9,7 +9,7 @@
     Drupal.behaviors.mobileUniversalSearch = {
         attach: function (context, settings) {
 
-            var waypoint = $('.results-wrapper', context).waypoint({
+            var waypoint = $('.gsc-result-info__new', context).waypoint({
                 handler: function (direction) {
 
 
@@ -18,7 +18,7 @@
                         } else {
                             $('.search-box-container').removeClass('scrolled');
                         }
-                    
+
                 },
                 offset: '0%'
                 //context: '.results-wrapper',

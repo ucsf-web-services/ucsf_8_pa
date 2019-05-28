@@ -4,6 +4,21 @@
   }
 }
 
+#universalSearchTabs,
+.results-wrapper__content {
+  max-width: $bp-full;
+  margin: 0 auto;
+  background: $white;
+}
+
+#universalSearchTabs {
+  display: none;
+  @include breakpoint($bp-medium) {
+    display: block;
+  }
+
+}
+
 .search-box-container {
   padding: $space-three $space-two;
   margin: 0;
@@ -34,6 +49,16 @@
     #search {
       border: none;
       box-shadow: none;
+    }
+
+    & + #universalSearchTabs {
+      padding-top: 305px;
+
+      @include breakpoint($new-x-small-max) {
+        display: block;
+        height: 1px;
+        padding-top: 100px;
+      }
     }
   }
 
@@ -140,20 +165,7 @@ fieldset {
   }
 }
 
-#universalSearchTabs,
-.results-wrapper__content {
-  max-width: $bp-full;
-  margin: 0 auto;
-  background: $white;
-}
 
-#universalSearchTabs {
-  display: none;
-  @include breakpoint($bp-medium) {
-    display: block;
-  }
-
-}
 
 .home-search__advanced-search {
   border: none;
