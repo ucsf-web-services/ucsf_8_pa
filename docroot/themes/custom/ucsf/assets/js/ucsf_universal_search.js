@@ -13,13 +13,11 @@
 
             var waypoint = $('.results-wrapper', context).waypoint({
                 handler: function handler(direction) {
-                    if ($(window).width() <= 600) {
 
-                        if (direction == 'down') {
-                            $('.search-box-container').addClass('scrolled');
-                        } else {
-                            $('.search-box-container').removeClass('scrolled');
-                        }
+                    if (direction == 'down') {
+                        $('.search-box-container').addClass('scrolled');
+                    } else {
+                        $('.search-box-container').removeClass('scrolled');
                     }
                 },
                 offset: '0%'
@@ -30,7 +28,7 @@
 
     Drupal.behaviors.mobileAdvanced = {
 
-        attach: function attach(context, setttings) {
+        attach: function attach(context, settings) {
 
             $('#home-search-button__advanced', context).click(function (e) {
                 e.preventDefault();

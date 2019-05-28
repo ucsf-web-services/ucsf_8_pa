@@ -67,16 +67,16 @@
   };
 
   $(function () {
-    //caches a jQuery object containing the header element
-    var header = $(".block-views-exposed-filter-blocknews-filter-page-1");
-    $(window).scroll(function () {
-      var scroll = $(window).scrollTop();
+    var waypoint = $('.view-content').waypoint({
+      handler: function handler(direction) {
 
-      if (scroll >= 175) {
-        header.addClass("news-search-scroll");
-      } else {
-        header.removeClass("news-search-scroll");
-      }
+        if (direction == 'down') {
+          $('.block-views-exposed-filter-blocknews-filter-page-1').addClass('scrolled');
+        } else {
+          $('.block-views-exposed-filter-blocknews-filter-page-1').removeClass('scrolled');
+        }
+      },
+      offset: '0%'
     });
   });
 })(jQuery);
