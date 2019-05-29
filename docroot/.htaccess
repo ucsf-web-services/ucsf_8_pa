@@ -191,3 +191,8 @@ AddEncoding gzip svgz
   # Disable Proxy header, since it's an attack vector.
   RequestHeader unset Proxy
 </IfModule>
+
+# Serve different robots.txt for valid stag domain wwwstage.ucsf.edu
+RewriteCond %{HTTP_HOST} ^wwwstage\.ucsf\.edu$ [NC]
+RewriteRule ^robots\.txt$ robots_noindex.txt [L]
+
