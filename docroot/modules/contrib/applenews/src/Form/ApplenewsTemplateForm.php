@@ -5,7 +5,7 @@ namespace Drupal\applenews\Form;
 use Drupal\applenews\Plugin\ApplenewsComponentTypeManager;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\EntityForm;
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\RendererInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
