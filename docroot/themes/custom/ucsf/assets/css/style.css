@@ -1374,14 +1374,16 @@ a.icon-hospital:hover {
         min-width: 28px; }
       [block="block-ucsf-main-menu-desktop"] .menu-item.search > a span {
         color: transparent; }
-    [block="block-ucsf-main-menu-desktop"] .menu-item:hover > .menu-child--wrapper,
-    [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper {
+    [block="block-ucsf-main-menu-desktop"] .menu-item .menu-item:hover > .menu-child--wrapper,
+    [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper,
+    [block="block-ucsf-main-menu-desktop"] .menu-item.menu-item-open > .menu-child--wrapper {
       clip: auto;
       overflow: visible;
       -webkit-animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
       animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both; }
-      [block="block-ucsf-main-menu-desktop"] .menu-item:hover > .menu-child--wrapper.wrapper--search-menu,
-      [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper.wrapper--search-menu {
+      [block="block-ucsf-main-menu-desktop"] .menu-item .menu-item:hover > .menu-child--wrapper.wrapper--search-menu,
+      [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper.wrapper--search-menu,
+      [block="block-ucsf-main-menu-desktop"] .menu-item.menu-item-open > .menu-child--wrapper.wrapper--search-menu {
         position: absolute !important;
         clip: rect(1px, 1px, 1px, 1px);
         overflow: hidden;
@@ -1390,32 +1392,50 @@ a.icon-hospital:hover {
         word-wrap: normal;
         -webkit-animation: none;
                 animation: none; }
-      [block="block-ucsf-main-menu-desktop"] .menu-item:hover > .menu-child--wrapper .menu-child--menu,
-      [block="block-ucsf-main-menu-desktop"] .menu-item:hover > .menu-child--wrapper .menu-child--label span,
-      [block="block-ucsf-main-menu-desktop"] .menu-item:hover > .menu-child--wrapper ::after,
+      [block="block-ucsf-main-menu-desktop"] .menu-item .menu-item:hover > .menu-child--wrapper .menu-child--menu,
+      [block="block-ucsf-main-menu-desktop"] .menu-item .menu-item:hover > .menu-child--wrapper .menu-child--label span,
+      [block="block-ucsf-main-menu-desktop"] .menu-item .menu-item:hover > .menu-child--wrapper ::after,
       [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper .menu-child--menu,
       [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper .menu-child--label span,
-      [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper ::after {
+      [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper ::after,
+      [block="block-ucsf-main-menu-desktop"] .menu-item.menu-item-open > .menu-child--wrapper .menu-child--menu,
+      [block="block-ucsf-main-menu-desktop"] .menu-item.menu-item-open > .menu-child--wrapper .menu-child--label span,
+      [block="block-ucsf-main-menu-desktop"] .menu-item.menu-item-open > .menu-child--wrapper ::after {
         -webkit-animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both;
                 animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both; }
-      [block="block-ucsf-main-menu-desktop"] .menu-item:hover > .menu-child--wrapper .menu-child--wrapper,
-      [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper .menu-child--wrapper {
+      [block="block-ucsf-main-menu-desktop"] .menu-item .menu-item:hover > .menu-child--wrapper .menu-child--wrapper,
+      [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper .menu-child--wrapper,
+      [block="block-ucsf-main-menu-desktop"] .menu-item.menu-item-open > .menu-child--wrapper .menu-child--wrapper {
         -webkit-animation: none;
                 animation: none; }
-    [block="block-ucsf-main-menu-desktop"] .menu-item .menu-child--wrapper.wrapper--search-menu {
-      position: absolute !important;
-      clip: rect(1px, 1px, 1px, 1px);
-      overflow: hidden;
-      height: 1px;
-      width: 1px;
-      word-wrap: normal;
-      -webkit-animation: none;
-              animation: none; }
-      [block="block-ucsf-main-menu-desktop"] .menu-item .menu-child--wrapper.wrapper--search-menu.active {
-        clip: auto;
-        overflow: visible;
-        -webkit-animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
-        animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both; }
+    [block="block-ucsf-main-menu-desktop"] .menu-item .menu-child--wrapper {
+      position: relative; }
+      [block="block-ucsf-main-menu-desktop"] .menu-item .menu-child--wrapper.wrapper--search-menu {
+        position: absolute !important;
+        clip: rect(1px, 1px, 1px, 1px);
+        overflow: hidden;
+        height: 1px;
+        width: 1px;
+        word-wrap: normal;
+        -webkit-animation: none;
+                animation: none; }
+        [block="block-ucsf-main-menu-desktop"] .menu-item .menu-child--wrapper.wrapper--search-menu.active {
+          clip: auto;
+          overflow: visible;
+          -webkit-animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
+          animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both; }
+      [block="block-ucsf-main-menu-desktop"] .menu-item .menu-child--wrapper .menu-item-close {
+        display: block;
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        width: 20px;
+        height: 20px;
+        background: url("../images/x-large.svg") left center no-repeat transparent;
+        background-size: 20px 20px;
+        cursor: pointer; }
+    [block="block-ucsf-main-menu-desktop"] .menu-item .menu-item .menu-item-close {
+      display: none; }
   [block="block-ucsf-main-menu-desktop"] .menu-child--wrapper {
     background: #f2f4f6;
     height: auto;

@@ -74,6 +74,17 @@
                     event.preventDefault();
                 });
             });
+
+            $('.menu-item-parent').click(function () {
+                $(this).addClass('menu-item-open').siblings().removeClass('menu-item-open');
+            });
+
+            $('.menu-item-close').click(function (e) {
+                e.stopPropagation(); // Key line to work perfectly
+                if ($(this).parent().parent().hasClass('menu-item-open')) {
+                    $(this).parent().parent().removeClass('menu-item-open');
+                };
+            });
         }
     };
 

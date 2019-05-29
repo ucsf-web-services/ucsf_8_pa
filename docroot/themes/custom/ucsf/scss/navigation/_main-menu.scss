@@ -86,8 +86,9 @@ header .menu--main {
 
     }
 
-    &:hover > .menu-child--wrapper,
-    &:active > .menu-child--wrapper {
+    .menu-item:hover > .menu-child--wrapper,
+    &:active > .menu-child--wrapper,
+    &.menu-item-open > .menu-child--wrapper {
       //border: 1px solid red;
       @include visually-hidden-reset;
       @include menu-animation;
@@ -107,11 +108,11 @@ header .menu--main {
       .menu-child--wrapper {
         animation: none;
       }
-
-
     }
 
     .menu-child--wrapper {
+      position: relative;
+
       &.wrapper--search-menu {
         @include visually-hidden;
         animation: none;
@@ -120,6 +121,24 @@ header .menu--main {
           @include visually-hidden-reset;
           @include menu-animation;
         }
+      }
+
+      .menu-item-close {
+        display: block;
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        width: 20px;
+        height: 20px;
+        background: url("../images/x-large.svg") left center no-repeat transparent;
+        background-size: 20px 20px;
+        cursor: pointer;
+      }
+    }
+
+    .menu-item {
+      .menu-item-close {
+        display: none;
       }
     }
     // for debugging only.

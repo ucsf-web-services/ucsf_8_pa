@@ -36,6 +36,19 @@
     {% endif %}
     {% for item in items %}
       {% set menu_attributes = menus_attribute(items|keys[loop.index0]) %}
+
+      {% if menu_level == 0 %}
+      {%
+        set classes = [
+        'menu-item',
+        'menu-item-parent',
+        item.is_expanded ? 'menu-item--expanded',
+        item.is_collapsed ? 'menu-item--collapsed',
+        item.in_active_trail ? 'menu-item--active-trail',
+        menu_attributes.item.class ? menu_attributes.item.class,
+      ]
+      %}
+      {% else %}
       {%
         set classes = [
         'menu-item',
@@ -45,6 +58,7 @@
         menu_attributes.item.class ? menu_attributes.item.class,
       ]
       %}
+      {% endif %}
 
       <li{{ item.attributes.addClass(classes) }}
         {% if menu_attributes.item.id %}
@@ -78,6 +92,8 @@
 
             {# Only show the side title if the menu is not search #}
             {% if item.title != 'Search' %}
+            <span class="menu-item-close"></span>
+
             <div data-section="section-{{ item_title_class }}" class="menu-child--label">
               {# added span so we can hide this during animation #}
               <span>{{ item.title }}</span>
