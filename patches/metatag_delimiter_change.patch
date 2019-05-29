@@ -1,0 +1,13 @@
+diff --git a/docroot/modules/contrib/metatag/src/Plugin/metatag/Tag/MetaNameBase.php b/docroot/modules/contrib/metatag/src/Plugin/metatag/Tag/MetaNameBase.php
+index c3bddb2f4..ac32bcbcd 100644
+--- a/docroot/modules/contrib/metatag/src/Plugin/metatag/Tag/MetaNameBase.php
++++ b/docroot/modules/contrib/metatag/src/Plugin/metatag/Tag/MetaNameBase.php
+@@ -321,7 +321,7 @@ public function output() {
+ 
+     // Parse out the image URL, if needed.
+     $value = $this->parseImageUrl();
+-    $values = $this->multiple() ? explode(',', $value) : [$value];
++    $values = $this->multiple() ? explode('||', $value) : [$value];
+     $elements = [];
+     foreach ($values as $value) {
+       $value = $this->tidy($value);

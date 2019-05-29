@@ -321,7 +321,7 @@ abstract class MetaNameBase extends PluginBase {
 
     // Parse out the image URL, if needed.
     $value = $this->parseImageUrl();
-    $values = $this->multiple() ? explode(',', $value) : [$value];
+    $values = $this->multiple() ? explode('||', $value) : [$value];
     $elements = [];
     foreach ($values as $value) {
       $value = $this->tidy($value);
