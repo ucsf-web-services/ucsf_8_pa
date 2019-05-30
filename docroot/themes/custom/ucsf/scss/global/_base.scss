@@ -358,3 +358,20 @@ strong, b {
 .far {
   font-family: 'Font Awesome 5 Free';
 }
+
+
+/*
+  Fade image in after load
+  https://github.com/aFarkas/lazysizes
+*/
+.lazyload,
+.lazyloading {
+  opacity: 0;
+}
+.lazyloaded {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+.no-js img.lazyload {
+  display: none;
+}
