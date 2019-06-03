@@ -47,6 +47,17 @@
                 $('#universal-search').attr('action', '/search' + option);
                 $('#universal-search').submit();
             });
+
+            $('.mobile-search-reveal', context).click(function (e) {
+                e.preventDefault();
+                if ($(this).hasClass('active')) {
+                    $('.home-search__form').removeClass('active');
+                    $(this).removeClass('active');
+                } else {
+                    $('.home-search__form').addClass('active');
+                    $(this).addClass('active');
+                }
+            });
         }
 
     };
