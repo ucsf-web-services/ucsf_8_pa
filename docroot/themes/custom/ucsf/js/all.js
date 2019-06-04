@@ -17,7 +17,7 @@
             $('#block-ucsf-main-menu').slicknav({
                 duplicate: false,
                 prependTo: '.slicknav-placeholder',
-                label: '',
+                label: 'Main Menu',
                 openedSymbol: '<i class="fas fa-angle-up">',
                 closedSymbol: '<i class="fas fa-angle-down">'
             });
