@@ -46,6 +46,19 @@ class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormali
       ->setGutter($template->gutter);
     $document = new Document($data->uuid(), $title, $langcode, $layout);
 
+    //figure out how to set the thumbnail here.
+    $card_image = $data->get('field_card_image');
+    foreach ($card_image->referencedEntities() as $media) {
+      break;
+    }
+
+    if (!empty($media)) {
+      $file = $media->get('field_media_image')->entity;
+      $thumbnail = $file->url();
+    } else {
+      $thumbnail = 'https://www.ucsf.edu/sites/default/files/2019-04/ucsf_tapestry_portal_full_1230.jpg';
+    }
+
     $metadata = new Metadata();
     if ($data instanceof Node) {
       $info = system_get_info('module', 'applenews');
@@ -59,8 +72,10 @@ class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormali
         ->setDateModified(date('c', $data->getChangedTime()))
         ->setGeneratorIdentifier('DrupalAppleNews')
         ->setGeneratorName('Apple News Drupal Module')
-        ->setGeneratorIdentifier($version);
+        ->setGeneratorIdentifier($version)
+        ->setThumbnailURL($thumbnail);
     }
+
     $document->setMetadata($metadata);
 
     $component = new Title($title);

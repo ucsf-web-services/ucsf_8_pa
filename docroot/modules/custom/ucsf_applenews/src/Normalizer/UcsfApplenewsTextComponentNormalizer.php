@@ -10,6 +10,7 @@ use ChapterThree\AppleNewsAPI\Document\Components\Heading;
 use ChapterThree\AppleNewsAPI\Document\Components\Photo;
 use ChapterThree\AppleNewsAPI\Document\Components\Quote;
 use ChapterThree\AppleNewsAPI\Document\Components\Video;
+use ChapterThree\AppleNewsAPI\Document\Components\Caption;
 use ChapterThree\AppleNewsAPI\Document\GalleryItem;
 use Drupal\applenews\Normalizer\ApplenewsTextComponentNormalizer;
 use Drupal\Core\TypedData\Exception\MissingDataException;
@@ -48,6 +49,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
     'footer',
     'blockquote',
     'div',
+    'small'
   ];
 
   /**
@@ -353,6 +355,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
     $tag_names = [
       'div',
       'figure',
+      'drupal-entity'
     ];
     $xp_query = implode('|', array_map(function ($e) {
       return "//$e";
@@ -413,6 +416,14 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
           }
           break;
 
+        //capture and create a new element for the caption
+        case 'drupal-entity':
+
+            if ($element->hasAttribute('data-caption')) {
+              $caption = $this->textValue($element->getAttribute('data-caption'));
+              $small = $doc->createElement('small', $caption);
+              $element->appendChild($small);
+          }
       }
     }
 
@@ -423,6 +434,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
       'img',
       'drupal-entity',
       'iframe',
+      'small'
     ];
     $xp_query = implode('|', array_map(function ($e) {
       return "//$e";
@@ -570,14 +582,12 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
                   ) {
                     $component = new Photo($file->url());
                     if ($element->hasAttribute('data-caption')) {
-                      $caption = $this->textValue(
-                        $element->getAttribute('data-caption'));
+                      $caption = $this->textValue($element->getAttribute('data-caption'));
                       if ($caption) {
                         $component->setCaption($caption);
                       }
                     }
-                    $component->setLayout(
-                      _ucsf_applenews_photo_component_layout());
+                    $component->setLayout(_ucsf_applenews_photo_component_layout());
                   }
                   else {
                     throw new \Exception(
@@ -597,7 +607,15 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             }
           }
           break;
-
+        case 'small':
+          if (!empty($element->textContent)) {
+            $caption = $this->textValue($element->textContent);
+            $component = new Caption($caption);
+            $component
+              ->setLayout(_ucsf_applenews_text_caption_layout())
+              ->setTextStyle(_ucsf_applenews_text_caption_style());
+            }
+          break;
       }
 
       $inline_component = new \stdClass();

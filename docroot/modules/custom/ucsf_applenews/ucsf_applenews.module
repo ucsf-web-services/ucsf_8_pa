@@ -262,6 +262,37 @@ function _ucsf_applenews_title_component_text_style() {
   return $style;
 }
 
+/*
+"text": "Study senior author Edward Chang, MD, has been studying how the brain produces and analyzes speech for over a decade and aims to develop a speech prosthesis to restore the voices of individuals who have lost speech to paralysis and other forms of neurological damage. Photo by Steve Babuljak",
+"role": "caption",
+"format": "html",
+"layout": {
+"columnStart": 0,
+"columnSpan": 7,
+"margin": { "top": 10, "bottom": 15 },
+"contentInset": {
+"top": false,
+"right": false,
+"bottom": false,
+"left": false
+},
+"paragraphSpacingBefore": 12,
+"paragraphSpacingAfter": 12
+},
+"textStyle": {
+"fontSize": 11,
+"textAlignment": "left",
+"lineHeight": 16,
+"textColor": "#0071AD",
+"hyphenation": false,
+"linkStyle": {
+"fontName": "HelveticaNeue-Light",
+"fontSize": 11,
+"textColor": "#0071AD",
+"underline": false
+ */
+
+
 /**
  * Generates text style for quote components.
  *
@@ -280,25 +311,37 @@ function _ucsf_applenews_quote_component_text_style() {
 
 /**
  * Generates a below the image caption layout.
- *
- *    "default-caption": {
-      "fontName": "IowanOldStyle-Italic",
-      "fontSize": 12,
-      "lineHeight": 16,
-      "paragraphSpacingBefore": 12,
-      "paragraphSpacingAfter": 12,
-      "textColor": "#53585F"
-      }
+ * @return \ChapterThree\AppleNewsAPI\Document\Styles\ComponentTextStyle
  */
-function _ucsf_applenews_text_caption() {
+function _ucsf_applenews_text_caption_style() {
   $style = _ucsf_applenews_base_component_text_style();
   $style
-    ->setFontName('HelveticaNeue-Light')
-    ->setFontSize(12)
-    ->setLineHeight(16)
-    ->setTextColor('#53585F')
-    ->setTextAlignment('left')
-    ->setLineHeight(15);
+    ->setFontName('HelveticaNeue-Medium')
+    ->setFontSize(14)
+    ->setLineHeight(19)
+    ->setTextColor('#646464')
+    ->setTextAlignment('left');
 
   return $style;
+}
+
+/**
+ *
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Layouts\ComponentLayout
+ */
+function _ucsf_applenews_text_caption_layout() {
+  $inset = new ContentInset();
+  $inset
+    ->setBottom(FALSE)
+    ->setLeft(FALSE)
+    ->setRight(FALSE)
+    ->setTop(FALSE);
+  $layout = new ComponentLayout();
+  $layout
+    ->setColumnSpan(7)
+    ->setMargin(new Margin(10, 15))
+    ->setContentInset($inset);
+
+  return $layout;
 }
