@@ -52,9 +52,11 @@
                 e.preventDefault();
                 if ($(this).hasClass('active')) {
                     $('.home-search__form').removeClass('active');
+                    $('.header--search').removeClass('header--search-active');
                     $(this).removeClass('active');
                 } else {
                     $('.home-search__form').addClass('active');
+                    $('.header--search').addClass('header--search-active');
                     $(this).addClass('active');
                 }
             });
