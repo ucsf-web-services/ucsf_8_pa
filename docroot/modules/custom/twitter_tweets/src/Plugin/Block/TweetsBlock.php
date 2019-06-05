@@ -44,12 +44,11 @@ class TweetsBlock extends BlockBase {  /**
     $reg_Hash = "/[#]+[A-Za-z0-9-_]+/i";
 
     //dvm($tweets);
-
     foreach($tweets as $tweet) {
       //$tweet->full_text = check_markup($tweet->full_text, 'full_html');
       //$tweet->full_text = '   ';
       $tweet->full_text = preg_replace('~[\r\n]~', ' ', $tweet->full_text);
-      if($tweet->retweeted_status!=null){
+      if(isset($tweet->retweeted_status) && $tweet->retweeted_status!=null){
         $retweet_urls = $tweet->retweeted_status->entities->urls;
         foreach($retweet_urls as $retweet_url) {
           $pattern = $retweet_url->url;
@@ -73,7 +72,7 @@ class TweetsBlock extends BlockBase {  /**
         $tweet->full_text =  preg_replace($reg_Url, "<a href=\"{$url[0]}\">{$url[0]}</a>", $tweet->full_text);
       }
       
-      if($tweet->retweeted_status!=null){
+      if(isset($tweet->retweeted_status) &&  $tweet->retweeted_status!=null){
         if(preg_match_all($reg_User, $tweet->retweeted_status->full_text, $url)) {
           foreach($url[0] as $user){
             $tweet->retweeted_status->full_text =  preg_replace("/$user /", "<a href=\"http://twitter.com/{$user}\">{$user} </a>", $tweet->retweeted_status->full_text);
@@ -85,7 +84,7 @@ class TweetsBlock extends BlockBase {  /**
           $tweet->full_text =  preg_replace("/$user /", "<a href=\"http://twitter.com/{$user}\">{$user} </a>", $tweet->full_text);
         }
       }
-      if($tweet->retweeted_status!=null){
+      if(isset($tweet->retweeted_status) &&  $tweet->retweeted_status!=null){
         if(preg_match_all($reg_Hash, $tweet->retweeted_status->full_text, $url)) {
            foreach($url[0] as $hash){
              $tag = substr($hash,1);

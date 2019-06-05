@@ -1070,6 +1070,9 @@ a.icon-hospital:hover {
     -webkit-box-shadow: 0 12px 12px -4px rgba(0, 0, 0, 0.02);
             box-shadow: 0 12px 12px -4px rgba(0, 0, 0, 0.02); } }
 
+.ie-message {
+  display: none; }
+
 .header {
   max-width: 1440px;
   width: 100%;
@@ -10902,13 +10905,6 @@ a.video_preview::before {
         overflow: hidden;
         display: block;
         height: 331px; }
-    .explorer .ie-message {
-      padding: 8px 16px;
-      font-size: 14px;
-      background: #FFF199;
-      display: block; }
-      .explorer .ie-message a {
-        font-weight: bold; }
     .explorer figure.half-image-left-full,
     .explorer figure.half-image-left,
     .explorer figure.align-left {
@@ -10967,8 +10963,14 @@ a.video_preview::before {
       padding-left: 5%;
       clear: none; } }
 
-.ie-message {
-  display: none; }
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .explorer .ie-message {
+      padding: 8px 16px;
+      font-size: 14px;
+      background: #FFF199;
+      display: block; }
+      .explorer .ie-message a {
+        font-weight: bold; } }
 
 @supports (-ms-ime-align: auto) {
   .promo-list__card-two {
@@ -10993,7 +10995,14 @@ a.video_preview::before {
     dom-twocolumn-layout::after,
     dom-threecolumn-layout::after {
       content: ' ';
-      clear: both; } }
+      clear: both; }
+  .ie-message {
+    padding: 8px 16px;
+    font-size: 14px;
+    background: #FFF199;
+    display: block; }
+    .ie-message a {
+      font-weight: bold; } }
 
 .fa,
 .fas,
