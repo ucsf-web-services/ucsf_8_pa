@@ -46,6 +46,9 @@ class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormali
       ->setGutter($template->gutter);
     $document = new Document($data->uuid(), $title, $langcode, $layout);
 
+    //figure out how to set the thumbnail here.
+    $thumbnail = "";
+
     $metadata = new Metadata();
     if ($data instanceof Node) {
       $info = system_get_info('module', 'applenews');
@@ -59,8 +62,10 @@ class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormali
         ->setDateModified(date('c', $data->getChangedTime()))
         ->setGeneratorIdentifier('DrupalAppleNews')
         ->setGeneratorName('Apple News Drupal Module')
-        ->setGeneratorIdentifier($version);
+        ->setGeneratorIdentifier($version)
+        ->setThumbnailURL($thumbnail);
     }
+
     $document->setMetadata($metadata);
 
     $component = new Title($title);
