@@ -47,7 +47,17 @@ class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormali
     $document = new Document($data->uuid(), $title, $langcode, $layout);
 
     //figure out how to set the thumbnail here.
-    $thumbnail = "";
+    $card_image = $data->get('field_card_image');
+    foreach ($card_image->referencedEntities() as $media) {
+      break;
+    }
+
+    if (!empty($media)) {
+      $file = $media->get('field_media_image')->entity;
+      $thumbnail = $file->url();
+    } else {
+      $thumbnail = 'https://www.ucsf.edu/sites/default/files/2019-04/ucsf_tapestry_portal_full_1230.jpg';
+    }
 
     $metadata = new Metadata();
     if ($data instanceof Node) {
