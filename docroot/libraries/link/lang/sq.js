@@ -1,58 +1,56 @@
 ﻿/*
-Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang( 'link', 'sq', {
-	acccessKey: 'Elementi i qasjes',
+	acccessKey: 'Sipas ID-së së Elementit',
 	advanced: 'Të përparuara',
-	advisoryContentType: 'Lloji i Përmbajtjes Këshillimorit',
-	advisoryTitle: 'Titulli Këshillimorit',
+	advisoryContentType: 'Lloji i Përmbajtjes Këshillimore',
+	advisoryTitle: 'Titull',
 	anchor: {
 		toolbar: 'Spirancë',
 		menu: 'Redakto Spirancën',
-		title: 'Karakteristikat e Spirancës',
+		title: 'Anchor Properties', // MISSING
 		name: 'Emri i Spirancës',
 		errorName: 'Ju lutemi shkruani emrin e spirancës',
 		remove: 'Largo Spirancën'
 	},
 	anchorId: 'Sipas ID-së së Elementit',
 	anchorName: 'Sipas Emrit të Spirancës',
-	charset: 'Seti i Karaktereve të Burimeve të lidhura',
-	cssClasses: 'CSS Klasat',
-	download: 'Nxit Shkarkimin',
-	displayText: 'Shfaq Tekstin',
+	charset: 'Seti i Karaktereve të Burimeve të Nëdlidhura',
+	cssClasses: 'Klasa stili CSS',
+	download: 'Force Download', // MISSING
+	displayText: 'Display Text', // MISSING
 	emailAddress: 'Posta Elektronike',
-	emailBody: 'Hapësira e Porosisë',
+	emailBody: 'Trupi i Porosisë',
 	emailSubject: 'Titulli i Porosisë',
 	id: 'Id',
-	info: 'Informacione të Nyjës',
-	langCode: 'Kodi Gjuhës',
-	langDir: 'Drejtimi Gjuhës',
+	info: 'Informacione të Nyjes',
+	langCode: 'Kod gjuhe',
+	langDir: 'Drejtim teksti',
 	langDirLTR: 'Nga e majta në të djathë (LTR)',
 	langDirRTL: 'Nga e djathta në të majtë (RTL)',
 	menu: 'Redakto Nyjen',
-	name: 'Emri',
+	name: 'Emër',
 	noAnchors: '(Nuk ka asnjë spirancë në dokument)',
 	noEmail: 'Ju lutemi shkruani postën elektronike',
-	noUrl: 'Ju lutemi shkruani URL-në e nyjës',
-	noTel: 'Please type the phone number', // MISSING
-	other: '<other>',
-	phoneNumber: 'Phone number', // MISSING
+	noUrl: 'Ju lutemi shkruani URL-në e nyjes',
+	other: '<tjetër>',
 	popupDependent: 'E Varur (Netscape)',
 	popupFeatures: 'Karakteristikat e Dritares së Dialogut',
-	popupFullScreen: 'Ekrani Plotë  (IE)',
+	popupFullScreen: 'Ekran i Plotë  (IE)',
 	popupLeft: 'Pozita Majtas',
-	popupLocationBar: 'Shiriti Vendit',
-	popupMenuBar: 'Shiriti Menysë',
+	popupLocationBar: 'Shiriti i Lokacionit',
+	popupMenuBar: 'Shiriti i Menysë',
 	popupResizable: 'I ndryshueshëm',
 	popupScrollBars: 'Shiritat zvarritës',
-	popupStatusBar: 'Shiriti Statutit',
-	popupToolbar: 'Shiriti Mjeteve',
+	popupStatusBar: 'Shiriti i Statutit',
+	popupToolbar: 'Shiriti i Mejteve',
 	popupTop: 'Top Pozita',
 	rel: 'Marrëdhëniet',
-	selectAnchor: 'Përzgjidh Spirancë',
+	selectAnchor: 'Përzgjidh një Spirancë',
 	styles: 'Stil',
-	tabIndex: 'Indeksi Fletës',
+	tabIndex: 'Indeksi i fletave',
 	target: 'Objektivi',
 	targetFrame: '<frame>',
 	targetFrameName: 'Emri i Kornizës së Synuar',
@@ -62,9 +60,8 @@ CKEDITOR.plugins.setLang( 'link', 'sq', {
 	toAnchor: 'Lidhu me spirancën në tekst',
 	toEmail: 'Posta Elektronike',
 	toUrl: 'URL',
-	toPhone: 'Phone', // MISSING
 	toolbar: 'Nyja',
-	type: 'Lloji i Nyjës',
-	unlink: 'Largo Nyjën',
+	type: 'Lloji i Nyjes',
+	unlink: 'Largo Nyjen',
 	upload: 'Ngarko'
 } );
