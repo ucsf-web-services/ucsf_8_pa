@@ -23,7 +23,7 @@
       //var nid = Drupal.settings.nid;
       //you must double escape the newlines coming from the Google copy/paste so they look like this [ \\n ]
       $.getJSON('/maps_api.php?name='+pagedata, function(data) {
-        console.dir(data);
+        //console.dir(data);
         var locations = {};
         var infoWindows = [];
         var markers = [];
