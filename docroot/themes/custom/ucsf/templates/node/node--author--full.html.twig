@@ -1,4 +1,4 @@
-{% set classes = ['author-main-article'] %}
+{% set classes = ['author-main-article', not node.isPublished() ? 'node--unpublished'] %}
 
 <div {{ attributes.addClass(classes) }}>
   <div class="author-page-wrapper">

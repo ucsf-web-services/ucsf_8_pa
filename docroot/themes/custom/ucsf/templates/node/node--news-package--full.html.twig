@@ -1,4 +1,4 @@
-{% set classes = ['main'] %}
+{% set classes = ['main', not node.isPublished() ? 'node--unpublished'] %}
 
 {% block content %}
 <main role="main" {{ attributes.addClass(classes) }}>

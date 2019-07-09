@@ -1,6 +1,8 @@
 {{ content.field_breadcrumbs }}
 
-<main role="main" class="main" {{ attributes.addClass(classes) }}>
+{% set body_classes = not node.isPublished() ? "node--unpublished" %}
+
+<main role="main" class="main {{ body_classes }}" {{ attributes.addClass(classes) }}>
   <a id="main-content" tabindex="-1"></a>
 
   {% if node.field_banner_image is not empty %}

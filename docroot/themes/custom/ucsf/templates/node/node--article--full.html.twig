@@ -1,6 +1,8 @@
 {% set layout = node.field_banner_layout.value %}
 
-<main role="main" class="main">
+{% set body_classes = not node.isPublished() ? "node--unpublished" %}
+
+<main role="main" class="main {{ body_classes }}">
   {# link is in html.html.twig #}
   <a id="main-content" tabindex="-1"></a>
   {% if layout == 'feature' %}

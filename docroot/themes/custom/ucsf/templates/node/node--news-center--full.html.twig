@@ -1,4 +1,6 @@
-<main role="main" class="main news-center">
+{% set body_classes = not node.isPublished() ? "node--unpublished" %}
+
+<main role="main" class="main news-center {{ body_classes }}">
   <a id="main-content" tabindex="-1"></a>
   <h1>{{ label }}</h1>
 

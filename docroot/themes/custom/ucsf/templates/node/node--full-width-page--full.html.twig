@@ -4,7 +4,9 @@
   {% set banner_image = "full-width-has-image" %}
 {% endif %}
 
-<header class="basic-header full-width-page-banner {{ banner_image }}">
+{% set body_classes = not node.isPublished() ? "node--unpublished" %}
+
+<header class="basic-header full-width-page-banner {{ banner_image }} {{ body_classes}}">
   {{ content.field_banner_image }}
   <div class="full-width-page-banner__header">
     <h1 class="full-width-page__header-title">{{ label }}</h1>
