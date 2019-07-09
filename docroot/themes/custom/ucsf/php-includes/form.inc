@@ -21,6 +21,9 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
       '#attributes' => [
         'class' => [
           'search-filter__top'
+        ],
+        'id' =>[
+          'main-content'
         ]
       ],
       '#weight' => -10,
