@@ -377,10 +377,25 @@ strong, b {
 }
 
 .node--unpublished {
-  h1 {
-    &:before {
-      content: "UNPUBLISHED: ";
-      color: $c-red;
-    }
+  .article-header,
+  .page_narrow,
+  .tags-menu-region,
+  .article-feature-banner .article-header,
+  .author-page-wrapper::before,
+  .author-page-wrapper,
+  .main-content,
+  .full-width-page-banner__header,
+  .narrow-page-header,
+  .narrow-page-header h1,
+  .narrow-page-header__subheading,
+  .news-center-banner,
+  .news-package-header,
+  .news-package-banner-bk-bottom,
+  .news-package-banner-bk {
+    background: $c-unpublished !important;
+  }
+
+  .main-content.narrow-page {
+    background: transparent !important;
   }
 }
