@@ -29,7 +29,8 @@
 
     <div class="media-coverage__list">
       <h2 class="media-coverage__list-title">{{ "UCSF in the News"|t }}</h2>
-        {{ content.field_supporting_media_articles }}
+        {#{{ content.field_supporting_media_articles }}#}
+        {{ drupal_view('media_coverage_articles', 'block_2') }}
       <p class="media-coverage__list-more"><a href="/news/media-coverage" class="link link--cta">{{ "View more"|t }}</a></p>
     </div>
   </div>
