@@ -16,7 +16,7 @@ use Drupal\metatag\Plugin\metatag\Tag\MetaPropertyBase;
  *   weight = 6,
  *   type = "label",
  *   secure = FALSE,
- *   multiple = TRUE
+ *   multiple = FALSE
  * )
  */
 class OgDescription extends MetaPropertyBase {
