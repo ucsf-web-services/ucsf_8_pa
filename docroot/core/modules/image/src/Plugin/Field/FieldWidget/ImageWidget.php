@@ -194,6 +194,11 @@ class ImageWidget extends FileWidget {
    * This method is assigned as a #process callback in formElement() method.
    */
   public static function process($element, FormStateInterface $form_state, $form) {
+    if (count($element['#files']) > 1) {
+      // In the case of a multiple upload, skip the processing, since it will be
+      // processing later at the appropriate stage.
+      return parent::process($element, $form_state, $form);
+    }
     $item = $element['#value'];
     $item['fids'] = $element['fids']['#value'];
 

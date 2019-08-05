@@ -74,3 +74,10 @@ function image_post_update_enable_filter_image_style() {
     }
   }
 }
+
+/**
+ * Fix problem with image dimensions when using multiple upload.
+ */
+function image_post_update_multiple_upload_fix_with_dimensions() {
+  \Drupal::messenger()->addMessage(t('Fixed problem with incorrect processing of image dimensions when using multiple upload. To eliminate this problem for already existing records see <a href="https://www.drupal.org/project/drupal/issues/2967586">https://www.drupal.org/project/drupal/issues/2967586</a>'), 'status');
+}
