@@ -16,7 +16,7 @@ use Drupal\metatag\Plugin\metatag\Tag\MetaNameBase;
  *   weight = 2,
  *   type = "label",
  *   secure = FALSE,
- *   multiple = FALSE
+ *   multiple = TRUE
  * )
  */
 class TwitterCardsTitle extends MetaNameBase {

@@ -321,10 +321,14 @@ abstract class MetaNameBase extends PluginBase {
 
     // Parse out the image URL, if needed.
     $value = $this->parseImageUrl();
-    $values = $this->multiple() ? explode(',', $value) : [$value];
+    $values = $this->multiple() ? explode('||', $value) : [$value];
     $elements = [];
     foreach ($values as $value) {
       $value = $this->tidy($value);
+      // Validate if the value is empty here, otherwise we get absolute URL.
+      if (empty($value)) {
+        continue;
+      }
       if ($this->requiresAbsoluteUrl()) {
         // Relative URL.
         if (parse_url($value, PHP_URL_HOST) == NULL) {
