@@ -29,9 +29,9 @@ class Applenews extends FieldItemBase {
     $properties['template'] = DataDefinition::create('string')
       ->setLabel(t('Template'));
     $properties['channels'] = DataDefinition::create('string')
-      ->setLabel(t('channels'));
+      ->setLabel(t('Channels'));
     $properties['is_preview'] = DataDefinition::create('boolean')
-      ->setLabel(t('Preview'));
+      ->setLabel(t('Is Preview'));
     return $properties;
   }
 
@@ -69,7 +69,7 @@ class Applenews extends FieldItemBase {
           'size' => 'big',
         ],
         'is_preview' => [
-          'description' => 'Content visibility',
+          'description' => 'Is preview',
           'type' => 'int',
           'default' => 1,
         ],

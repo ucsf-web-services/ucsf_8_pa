@@ -39,35 +39,30 @@ function applenews_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
+ * Implements hook_entity_presave().
+ */
+function applenews_entity_presave(EntityInterface $entity) {
+  /** @var \Drupal\applenews\ApplenewsManager $manager */
+  $manager = \Drupal::service('applenews.manager');
+  $manager->entityPreSave($entity);
+}
+
+/**
  * Implements hook_entity_insert().
  */
 function applenews_entity_insert(EntityInterface $entity) {
-
-  try {
-    /** @var \Drupal\applenews\ApplenewsManager $manager */
-    $manager = \Drupal::service('applenews.manager');
-    // On successful post, save response details on entity.
-    $manager->postArticle($entity);
-  }
-  catch (\Exception $e) {
-    \Drupal::logger('applenews')->error(t('Error while trying to create an article in Apple News: @error', ['@error' => $e->getMessage()]));
-  }
+  /** @var \Drupal\applenews\ApplenewsManager $manager */
+  $manager = \Drupal::service('applenews.manager');
+  $manager->entitySave($entity);
 }
 
 /**
  * Implements hook_entity_update().
  */
 function applenews_entity_update(EntityInterface $entity) {
-
-  try {
-    /** @var \Drupal\applenews\ApplenewsManager $manager */
-    $manager = \Drupal::service('applenews.manager');
-    // On successful post, save response details on entity.
-    $manager->postArticle($entity);
-  }
-  catch (\Exception $e) {
-    \Drupal::logger('applenews')->error(t('Error while trying to update an article in Apple News: @error', ['@err' => $e->getMessage()]));
-  }
+  /** @var \Drupal\applenews\ApplenewsManager $manager */
+  $manager = \Drupal::service('applenews.manager');
+  $manager->entitySave($entity);
 }
 
 /**

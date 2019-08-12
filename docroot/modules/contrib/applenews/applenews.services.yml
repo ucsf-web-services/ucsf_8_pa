@@ -36,7 +36,7 @@ services:
     arguments: ['applenews']
   applenews.manager:
     class: Drupal\applenews\ApplenewsManager
-    arguments: ['@entity_type.manager','@entity_field.manager', '@config.factory', '@string_translation', '@serializer', '@applenews.publisher']
+    arguments: ['@entity_type.manager','@entity_field.manager', '@config.factory', '@string_translation', '@serializer', '@applenews.publisher', '@logger.channel.applenews', '@messenger']
   applenews.publisher:
     class: Drupal\applenews\Publisher
     arguments: ['@config.factory']

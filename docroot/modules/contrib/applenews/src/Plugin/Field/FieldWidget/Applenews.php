@@ -166,10 +166,10 @@ class Applenews extends WidgetBase {
         }
       }
       $element['is_preview'] = [
-        '#title' => $this->t('<strong>Content visibility</strong>: Exported articles will be visible to members of my channel only.'),
+        '#title' => $this->t('Preview'),
         '#type' => 'checkbox',
         '#default_value' => $items->is_preview,
-        '#description' => $this->t('Indicates whether this article should be public (live) or should be a preview that is only visible to members of your channel. Uncheck this to publish the article right away and make it visible to all News users. <br/><strong>Note:</strong>  If your channel has not yet been approved to publish articles in Apple News Format, unchecking this option will result in an error.'),
+        '#description' => $this->t('Flags this article as a preview, only visible to members of your channel. <strong>Note:</strong> If your channel has not been approved, you must publish as a preview.'),
         '#weight' => 1,
         '#states' => [
           'visible' => [
@@ -199,7 +199,7 @@ class Applenews extends WidgetBase {
     // in this tab-set.
     if (isset($form['advanced'])) {
       // Override widget title to be helpful for end users.
-      $element['#title'] = $this->t('Applenews settings');
+      $element['#title'] = $this->t('Apple News settings');
 
       $element += [
         '#type' => 'details',
@@ -207,6 +207,7 @@ class Applenews extends WidgetBase {
         '#attributes' => [
           'class' => ['applenews-' . Html::getClass($entity->getEntityTypeId()) . '-settings-form'],
         ],
+        '#open' => isset($article) && $items->status,
       ];
     }
 

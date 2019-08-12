@@ -574,7 +574,7 @@ class MetatagManager implements MetatagManagerInterface {
         }
       }
     }
-    //dpm($rawTags);
+
     return $rawTags;
   }
 
