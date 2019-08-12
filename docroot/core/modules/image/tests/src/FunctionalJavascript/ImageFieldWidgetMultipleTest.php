@@ -4,17 +4,17 @@ namespace Drupal\Tests\image\FunctionalJavascript;
 
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\FunctionalJavascriptTests\DrupalSelenium2Driver;
-use Drupal\FunctionalJavascriptTests\JavascriptTestBase;
+use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\node\Entity\Node;
 use Drupal\Tests\image\Kernel\ImageFieldCreationTrait;
 use Drupal\Tests\TestFileCreationTrait;
 
 /**
- * Tests the image field widget with multiple ajax uploads.
+ * Tests the image field widget support multiple upload correctly.
  *
  * @group image
  */
-class ImageFieldWidgetMultipleTest extends JavascriptTestBase {
+class ImageFieldWidgetMultipleTest extends WebDriverTestBase {
 
   use ImageFieldCreationTrait;
   use TestFileCreationTrait;
@@ -27,10 +27,14 @@ class ImageFieldWidgetMultipleTest extends JavascriptTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static $modules = ['node', 'image', 'field_ui'];
+  protected static $modules = [
+    'node',
+    'field_ui',
+    'image',
+  ];
 
   /**
-   * Tests file widget element allowing multiple images.
+   * Tests image widget element support multiple upload correctly.
    */
   public function testWidgetElementMultipleUploads() {
     $image_factory = \Drupal::service('image.factory');
@@ -46,25 +50,27 @@ class ImageFieldWidgetMultipleTest extends JavascriptTestBase {
     $this->xpath('//input[@name="title[0][value]"]')[0]->setValue('Test');
 
     $images = $this->getTestFiles('image');
-    $test_images = [
-      $file_system->realpath($images[5]->uri),
-      $file_system->realpath($images[7]->uri),
-    ];
+    $images = array_slice($images, 0, 5);
 
-    // Need for a trick to work around the problem of uploading remote files.
+    $paths = [];
+    foreach ($images as $image) {
+      $paths[] = $file_system->realpath($image->uri);
+    }
+
     $remote_paths = [];
-    foreach ($test_images as $path) {
+    foreach ($paths as $path) {
       $remote_paths[] = $this->uploadFileRemotePath($path);
     }
+
     $multiple_field = $this->xpath('//input[@multiple]')[0];
     $multiple_field->setValue(implode("\n", $remote_paths));
-
+    $this->assertSession()->waitForElementVisible('css', '[data-drupal-selector="edit-images-4-preview"]');
     $this->getSession()->getPage()->findButton('Save')->click();
 
     $node = Node::load(1);
-    foreach ($test_images as $delta => $test_image_path) {
+    foreach ($paths as $delta => $path) {
       $node_image = $node->{$field_name}[$delta];
-      $original_image = $image_factory->get($test_image_path);
+      $original_image = $image_factory->get($path);
       $this->assertEquals($node_image->width, $original_image->getWidth(), "Correct width of image #$delta");
       $this->assertEquals($node_image->height, $original_image->getHeight(), "Correct height of image #$delta");
     }
@@ -89,7 +95,7 @@ class ImageFieldWidgetMultipleTest extends JavascriptTestBase {
     $archive->open($tempFilename, \ZipArchive::CREATE);
     $archive->addFile($path, basename($path));
     $archive->close();
-    $remotePath = $this->getSession()->getDriver()->getWebDriverSession()->file(array('file' => base64_encode(file_get_contents($tempFilename))));
+    $remotePath = $this->getSession()->getDriver()->getWebDriverSession()->file(['file' => base64_encode(file_get_contents($tempFilename))]);
     unlink($tempFilename);
     return $remotePath;
   }

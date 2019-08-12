@@ -71,23 +71,23 @@ index 57c4ca281..ba17a7844 100644
            }
  
            foreach ($output as $index => $element) {
--            / Add index to tag name as suffix to avoid having same key.
+-            // Add index to tag name as suffix to avoid having same key.
 -            $index_tag_name = $tag->multiple() ? $tag_name . '_' . $index : $tag_name;
-+            / UCSFD8-323 - only display the first valid token from left to right order in the Metatag field(s)
++            // UCSFD8-323 - only display the first valid token from left to right order in the Metatag field(s)
 +            $single_tags = ['og_title','og_description','og_image','twitter_cards_title','twitter_cards_description','twitter_cards_image'];
-+            / String elements might be empty, so we need to skip over those
++            // String elements might be empty, so we need to skip over those
 +            if (in_array($tag_name, $single_tags)) {
 +              if (trim($element['#attributes']['content'])=='') {
 +                continue;
 +              }
-+              / Check if raw tag is created there should only be one value
++              // Check if raw tag is created there should only be one value
 +              if (isset($rawTags[$tag_name])) {
 +                continue;
 +              }
-+              / Create a tag with no index appendended
++              // Create a tag with no index appendended
 +              $index_tag_name = $tag_name;
 +            } else {
-+              / Add index to tag name as suffix to avoid having same key.
++              // Add index to tag name as suffix to avoid having same key.
 +              $index_tag_name = $tag->multiple() ? $tag_name . '_' . $index : $tag_name;
 +            }
              $rawTags[$index_tag_name] = $element;
@@ -99,17 +99,17 @@ index 9212571ef..ac32bcbcd 100644
 +++ b/src/Plugin/metatag/Tag/MetaNameBase.php
 @@ -321,10 +321,14 @@ public function output() {
  
-     / Parse out the image URL, if needed.
+     // Parse out the image URL, if needed.
      $value = $this->parseImageUrl();
 -    $values = $this->multiple() ? explode(',', $value) : [$value];
 +    $values = $this->multiple() ? explode('||', $value) : [$value];
      $elements = [];
      foreach ($values as $value) {
        $value = $this->tidy($value);
-+      / Validate if the value is empty here, otherwise we get absolute URL.
++      // Validate if the value is empty here, otherwise we get absolute URL.
 +      if (empty($value)) {
 +        continue;
 +      }
        if ($this->requiresAbsoluteUrl()) {
-         / Relative URL.
+         // Relative URL.
          if (parse_url($value, PHP_URL_HOST) == NULL) {

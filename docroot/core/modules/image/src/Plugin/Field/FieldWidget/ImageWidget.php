@@ -7,6 +7,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Image\ImageFactory;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Render\ElementInfoManagerInterface;
 use Drupal\file\Entity\File;
 use Drupal\file\Plugin\Field\FieldWidget\FileWidget;
@@ -217,12 +218,6 @@ class ImageWidget extends FileWidget {
         $variables['width'] = $element['#value']['width'];
         $variables['height'] = $element['#value']['height'];
       }
-      // In the case of a multiple upload, do not retrieve the image dimensions
-      // as it can lead to all images having the same dimensions. The correct
-      // dimensions will be calculated in ImageItem::preSave().
-      elseif (count($element['#files']) > 1) {
-        $variables['width'] = $variables['height'] = NULL;
-      }
       else {
         $image = \Drupal::service('image.factory')->get($file->getFileUri());
         if ($image->isValid()) {
@@ -241,17 +236,6 @@ class ImageWidget extends FileWidget {
         '#height' => $variables['height'],
         '#style_name' => $variables['style_name'],
         '#uri' => $variables['uri'],
-      ];
-
-      // Store the dimensions in the form so the file doesn't have to be
-      // accessed again. This is important for remote files.
-      $element['width'] = [
-        '#type' => 'hidden',
-        '#value' => $variables['width'],
-      ];
-      $element['height'] = [
-        '#type' => 'hidden',
-        '#value' => $variables['height'],
       ];
     }
     elseif (!empty($element['#default_image'])) {
@@ -295,6 +279,44 @@ class ImageWidget extends FileWidget {
     ];
 
     return parent::process($element, $form_state, $form);
+  }
+
+  /**
+   * Form API callback: Processes a group of image_image field elements.
+   *
+   * Expands the image_image type to include the width and height.
+   *
+   * This method is assigned as a #process callback in ::formMultipleElements().
+   */
+  public static function processMultiple($element, FormStateInterface $form_state, $form) {
+    $element = parent::processMultiple($element, $form_state, $form);
+    $element_children = Element::children($element, TRUE);
+
+    foreach ($element_children as $child) {
+      if (!empty($child['#files'])) {
+        $file = reset($child['#files']);
+        $image = \Drupal::service('image.factory')->get($file->getFileUri());
+        if ($image->isValid()) {
+          $width = $image->getWidth();
+          $height = $image->getHeight();
+        }
+        else {
+          $width = $height = NULL;
+        }
+        // Store the dimensions in the form so the file doesn't have to be
+        // accessed again. This is important for remote files.
+        $element[$child]['width'] = [
+          '#type' => 'hidden',
+          '#value' => $width,
+        ];
+        $element[$child]['height'] = [
+          '#type' => 'hidden',
+          '#value' => $height,
+        ];
+      }
+    }
+
+    return $element;
   }
 
   /**

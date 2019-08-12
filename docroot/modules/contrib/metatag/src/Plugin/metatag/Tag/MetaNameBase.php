@@ -325,7 +325,7 @@ abstract class MetaNameBase extends PluginBase {
     $elements = [];
     foreach ($values as $value) {
       $value = $this->tidy($value);
-      / Validate if the value is empty here, otherwise we get absolute URL.
+      // Validate if the value is empty here, otherwise we get absolute URL.
       if (empty($value)) {
         continue;
       }
