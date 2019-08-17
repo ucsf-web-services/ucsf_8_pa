@@ -61,17 +61,25 @@ function conditional_styles_css_alter(&$css, \Drupal\Core\Asset\AttachedAssetsIn
   */
 }
 
-function conditional_styles_node_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+function conditional_styles_node_access(\Drupal\node\NodeInterface $node, $op, \Drupal\Core\Session\AccountInterface $account) {
+  /*
+  $type = $node
+    ->bundle();
+  switch ($op) {
+    case '';
+      break;
 
+  }
+  */
 
-  if ($entity->hasField('field_article_type')) {
+  if ($node->hasField('field_article_type')) {
 
-    if ($entity->get('field_article_type')->first()->getValue()['target_id']=='413496') {
+    if ($node->get('field_article_type')->first()->getValue()['target_id']=='413496') {
       //drupal_set_message("Has the Article Type of Media Coverage");
-      $url = $entity->get('field_external_url')->first()->getValue()['uri'];
-      dpm($url);
-      header('HTTP/1.1 301 Moved Permanently');
-      header('Location:'.$url);
+      //$url = $node->get('field_external_url')->first()->getValue()['uri'];
+      //dpm($url);
+      //header('HTTP/1.1 301 Moved Permanently');
+      //header('Location:'.$url);
     }
 
   }
@@ -85,27 +93,25 @@ function conditional_styles_simple_sitemap_links_alter(array &$links, $sitemap_v
 
       // Remove 'loc' URL if it points to a german site.
       if ($link['langcode'] === 'de') {
-        unset($links[$key]);
+        //unset($links[$key]);
       }
 
       // If this 'loc' URL points to a non-german site, make sure to remove
       // its german alternate URL.
       else {
         if ($link['alternate_urls']['de']) {
-          unset($links[$key]['alternate_urls']['de']);
+          //unset($links[$key]['alternate_urls']['de']);
         }
       }
     }
   }
   /*
   if ($link['type'] == 'node') {
-
     $node = node_load($link['id']);
     if ($node->hasField('field_article_type')) {
       $target_id = $node->get('field_article_type')
         ->first()
         ->getValue()['target_id'];
-
       // Code to check if $node has taxonomy term goes here
       if ($target_id == '413496') {
         $element['disabled'] = TRUE; // This removes the node link from sitemap
