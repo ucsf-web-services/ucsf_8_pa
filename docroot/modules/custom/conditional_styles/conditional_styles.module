@@ -30,9 +30,7 @@ function conditional_styles_css_alter(&$css, \Drupal\Core\Asset\AttachedAssetsIn
       'media' => 'all'
     ];
   }
-   */
 
-  /**
    * IE 11 doesn't actually support this at all, so we are repurposing this module.
   $theme_handler = \Drupal::service('theme_handler');
   $current_theme = $theme_handler->getDefault();
@@ -62,61 +60,42 @@ function conditional_styles_css_alter(&$css, \Drupal\Core\Asset\AttachedAssetsIn
 }
 
 function conditional_styles_node_access(\Drupal\node\NodeInterface $node, $op, \Drupal\Core\Session\AccountInterface $account) {
-  /*
-  $type = $node
-    ->bundle();
-  switch ($op) {
-    case '';
-      break;
 
-  }
-  */
-
-  if ($node->hasField('field_article_type')) {
-
-    if ($node->get('field_article_type')->first()->getValue()['target_id']=='413496') {
-      //drupal_set_message("Has the Article Type of Media Coverage");
-      //$url = $node->get('field_external_url')->first()->getValue()['uri'];
-      //dpm($url);
-      //header('HTTP/1.1 301 Moved Permanently');
-      //header('Location:'.$url);
-    }
-
-  }
 }
 
 function conditional_styles_simple_sitemap_links_alter(array &$links, $sitemap_variant) {
+/**
+// Remove German URL for a certain path in the hreflang sitemap.
+foreach ($links as $key => $link) {
+  if ($link['meta']['path'] === 'node/1') {
 
-  // Remove German URL for a certain path in the hreflang sitemap.
-  foreach ($links as $key => $link) {
-    if ($link['meta']['path'] === 'node/1') {
+    // Remove 'loc' URL if it points to a german site.
+    if ($link['langcode'] === 'de') {
+      //unset($links[$key]);
+    }
 
-      // Remove 'loc' URL if it points to a german site.
-      if ($link['langcode'] === 'de') {
-        //unset($links[$key]);
-      }
-
-      // If this 'loc' URL points to a non-german site, make sure to remove
-      // its german alternate URL.
-      else {
-        if ($link['alternate_urls']['de']) {
-          //unset($links[$key]['alternate_urls']['de']);
-        }
+    // If this 'loc' URL points to a non-german site, make sure to remove
+    // its german alternate URL.
+    else {
+      if ($link['alternate_urls']['de']) {
+        //unset($links[$key]['alternate_urls']['de']);
       }
     }
   }
-  /*
-  if ($link['type'] == 'node') {
-    $node = node_load($link['id']);
-    if ($node->hasField('field_article_type')) {
-      $target_id = $node->get('field_article_type')
-        ->first()
-        ->getValue()['target_id'];
-      // Code to check if $node has taxonomy term goes here
-      if ($target_id == '413496') {
-        $element['disabled'] = TRUE; // This removes the node link from sitemap
-      }
+}
+
+if ($link['type'] == 'node') {
+  $node = node_load($link['id']);
+  if ($node->hasField('field_article_type')) {
+    $target_id = $node->get('field_article_type')
+      ->first()
+      ->getValue()['target_id'];
+    // Code to check if $node has taxonomy term goes here
+    if ($target_id == '413496') {
+      $element['disabled'] = TRUE; // This removes the node link from sitemap
     }
   }
-  */
+}
+*/
+
 }

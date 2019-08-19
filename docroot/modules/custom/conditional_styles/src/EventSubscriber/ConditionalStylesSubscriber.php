@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Drupal\Core\Url;
+//use Drupal\user\Entity\User;
 /**
 * Redirect .html pages to corresponding Node page.
 */
@@ -20,36 +21,37 @@ class ConditionalStylesSubscriber implements EventSubscriberInterface {
   */
   public function customRedirection(GetResponseEvent $event) {
 
-  $node = \Drupal::routeMatch()->getParameter('node');
-  if ($node->hasField('field_article_type')) {
-    if ($node->get('field_article_type')
-        ->first()
-        ->getValue()['target_id'] == '413496'
-    ) {
-      //drupal_set_message("Has the Article Type of Media Coverage");
-      $url = $node->get('field_external_url')->first()->getValue()['uri'];
-      $response = new RedirectResponse($url, $this->redirectCode);
-      $response->send();
-      return;
-      //dpm($url);
-      //header('HTTP/1.1 301 Moved Permanently');
-      //header('Location:'.$url);
+    $node = \Drupal::routeMatch()->getParameter('node');
+    $userRoles = \Drupal::currentUser()->getRoles();
+
+    //$admin_context = \Drupal::service('router.admin_context');
+    //if (!$admin_context->isAdminRoute()) {
+      // perform tasks.
+      //return;
+    //}
+
+    $roles = ['administrator','editor', 'publisher', 'manager'];
+    $isAdmin = false;
+    foreach ($roles as $role) {
+      if (in_array($role, $userRoles)) {
+        $isAdmin = true;
+      }
+    }
+    //dpm('are we some sort of admin: '. $isAdmin);
+    // this isn't working because of some Drupal cache thing going (!$isAdmin)
+    if (is_object($node) && $node->hasField('field_article_type')) {
+      \Drupal::service('page_cache_kill_switch')->trigger();
+      //dpm($node);
+      if ($node->get('field_article_type')->first()->getValue()['target_id'] == '413496') {
+        $url = $node->get('field_external_url')->first()->getValue()['uri'];
+        $response = new RedirectResponse($url, $this->redirectCode);
+        $response->send();
+        return;
+      }
     }
   }
-  //dpm($requestUrl);
-  /**
-  * Here i am redirecting the about-us.html to respective /about-us node.
-  * Here you can implement your logic and search the URL in the DB
-  * and redirect them on the respective node.
 
-  if ($requestUrl=='/aboutus') {
-    $response = new RedirectResponse('/aboutus', $this->redirectCode);
-    $response->send();
-    exit(0);
-    }
-   */
 
-  }
 
   /**
   * Listen to kernel.request events and call customRedirection.
