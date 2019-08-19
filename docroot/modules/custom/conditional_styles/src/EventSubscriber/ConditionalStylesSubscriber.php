@@ -24,11 +24,11 @@ class ConditionalStylesSubscriber implements EventSubscriberInterface {
     $node = \Drupal::routeMatch()->getParameter('node');
     $userRoles = \Drupal::currentUser()->getRoles();
 
-    //$admin_context = \Drupal::service('router.admin_context');
-    //if (!$admin_context->isAdminRoute()) {
+    $admin_context = \Drupal::service('router.admin_context');
+    if ($admin_context->isAdminRoute()) {
       // perform tasks.
-      //return;
-    //}
+      return;
+    }
 
     $roles = ['administrator','editor', 'publisher', 'manager'];
     $isAdmin = false;
