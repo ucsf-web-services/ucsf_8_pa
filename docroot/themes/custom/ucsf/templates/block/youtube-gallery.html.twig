@@ -23,7 +23,7 @@
   {% for key, value in content.items %}
     <li class="video-item__youtube">
       <a class="video_preview" href="https://www.youtube.com/watch?v={{ value.snippet.resourceId.videoId }}" target="_blank">
-        <img src={{ value.snippet.thumbnails.medium.url }} />
+        <img src={{ value.snippet.thumbnails.medium.url }} alt="{{value.snippet.title}}" />
       </a>
 
       <a class="video_link" href="https://www.youtube.com/watch?v={{ value.snippet.resourceId.videoId}}" target="_blank">
