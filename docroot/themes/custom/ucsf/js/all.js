@@ -18,8 +18,8 @@
                 duplicate: false,
                 prependTo: '.slicknav-placeholder',
                 label: 'Main Menu',
-                openedSymbol: '<i class="fas fa-angle-up">',
-                closedSymbol: '<i class="fas fa-angle-down">'
+                openedSymbol: '<span class="fas fa-angle-up">',
+                closedSymbol: '<span class="fas fa-angle-down">'
             });
 
             //var height = $(window).height();
