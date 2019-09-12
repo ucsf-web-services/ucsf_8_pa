@@ -93,6 +93,14 @@
 
       tabAccordionSwitch(mediaQuery);
 
+      // Select a link inside tablist and update url when it is clicked.
+      // Passing context to prevent multiple bindings.
+      $(".js-tablist a", context).on("click", function() {
+        // Update url and store it in the browser history.
+        const href = $(this).attr("href");
+        history.pushState(null, null, href);
+      });
+
     }
   };
 
