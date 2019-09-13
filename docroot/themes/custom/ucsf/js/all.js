@@ -93,10 +93,11 @@
     Drupal.behaviors.searchMenuAction = {
 
         attach: function (context, settings) {
-            $('.menu-parent--wrapper .menu-item.search > a', context).click(function (e) {
+            const $searchToggle = $('.menu-parent--wrapper .menu-item.search > a', context);
+            $searchToggle.click(function (e) {
                 e.preventDefault();
                 $('.wrapper--search-menu').toggleClass('active');
-                $('.menu-parent--wrapper .menu-item.search > a').toggleClass('active');
+                $searchToggle.toggleClass('active');
                 $('.wrapper--search-menu .home-search__form-input').focus();
             });
 
@@ -105,9 +106,24 @@
                     //console.log('search menu');
                 } else {
                     $('.wrapper--search-menu').removeClass('active');
-                    $('.menu-parent--wrapper .menu-item.search > a').removeClass('active');
+                    $searchToggle.removeClass('active');
                 }
             });
+
+            const $search = $('.wrapper--search-menu');
+            $search.on('focusin', function() {
+                $search.addClass('active');
+                $searchToggle.addClass('active');
+            })
+
+            $search.on('focusout', function(e) {
+                setTimeout(function() {
+                    if ($(document.activeElement).parents('.wrapper--search-menu').length === 0) {
+                      $search.removeClass('active');
+                      $searchToggle.removeClass('active');
+                    }
+                }, 50)
+            })
         }
     };
 
