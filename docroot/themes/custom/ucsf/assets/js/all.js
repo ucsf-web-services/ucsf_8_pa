@@ -98,21 +98,14 @@
                 var $this = $(this);
                 // Waits and only removes class if newly focused element is outside the dropdown
                 setTimeout(function () {
+                    // Closes second level subnav
                     if ($(document.activeElement).parents('.menu-child--wrapper').length === 0) {
                         $this.parents('.menu-item-parent').removeClass('menu-item-open');
                     }
-                }, 50);
-            });
-
-            // Targets all doropdown subnavigations and closes them on focus out
-            var $thirdLevelMenu = $('.menu-child--wrapper[data-level="level-1"]', context);
-            $thirdLevelMenu.on('focusout', function () {
-                var $this = $(this);
-                // Waits and only removes class if newly focused element is outside the dropdown
-                setTimeout(function () {
-                    if ($this.has(document.activeElement).length === 0) {
-                        $this.parents('.menu-item--expanded').first().removeClass('menu-item-open');
-                    }
+                    // Closes the third level subnav if the current focused element is not in it.
+                    else if ($this.has(document.activeElement).length === 0) {
+                            $this.parents('.menu-item--expanded').first().removeClass('menu-item-open');
+                        }
                 }, 50);
             });
         }
