@@ -108,13 +108,16 @@
                 }
             });
 
+            //Search form opens when focus is inside.
             var $search = $('.wrapper--search-menu');
             $search.on('focusin', function () {
                 $search.addClass('active');
-                $searchToggle.addClass('active');
+                $searchToggle.addClass('active'); // changes toggle icon
             });
 
-            $search.on('focusout', function (e) {
+            //Search form closes when focus is out.
+            $search.on('focusout', function () {
+                //Wait and only remove classes if newly focused element is outside the search form
                 setTimeout(function () {
                     if ($(document.activeElement).parents('.wrapper--search-menu').length === 0) {
                         $search.removeClass('active');
