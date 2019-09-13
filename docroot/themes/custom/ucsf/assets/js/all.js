@@ -86,11 +86,11 @@
                 };
             });
 
-            // Shows menu when it's being tabbed through
+            // Shows menus when it's being tabbed through
             var $dropdown = $('.menu-child--wrapper', context);
             $dropdown.on('focusin', function () {
-                // First level dropdown opens on focus.
-                $(this).parent('.menu-item-parent').addClass('menu-item-open');
+                // Menu dropdowns open on focus.
+                $(this).parents('.menu-item--expanded').addClass('menu-item-open');
             });
 
             // Menu dropdown closes when focus is out.
@@ -100,6 +100,18 @@
                 setTimeout(function () {
                     if ($(document.activeElement).parents('.menu-child--wrapper').length === 0) {
                         $this.parents('.menu-item-parent').removeClass('menu-item-open');
+                    }
+                }, 50);
+            });
+
+            // Targets all doropdown subnavigations and closes them on focus out
+            var $thirdLevelMenu = $('.menu-child--wrapper[data-level="level-1"]', context);
+            $thirdLevelMenu.on('focusout', function () {
+                var $this = $(this);
+                // Waits and only removes class if newly focused element is outside the dropdown
+                setTimeout(function () {
+                    if ($this.has(document.activeElement).length === 0) {
+                        $this.parents('.menu-item--expanded').first().removeClass('menu-item-open');
                     }
                 }, 50);
             });
