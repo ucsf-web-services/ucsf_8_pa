@@ -75,7 +75,7 @@
         {{ link(title_wrap, item.url, menu_attributes.link) }}
 
         {% if menu_level > 0 and item.is_expanded %}
-          <span class="fas fa-angle-right"></span>
+          <span class="fas fa-angle-right icon"></span>
         {% endif %}
 
         {% if item.below or item.title == 'Search' %}
@@ -106,8 +106,8 @@
             {% if item.title == 'Search' %}
             <div class="home-search__form">
               <form action="/search" accept-charset="utf-8" method="get" class="search__form">
-                <label for="header-desktop-search" class="visually-hidden">search</label>
-                <input type="text" name="search" id="header-desktop-search" size="32" class="home-search__form-input" value="{{ searchterm }}" placeholder="Search people, places, ideas" />
+                <label for="search" style="display:none;">search</label>
+                <input type="text" name="search" id="search" size="32" class="home-search__form-input" value="{{ searchterm }}" placeholder="Search people, places, ideas" />
                 {# this should be /images/search.svg file #}
                 <input type="submit" id="edit-submit" name="op" value="Search" class="home-search__form-submit">
               </form>
