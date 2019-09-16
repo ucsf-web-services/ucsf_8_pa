@@ -173,6 +173,9 @@ parameters:
     # Sets the Access-Control-Allow-Credentials header.
     supportsCredentials: false
 services:
+  plugin.manager.applenews_component_type:
+    class: Drupal\applenews\Plugin\ApplenewsComponentTypeManager
+    parent: default_plugin_manager
   serializer.applenews.content_entity:
     class: Drupal\ucsf_applenews\Normalizer\UcsfApplenewsContentEntityNormalizer
     arguments: ['@entity_type.manager']
