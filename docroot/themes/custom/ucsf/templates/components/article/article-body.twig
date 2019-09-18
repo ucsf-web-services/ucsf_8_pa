@@ -1,20 +1,21 @@
 {{ content.body }}
     {{ content.field_content_panel }}
-    {% if content.field_first_media %}
-      {% set classes = [
-        'paragraph--type--gallery',
-      ] %}
-      {{ attach_library('ucsf/slick_gallery') }}
-      <div class="paragraph-text-block gallery-background-fill"></div>
-      <div{{ attributes.addClass(classes) }}>
-        <div class="gallery-container">
-          <div class="field-gallery-items">
-          {{content.field_first_media}}
-          </div>
-        </div>
-      </div>
-      {{content.field_first_media}}
-    {% endif %}
+
+{% if content.field_first_media %}
+  {% set classes = [
+  'paragraph--type--gallery',
+  ] %}
+  {{ attach_library('ucsf/slick_gallery') }}
+  <div class="paragraph-text-block gallery-background-fill"></div>
+  <div{{ attributes.addClass(classes) }}>
+    <div class="gallery-container">
+        {{content.field_first_media}}
+    </div>
+  </div>
+
+{% endif %}
+
+
 <div class="tags-menu-region">
   {% if content.field_topics|render or content.field_tags|render %}
     <h3 class="tags-menu__title">{{ "Topics"|t }}</h3>
