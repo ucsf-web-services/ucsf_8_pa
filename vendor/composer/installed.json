@@ -2826,7 +2826,7 @@
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/applenews.git",
-            "reference": "092d67903111a088e5072f0923804a2698b54198"
+            "reference": "369c57641445f1793b0bb900be5a48278a19e3a0"
         },
         "require": {
             "chapter-three/apple-news-api": "dev-master",
@@ -2838,15 +2838,14 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0-beta1+17-dev",
-                "datestamp": "1559915584",
+                "version": "8.x-1.0-beta1+18-dev",
+                "datestamp": "1560365284",
                 "security-coverage": {
                     "status": "not-covered",
                     "message": "Dev releases are not covered by Drupal security advisories."
                 }
             },
             "patches_applied": {
-                "3025958 - Fix delete process of templates components": "https://www.drupal.org/files/issues/2019-02-05/applenews-fix-delete-process-of-templates-components-3025958-9.patch",
                 "3029632 - Add preview link when no channels are configured": "https://www.drupal.org/files/issues/2019-02-05/applenews-preview-with-no-api-3029632-4.patch",
                 "11333241 - Limit tags in html": "https://www.drupal.org/files/issues/2019-02-05/applenews-limit_tags_in_html-11333241-2.patch"
             }
@@ -2857,6 +2856,10 @@
             "GPL-2.0-or-later"
         ],
         "authors": [
+            {
+                "name": "bitswreck",
+                "homepage": "https://www.drupal.org/user/487090"
+            },
             {
                 "name": "geekygnr",
                 "homepage": "https://www.drupal.org/user/2775199"
@@ -2876,10 +2879,6 @@
             {
                 "name": "mrf",
                 "homepage": "https://www.drupal.org/user/76245"
-            },
-            {
-                "name": "tbfisher",
-                "homepage": "https://www.drupal.org/user/487090"
             },
             {
                 "name": "vijaycs85",
@@ -9897,24 +9896,25 @@
     },
     {
         "name": "drupal/scheduler",
-        "version": "1.0.0",
-        "version_normalized": "1.0.0.0",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/scheduler.git",
-            "reference": "8.x-1.0"
+            "reference": "8.x-1.1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/scheduler-8.x-1.0.zip",
-            "reference": "8.x-1.0",
-            "shasum": "213025b64b417f459b73d260d7287ca1f916d587"
+            "url": "https://ftp.drupal.org/files/projects/scheduler-8.x-1.1.zip",
+            "reference": "8.x-1.1",
+            "shasum": "52ff9c778f183d970ec2d57dfc1ba45282054e97"
         },
         "require": {
             "drupal/core": "*"
         },
         "require-dev": {
-            "drupal/devel_generate": "*",
+            "drupal/coder": "^8.3.3",
+            "drupal/devel_generate": "^2.0",
             "drupal/rules": "*"
         },
         "type": "drupal-module",
@@ -9923,11 +9923,16 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0",
-                "datestamp": "1510690385",
+                "version": "8.x-1.1",
+                "datestamp": "1566578555",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
+                }
+            },
+            "drush": {
+                "services": {
+                    "drush.services.yml": "^9"
                 }
             }
         },
@@ -9963,6 +9968,64 @@
         "support": {
             "source": "http://cgit.drupalcode.org/scheduler",
             "issues": "https://www.drupal.org/project/issues/scheduler"
+        }
+    },
+    {
+        "name": "drupal/scheduler_content_moderation_integration",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/scheduler_content_moderation_integration.git",
+            "reference": "8.x-1.0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/scheduler_content_moderation_integration-8.x-1.0.zip",
+            "reference": "8.x-1.0",
+            "shasum": "fbf6bce35d2b4433dfd13f2d33f56155ba499c57"
+        },
+        "require": {
+            "drupal/core": "*",
+            "drupal/scheduler": "^1.1"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0",
+                "datestamp": "1567069085",
+                "security-coverage": {
+                    "status": "not-covered",
+                    "message": "Project has not opted into security advisory coverage!"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "daniel.bosen",
+                "homepage": "https://www.drupal.org/user/404865"
+            },
+            {
+                "name": "thunderbot",
+                "homepage": "https://www.drupal.org/user/3511180"
+            },
+            {
+                "name": "volkerk",
+                "homepage": "https://www.drupal.org/user/57527"
+            }
+        ],
+        "description": "Scheduler Content Moderation Integration",
+        "homepage": "https://www.drupal.org/project/scheduler_content_moderation_integration",
+        "support": {
+            "source": "https://git.drupalcode.org/project/scheduler_content_moderation_integration"
         }
     },
     {

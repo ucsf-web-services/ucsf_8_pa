@@ -42,8 +42,7 @@ class ConditionalStylesSubscriber implements EventSubscriberInterface {
     if (is_object($node) && $node->hasField('field_article_type')) {
       \Drupal::service('page_cache_kill_switch')->trigger();
       //dpm($node);
-      if ($node->get('field_external_url')->first()
-        && $node->get('field_article_type')->first()->getValue()['target_id'] == '413496') {
+      if ($node->get('field_article_type')->first()->getValue()['target_id'] == '413496') {
         $url = $node->get('field_external_url')->first()->getValue()['uri'];
         $response = new RedirectResponse($url, $this->redirectCode);
         $response->send();

@@ -3,37 +3,38 @@
 {% extends 'paragraph--featured--alt.html.twig' %}
 
 {% block wrapper_top %}
+  {% set unique_title = paragraph.field_news_article.entity.label %}
   <!-- nid: {{ paragraph.field_news_article.target_id }}  -->
-  <article{{ attributes.addClass('news-card') }}>
+  <article{{attributes.addClass('news-card')}} aria-label="Teaser for: {{unique_title}}">
     <a href="{{ link }}" class="news-card__link">
-{% endblock wrapper_top %}
+    {% endblock wrapper_top %}
 
-{% block article_image %}
-  {# Feature Paragraph > News Article (News) > Card Image #}
-  {% set card_image_uri = paragraph.field_news_article.entity.field_card_image.0.entity.field_media_image.entity.fileuri %}
-  {% set card_image_alt = paragraph.field_news_article.entity.field_card_image.0.entity.field_media_image.alt %}
-  <figure>
-    <picture>
-      <img src="{{ card_image_uri|image_style('featured_news_card__image') }}" alt="{{card_image_alt}}"/>
-    </picture>
-  </figure>
-{% endblock article_image %}
+    {% block article_image %}
+      {# Feature Paragraph > News Article (News) > Card Image #}
+      {% set card_image_uri = paragraph.field_news_article.entity.field_card_image.0.entity.field_media_image.entity.fileuri %}
+      {% set card_image_alt = paragraph.field_news_article.entity.field_card_image.0.entity.field_media_image.alt %}
+      <figure>
+        <picture>
+          <img src="{{ card_image_uri|image_style('featured_news_card__image') }}" alt="{{card_image_alt}}"/>
+        </picture>
+      </figure>
+    {% endblock article_image %}
 
-{% block wrapper_bottom %}
+    {% block wrapper_bottom %}
 
-    {% if content.field_text_body|render|striptags != '' %}
-      {# Feature Paragraph - Banner Description #}
-      <div class="news-card__desc">{{ content.field_text_body }}</div>
-    {% else %}
-      {# Feature Paragraph > News Article (News) > Sub Title #}
-      <div class="news-card__desc">{{ drupal_field('field_sub_title', 'node', paragraph.field_news_article.target_id) }}</div>
-    {% endif %}
+      {% if content.field_text_body|render|striptags != '' %}
+        {# Feature Paragraph - Banner Description #}
+        <div class="news-card__desc">{{ content.field_text_body }}</div>
+      {% else %}
+        {# Feature Paragraph > News Article (News) > Sub Title #}
+        <div class="news-card__desc">{{ drupal_field('field_sub_title', 'node', paragraph.field_news_article.target_id) }}</div>
+      {% endif %}
 
-    <p class="news-card__more link--cta">
-      {# todo conditional link and link text needed. #}
-      {{ paragraph.banner.cta_text.value ? paragraph.banner.cta_text.value : 'Continue Reading'|t }}
-    </p>
+      <p
+        class="news-card__more link--cta">
+        {# todo conditional link and link text needed. #}
+        {{ paragraph.banner.cta_text.value ? paragraph.banner.cta_text.value : 'Continue Reading'|t }}
+      </p>
     </header>
-    </a>
-  </article>
-{% endblock wrapper_bottom %}
+  </a>
+</article>{% endblock wrapper_bottom %}

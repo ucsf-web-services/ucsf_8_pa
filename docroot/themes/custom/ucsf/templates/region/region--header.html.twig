@@ -1,20 +1,21 @@
 {% extends 'region.html.twig' %}
 {% block content %}
-    {# need both headers wrapped together for CSS Animations #}
-    <div class="combined-header-region">
-        <div class="universal-header-region">
-            <header class="universal-header">
-                <p class="universal-header__title">University of California San Francisco</p>
-                <a href="https://giving.ucsf.edu" class="universal-header__give">Give to UCSF</a>
-            </header>
-        </div>
-        <div class="header-region">
-            <header class="header" role="banner">
-                {% include '@theme/header/header--logo.twig' %}
-                {% include '@theme/header/header--search.twig' %}
-                <div class="slicknav-placeholder"></div>
-                {{ content }} {# main nav #}
-            </header>
-        </div>
-    </div>
+  {# need both headers wrapped together for CSS Animations #}
+  <header class="combined-header-region">
+    <section class="universal-header-region">
+      <div class="universal-header">
+        <p id="site-name" class="universal-header__title">University of California San Francisco</p>
+        <a href="https://giving.ucsf.edu" class="universal-header__give">Give to UCSF</a>
+      </div>
+    </section>
+    <section class="header-region">
+      <div class="header">
+        {% include '@theme/header/header--logo.twig' %}
+        {% include '@theme/header/header--search.twig' %}
+        <div class="slicknav-placeholder"></div>
+        {{ content }}
+        {# main nav #}
+      </div>
+    </section>
+  </header>
 {% endblock content %}

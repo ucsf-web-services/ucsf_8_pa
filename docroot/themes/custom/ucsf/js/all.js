@@ -87,16 +87,40 @@
                 };
               });
 
+            // Shows menus when it's being tabbed through
+            const $dropdown = $('.menu-child--wrapper', context);
+            $dropdown.on('focusin', function() {
+                // Menu dropdowns open on focus.
+                $(this).parents('.menu-item--expanded').addClass('menu-item-open');
+            });
+
+            // Menu dropdown closes when focus is out.
+            $dropdown.on('focusout', function() {
+                const $this = $(this);
+                // Waits and only removes class if newly focused element is outside the dropdown
+                setTimeout(function() {
+                    // Closes second level subnav
+                    if ($(document.activeElement).parents('.menu-child--wrapper').length === 0) {
+                        $this.parents('.menu-item-parent').removeClass('menu-item-open');
+                    }
+                    // Closes the third level subnav if the current focused element is not in it.
+                    else if ($this.has(document.activeElement).length === 0) {
+                        $this.parents('.menu-item--expanded').first().removeClass('menu-item-open');
+                    }
+                }, 50);
+            });
+
         }
     };
 
     Drupal.behaviors.searchMenuAction = {
 
         attach: function (context, settings) {
-            $('.menu-parent--wrapper .menu-item.search > a', context).click(function (e) {
+            const $searchToggle = $('.menu-parent--wrapper .menu-item.search > a', context);
+            $searchToggle.click(function (e) {
                 e.preventDefault();
                 $('.wrapper--search-menu').toggleClass('active');
-                $('.menu-parent--wrapper .menu-item.search > a').toggleClass('active');
+                $searchToggle.toggleClass('active');
                 $('.wrapper--search-menu .home-search__form-input').focus();
             });
 
@@ -105,9 +129,27 @@
                     //console.log('search menu');
                 } else {
                     $('.wrapper--search-menu').removeClass('active');
-                    $('.menu-parent--wrapper .menu-item.search > a').removeClass('active');
+                    $searchToggle.removeClass('active');
                 }
             });
+
+            //Search form opens when focus is inside.
+            const $search = $('.wrapper--search-menu');
+            $search.on('focusin', function() {
+                $search.addClass('active');
+                $searchToggle.addClass('active'); // changes toggle icon
+            })
+
+            //Search form closes when focus is out.
+            $search.on('focusout', function() {
+                //Wait and only remove classes if newly focused element is outside the search form
+                setTimeout(function() {
+                    if ($(document.activeElement).parents('.wrapper--search-menu').length === 0) {
+                      $search.removeClass('active');
+                      $searchToggle.removeClass('active');
+                    }
+                }, 50)
+            })
         }
     };
 

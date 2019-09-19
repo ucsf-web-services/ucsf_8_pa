@@ -4,7 +4,7 @@
   {# Feature Paragraph > Overwrite Link #}
   {% set link = paragraph.field_link.value.0.uri %}
 {% elseif drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id)|render|striptags != '' %}
-   {# Feature Paragraph > News Article (News) > External URL #}
+  {# Feature Paragraph > News Article (News) > External URL #}
   {% set external_link = drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id) %}
   {% set link = external_link.0['#url'].uri %}
 {% else %}
@@ -13,26 +13,27 @@
 {% endif %}
 
 {% block wrapper_top %}
-<li{{  attributes.addClass(classes) }}>
-  <article class="news-card">
-    <a href="{{ link }}" class="news-card__link">
-{% endblock wrapper_top %}
+  <li{{attributes.addClass(classes)}}>
+    {% set unique_title = paragraph.field_news_article.entity.label %}
+    <article class="news-card" aria-label="Teaser for: {{unique_title}}">
+      <a href="{{ link }}" class="news-card__link">
+      {% endblock wrapper_top %}
       <div class="news-card__image">
         {% if content.field_image_media|render|striptags != ''%}
           {# Feature Paragraph - Overwrite Image #}
           {{ content.field_image_media }}
         {% else %}
           {% block article_image %}
-          {# Feature Paragraph > News Article (News) > Card Image #}
-          {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id) }}
+            {# Feature Paragraph > News Article (News) > Card Image #}
+            {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id) }}
           {% endblock article_image %}
         {% endif %}
       </div>
 
       <header class="news-card__copy">
-      {% block article_byline %}
-        {% include '@theme/homepage/homepage-byline.twig' %}
-      {% endblock article_byline %}
+        {% block article_byline %}
+          {% include '@theme/homepage/homepage-byline.twig' %}
+        {% endblock article_byline %}
 
         <h2>
           {% if content.field_title|render|striptags != '' %}
@@ -43,9 +44,9 @@
             {{ paragraph.field_news_article.entity.label }}
           {% endif %}
         </h2>
-{% block wrapper_bottom %}
-      </header>
-    </a>
-  </article>
-</li>
+        {% block wrapper_bottom %}
+        </header>
+      </a>
+    </article>
+  </li>
 {% endblock wrapper_bottom %}

@@ -2,7 +2,7 @@
 
 {% set body_classes = not node.isPublished() ? "node--unpublished" %}
 
-<main role="main" class="main {{ body_classes }}">
+<main class="main {{ body_classes }}">
   {# link is in html.html.twig #}
   <a id="main-content" tabindex="-1"></a>
   {% if layout == 'feature' %}
@@ -13,7 +13,7 @@
 </main>
 
 {# @todo Wrapper should probably be conditional. #}
-<div class="recommended-articles{{ content.field_recommended_article|render ? ' has-recommended-article' }} ">
+<section class="recommended-articles{{ content.field_recommended_article|render ? ' has-recommended-article' }} ">
 
   {% if content.field_topics|render or content.field_tags|render or content.field_primary_area|render %}
     <div class="recommended-articles__banner">
@@ -31,4 +31,4 @@
   <div class="footer-ctas-wrapper">
     {{ content.field_ankle_cta }}
   </div>
-</div>
+</section>

@@ -128,7 +128,9 @@ class ApplenewsTemplate extends ConfigEntityBase implements ApplenewsTemplateInt
       if ($id == $component_id) {
         return $component;
       }
-      if ($found = $this->getNestedComponent($component['component_data']['components'], $id)) {
+      if (!empty($component['component_data']['components']) &&
+        $found = $this->getNestedComponent($component['component_data']['components'], $id)
+      ) {
         return $found;
       }
     }

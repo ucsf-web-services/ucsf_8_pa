@@ -96,6 +96,14 @@
       }
 
       tabAccordionSwitch(mediaQuery);
+
+      // Select a link inside tablist and update url when it is clicked.
+      // Passing context to prevent multiple bindings.
+      $('.js-tablist a, .js-accordion-header', context).on('click', function () {
+        // Update url.
+        var href = $(this).attr("href");
+        history.replaceState(null, null, href);
+      });
     }
   };
 })(jQuery);
