@@ -1,7 +1,7 @@
 {{ content.body }}
     {{ content.field_content_panel }}
 
-{% if content.field_first_media %}
+{% if content.field_legacy_gallery %}
   {% set classes = [
   'paragraph--type--gallery',
   ] %}
@@ -9,7 +9,7 @@
   <div class="paragraph-text-block gallery-background-fill"></div>
   <div{{ attributes.addClass(classes) }}>
     <div class="gallery-container">
-        {{content.field_first_media}}
+        {{content.field_legacy_gallery}}
     </div>
   </div>
 
