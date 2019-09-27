@@ -26,7 +26,10 @@ class Vimeo extends ProviderPluginBase {
     */
     $input = $this->getInput();
     preg_match('/^https?:\/\/(www\.)?vimeo.com\/(channels\/[a-zA-Z0-9]*\/)?(?<id>[0-9]*)(\/[a-zA-Z0-9]+)?(\#t=(\d+)s)?(\?((?<option>[a-zA-Z0-9]*=[a-zA-Z0-9]*)))?$/',$input ,$option );
-    $url = $this->getVideoId(). "?".$option['option']."&";
+    if($option['option']){
+      $url = $this->getVideoId(). "?".$option['option']."&";
+    }
+    $url = $this->getVideoId();
     
     $iframe = [
       '#type' => 'video_embed_iframe',
