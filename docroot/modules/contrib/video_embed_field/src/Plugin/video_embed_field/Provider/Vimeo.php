@@ -29,7 +29,9 @@ class Vimeo extends ProviderPluginBase {
     if($option['option']){
       $url = $this->getVideoId(). "?".$option['option']."&";
     }
-    $url = $this->getVideoId();
+    else {
+      $url = $this->getVideoId();
+    }
     
     $iframe = [
       '#type' => 'video_embed_iframe',
