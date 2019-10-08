@@ -1,0 +1,36 @@
+--- src/Entity/ApplenewsTemplate.php
++++ src/Entity/ApplenewsTemplate.php
+@@ -147,17 +149,13 @@ class ApplenewsTemplate extends ConfigEntityBase implements ApplenewsTemplateInt
+    * {@inheritdoc}
+    */
+   public function deleteComponent($id) {
+-    foreach ($this->components as $component_id => &$component) {
+-      if ($id == $component_id) {
+-        unset($this->components[$id]);
+-        return TRUE;
+-      }
+-      if ($this->deleteNestedComponent($component['component_data']['components'], $id)) {
+-        return TRUE;
++    if ($this->deleteNestedComponent($this->components, $id)) {
++      if (!empty($this->components)) {
++        uasort($this->components, [$this, 'sortHelper']);
+       }
+-
++      return TRUE;
+     }
+-    uasort($components, [$this, 'sortHelper']);
++    return FALSE;
+   }
+ 
+   /**
+@@ -180,7 +178,9 @@ class ApplenewsTemplate extends ConfigEntityBase implements ApplenewsTemplateInt
+         }
+         return TRUE;
+       }
+-      if ($this->deleteNestedComponent($component['component_data']['components'], $id)) {
++      if (!empty($component['component_data']['components']) &&
++        $this->deleteNestedComponent($component['component_data']['components'], $id)
++      ) {
+         return TRUE;
+       }
+     }
