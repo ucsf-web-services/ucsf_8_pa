@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.news_package.field_areas
     - field.field.node.news_package.field_article_type
     - field.field.node.news_package.field_banner_image
+    - field.field.node.news_package.field_card_image
     - field.field.node.news_package.field_date_and_time
     - field.field.node.news_package.field_exclude
     - field.field.node.news_package.field_facebook_description
@@ -83,8 +84,17 @@ content:
     third_party_settings: {  }
     type: media_responsive_thumbnail
     region: content
-  field_date_and_time:
+  field_card_image:
     weight: 6
+    label: hidden
+    settings:
+      responsive_image_style: homepage_news_card
+      image_link: ''
+    third_party_settings: {  }
+    type: media_responsive_thumbnail
+    region: content
+  field_date_and_time:
+    weight: 7
     label: hidden
     settings:
       timezone_override: ''
@@ -93,7 +103,7 @@ content:
     type: datetime_default
     region: content
   field_exclude:
-    weight: 7
+    weight: 8
     label: hidden
     settings:
       link: true
@@ -101,7 +111,7 @@ content:
     type: entity_reference_label
     region: content
   field_facebook_description:
-    weight: 8
+    weight: 9
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -116,7 +126,7 @@ content:
     type: entity_reference_label
     region: content
   field_facebook_title:
-    weight: 9
+    weight: 10
     label: hidden
     settings:
       link_to_entity: false
@@ -133,7 +143,7 @@ content:
     third_party_settings: {  }
     region: content
   field_hide_article:
-    weight: 10
+    weight: 11
     label: hidden
     settings:
       format: default
@@ -143,14 +153,6 @@ content:
     type: boolean
     region: content
   field_include:
-    weight: 11
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_locations:
     weight: 12
     label: hidden
     settings:
@@ -158,7 +160,7 @@ content:
     third_party_settings: {  }
     type: entity_reference_label
     region: content
-  field_organizations:
+  field_locations:
     weight: 13
     label: hidden
     settings:
@@ -166,7 +168,7 @@ content:
     third_party_settings: {  }
     type: entity_reference_label
     region: content
-  field_people:
+  field_organizations:
     weight: 14
     label: hidden
     settings:
@@ -174,7 +176,7 @@ content:
     third_party_settings: {  }
     type: entity_reference_label
     region: content
-  field_primary_area:
+  field_people:
     weight: 15
     label: hidden
     settings:
@@ -182,27 +184,27 @@ content:
     third_party_settings: {  }
     type: entity_reference_label
     region: content
-  field_short_title:
+  field_primary_area:
     weight: 16
     label: hidden
-    settings: {  }
+    settings:
+      link: true
     third_party_settings: {  }
-    type: text_default
+    type: entity_reference_label
     region: content
-  field_sub_title:
+  field_short_title:
     weight: 17
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
-  field_tags:
+  field_sub_title:
     weight: 18
     label: hidden
-    settings:
-      link: true
+    settings: {  }
     third_party_settings: {  }
-    type: entity_reference_label
+    type: text_default
     region: content
   field_textured_background_image:
     weight: 19
@@ -251,3 +253,4 @@ content:
     third_party_settings: {  }
 hidden:
   field_article_type: true
+  field_tags: true

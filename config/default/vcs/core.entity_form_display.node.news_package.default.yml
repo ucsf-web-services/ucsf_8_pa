@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.news_package.field_areas
     - field.field.node.news_package.field_article_type
     - field.field.node.news_package.field_banner_image
+    - field.field.node.news_package.field_card_image
     - field.field.node.news_package.field_date_and_time
     - field.field.node.news_package.field_exclude
     - field.field.node.news_package.field_facebook_description
@@ -55,6 +56,7 @@ third_party_settings:
         open: false
         required_fields: true
       label: 'Short and Sub Title'
+      region: content
     group_byline:
       children:
         - field_date_and_time
@@ -67,19 +69,23 @@ third_party_settings:
         open: false
         required_fields: true
       label: Byline
+      region: content
     group_banner_and_background_text:
       children:
         - field_banner_image
+        - field_card_image
         - field_textured_background_image
       parent_name: ''
       weight: 4
       format_type: details
       format_settings:
+        label: 'Banner, Card, and Background Images'
+        required_fields: true
         id: ''
         classes: ''
         open: false
-        required_fields: true
-      label: 'Banner and Background Texture Images'
+      label: 'Banner, Card, and Background Images'
+      region: content
     group_classifications:
       children:
         - field_primary_area
@@ -102,6 +108,7 @@ third_party_settings:
         open: false
         required_fields: true
       label: Classifications
+      region: content
     group_soc:
       children:
         - field_apple_news_title
@@ -120,6 +127,7 @@ third_party_settings:
         open: false
         required_fields: true
       label: 'Social Media'
+      region: content
     group_a:
       children:
         - field_ankle_cta
@@ -132,6 +140,7 @@ third_party_settings:
         open: false
         required_fields: true
       label: 'Ankle CTAs'
+      region: content
 id: node.news_package.default
 targetEntityType: node
 bundle: news_package
@@ -193,6 +202,21 @@ content:
       field_widget_display_settings:
         view_mode: full
       open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_card_image:
+    weight: 21
+    settings:
+      entity_browser: media_assets_library_field
+      field_widget_display: rendered_entity
+      field_widget_edit: true
+      field_widget_remove: true
+      field_widget_replace: true
+      open: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: default
     third_party_settings: {  }
     type: entity_browser_entity_reference
     region: content
@@ -321,7 +345,7 @@ content:
     type: entity_reference_autocomplete_tags
     region: content
   field_textured_background_image:
-    weight: 21
+    weight: 22
     settings:
       entity_browser: media_assets_library_field
       field_widget_display: rendered_entity

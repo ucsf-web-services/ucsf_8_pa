@@ -35,6 +35,7 @@ third_party_settings:
         open: false
         required_fields: true
       label: 'Featured Articles'
+      region: content
     group_search_news:
       children:
         - field_search_title
@@ -49,10 +50,10 @@ third_party_settings:
         open: false
         required_fields: true
       label: 'Search News'
+      region: content
     group_featured_media_coverage:
       children:
         - field_featured_media_article
-        - field_supporting_media_articles
       parent_name: ''
       weight: 3
       format_type: details
@@ -62,6 +63,7 @@ third_party_settings:
         open: false
         required_fields: true
       label: 'Featured Media Coverage'
+      region: content
     group_a:
       children:
         - field_ankle_cta
@@ -74,6 +76,7 @@ third_party_settings:
         open: false
         required_fields: true
       label: 'Ankle CTAs'
+      region: content
 id: node.news_center.default
 targetEntityType: node
 bundle: news_center
@@ -151,15 +154,6 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
-  field_supporting_media_articles:
-    weight: 11
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   path:
     type: path
     weight: 10
@@ -228,3 +222,4 @@ content:
     third_party_settings: {  }
 hidden:
   body: true
+  field_supporting_media_articles: true

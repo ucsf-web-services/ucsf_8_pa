@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.news_package.field_areas
     - field.field.node.news_package.field_article_type
     - field.field.node.news_package.field_banner_image
+    - field.field.node.news_package.field_card_image
     - field.field.node.news_package.field_date_and_time
     - field.field.node.news_package.field_exclude
     - field.field.node.news_package.field_facebook_description
@@ -52,6 +53,15 @@ content:
   field_banner_image:
     type: media_thumbnail
     weight: 5
+    region: content
+    label: hidden
+    settings:
+      image_style: news_card__image
+      image_link: ''
+    third_party_settings: {  }
+  field_card_image:
+    type: media_thumbnail
+    weight: 6
     region: content
     label: hidden
     settings:

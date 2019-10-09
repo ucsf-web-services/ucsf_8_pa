@@ -7,22 +7,26 @@ _core:
 id: node
 label: Content
 tags:
+  abstract: '[node:summary]'
   canonical_url: '[node:url]'
   description: '[node:summary]'
+  image_src: 'https://www.ucsf.edu/sites/default/files/2019-04/ucsf_tapestry_portal_full_1230.jpg'
   title: '[node:title] | [site:name]'
   article_author: '[node:field_author_byline]'
-  og_description: '[node:field_facebook_description]'
-  og_image: '[node:field_facebook_image:entity:field_media_image:entity:url]'
+  og_description: '[node:field_facebook_description]||[node:summary]'
+  og_image: '[node:field_facebook_image:entity:field_media_image:entity:url]||[node:field_card_image:entity:field_media_image:entity:url]||http://www.ucsf.edu/sites/default/files/2019-04/ucsf_tapestry_portal_full_1230.jpg'
+  og_image_alt: '[node:field_facebook_image:entity:field_media_image:entity:alt]'
+  og_image_secure_url: 'http://www.ucsf.edu/sites/default/files/2019-04/ucsf_tapestry_portal_full_1230.jpg'
   og_image_type: image/jpeg
   og_site_name: '[node:title] | [site:name]'
-  og_title: '[node:title]'
+  og_title: '[node:field_facebook_title]||[node:title]'
   og_type: news
   og_url: '[current-page:url]'
   twitter_cards_creator: '@ucsf'
-  twitter_cards_description: '[node:field_twitter_description]'
-  twitter_cards_image: '[node:field_twitter_image:entity:field_media_image:entity:url]'
+  twitter_cards_description: '[node:field_facebook_description]||[node:summary]'
+  twitter_cards_image: '[node:field_facebook_image:entity:field_media_image:entity:url]||[node:field_card_image:entity:field_media_image:entity:url]||http://www.ucsf.edu/sites/default/files/2019-04/ucsf_tapestry_portal_full_1230.jpg'
   twitter_cards_image_alt: '[node:field_twitter_title]'
   twitter_cards_page_url: '[node:url]'
   twitter_cards_site: '@ucsf'
-  twitter_cards_title: '[node:field_twitter_title]'
+  twitter_cards_title: '[node:field_facebook_title]||[node:title]'
   twitter_cards_type: summary_large_image

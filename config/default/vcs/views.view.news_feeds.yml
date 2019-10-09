@@ -4,9 +4,12 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.search_index
+    - field.storage.media.field_media_image
     - field.storage.node.body
+    - field.storage.node.field_author
     - field.storage.node.field_card_image
     - field.storage.node.field_date_and_time
+    - field.storage.node.field_external_url
     - field.storage.node.field_primary_area
     - field.storage.node.field_source
     - image.style.card_row__image
@@ -28,8 +31,6 @@ dependencies:
     - 'taxonomy_term:topics:0f470a0c-3169-48d7-b488-414b247c2a44'
     - 'taxonomy_term:topics:18620460-1a21-483e-bcef-50b9a169c937'
     - 'taxonomy_term:topics:1a8eb26f-50c1-4ea0-8ea7-d837fbdbd1cd'
-    - 'taxonomy_term:topics:1d1b425c-e0fb-4fb8-978f-d4632c7b9c00'
-    - 'taxonomy_term:topics:246a2660-c109-4f53-9b33-5b9310a01023'
     - 'taxonomy_term:topics:265aabd8-0d54-416b-990e-224598435ca9'
     - 'taxonomy_term:topics:27264d8d-07ce-4ca0-a0ff-754534981e67'
     - 'taxonomy_term:topics:3038f4da-161b-43ca-ba99-6e0da5837a0a'
@@ -41,12 +42,8 @@ dependencies:
     - 'taxonomy_term:topics:4b5cfa0a-a954-4db7-b557-e4eddd35fb46'
     - 'taxonomy_term:topics:4bef4928-9325-4454-bc96-49d88b40e43b'
     - 'taxonomy_term:topics:4f75e5b3-e8c8-41c3-a273-e67c86914d29'
-    - 'taxonomy_term:topics:57f17404-d1de-4430-bb16-b7766aff8366'
-    - 'taxonomy_term:topics:5aa39577-a3f3-4954-805f-7053207883fa'
-    - 'taxonomy_term:topics:5da3eff0-0d12-418a-abed-5e7cbad5bc2a'
     - 'taxonomy_term:topics:5e4cc110-fed9-4427-8b16-89e9f44b37c3'
     - 'taxonomy_term:topics:6100d1a3-3383-48d8-99f7-818742971f2e'
-    - 'taxonomy_term:topics:63d92716-092a-4ab9-b8b7-23f20fa879c4'
     - 'taxonomy_term:topics:694fee74-dc9d-4317-a246-ab1a8def8cb3'
     - 'taxonomy_term:topics:6a09caa6-a421-45b3-b801-d17240cb4b0b'
     - 'taxonomy_term:topics:6cf5a786-b8ff-41b5-8989-1499d33a14bf'
@@ -59,20 +56,16 @@ dependencies:
     - 'taxonomy_term:topics:80c6b413-3ea4-4de9-9a4e-444eec9f9f90'
     - 'taxonomy_term:topics:838cf240-286c-4557-bb90-5bbd26b46043'
     - 'taxonomy_term:topics:85a85407-c8ba-4416-b7a9-585a98e870c2'
-    - 'taxonomy_term:topics:88c1af01-7ebb-42e4-b225-df3fad13194c'
     - 'taxonomy_term:topics:9016fd6c-c008-4530-8586-f00db0754dc9'
     - 'taxonomy_term:topics:901f11dd-e692-40fe-8e64-92cbb7c1a0f6'
     - 'taxonomy_term:topics:94693dea-809e-4976-90e6-6eb97414648f'
     - 'taxonomy_term:topics:97117d29-8fad-4777-8041-98e462bfdfae'
-    - 'taxonomy_term:topics:99246d7a-0337-4458-83e9-2dbd81b8196f'
     - 'taxonomy_term:topics:9bd2e81d-aaf8-4a20-af2d-85b6f2d2026d'
     - 'taxonomy_term:topics:a1ff4d25-3d43-494f-85d0-76212a37fe36'
     - 'taxonomy_term:topics:a3f252e1-70ba-41d3-bdec-ee575c387062'
-    - 'taxonomy_term:topics:a739db58-3a70-4a1c-b933-c8a392d6b250'
     - 'taxonomy_term:topics:a86f67cf-3edd-49e5-9848-95777fe2f7c8'
     - 'taxonomy_term:topics:aacd8fe0-334e-4fc2-9b11-761105f6a23e'
     - 'taxonomy_term:topics:ab9782a6-d57e-4aa1-91e8-89c6e687ba53'
-    - 'taxonomy_term:topics:ac749738-e388-4cc0-901f-422aa72a9da5'
     - 'taxonomy_term:topics:b062ae97-bd31-4540-843c-42f54892d584'
     - 'taxonomy_term:topics:b0d489b0-fd03-4d1e-b74c-ee37c7821275'
     - 'taxonomy_term:topics:b6d850dc-6445-4bda-9a43-99f51288040a'
@@ -87,7 +80,6 @@ dependencies:
     - 'taxonomy_term:topics:d0a9d418-969e-40a2-a2cf-99e6f75086f1'
     - 'taxonomy_term:topics:d4e2a831-03b8-4103-a9f9-bcd708da1245'
     - 'taxonomy_term:topics:d79d49df-6c08-4eb4-8c13-e9cefa55c635'
-    - 'taxonomy_term:topics:d7a37be1-c510-4c63-83b1-c2cbd47bbe04'
     - 'taxonomy_term:topics:d92f7551-4146-4fa9-8561-6b1f244afecf'
     - 'taxonomy_term:topics:d938c195-f8b2-4286-91ed-710f36fd462e'
     - 'taxonomy_term:topics:da558765-2153-4d1b-80c3-58089246fa3d'
@@ -106,8 +98,11 @@ dependencies:
   module:
     - better_exposed_filters
     - datetime
+    - image_url_formatter
+    - link
     - media
     - node
+    - smart_trim
     - taxonomy
     - text
     - user
@@ -1334,7 +1329,7 @@ display:
             dc:
               views_rss_dc:
                 title: ''
-                creator: ''
+                creator: field_author
                 subject: ''
                 description: ''
                 publisher: ''
@@ -1786,6 +1781,143 @@ display:
             tags: '0'
           entity_type: node
           plugin_id: taxonomy_index_tid
+        term_node_tid_1:
+          id: term_node_tid_1
+          table: node_field_data
+          field: term_node_tid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Custom Authors'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: separator
+          separator: ', '
+          link_to_taxonomy: false
+          limit: true
+          vids:
+            custom_authors: custom_authors
+            accent_color: '0'
+            areas: '0'
+            article_type: '0'
+            author_type: '0'
+            background_color: '0'
+            banner_box_alignment: '0'
+            beats: '0'
+            exclude: '0'
+            icons: '0'
+            include: '0'
+            locations: '0'
+            location_type: '0'
+            media_tags: '0'
+            organizations: '0'
+            people: '0'
+            source: '0'
+            tags: '0'
+            topics: '0'
+          entity_type: node
+          plugin_id: taxonomy_index_tid
+        field_author:
+          id: field_author
+          table: node__field_author
+          field: field_author
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: '{{ field_author }}, {{ term_node_tid_1 }}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: '{{ term_node_tid_1 }}'
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
         nid:
           id: nid
           table: node_field_data
@@ -2714,6 +2846,7 @@ display:
         - user.roles
       tags:
         - 'config:field.storage.node.body'
+        - 'config:field.storage.node.field_author'
         - 'config:field.storage.node.field_date_and_time'
         - 'config:field.storage.node.field_source'
   feed_2:
@@ -2742,7 +2875,7 @@ display:
             dc:
               views_rss_dc:
                 title: ''
-                creator: ''
+                creator: field_author
                 subject: ''
                 description: ''
                 publisher: ''
@@ -2977,9 +3110,20 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: summary
-          type: text_summary_or_trimmed
+          type: smart_trim
           settings:
             trim_length: 600
+            trim_type: chars
+            trim_suffix: ''
+            wrap_output: false
+            wrap_class: trimmed
+            more_link: false
+            more_text: More
+            more_class: more-link
+            summary_handler: full
+            trim_options:
+              text: false
+              trim_zero: false
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -3108,12 +3252,12 @@ display:
           type: separator
           separator: ', '
           link_to_taxonomy: false
-          limit: false
+          limit: true
           vids:
+            topics: topics
+            accent_color: '0'
             areas: '0'
             article_type: '0'
-            topics: '0'
-            accent_color: '0'
             author_type: '0'
             background_color: '0'
             banner_box_alignment: '0'
@@ -3122,8 +3266,8 @@ display:
             exclude: '0'
             icons: '0'
             include: '0'
-            location_type: '0'
             locations: '0'
+            location_type: '0'
             media_tags: '0'
             organizations: '0'
             people: '0'
@@ -3131,6 +3275,143 @@ display:
             tags: '0'
           entity_type: node
           plugin_id: taxonomy_index_tid
+        term_node_tid_1:
+          id: term_node_tid_1
+          table: node_field_data
+          field: term_node_tid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Custom Authors'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: separator
+          separator: ', '
+          link_to_taxonomy: false
+          limit: true
+          vids:
+            custom_authors: custom_authors
+            accent_color: '0'
+            areas: '0'
+            article_type: '0'
+            author_type: '0'
+            background_color: '0'
+            banner_box_alignment: '0'
+            beats: '0'
+            exclude: '0'
+            icons: '0'
+            include: '0'
+            locations: '0'
+            location_type: '0'
+            media_tags: '0'
+            organizations: '0'
+            people: '0'
+            source: '0'
+            tags: '0'
+            topics: '0'
+          entity_type: node
+          plugin_id: taxonomy_index_tid
+        field_author:
+          id: field_author
+          table: node__field_author
+          field: field_author
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: '{{ field_author }}, {{ term_node_tid_1 }}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: '{{ term_node_tid_1 }}'
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       defaults:
         fields: false
         filters: false
@@ -3284,51 +3565,6 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           plugin_id: string
-        tid:
-          id: tid
-          table: taxonomy_index
-          field: tid
-          relationship: none
-          group_type: group
-          admin_label: 'Type of Article'
-          operator: 'not empty'
-          value: {  }
-          group: 1
-          exposed: false
-          expose:
-            operator_id: tid_op
-            label: 'Type of Article'
-            description: ''
-            use_operator: false
-            operator: tid_op
-            identifier: tid
-            required: false
-            remember: false
-            multiple: true
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-          type: select
-          limit: true
-          vid: article_type
-          hierarchy: false
-          error_message: true
-          plugin_id: taxonomy_index_tid
         field_primary_area_target_id:
           id: field_primary_area_target_id
           table: node__field_primary_area
@@ -3399,52 +3635,6 @@ display:
           hierarchy: false
           error_message: false
           plugin_id: taxonomy_index_tid
-        tid_1:
-          id: tid_1
-          table: taxonomy_index
-          field: tid
-          relationship: none
-          group_type: group
-          admin_label: 'Health And Science Topics'
-          operator: or
-          value:
-            756: 756
-          group: 1
-          exposed: false
-          expose:
-            operator_id: tid_1_op
-            label: 'Health And Science Topics'
-            description: ''
-            use_operator: false
-            operator: tid_1_op
-            identifier: tid_1
-            required: false
-            remember: false
-            multiple: true
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-            reduce: true
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-          type: select
-          limit: true
-          vid: topics
-          hierarchy: false
-          error_message: true
-          plugin_id: taxonomy_index_tid
       filter_groups:
         operator: AND
         groups:
@@ -3459,6 +3649,7 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.body'
+        - 'config:field.storage.node.field_author'
         - 'config:field.storage.node.field_date_and_time'
   feed_3:
     display_plugin: feed
@@ -3486,7 +3677,7 @@ display:
             dc:
               views_rss_dc:
                 title: ''
-                creator: ''
+                creator: field_author
                 subject: ''
                 description: ''
                 publisher: ''
@@ -3875,6 +4066,143 @@ display:
             tags: '0'
           entity_type: node
           plugin_id: taxonomy_index_tid
+        term_node_tid_1:
+          id: term_node_tid_1
+          table: node_field_data
+          field: term_node_tid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Custom Authors'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: separator
+          separator: ', '
+          link_to_taxonomy: false
+          limit: true
+          vids:
+            custom_authors: custom_authors
+            accent_color: '0'
+            areas: '0'
+            article_type: '0'
+            author_type: '0'
+            background_color: '0'
+            banner_box_alignment: '0'
+            beats: '0'
+            exclude: '0'
+            icons: '0'
+            include: '0'
+            locations: '0'
+            location_type: '0'
+            media_tags: '0'
+            organizations: '0'
+            people: '0'
+            source: '0'
+            tags: '0'
+            topics: '0'
+          entity_type: node
+          plugin_id: taxonomy_index_tid
+        field_author:
+          id: field_author
+          table: node__field_author
+          field: field_author
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: '{{ field_author }}, {{ term_node_tid_1 }}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: '{{ term_node_tid_1 }}'
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       defaults:
         fields: false
         filters: false
@@ -4112,6 +4440,7 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.body'
+        - 'config:field.storage.node.field_author'
         - 'config:field.storage.node.field_date_and_time'
   feed_4:
     display_plugin: feed
@@ -4130,16 +4459,16 @@ display:
                 link: view_node
                 description-image: ''
                 description: body
-                author: ''
+                author: nothing
                 category: term_node_tid
                 comments: ''
-                enclosure: ''
+                enclosure: field_media_image
                 guid: nid
                 pubDate: field_date_and_time
             dc:
               views_rss_dc:
                 title: ''
-                creator: ''
+                creator: field_author_1
                 subject: ''
                 description: ''
                 publisher: ''
@@ -4165,39 +4494,54 @@ display:
           id: title
           table: node_field_data
           field: title
-          entity_type: node
-          entity_field: title
-          label: ''
-          alter:
-            alter_text: false
-            make_link: false
-            absolute: false
-            trim: false
-            word_boundary: false
-            ellipsis: false
-            strip_tags: false
-            html: false
-          hide_empty: false
-          empty_zero: false
-          settings:
-            link_to_entity: true
-          plugin_id: field
           relationship: none
           group_type: group
           admin_label: ''
+          label: ''
           exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: false
+            ellipsis: false
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
           element_type: ''
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
           empty: ''
+          hide_empty: false
+          empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
           type: string
+          settings:
+            link_to_entity: false
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -4208,6 +4552,9 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+          entity_type: node
+          entity_field: title
+          plugin_id: field
         field_date_and_time:
           id: field_date_and_time
           table: node__field_date_and_time
@@ -4374,9 +4721,20 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: summary
-          type: text_summary_or_trimmed
+          type: smart_trim
           settings:
             trim_length: 600
+            trim_type: chars
+            trim_suffix: ''
+            wrap_output: false
+            wrap_class: trimmed
+            more_link: false
+            more_text: More
+            more_class: more-link
+            summary_handler: full
+            trim_options:
+              text: true
+              trim_zero: false
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -4398,7 +4756,7 @@ display:
           label: ''
           exclude: false
           alter:
-            alter_text: true
+            alter_text: false
             text: '{{ nid }} at UCSF.edu'
             make_link: false
             path: ''
@@ -4505,12 +4863,12 @@ display:
           type: separator
           separator: ', '
           link_to_taxonomy: false
-          limit: false
+          limit: true
           vids:
+            topics: topics
+            accent_color: '0'
             areas: '0'
             article_type: '0'
-            topics: '0'
-            accent_color: '0'
             author_type: '0'
             background_color: '0'
             banner_box_alignment: '0'
@@ -4519,8 +4877,8 @@ display:
             exclude: '0'
             icons: '0'
             include: '0'
-            location_type: '0'
             locations: '0'
+            location_type: '0'
             media_tags: '0'
             organizations: '0'
             people: '0'
@@ -4528,6 +4886,386 @@ display:
             tags: '0'
           entity_type: node
           plugin_id: taxonomy_index_tid
+        field_media_image:
+          id: field_media_image
+          table: media__field_media_image
+          field: field_media_image
+          relationship: field_card_image
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: image_url
+          settings:
+            url_type: '0'
+            image_style: ''
+            image_link: file
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+        name:
+          id: name
+          table: taxonomy_term_field_data
+          field: name
+          relationship: field_custom_author
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          convert_spaces: false
+          entity_type: taxonomy_term
+          entity_field: name
+          plugin_id: term_name
+        field_author:
+          id: field_author
+          table: node__field_author
+          field: field_author
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+        nothing:
+          id: nothing
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: Author
+          exclude: false
+          alter:
+            alter_text: true
+            text: '{{ field_author }}{{ name }}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
+          plugin_id: custom
+        term_node_tid_1:
+          id: term_node_tid_1
+          table: node_field_data
+          field: term_node_tid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Custom Authors'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: separator
+          separator: ', '
+          link_to_taxonomy: false
+          limit: true
+          vids:
+            custom_authors: custom_authors
+            accent_color: '0'
+            areas: '0'
+            article_type: '0'
+            author_type: '0'
+            background_color: '0'
+            banner_box_alignment: '0'
+            beats: '0'
+            exclude: '0'
+            icons: '0'
+            include: '0'
+            locations: '0'
+            location_type: '0'
+            media_tags: '0'
+            organizations: '0'
+            people: '0'
+            source: '0'
+            tags: '0'
+            topics: '0'
+          entity_type: node
+          plugin_id: taxonomy_index_tid
+        field_author_1:
+          id: field_author_1
+          table: node__field_author
+          field: field_author
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: '{{ field_author }}, {{ term_node_tid_1 }}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: '{{ term_node_tid_1 }}'
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       defaults:
         fields: false
         filters: false
@@ -4535,6 +5273,7 @@ display:
         title: false
         sitename_title: false
         access: false
+        relationships: false
       pager:
         type: some
         options:
@@ -4681,20 +5420,100 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           plugin_id: string
+        tid:
+          id: tid
+          table: taxonomy_index
+          field: tid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: tid_op
+            label: Topics
+            description: ''
+            use_operator: false
+            operator: tid_op
+            identifier: topics
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              myaccess: '0'
+              editor: '0'
+              publisher: '0'
+              manager: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          type: select
+          limit: true
+          vid: topics
+          hierarchy: false
+          error_message: true
+          plugin_id: taxonomy_index_tid
       filter_groups:
         operator: AND
         groups:
           1: AND
+      relationships:
+        field_source:
+          id: field_source
+          table: node__field_source
+          field: field_source
+          relationship: none
+          group_type: group
+          admin_label: 'field_source: Taxonomy term'
+          required: false
+          plugin_id: standard
+        field_card_image:
+          id: field_card_image
+          table: node__field_card_image
+          field: field_card_image
+          relationship: none
+          group_type: group
+          admin_label: 'field_card_image: Media'
+          required: false
+          plugin_id: standard
+        field_custom_author:
+          id: field_custom_author
+          table: node__field_custom_author
+          field: field_custom_author
+          relationship: none
+          group_type: group
+          admin_label: 'field_custom_author: Taxonomy term'
+          required: false
+          plugin_id: standard
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url
         - user
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.media.field_media_image'
         - 'config:field.storage.node.body'
+        - 'config:field.storage.node.field_author'
         - 'config:field.storage.node.field_date_and_time'
   feed_5:
     display_plugin: feed
@@ -4722,7 +5541,7 @@ display:
             dc:
               views_rss_dc:
                 title: ''
-                creator: ''
+                creator: field_author
                 subject: ''
                 description: ''
                 publisher: ''
@@ -5111,6 +5930,143 @@ display:
             tags: '0'
           entity_type: node
           plugin_id: taxonomy_index_tid
+        term_node_tid_1:
+          id: term_node_tid_1
+          table: node_field_data
+          field: term_node_tid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Custom Authors'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: separator
+          separator: ', '
+          link_to_taxonomy: false
+          limit: true
+          vids:
+            custom_authors: custom_authors
+            accent_color: '0'
+            areas: '0'
+            article_type: '0'
+            author_type: '0'
+            background_color: '0'
+            banner_box_alignment: '0'
+            beats: '0'
+            exclude: '0'
+            icons: '0'
+            include: '0'
+            locations: '0'
+            location_type: '0'
+            media_tags: '0'
+            organizations: '0'
+            people: '0'
+            source: '0'
+            tags: '0'
+            topics: '0'
+          entity_type: node
+          plugin_id: taxonomy_index_tid
+        field_author:
+          id: field_author
+          table: node__field_author
+          field: field_author
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: '{{ field_author }}, {{ term_node_tid_1 }}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: '{{ term_node_tid_1 }}'
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       defaults:
         fields: false
         filters: false
@@ -5348,6 +6304,7 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.body'
+        - 'config:field.storage.node.field_author'
         - 'config:field.storage.node.field_date_and_time'
   feed_6:
     display_plugin: feed
@@ -5363,7 +6320,7 @@ display:
             core:
               views_rss_core:
                 title: title
-                link: view_node
+                link: field_external_url
                 description-image: ''
                 description: body
                 author: ''
@@ -5375,7 +6332,7 @@ display:
             dc:
               views_rss_dc:
                 title: ''
-                creator: ''
+                creator: field_author
                 subject: ''
                 description: ''
                 publisher: ''
@@ -5401,39 +6358,54 @@ display:
           id: title
           table: node_field_data
           field: title
-          entity_type: node
-          entity_field: title
-          label: ''
-          alter:
-            alter_text: false
-            make_link: false
-            absolute: false
-            trim: false
-            word_boundary: false
-            ellipsis: false
-            strip_tags: false
-            html: false
-          hide_empty: false
-          empty_zero: false
-          settings:
-            link_to_entity: true
-          plugin_id: field
           relationship: none
           group_type: group
           admin_label: ''
+          label: ''
           exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: false
+            ellipsis: false
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: true
+            trim: false
+            preserve_tags: ''
+            html: false
           element_type: ''
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
           empty: ''
+          hide_empty: false
+          empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
           type: string
+          settings:
+            link_to_entity: false
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -5444,6 +6416,9 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+          entity_type: node
+          entity_field: title
+          plugin_id: field
         field_date_and_time:
           id: field_date_and_time
           table: node__field_date_and_time
@@ -5764,6 +6739,210 @@ display:
             tags: '0'
           entity_type: node
           plugin_id: taxonomy_index_tid
+        field_external_url:
+          id: field_external_url
+          table: node__field_external_url
+          field: field_external_url
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: '{{ view_node }}'
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
+          click_sort_column: uri
+          type: link
+          settings:
+            trim_length: null
+            url_only: true
+            url_plain: true
+            rel: '0'
+            target: '0'
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+        term_node_tid_1:
+          id: term_node_tid_1
+          table: node_field_data
+          field: term_node_tid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Custom Authors'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: separator
+          separator: ', '
+          link_to_taxonomy: false
+          limit: true
+          vids:
+            custom_authors: custom_authors
+            accent_color: '0'
+            areas: '0'
+            article_type: '0'
+            author_type: '0'
+            background_color: '0'
+            banner_box_alignment: '0'
+            beats: '0'
+            exclude: '0'
+            icons: '0'
+            include: '0'
+            locations: '0'
+            location_type: '0'
+            media_tags: '0'
+            organizations: '0'
+            people: '0'
+            source: '0'
+            tags: '0'
+            topics: '0'
+          entity_type: node
+          plugin_id: taxonomy_index_tid
+        field_author:
+          id: field_author
+          table: node__field_author
+          field: field_author
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: '{{ field_author }}, {{ term_node_tid_1 }}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: '{{ term_node_tid_1 }}'
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       defaults:
         fields: false
         filters: false
@@ -5880,43 +7059,6 @@ display:
           hierarchy: false
           error_message: true
           plugin_id: taxonomy_index_tid
-        field_external_url_uri:
-          id: field_external_url_uri
-          table: node__field_external_url
-          field: field_external_url_uri
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: empty
-          value: ''
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            placeholder: ''
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: string
         tid:
           id: tid
           table: taxonomy_index
@@ -5977,7 +7119,9 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.body'
+        - 'config:field.storage.node.field_author'
         - 'config:field.storage.node.field_date_and_time'
+        - 'config:field.storage.node.field_external_url'
   page_1:
     display_plugin: page
     id: page_1
