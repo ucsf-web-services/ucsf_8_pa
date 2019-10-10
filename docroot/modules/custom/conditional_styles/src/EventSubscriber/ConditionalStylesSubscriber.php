@@ -39,14 +39,16 @@ class ConditionalStylesSubscriber implements EventSubscriberInterface {
     }
     //dpm('are we some sort of admin: '. $isAdmin);
     // this isn't working because of some Drupal cache thing going (!$isAdmin)
-    if (is_object($node) && $node->hasField('field_article_type')) {
+    if (is_object($node) && $node->hasField('field_article_type') && $node->hasField('field_external_url')) {
       \Drupal::service('page_cache_kill_switch')->trigger();
       //dpm($node);
       if ($node->get('field_article_type')->first()->getValue()['target_id'] == '413496') {
-        $url = $node->get('field_external_url')->first()->getValue()['uri'];
-        $response = new RedirectResponse($url, $this->redirectCode);
-        $response->send();
-        return;
+        if ($node->get('field_external_url')->first() !== null) {
+          $url = $node->get('field_external_url')->first()->getValue()['uri'];
+          $response = new RedirectResponse($url, $this->redirectCode);
+          $response->send();
+          return;
+        }
       }
     }
   }
