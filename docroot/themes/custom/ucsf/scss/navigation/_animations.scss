@@ -1,6 +1,9 @@
 /**
 * Header and main body animation
 */
+
+// Variables for transition animations are located in tools/_variables.scss
+
 .page-node-type-news-center .combined-header-region,
 .alias-home .combined-header-region,
 .page-node-type-article  .combined-header-region {
@@ -62,16 +65,20 @@
   .recommended-article__image {
     overflow: hidden;
   }
+
   img {
-    transition: .5s ease-out all;
+    transition: $transition-time-short ease-out transform;
   }
+
   .recommended-article__copy h2 a {
-    transition: .5s ease-out all;
+    transition: $transition-time ease-out color;
   }
+
   &:hover {
     img {
       transform: scale(1.1);
     }
+
     .recommended-article__copy h2 a {
       color: $c-blue-link;
     }
