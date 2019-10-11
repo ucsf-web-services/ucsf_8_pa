@@ -161,20 +161,22 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             /** @var \Drupal\paragraphs\Entity\Paragraph $video_paragraph */
             $video_paragraph = $item->entity;
             /** @var \Drupal\video_embed_field\Plugin\Field\FieldType\VideoEmbedField $video_field */
-            $video_field = $video_paragraph
-              ->get('field_media_video_embed_field')->get(0);
+            $video_field = $video_paragraph->get('field_media_video_embed_field')->get(0);
             if ($url = $video_field->get('value')->getString()) {
               $component = $this->getVideoComponent($url);
-              /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $caption */
-              if ($caption = $paragraph->get('field_video_caption')->get(0)) {
-                /** @var string $caption */
-                if ($caption = $this->textValue($caption->get('value')->getValue())) {
-                  $component->setCaption($caption);
+              if (is_object($component)) {
+                /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $caption */
+                if ($caption = $paragraph->get('field_video_caption')->get(0)) {
+                  /** @var string $caption */
+                  if ($caption = $this->textValue($caption->get('value')->getValue())) {
+                    $component->setCaption($caption);
+                  }
                 }
+                $component->setLayout(
+                  _ucsf_applenews_video_component_layout());
+                $components[] = $component;
               }
-              $component->setLayout(
-                _ucsf_applenews_video_component_layout());
-              $components[] = $component;
+
               break;
             }
           }
