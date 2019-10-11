@@ -245,9 +245,17 @@ a.button-reverse:visited,
 
 .cta--list {
   a {
-    // overwriting the transition
-    // applied to all links for text areas of articles, full-width, and narrow pages
-    transition: none;
+    transition: $transition-time cubic-bezier(0.33,0.66,0.66,1) background-color;
+
+    &:hover,
+    &:focus {
+      // declaring each background property separately on purpose,
+      // all inclusive background shorthand can accidentally overwrite images set as backgrounds.
+      background-size: 14px 10px;
+      background-repeat: no-repeat;
+      background-position: right center;
+      background-color: $c-blue-link-rollover;
+    }
   }
 }
 
