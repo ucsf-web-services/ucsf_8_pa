@@ -214,8 +214,8 @@ a {
   color: #0071ad;
   background-color: transparent;
   text-decoration: none;
-  -webkit-transition: background 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
-  transition: background 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
+  -webkit-transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
+  transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
   border-bottom: 1px solid #0071ad;
   overflow-wrap: break-word;
   word-break: break-word;
@@ -224,7 +224,7 @@ a {
   .article-header a:hover,
   .full-width-page-wrapper a:hover,
   .full-width-page-banner a:hover {
-    background: #e8f4fa;
+    background-color: #e8f4fa;
     border-bottom: 1px solid #e8f4fa; }
 
 .tags-menu a,
@@ -248,7 +248,10 @@ a {
 .full-width-page-banner__header a.link--cta,
 .promo-list__card-two .link--cta {
   display: inline-block;
-  background: url("../images/cta-arrow.svg") right center no-repeat transparent;
+  background-image: url("../images/cta-arrow.svg");
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-color: transparent;
   background-size: 14px 10px;
   padding-right: 24px;
   text-decoration: none;
@@ -262,8 +265,6 @@ a {
   .link--cta a:hover,
   .full-width-page-banner__header a.link--cta:hover,
   .promo-list__card-two .link--cta:hover {
-    background: url("../images/cta-arrow.svg") right center no-repeat transparent;
-    background-size: 14px 10px;
     padding-right: 32px; }
 
 .promo-list__card a {
@@ -405,7 +406,10 @@ a.button-reverse:visited,
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     padding: 16px 0;
     border-bottom: 1px solid #ddd;
-    background: url("../images/cta-arrow.svg") right center no-repeat transparent;
+    background-image: url("../images/cta-arrow.svg");
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-color: transparent;
     background-size: 14px 10px;
     padding-right: 20px; }
 
@@ -413,13 +417,10 @@ a.button-reverse:visited,
   -webkit-transition: 0.3s cubic-bezier(0.33, 0.66, 0.66, 1) background-color;
   transition: 0.3s cubic-bezier(0.33, 0.66, 0.66, 1) background-color; }
   .cta--list a:hover, .cta--list a:focus {
-    background-size: 14px 10px;
-    background-repeat: no-repeat;
-    background-position: right center;
     background-color: #e8f4fa; }
 
 .ext--list a {
-  background: url("../images/ext-link.svg") right center no-repeat transparent;
+  background-image: url("../images/ext-link.svg");
   background-size: 20px; }
 
 .no-bullets,
@@ -9168,7 +9169,9 @@ a[href*="http"] .article-header__date {
     margin-bottom: 8px; }
     .article-meta-share li a {
       color: #506380;
-      border-bottom: none; }
+      border-bottom: none;
+      -webkit-transition: 0.3s ease color;
+      transition: 0.3s ease color; }
       .article-meta-share li a .indent-text {
         position: absolute;
         left: -9999px;
@@ -9176,7 +9179,8 @@ a[href*="http"] .article-header__date {
       .article-meta-share li a .fa-print {
         font-size: 24px; }
       .article-meta-share li a:hover {
-        border-bottom: none; }
+        border-bottom: none;
+        background-color: transparent; }
       .article-meta-share li a[title="Facebook"]:hover {
         color: #3b5998; }
       .article-meta-share li a[title="Twitter"]:hover {
