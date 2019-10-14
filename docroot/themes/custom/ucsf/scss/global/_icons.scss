@@ -85,6 +85,39 @@ a%icon {
   }
 }
 
+// Reason for nesting classes:
+// .field-ankle-cta all inclusive background: none in _field-ankle-cta.scss
+// is overwriting background properties of a.icon-media on small screens.
+// For example "Subscribe to UCSF News" http://ucsf.lndo.site/news
+
+// Screen size up to 850px
+.field-ankle-cta {
+  a.icon-media {
+    background-image: url(/themes/custom/ucsf/assets/images/card/media.svg);
+    background-position: .5em center;
+    background-repeat: no-repeat;
+    background-size: $space-four $space-four;
+    padding-left: $space-six;
+
+    // Screen size starting at 850px
+    @include breakpoint($bp-large) {
+      background-position: left center;
+      padding-left: $space-five;
+    }
+  }
+
+  // Screen size up to 850px
+  a.icon-media:hover {
+    background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg);
+
+    // Screen size starting at 850px
+    @include breakpoint($bp-large) {
+      background-image: url(/themes/custom/ucsf/assets/images/card/media.svg);
+      padding-left: $space-six;
+    }
+  }
+}
+
 [data-primary-area="pa-about"],
 [data-primary-area="pa-campus-news"],
 [data-primary-area="pa-announcements"],
