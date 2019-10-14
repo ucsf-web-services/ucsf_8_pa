@@ -100,13 +100,13 @@ a {
   color: $c-blue-link;
   background-color: transparent;
   text-decoration: none;
-  transition: background 0.15s cubic-bezier(0.33,0.66,0.66,1);
+  transition: background-color 0.15s cubic-bezier(0.33,0.66,0.66,1);
   border-bottom: 1px solid $c-blue-link;
   overflow-wrap: break-word;
   word-break: break-word;
   word-wrap: break-word;
     &:hover {
-      background: $c-blue-link-rollover;
+      background-color: $c-blue-link-rollover;
       border-bottom: 1px solid $c-blue-link-rollover;
     }
   }
@@ -142,16 +142,20 @@ a {
 .full-width-page-banner__header a.link--cta,
 .promo-list__card-two .link--cta {
   display: inline-block;
-  background: url('../images/cta-arrow.svg') right center no-repeat transparent;
+  // declaring each background property separately on purpose,
+  // all inclusive background shorthand can accidentally overwrite images set as backgrounds.
+  background-image: url('../images/cta-arrow.svg');
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-color: transparent;
   background-size: 14px 10px;
   padding-right: $space-three;
   text-decoration: none;
   font-family: $font-helvetica-neue-medium;
   border-bottom: none;
   @include transition;
+
   &:hover {
-    background: url('../images/cta-arrow.svg') right center no-repeat transparent;
-    background-size: 14px 10px;
     padding-right: $space-four;
   }
 }
@@ -237,7 +241,10 @@ a.button-reverse:visited,
     font-family: $font-helvetica-neue-medium;
     padding: $space-two 0;
     border-bottom: 1px solid $gray-lightest;
-    background: url('../images/cta-arrow.svg') right center no-repeat transparent;
+    background-image: url('../images/cta-arrow.svg');
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-color: transparent;
     background-size: 14px 10px;
     padding-right: 20px;
   }
@@ -249,11 +256,6 @@ a.button-reverse:visited,
 
     &:hover,
     &:focus {
-      // declaring each background property separately on purpose,
-      // all inclusive background shorthand can accidentally overwrite images set as backgrounds.
-      background-size: 14px 10px;
-      background-repeat: no-repeat;
-      background-position: right center;
       background-color: $c-blue-link-rollover;
     }
   }
@@ -261,7 +263,7 @@ a.button-reverse:visited,
 
 .ext--list {
   a {
-    background: url('../images/ext-link.svg') right center no-repeat transparent;
+    background-image: url('../images/ext-link.svg');
     background-size: 20px;
   }
 }
