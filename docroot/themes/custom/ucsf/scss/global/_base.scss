@@ -252,10 +252,18 @@ a.button-reverse:visited,
 
 .cta--list {
   a {
-    transition: $transition-time cubic-bezier(0.33,0.66,0.66,1) background-color;
+    transition: $transition-time cubic-bezier(0.33,0.66,0.66,1) background-color,
+                $transition-time cubic-bezier(0.33,0.66,0.66,1) background-position;
+    background-position: 97% center;
 
     &:hover,
     &:focus {
+      // declaring each background property separately on purpose,
+      // all inclusive background shorthand can accidentally overwrite images set as backgrounds.
+      background-image: url('../images/cta-arrow.svg');
+      background-size: 14px 10px;
+      background-repeat: no-repeat;
+      background-position: right center;
       background-color: $c-blue-link-rollover;
     }
   }
