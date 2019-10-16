@@ -1,0 +1,52 @@
+uuid: ef736907-7454-4bdd-8733-7d4b542b5d6c
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - ucsf_edu_migrate
+_core:
+  default_config_hash: DPuaflJOVxp2csrz5GErFW21pNJBcv2pyvX8CK-UHos
+id: author_paragraph
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: content_import
+label: 'Migrate the author paragraph entity type into the new ucsf.edu website'
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  urls: 'public://author_paragraph.xml'
+  item_selector: /nodes/node
+  ids:
+    nid:
+      type: integer
+  fields:
+    -
+      name: nid
+      label: 'node id'
+      selector: Nid
+    -
+      name: author_ref
+      label: 'author entity reference'
+      selector: author_ent
+    -
+      name: name
+      label: test
+      selector: name
+    -
+      name: num
+      label: test
+      selector: num
+  constants:
+    file_directory: 'public://'
+process:
+  field_a_author: author_ref
+  field_test_name: name
+  field_test_num: num
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: author
+migration_dependencies: {  }
