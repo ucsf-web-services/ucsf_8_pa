@@ -46,7 +46,11 @@
   {% include directory ~ '/assets/images/sprite.svg' %}
 </div>
 
-<div {{ attributes.addClass('page') }}>
+{% if node.field_page_background_color.0.entity.label|clean_class is not empty %}
+  {% set background_color = 'bk-color-'~node.field_page_background_color.0.entity.label|clean_class %}
+{% endif %}
+
+<div {{ attributes.addClass('page', background_color) }}>
 
   {{ page.header }}
 
