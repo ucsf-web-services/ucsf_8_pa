@@ -1857,6 +1857,13 @@ a.icon-transit:hover {
       -webkit-animation: element-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
               animation: element-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
 
+@media (min-width: 769px) {
+  .element-fade {
+    opacity: 0; }
+    .element-fade--in-viewport {
+      -webkit-animation: element-fade 0.8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+              animation: element-fade 0.8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
+
 @-webkit-keyframes fade-and-slide {
   0% {
     -webkit-transform: translateY(-147px);
@@ -2017,6 +2024,18 @@ a.icon-transit:hover {
     opacity: 1;
     -webkit-transform: translateY(0px);
             transform: translateY(0px); } }
+
+@-webkit-keyframes element-fade {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@keyframes element-fade {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
 
 .news-card {
   overflow: hidden; }
