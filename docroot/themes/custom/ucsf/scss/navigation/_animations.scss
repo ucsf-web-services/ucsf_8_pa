@@ -101,6 +101,18 @@
   }
 }
 
+.element-fade {
+  // Screen size starting at 769 px
+  @include breakpoint($new-small) {
+    opacity: 0;
+
+    // on scroll down makes section move up and become visible
+    &--in-viewport {
+      animation: element-fade .8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    }
+  }
+}
+
 /**
  * ----------------------------------------
  * animation menu
@@ -200,6 +212,17 @@
   100% {
     opacity: 1;
     transform: translateY(0px);
+  }
+}
+
+// Generic fade-in animation for elements
+@keyframes element-fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 
