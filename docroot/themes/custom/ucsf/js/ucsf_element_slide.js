@@ -4,21 +4,24 @@
  */
 
 (function () {
-  // element to be animated
-  const quote = document.querySelectorAll('.blockquote--half-right, .blockquote--half-left, .callout-right, .callout-left');
+  if ('IntersectionObserver' in window) {
+    // element to be animated
+    const quote = document.querySelectorAll('.blockquote--half-right, .blockquote--half-left, .callout-right, .callout-left');
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
 
-      if (entry.intersectionRatio > 0) {
-        // adds the class responsible for animation on the first viewport appearance
-        entry.target.classList.add('in-viewport');
-        observer.unobserve(entry.target);
-      }
+        if (entry.intersectionRatio > 0) {
+          // adds the class responsible for animation on the first viewport appearance
+          entry.target.classList.add('in-viewport');
+          observer.unobserve(entry.target);
+        }
+      })
     })
-  })
 
-  quote.forEach(element => {
-    observer.observe(element);
-  });
+    quote.forEach(element => {
+      observer.observe(element);
+    });
+  }
+
 })();
