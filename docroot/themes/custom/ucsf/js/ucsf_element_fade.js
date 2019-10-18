@@ -5,18 +5,22 @@
   // element to be animated
   const elementFade = document.querySelectorAll('.element-fade');
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        console.log(entry.intersectionRatio)
 
-      if (entry.intersectionRatio > 0) {
-        // adds the class responsible for animation on the first viewport appearance
-        entry.target.classList.add('element-fade--in-viewport');
-        observer.unobserve(entry.target);
-      }
+        if (entry.intersectionRatio > 0) {
+          // adds the class responsible for animation on the first viewport appearance
+          entry.target.classList.add('element-fade--in-viewport');
+          observer.unobserve(entry.target);
+        }
+      })
     })
-  })
 
-  elementFade.forEach(element => {
-    observer.observe(element);
-  });
+    elementFade.forEach(element => {
+      observer.observe(element);
+    });
+  }
+
 })();
