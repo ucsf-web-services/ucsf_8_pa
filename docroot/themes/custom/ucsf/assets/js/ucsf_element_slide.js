@@ -1,25 +1,27 @@
 'use strict';
 
 /**
- * Animation of elements based on location in the viewport.
+ * Slide in callout boxes and blockquotes from right or left based on location
+ * in the viewport.
  */
+
 (function () {
   // element to be animated
-  var elementFade = document.querySelectorAll('.element-fade');
+  var quote = document.querySelectorAll('.blockquote--half-right, .blockquote--half-left, .callout-right, .callout-left');
 
   var observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
 
       if (entry.intersectionRatio > 0) {
         // adds the class responsible for animation on the first viewport appearance
-        entry.target.classList.add('element-fade--in-viewport');
+        entry.target.classList.add('in-viewport');
         observer.unobserve(entry.target);
       }
     });
   });
 
-  elementFade.forEach(function (element) {
+  quote.forEach(function (element) {
     observer.observe(element);
   });
 })();
-//# sourceMappingURL=ucsf_element_fade.js.map
+//# sourceMappingURL=ucsf_element_slide.js.map
