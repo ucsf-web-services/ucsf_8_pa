@@ -10,8 +10,6 @@
   if ('IntersectionObserver' in window) {
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        console.log(entry.intersectionRatio);
-
         if (entry.intersectionRatio > 0) {
           // adds the class responsible for animation on the first viewport appearance
           entry.target.classList.add('element-fade--in-viewport');
