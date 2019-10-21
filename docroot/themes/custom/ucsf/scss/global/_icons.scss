@@ -1,214 +1,122 @@
-.icon-education,
-.icon-doctor,
-.icon-campus,
-.icon-money,
-.icon-awards,
-.icon-support,
-.icon-caduceus,
-.icon-heart,
-.icon-comprehensive,
-.icon-media,
-.icon-microscope,
-.icon-research,
-.icon-directions,
-.icon-transit,
-.icon-patient-care,
-.icon-hospital {
+// Icon SVG styles
+//
+// Documentation about Sass functions https://sass-lang.com/documentation/at-rules/control
+// Documentation about Sass Placeholder Selectors https://sass-lang.com/documentation/style-rules/placeholder-selectors
+// Testing how Sass will compile to css https://www.sassmeister.com
+//
+// Variables and placeholders used
+// @param $icon-styles - a sass list of icon styles.
+// @param #{$item} - current item from $icon-styles iterated over by the @each loop
+// @param %icon - placeholder for .icon-#{$item}
+
+$icon-styles: awards, caduceus, campus, comprehensive, directions,
+              doctor, education, heart, hospital, media,
+              microscope, money, patient-care, research, support,
+              transit;
+
+// Common properties that all icons will share.
+%icon {
   content: ' ';
   background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
   background-size: $space-six $space-six;
   height: $space-six;
   width: $space-six;
+
   &:hover {
     text-decoration: underline;
   }
 }
 
-.icon-media {
-  background: url(/themes/custom/ucsf/assets/images/card/media.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
+// Creates a comma separated list of classes
+@each $item in $icon-styles {
+  .icon-#{$item} {
+    @extend %icon;
+  }
 }
 
-.icon-doctor {
-  background-image: url(/themes/custom/ucsf/assets/images/card/doctor.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
-}
-
-.icon-campus {
-  background: url(/themes/custom/ucsf/assets/images/card/campus.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
-}
-
-.icon-money {
-  background: url(/themes/custom/ucsf/assets/images/card/money.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
-}
-
-.icon-awards {
-  background: url(/themes/custom/ucsf/assets/images/card/awards.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
-}
-
-.icon-support {
-  background: url(/themes/custom/ucsf/assets/images/card/support.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
-}
-
-.icon-caduceus {
-  background: url(/themes/custom/ucsf/assets/images/card/caduceus.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
-}
-
-.icon-heart {
-  background: url(/themes/custom/ucsf/assets/images/card/heart.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
-}
-
-.icon-comprehensive {
-  background: url(/themes/custom/ucsf/assets/images/card/comprehensive.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
-}
-
-.icon-microscope,
-.icon-research {
-  background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
-}
-
-.icon-directions {
-  background: url(/themes/custom/ucsf/assets/images/card/directions.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
-}
-
-.icon-transit {
-  background: url(/themes/custom/ucsf/assets/images/card/transit.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
-}
-
-.icon-patient-care {
-  background: url(/themes/custom/ucsf/assets/images/card/patient-care.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
-}
-
-.icon-hospital {
-  background: url(/themes/custom/ucsf/assets/images/card/hospital.svg) left center no-repeat transparent;
-  background-size: $space-six $space-six;
-}
-
-a {
-  &.icon-education,
-  &.icon-doctor,
-  &.icon-campus,
-  &.icon-money,
-  &.icon-awards,
-  &.icon-support,
-  &.icon-caduceus,
-  &.icon-heart,
-  &.icon-comprehensive,
-  &.icon-media,
-  &.icon-microscope,
-  &.icon-directions,
-  &.icon-transit,
-  &.icon-patient-care,
-  &.icon-hospital {
-    content: ' ';
-    background-size: $space-four $space-four;
-    height: auto;
-    width: auto;
-    padding-left: $space-five;
-    display: inline-block;
-    background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
-    @include transition;
-
-    &:hover {
-      background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
-      padding-left: $space-six;
+@each $item in $icon-styles {
+  .icon-#{$item} {
+    // if .icon-research uses microscope svg.
+    @if $item == research {
+      background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent;
+      background-size: $space-six $space-six;
+    }
+    // For other icons generates current item's svg name from the list of icon styles
+    @else {
+      background: url(/themes/custom/ucsf/assets/images/card/#{$item}.svg) left center no-repeat transparent;
+      background-size: $space-six $space-six;
     }
   }
 }
 
-a.icon-media,
-a.icon-media:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/media.svg) left center no-repeat transparent;
+// Compiles to a list of comma separated selectors for link with a class - a.icon-awards, a.icon-campus, ...
+a%icon {
+  content: ' ';
+  background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
   background-size: $space-four $space-four;
+  height: auto;
+  width: auto;
+  padding-left: $space-five;
+  display: inline-block;
+  @include transition;
+
+  &:hover {
+    background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
+    padding-left: $space-six;
+  }
 }
 
-a.icon-doctor,
-a.icon-doctor:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/doctor.svg) left center no-repeat transparent;
-  background-size: $space-four $space-four;
+@each $item in $icon-styles {
+  // if a.icon-research uses microscope svg.
+  @if $item == research {
+    a.icon-#{$item},
+    a.icon-#{$item}:hover {
+      background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent;
+      padding-left: $space-six;
+    }
+  }
+
+  @else {
+    // For other icons generates current item's svg name from the list of icon styles
+    a.icon-#{$item},
+    a.icon-#{$item}:hover {
+      background: url(/themes/custom/ucsf/assets/images/card/#{$item}.svg) left center no-repeat transparent;
+      background-size: $space-four $space-four;
+    }
+  }
 }
 
-a.icon-campus,
-a.icon-campus:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/campus.svg) left center no-repeat transparent;
-  background-size: $space-four $space-four;
-}
+// Reason for nesting classes:
+// .field-ankle-cta all inclusive background: none in _field-ankle-cta.scss
+// is overwriting background properties of a.icon-media on small screens.
+// For example "Subscribe to UCSF News" http://ucsf.lndo.site/news
 
-a.icon-money,
-a.icon-money:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/money.svg) left center no-repeat transparent;
-  background-size: $space-four $space-four;
-}
+// Screen size up to 850px
+.field-ankle-cta {
+  a.icon-media {
+    background-image: url(/themes/custom/ucsf/assets/images/card/media.svg);
+    background-position: .5em center;
+    background-repeat: no-repeat;
+    background-size: $space-four $space-four;
+    padding-left: $space-six;
 
-a.icon-awards,
-a.icon-awards:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/awards.svg) left center no-repeat transparent;
-  background-size: $space-four $space-four;
-}
+    // Screen size starting at 850px
+    @include breakpoint($bp-large) {
+      background-position: left center;
+      padding-left: $space-five;
+    }
+  }
 
-a.icon-support,
-a.icon-support:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/support.svg) left center no-repeat transparent;
-  background-size: $space-four $space-four;
-}
+  // Screen size up to 850px
+  a.icon-media:hover {
+    background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg);
 
-a.icon-caduceus,
-a.icon-caduceus:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/caduceus.svg) left center no-repeat transparent;
-  background-size: $space-four $space-four;
-}
-
-a.icon-heart,
-a.icon-heart:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/heart.svg) left center no-repeat transparent;
-  background-size: $space-four $space-four;
-}
-
-a.icon-comprehensive,
-a.icon-comprehensive:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/comprehensive.svg) left center no-repeat transparent;
-  background-size: $space-four $space-four;
-}
-
-a.icon-microscope,
-a.icon-microscope:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent;
-  background-size: $space-four $space-four;
-}
-
-a.icon-directions,
-a.icon-directions:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/directions.svg) left center no-repeat transparent;
-  background-size: $space-four $space-four;
-}
-
-a.icon-transit,
-a.icon-transit:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/transit.svg) left center no-repeat transparent;
-  background-size: $space-four $space-four;
-}
-
-a.icon-patient-care,
-a.icon-patient-care:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/patient-care.svg) left center no-repeat transparent;
-  background-size: $space-four $space-four;
-}
-
-a.icon-hospital,
-a.icon-hospital:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/hospital.svg) left center no-repeat transparent;
-  background-size: $space-four $space-four;
+    // Screen size starting at 850px
+    @include breakpoint($bp-large) {
+      background-image: url(/themes/custom/ucsf/assets/images/card/media.svg);
+      padding-left: $space-six;
+    }
+  }
 }
 
 [data-primary-area="pa-about"],
