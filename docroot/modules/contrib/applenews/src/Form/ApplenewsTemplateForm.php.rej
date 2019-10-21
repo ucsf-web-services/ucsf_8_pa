@@ -1,11 +1,37 @@
---- src/Form/ApplenewsTemplateForm.php
-+++ src/Form/ApplenewsTemplateForm.php
-@@ -5,7 +5,7 @@ namespace Drupal\applenews\Form;
- use Drupal\applenews\Plugin\ApplenewsComponentTypeManager;
- use Drupal\Component\Serialization\Json;
- use Drupal\Core\Entity\EntityForm;
--use Drupal\Core\Entity\EntityTypeManager;
-+use Drupal\Core\Entity\EntityTypeManagerInterface;
- use Drupal\Core\Form\FormStateInterface;
- use Drupal\Core\Render\RendererInterface;
- use Symfony\Component\DependencyInjection\ContainerInterface;
+***************
+*** 184,199 ****
+      ];
+  
+      $rows = [];
+-     foreach ($components as $id => $component) {
+-       $rows[$id] = $this->getComponentRow($component, $form_state);
+-       $component_plugin = $this->applenewsComponentTypeManager->createInstance($component['id']);
+-       // If not a nested component, it cannot be a parent of other components.
+-       if ($component_plugin->getComponentType() != 'nested') {
+-         $rows[$id]['#attributes']['class'][] = 'tabledrag-leaf';
+-       }
+-       else {
+-         $rows += $this->getChildComponentRows($component, $form_state);
+-         $rows[$id]['type']['#markup'] = '<strong>' . $component['id'] . '</strong>';
+        }
+      }
+  
+--- 184,201 ----
+      ];
+  
+      $rows = [];
++     if (!empty($components)) {
++       foreach ($components as $id => $component) {
++         $rows[$id] = $this->getComponentRow($component, $form_state);
++         $component_plugin = $this->applenewsComponentTypeManager->createInstance($component['id']);
++         // If not a nested component, it cannot be a parent of other components.
++         if ($component_plugin->getComponentType() != 'nested') {
++           $rows[$id]['#attributes']['class'][] = 'tabledrag-leaf';
++         }
++         else {
++           $rows += $this->getChildComponentRows($component, $form_state);
++           $rows[$id]['type']['#markup'] = '<strong>' . $component['id'] . '</strong>';
++         }
+        }
+      }
+  

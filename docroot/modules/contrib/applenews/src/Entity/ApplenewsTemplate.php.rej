@@ -1,0 +1,52 @@
+***************
+*** 171,187 ****
+     * {@inheritdoc}
+     */
+    public function deleteComponent($id) {
+-     foreach ($this->components as $component_id => &$component) {
+-       if ($id == $component_id) {
+-         unset($this->components[$id]);
+-         return TRUE;
+-       }
+-       if ($this->deleteNestedComponent($component['component_data']['components'], $id)) {
+-         return TRUE;
+        }
+- 
+      }
+-     uasort($components, [$this, 'sortHelper']);
+    }
+  
+    /**
+--- 173,185 ----
+     * {@inheritdoc}
+     */
+    public function deleteComponent($id) {
++     if ($this->deleteNestedComponent($this->components, $id)) {
++       if (!empty($this->components)) {
++         uasort($this->components, [$this, 'sortHelper']);
+        }
++       return TRUE;
+      }
++     return FALSE;
+    }
+  
+    /**
+***************
+*** 204,210 ****
+          }
+          return TRUE;
+        }
+-       if ($this->deleteNestedComponent($component['component_data']['components'], $id)) {
+          return TRUE;
+        }
+      }
+--- 202,210 ----
+          }
+          return TRUE;
+        }
++       if (!empty($component['component_data']['components']) &&
++         $this->deleteNestedComponent($component['component_data']['components'], $id)
++       ) {
+          return TRUE;
+        }
+      }

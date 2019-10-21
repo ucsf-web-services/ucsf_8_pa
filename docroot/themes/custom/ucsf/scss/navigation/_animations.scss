@@ -1,9 +1,6 @@
 /**
 * Header and main body animation
 */
-
-// Variables for transition animations are located in tools/_variables.scss
-
 .page-node-type-news-center .combined-header-region,
 .alias-home .combined-header-region,
 .page-node-type-article  .combined-header-region {
@@ -20,13 +17,13 @@
 
 
 .page-node-type-article .page_narrow {
-  animation: header-fade $transition-time-long cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+  animation: header-fade 1.0s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
 }
 .page-node-type-article .image-style-article-feature-banner__image {
   animation: fade 2000ms cubic-bezier(0.77, 0, 0.175, 1) 0ms both;
 }
 .page-node-type-article .article-header.article-medium-header {
-  animation: header-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+  animation: header-swoosh 2.0s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
 
 }
 .topics-list__topics .slick-slide .topic-card {
@@ -51,14 +48,12 @@
 
 .page-node-type-news-center {
   h1 {
-    animation: header-fade .8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    animation: header-fade 2.0s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
   }
-  .news-center-banner_list {
-    animation: header-swoosh 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-  }
+  .news-center-banner_list,
   .news-center-banner__featured,
   .news-search {
-    animation: header-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    animation: header-swoosh 2.0s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
   }
 }
 
@@ -67,25 +62,23 @@
   .recommended-article__image {
     overflow: hidden;
   }
-
   img {
-    transition: $transition-time-short ease-out transform;
+    transition: .5s ease-out all;
   }
-
   .recommended-article__copy h2 a {
-    transition: $transition-time ease-out color;
+    transition: .5s ease-out all;
   }
-
   &:hover {
     img {
       transform: scale(1.1);
     }
-
     .recommended-article__copy h2 a {
       color: $c-blue-link;
     }
   }
 }
+
+
 
 /**
  * ----------------------------------------
@@ -113,6 +106,14 @@
   }
 }
 
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 @keyframes menu-slide {
   0% {
     clip: auto;
@@ -181,10 +182,10 @@
 
   .news-card__image img,
   .field-card-image img {
-    transition: $transition-time-short ease-out all;
+    transition: .3s ease-out all;
   }
   h2 {
-    transition: $transition-time ease-out all;
+    transition: .3s ease-out all;
   }
   &:hover {
     .news-card__image img,
