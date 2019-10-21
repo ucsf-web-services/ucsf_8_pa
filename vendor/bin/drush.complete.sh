@@ -1,5 +1,1 @@
-XSym
-0032
-3728992084f38420987f638bd86110c2
 ../drush/drush/drush.complete.sh
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
