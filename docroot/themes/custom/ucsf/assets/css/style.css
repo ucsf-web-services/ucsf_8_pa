@@ -180,8 +180,8 @@ a {
   a:hover {
     text-decoration: none; }
   a.cta {
-    -webkit-transition: .3s ease-out all;
-    transition: .3s ease-out all;
+    -webkit-transition: .2s ease-out all;
+    transition: .2s ease-out all;
     font-size: 14px;
     font-weight: 700;
     line-height: 13px;
@@ -214,8 +214,8 @@ a {
   color: #0071ad;
   background-color: transparent;
   text-decoration: none;
-  -webkit-transition: background 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
-  transition: background 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
+  -webkit-transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
+  transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
   border-bottom: 1px solid #0071ad;
   overflow-wrap: break-word;
   word-break: break-word;
@@ -224,7 +224,7 @@ a {
   .article-header a:hover,
   .full-width-page-wrapper a:hover,
   .full-width-page-banner a:hover {
-    background: #e8f4fa;
+    background-color: #e8f4fa;
     border-bottom: 1px solid #e8f4fa; }
 
 .tags-menu a,
@@ -248,22 +248,23 @@ a {
 .full-width-page-banner__header a.link--cta,
 .promo-list__card-two .link--cta {
   display: inline-block;
-  background: url("../images/cta-arrow.svg") right center no-repeat transparent;
+  background-image: url("../images/cta-arrow.svg");
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-color: transparent;
   background-size: 14px 10px;
   padding-right: 24px;
   text-decoration: none;
   font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   border-bottom: none;
-  -webkit-transition: .3s ease-out all;
-  transition: .3s ease-out all; }
+  -webkit-transition: .2s ease-out all;
+  transition: .2s ease-out all; }
   .link--cta:hover,
   .narrow-page a.link--cta:hover,
   .full-width-page-wrapper a.link--cta:hover,
   .link--cta a:hover,
   .full-width-page-banner__header a.link--cta:hover,
   .promo-list__card-two .link--cta:hover {
-    background: url("../images/cta-arrow.svg") right center no-repeat transparent;
-    background-size: 14px 10px;
     padding-right: 32px; }
 
 .promo-list__card a {
@@ -273,8 +274,8 @@ a {
     background: transparent; }
 
 .promo-list__card-two:hover .link--cta {
-  -webkit-transition: .3s ease-out all;
-  transition: .3s ease-out all;
+  -webkit-transition: .2s ease-out all;
+  transition: .2s ease-out all;
   background: url("../images/cta-arrow.svg") right center no-repeat transparent;
   background-size: 14px 10px;
   padding-right: 32px;
@@ -314,7 +315,9 @@ span.ext {
   .narrow-page .button:hover {
     background-color: #007cbe;
     color: #fff;
-    border-color: #007cbe; }
+    border-color: #007cbe;
+    -webkit-transition: 0.2s ease background-color;
+    transition: 0.2s ease background-color; }
 
 .button--alt,
 .full-width-page-wrapper .button--alt,
@@ -346,7 +349,9 @@ span.ext {
   .layout-column .button--alt:last-child:hover {
     background-color: #007cbe;
     color: #fff;
-    border-color: #007cbe; }
+    border-color: #007cbe;
+    -webkit-transition: 0.2s ease background-color;
+    transition: 0.2s ease background-color; }
 
 .button-reverse,
 a.button-reverse,
@@ -388,7 +393,9 @@ a.button-reverse:visited,
   .full-width-page-wrapper a.button-reverse:visited:hover {
     background-color: #007cbe;
     color: #fff;
-    border-color: #007cbe; }
+    border-color: #007cbe;
+    -webkit-transition: 0.2s ease background-color;
+    transition: 0.2s ease background-color; }
 
 .cta--list,
 .ext--list {
@@ -405,12 +412,26 @@ a.button-reverse:visited,
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     padding: 16px 0;
     border-bottom: 1px solid #ddd;
-    background: url("../images/cta-arrow.svg") right center no-repeat transparent;
+    background-image: url("../images/cta-arrow.svg");
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-color: transparent;
     background-size: 14px 10px;
     padding-right: 20px; }
 
+.cta--list a {
+  -webkit-transition: 0.3s cubic-bezier(0.33, 0.66, 0.66, 1) background-color, 0.3s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+  transition: 0.3s cubic-bezier(0.33, 0.66, 0.66, 1) background-color, 0.3s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+  background-position: 97% center; }
+  .cta--list a:hover, .cta--list a:focus {
+    background-image: url("../images/cta-arrow.svg");
+    background-size: 14px 10px;
+    background-repeat: no-repeat;
+    background-position: 98% center;
+    background-color: #e8f4fa; }
+
 .ext--list a {
-  background: url("../images/ext-link.svg") right center no-repeat transparent;
+  background-image: url("../images/ext-link.svg");
   background-size: 20px; }
 
 .no-bullets,
@@ -503,15 +524,6 @@ strong, b {
 .far {
   font-family: 'Font Awesome 5 Free'; }
 
-.lazyload,
-.lazyloading {
-  opacity: 0; }
-
-.lazyloaded {
-  opacity: 1;
-  -webkit-transition: opacity 300ms;
-  transition: opacity 300ms; }
-
 .no-js img.lazyload {
   display: none; }
 
@@ -603,7 +615,9 @@ form button {
   form button:hover {
     background-color: #007cbe;
     color: #fff;
-    border-color: #007cbe; }
+    border-color: #007cbe;
+    -webkit-transition: 0.2s ease background-color;
+    transition: 0.2s ease background-color; }
 
 input[type="search"],
 input[type="text"],
@@ -636,7 +650,9 @@ input[type="submit"] {
   input[type="submit"]:hover {
     background-color: #007cbe;
     color: #fff;
-    border-color: #007cbe; }
+    border-color: #007cbe;
+    -webkit-transition: 0.2s ease background-color;
+    transition: 0.2s ease background-color; }
 
 select {
   background: url("/themes/custom/ucsf/assets/images/arrow-down.svg") no-repeat right 19px center #fff; }
@@ -656,144 +672,96 @@ textarea {
 .webform-submission-form textarea {
   border: 1px solid #333; }
 
-.icon-education,
-.icon-doctor,
-.icon-campus,
-.icon-money,
-.icon-awards,
-.icon-support,
-.icon-caduceus,
-.icon-heart,
-.icon-comprehensive,
-.icon-media,
-.icon-microscope,
-.icon-research,
-.icon-directions,
-.icon-transit,
-.icon-patient-care,
-.icon-hospital {
+.icon-awards, .icon-caduceus, .icon-campus, .icon-comprehensive, .icon-directions, .icon-doctor, .icon-education, .icon-heart, .icon-hospital, .icon-media, .icon-microscope, .icon-money, .icon-patient-care, .icon-research, .icon-support, .icon-transit {
   content: ' ';
   background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
   background-size: 48px 48px;
   height: 48px;
   width: 48px; }
-  .icon-education:hover,
-  .icon-doctor:hover,
-  .icon-campus:hover,
-  .icon-money:hover,
-  .icon-awards:hover,
-  .icon-support:hover,
-  .icon-caduceus:hover,
-  .icon-heart:hover,
-  .icon-comprehensive:hover,
-  .icon-media:hover,
-  .icon-microscope:hover,
-  .icon-research:hover,
-  .icon-directions:hover,
-  .icon-transit:hover,
-  .icon-patient-care:hover,
-  .icon-hospital:hover {
+  .icon-awards:hover, .icon-caduceus:hover, .icon-campus:hover, .icon-comprehensive:hover, .icon-directions:hover, .icon-doctor:hover, .icon-education:hover, .icon-heart:hover, .icon-hospital:hover, .icon-media:hover, .icon-microscope:hover, .icon-money:hover, .icon-patient-care:hover, .icon-research:hover, .icon-support:hover, .icon-transit:hover {
     text-decoration: underline; }
-
-.icon-media {
-  background: url(/themes/custom/ucsf/assets/images/card/media.svg) left center no-repeat transparent;
-  background-size: 48px 48px; }
-
-.icon-doctor {
-  background-image: url(/themes/custom/ucsf/assets/images/card/doctor.svg) left center no-repeat transparent;
-  background-size: 48px 48px; }
-
-.icon-campus {
-  background: url(/themes/custom/ucsf/assets/images/card/campus.svg) left center no-repeat transparent;
-  background-size: 48px 48px; }
-
-.icon-money {
-  background: url(/themes/custom/ucsf/assets/images/card/money.svg) left center no-repeat transparent;
-  background-size: 48px 48px; }
 
 .icon-awards {
   background: url(/themes/custom/ucsf/assets/images/card/awards.svg) left center no-repeat transparent;
-  background-size: 48px 48px; }
-
-.icon-support {
-  background: url(/themes/custom/ucsf/assets/images/card/support.svg) left center no-repeat transparent;
   background-size: 48px 48px; }
 
 .icon-caduceus {
   background: url(/themes/custom/ucsf/assets/images/card/caduceus.svg) left center no-repeat transparent;
   background-size: 48px 48px; }
 
-.icon-heart {
-  background: url(/themes/custom/ucsf/assets/images/card/heart.svg) left center no-repeat transparent;
+.icon-campus {
+  background: url(/themes/custom/ucsf/assets/images/card/campus.svg) left center no-repeat transparent;
   background-size: 48px 48px; }
 
 .icon-comprehensive {
   background: url(/themes/custom/ucsf/assets/images/card/comprehensive.svg) left center no-repeat transparent;
   background-size: 48px 48px; }
 
-.icon-microscope,
-.icon-research {
-  background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent;
-  background-size: 48px 48px; }
-
 .icon-directions {
   background: url(/themes/custom/ucsf/assets/images/card/directions.svg) left center no-repeat transparent;
   background-size: 48px 48px; }
 
-.icon-transit {
-  background: url(/themes/custom/ucsf/assets/images/card/transit.svg) left center no-repeat transparent;
+.icon-doctor {
+  background: url(/themes/custom/ucsf/assets/images/card/doctor.svg) left center no-repeat transparent;
   background-size: 48px 48px; }
 
-.icon-patient-care {
-  background: url(/themes/custom/ucsf/assets/images/card/patient-care.svg) left center no-repeat transparent;
+.icon-education {
+  background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
+  background-size: 48px 48px; }
+
+.icon-heart {
+  background: url(/themes/custom/ucsf/assets/images/card/heart.svg) left center no-repeat transparent;
   background-size: 48px 48px; }
 
 .icon-hospital {
   background: url(/themes/custom/ucsf/assets/images/card/hospital.svg) left center no-repeat transparent;
   background-size: 48px 48px; }
 
-a.icon-education, a.icon-doctor, a.icon-campus, a.icon-money, a.icon-awards, a.icon-support, a.icon-caduceus, a.icon-heart, a.icon-comprehensive, a.icon-media, a.icon-microscope, a.icon-directions, a.icon-transit, a.icon-patient-care, a.icon-hospital {
+.icon-media {
+  background: url(/themes/custom/ucsf/assets/images/card/media.svg) left center no-repeat transparent;
+  background-size: 48px 48px; }
+
+.icon-microscope {
+  background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent;
+  background-size: 48px 48px; }
+
+.icon-money {
+  background: url(/themes/custom/ucsf/assets/images/card/money.svg) left center no-repeat transparent;
+  background-size: 48px 48px; }
+
+.icon-patient-care {
+  background: url(/themes/custom/ucsf/assets/images/card/patient-care.svg) left center no-repeat transparent;
+  background-size: 48px 48px; }
+
+.icon-research {
+  background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent;
+  background-size: 48px 48px; }
+
+.icon-support {
+  background: url(/themes/custom/ucsf/assets/images/card/support.svg) left center no-repeat transparent;
+  background-size: 48px 48px; }
+
+.icon-transit {
+  background: url(/themes/custom/ucsf/assets/images/card/transit.svg) left center no-repeat transparent;
+  background-size: 48px 48px; }
+
+a.icon-awards, a.icon-caduceus, a.icon-campus, a.icon-comprehensive, a.icon-directions, a.icon-doctor, a.icon-education, a.icon-heart, a.icon-hospital, a.icon-media, a.icon-microscope, a.icon-money, a.icon-patient-care, a.icon-research, a.icon-support, a.icon-transit {
   content: ' ';
+  background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
   background-size: 32px 32px;
   height: auto;
   width: auto;
   padding-left: 40px;
   display: inline-block;
-  background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
-  -webkit-transition: .3s ease-out all;
-  transition: .3s ease-out all; }
-  a.icon-education:hover, a.icon-doctor:hover, a.icon-campus:hover, a.icon-money:hover, a.icon-awards:hover, a.icon-support:hover, a.icon-caduceus:hover, a.icon-heart:hover, a.icon-comprehensive:hover, a.icon-media:hover, a.icon-microscope:hover, a.icon-directions:hover, a.icon-transit:hover, a.icon-patient-care:hover, a.icon-hospital:hover {
+  -webkit-transition: .2s ease-out all;
+  transition: .2s ease-out all; }
+  a.icon-awards:hover, a.icon-caduceus:hover, a.icon-campus:hover, a.icon-comprehensive:hover, a.icon-directions:hover, a.icon-doctor:hover, a.icon-education:hover, a.icon-heart:hover, a.icon-hospital:hover, a.icon-media:hover, a.icon-microscope:hover, a.icon-money:hover, a.icon-patient-care:hover, a.icon-research:hover, a.icon-support:hover, a.icon-transit:hover {
     background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
     padding-left: 48px; }
-
-a.icon-media,
-a.icon-media:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/media.svg) left center no-repeat transparent;
-  background-size: 32px 32px; }
-
-a.icon-doctor,
-a.icon-doctor:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/doctor.svg) left center no-repeat transparent;
-  background-size: 32px 32px; }
-
-a.icon-campus,
-a.icon-campus:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/campus.svg) left center no-repeat transparent;
-  background-size: 32px 32px; }
-
-a.icon-money,
-a.icon-money:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/money.svg) left center no-repeat transparent;
-  background-size: 32px 32px; }
 
 a.icon-awards,
 a.icon-awards:hover {
   background: url(/themes/custom/ucsf/assets/images/card/awards.svg) left center no-repeat transparent;
-  background-size: 32px 32px; }
-
-a.icon-support,
-a.icon-support:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/support.svg) left center no-repeat transparent;
   background-size: 32px 32px; }
 
 a.icon-caduceus,
@@ -801,9 +769,9 @@ a.icon-caduceus:hover {
   background: url(/themes/custom/ucsf/assets/images/card/caduceus.svg) left center no-repeat transparent;
   background-size: 32px 32px; }
 
-a.icon-heart,
-a.icon-heart:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/heart.svg) left center no-repeat transparent;
+a.icon-campus,
+a.icon-campus:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/campus.svg) left center no-repeat transparent;
   background-size: 32px 32px; }
 
 a.icon-comprehensive,
@@ -811,19 +779,44 @@ a.icon-comprehensive:hover {
   background: url(/themes/custom/ucsf/assets/images/card/comprehensive.svg) left center no-repeat transparent;
   background-size: 32px 32px; }
 
-a.icon-microscope,
-a.icon-microscope:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent;
-  background-size: 32px 32px; }
-
 a.icon-directions,
 a.icon-directions:hover {
   background: url(/themes/custom/ucsf/assets/images/card/directions.svg) left center no-repeat transparent;
   background-size: 32px 32px; }
 
-a.icon-transit,
-a.icon-transit:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/transit.svg) left center no-repeat transparent;
+a.icon-doctor,
+a.icon-doctor:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/doctor.svg) left center no-repeat transparent;
+  background-size: 32px 32px; }
+
+a.icon-education,
+a.icon-education:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
+  background-size: 32px 32px; }
+
+a.icon-heart,
+a.icon-heart:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/heart.svg) left center no-repeat transparent;
+  background-size: 32px 32px; }
+
+a.icon-hospital,
+a.icon-hospital:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/hospital.svg) left center no-repeat transparent;
+  background-size: 32px 32px; }
+
+a.icon-media,
+a.icon-media:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/media.svg) left center no-repeat transparent;
+  background-size: 32px 32px; }
+
+a.icon-microscope,
+a.icon-microscope:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent;
+  background-size: 32px 32px; }
+
+a.icon-money,
+a.icon-money:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/money.svg) left center no-repeat transparent;
   background-size: 32px 32px; }
 
 a.icon-patient-care,
@@ -831,10 +824,38 @@ a.icon-patient-care:hover {
   background: url(/themes/custom/ucsf/assets/images/card/patient-care.svg) left center no-repeat transparent;
   background-size: 32px 32px; }
 
-a.icon-hospital,
-a.icon-hospital:hover {
-  background: url(/themes/custom/ucsf/assets/images/card/hospital.svg) left center no-repeat transparent;
+a.icon-research,
+a.icon-research:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent;
+  padding-left: 48px; }
+
+a.icon-support,
+a.icon-support:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/support.svg) left center no-repeat transparent;
   background-size: 32px 32px; }
+
+a.icon-transit,
+a.icon-transit:hover {
+  background: url(/themes/custom/ucsf/assets/images/card/transit.svg) left center no-repeat transparent;
+  background-size: 32px 32px; }
+
+.field-ankle-cta a.icon-media {
+  background-image: url(/themes/custom/ucsf/assets/images/card/media.svg);
+  background-position: .5em center;
+  background-repeat: no-repeat;
+  background-size: 32px 32px;
+  padding-left: 48px; }
+  @media (min-width: 850px) {
+    .field-ankle-cta a.icon-media {
+      background-position: left center;
+      padding-left: 40px; } }
+
+.field-ankle-cta a.icon-media:hover {
+  background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg); }
+  @media (min-width: 850px) {
+    .field-ankle-cta a.icon-media:hover {
+      background-image: url(/themes/custom/ucsf/assets/images/card/media.svg);
+      padding-left: 48px; } }
 
 [data-primary-area="pa-about"] figure,
 [data-primary-area="pa-campus-news"] figure,
@@ -1040,6 +1061,79 @@ a.icon-hospital:hover {
   .ui-accordion-content .field-tab-content > :first-child {
     margin-top: 0;
     padding-top: 0; }
+
+.element-fade {
+  opacity: 0; }
+  .element-fade--in-viewport:not(.lazyload) {
+    -webkit-animation: fade 0.8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+            animation: fade 0.8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
+  .explorer .element-fade {
+    opacity: 1; }
+
+@media (min-width: 769px) {
+  .element-swoosh--in-viewport {
+    -webkit-animation: element-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+            animation: element-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
+
+@-webkit-keyframes fade {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@keyframes fade {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@-webkit-keyframes element-swoosh {
+  0% {
+    -webkit-transform: translateY(50px);
+            transform: translateY(50px); }
+  100% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px); } }
+
+@keyframes element-swoosh {
+  0% {
+    -webkit-transform: translateY(50px);
+            transform: translateY(50px); }
+  100% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px); } }
+
+@-webkit-keyframes element-slide-left {
+  0% {
+    -webkit-transform: translateX(50px);
+            transform: translateX(50px); }
+  100% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px); } }
+
+@keyframes element-slide-left {
+  0% {
+    -webkit-transform: translateX(50px);
+            transform: translateX(50px); }
+  100% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px); } }
+
+@-webkit-keyframes element-slide-right {
+  0% {
+    -webkit-transform: translateX(-50px);
+            transform: translateX(-50px); }
+  100% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px); } }
+
+@keyframes element-slide-right {
+  0% {
+    -webkit-transform: translateX(-50px);
+            transform: translateX(-50px); }
+  100% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px); } }
 
 .universal-header__give {
   display: block;
@@ -1775,16 +1869,16 @@ a.icon-hospital:hover {
           animation: fade 1s cubic-bezier(0.77, 0, 0.175, 1) 1.25s both; }
 
 .page-node-type-article .page_narrow {
-  -webkit-animation: header-fade 1s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-          animation: header-fade 1s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
+  -webkit-animation: header-fade 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+          animation: header-fade 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
 
 .page-node-type-article .image-style-article-feature-banner__image {
   -webkit-animation: fade 2000ms cubic-bezier(0.77, 0, 0.175, 1) 0ms both;
           animation: fade 2000ms cubic-bezier(0.77, 0, 0.175, 1) 0ms both; }
 
 .page-node-type-article .article-header.article-medium-header {
-  -webkit-animation: header-swoosh 2s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-          animation: header-swoosh 2s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
+  -webkit-animation: header-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+          animation: header-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
 
 .topics-list__topics .slick-slide .topic-card {
   -webkit-transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1) all;
@@ -1808,25 +1902,28 @@ a.icon-hospital:hover {
           animation-fill-mode: forwards; }
 
 .page-node-type-news-center h1 {
-  -webkit-animation: header-fade 2s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-          animation: header-fade 2s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
+  -webkit-animation: header-fade 0.8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+          animation: header-fade 0.8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
 
-.page-node-type-news-center .news-center-banner_list,
+.page-node-type-news-center .news-center-banner_list {
+  -webkit-animation: header-swoosh 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+          animation: header-swoosh 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
+
 .page-node-type-news-center .news-center-banner__featured,
 .page-node-type-news-center .news-search {
-  -webkit-animation: header-swoosh 2s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-          animation: header-swoosh 2s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
+  -webkit-animation: header-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+          animation: header-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
 
 .recommended-articles__banner .recommended-article__image {
   overflow: hidden; }
 
 .recommended-articles__banner img {
-  -webkit-transition: .5s ease-out all;
-  transition: .5s ease-out all; }
+  -webkit-transition: 0.2s ease-out transform;
+  transition: 0.2s ease-out transform; }
 
 .recommended-articles__banner .recommended-article__copy h2 a {
-  -webkit-transition: .5s ease-out all;
-  transition: .5s ease-out all; }
+  -webkit-transition: 0.3s ease-out color;
+  transition: 0.3s ease-out color; }
 
 .recommended-articles__banner:hover img {
   -webkit-transform: scale(1.1);
@@ -1871,18 +1968,6 @@ a.icon-hospital:hover {
     opacity: 1;
     -webkit-box-shadow: 2px 0 0 #000;
             box-shadow: 2px 0 0 #000; } }
-
-@-webkit-keyframes fade {
-  0% {
-    opacity: 0; }
-  100% {
-    opacity: 1; } }
-
-@keyframes fade {
-  0% {
-    opacity: 0; }
-  100% {
-    opacity: 1; } }
 
 @-webkit-keyframes menu-slide {
   0% {
@@ -1984,11 +2069,11 @@ a.icon-hospital:hover {
     display: block; }
   .news-card .news-card__image img,
   .news-card .field-card-image img {
-    -webkit-transition: .3s ease-out all;
-    transition: .3s ease-out all; }
+    -webkit-transition: 0.2s ease-out all;
+    transition: 0.2s ease-out all; }
   .news-card h2 {
-    -webkit-transition: .3s ease-out all;
-    transition: .3s ease-out all; }
+    -webkit-transition: 0.3s ease-out all;
+    transition: 0.3s ease-out all; }
   .news-card:hover .news-card__image img,
   .news-card:hover .field-card-image img {
     -webkit-transform: scale(1.1);
@@ -2038,8 +2123,8 @@ a.icon-hospital:hover {
 .header-region {
   position: relative; }
   .header-region:before {
-    -webkit-transition: .3s ease-out all;
-    transition: .3s ease-out all;
+    -webkit-transition: .2s ease-out all;
+    transition: .2s ease-out all;
     background-color: rgba(18, 26, 49, 0.25);
     left: 0;
     display: block;
@@ -2338,7 +2423,9 @@ body.loading .quicklinks {
         .field-ankle-cta p a:hover {
           background-color: #007cbe;
           color: #fff;
-          border-color: #007cbe; } }
+          border-color: #007cbe;
+          -webkit-transition: 0.2s ease background-color;
+          transition: 0.2s ease background-color; } }
   @media (min-width: 850px) {
     .field-ankle-cta > .field__item {
       float: left;
@@ -3410,7 +3497,9 @@ figure.align-center figcaption {
   .card__button:hover {
     background-color: #007cbe;
     color: #fff;
-    border-color: #007cbe; }
+    border-color: #007cbe;
+    -webkit-transition: 0.2s ease background-color;
+    transition: 0.2s ease background-color; }
 
 .card--bg {
   background-color: #ddd;
@@ -4647,8 +4736,8 @@ figure.align-center figcaption {
           background-size: 16px 16px;
           padding-left: 24px;
           margin-right: 24px;
-          -webkit-transition: .3s ease-out all;
-          transition: .3s ease-out all; }
+          -webkit-transition: .2s ease-out all;
+          transition: .2s ease-out all; }
           .home-search__presearch-links li a:hover {
             text-decoration: underline;
             padding-left: 28px;
@@ -5133,7 +5222,9 @@ figure.align-center figcaption {
           .media-coverage__list .media-coverage__list-more a:hover {
             background-color: #007cbe;
             color: #fff;
-            border-color: #007cbe; } }
+            border-color: #007cbe;
+            -webkit-transition: 0.2s ease background-color;
+            transition: 0.2s ease background-color; } }
   @media (min-width: 769px) {
     .media-coverage__list {
       float: left;
@@ -5990,7 +6081,8 @@ a[href*="http"] .article-header__date {
     font-size: 20px; }
   .cd-timeline-content p {
     font-size: 16px; }
-  .cd-timeline-content .cd-read-more, .cd-timeline-content .cd-date {
+  .cd-timeline-content .cd-read-more,
+  .cd-timeline-content .cd-date {
     font-size: 15px; } }
 
 @media only screen and (min-width: 769px) {
@@ -7445,8 +7537,8 @@ a[href*="http"] .article-header__date {
   padding: 24px;
   width: 100%;
   margin-top: 100%;
-  -webkit-transition: .3s ease-out all;
-  transition: .3s ease-out all; }
+  -webkit-transition: .2s ease-out all;
+  transition: .2s ease-out all; }
   .promo-list__card-two-content .promo-list__card-content .field-promo-text,
   .promo-list__card-two-content:last-child .promo-list__card-content .field-promo-text,
   .promo-list__card-two-content:first-child .promo-list__card-content .field-promo-text {
@@ -7456,14 +7548,11 @@ a[href*="http"] .article-header__date {
   .promo-list__card-two-content:first-child p {
     margin: 0; }
   .promo-list__card-two-content .promo-list__card-more,
-  .promo-list__card-two-content .promo-list__card-more:first-child
-.promo-list__card-more:last-child,
+  .promo-list__card-two-content .promo-list__card-more:first-child .promo-list__card-more:last-child,
   .promo-list__card-two-content:last-child .promo-list__card-more,
-  .promo-list__card-two-content:last-child .promo-list__card-more:first-child
-.promo-list__card-more:last-child,
+  .promo-list__card-two-content:last-child .promo-list__card-more:first-child .promo-list__card-more:last-child,
   .promo-list__card-two-content:first-child .promo-list__card-more,
-  .promo-list__card-two-content:first-child .promo-list__card-more:first-child
-.promo-list__card-more:last-child {
+  .promo-list__card-two-content:first-child .promo-list__card-more:first-child .promo-list__card-more:last-child {
     margin-top: 12px; }
 
 .promo-list__card-two:hover .promo-list__card-two-content {
@@ -8087,8 +8176,8 @@ a[href*="http"] .article-header__date {
         top: 39px; } }
 
 .search-filter__dropdown {
-  -webkit-transition: .3s ease-out all;
-  transition: .3s ease-out all;
+  -webkit-transition: .2s ease-out all;
+  transition: .2s ease-out all;
   background: #f2f4f6;
   height: 0;
   width: 100%;
@@ -8154,8 +8243,8 @@ a[href*="http"] .article-header__date {
       line-height: 16px;
       text-transform: uppercase; }
   .search-filter__dropdown .fieldset-wrapper {
-    -webkit-transition: .3s ease-out all;
-    transition: .3s ease-out all;
+    -webkit-transition: .2s ease-out all;
+    transition: .2s ease-out all;
     height: 0;
     max-height: 192px;
     overflow: auto;
@@ -8459,8 +8548,8 @@ a[href*="http"] .article-header__date {
     text-decoration: none;
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     line-height: 1.4;
-    -webkit-transition: .3s ease-out all;
-    transition: .3s ease-out all; }
+    -webkit-transition: .2s ease-out all;
+    transition: .2s ease-out all; }
 
 .blockquote::after {
   clear: both;
@@ -9093,6 +9182,14 @@ a[href*="http"] .article-header__date {
       padding-left: 40px;
       padding-right: 40px; } }
 
+@media (min-width: 769px) {
+  .blockquote--half-right.in-viewport {
+    -webkit-animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+            animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
+  .blockquote--half-left.in-viewport {
+    -webkit-animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+            animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
+
 .ucsfcallout {
   background: #f2f4f6;
   margin: 10%;
@@ -9161,6 +9258,14 @@ a[href*="http"] .article-header__date {
   display: none;
   line-height: 0; }
 
+@media (min-width: 769px) {
+  .callout-right.in-viewport {
+    -webkit-animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+            animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
+  .callout-left.in-viewport {
+    -webkit-animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+            animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
+
 .article-meta-share {
   list-style: none;
   margin: 0;
@@ -9178,7 +9283,9 @@ a[href*="http"] .article-header__date {
     margin-bottom: 8px; }
     .article-meta-share li a {
       color: #506380;
-      border-bottom: none; }
+      border-bottom: none;
+      -webkit-transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) color;
+      transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) color; }
       .article-meta-share li a .indent-text {
         position: absolute;
         left: -9999px;
@@ -9186,7 +9293,8 @@ a[href*="http"] .article-header__date {
       .article-meta-share li a .fa-print {
         font-size: 24px; }
       .article-meta-share li a:hover {
-        border-bottom: none; }
+        border-bottom: none;
+        background-color: transparent; }
       .article-meta-share li a[title="Facebook"]:hover {
         color: #3b5998; }
       .article-meta-share li a[title="Twitter"]:hover {
@@ -11060,7 +11168,9 @@ a.video_preview::before {
 @supports (-ms-ime-align: auto) {
   .promo-list__card-two {
     min-height: 400px; }
-  .promo-list__card-two-content, .promo-list__card-two-content:last-child, .promo-list__card-two-content:first-child {
+  .promo-list__card-two-content,
+  .promo-list__card-two-content:last-child,
+  .promo-list__card-two-content:first-child {
     margin-top: auto;
     padding-bottom: auto; }
   .promo-list__card-two:hover .promo-list__card-two-content {
