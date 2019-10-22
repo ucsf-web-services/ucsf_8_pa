@@ -9,7 +9,8 @@ function ucsf_preprocess_field(&$variables) {
     $variables["items"][0]["content"]["#item_attributes"]['data-no-lazyload'] = TRUE;
   };
 
-  if ($variables['field_name'] == 'field_card_image') {
-    $variables["items"][0]["content"]["#item_attributes"]['data-no-lazyload'] = TRUE;
-  }
+  // Remove LazyLoad from Card Images
+  // if ($variables['field_name'] == 'field_card_image') {
+  //   $variables["items"][0]["content"]["#item_attributes"]['data-no-lazyload'] = TRUE;
+  // }
 }
