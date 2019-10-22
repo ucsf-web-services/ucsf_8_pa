@@ -247,7 +247,7 @@
   }
 }
 
-.ckpullquote, {
+.ckpullquote {
   padding-bottom: 50px;
   margin-bottom: 24px;
 }
@@ -274,5 +274,19 @@
   @include breakpoint($new-small-max) {
     padding-left: $space-five;
     padding-right: $space-five;
+  }
+}
+
+@include breakpoint($new-small) {
+  .blockquote--half-right {
+    &.in-viewport {
+      animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    }
+  }
+
+  .blockquote--half-left {
+    &.in-viewport {
+      animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    }
   }
 }
