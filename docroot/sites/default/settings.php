@@ -802,7 +802,7 @@ if (file_exists('/var/www/site-php')) {
   require '/var/www/site-php/ucsfpa1/ucsfpa8-settings.inc';
 }
 
-$config_directories['vcs'] = $app_root . '/../config/' . basename($site_path) . '/vcs';
+$config_directories['vcs'] = $app_root . '/../config/' . basename($site_path) . '/sync';
 $config_directories['sync'] = $app_root . '/sites/default/files/sync';
 
 

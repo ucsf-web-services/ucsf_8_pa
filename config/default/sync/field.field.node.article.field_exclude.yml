@@ -1,0 +1,29 @@
+uuid: e5466c67-f325-445a-84e9-38f8fd876068
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_exclude
+    - node.type.article
+    - taxonomy.vocabulary.exclude
+id: node.article.field_exclude
+field_name: field_exclude
+entity_type: node
+bundle: article
+label: Exclude
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      exclude: exclude
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

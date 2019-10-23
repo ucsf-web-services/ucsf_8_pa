@@ -1,0 +1,29 @@
+uuid: 871aadf8-779c-4e18-99fc-d785b35b8845
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_exclude
+    - node.type.news_package
+    - taxonomy.vocabulary.exclude
+id: node.news_package.field_exclude
+field_name: field_exclude
+entity_type: node
+bundle: news_package
+label: Exclude
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      exclude: exclude
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,29 @@
+uuid: e91ac7e9-891c-49a1-afda-ea7f0b643f02
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_areas
+    - node.type.narrow_page
+    - taxonomy.vocabulary.areas
+id: node.narrow_page.field_areas
+field_name: field_areas
+entity_type: node
+bundle: narrow_page
+label: Areas
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      areas: areas
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

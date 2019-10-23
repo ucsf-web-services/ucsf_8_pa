@@ -1,0 +1,47 @@
+uuid: a29d7818-5d1c-4996-8853-18a59defe74b
+langcode: en
+status: true
+dependencies:
+  module:
+    - image
+_core:
+  default_config_hash: KUjJ8Ti_ZJSlhGM88E_mhJP-8mmQRNUB6RFof615Kt0
+name: 'Restricted HTML'
+format: restricted_html
+weight: -8
+filters:
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -10
+    settings:
+      allowed_html: '<a href hreflang target class=""> <em> <strong> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id class=""> <h3 id class=""> <h4 id class=""> <h5 id class=""> <h6 id ca> <br> <span> <img src alt data-entity-type data-entity-uuid data-entity-substitution data-align data-caption width height data-image-style> <drupal-entity data-entity-type data-entity-uuid data-entity-substitution data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button> <p class=""> <s> <sup> <sub> <blockquote class=""> <div class=""> <cite class=""> <aside class=""> <footer class="">'
+      filter_html_help: true
+      filter_html_nofollow: false
+  filter_autop:
+    id: filter_autop
+    provider: filter
+    status: true
+    weight: 0
+    settings: {  }
+  filter_url:
+    id: filter_url
+    provider: filter
+    status: true
+    weight: 0
+    settings:
+      filter_url_length: 72
+  filter_htmlcorrector:
+    id: filter_htmlcorrector
+    provider: filter
+    status: true
+    weight: 10
+    settings: {  }
+  filter_image_style:
+    id: filter_image_style
+    provider: image
+    status: true
+    weight: 11
+    settings:
+      allowed_styles: {  }

@@ -1,0 +1,29 @@
+uuid: bd8544fa-096a-42dc-8c62-78fc70bffa69
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_fact_card_icon
+    - paragraphs.paragraphs_type.fact_promotional_card
+    - taxonomy.vocabulary.icons
+id: paragraph.fact_promotional_card.field_fact_card_icon
+field_name: field_fact_card_icon
+entity_type: paragraph
+bundle: fact_promotional_card
+label: 'Fact Card Icon'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      icons: icons
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

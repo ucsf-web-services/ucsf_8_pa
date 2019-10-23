@@ -1,0 +1,35 @@
+uuid: 79acc49a-6e11-4973-ae4f-290bdd9d3442
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.ankle_cta
+    - field.storage.node.field_ankle_cta
+    - node.type.article
+  content:
+    - 'block_content:ankle_cta:8fbc8f32-3463-472d-9674-d057ecd2732e'
+    - 'block_content:ankle_cta:955e8c14-e1be-4b86-bc13-e0c2a287a11c'
+id: node.article.field_ankle_cta
+field_name: field_ankle_cta
+entity_type: node
+bundle: article
+label: 'Ankle CTA'
+description: 'Create the ankle CTA block to reference it'
+required: false
+translatable: false
+default_value:
+  -
+    target_uuid: 8fbc8f32-3463-472d-9674-d057ecd2732e
+  -
+    target_uuid: 955e8c14-e1be-4b86-bc13-e0c2a287a11c
+default_value_callback: ''
+settings:
+  handler: 'default:block_content'
+  handler_settings:
+    target_bundles:
+      ankle_cta: ankle_cta
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,40 @@
+uuid: d9e35abd-e14e-4ecf-8456-11c3bb0d8786
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:6efc2b33-6a3d-487d-8945-4c884ad0df82'
+  module:
+    - block_content
+    - node
+  theme:
+    - ucsf
+id: popwiseblock
+theme: ucsf
+region: footer
+weight: 0
+provider: null
+plugin: 'block_content:6efc2b33-6a3d-487d-8945-4c884ad0df82'
+settings:
+  id: 'block_content:6efc2b33-6a3d-487d-8945-4c884ad0df82'
+  label: 'PopWise Block'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  node_type:
+    id: node_type
+    bundles:
+      article: article
+      author: author
+      full_width_page: full_width_page
+      homepage: homepage
+      narrow_page: narrow_page
+      news_center: news_center
+      news_package: news_package
+      trending: trending
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

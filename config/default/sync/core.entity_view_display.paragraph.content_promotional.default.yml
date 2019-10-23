@@ -1,0 +1,52 @@
+uuid: 453d493b-92cb-480d-931b-f901918e95c4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.content_promotional.field_content_accent_color
+    - field.field.paragraph.content_promotional.field_content_promotional_bg_col
+    - field.field.paragraph.content_promotional.field_content_promotional_conten
+    - field.field.paragraph.content_promotional.field_content_promotional_image
+    - image.style.full_width_page_banner__image
+    - paragraphs.paragraphs_type.content_promotional
+  module:
+    - media
+    - options
+    - text
+id: paragraph.content_promotional.default
+targetEntityType: paragraph
+bundle: content_promotional
+mode: default
+content:
+  field_content_accent_color:
+    weight: 5
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_content_promotional_bg_col:
+    weight: 4
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_content_promotional_conten:
+    weight: 3
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_content_promotional_image:
+    type: media_thumbnail
+    weight: 2
+    label: hidden
+    settings:
+      image_style: full_width_page_banner__image
+      image_link: ''
+    third_party_settings: {  }
+    region: content
+hidden: {  }

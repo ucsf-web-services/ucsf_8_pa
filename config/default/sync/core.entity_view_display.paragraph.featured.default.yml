@@ -1,0 +1,84 @@
+uuid: e50a452d-e942-4cfa-adee-408a0c0fc07d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.featured.field_banner_cta_text
+    - field.field.paragraph.featured.field_description
+    - field.field.paragraph.featured.field_image_media
+    - field.field.paragraph.featured.field_link
+    - field.field.paragraph.featured.field_news_article
+    - field.field.paragraph.featured.field_text_body
+    - field.field.paragraph.featured.field_title
+    - paragraphs.paragraphs_type.featured
+    - responsive_image.styles.card_row__image
+  module:
+    - link
+    - media_responsive_thumbnail
+    - text
+id: paragraph.featured.default
+targetEntityType: paragraph
+bundle: featured
+mode: default
+content:
+  field_banner_cta_text:
+    weight: 7
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_description:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_image_media:
+    weight: 4
+    label: hidden
+    settings:
+      responsive_image_style: card_row__image
+      image_link: ''
+    third_party_settings: {  }
+    type: media_responsive_thumbnail
+    region: content
+  field_link:
+    weight: 3
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_news_article:
+    weight: 5
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_text_body:
+    weight: 6
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

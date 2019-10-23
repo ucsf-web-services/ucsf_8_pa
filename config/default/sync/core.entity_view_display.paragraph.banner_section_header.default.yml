@@ -1,0 +1,52 @@
+uuid: 25f82289-85a4-4392-b666-09212c31534b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.banner_section_header.field_banner_section_description
+    - field.field.paragraph.banner_section_header.field_banner_section_image
+    - field.field.paragraph.banner_section_header.field_banner_section_position
+    - field.field.paragraph.banner_section_header.field_banner_section_title
+    - paragraphs.paragraphs_type.banner_section_header
+    - responsive_image.styles.banner_section
+  module:
+    - media_responsive_thumbnail
+    - options
+    - text
+id: paragraph.banner_section_header.default
+targetEntityType: paragraph
+bundle: banner_section_header
+mode: default
+content:
+  field_banner_section_description:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_banner_section_image:
+    type: media_responsive_thumbnail
+    weight: 1
+    label: hidden
+    settings:
+      responsive_image_style: banner_section
+      image_link: ''
+    third_party_settings: {  }
+    region: content
+  field_banner_section_position:
+    weight: 3
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_key
+    region: content
+  field_banner_section_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

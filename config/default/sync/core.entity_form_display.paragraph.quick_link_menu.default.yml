@@ -1,0 +1,35 @@
+uuid: 08710a8a-f7d0-461f-a91f-b626c741483e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.quick_link_menu.field_quick_link_link
+    - field.field.paragraph.quick_link_menu.field_quick_link_title
+    - paragraphs.paragraphs_type.quick_link_menu
+  module:
+    - link
+id: paragraph.quick_link_menu.default
+targetEntityType: paragraph
+bundle: quick_link_menu
+mode: default
+content:
+  field_quick_link_link:
+    weight: 1
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_quick_link_title:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

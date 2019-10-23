@@ -1,0 +1,58 @@
+uuid: 0dfe108f-f813-48be-b19e-8b3c789bb68f
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.alt
+    - field.field.paragraph.promotional_with_image.field_image_media
+    - field.field.paragraph.promotional_with_image.field_promo_cta
+    - field.field.paragraph.promotional_with_image.field_promo_text
+    - field.field.paragraph.promotional_with_image.field_textbox_background_color
+    - image.style.card_row__image
+    - paragraphs.paragraphs_type.promotional_with_image
+  module:
+    - link
+    - media
+    - text
+id: paragraph.promotional_with_image.alt
+targetEntityType: paragraph
+bundle: promotional_with_image
+mode: alt
+content:
+  field_image_media:
+    weight: 4
+    label: hidden
+    settings:
+      image_style: card_row__image
+      image_link: ''
+    third_party_settings: {  }
+    type: media_thumbnail
+    region: content
+  field_promo_cta:
+    weight: 3
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link_separate
+    region: content
+  field_promo_text:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_textbox_background_color:
+    weight: 2
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+hidden: {  }

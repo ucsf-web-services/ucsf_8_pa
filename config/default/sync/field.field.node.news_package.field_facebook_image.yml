@@ -1,0 +1,28 @@
+uuid: 2bfbde45-b6be-438b-aba9-6e679835ee50
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_facebook_image
+    - media.type.image
+    - node.type.news_package
+id: node.news_package.field_facebook_image
+field_name: field_facebook_image
+entity_type: node
+bundle: news_package
+label: 'Facebook Image'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

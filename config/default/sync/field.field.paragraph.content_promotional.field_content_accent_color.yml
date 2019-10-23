@@ -1,0 +1,29 @@
+uuid: 1a44ad98-5dc8-4abf-83e4-a7bd19db49f7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_content_accent_color
+    - paragraphs.paragraphs_type.content_promotional
+    - taxonomy.vocabulary.accent_color
+id: paragraph.content_promotional.field_content_accent_color
+field_name: field_content_accent_color
+entity_type: paragraph
+bundle: content_promotional
+label: 'Content Accent Color'
+description: 'This is used when a card has no image and usually with a background color'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      accent_color: accent_color
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

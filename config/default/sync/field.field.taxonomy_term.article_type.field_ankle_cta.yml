@@ -1,0 +1,35 @@
+uuid: 3d134872-b42f-46ce-8a7f-b5ddd4112052
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.ankle_cta
+    - field.storage.taxonomy_term.field_ankle_cta
+    - taxonomy.vocabulary.article_type
+  content:
+    - 'block_content:ankle_cta:8fbc8f32-3463-472d-9674-d057ecd2732e'
+    - 'block_content:ankle_cta:955e8c14-e1be-4b86-bc13-e0c2a287a11c'
+id: taxonomy_term.article_type.field_ankle_cta
+field_name: field_ankle_cta
+entity_type: taxonomy_term
+bundle: article_type
+label: 'Ankle CTA'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    target_uuid: 8fbc8f32-3463-472d-9674-d057ecd2732e
+  -
+    target_uuid: 955e8c14-e1be-4b86-bc13-e0c2a287a11c
+default_value_callback: ''
+settings:
+  handler: 'default:block_content'
+  handler_settings:
+    target_bundles:
+      ankle_cta: ankle_cta
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

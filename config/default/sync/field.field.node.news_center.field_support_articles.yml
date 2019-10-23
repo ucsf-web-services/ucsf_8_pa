@@ -1,0 +1,28 @@
+uuid: f0513d59-beee-42cb-9e52-1747df377024
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_support_articles
+    - node.type.article
+    - node.type.news_center
+id: node.news_center.field_support_articles
+field_name: field_support_articles
+entity_type: node
+bundle: news_center
+label: 'Supporting Articles'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      article: article
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

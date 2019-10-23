@@ -1,0 +1,29 @@
+uuid: 53426791-977f-4e57-8a79-97c845999311
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_include
+    - node.type.news_package
+    - taxonomy.vocabulary.include
+id: node.news_package.field_include
+field_name: field_include
+entity_type: node
+bundle: news_package
+label: Include
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      include: include
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

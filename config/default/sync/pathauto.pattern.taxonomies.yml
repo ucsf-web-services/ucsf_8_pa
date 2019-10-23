@@ -1,0 +1,31 @@
+uuid: 2f1ea73f-1c3f-4e49-99ae-747bacfee979
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - taxonomy
+id: taxonomies
+label: Taxonomies
+type: 'canonical_entities:taxonomy_term'
+pattern: '[term:name]'
+selection_criteria:
+  28f3d000-4af4-43bb-be4f-932dd257c908:
+    id: 'entity_bundle:taxonomy_term'
+    bundles:
+      areas: areas
+      article_type: article_type
+      custom_authors: custom_authors
+      locations: locations
+      organizations: organizations
+      people: people
+      source: source
+      tags: tags
+      topics: topics
+    negate: false
+    context_mapping:
+      taxonomy_term: taxonomy_term
+    uuid: 28f3d000-4af4-43bb-be4f-932dd257c908
+selection_logic: and
+weight: -6
+relationships: {  }
