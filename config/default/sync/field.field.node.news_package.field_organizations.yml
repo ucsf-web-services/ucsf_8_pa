@@ -1,0 +1,29 @@
+uuid: d157fb88-191e-45b3-872e-e1a18f7b0419
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_organizations
+    - node.type.news_package
+    - taxonomy.vocabulary.organizations
+id: node.news_package.field_organizations
+field_name: field_organizations
+entity_type: node
+bundle: news_package
+label: Organizations
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      organizations: organizations
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

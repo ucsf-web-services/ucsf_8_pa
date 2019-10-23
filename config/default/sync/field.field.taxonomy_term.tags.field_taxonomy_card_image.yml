@@ -1,0 +1,28 @@
+uuid: 699def30-f5aa-4d1e-ad9c-400c8b25080d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_taxonomy_card_image
+    - media.type.image
+    - taxonomy.vocabulary.tags
+id: taxonomy_term.tags.field_taxonomy_card_image
+field_name: field_taxonomy_card_image
+entity_type: taxonomy_term
+bundle: tags
+label: 'Taxonomy Card Image'
+description: 'Used for Deeper Dive carousel; size is 260 x 350, for retina 520px x 700px'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

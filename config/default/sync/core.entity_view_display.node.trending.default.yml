@@ -1,0 +1,90 @@
+uuid: e703b202-c16f-4d1d-9cce-4596d515aa51
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.trending.field_ankle_cta
+    - field.field.node.trending.field_apple_news_title
+    - field.field.node.trending.field_bottom_of_page_cta
+    - field.field.node.trending.field_breadcrumbs
+    - field.field.node.trending.field_date_and_time
+    - field.field.node.trending.field_facebook_description
+    - field.field.node.trending.field_facebook_image
+    - field.field.node.trending.field_facebook_title
+    - field.field.node.trending.field_trending
+    - field.field.node.trending.field_twitter_description
+    - field.field.node.trending.field_twitter_image
+    - field.field.node.trending.field_twitter_title
+    - node.type.trending
+  module:
+    - link
+    - text
+    - user
+id: node.trending.default
+targetEntityType: node
+bundle: trending
+mode: default
+content:
+  field_ankle_cta:
+    weight: 2
+    label: hidden
+    settings:
+      link: true
+      view_mode: default
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_bottom_of_page_cta:
+    weight: 5
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_breadcrumbs:
+    type: link
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      trim_length: null
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+  field_facebook_image:
+    type: entity_reference_entity_view
+    weight: 4
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
+  field_trending:
+    type: entity_reference_entity_view
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      view_mode: trending
+      link: false
+    third_party_settings: {  }
+  field_twitter_image:
+    type: entity_reference_entity_view
+    weight: 3
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_apple_news_title: true
+  field_date_and_time: true
+  field_facebook_description: true
+  field_facebook_title: true
+  field_twitter_description: true
+  field_twitter_title: true
+  links: true

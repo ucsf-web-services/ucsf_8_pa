@@ -1,0 +1,28 @@
+uuid: f2fa3ab8-3496-4e5d-8fde-b172a4dbbf1d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_facebook_image
+    - media.type.image
+    - node.type.trending
+id: node.trending.field_facebook_image
+field_name: field_facebook_image
+entity_type: node
+bundle: trending
+label: 'Facebook Image'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

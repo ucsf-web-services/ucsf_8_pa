@@ -1,0 +1,465 @@
+uuid: 95acc0b6-f61d-442c-9232-61e90516e289
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.media_assets_library_field
+    - field.field.node.news_package.body
+    - field.field.node.news_package.field_ankle_cta
+    - field.field.node.news_package.field_apple_news_title
+    - field.field.node.news_package.field_areas
+    - field.field.node.news_package.field_article_type
+    - field.field.node.news_package.field_banner_image
+    - field.field.node.news_package.field_card_image
+    - field.field.node.news_package.field_date_and_time
+    - field.field.node.news_package.field_exclude
+    - field.field.node.news_package.field_facebook_description
+    - field.field.node.news_package.field_facebook_image
+    - field.field.node.news_package.field_facebook_title
+    - field.field.node.news_package.field_featured
+    - field.field.node.news_package.field_hide_article
+    - field.field.node.news_package.field_include
+    - field.field.node.news_package.field_locations
+    - field.field.node.news_package.field_organizations
+    - field.field.node.news_package.field_people
+    - field.field.node.news_package.field_primary_area
+    - field.field.node.news_package.field_short_title
+    - field.field.node.news_package.field_sub_title
+    - field.field.node.news_package.field_tags
+    - field.field.node.news_package.field_textured_background_image
+    - field.field.node.news_package.field_topics
+    - field.field.node.news_package.field_twitter_description
+    - field.field.node.news_package.field_twitter_image
+    - field.field.node.news_package.field_twitter_title
+    - node.type.news_package
+  module:
+    - chosen_field
+    - datetime
+    - entity_browser
+    - field_group
+    - paragraphs
+    - path
+    - scheduler
+    - text
+third_party_settings:
+  field_group:
+    group_short_and_sub_title:
+      children:
+        - field_short_title
+        - field_sub_title
+      parent_name: ''
+      weight: 2
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: false
+        required_fields: true
+      label: 'Short and Sub Title'
+      region: content
+    group_byline:
+      children:
+        - field_date_and_time
+      parent_name: ''
+      weight: 3
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: false
+        required_fields: true
+      label: Byline
+      region: content
+    group_banner_and_background_text:
+      children:
+        - field_banner_image
+        - field_card_image
+        - field_textured_background_image
+      parent_name: ''
+      weight: 4
+      format_type: details
+      format_settings:
+        label: 'Banner, Card, and Background Images'
+        required_fields: true
+        id: ''
+        classes: ''
+        open: false
+      label: 'Banner, Card, and Background Images'
+      region: content
+    group_classifications:
+      children:
+        - field_primary_area
+        - field_areas
+        - field_organizations
+        - field_locations
+        - field_people
+        - field_topics
+        - field_tags
+        - field_exclude
+        - field_include
+        - field_hide_article
+        - field_article_type
+      parent_name: ''
+      weight: 7
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: false
+        required_fields: true
+      label: Classifications
+      region: content
+    group_soc:
+      children:
+        - field_apple_news_title
+        - field_facebook_title
+        - field_facebook_description
+        - field_facebook_image
+        - field_twitter_title
+        - field_twitter_description
+        - field_twitter_image
+      parent_name: ''
+      weight: 8
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: false
+        required_fields: true
+      label: 'Social Media'
+      region: content
+    group_a:
+      children:
+        - field_ankle_cta
+      parent_name: ''
+      weight: 9
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: false
+        required_fields: true
+      label: 'Ankle CTAs'
+      region: content
+id: node.news_package.default
+targetEntityType: node
+bundle: news_package
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 5
+    region: content
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+  created:
+    type: datetime_timestamp
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_ankle_cta:
+    weight: 17
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_apple_news_title:
+    weight: 17
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_areas:
+    weight: 29
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+    region: content
+  field_article_type:
+    type: options_select
+    weight: 38
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_banner_image:
+    weight: 20
+    settings:
+      entity_browser: media_assets_library_field
+      field_widget_display: rendered_entity
+      field_widget_edit: true
+      field_widget_remove: true
+      field_widget_replace: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: full
+      open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_card_image:
+    weight: 21
+    settings:
+      entity_browser: media_assets_library_field
+      field_widget_display: rendered_entity
+      field_widget_edit: true
+      field_widget_remove: true
+      field_widget_replace: true
+      open: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: default
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_date_and_time:
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_exclude:
+    weight: 35
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+    region: content
+  field_facebook_description:
+    weight: 20
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_facebook_image:
+    weight: 21
+    settings:
+      entity_browser: media_assets_library_field
+      field_widget_display: rendered_entity
+      field_widget_edit: true
+      field_widget_remove: true
+      field_widget_replace: true
+      open: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: default
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_facebook_title:
+    weight: 18
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_featured:
+    type: paragraphs
+    weight: 6
+    settings:
+      title: 'Featured Item'
+      title_plural: 'Featured Items'
+      edit_mode: closed
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: featured
+      features:
+        duplicate: duplicate
+        collapse_edit_all: collapse_edit_all
+        add_above: '0'
+    third_party_settings: {  }
+    region: content
+  field_hide_article:
+    weight: 37
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_include:
+    weight: 36
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+    region: content
+  field_locations:
+    weight: 31
+    settings: {  }
+    third_party_settings: {  }
+    type: chosen_select
+    region: content
+  field_organizations:
+    weight: 30
+    settings: {  }
+    third_party_settings: {  }
+    type: chosen_select
+    region: content
+  field_people:
+    weight: 32
+    settings: {  }
+    third_party_settings: {  }
+    type: chosen_select
+    region: content
+  field_primary_area:
+    weight: 28
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_short_title:
+    weight: 31
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textfield
+    region: content
+  field_sub_title:
+    weight: 32
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textfield
+    region: content
+  field_tags:
+    weight: 34
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete_tags
+    region: content
+  field_textured_background_image:
+    weight: 22
+    settings:
+      entity_browser: media_assets_library_field
+      field_widget_display: rendered_entity
+      field_widget_edit: true
+      field_widget_remove: true
+      field_widget_replace: true
+      open: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: default
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_topics:
+    weight: 33
+    settings: {  }
+    third_party_settings: {  }
+    type: chosen_select
+    region: content
+  field_twitter_description:
+    weight: 23
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_twitter_image:
+    weight: 24
+    settings:
+      entity_browser: media_assets_library_field
+      field_widget_display: rendered_entity
+      field_widget_edit: true
+      field_widget_remove: true
+      field_widget_replace: true
+      open: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: default
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_twitter_title:
+    weight: 22
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  path:
+    type: path
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    region: content
+    third_party_settings: {  }
+  publish_on:
+    type: datetime_timestamp_no_default
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  scheduler_settings:
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 18
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 11
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    region: content
+    third_party_settings: {  }
+  unpublish_on:
+    type: datetime_timestamp_no_default
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  url_redirects:
+    weight: 17
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

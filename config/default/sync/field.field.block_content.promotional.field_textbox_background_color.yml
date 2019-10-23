@@ -1,0 +1,29 @@
+uuid: 090e1ed0-bac3-48a2-8457-60b1422fa5f6
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.promotional
+    - field.storage.block_content.field_textbox_background_color
+    - taxonomy.vocabulary.background_color
+id: block_content.promotional.field_textbox_background_color
+field_name: field_textbox_background_color
+entity_type: block_content
+bundle: promotional
+label: 'Textbox Background Color'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      background_color: background_color
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

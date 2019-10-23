@@ -1,0 +1,50 @@
+uuid: fd47f240-7bb8-470c-9e81-2999d37106b5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.two_column_content_row_25_75.field_background_color
+    - field.field.paragraph.two_column_content_row_25_75.field_column_25
+    - field.field.paragraph.two_column_content_row_25_75.field_column_75
+    - paragraphs.paragraphs_type.two_column_content_row_25_75
+  module:
+    - paragraphs
+id: paragraph.two_column_content_row_25_75.default
+targetEntityType: paragraph
+bundle: two_column_content_row_25_75
+mode: default
+content:
+  field_background_color:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_column_25:
+    weight: 1
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: column_content
+    third_party_settings: {  }
+    type: entity_reference_paragraphs
+    region: content
+  field_column_75:
+    type: entity_reference_paragraphs
+    weight: 2
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

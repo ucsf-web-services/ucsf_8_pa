@@ -1,0 +1,29 @@
+uuid: 01d91203-672a-4fe5-86f3-3f8dc3c1ba5d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_primary_area
+    - node.type.news_package
+    - taxonomy.vocabulary.areas
+id: node.news_package.field_primary_area
+field_name: field_primary_area
+entity_type: node
+bundle: news_package
+label: 'Primary Area'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      areas: areas
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

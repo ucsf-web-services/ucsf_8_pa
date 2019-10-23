@@ -1,0 +1,28 @@
+uuid: 6238762e-d722-415b-84a5-63bd47345ab2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_facebook_image
+    - media.type.image
+    - node.type.article
+id: node.article.field_facebook_image
+field_name: field_facebook_image
+entity_type: node
+bundle: article
+label: 'Social Image'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,52 @@
+uuid: f7b2f5ad-f1c4-4e9c-9e08-4a3d8d25417e
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.library
+  module:
+    - entity_browser_entity_form
+    - views
+name: embedded_video
+label: 'Embedded Video'
+display: iframe
+display_configuration:
+  width: 100%
+  height: '500'
+  link_text: 'Embed Video'
+  auto_open: true
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  d65681f9-ffe3-4d94-99fd-645113eedb51:
+    settings:
+      entity_type: media
+      bundle: video
+      form_mode: default
+      submit_text: 'Save Video'
+    uuid: d65681f9-ffe3-4d94-99fd-645113eedb51
+    weight: 1
+    label: Upload
+    id: entity_form
+  a9ddf5fb-cb5f-4f41-88f2-7f569d6ce03a:
+    settings:
+      view: library
+      view_display: entity_browser_8
+      submit_text: 'Insert Video'
+      auto_select: false
+    uuid: a9ddf5fb-cb5f-4f41-88f2-7f569d6ce03a
+    weight: 2
+    label: 'My Library'
+    id: view
+  d4be1bf0-2ce1-401c-a190-999167dc4878:
+    settings:
+      view: library
+      view_display: entity_browser_7
+      submit_text: 'Insert Video'
+      auto_select: false
+    uuid: d4be1bf0-2ce1-401c-a190-999167dc4878
+    weight: 3
+    label: Library
+    id: view

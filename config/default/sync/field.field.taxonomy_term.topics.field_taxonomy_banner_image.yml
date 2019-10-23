@@ -1,0 +1,28 @@
+uuid: c6cebeb0-b451-4705-8065-7c2372626e6f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_taxonomy_banner_image
+    - media.type.image
+    - taxonomy.vocabulary.topics
+id: taxonomy_term.topics.field_taxonomy_banner_image
+field_name: field_taxonomy_banner_image
+entity_type: taxonomy_term
+bundle: topics
+label: 'Taxonomy Banner Image'
+description: 'Size is 1440 x 480, or for retina 2880px x 960px'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
