@@ -1,0 +1,28 @@
+uuid: f12b5eab-2838-4d0a-966a-d84aa9af8039
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_news_article
+    - node.type.article
+    - paragraphs.paragraphs_type.featured
+id: paragraph.featured.field_news_article
+field_name: field_news_article
+entity_type: paragraph
+bundle: featured
+label: 'News Article'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      article: article
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

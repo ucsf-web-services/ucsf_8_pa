@@ -1,0 +1,29 @@
+uuid: e0a5968e-87d0-4004-b680-7bd46136b6bc
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.news_filter
+  module:
+    - system
+    - views
+  theme:
+    - ucsf
+id: exposedformnews_filterpage_1
+theme: ucsf
+region: content
+weight: -7
+provider: null
+plugin: 'views_exposed_filter_block:news_filter-page_1'
+settings:
+  id: 'views_exposed_filter_block:news_filter-page_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: "/news/filter*\r\n/news_filter*"
+    negate: false
+    context_mapping: {  }

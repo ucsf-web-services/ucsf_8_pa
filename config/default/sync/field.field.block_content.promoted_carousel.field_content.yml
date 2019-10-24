@@ -1,0 +1,28 @@
+uuid: 3cb27807-1169-40e1-8f57-dee6e299b90b
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.promoted_carousel
+    - field.storage.block_content.field_content
+    - node.type.article
+id: block_content.promoted_carousel.field_content
+field_name: field_content
+entity_type: block_content
+bundle: promoted_carousel
+label: Content
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      article: article
+    sort:
+      field: _none
+    auto_create: null
+    auto_create_bundle: null
+field_type: entity_reference

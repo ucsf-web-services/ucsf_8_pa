@@ -1,0 +1,28 @@
+uuid: 3b2d979a-6bea-48c6-9d1e-1e75e0141d7b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_support_articles
+    - node.type.article
+    - taxonomy.vocabulary.areas
+id: taxonomy_term.areas.field_support_articles
+field_name: field_support_articles
+entity_type: taxonomy_term
+bundle: areas
+label: 'Supporting Articles'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      article: article
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

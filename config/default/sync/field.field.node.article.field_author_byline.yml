@@ -1,0 +1,86 @@
+uuid: 72bd8e5f-a3da-474c-b66e-cd5ac2c53ef2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_author_byline
+    - node.type.article
+    - paragraphs.paragraphs_type.author
+    - paragraphs.paragraphs_type.custom_author
+    - paragraphs.paragraphs_type.source
+  module:
+    - entity_reference_revisions
+id: node.article.field_author_byline
+field_name: field_author_byline
+entity_type: node
+bundle: article
+label: 'Author Byline'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      author: author
+      custom_author: custom_author
+      source: source
+    target_bundles_drag_drop:
+      author:
+        enabled: true
+        weight: -21
+      custom_author:
+        enabled: true
+        weight: -20
+      authors:
+        weight: -19
+        enabled: false
+      blockquote:
+        weight: -18
+        enabled: false
+      column_content:
+        weight: -17
+        enabled: false
+      column_wrapper:
+        weight: -16
+        enabled: false
+      image:
+        weight: -15
+        enabled: false
+      text_block:
+        weight: -14
+        enabled: false
+      featured_image:
+        weight: -13
+        enabled: false
+      featured_video:
+        weight: -12
+        enabled: false
+      related_content:
+        weight: 21
+        enabled: false
+      featured_card_image:
+        weight: 25
+        enabled: false
+      gallery:
+        weight: 28
+        enabled: false
+      gallery_item:
+        weight: 29
+        enabled: false
+      related_external_link:
+        weight: 32
+        enabled: false
+      related_internal_link:
+        weight: 33
+        enabled: false
+      related_links:
+        weight: 34
+        enabled: false
+      source:
+        enabled: true
+        weight: 35
+field_type: entity_reference_revisions

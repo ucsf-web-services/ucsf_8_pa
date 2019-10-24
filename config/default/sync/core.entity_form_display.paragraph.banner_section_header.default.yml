@@ -1,0 +1,60 @@
+uuid: 953588ec-69e4-479c-9634-258cdb64fbd7
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.media_assets_library_field
+    - field.field.paragraph.banner_section_header.field_banner_section_description
+    - field.field.paragraph.banner_section_header.field_banner_section_image
+    - field.field.paragraph.banner_section_header.field_banner_section_position
+    - field.field.paragraph.banner_section_header.field_banner_section_title
+    - paragraphs.paragraphs_type.banner_section_header
+  module:
+    - entity_browser
+    - text
+id: paragraph.banner_section_header.default
+targetEntityType: paragraph
+bundle: banner_section_header
+mode: default
+content:
+  field_banner_section_description:
+    weight: 2
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_banner_section_image:
+    weight: 3
+    settings:
+      entity_browser: media_assets_library_field
+      field_widget_display: rendered_entity
+      field_widget_edit: true
+      field_widget_remove: true
+      field_widget_replace: true
+      open: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: default
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_banner_section_position:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_banner_section_title:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

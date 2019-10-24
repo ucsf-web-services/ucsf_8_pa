@@ -1,0 +1,28 @@
+uuid: 4c6396ba-4c6f-4fd8-baa0-77cc5f230265
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_twitter_image
+    - media.type.image
+    - node.type.full_width_page
+id: node.full_width_page.field_twitter_image
+field_name: field_twitter_image
+entity_type: node
+bundle: full_width_page
+label: 'Twitter Image'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

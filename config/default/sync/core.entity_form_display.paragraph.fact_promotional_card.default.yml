@@ -1,0 +1,42 @@
+uuid: 41d4c4d6-cf4b-4cce-b05a-1f59b1488466
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.fact_promotional_card.field_fact_card_content
+    - field.field.paragraph.fact_promotional_card.field_fact_card_icon
+    - field.field.paragraph.fact_promotional_card.field_fact_card_stat
+    - paragraphs.paragraphs_type.fact_promotional_card
+  module:
+    - text
+id: paragraph.fact_promotional_card.default
+targetEntityType: paragraph
+bundle: fact_promotional_card
+mode: default
+content:
+  field_fact_card_content:
+    weight: 2
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_fact_card_icon:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_fact_card_stat:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

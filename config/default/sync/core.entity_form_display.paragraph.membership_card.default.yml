@@ -1,0 +1,33 @@
+uuid: 2e5e9184-c28d-4c39-a4c9-fcf485563a5c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.membership_card.field_membership_organization
+    - field.field.paragraph.membership_card.field_membership_stat
+    - paragraphs.paragraphs_type.membership_card
+id: paragraph.membership_card.default
+targetEntityType: paragraph
+bundle: membership_card
+mode: default
+content:
+  field_membership_organization:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_membership_stat:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

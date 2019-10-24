@@ -1,0 +1,52 @@
+uuid: 49a46ded-c017-4d31-9f95-b8bf033d6eb0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.blockquote.field_blockquote_body
+    - field.field.paragraph.blockquote.field_blockquote_image
+    - field.field.paragraph.blockquote.field_blockquote_source
+    - field.field.paragraph.blockquote.field_blockquote_source_org
+    - image.style.blockquote__image
+    - paragraphs.paragraphs_type.blockquote
+  module:
+    - media
+    - text
+id: paragraph.blockquote.default
+targetEntityType: paragraph
+bundle: blockquote
+mode: default
+content:
+  field_blockquote_body:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_blockquote_image:
+    type: media_thumbnail
+    weight: 0
+    label: hidden
+    settings:
+      image_style: blockquote__image
+      image_link: ''
+    third_party_settings: {  }
+    region: content
+  field_blockquote_source:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_blockquote_source_org:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

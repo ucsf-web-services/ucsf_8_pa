@@ -1,0 +1,33 @@
+uuid: 6cc90a85-2dbb-4361-a8cc-98ba3fcc3463
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.vertical_tabs.field_tabs
+    - field.field.paragraph.vertical_tabs.field_vertical_tab_design
+    - paragraphs.paragraphs_type.vertical_tabs
+  module:
+    - entity_reference_revisions
+    - options
+id: paragraph.vertical_tabs.default
+targetEntityType: paragraph
+bundle: vertical_tabs
+mode: default
+content:
+  field_tabs:
+    type: entity_reference_revisions_entity_view
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  field_vertical_tab_design:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+hidden: {  }

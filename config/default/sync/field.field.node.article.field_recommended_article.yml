@@ -1,0 +1,27 @@
+uuid: a2e9a3b4-3bb3-4aaf-a42d-8a1042e23987
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_recommended_article
+    - node.type.article
+id: node.article.field_recommended_article
+field_name: field_recommended_article
+entity_type: node
+bundle: article
+label: 'Recommended Article'
+description: 'Make sure the article you are recommending has a background image and the proper sized card image'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      article: article
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

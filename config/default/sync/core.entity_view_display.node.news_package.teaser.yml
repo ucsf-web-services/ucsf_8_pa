@@ -1,0 +1,55 @@
+uuid: d6971740-1a77-4f60-b5f2-3c639d454518
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.news_package.body
+    - node.type.news_package
+  module:
+    - text
+    - user
+id: node.news_package.teaser
+targetEntityType: node
+bundle: news_package
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_ankle_cta: true
+  field_apple_news_title: true
+  field_areas: true
+  field_article_type: true
+  field_banner_image: true
+  field_date_and_time: true
+  field_exclude: true
+  field_facebook_description: true
+  field_facebook_image: true
+  field_facebook_title: true
+  field_featured: true
+  field_hide_article: true
+  field_include: true
+  field_locations: true
+  field_organizations: true
+  field_people: true
+  field_primary_area: true
+  field_short_title: true
+  field_sub_title: true
+  field_tags: true
+  field_textured_background_image: true
+  field_topics: true
+  field_twitter_description: true
+  field_twitter_image: true
+  field_twitter_title: true

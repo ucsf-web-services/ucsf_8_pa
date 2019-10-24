@@ -1,0 +1,24 @@
+uuid: 1d54fd0d-abc4-49ae-ac08-153da2e2ca5b
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - taxonomy
+id: topics_term_name_
+label: 'Topic and Tag Pages'
+type: 'canonical_entities:taxonomy_term'
+pattern: 'topic/[term:name]'
+selection_criteria:
+  1d6a60fe-8ba9-413f-a376-a16b51463e36:
+    id: 'entity_bundle:taxonomy_term'
+    bundles:
+      tags: tags
+      topics: topics
+    negate: false
+    context_mapping:
+      taxonomy_term: taxonomy_term
+    uuid: 1d6a60fe-8ba9-413f-a376-a16b51463e36
+selection_logic: and
+weight: -7
+relationships: {  }

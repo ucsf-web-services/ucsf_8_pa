@@ -1,0 +1,53 @@
+uuid: cb1816d4-24ca-4ce7-97de-a0a7fb70e3af
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.column_wrapper.field_background_color
+    - field.field.paragraph.column_wrapper.field_content_wrapper_content
+    - field.field.paragraph.column_wrapper.field_remove_top_space
+    - field.field.paragraph.column_wrapper.field_title
+    - paragraphs.paragraphs_type.column_wrapper
+  module:
+    - entity_reference_revisions
+    - options
+id: paragraph.column_wrapper.default
+targetEntityType: paragraph
+bundle: column_wrapper
+mode: default
+content:
+  field_background_color:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_content_wrapper_content:
+    type: entity_reference_revisions_entity_view
+    weight: 1
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  field_remove_top_space:
+    weight: 3
+    label: hidden
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

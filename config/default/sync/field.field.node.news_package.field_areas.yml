@@ -1,0 +1,29 @@
+uuid: a3f59182-5cec-418d-af2c-a5e960e8a63b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_areas
+    - node.type.news_package
+    - taxonomy.vocabulary.areas
+id: node.news_package.field_areas
+field_name: field_areas
+entity_type: node
+bundle: news_package
+label: Areas
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      areas: areas
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
