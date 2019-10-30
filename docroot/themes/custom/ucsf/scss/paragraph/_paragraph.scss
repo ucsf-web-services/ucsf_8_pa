@@ -752,3 +752,35 @@
     padding-top: 0;
   }
 }
+
+// For 1-4 column used in middle of News Articles
+.main-content.narrow-page {
+  .layout-columns__1,
+  .layout-columns__2,
+  .layout-columns__3,
+  .layout-columns__4 {
+
+    @include breakpoint($new-large) {
+      grid-column: 1 / -1;
+      padding-bottom: $space-ten;
+    }
+
+    .paragraph-text-block {
+      background: transparent;
+      padding-left: 0;
+      padding-right: 0;
+
+      &> :first-child {
+        padding-top: 0;
+      }
+    }
+
+    &.col-white-text {
+      p, li, h2, h3, h4, h5 {
+        color: $c-white;
+      }
+    }
+
+  }
+
+}
