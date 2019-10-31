@@ -1,12 +1,11 @@
-{% set layout = node.field_banner_layout.value %}
-{% set classes = [ 'article-twocol-banner', layout] %}
+{% set classes = [ 'article-feature-overlay-banner'] %}
 
 <div{{ attributes.addClass(classes) }}>
-  <figure class="article-twocol-banner-image">
-    {{ content.field_two_column_banner_image }}
+  <figure class="article-feature-banner-image">
+    {{ content.field_banner_image }}
   </figure>
 
-  <header class="article-header article-twocol-header">
+  <header class="article-header article-feature-header">
     {% include '@theme/banner/banner-content.twig' %}
   </header>
 </div>

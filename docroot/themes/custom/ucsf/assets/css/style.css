@@ -531,6 +531,7 @@ strong, b {
 .node--unpublished .page_narrow,
 .node--unpublished .tags-menu-region,
 .node--unpublished .article-feature-banner .article-header,
+.node--unpublished .article-twocol-banner .article-header,
 .node--unpublished .author-page-wrapper::before,
 .node--unpublished .author-page-wrapper,
 .node--unpublished .main-content,
@@ -2832,6 +2833,58 @@ body.loading .quicklinks {
 .article-feature-banner-image {
   grid-column: 1 / -1;
   grid-row: 1 / -1; }
+
+.article-twocol-banner .article-twocol-header {
+  margin-top: 0;
+  background: #fff; }
+
+@media (min-width: 1050px) {
+  .article-twocol-banner {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 5%;
+    grid-row-gap: 0;
+    background: #fff;
+    grid-gap: 0; } }
+  @media (min-width: 1050px) and (min-width: 600px) {
+    .article-twocol-banner {
+      grid-template-columns: repeat(2, 1fr); } }
+
+@media (min-width: 1050px) {
+    .article-twocol-banner .article-twocol-header {
+      grid-column: 1 / 2;
+      grid-row: 1;
+      margin-top: 0;
+      padding-top: 0;
+      -ms-flex-item-align: center;
+          align-self: center; }
+      .article-twocol-banner .article-twocol-header .article-header__author {
+        border-bottom: none; }
+    .article-twocol-banner .article-twocol-banner-image {
+      grid-column: 2 / 3;
+      grid-row: 1; }
+    .article-twocol-banner.twocolleftdark, .article-twocol-banner.twocolrightdark {
+      background: #000; }
+      .article-twocol-banner.twocolleftdark .article-twocol-header, .article-twocol-banner.twocolrightdark .article-twocol-header {
+        background: #000; }
+        .article-twocol-banner.twocolleftdark .article-twocol-header h1,
+        .article-twocol-banner.twocolleftdark .article-twocol-header .field-sub-title,
+        .article-twocol-banner.twocolleftdark .article-twocol-header .article-header__author, .article-twocol-banner.twocolrightdark .article-twocol-header h1,
+        .article-twocol-banner.twocolrightdark .article-twocol-header .field-sub-title,
+        .article-twocol-banner.twocolrightdark .article-twocol-header .article-header__author {
+          color: #fff; }
+        .article-twocol-banner.twocolleftdark .article-twocol-header .article-header__byline .article-header__primary-area,
+        .article-twocol-banner.twocolleftdark .article-twocol-header .article-header__byline .article-header__date, .article-twocol-banner.twocolrightdark .article-twocol-header .article-header__byline .article-header__primary-area,
+        .article-twocol-banner.twocolrightdark .article-twocol-header .article-header__byline .article-header__date {
+          color: #fff; }
+          .article-twocol-banner.twocolleftdark .article-twocol-header .article-header__byline .article-header__primary-area::before,
+          .article-twocol-banner.twocolleftdark .article-twocol-header .article-header__byline .article-header__date::before, .article-twocol-banner.twocolrightdark .article-twocol-header .article-header__byline .article-header__primary-area::before,
+          .article-twocol-banner.twocolrightdark .article-twocol-header .article-header__byline .article-header__date::before {
+            background: #fff; }
+    .article-twocol-banner.twocolrightdark .article-twocol-header, .article-twocol-banner.twocolrightlight .article-twocol-header {
+      grid-column: 2 / 3; }
+    .article-twocol-banner.twocolrightdark .article-twocol-banner-image, .article-twocol-banner.twocolrightlight .article-twocol-banner-image {
+      grid-column: 1 / 2; } }
 
 .article-header__byline,
 .news-card__byline {
