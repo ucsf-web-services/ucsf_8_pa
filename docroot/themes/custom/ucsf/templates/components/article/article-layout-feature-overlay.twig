@@ -1,15 +1,18 @@
-{% set classes = [ 'article-feature-overlay-banner'] %}
+{% set layout = node.field_banner_layout.value %}
+{% set classes = [ 'article-feature-overlay-banner', layout] %}
 
 <div{{ attributes.addClass(classes) }}>
-  <figure class="article-feature-banner-image">
+  <figure class="article-feature-overlay-image">
     {{ content.field_banner_image }}
+    <div class="article-feature-overlay"> </div>
   </figure>
 
-  <header class="article-header article-feature-header">
+
+  <header class="article-header article-feature-overlay-header">
     {% include '@theme/banner/banner-content.twig' %}
   </header>
 </div>
-<div class="main-content article-feature-content narrow-page">
+<div class="main-content article-feature-overlay-content narrow-page">
   {#{% include "@theme/share/share.twig" %}#}
     <ul class="article-meta-share">
       <li><a rel="nofollow" href="http://www.facebook.com/share.php?u={{ url('<current>') }}" target="_blank" title="Facebook"><span class="fab fa-facebook-square"></span> <span class="indent-text">Facebook</span></a></li>

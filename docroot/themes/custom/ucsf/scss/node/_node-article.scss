@@ -4,6 +4,7 @@
   padding: 0 20px;
   padding-bottom: 1px;
   position: relative;
+  clear: both;
 
   > :first-child {
     padding-top: $space-four;
@@ -188,6 +189,16 @@
         .field-sub-title,
         .article-header__author {
           color: $c-white;
+
+          a {
+            color: $c-white;
+            border-bottom: 1px solid $c-white;
+
+            &:hover {
+              background: transparent;
+              border-bottom: none;
+            }
+          }
         }
 
         .article-header__byline {
@@ -215,6 +226,123 @@
     }
   }
 
+}
+
+.article-feature-overlay-banner {
+
+  .article-feature-overlay-header {
+    margin-top: 0;
+    background: $c-white;
+  }
+
+  @include breakpoint($new-large) {
+    @include grid-base;
+
+    grid-gap: 0;
+    text-align: center;
+
+    .article-header__author {
+      border-bottom: none;
+      width: 100%;
+    }
+
+    .article-feature-overlay-image {
+      position: relative;
+      grid-column: 1/-1;
+      grid-row: 1/-1;
+
+      .article-feature-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.55);
+      }
+    }
+
+    .article-feature-overlay-header {
+      grid-column: 1/-1;
+      grid-row: 1/-1;
+      z-index: 2;
+      background: transparent;
+      margin-top: 0;
+      padding: 0;
+      max-width: 50%;
+      align-self: center;
+      justify-self: center;
+    }
+
+    &.featureoverlaydark {
+      .article-feature-overlay-header {
+        h1,
+        .field-sub-title,
+        .article-header__author {
+          color: $c-white;
+
+          a {
+            color: $c-white;
+            border-bottom: 1px solid $c-white;
+
+            &:hover {
+              background: transparent;
+              border-bottom: none;
+            }
+          }
+        }
+
+        .article-header__byline {
+          .article-header__primary-area,
+          .article-header__date {
+            color: $c-white;
+
+            &::before {
+              background: $c-white;
+            }
+          }
+        }
+      }
+    }
+
+    &.featureoverlaylight {
+      .article-feature-overlay-image {
+        .article-feature-overlay {
+          background-color: rgba(255,255,255,0.65);
+        }
+      }
+
+      .article-feature-overlay-header {
+        h1,
+        .field-sub-title,
+        .article-header__author {
+          color: $c-navy;
+
+          a {
+            color: $c-navy;
+            border-bottom: 1px solid $c-navy;
+
+            &:hover {
+              background: transparent;
+              border-bottom: none;
+            }
+          }
+        }
+
+        .article-header__byline {
+          .article-header__primary-area,
+          .article-header__date {
+            color: $c-navy;
+
+            &::before {
+              background: $c-navy;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .article-header__byline,
