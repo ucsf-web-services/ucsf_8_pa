@@ -740,7 +740,6 @@ figure[style~="float:left"] {
   margin-left: 0;
 }
 
-figure.align-center,
 figure[class="embedded-entity"],
 figure[class="image"] {
   margin-left: 0;
@@ -836,6 +835,12 @@ figure figure[class="image"] {
 }
 
 figure.align-center {
+  margin: $space-seven auto;
+
+  @include breakpoint($new-small) {
+    margin: $space-ten auto;
+  }
+  
   img,
   figcaption {
     margin: 0 auto;
