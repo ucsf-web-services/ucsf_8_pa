@@ -2,7 +2,7 @@
   {% set classes = [ 'article-medium-banner'] %}
 
 <figure{{ attributes.addClass(classes) }}>
-  {% if content.field_banner_image|render %}
+  {% if content.field_video_banner|render %}
     {{ content.field_video_banner }}
   {% else %}
     {{ content.field_banner_image }}
@@ -18,6 +18,11 @@
     {% if layout == 'medium' and content.field_banner_image|render != '' %}
       {% set class= 'article-medium-header' %}
     {% endif %}
+    
+    {% if layout == 'medium' and content.field_video_banner|render != '' %}
+      {% set class= 'article-medium-header' %}
+    {% endif %}
+
     <header class="article-header {{ class }}">
       {% include '@theme/banner/banner-content.twig' %}
     </header>
