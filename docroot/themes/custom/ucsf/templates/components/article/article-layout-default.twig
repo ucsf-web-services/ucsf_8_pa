@@ -2,8 +2,13 @@
   {% set classes = [ 'article-medium-banner'] %}
 
 <figure{{ attributes.addClass(classes) }}>
-  {{ content.field_banner_image }}
+  {% if content.field_banner_image|render %}
+    {{ content.field_video_banner }}
+  {% else %}
+    {{ content.field_banner_image }}
+  {% endif %}
 </figure>
+
 <div class="main-content narrow-page">
   {% else %}
   {% set classes = [ 'main-content', 'narrow-page'] %}

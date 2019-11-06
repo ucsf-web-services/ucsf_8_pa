@@ -2,7 +2,11 @@
 
 <div{{ attributes.addClass(classes) }}>
   <figure class="article-feature-banner-image">
-    {{ content.field_banner_image }}
+    {% if content.field_banner_image|render %}
+      {{ content.field_video_banner }}
+    {% else %}
+      {{ content.field_banner_image }}
+    {% endif %}
   </figure>
 
   <header class="article-header article-feature-header">

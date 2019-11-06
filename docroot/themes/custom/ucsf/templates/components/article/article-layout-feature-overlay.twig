@@ -3,7 +3,11 @@
 
 <div{{ attributes.addClass(classes) }}>
   <figure class="article-feature-overlay-image">
-    {{ content.field_banner_image }}
+    {% if content.field_banner_image|render %}
+      {{ content.field_video_banner }}
+    {% else %}
+      {{ content.field_banner_image }}
+    {% endif %}
     <div class="article-feature-overlay"> </div>
   </figure>
 
