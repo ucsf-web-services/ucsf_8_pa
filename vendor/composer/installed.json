@@ -9107,18 +9107,18 @@
     },
     {
         "name": "drupal/paragraphs",
-        "version": "1.6.0",
-        "version_normalized": "1.6.0.0",
+        "version": "1.9.0",
+        "version_normalized": "1.9.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/paragraphs.git",
-            "reference": "8.x-1.6"
+            "reference": "8.x-1.9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/paragraphs-8.x-1.6.zip",
-            "reference": "8.x-1.6",
-            "shasum": "cd93e244f3a78dabdcf362adc31e59aad25b3fae"
+            "url": "https://ftp.drupal.org/files/projects/paragraphs-8.x-1.9.zip",
+            "reference": "8.x-1.9",
+            "shasum": "c04753047fc995bfa2236c272d0b8344d77ee25d"
         },
         "require": {
             "drupal/core": "~8",
@@ -9128,7 +9128,7 @@
             "drupal/block_field": "~1.0",
             "drupal/ctools": "3.x-dev",
             "drupal/diff": "~1.0",
-            "drupal/entity_browser": "1.x-dev",
+            "drupal/entity_browser": "2.x-dev",
             "drupal/entity_usage": "2.x-dev",
             "drupal/field_group": "~1.0",
             "drupal/inline_entity_form": "~1.0",
@@ -9146,8 +9146,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.6",
-                "datestamp": "1550692525",
+                "version": "8.x-1.9",
+                "datestamp": "1565881389",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -9184,7 +9184,7 @@
         "description": "Enables the creation of Paragraphs entities.",
         "homepage": "https://www.drupal.org/project/paragraphs",
         "support": {
-            "source": "http://cgit.drupalcode.org/paragraphs"
+            "source": "https://git.drupalcode.org/project/paragraphs"
         }
     },
     {
@@ -10795,26 +10795,22 @@
         }
     },
     {
-        "name": "drupal/svg_formatter",
-        "version": "1.10.0",
-        "version_normalized": "1.10.0.0",
+        "name": "drupal/svg_image_field",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupalcode.org/project/svg_formatter.git",
-            "reference": "8.x-1.10"
+            "url": "https://git.drupalcode.org/project/svg_image_field.git",
+            "reference": "8.x-1.2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/svg_formatter-8.x-1.10.zip",
-            "reference": "8.x-1.10",
-            "shasum": "30fa3cefff4e8a9dbe640a4f54d9d26f39851d69"
+            "url": "https://ftp.drupal.org/files/projects/svg_image_field-8.x-1.2.zip",
+            "reference": "8.x-1.2",
+            "shasum": "966c50eb6292bf502dfd114948389df2f8f802a7"
         },
         "require": {
-            "drupal/core": "~8.0",
-            "enshrined/svg-sanitize": "^0.10.0"
-        },
-        "require-dev": {
-            "drupal/token": "^1.0"
+            "drupal/core": "*"
         },
         "type": "drupal-module",
         "extra": {
@@ -10822,33 +10818,44 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.10",
-                "datestamp": "1570222384",
+                "version": "8.x-1.2",
+                "datestamp": "1552491485",
                 "security-coverage": {
-                    "status": "covered",
-                    "message": "Covered by Drupal's security advisory policy"
+                    "status": "not-covered",
+                    "message": "Project has not opted into security advisory coverage!"
                 }
+            },
+            "patches_applied": {
+                "Adds media library pop-up file upload form on the SVG tab": "./patches/svg_image_field-media-library-3053011.patch"
             }
         },
         "installation-source": "dist",
         "notification-url": "https://packages.drupal.org/8/downloads",
         "license": [
-            "GPL-2.0+"
+            "GPL-2.0-or-later"
         ],
         "authors": [
             {
-                "name": "Goran Nikolovski",
-                "homepage": "https://gorannikolovski.com",
-                "email": "goran@gorannikolovski.com",
-                "role": "Developer"
+                "name": "donne93",
+                "homepage": "https://www.drupal.org/user/3569136"
+            },
+            {
+                "name": "dunot",
+                "homepage": "https://www.drupal.org/user/3562626"
+            },
+            {
+                "name": "romychvk",
+                "homepage": "https://www.drupal.org/user/361734"
+            },
+            {
+                "name": "shmel210",
+                "homepage": "https://www.drupal.org/user/2600028"
             }
         ],
-        "description": "SVG Formatter provides support for using SVG images on your website.",
-        "homepage": "https://www.drupal.org/project/svg_formatter",
+        "description": "Provides svg image field",
+        "homepage": "https://www.drupal.org/project/svg_image_field",
         "support": {
-            "source": "https://git.drupalcode.org/project/svg_formatter",
-            "issues": "https://www.drupal.org/node/add/project-issue/svg_formatter",
-            "email": "goran@gorannikolovski.com"
+            "source": "https://git.drupalcode.org/project/svg_image_field"
         }
     },
     {
@@ -12390,45 +12397,6 @@
             "opengraph",
             "twitter cards"
         ]
-    },
-    {
-        "name": "enshrined/svg-sanitize",
-        "version": "0.10.0",
-        "version_normalized": "0.10.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/darylldoyle/svg-sanitizer.git",
-            "reference": "5344d8511e494adf160f71f4b34024d3a3c66c82"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/darylldoyle/svg-sanitizer/zipball/5344d8511e494adf160f71f4b34024d3a3c66c82",
-            "reference": "5344d8511e494adf160f71f4b34024d3a3c66c82",
-            "shasum": ""
-        },
-        "require-dev": {
-            "codeclimate/php-test-reporter": "^0.1.2",
-            "phpunit/phpunit": "^6"
-        },
-        "time": "2019-01-11T12:31:32+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "enshrined\\svgSanitize\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Daryll Doyle",
-                "email": "daryll@enshrined.co.uk"
-            }
-        ],
-        "description": "An SVG sanitizer for PHP"
     },
     {
         "name": "ezyang/htmlpurifier",

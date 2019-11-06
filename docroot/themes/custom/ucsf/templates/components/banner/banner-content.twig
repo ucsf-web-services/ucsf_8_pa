@@ -29,4 +29,10 @@
       {%- include '@theme/banner/banner-author.twig' with {separator: ', '}-%}
     {%- endif -%}
   {%- endfor -%}
+  {% if content.field_article_affiliation|render %}
+    {{ content.field_article_affiliation  }}
+  {% endif %}
+  {% if content.field_art_credit|render %}
+    {{ content.field_art_credit  }}
+  {% endif %}
 </p>

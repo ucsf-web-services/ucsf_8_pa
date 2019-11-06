@@ -2,12 +2,21 @@
   {% set remove = 'remove-top-space' %}
 {% endif %}
 
+{% if paragraph.field_white_text[0].value == '1' %}
+  {% set whitetext = 'col-white-text' %}
+{% endif %}
+
+{% if paragraph.field_background_color_hex.value|render != '' %}
+  {% set backgroundhex = 'background-color:#' ~ paragraph.field_background_color_hex.value %}
+{% endif %}
+
 {% set classes = [
   'layout-columns__' ~ paragraph.field_content_wrapper_content.value |length,
   paragraph.field_background_color.value,
-  remove
+  remove,
+  whitetext
 ] %}
 
-<div{{ attributes.addClass(classes) }}>
-  {{ content|without('field_background_color', 'field_remove_top_space') }}
+<div{{ attributes.addClass(classes) }} style="{{ backgroundhex }}">
+  {{ content|without('field_background_color', 'field_remove_top_space', 'field_background_color_hex', 'field_white_text') }}
 </div>

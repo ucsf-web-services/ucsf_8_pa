@@ -4,6 +4,7 @@
   padding: 0 20px;
   padding-bottom: 1px;
   position: relative;
+  clear: both;
 
   > :first-child {
     padding-top: $space-four;
@@ -147,6 +148,254 @@
   grid-row: 1 / -1;
 }
 
+.article-twocol-banner {
+
+  .article-twocol-header {
+    margin-top: 0;
+    background: $c-white;
+  }
+
+  @include breakpoint($new-large) {
+    @include grid-two;
+
+    background: $c-white;
+    grid-gap: 0;
+    position: relative;
+
+    .article-twocol-header {
+      grid-column: 1 / 2;
+      grid-row: 1;
+      margin-top: 0;
+      padding-top: 0;
+      align-self: center;
+
+      .article-header__author {
+        border-bottom: none;
+
+        .article-art-credit {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          background-color: rgba(255, 255, 255, 0.9);
+          font-style: italic;
+          margin: 0;
+          padding: 0px 20px;
+        }
+      }
+    }
+
+    .article-twocol-banner-image {
+      grid-column: 2 / 3;
+      grid-row: 1;
+    }
+
+    &.twocolleftdark,
+    &.twocolrightdark {
+      background: $c-black;
+
+      .article-twocol-header {
+        background: $c-black;
+
+        h1,
+        .field-sub-title,
+        .article-header__author {
+          color: $c-white;
+
+          a {
+            color: $c-white;
+            border-bottom: 1px solid $c-white;
+
+            &:hover {
+              background: transparent;
+              border-bottom: none;
+            }
+          }
+        }
+
+        .article-header__byline {
+          .article-header__primary-area,
+          .article-header__date {
+            color: $c-white;
+
+            &::before {
+              background: $c-white;
+            }
+          }
+        }
+
+        .article-affiliation {
+          color: $c-white;
+
+          &::before {
+            background: $c-white;
+          }
+        }
+      }
+    }
+
+    &.twocolrightdark,
+    &.twocolrightlight {
+      .article-twocol-header {
+        grid-column: 2 / 3;
+
+          .article-header__author {
+
+            .article-art-credit {
+              left: 0;
+              right: auto;
+            }
+          }
+        }
+
+      .article-twocol-banner-image {
+        grid-column: 1 / 2;
+      }
+    }
+  }
+
+}
+
+.article-feature-overlay-banner {
+
+  .article-feature-overlay-header {
+    margin-top: 0;
+    background: $c-white;
+  }
+
+  @include breakpoint($new-large) {
+    @include grid-base;
+
+    grid-gap: 0;
+    text-align: center;
+    position: relative;
+
+    .article-header__author {
+      border-bottom: none;
+      width: 100%;
+
+      .article-art-credit {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(255, 255, 255, 0.55);
+        font-style: italic;
+        margin: 0;
+        padding: 0px 20px;
+      }
+    }
+
+    .article-feature-overlay-image {
+      position: relative;
+      grid-column: 1/-1;
+      grid-row: 1/-1;
+
+      .article-feature-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.55);
+      }
+    }
+
+    .article-feature-overlay-header {
+      grid-column: 1/-1;
+      grid-row: 1/-1;
+      z-index: 2;
+      background: transparent;
+      margin-top: 0;
+      padding: 0;
+      max-width: 50%;
+      align-self: center;
+      justify-self: center;
+    }
+
+    &.featureoverlaydark {
+      .article-feature-overlay-header {
+        h1,
+        .field-sub-title,
+        .article-header__author {
+          color: $c-white;
+
+          a {
+            color: $c-white;
+            border-bottom: 1px solid $c-white;
+
+            &:hover {
+              background: transparent;
+              border-bottom: none;
+            }
+          }
+
+          .article-art-credit {
+            background-color: rgba(0, 0, 0, 0.55);
+            color: $c-white;
+          }
+        }
+
+        .article-header__byline {
+          .article-header__primary-area,
+          .article-header__date {
+            color: $c-white;
+
+            &::before {
+              background: $c-white;
+            }
+          }
+        }
+
+        .article-affiliation {
+          color: $c-white;
+
+          &::before {
+            background: $c-white;
+          }
+        }
+      }
+    }
+
+    &.featureoverlaylight {
+      .article-feature-overlay-image {
+        .article-feature-overlay {
+          background-color: rgba(255,255,255,0.65);
+        }
+      }
+
+      .article-feature-overlay-header {
+        h1,
+        .field-sub-title,
+        .article-header__author {
+          color: $c-navy;
+
+          a {
+            color: $c-navy;
+            border-bottom: 1px solid $c-navy;
+
+            &:hover {
+              background: transparent;
+              border-bottom: none;
+            }
+          }
+        }
+
+        .article-header__byline {
+          .article-header__primary-area,
+          .article-header__date {
+            color: $c-navy;
+
+            &::before {
+              background: $c-navy;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 .article-header__byline,
 .news-card__byline {
   margin: 0;
@@ -193,7 +442,8 @@
 }
 
 [data-primary-area^="pa-"] + .news-card__date::before,
-[data-primary-area^="pa-"] + .article-header__date::before {
+[data-primary-area^="pa-"] + .article-header__date::before,
+.article-affiliation::before {
   content: ' ';
   display: inline-block;
   height: 3px;
@@ -259,6 +509,12 @@
       text-decoration: none;
     }
   }
+}
+
+.article-art-credit {
+  color: $c-gray-blue;
+  display: block;
+  font-size: $font-size-xxsm;
 }
 
 //MOVE THIS TO images
@@ -485,7 +741,6 @@ figure[style~="float:left"] {
   margin-left: 0;
 }
 
-figure.align-center,
 figure[class="embedded-entity"],
 figure[class="image"] {
   margin-left: 0;
@@ -581,6 +836,12 @@ figure figure[class="image"] {
 }
 
 figure.align-center {
+  margin: $space-seven auto;
+
+  @include breakpoint($new-small) {
+    margin: $space-ten auto;
+  }
+
   img,
   figcaption {
     margin: 0 auto;
@@ -591,6 +852,7 @@ figure.align-center {
 .tags-menu-region {
   background: $white;
   padding: $space-four 20px;
+  clear: both;
 
   @include breakpoint($new-small) {
     padding: $space-ten 11%;
