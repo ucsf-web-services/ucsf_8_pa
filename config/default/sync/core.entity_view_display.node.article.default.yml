@@ -10,6 +10,8 @@ dependencies:
     - field.field.node.article.field_apple_news
     - field.field.node.article.field_apple_news_title
     - field.field.node.article.field_areas
+    - field.field.node.article.field_art_credit
+    - field.field.node.article.field_article_affiliation
     - field.field.node.article.field_article_type
     - field.field.node.article.field_author
     - field.field.node.article.field_author_byline
@@ -47,9 +49,11 @@ dependencies:
     - field.field.node.article.field_twitter_description
     - field.field.node.article.field_twitter_image
     - field.field.node.article.field_twitter_title
+    - field.field.node.article.field_two_column_banner_image
     - image.style.recommended_article__bg
     - node.type.article
     - responsive_image.styles.homepage_news_card
+    - responsive_image.styles.two_column_banner
   module:
     - comment
     - datetime
@@ -70,14 +74,14 @@ mode: default
 content:
   body:
     type: text_default
-    weight: 2
+    weight: 3
     region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
   comment:
     type: comment_default
-    weight: 31
+    weight: 33
     region: content
     label: hidden
     settings:
@@ -85,13 +89,13 @@ content:
       pager_id: 0
     third_party_settings: {  }
   content_moderation_control:
-    weight: -20
+    weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   field_ankle_cta:
     type: entity_reference_entity_view
-    weight: 14
+    weight: 16
     region: content
     label: hidden
     settings:
@@ -100,7 +104,7 @@ content:
     third_party_settings: {  }
   field_apple_news_title:
     type: string
-    weight: 23
+    weight: 25
     region: content
     label: hidden
     settings:
@@ -108,15 +112,31 @@ content:
     third_party_settings: {  }
   field_areas:
     type: entity_reference_label
-    weight: 34
+    weight: 36
     region: content
     label: hidden
     settings:
       link: true
     third_party_settings: {  }
+  field_art_credit:
+    weight: 44
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_article_affiliation:
+    weight: 45
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_article_type:
     type: entity_reference_label
-    weight: 32
+    weight: 34
     region: content
     label: hidden
     settings:
@@ -124,7 +144,7 @@ content:
     third_party_settings: {  }
   field_author:
     type: entity_reference_label
-    weight: 4
+    weight: 5
     region: content
     label: hidden
     settings:
@@ -132,7 +152,7 @@ content:
     third_party_settings: {  }
   field_author_byline:
     type: entity_reference_revisions_entity_view
-    weight: 33
+    weight: 35
     region: content
     label: hidden
     settings:
@@ -141,7 +161,7 @@ content:
     third_party_settings: {  }
   field_banner_image:
     type: media_responsive_thumbnail
-    weight: 9
+    weight: 10
     region: content
     label: hidden
     settings:
@@ -150,14 +170,14 @@ content:
     third_party_settings: {  }
   field_banner_layout:
     type: list_default
-    weight: 8
+    weight: 9
     region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
   field_card_image:
     type: media_responsive_thumbnail
-    weight: 10
+    weight: 12
     region: content
     label: hidden
     settings:
@@ -166,7 +186,7 @@ content:
     third_party_settings: {  }
   field_content_panel:
     type: entity_reference_revisions_entity_view
-    weight: 3
+    weight: 4
     region: content
     label: hidden
     settings:
@@ -175,7 +195,7 @@ content:
     third_party_settings: {  }
   field_custom_author:
     type: entity_reference_label
-    weight: 5
+    weight: 6
     region: content
     label: hidden
     settings:
@@ -183,7 +203,7 @@ content:
     third_party_settings: {  }
   field_date:
     type: datetime_default
-    weight: 37
+    weight: 39
     region: content
     label: hidden
     settings:
@@ -192,7 +212,7 @@ content:
     third_party_settings: {  }
   field_date_and_time:
     type: datetime_default
-    weight: 7
+    weight: 8
     region: content
     label: hidden
     settings:
@@ -201,7 +221,7 @@ content:
     third_party_settings: {  }
   field_exclude:
     type: entity_reference_label
-    weight: 35
+    weight: 37
     region: content
     label: hidden
     settings:
@@ -209,7 +229,7 @@ content:
     third_party_settings: {  }
   field_external_url:
     type: link
-    weight: 29
+    weight: 31
     region: content
     label: hidden
     settings:
@@ -221,14 +241,14 @@ content:
     third_party_settings: {  }
   field_facebook_description:
     type: basic_string
-    weight: 30
+    weight: 32
     region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
   field_facebook_image:
     type: entity_reference_label
-    weight: 38
+    weight: 40
     region: content
     label: hidden
     settings:
@@ -236,7 +256,7 @@ content:
     third_party_settings: {  }
   field_facebook_title:
     type: string
-    weight: 26
+    weight: 28
     region: content
     label: hidden
     settings:
@@ -244,7 +264,7 @@ content:
     third_party_settings: {  }
   field_featured_image_video:
     type: entity_reference_revisions_entity_view
-    weight: 1
+    weight: 2
     region: content
     label: hidden
     settings:
@@ -253,7 +273,7 @@ content:
     third_party_settings: {  }
   field_hide_article:
     type: boolean
-    weight: 13
+    weight: 15
     region: content
     label: hidden
     settings:
@@ -263,7 +283,7 @@ content:
     third_party_settings: {  }
   field_include:
     type: entity_reference_label
-    weight: 27
+    weight: 29
     region: content
     label: hidden
     settings:
@@ -271,7 +291,7 @@ content:
     third_party_settings: {  }
   field_legacy_gallery:
     type: entity_reference_entity_view
-    weight: 41
+    weight: 43
     label: hidden
     settings:
       view_mode: default
@@ -280,7 +300,7 @@ content:
     region: content
   field_locations:
     type: entity_reference_label
-    weight: 24
+    weight: 26
     region: content
     label: hidden
     settings:
@@ -288,21 +308,21 @@ content:
     third_party_settings: {  }
   field_meta_tags:
     type: metatag_empty_formatter
-    weight: 25
+    weight: 27
     region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
   field_organizations:
     type: entity_reference_label
-    weight: 17
+    weight: 19
     region: content
     label: hidden
     settings:
       link: true
     third_party_settings: {  }
   field_page_background_color:
-    weight: 40
+    weight: 42
     label: above
     settings:
       link: true
@@ -311,7 +331,7 @@ content:
     region: content
   field_people:
     type: entity_reference_label
-    weight: 21
+    weight: 23
     region: content
     label: hidden
     settings:
@@ -319,7 +339,7 @@ content:
     third_party_settings: {  }
   field_primary_area:
     type: entity_reference_label
-    weight: 20
+    weight: 22
     region: content
     label: hidden
     settings:
@@ -327,7 +347,7 @@ content:
     third_party_settings: {  }
   field_recommended_article:
     type: entity_reference_entity_view
-    weight: 12
+    weight: 14
     region: content
     label: hidden
     settings:
@@ -336,7 +356,7 @@ content:
     third_party_settings: {  }
   field_related_sidebar_content:
     type: entity_reference_revisions_entity_view
-    weight: 22
+    weight: 24
     region: content
     label: hidden
     settings:
@@ -345,14 +365,14 @@ content:
     third_party_settings: {  }
   field_short_title:
     type: text_default
-    weight: 28
+    weight: 30
     region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
   field_sidebar_content:
     type: entity_reference_revisions_entity_view
-    weight: 19
+    weight: 21
     region: content
     label: hidden
     settings:
@@ -361,14 +381,14 @@ content:
     third_party_settings: {  }
   field_source:
     type: entity_reference_label
-    weight: 6
+    weight: 7
     region: content
     label: hidden
     settings:
       link: true
     third_party_settings: {  }
   field_sub_title:
-    weight: 0
+    weight: 1
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -376,7 +396,7 @@ content:
     region: content
   field_textured_background_image:
     type: media_thumbnail
-    weight: 11
+    weight: 13
     region: content
     label: hidden
     settings:
@@ -385,7 +405,7 @@ content:
     third_party_settings: {  }
   field_topics:
     type: entity_reference_label
-    weight: 18
+    weight: 20
     region: content
     label: hidden
     settings:
@@ -393,14 +413,14 @@ content:
     third_party_settings: {  }
   field_twitter_description:
     type: basic_string
-    weight: 16
+    weight: 18
     region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
   field_twitter_image:
     type: entity_reference_label
-    weight: 39
+    weight: 41
     region: content
     label: hidden
     settings:
@@ -408,14 +428,23 @@ content:
     third_party_settings: {  }
   field_twitter_title:
     type: string
-    weight: 15
+    weight: 17
     region: content
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
+  field_two_column_banner_image:
+    type: media_responsive_thumbnail
+    weight: 11
+    region: content
+    label: hidden
+    settings:
+      responsive_image_style: two_column_banner
+      image_link: ''
+    third_party_settings: {  }
   links:
-    weight: 36
+    weight: 38
     region: content
     settings: {  }
     third_party_settings: {  }
