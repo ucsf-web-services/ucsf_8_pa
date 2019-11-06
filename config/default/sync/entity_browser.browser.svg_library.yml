@@ -1,0 +1,52 @@
+uuid: 9b2e7e1b-ceda-4b84-8eae-f8b24e618a34
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.library
+  module:
+    - entity_browser_entity_form
+    - views
+name: svg_library
+label: 'SVG Library'
+display: iframe
+display_configuration:
+  width: 100%
+  height: '500'
+  link_text: 'Insert SVG'
+  auto_open: true
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  fd87b115-9844-4f1c-9653-e1c955cc333f:
+    settings:
+      entity_type: media
+      bundle: svg
+      form_mode: default
+      submit_text: 'Save SVG'
+    uuid: fd87b115-9844-4f1c-9653-e1c955cc333f
+    weight: 1
+    label: Upload
+    id: entity_form
+  93daadef-815e-4b4d-8188-658b04287d69:
+    settings:
+      view: library
+      view_display: entity_browser_10
+      submit_text: 'Insert SVG'
+      auto_select: false
+    uuid: 93daadef-815e-4b4d-8188-658b04287d69
+    weight: 2
+    label: 'My Library'
+    id: view
+  85065d6e-2648-41d9-b243-e6479618c979:
+    settings:
+      view: library
+      view_display: entity_browser_9
+      submit_text: 'Insert SVG'
+      auto_select: false
+    uuid: 85065d6e-2648-41d9-b243-e6479618c979
+    weight: 3
+    label: Library
+    id: view

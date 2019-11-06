@@ -1,0 +1,28 @@
+uuid: 898dc59c-8937-437c-a4c6-b60bc62ecf4e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_legacy_gallery
+    - media.type.image
+    - node.type.article
+id: node.article.field_legacy_gallery
+field_name: field_legacy_gallery
+entity_type: node
+bundle: article
+label: 'Legacy Gallery'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

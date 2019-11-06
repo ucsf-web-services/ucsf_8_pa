@@ -795,6 +795,14 @@ $settings['file_scan_ignore_directories'] = array(
 $settings['entity_update_batch_size'] = 50;
 
 
+/**
+ * Settings to allow the generation of the focalpoint image derivatives
+ *
+ * Fix found here https://drupal.stackexchange.com/questions/217689/image-styles-do-not-work/262293
+ */
+$config['image.settings']['suppress_itok_output'] = TRUE;
+$config['image.settings']['allow_insecure_derivatives'] = TRUE;
+
 /*
  * Include Acquia Connection
  */

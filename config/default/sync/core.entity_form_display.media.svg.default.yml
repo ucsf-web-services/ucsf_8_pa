@@ -1,0 +1,37 @@
+uuid: fb94e9a2-9c0f-41cb-92e5-8c5c11708956
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.svg.field_media_svg
+    - media.type.svg
+  module:
+    - svg_image_field
+id: media.svg.default
+targetEntityType: media
+bundle: svg
+mode: default
+content:
+  field_media_svg:
+    weight: 1
+    settings:
+      preview_image_max_width: 300
+      preview_image_max_height: 300
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: svg_image_field_widget
+    region: content
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  moderation_state: true
+  path: true
+  status: true
+  uid: true

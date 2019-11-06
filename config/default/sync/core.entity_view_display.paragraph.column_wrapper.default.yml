@@ -4,9 +4,11 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.column_wrapper.field_background_color
+    - field.field.paragraph.column_wrapper.field_background_color_hex
     - field.field.paragraph.column_wrapper.field_content_wrapper_content
     - field.field.paragraph.column_wrapper.field_remove_top_space
     - field.field.paragraph.column_wrapper.field_title
+    - field.field.paragraph.column_wrapper.field_white_text
     - paragraphs.paragraphs_type.column_wrapper
   module:
     - entity_reference_revisions
@@ -22,6 +24,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
+  field_background_color_hex:
+    weight: 4
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
     region: content
   field_content_wrapper_content:
     type: entity_reference_revisions_entity_view
@@ -49,5 +59,15 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_white_text:
+    weight: 5
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
     region: content
 hidden: {  }
