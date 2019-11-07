@@ -87,15 +87,26 @@
 .bk-color-white .page_narrow blockquote,
 .bk-color-white .blockquote .blockquote-content,
 .bk-color-white .ucsfcallout,
-.bk-color-white .recommended-articles__title {
+.bk-color-white .recommended-articles__title,
+.bk-color-white .paragraph-text-block blockquote {
   background: $bk-color-white;
+}
+
+.bk-color-white .ucsfcallout,
+.bk-color-white .recommended-articles__title,
+.bk-color-white .paragraph-text-block blockquote {
+  @include breakpoint($new-small-max) {
+    border-top: 1px solid $c-gray-lighter;
+    border-bottom: 1px solid $c-gray-lighter;
+  }
 }
 
 .bk-color-light-teal,
 .bk-color-light-teal .page_narrow blockquote,
 .bk-color-light-teal .blockquote .blockquote-content,
 .bk-color-light-teal .ucsfcallout,
-.bk-color-light-teal .recommended-articles__title {
+.bk-color-light-teal .recommended-articles__title,
+.bk-color-light-teal .paragraph-text-block blockquote {
   background: $bk-color-teal;
 }
 
@@ -103,6 +114,7 @@
 .bk-color-light-blue .page_narrow blockquote,
 .bk-color-light-blue .blockquote .blockquote-content,
 .bk-color-light-blue .ucsfcallout,
-.bk-color-light-blue .recommended-articles__title {
+.bk-color-light-blue .recommended-articles__title,
+.bk-color-light-blue .paragraph-text-block blockquote {
   background: $bk-color-blue;
 }
