@@ -12,7 +12,9 @@ events:
           type: script
           script:
             - echo "completed"
-      # Deploy the build artifact to a Cloud on-demand environment.
-      - deploy:
-          script:
-            - pipelines-deploy
+post-deploy:
+  steps:
+    # Deploy the build artifact to a Cloud on-demand environment.
+    - deploy:
+        script:
+          - pipelines-deploy
