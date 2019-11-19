@@ -12,8 +12,8 @@ target_env=$2
 drush_alias=$site'.'$target_env
 
 # Enable Stage File Proxy so that files don't need to be copied from Prod.
-drush8 @$drush_alias en stage_file_proxy
-drush8 @$drush_alias config-set stage_file_proxy.settings origin "https://www.ucsf.edu"
+drush @$drush_alias en stage_file_proxy
+drush @$drush_alias config-set stage_file_proxy.settings origin "https://www.ucsf.edu"
 
 # Clear the cache.
 drush @$drush_alias cr
