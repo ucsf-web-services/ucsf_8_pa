@@ -136,3 +136,30 @@
       display: none;
   }
 }
+
+.fixed-nav {
+  //same as header nav. height.
+  // calculated with JavaScript
+  padding-bottom: var(--nav-height);
+
+  .header-region {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: $z-quicklinks;
+  }
+}
+
+.fixed-nav--visible {
+  .header-region {
+    animation: $transition-time cubic-bezier(0.77, 0, 0.175, 1) slide-in;
+    transform: translateY(0);
+  }
+}
+
+.fixed-nav--hidden {
+  .header-region {
+    animation: $transition-time cubic-bezier(0.77, 0, 0.175, 1) slide-out;
+    transform: translateY(-100%);
+  }
+}
