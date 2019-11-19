@@ -11,6 +11,9 @@ site=$1
 target_env=$2
 drush_alias=$site'.'$target_env
 
+echo "site: $site"
+echo "Target Env: $target_env"
+
 # Enable Stage File Proxy so that files don't need to be copied from Prod.
 echo "Enabling Stage File Proxy"
 drush @$drush_alias en stage_file_proxy -y
