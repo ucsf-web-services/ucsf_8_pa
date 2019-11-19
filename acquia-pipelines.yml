@@ -7,7 +7,6 @@ variables:
   global:
 cde-databases:
   - stage
-  - ucsfpa8
 events:
   build:
     steps:
@@ -21,7 +20,7 @@ events:
       - deploy:
           script:
             - pipelines-deploy
-            - pipelines-sync-dbs stage ucsfpa8
+            - pipelines-sync-dbs stage
 
   # When a GitHub pull request is merged, this deletes the corresponding ODE.
   pr-merged:
