@@ -21,10 +21,11 @@ events:
           script:
             - pipelines-deploy
             - pipelines-sync-dbs ucsfpa8
+            - echo "DB sync completed"
       - cleanup:
           type: script
           script:
-            - drush8 cr
+            # - drush8 cr
             - drush8 en stage_file_proxy
             - drush8 config-set stage_file_proxy.settings origin "https://www.ucsf.edu"
 
