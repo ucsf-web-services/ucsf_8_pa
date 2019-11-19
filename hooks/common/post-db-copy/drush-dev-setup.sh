@@ -11,13 +11,17 @@ site=$1
 target_env=$2
 drush_alias=$site'.'$target_env
 
-echo "site: $site"
+echo "Site: $site"
 echo "Target Env: $target_env"
 
-# Enable Stage File Proxy so that files don't need to be copied from Prod.
-echo "Enabling Stage File Proxy"
-drush @$drush_alias en stage_file_proxy -y
-drush @$drush_alias config-set stage_file_proxy.settings origin "https://www.ucsf.edu" -y
+# Check if this is an On-Demand Environmnet starting with "ode" prefix.
+if  [[ $target_env == ode* ]] ;
+then
+  # Enable Stage File Proxy so that files don't need to be copied from Prod.
+  echo "Enabling Stage File Proxy"
+  drush @$drush_alias en stage_file_proxy -y
+  drush @$drush_alias config-set stage_file_proxy.settings origin "https://www.ucsf.edu" -y
+fi
 
 # Clear the cache.
 echo "Clearing Cache"
