@@ -1,3 +1,6 @@
+$icon-logo-height: 41px;
+$icon-logo-height-sticky: 25px;
+
 .header-region {
   @include breakpoint($bp-until-large) {
     background: $white;
@@ -8,7 +11,6 @@
 
   @include breakpoint($bp-large) {
     background: $white;
-    padding-top: $space-three;
     box-shadow: 0 12px 12px -4px rgba(0, 0, 0, 0.02);
   }
 }
@@ -33,11 +35,12 @@
 
   @include breakpoint($bp-large) {
     @include grid-two-auto;
+    align-items: center;
     margin-bottom: 0;
   }
 }
 
-.header--logo {
+.logo__img {
   @include breakpoint($bp-until-large) {
     display: inline-block;
     line-height: 26px;
@@ -47,9 +50,7 @@
   }
 
   @include breakpoint($bp-large) {
-      width: 83px;
-      height: 40px;
-      margin-bottom: $space-three;
+    height: $icon-logo-height;
   }
 }
 
@@ -147,6 +148,10 @@
     top: 0;
     width: 100%;
     z-index: $z-quicklinks;
+  }
+
+  .logo__img {
+    height: $icon-logo-height-sticky;
   }
 }
 

@@ -1,3 +1,9 @@
+$nav-line-height: 84px;
+$nav-line-height-sticky: 60px;
+$search-icon: 28px;
+$search-icon-sticky: 24px;
+$hover-border-size: 4px;
+
 .combined-header-region {
 
 }
@@ -42,23 +48,24 @@ header .menu--main {
     }
     */
     a {
-      line-height: 1.5;
+      line-height: $nav-line-height; // Height of Header Navigation without border bottom.
       letter-spacing: 0;
       text-decoration: none;
       border-bottom: none;
       color: $gray-blue;
       display: inline-block;
       font-size: $font-size-sm;
-      padding: $space 0;
-      margin: 0 $space-five;
       text-transform: none;
       position: relative;
       width: auto;
       font-family: $font-helvetica-neue-roman;
       font-weight: 500;
-      height: $space-octuple;
-      padding-right: 0;
-      margin-right: 0;
+      margin: 0 0 0 $space-five;
+      // to prevent content below from jumping
+      // padding bottom needs to be the same as border bottom on hover
+      padding-bottom: $hover-border-size;
+      // Used when minimizing Header Navigation when sticky at the top
+      transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1) line-height;
     }
 
 
@@ -69,26 +76,22 @@ header .menu--main {
       }
 
       > a {
-        //text-indent: -9999px;
-        background: url(/themes/custom/ucsf/assets/images/magnifier.svg) no-repeat 0 7px #fff;
-        background-size: 28px 28px;
-        min-width: 28px;
+        background: url(/themes/custom/ucsf/assets/images/magnifier.svg) no-repeat center #fff;
+        background-size: $search-icon;
+        max-width: $search-icon;
+        vertical-align: middle;
+        padding-bottom: 0;
+        margin-right: 22px; // to offset icon to the right
 
         &:hover {
-          background: url(/themes/custom/ucsf/assets/images/magnifier-hover.svg) no-repeat 0 7px #fff;
-          background-size: 28px 28px;
-          min-width: 28px;
+          background-image: url(/themes/custom/ucsf/assets/images/magnifier-hover.svg);
         }
 
         &.active {
-          background: url(/themes/custom/ucsf/assets/images/x-large.svg) no-repeat 0 7px #fff;
-          background-size: 28px 28px;
-          min-width: 28px;
+          background-image: url(/themes/custom/ucsf/assets/images/x-large.svg);
 
           &:hover {
-            background: url(/themes/custom/ucsf/assets/images/x-large.svg) no-repeat 0 7px #fff;
-            background-size: 28px 28px;
-            min-width: 28px;
+            background-image: url(/themes/custom/ucsf/assets/images/x-large.svg);
           }
         }
 
@@ -224,13 +227,33 @@ header .menu--main {
 
 }
 
+// When Header Navigation is sticky
+.fixed-nav {
+  [block="block-ucsf-main-menu-desktop"] {
+    .menu-item {
+      a {
+        // Reduce the height of element
+        line-height: $nav-line-height-sticky;
+      }
+    }
+    // Minimized search icon for sticky nav
+    .search {
+      a {
+        background-size: $search-icon-sticky;
+        max-width: $search-icon-sticky;
+      }
+    }
+  }
+}
+
 // Level One Hover/Active state.
 [block="block-ucsf-main-menu-desktop"] {
   > .menu-item > a {
     &.is-active,
     &:active,
     &:hover {
-      border-bottom: 4px solid $blue;
+      border-bottom: $hover-border-size solid $blue;
+      padding-bottom: 0; // padding bottom is replaced by the border bottom
     }
   }
 
@@ -238,14 +261,14 @@ header .menu--main {
     &.is-active,
     &:active,
     &:hover {
-      border-bottom: 4px solid $white;
+      border-bottom: 0;
     }
   }
   /*
   > .menu-item > span {
     &:active,
     &:hover {
-      border-bottom: 4px solid $blue;
+      border-bottom: $hover-border-size solid $blue;
     }
   }
   */
@@ -262,7 +285,7 @@ header .menu--main {
   [block="block-ucsf-main-menu-desktop"] {
     > .menu-item > a {
       &[href="/news"] {
-        border-bottom: 4px solid $blue;
+        border-bottom: $hover-border-size solid $blue;
       }
     }
   }
@@ -321,7 +344,8 @@ header .menu--main {
       font-size: 18px;
       line-height: 32px;
       height: auto;
-      margin-left: 0;
+      margin: 0;
+      padding: $space 0;
       padding-right: 20px;
     }
 
@@ -340,7 +364,7 @@ header .menu--main {
 
   & > li.menu-item--active-trail {
     & > a {
-      border-bottom: 4px solid $blue;
+      border-bottom: $hover-border-size solid $blue;
     }
   }
 
