@@ -37,7 +37,8 @@ CKEDITOR.dialog.add('ucsfquote', function( editor ) {
             label: 'Align',
             items: [
               [ editor.lang.common.alignLeft, 'half-left' ],
-              [ editor.lang.common.alignRight, 'half-right' ]
+              [ editor.lang.common.alignRight, 'half-right' ],
+              [ 'Align Right Full-Width', 'full-right' ]
             ],
             setup: function( widget ) {
               this.setValue( widget.data.align ? widget.data.align : 'half-left' );
