@@ -424,14 +424,14 @@
 
   .news-card__primary-area,
   .article-header__primary-area {
+    display: flex;
+    align-items: center;
     &::before {
+      display: block;
       content: ' ';
-      display: inline-block;
       height: 12px;
       width: 12px;
       margin-right: $space;
-      vertical-align: middle;
-      margin-bottom: 3px;
     }
   }
 
@@ -453,6 +453,10 @@
   }
 }
 
+.article-header__byline {
+  display: flex;
+}
+
 [data-primary-area^="pa-"] + .news-card__date::before,
 [data-primary-area^="pa-"] + .article-header__date::before,
 .article-affiliation::before {
@@ -461,7 +465,7 @@
   height: 3px;
   width: 3px;
   background: $gray-blue;
-  margin: 0 10px 3px 7px;
+  margin: 0 10px 3px 10px;
   border-radius: 50%;
 }
 
