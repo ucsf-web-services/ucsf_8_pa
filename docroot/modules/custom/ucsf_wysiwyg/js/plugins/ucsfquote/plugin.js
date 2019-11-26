@@ -99,6 +99,8 @@ CKEDITOR.plugins.add('ucsfquote', {
           this.setData( 'align', 'half-left' );
         if ( this.element.hasClass( 'blockquote--half-right' ) )
           this.setData( 'align', 'half-right' );
+        if ( this.element.hasClass( 'blockquote--full-right' ) )
+        this.setData( 'align', 'full-right' );
 
 //         if ( this.element.hasClass( 'size--full' ) )
 //           this.setData( 'size', 'full' );
@@ -114,6 +116,7 @@ CKEDITOR.plugins.add('ucsfquote', {
         // Brutally remove all align classes and set a new one if "align" widget data is set.
         this.element.removeClass( 'blockquote--half-left' );
         this.element.removeClass( 'blockquote--half-right' );
+        this.element.removeClass( 'blockquote--full-right' );
         if ( this.data.align )
           this.element.addClass( 'blockquote--' + this.data.align );
         /**
