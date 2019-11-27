@@ -40,11 +40,43 @@ CKEDITOR.dialog.add('ucsfquote', function( editor ) {
               [ editor.lang.common.alignRight, 'half-right' ],
               [ 'Align Right Full-Width', 'full-right' ]
             ],
+            onChange: function() {
+              var dialog = this.getDialog()
+              var typeValue = this.getValue()
+              var colorSelect = dialog.getContentElement( 'info', 'colorAccent' )
+
+              if (typeValue === 'full-right') {
+                colorSelect.getElement().show();
+              } else {
+                colorSelect.getElement().hide()
+              }
+            },
             setup: function( widget ) {
               this.setValue( widget.data.align ? widget.data.align : 'half-left' );
             },
             commit: function( widget ) {
               widget.setData( 'align', this.getValue() );
+            }
+          },
+
+          // Full quote border
+          {
+            id: 'colorAccent',
+            type: 'select',
+            label: 'Color Accent',
+            items: [
+              [ 'Blue', 'blue' ],
+              [ 'Grey', 'grey' ],
+              [ 'Green', 'green' ],
+              [ 'Teal', 'teal' ],
+              [ 'Navy', 'navy' ],
+              [ 'Purple', 'purple' ]
+            ],
+            setup: function( widget ) {
+              this.setValue( widget.data.colorAccent ? widget.data.colorAccent : 'grey' );
+            },
+            commit: function( widget ) {
+              widget.setData( 'colorAccent', this.getValue() );
             }
           },
 //           {
