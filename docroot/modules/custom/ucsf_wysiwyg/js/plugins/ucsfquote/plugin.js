@@ -113,12 +113,32 @@ CKEDITOR.plugins.add('ucsfquote', {
 
       },
       data: function() {
-        // Brutally remove all align classes and set a new one if "align" widget data is set.
-        this.element.removeClass( 'blockquote--half-left' );
-        this.element.removeClass( 'blockquote--half-right' );
-        this.element.removeClass( 'blockquote--full-right' );
+        // Brutally remove all classes starting with 'blockquote--'
+        var classListArr = this.element.$.classList
+        var toRemove = []
+
+        // Creates an array of classes to remove
+        for	( i = 0; i < classListArr.length; i++ ) {
+          var currentClass = classListArr[i]
+          if (currentClass.startsWith('blockquote--') !== false) {
+            toRemove.push(currentClass)
+          }
+        }
+
+        // Removes classes
+        for	( i = 0; i < toRemove.length; i++ ) {
+          var classToRemove = toRemove[i]
+          this.element.removeClass(classToRemove)
+        }
+
+        // Set new classes if "align" or "colorAccent" widget data is set.
         if ( this.data.align )
           this.element.addClass( 'blockquote--' + this.data.align );
+
+        if ( this.data.align === 'full-right' && this.data.colorAccent) {
+          this.element.addClass( 'blockquote--color-' + this.data.colorAccent);
+        }
+
         /**
          * @info - these are the old classes
         this.element.removeClass( 'size--full' );
