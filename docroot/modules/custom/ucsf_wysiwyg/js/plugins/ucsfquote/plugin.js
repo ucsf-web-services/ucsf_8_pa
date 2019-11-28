@@ -102,6 +102,16 @@ CKEDITOR.plugins.add('ucsfquote', {
         if ( this.element.hasClass( 'blockquote--full-right' ) )
         this.setData( 'align', 'full-right' );
 
+        // Set data to selected color
+        var classListArr = this.element.$.classList
+        for	( i = 0; i < classListArr.length; i++ ) {
+          var currentClass = classListArr[i]
+          if (currentClass.startsWith('blockquote--color-') !== false) {
+            var color = currentClass.replace(/blockquote--color-/,"")
+            this.setData( 'colorAccent', color );
+          }
+        }
+
 //         if ( this.element.hasClass( 'size--full' ) )
 //           this.setData( 'size', 'full' );
 //         if ( this.element.hasClass( 'size--half' ) )
