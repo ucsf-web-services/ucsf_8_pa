@@ -73,7 +73,7 @@ CKEDITOR.dialog.add('ucsfquote', function( editor ) {
               [ 'Purple', 'purple' ]
             ],
             setup: function( widget ) {
-              this.setValue( widget.data.colorAccent ? widget.data.colorAccent : 'grey' );
+              this.setValue( widget.data.colorAccent ? widget.data.colorAccent : 'blue' );
             },
             commit: function( widget ) {
               widget.setData( 'colorAccent', this.getValue() );
