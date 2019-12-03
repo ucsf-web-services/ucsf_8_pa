@@ -1,3 +1,16 @@
+// Space that needs to scale based on font-size
+$padding-quote-left: 3.9rem;
+$quote-border-left: 1rem;
+
+$blockquote-colors: (
+  blue: $c-blue,
+  grey: $c-gray-blue,
+  green: #6EA400,
+  teal: $c-teal,
+  navy: $c-navy,
+  purple: $c-purple
+);
+
 .blockquote {
   @include clearfix;
 
@@ -104,15 +117,15 @@
 }
 
 // In WYSIWYG.
-.page_narrow blockquote,
+.page_narrow .blockquote,
 .paragraph-text-block blockquote,
 .ckpullquote,
 .wysiwyg_quote,
 .narrow-page-header__subheading blockquote {
   background: $background-gray;
 
-  &.blockquote--half-left,
-  &.blockquote--half-right,
+  &--half-left,
+  &--half-right,
   &.ckpullquote-left,
   &.ckpullquote-right,
   &.align--left,
@@ -126,7 +139,7 @@
     margin-top: 0;
   }
 
-  .blockquote-content__text,
+  &-content__text,
   .ckpullquote--quote,
   .wysiwyg_quote--content {
     @include fs-heading-blockquote;
@@ -152,7 +165,7 @@
     }
   }
 
-  .blockquote-content__cite,
+  &-content__cite,
   .ckpullquote--author,
   .wysiwyg_quote--author {
     @include eyebrow;
@@ -170,7 +183,7 @@
     padding-right: 15%;
   }
 
-  &.blockquote--half-right,
+  &--half-right,
   &.ckpullquote-right,
   &.align--right {
     float: right;
@@ -210,7 +223,7 @@
 
   @include breakpoint($new-small) {
 
-    &.blockquote--half-left,
+    &--half-left,
     &.ckpullquote-left,
     &.align--left,
     &.align--center {
@@ -219,7 +232,8 @@
       padding-left: 56px;
       width: 50%;
     }
-    &.blockquote--half-right,
+
+    &--half-right,
     &.ckpullquote-right,
     &.align--right {
       margin-right: -14%;
@@ -231,18 +245,41 @@
 
   @include breakpoint($new-large) {
 
-    &.blockquote--half-left,
+    &--half-left,
     &.ckpullquote-left,
     &.align--left,
     &.align--center {
       margin-left: -20%;
       padding-left: 0;
     }
-    &.blockquote--half-right,
+
+    &--half-right,
     &.ckpullquote-right,
     &.align--right {
       margin-right: -20%;
       padding-right: 0;
+    }
+  }
+
+  &--full-right {
+    margin: 0 -1.25rem;
+    padding-right: 6%;
+
+    @include breakpoint($new-small) {
+      border-left-width: $quote-border-left;
+      border-left-style: solid;
+      margin: 0 -20% 0 (-$quote-border-left);
+      padding: 0 9% 0 $padding-quote-left;
+    }
+
+    @include breakpoint($new-large) {
+      padding-right: 6%;
+    }
+
+    .blockquote-content__text {
+      @include breakpoint($new-small) {
+        padding-right: 0;
+      }
     }
   }
 }
@@ -288,5 +325,15 @@
     &.in-viewport {
       animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
     }
+  }
+}
+
+// Border colors.
+@each $item in $blockquote-colors {
+  $key: nth($item, 1);
+  $value: nth($item, 2);
+
+  .blockquote--color-#{$key} {
+    border-color: $value;
   }
 }
