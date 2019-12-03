@@ -100,14 +100,14 @@ CKEDITOR.plugins.add('ucsfquote', {
         if ( this.element.hasClass( 'blockquote--half-right' ) )
           this.setData( 'align', 'half-right' );
         if ( this.element.hasClass( 'blockquote--full-right' ) )
-        this.setData( 'align', 'full-right' );
+          this.setData( 'align', 'full-right' );
 
         // Set data to selected color
-        var classListArr = this.element.$.classList
+        var classListArr = this.element.$.classList;
         for	( i = 0; i < classListArr.length; i++ ) {
-          var currentClass = classListArr[i]
+          var currentClass = classListArr[i];
           if (currentClass.startsWith('blockquote--color-') !== false) {
-            var color = currentClass.replace(/blockquote--color-/,"")
+            var color = currentClass.replace(/blockquote--color-/, '');
             this.setData( 'colorAccent', color );
           }
         }
@@ -124,21 +124,20 @@ CKEDITOR.plugins.add('ucsfquote', {
       },
       data: function() {
         // Brutally remove all classes starting with 'blockquote--'
-        var classListArr = this.element.$.classList
-        var toRemove = []
+        var classListArr = this.element.$.classList;
+        var toRemove = [];
 
         // Creates an array of classes to remove
         for	( i = 0; i < classListArr.length; i++ ) {
-          var currentClass = classListArr[i]
+          var currentClass = classListArr[i];
           if (currentClass.startsWith('blockquote--') !== false) {
-            toRemove.push(currentClass)
+            toRemove.push(currentClass);
           }
         }
 
         // Removes classes
         for	( i = 0; i < toRemove.length; i++ ) {
-          var classToRemove = toRemove[i]
-          this.element.removeClass(classToRemove)
+          this.element.removeClass(toRemove[i]);
         }
 
         // Set new classes if "align" or "colorAccent" widget data is set.

@@ -41,14 +41,14 @@ CKEDITOR.dialog.add('ucsfquote', function( editor ) {
               [ 'Align Right Full-Width', 'full-right' ]
             ],
             onChange: function() {
-              var dialog = this.getDialog()
-              var typeValue = this.getValue()
-              var colorSelect = dialog.getContentElement( 'info', 'colorAccent' )
+              var dialog = this.getDialog();
+              var typeValue = this.getValue();
+              var colorSelect = dialog.getContentElement( 'info', 'colorAccent' );
 
               if (typeValue === 'full-right') {
                 colorSelect.getElement().show();
               } else {
-                colorSelect.getElement().hide()
+                colorSelect.getElement().hide();
               }
             },
             setup: function( widget ) {
