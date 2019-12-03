@@ -5,13 +5,14 @@
   const delay = 1500;
   const input = document.querySelector('[data-placeholder]');
 
-  // Removes commas and white spaces before making an array of placeholder text
-  const placeholderArr = input.placeholder.replace(/[, ]+/g, " ").trim().split(' ');
+  // Rets the first placeholder word ('search') to a variable
+  const stationary = input.placeholder.split(' ').shift();
 
-  // sets the first word ('search') of an array to a variable
-  const stationary = placeholderArr[0];
-  // removes first word from array
-  placeholderArr.shift();
+  // removes first word from placeholder text
+  const trimmedString = input.placeholder.replace(stationary, '').trim();
+
+  // Removes commas and white spaces before making an array of placeholder text
+  const placeholderArr = trimmedString.replace(/,\s*/g, ',').split(',');
 
   let count = 0;
   setInterval(() => {
