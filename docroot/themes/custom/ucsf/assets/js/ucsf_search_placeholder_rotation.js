@@ -6,13 +6,14 @@
   var delay = 1500;
   var input = document.querySelector('[data-placeholder]');
 
-  // Removes commas and white spaces before making an array of placeholder text
-  var placeholderArr = input.placeholder.replace(/[, ]+/g, " ").trim().split(' ');
+  // Rets the first placeholder word ('search') to a variable
+  var stationary = input.placeholder.split(' ').shift();
 
-  // sets the first word ('search') of an array to a variable
-  var stationary = placeholderArr[0];
-  // removes first word from array
-  placeholderArr.shift();
+  // removes first word from placeholder text
+  var trimmedString = input.placeholder.replace(stationary, '').trim();
+
+  // Removes commas and white spaces before making an array of placeholder text
+  var placeholderArr = trimmedString.replace(/,\s*/g, ',').split(',');
 
   var count = 0;
   setInterval(function () {
