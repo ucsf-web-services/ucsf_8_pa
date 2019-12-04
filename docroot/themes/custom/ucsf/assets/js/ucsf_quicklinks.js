@@ -5,8 +5,8 @@
 
   $(document).ready(function () {
     setTimeout(function () {
-      $('body').removeClass('loading');
-    }, 2500);
+      $('body').removeClass('loading'); // 'quicklinks-intro' CSS animation breaks if class is removed before animation is finished.
+    }, 5000);
   });
 
   Drupal.behaviors.quicklinks = {
