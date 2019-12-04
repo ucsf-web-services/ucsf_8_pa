@@ -7701,14 +7701,21 @@ a[href*="http"] .article-header__date {
     .field-gallery-items button {
       display: none; } }
 
-.field-gallery-items .slick-arrow {
-  height: 40px;
-  width: 40px;
-  background-size: 50%; }
+@media (min-width: 1050px) {
+  .field-gallery-items .slick-arrow {
+    height: 40px;
+    width: 40px;
+    background-size: 50%; }
+    .field-gallery-items .slick-arrow.slick-prev {
+      left: -21%; }
+    .field-gallery-items .slick-arrow.slick-next {
+      right: -21%; } }
+
+@media (min-width: 1280px) {
   .field-gallery-items .slick-arrow.slick-prev {
     left: -35%; }
   .field-gallery-items .slick-arrow.slick-next {
-    right: -35%; }
+    right: -35%; } }
 
 .field-gallery-items .slick-slide {
   margin: 0 1.5em;
