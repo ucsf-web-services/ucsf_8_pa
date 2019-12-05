@@ -167,6 +167,10 @@ p {
     margin-top: .28em;
     font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif;
     margin-right: 10px; }
+
+@-moz-document url-prefix() {
+  p.drop-cap:first-letter {
+    margin-top: .2em; } }
   p.small-text {
     font-size: 14px;
     letter-spacing: .3px;
@@ -2691,7 +2695,11 @@ body.loading .quicklinks {
   .bk-color-white .recommended-articles__title,
   .bk-color-white .paragraph-text-block blockquote {
     border-top: 1px solid #d1d3d3;
-    border-bottom: 1px solid #d1d3d3; } }
+    border-bottom: 1px solid #d1d3d3;
+    margin-right: 0;
+    margin-left: 0;
+    float: none;
+    width: auto; } }
 
 .bk-color-light-teal,
 .bk-color-light-teal .page_narrow blockquote,
@@ -7205,47 +7213,50 @@ a[href*="http"] .article-header__date {
 .layout-left-70-30.remove-top-space {
   padding-top: 0; }
 
-@media (min-width: 1050px) {
-  .main-content.narrow-page .layout-columns__1,
-  .main-content.narrow-page .layout-columns__2,
-  .main-content.narrow-page .layout-columns__3,
-  .main-content.narrow-page .layout-columns__4 {
-    grid-column: 1 / -1;
-    padding-bottom: 80px; } }
-
-.main-content.narrow-page .layout-columns__1 .paragraph-text-block,
-.main-content.narrow-page .layout-columns__2 .paragraph-text-block,
-.main-content.narrow-page .layout-columns__3 .paragraph-text-block,
-.main-content.narrow-page .layout-columns__4 .paragraph-text-block {
-  background: transparent;
-  padding-left: 0;
-  padding-right: 0; }
-  .main-content.narrow-page .layout-columns__1 .paragraph-text-block > :first-child,
-  .main-content.narrow-page .layout-columns__2 .paragraph-text-block > :first-child,
-  .main-content.narrow-page .layout-columns__3 .paragraph-text-block > :first-child,
-  .main-content.narrow-page .layout-columns__4 .paragraph-text-block > :first-child {
-    padding-top: 0; }
-
-.main-content.narrow-page .layout-columns__1.col-white-text p, .main-content.narrow-page .layout-columns__1.col-white-text li, .main-content.narrow-page .layout-columns__1.col-white-text h2, .main-content.narrow-page .layout-columns__1.col-white-text h3, .main-content.narrow-page .layout-columns__1.col-white-text h4, .main-content.narrow-page .layout-columns__1.col-white-text h5,
-.main-content.narrow-page .layout-columns__2.col-white-text p,
-.main-content.narrow-page .layout-columns__2.col-white-text li,
-.main-content.narrow-page .layout-columns__2.col-white-text h2,
-.main-content.narrow-page .layout-columns__2.col-white-text h3,
-.main-content.narrow-page .layout-columns__2.col-white-text h4,
-.main-content.narrow-page .layout-columns__2.col-white-text h5,
-.main-content.narrow-page .layout-columns__3.col-white-text p,
-.main-content.narrow-page .layout-columns__3.col-white-text li,
-.main-content.narrow-page .layout-columns__3.col-white-text h2,
-.main-content.narrow-page .layout-columns__3.col-white-text h3,
-.main-content.narrow-page .layout-columns__3.col-white-text h4,
-.main-content.narrow-page .layout-columns__3.col-white-text h5,
-.main-content.narrow-page .layout-columns__4.col-white-text p,
-.main-content.narrow-page .layout-columns__4.col-white-text li,
-.main-content.narrow-page .layout-columns__4.col-white-text h2,
-.main-content.narrow-page .layout-columns__4.col-white-text h3,
-.main-content.narrow-page .layout-columns__4.col-white-text h4,
-.main-content.narrow-page .layout-columns__4.col-white-text h5 {
-  color: #fff; }
+.main-content.narrow-page .layout-columns__1,
+.main-content.narrow-page .layout-columns__2,
+.main-content.narrow-page .layout-columns__3,
+.main-content.narrow-page .layout-columns__4 {
+  padding-bottom: 40px; }
+  @media (min-width: 1050px) {
+    .main-content.narrow-page .layout-columns__1,
+    .main-content.narrow-page .layout-columns__2,
+    .main-content.narrow-page .layout-columns__3,
+    .main-content.narrow-page .layout-columns__4 {
+      grid-column: 1 / -1;
+      padding-bottom: 80px; } }
+  .main-content.narrow-page .layout-columns__1 .paragraph-text-block,
+  .main-content.narrow-page .layout-columns__2 .paragraph-text-block,
+  .main-content.narrow-page .layout-columns__3 .paragraph-text-block,
+  .main-content.narrow-page .layout-columns__4 .paragraph-text-block {
+    background: transparent;
+    padding-left: 0;
+    padding-right: 0; }
+    .main-content.narrow-page .layout-columns__1 .paragraph-text-block > :first-child,
+    .main-content.narrow-page .layout-columns__2 .paragraph-text-block > :first-child,
+    .main-content.narrow-page .layout-columns__3 .paragraph-text-block > :first-child,
+    .main-content.narrow-page .layout-columns__4 .paragraph-text-block > :first-child {
+      padding-top: 0; }
+  .main-content.narrow-page .layout-columns__1.col-white-text p, .main-content.narrow-page .layout-columns__1.col-white-text li, .main-content.narrow-page .layout-columns__1.col-white-text h2, .main-content.narrow-page .layout-columns__1.col-white-text h3, .main-content.narrow-page .layout-columns__1.col-white-text h4, .main-content.narrow-page .layout-columns__1.col-white-text h5,
+  .main-content.narrow-page .layout-columns__2.col-white-text p,
+  .main-content.narrow-page .layout-columns__2.col-white-text li,
+  .main-content.narrow-page .layout-columns__2.col-white-text h2,
+  .main-content.narrow-page .layout-columns__2.col-white-text h3,
+  .main-content.narrow-page .layout-columns__2.col-white-text h4,
+  .main-content.narrow-page .layout-columns__2.col-white-text h5,
+  .main-content.narrow-page .layout-columns__3.col-white-text p,
+  .main-content.narrow-page .layout-columns__3.col-white-text li,
+  .main-content.narrow-page .layout-columns__3.col-white-text h2,
+  .main-content.narrow-page .layout-columns__3.col-white-text h3,
+  .main-content.narrow-page .layout-columns__3.col-white-text h4,
+  .main-content.narrow-page .layout-columns__3.col-white-text h5,
+  .main-content.narrow-page .layout-columns__4.col-white-text p,
+  .main-content.narrow-page .layout-columns__4.col-white-text li,
+  .main-content.narrow-page .layout-columns__4.col-white-text h2,
+  .main-content.narrow-page .layout-columns__4.col-white-text h3,
+  .main-content.narrow-page .layout-columns__4.col-white-text h4,
+  .main-content.narrow-page .layout-columns__4.col-white-text h5 {
+    color: #fff; }
 
 .latest-events-list {
   float: left;
