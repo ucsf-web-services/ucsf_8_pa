@@ -21,6 +21,7 @@
       var count = 0;
       setInterval(function () {
         input.setAttribute('placeholder', stationary + ' ' + placeholderArr[count]);
+        count++;
 
         if (count >= placeholderArr.length) {
           count = 0;
