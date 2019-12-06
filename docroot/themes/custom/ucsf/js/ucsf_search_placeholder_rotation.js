@@ -20,6 +20,7 @@
       let count = 0;
       setInterval(() => {
         input.setAttribute('placeholder', `${stationary} ${placeholderArr[count]}`);
+        count++
 
         if (count >= placeholderArr.length) {
           count = 0;
