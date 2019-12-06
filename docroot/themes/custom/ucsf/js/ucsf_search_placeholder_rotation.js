@@ -19,13 +19,8 @@
 
       let count = 0;
       setInterval(() => {
-        input.classList.add("fade-in")
         input.setAttribute('placeholder', `${stationary} ${placeholderArr[count]}`);
-        // faking the fade in since
-          setTimeout(() => {
-            input.classList.remove("fade-in")
-          }, 300);
-        count++;
+
         if (count >= placeholderArr.length) {
           count = 0;
         }
