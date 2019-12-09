@@ -13,7 +13,7 @@
 
     // Toggle the .is-fixed class on scroll.
     var header = document.querySelector('.combined-header-region');
-    var headerNav = document.querySelector('.header-region');
+    var headerNav = document.querySelector('.header-region .header');
     var lastScroll = 0;
 
     // Get element height
@@ -25,6 +25,10 @@
 
     var headerTop = document.querySelector('.universal-header-region');
     var headerNavY = headerTop.offsetHeight;
+
+    // Get the bottom Y coordinate of the Header.
+    var headerBottomY = headerNavHeight + headerNavY;
+    var headerFixedBottomY = 60 + headerNavY; // 60 is the height of the fixed-nav
 
     // calculate weather user is scrolling up or down
     // to reveal full navbar on up scroll
@@ -44,12 +48,22 @@
       if (currentScroll > 400) {
         // If scrolling down
         if (currentScroll > lastScroll) {
-          header.classList.add('fixed-nav--hidden');
-          header.classList.remove('fixed-nav--visible');
+          if (!header.classList.contains('fixed-nav--pre-hidden')) {
+            header.classList.add('fixed-nav--hidden');
+            header.classList.remove('fixed-nav--visible');
+          }
           // If scrolling up
         } else {
-          header.classList.remove('fixed-nav--hidden');
+          header.classList.remove('fixed-nav--hidden', 'fixed-nav--pre-hidden');
           header.classList.add('fixed-nav', 'fixed-nav--visible');
+        }
+      } else if (currentScroll > headerBottomY) {
+        if (!header.classList.contains('fixed-nav')) {
+          header.classList.add('fixed-nav', 'fixed-nav--pre-hidden');
+        }
+      } else if (currentScroll < headerFixedBottomY) {
+        if (header.classList.contains('fixed-nav--pre-hidden')) {
+          header.classList.remove('fixed-nav', 'fixed-nav--pre-hidden');
         }
       }
 
