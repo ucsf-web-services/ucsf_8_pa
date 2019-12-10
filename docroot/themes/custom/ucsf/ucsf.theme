@@ -19,3 +19,9 @@ function ucsf_theme_suggestions_block_alter(array &$suggestions, array $variable
     array_splice($suggestions, 1, 0, 'block__bundle__' . $variables['elements']['content']['#block_content']->bundle());
   }
 }
+
+function ucsf_preprocess_webform(&$vars){
+  $wfid = $vars["element"]["#webform_id"];
+  $wf = \Drupal\webform\Entity\Webform::load($wfid);
+  $vars["title"] = $wf->label();
+}
