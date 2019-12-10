@@ -314,6 +314,8 @@
 }
 
 .media-coverage__list-byline {
+  display: flex;
+  align-items: center;
   margin: 0;
   font-size: $font-size-xsm;
   font-family: $font-helvetica-neue-roman;
@@ -323,16 +325,16 @@
 .media-coverage__list-date,
 .article-header__date {
   color: $gray-blue;
-  display: inline-block;
-  margin-top: 4px;
+  display: flex;
+  align-items: center;
 
   &::before {
     content: ' ';
-    display: inline-block;
+    display: block;
     height: 3px;
     width: 3px;
     background: $gray-blue;
-    margin: 0 10px 3px 7px;
+    margin: 2px $space 0 $space; // 2 px at the top to visually offset the "dot" from the top of lower case letters
     border-radius: 50%;
   }
 }
