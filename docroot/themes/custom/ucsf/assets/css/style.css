@@ -1384,12 +1384,20 @@ a.icon-transit:hover {
 .fixed-nav--hidden .header-region {
   -webkit-animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-out;
           animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-out;
-  -webkit-transform: translateY(-101%);
-          transform: translateY(-101%); }
+  -webkit-transform: translateY(-93%);
+          transform: translateY(-93%); }
+  @media (min-width: 850px) {
+    .fixed-nav--hidden .header-region {
+      -webkit-transform: translateY(-101%);
+              transform: translateY(-101%); } }
 
 .fixed-nav--pre-hidden .header-region {
-  -webkit-transform: translateY(-101%);
-          transform: translateY(-101%); }
+  -webkit-transform: translateY(-96%);
+          transform: translateY(-96%); }
+  @media (min-width: 850px) {
+    .fixed-nav--pre-hidden .header-region {
+      -webkit-transform: translateY(-101%);
+              transform: translateY(-101%); } }
 
 .slicknav_btn {
   position: relative;
@@ -10451,13 +10459,11 @@ a.video_preview::before {
         display: inline-block;
         margin-left: 24px; } }
 
-progress {
-  background-color: #5dafdb; }
-
 .progress-bar {
   position: absolute;
   padding: 0;
   margin: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
   height: 4px;
@@ -10466,7 +10472,19 @@ progress {
      -moz-appearance: none;
           appearance: none;
   border: none;
-  background-color: #d6d6d6; }
+  background: #d6d6d6;
+  color: #5dafdb; }
+  @media (min-width: 850px) {
+    .progress-bar {
+      bottom: auto; } }
+  .progress-bar::-webkit-progress-value {
+    background: #5dafdb; }
+  .progress-bar::-moz-progress-bar {
+    background: #5dafdb; }
+  .progress-bar::-webkit-progress-value {
+    background: #5dafdb; }
+  .progress-bar::-webkit-progress-bar {
+    background: #d6d6d6; }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .explorer {

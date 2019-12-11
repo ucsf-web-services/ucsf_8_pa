@@ -165,12 +165,19 @@ $icon-logo-height-sticky: 30px;
 .fixed-nav--hidden {
   .header-region {
     animation: $transition-time cubic-bezier(0.77, 0, 0.175, 1) slide-out;
-    transform: translateY(-101%);
+    transform: translateY(-93%);
+
+    @include breakpoint($bp-large) {
+      transform: translateY(-101%);
+    }
   }
 }
 
 .fixed-nav--pre-hidden {
   .header-region {
-    transform: translateY(-101%);
+    transform: translateY(-96%);
+    @include breakpoint($bp-large) {
+      transform: translateY(-101%);
+    }
   }
 }
