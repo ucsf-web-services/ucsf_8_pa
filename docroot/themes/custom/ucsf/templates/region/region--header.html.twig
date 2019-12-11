@@ -16,7 +16,10 @@
         {{ content }}
         {# main nav #}
       </div>
-      <progress value="0" class="progress-bar"></progress>
+      {% if progress_bar %}
+        {{ attach_library('ucsf/progress_bar') }}
+        <progress value="0" class="progress-bar"></progress>
+      {% endif %}
     </section>
   </header>
 {% endblock content %}
