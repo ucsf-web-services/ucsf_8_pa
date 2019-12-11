@@ -24,6 +24,36 @@
   @include breakpoint($new-xl) {
     grid-column: 3 / -3;
   }
+
+  &.paragraph-responsive-areas {
+    > :first-child {
+      padding-top: 0;
+    }
+
+    .field-desktop-area {
+      display: none;
+
+      @include breakpoint($new-small) {
+        display: block;
+      }
+
+      > :first-child {
+        margin-top: 0;
+      }
+    }
+
+    .field-mobile-area {
+      display: none;
+
+      @include breakpoint($new-small-max) {
+        display: block;
+      }
+
+      > :first-child {
+        margin-top: 0;
+      }
+    }
+  }
 }
 
 .page-node-type-article,
