@@ -20,8 +20,8 @@ events:
       # Deploy the build artifact to a Cloud on-demand environment.
       - deploy:
           script:
-            - pipelines-deploy
-            - pipelines-sync-dbs ucsfpa8
+            - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ]; then pipelines-deploy; fi
+            - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ]; then pipelines-sync-dbs ucsfpa8; fi
 
   # When a GitHub pull request is merged, this deletes the corresponding ODE.
   pr-merged:
