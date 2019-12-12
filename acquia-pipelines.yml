@@ -14,9 +14,7 @@ events:
           type: script
           script:
             - echo "completed"
-            - echo PIPELINE_DEPLOY_VCS_PATH
-            - echo SOURCE_VCS_PATH
-            - echo DEPLOY_VCS_PATH
+            - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ]; then echo "pull request made"; fi
   post-deploy:
     steps:
       # Deploy the build artifact to a Cloud on-demand environment.
