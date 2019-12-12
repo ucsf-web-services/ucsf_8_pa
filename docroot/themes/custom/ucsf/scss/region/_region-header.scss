@@ -168,3 +168,25 @@ $icon-logo-height-sticky: 30px;
     transform: translateY(-105%);
   }
 }
+
+// Minimized sticky Navbar, small screen
+@include breakpoint($bp-until-large) {
+  .fixed-nav--visible {
+    padding-bottom: 0;
+
+    .header-region {
+      // Removing transformX(0) when toggle class is present
+      // so that first level menu can expand and collapse in mobile/tablet.
+      transform: none;
+    }
+  }
+
+  .fixed {
+    .fixed-nav--visible {
+
+      .slicknav_nav {
+        top: var(--nav-height);
+      }
+    }
+  }
+}
