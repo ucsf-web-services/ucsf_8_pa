@@ -14,6 +14,9 @@ events:
           type: script
           script:
             - echo "completed"
+            - echo $PIPELINE_DEPLOY_VCS_PATH
+            - echo $SOURCE_VCS_PATH
+            - echo $DEPLOY_VCS_PATH
   post-deploy:
     steps:
       # Deploy the build artifact to a Cloud on-demand environment.
