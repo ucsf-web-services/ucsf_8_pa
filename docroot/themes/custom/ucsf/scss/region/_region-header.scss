@@ -139,7 +139,7 @@ $icon-logo-height-sticky: 30px;
 }
 
 .fixed-nav {
-  //same as header nav. height.
+  // Same as header nav height.
   // calculated with JavaScript
   padding-bottom: var(--nav-height);
 
@@ -166,27 +166,5 @@ $icon-logo-height-sticky: 30px;
   .header-region {
     animation: $transition-time cubic-bezier(0.77, 0, 0.175, 1) slide-out;
     transform: translateY(-105%);
-  }
-}
-
-// Minimized sticky Navbar, small screen
-@include breakpoint($bp-until-large) {
-  .fixed-nav--visible {
-    padding-bottom: 0;
-
-    .header-region {
-      // Removing transformX(0) when toggle class is present
-      // so that first level menu can expand and collapse in mobile/tablet.
-      transform: none;
-    }
-  }
-
-  .fixed {
-    .fixed-nav--visible {
-
-      .slicknav_nav {
-        top: var(--nav-height);
-      }
-    }
   }
 }
