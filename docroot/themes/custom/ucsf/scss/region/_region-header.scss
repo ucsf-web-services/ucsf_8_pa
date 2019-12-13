@@ -138,6 +138,11 @@ $icon-logo-height-sticky: 30px;
   }
 }
 
+/**
+ * ----------------------------------------
+ * Sticky Navbar on scroll up
+ * ----------------------------------------
+ */
 .fixed-nav {
   // Same as header nav height.
   // calculated with JavaScript
@@ -168,16 +173,16 @@ $icon-logo-height-sticky: 30px;
     transform: translateY(-93%);
 
     @include breakpoint($bp-large) {
-      transform: translateY(-101%);
+      transform: translateY(-101%); // To hide current page underline in Chrome
     }
   }
 }
 
 .fixed-nav--pre-hidden {
   .header-region {
-    transform: translateY(-96%);
+    transform: translateY(-93%);
     @include breakpoint($bp-large) {
-      transform: translateY(-101%);
+      transform: translateY(-101%); // To hide current page underline in Chrome
     }
   }
 }
