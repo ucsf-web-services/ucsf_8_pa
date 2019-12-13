@@ -14,13 +14,17 @@ events:
           type: script
           script:
             - echo "completed"
+            - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ]; then echo "pull request made"; fi
   post-deploy:
     steps:
       # Deploy the build artifact to a Cloud on-demand environment.
       - deploy:
           script:
+            - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ]; then
+            - echo "Create/Update a new On Demand Environment for $PIPELINE_DEPLOY_VCS_PATH"
             - pipelines-deploy
             - pipelines-sync-dbs ucsfpa8
+            - fi
 
   # When a GitHub pull request is merged, this deletes the corresponding ODE.
   pr-merged:
