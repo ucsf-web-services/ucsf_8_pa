@@ -9,24 +9,40 @@
       return;
     }
 
-    // Toggle the .is-fixed class on scroll.
-    const header = document.querySelector('.combined-header-region')
-    const headerNav = document.querySelector('.header-region .header')
-    let lastScroll = 0;
-
-    // Get element height
-    const headerNavHeight = headerNav.offsetHeight;
-
-    // Set root variable of nav-height
-    const root = document.documentElement;
-    root.style.setProperty('--nav-height', headerNavHeight + "px")
-
+    const header = document.querySelector('.combined-header-region');
+    const headerNav = document.querySelector('.header-region .header');
     const headerTop = document.querySelector('.universal-header-region');
     const headerNavY = headerTop.offsetHeight;
+    const root = document.documentElement;
+
+    // Calculate the Nav Height and set a CSS variable.
+    const setNavHeight = () => {
+      // Get element height
+      const headerNavHeight = headerNav.offsetHeight;
+      // Set root variable of nav-height
+      root.style.setProperty('--nav-height', headerNavHeight + "px");
+    }
+
+    // Set the initial nav height.
+    setNavHeight();
 
     // Get the bottom Y coordinate of the Header.
-    const headerBottomY = headerNavHeight + headerNavY;
+    const headerBottomY = headerNav.offsetHeight + headerNavY;
     const headerFixedBottomY = 60 + headerNavY; // 60 is the height of the fixed-nav
+
+    // Recalculate css variable on screen resize for the Nav height
+    const mql = matchMedia('(min-width: 850px)');
+    mql.addListener(setNavHeight);
+
+    // In Mobile, remove all the fixed classes when toggling the menu.
+    const mobileToggle = document.querySelector('.slicknav_btn');
+    mobileToggle.addEventListener('click', () => {
+      header.classList.remove('fixed-nav', 'fixed-nav--visible', 'fixed-nav--hidden');
+    });
+
+    // Toggle the .is-fixed class on scroll.
+    let lastScroll = 0;
+
 
     // calculate weather user is scrolling up or down
     // to reveal full navbar on up scroll
@@ -34,8 +50,7 @@
       const currentScroll = window.pageYOffset;
 
       // make nav fixed only when user scrolled past navigation.
-      // In other words, put the navigation back to its noraml
-      // spot.
+      // In other words, put the navigation back to its normal spot.
       if (currentScroll < headerNavY) {
         header.classList.remove('fixed-nav', 'fixed-nav--visible', 'fixed-nav--hidden');
         return;
