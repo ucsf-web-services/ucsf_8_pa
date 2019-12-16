@@ -21,14 +21,6 @@
     {% endblock article_image %}
 
     {% block wrapper_bottom %}
-
-      {% if content.field_text_body|render|striptags != '' %}
-        {# Feature Paragraph - Banner Description #}
-        <div class="news-card__desc">{{ content.field_text_body }}</div>
-      {% else %}
-        {# Feature Paragraph > News Article (News) > Sub Title #}
-        <div class="news-card__desc">{{ drupal_field('field_sub_title', 'node', paragraph.field_news_article.target_id) }}</div>
-      {% endif %}
     </header>
   </a>
 </article>{% endblock wrapper_bottom %}
