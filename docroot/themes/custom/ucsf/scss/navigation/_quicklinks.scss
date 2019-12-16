@@ -227,25 +227,36 @@
 
 
 body.loading .quicklinks {
-  animation: quicklinks-intro 3s cubic-bezier(0.77, 0, 0.175, 1) forwards;
-  animation-name: quicklinks-intro;
-  animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
-  animation-fill-mode: forwards;
+  // this animation brakes without class "loading" which is removed in ucsf_quicklinks.js,
+  // to increase animation time  ucsf_quicklinks.js also needs to be altered
+  animation: quicklinks-intro 4s cubic-bezier(0.77, 0, 0.175, 1) forwards;
 }
 
 
 @keyframes quicklinks-intro {
   0% {
-    margin-right: -80px;
+    transform: translateX(80px);
   }
-  35% {
-    margin-right: -80px;
+
+  20% {
+    transform: translateX(80px);
   }
-  65% {
-    margin-right: 15px;
+
+  40% {
+    transform: translateX(-30px);
   }
+
+  60% {
+    transform: translateX(0px);
+  }
+
+  80% {
+    transform: translateX(-15px);
+  }
+
   100% {
-    margin-right: 0px;
+    transform: translateX(0px);
+
     .quicklinks-menu {
       visibility: hidden;
     }

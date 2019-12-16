@@ -8,16 +8,20 @@
         slidesToShow: 4,
         slidesToScroll: 1,
         lazyLoad: 'progressive',
+        autoplay: true,
+        autoplaySpeed: 2000,
+        pauseOnHover: false,
         infinite: true,
         dots: false,
         variableWidth: true,
         arrows: true,
-        reponsive: [{
-          breakpoint: 599,
-          settings: {
-            arrows: false
-          }
-        }]
+
+        // responsive: [{
+        //   breakpoint: 599,
+        //   settings: {
+        //     arrows: false
+        //   }
+        // }]
       });
     }
   };

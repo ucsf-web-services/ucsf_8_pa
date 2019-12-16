@@ -1156,6 +1156,38 @@ a.icon-transit:hover {
     -webkit-transform: translateY(0px);
             transform: translateY(0px); } }
 
+@-webkit-keyframes slide-in {
+  from {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%); }
+  to {
+    -webkit-transform: translateY(0);
+            transform: translateY(0); } }
+
+@keyframes slide-in {
+  from {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%); }
+  to {
+    -webkit-transform: translateY(0);
+            transform: translateY(0); } }
+
+@-webkit-keyframes slide-out {
+  from {
+    -webkit-transform: translateY(0);
+            transform: translateY(0); }
+  to {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%); } }
+
+@keyframes slide-out {
+  from {
+    -webkit-transform: translateY(0);
+            transform: translateY(0); }
+  to {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%); } }
+
 .universal-header__give {
   display: block;
   padding: 8px;
@@ -1218,7 +1250,6 @@ a.icon-transit:hover {
 @media (min-width: 850px) {
   .header-region {
     background: #fff;
-    padding-top: 24px;
     -webkit-box-shadow: 0 12px 12px -4px rgba(0, 0, 0, 0.02);
             box-shadow: 0 12px 12px -4px rgba(0, 0, 0, 0.02); } }
 
@@ -1244,13 +1275,16 @@ a.icon-transit:hover {
       grid-template-columns: repeat(1, 1fr);
       grid-gap: 5%;
       grid-row-gap: 0;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
       margin-bottom: 0; } }
   @media (min-width: 850px) and (min-width: 600px) {
     .header {
       grid-template-columns: repeat(2, auto); } }
 
 @media (max-width: 849px) {
-  .header--logo {
+  .logo__img {
     display: inline-block;
     line-height: 26px;
     height: 26px;
@@ -1258,10 +1292,8 @@ a.icon-transit:hover {
     vertical-align: middle; } }
 
 @media (min-width: 850px) {
-  .header--logo {
-    width: 83px;
-    height: 40px;
-    margin-bottom: 24px; } }
+  .logo__img {
+    height: 41px; } }
 
 .header--search a {
   position: absolute;
@@ -1336,6 +1368,28 @@ a.icon-transit:hover {
 @media (min-width: 850px) {
   .header--search {
     display: none; } }
+
+.fixed-nav {
+  padding-bottom: var(--nav-height); }
+  .fixed-nav .header-region {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 800; }
+  .fixed-nav .logo__img {
+    height: 30px; }
+
+.fixed-nav--visible .header-region {
+  -webkit-animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-in;
+          animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-in;
+  -webkit-transform: translateY(0);
+          transform: translateY(0); }
+
+.fixed-nav--hidden .header-region {
+  -webkit-animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-out;
+          animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-out;
+  -webkit-transform: translateY(-105%);
+          transform: translateY(-105%); }
 
 .slicknav_btn {
   position: relative;
@@ -1575,39 +1629,37 @@ a.icon-transit:hover {
     display: inline-block;
  }
     [block="block-ucsf-main-menu-desktop"] .menu-item a {
-      line-height: 1.5;
+      line-height: 84px;
       letter-spacing: 0;
       text-decoration: none;
       border-bottom: none;
       color: #506380;
       display: inline-block;
       font-size: 16px;
-      padding: 8px 0;
-      margin: 0 40px;
       text-transform: none;
       position: relative;
       width: auto;
       font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
       font-weight: 500;
-      height: 64px;
-      padding-right: 0;
-      margin-right: 0; }
+      margin: 0 0 0 40px;
+      padding-bottom: 4px;
+      -webkit-transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) line-height;
+      transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) line-height; }
     [block="block-ucsf-main-menu-desktop"] .menu-item.search > a {
-      background: url(/themes/custom/ucsf/assets/images/magnifier.svg) no-repeat 0 7px #fff;
-      background-size: 28px 28px;
-      min-width: 28px; }
+      background: url(/themes/custom/ucsf/assets/images/magnifier.svg) no-repeat center #fff;
+      background-size: 28px;
+      max-width: 28px;
+      vertical-align: middle;
+      padding-bottom: 0;
+      margin-right: 22px;
+      margin-top: 2px;
+      margin-bottom: 2px; }
       [block="block-ucsf-main-menu-desktop"] .menu-item.search > a:hover {
-        background: url(/themes/custom/ucsf/assets/images/magnifier-hover.svg) no-repeat 0 7px #fff;
-        background-size: 28px 28px;
-        min-width: 28px; }
+        background-image: url(/themes/custom/ucsf/assets/images/magnifier-hover.svg); }
       [block="block-ucsf-main-menu-desktop"] .menu-item.search > a.active {
-        background: url(/themes/custom/ucsf/assets/images/x-large.svg) no-repeat 0 7px #fff;
-        background-size: 28px 28px;
-        min-width: 28px; }
+        background-image: url(/themes/custom/ucsf/assets/images/x-large.svg); }
         [block="block-ucsf-main-menu-desktop"] .menu-item.search > a.active:hover {
-          background: url(/themes/custom/ucsf/assets/images/x-large.svg) no-repeat 0 7px #fff;
-          background-size: 28px 28px;
-          min-width: 28px; }
+          background-image: url(/themes/custom/ucsf/assets/images/x-large.svg); }
       [block="block-ucsf-main-menu-desktop"] .menu-item.search > a span {
         color: transparent; }
     [block="block-ucsf-main-menu-desktop"] .menu-item .menu-item:hover > .menu-child--wrapper,
@@ -1745,12 +1797,20 @@ a.icon-transit:hover {
     [block="block-ucsf-main-menu-desktop"] [data-level="level-0"] > .menu-child--label[data-section="section-research"] {
       background: #058488; }
 
+.fixed-nav [block="block-ucsf-main-menu-desktop"] .menu-item a {
+  line-height: 60px; }
+
+.fixed-nav [block="block-ucsf-main-menu-desktop"] .search a {
+  background-size: 24px;
+  max-width: 24px; }
+
 [block="block-ucsf-main-menu-desktop"] {
  }
   [block="block-ucsf-main-menu-desktop"] > .menu-item > a.is-active, [block="block-ucsf-main-menu-desktop"] > .menu-item > a:active, [block="block-ucsf-main-menu-desktop"] > .menu-item > a:hover {
-    border-bottom: 4px solid #007cbe; }
+    border-bottom: 4px solid #007cbe;
+    padding-bottom: 0; }
   [block="block-ucsf-main-menu-desktop"] > .menu-item.search > a.is-active, [block="block-ucsf-main-menu-desktop"] > .menu-item.search > a:active, [block="block-ucsf-main-menu-desktop"] > .menu-item.search > a:hover {
-    border-bottom: 4px solid #fff; }
+    border-bottom: 0; }
   [block="block-ucsf-main-menu-desktop"] > .menu-item:first-child > a {
     margin-left: 0; }
 
@@ -1759,7 +1819,8 @@ a.icon-transit:hover {
 .page-node-type-news-package [block="block-ucsf-main-menu-desktop"] > .menu-item > a[href="/news"],
 .page-node-type-trending [block="block-ucsf-main-menu-desktop"] > .menu-item > a[href="/news"],
 .page-node-type-author [block="block-ucsf-main-menu-desktop"] > .menu-item > a[href="/news"] {
-  border-bottom: 4px solid #007cbe; }
+  border-bottom: 4px solid #007cbe;
+  padding-bottom: 0; }
 
 [block="block-ucsf-main-menu-desktop"] [data-level="level-0"] > .menu-child--menu {
   display: block;
@@ -1793,7 +1854,8 @@ a.icon-transit:hover {
     font-size: 18px;
     line-height: 32px;
     height: auto;
-    margin-left: 0;
+    margin: 0;
+    padding: 8px 0;
     padding-right: 20px; }
     [block="block-ucsf-main-menu-desktop"] [data-level="level-0"] > .menu-child--menu a:link {
       color: #052049; }
@@ -1815,7 +1877,8 @@ a.icon-transit:hover {
   float: right;
   clear: both; }
   .menu-parent--wrapper > li.menu-item--active-trail > a {
-    border-bottom: 4px solid #007cbe; }
+    border-bottom: 4px solid #007cbe;
+    padding-bottom: 0; }
 
 [block="block-ucsf-main-menu-desktop"] [data-level="level-1"] {
   position: absolute;
@@ -2346,40 +2409,53 @@ a.icon-transit:hover {
     @media (min-width: 600px) {
       .quicklinks-menu .field-quick-link-link {
         -webkit-column-count: 2;
-           -moz-column-count: 2;
                 column-count: 2; } }
 
 body.loading .quicklinks {
-  -webkit-animation: quicklinks-intro 3s cubic-bezier(0.77, 0, 0.175, 1) forwards;
-          animation: quicklinks-intro 3s cubic-bezier(0.77, 0, 0.175, 1) forwards;
-  -webkit-animation-name: quicklinks-intro;
-          animation-name: quicklinks-intro;
-  -webkit-animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
-          animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards; }
+  -webkit-animation: quicklinks-intro 4s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+          animation: quicklinks-intro 4s cubic-bezier(0.77, 0, 0.175, 1) forwards; }
 
 @-webkit-keyframes quicklinks-intro {
   0% {
-    margin-right: -80px; }
-  35% {
-    margin-right: -80px; }
-  65% {
-    margin-right: 15px; }
+    -webkit-transform: translateX(80px);
+            transform: translateX(80px); }
+  20% {
+    -webkit-transform: translateX(80px);
+            transform: translateX(80px); }
+  40% {
+    -webkit-transform: translateX(-30px);
+            transform: translateX(-30px); }
+  60% {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px); }
+  80% {
+    -webkit-transform: translateX(-15px);
+            transform: translateX(-15px); }
   100% {
-    margin-right: 0px;
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
     .quicklinks-menu {
       visibility: hidden; } } }
 
 @keyframes quicklinks-intro {
   0% {
-    margin-right: -80px; }
-  35% {
-    margin-right: -80px; }
-  65% {
-    margin-right: 15px; }
+    -webkit-transform: translateX(80px);
+            transform: translateX(80px); }
+  20% {
+    -webkit-transform: translateX(80px);
+            transform: translateX(80px); }
+  40% {
+    -webkit-transform: translateX(-30px);
+            transform: translateX(-30px); }
+  60% {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px); }
+  80% {
+    -webkit-transform: translateX(-15px);
+            transform: translateX(-15px); }
   100% {
-    margin-right: 0px;
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
     .quicklinks-menu {
       visibility: hidden; } } }
 
@@ -3098,26 +3174,44 @@ body.loading .quicklinks {
   list-style: none;
   font-size: 14px;
   font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-  font-weight: 500; }
-  .article-header__byline li,
-  .article-header__byline li *,
-  .news-card__byline li,
-  .news-card__byline li * {
-    display: inline-block; }
-  .article-header__byline .news-card__primary-area::before,
-  .article-header__byline .article-header__primary-area::before,
-  .news-card__byline .news-card__primary-area::before,
-  .news-card__byline .article-header__primary-area::before {
-    content: ' ';
-    display: inline-block;
-    height: 12px;
-    width: 12px;
-    margin-right: 8px;
-    vertical-align: middle;
-    margin-bottom: 3px; }
+  font-weight: 500;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-flow: row wrap;
+      flex-flow: row wrap; }
+  .article-header__byline .news-card__primary-area,
+  .article-header__byline .article-header__primary-area,
+  .news-card__byline .news-card__primary-area,
+  .news-card__byline .article-header__primary-area {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+    .article-header__byline .news-card__primary-area::before,
+    .article-header__byline .article-header__primary-area::before,
+    .news-card__byline .news-card__primary-area::before,
+    .news-card__byline .article-header__primary-area::before {
+      display: block;
+      content: ' ';
+      height: 12px;
+      width: 12px;
+      margin-right: 8px; }
   .article-header__byline .article-header__date,
   .news-card__byline .article-header__date {
-    color: #506380; }
+    color: #506380;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
   .article-header__byline.media,
   .news-card__byline.media {
     color: #506380; }
@@ -3134,11 +3228,11 @@ body.loading .quicklinks {
 [data-primary-area^="pa-"] + .article-header__date::before,
 .article-affiliation::before {
   content: ' ';
-  display: inline-block;
+  display: block;
   height: 3px;
   width: 3px;
   background: #506380;
-  margin: 0 10px 3px 7px;
+  margin: 2px 8px 0 8px;
   border-radius: 50%; }
 
 [data-primary-area] {
@@ -4981,8 +5075,6 @@ figure.align-center {
     color: #506380; }
   .home-search__form .home-search__form-input::-webkit-input-placeholder {
     color: #506380; }
-  .home-search__form .home-search__form-input::-moz-placeholder {
-    color: #506380; }
   .home-search__form .home-search__form-input::-ms-input-placeholder {
     color: #506380; }
   .home-search__form .home-search__form-input::placeholder {
@@ -5610,23 +5702,36 @@ figure.align-center {
 .media-coverage__list-byline {
   margin: 0;
   font-size: 14px;
-  font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
+  font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-flow: row wrap;
+      flex-flow: row wrap; }
 
 .field-featured-media-article .news-card__date,
 .media-coverage__list-date,
 .article-header__date {
   color: #506380;
-  display: inline-block;
-  margin-top: 4px; }
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
   .field-featured-media-article .news-card__date::before,
   .media-coverage__list-date::before,
   .article-header__date::before {
     content: ' ';
-    display: inline-block;
+    display: block;
     height: 3px;
     width: 3px;
     background: #506380;
-    margin: 0 10px 3px 7px;
+    margin: 2px 8px 0 8px;
     border-radius: 50%; }
 
 a[href*="http"] .field-featured-media-article .news-card__date,
@@ -7166,7 +7271,6 @@ a[href*="http"] .article-header__date {
   margin: 0;
   padding: 0;
   -webkit-columns: 1;
-     -moz-columns: 1;
           columns: 1; }
   @media (max-width: 768px) {
     .memberships-cards {
@@ -7178,12 +7282,10 @@ a[href*="http"] .article-header__date {
   @media (min-width: 769px) {
     .memberships-cards {
       -webkit-columns: 2;
-         -moz-columns: 2;
               columns: 2; } }
   @media (min-width: 850px) {
     .memberships-cards {
       -webkit-columns: 3;
-         -moz-columns: 3;
               columns: 3; } }
   @media (min-width: 1050px) {
     .memberships-cards {
@@ -7618,6 +7720,10 @@ a[href*="http"] .article-header__date {
     .paragraph--type--gallery .gallery-container {
       grid-column: 3 / -3; } }
 
+.paragraph--type--gallery :not(.slick-active) .element-fade {
+  -webkit-animation: none;
+          animation: none; }
+
 .field-gallery-items .slick-track {
   left: 0; }
   @media (min-width: 375px) {
@@ -7686,6 +7792,22 @@ a[href*="http"] .article-header__date {
     .field-gallery-items button {
       display: none; } }
 
+@media (min-width: 1050px) {
+  .field-gallery-items .slick-arrow {
+    height: 40px;
+    width: 40px;
+    background-size: 50%; }
+    .field-gallery-items .slick-arrow.slick-prev {
+      left: -21%; }
+    .field-gallery-items .slick-arrow.slick-next {
+      right: -21%; } }
+
+@media (min-width: 1280px) {
+  .field-gallery-items .slick-arrow.slick-prev {
+    left: -35%; }
+  .field-gallery-items .slick-arrow.slick-next {
+    right: -35%; } }
+
 .field-gallery-items .slick-slide {
   margin: 0 1.5em;
   width: calc(100vw - 40px); }
@@ -7721,7 +7843,10 @@ a[href*="http"] .article-header__date {
   overflow: visible; }
 
 .field-gallery-items .field-gallery-image {
-  background-color: #fff; }
+  background-color: #fff;
+  height: 0;
+  padding-bottom: 66%;
+ }
 
 .field-gallery-items img {
   margin: 0 auto;
@@ -8345,8 +8470,6 @@ a[href*="http"] .article-header__date {
         max-width: 827px; } }
     .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"]::-webkit-input-placeholder {
       color: #506380; }
-    .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"]::-moz-placeholder {
-      color: #506380; }
     .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"]::-ms-input-placeholder {
       color: #506380; }
     .block-views-exposed-filter-blocknews-filter-page-1 [data-drupal-selector="edit-combine"]::placeholder {
@@ -8553,7 +8676,6 @@ a[href*="http"] .article-header__date {
   @media (min-width: 600px) {
     .search-filter__dropdown [data-drupal-selector="edit-tid-1"] {
       -webkit-columns: 3 12em;
-         -moz-columns: 3 12em;
               columns: 3 12em;
       grid-column: 1/4; } }
   .search-filter__dropdown.js-search_filter__dropdown-open {
@@ -8631,8 +8753,7 @@ a[href*="http"] .article-header__date {
           visibility: visible;
           -webkit-column-break-inside: avoid;
           page-break-inside: avoid;
-          -moz-column-break-inside: avoid;
-               break-inside: avoid; } }
+          break-inside: avoid; } }
       .search-filter__dropdown .fieldset-wrapper .form-type-radio label,
       .search-filter__dropdown .fieldset-wrapper .form-type-checkbox label {
         font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
@@ -8873,6 +8994,18 @@ a[href*="http"] .article-header__date {
   .topics-list__topics.slick-slider .slick-prev {
     background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #007cbe;
     left: 35px; }
+  .topics-list__topics.slick-slider .slick-arrow {
+    height: 40px;
+    width: 40px;
+    background-size: 50%;
+    top: 45%; }
+  .topics-list__topics.slick-slider .slick-prev {
+    left: 20px; }
+  .topics-list__topics.slick-slider .slick-next {
+    right: 35px; }
+    @media (min-width: 1466px) {
+      .topics-list__topics.slick-slider .slick-next {
+        right: 20px; } }
   .topics-list__topics.slick-slider .slick-slide {
     width: 340px; }
   .topics-list__topics.slick-slider .topic-card span {
@@ -9018,33 +9151,33 @@ a[href*="http"] .article-header__date {
     background: #052049;
     margin: 0 5px 3px; }
 
-.page_narrow blockquote,
+.page_narrow .blockquote,
 .paragraph-text-block blockquote,
 .ckpullquote,
 .wysiwyg_quote,
 .narrow-page-header__subheading blockquote {
   background: #f2f4f6; }
-  .page_narrow blockquote.blockquote--half-left, .page_narrow blockquote.blockquote--half-right, .page_narrow blockquote.ckpullquote-left, .page_narrow blockquote.ckpullquote-right, .page_narrow blockquote.align--left, .page_narrow blockquote.align--center,
-  .paragraph-text-block blockquote.blockquote--half-left,
-  .paragraph-text-block blockquote.blockquote--half-right,
+  .page_narrow .blockquote--half-left, .page_narrow .blockquote--half-right, .page_narrow .blockquote.ckpullquote-left, .page_narrow .blockquote.ckpullquote-right, .page_narrow .blockquote.align--left, .page_narrow .blockquote.align--center,
+  .paragraph-text-block blockquote--half-left,
+  .paragraph-text-block blockquote--half-right,
   .paragraph-text-block blockquote.ckpullquote-left,
   .paragraph-text-block blockquote.ckpullquote-right,
   .paragraph-text-block blockquote.align--left,
   .paragraph-text-block blockquote.align--center,
-  .ckpullquote.blockquote--half-left,
-  .ckpullquote.blockquote--half-right,
+  .ckpullquote--half-left,
+  .ckpullquote--half-right,
   .ckpullquote.ckpullquote-left,
   .ckpullquote.ckpullquote-right,
   .ckpullquote.align--left,
   .ckpullquote.align--center,
-  .wysiwyg_quote.blockquote--half-left,
-  .wysiwyg_quote.blockquote--half-right,
+  .wysiwyg_quote--half-left,
+  .wysiwyg_quote--half-right,
   .wysiwyg_quote.ckpullquote-left,
   .wysiwyg_quote.ckpullquote-right,
   .wysiwyg_quote.align--left,
   .wysiwyg_quote.align--center,
-  .narrow-page-header__subheading blockquote.blockquote--half-left,
-  .narrow-page-header__subheading blockquote.blockquote--half-right,
+  .narrow-page-header__subheading blockquote--half-left,
+  .narrow-page-header__subheading blockquote--half-right,
   .narrow-page-header__subheading blockquote.ckpullquote-left,
   .narrow-page-header__subheading blockquote.ckpullquote-right,
   .narrow-page-header__subheading blockquote.align--left,
@@ -9056,19 +9189,19 @@ a[href*="http"] .article-header__date {
     margin-left: -20px;
     margin-right: 0;
     margin-top: 0; }
-  .page_narrow blockquote .blockquote-content__text,
-  .page_narrow blockquote .ckpullquote--quote,
-  .page_narrow blockquote .wysiwyg_quote--content,
-  .paragraph-text-block blockquote .blockquote-content__text,
+  .page_narrow .blockquote-content__text,
+  .page_narrow .blockquote .ckpullquote--quote,
+  .page_narrow .blockquote .wysiwyg_quote--content,
+  .paragraph-text-block blockquote-content__text,
   .paragraph-text-block blockquote .ckpullquote--quote,
   .paragraph-text-block blockquote .wysiwyg_quote--content,
-  .ckpullquote .blockquote-content__text,
+  .ckpullquote-content__text,
   .ckpullquote .ckpullquote--quote,
   .ckpullquote .wysiwyg_quote--content,
-  .wysiwyg_quote .blockquote-content__text,
+  .wysiwyg_quote-content__text,
   .wysiwyg_quote .ckpullquote--quote,
   .wysiwyg_quote .wysiwyg_quote--content,
-  .narrow-page-header__subheading blockquote .blockquote-content__text,
+  .narrow-page-header__subheading blockquote-content__text,
   .narrow-page-header__subheading blockquote .ckpullquote--quote,
   .narrow-page-header__subheading blockquote .wysiwyg_quote--content {
     -webkit-font-smoothing: antialiased;
@@ -9085,36 +9218,36 @@ a[href*="http"] .article-header__date {
     padding-right: 15%;
     margin-top: 0; }
     @media (min-width: 600px) {
-      .page_narrow blockquote .blockquote-content__text,
-      .page_narrow blockquote .ckpullquote--quote,
-      .page_narrow blockquote .wysiwyg_quote--content,
-      .paragraph-text-block blockquote .blockquote-content__text,
+      .page_narrow .blockquote-content__text,
+      .page_narrow .blockquote .ckpullquote--quote,
+      .page_narrow .blockquote .wysiwyg_quote--content,
+      .paragraph-text-block blockquote-content__text,
       .paragraph-text-block blockquote .ckpullquote--quote,
       .paragraph-text-block blockquote .wysiwyg_quote--content,
-      .ckpullquote .blockquote-content__text,
+      .ckpullquote-content__text,
       .ckpullquote .ckpullquote--quote,
       .ckpullquote .wysiwyg_quote--content,
-      .wysiwyg_quote .blockquote-content__text,
+      .wysiwyg_quote-content__text,
       .wysiwyg_quote .ckpullquote--quote,
       .wysiwyg_quote .wysiwyg_quote--content,
-      .narrow-page-header__subheading blockquote .blockquote-content__text,
+      .narrow-page-header__subheading blockquote-content__text,
       .narrow-page-header__subheading blockquote .ckpullquote--quote,
       .narrow-page-header__subheading blockquote .wysiwyg_quote--content {
         font-size: 40px;
         letter-spacing: -1px; } }
-    .page_narrow blockquote .blockquote-content__text::before,
-    .page_narrow blockquote .ckpullquote--quote::before,
-    .page_narrow blockquote .wysiwyg_quote--content::before,
-    .paragraph-text-block blockquote .blockquote-content__text::before,
+    .page_narrow .blockquote-content__text::before,
+    .page_narrow .blockquote .ckpullquote--quote::before,
+    .page_narrow .blockquote .wysiwyg_quote--content::before,
+    .paragraph-text-block blockquote-content__text::before,
     .paragraph-text-block blockquote .ckpullquote--quote::before,
     .paragraph-text-block blockquote .wysiwyg_quote--content::before,
-    .ckpullquote .blockquote-content__text::before,
+    .ckpullquote-content__text::before,
     .ckpullquote .ckpullquote--quote::before,
     .ckpullquote .wysiwyg_quote--content::before,
-    .wysiwyg_quote .blockquote-content__text::before,
+    .wysiwyg_quote-content__text::before,
     .wysiwyg_quote .ckpullquote--quote::before,
     .wysiwyg_quote .wysiwyg_quote--content::before,
-    .narrow-page-header__subheading blockquote .blockquote-content__text::before,
+    .narrow-page-header__subheading blockquote-content__text::before,
     .narrow-page-header__subheading blockquote .ckpullquote--quote::before,
     .narrow-page-header__subheading blockquote .wysiwyg_quote--content::before {
       content: '“ ';
@@ -9123,38 +9256,38 @@ a[href*="http"] .article-header__date {
       padding-right: 8px;
       font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif; }
     @media (max-width: 768px) {
-      .page_narrow blockquote .blockquote-content__text,
-      .page_narrow blockquote .ckpullquote--quote,
-      .page_narrow blockquote .wysiwyg_quote--content,
-      .paragraph-text-block blockquote .blockquote-content__text,
+      .page_narrow .blockquote-content__text,
+      .page_narrow .blockquote .ckpullquote--quote,
+      .page_narrow .blockquote .wysiwyg_quote--content,
+      .paragraph-text-block blockquote-content__text,
       .paragraph-text-block blockquote .ckpullquote--quote,
       .paragraph-text-block blockquote .wysiwyg_quote--content,
-      .ckpullquote .blockquote-content__text,
+      .ckpullquote-content__text,
       .ckpullquote .ckpullquote--quote,
       .ckpullquote .wysiwyg_quote--content,
-      .wysiwyg_quote .blockquote-content__text,
+      .wysiwyg_quote-content__text,
       .wysiwyg_quote .ckpullquote--quote,
       .wysiwyg_quote .wysiwyg_quote--content,
-      .narrow-page-header__subheading blockquote .blockquote-content__text,
+      .narrow-page-header__subheading blockquote-content__text,
       .narrow-page-header__subheading blockquote .ckpullquote--quote,
       .narrow-page-header__subheading blockquote .wysiwyg_quote--content {
         padding-top: 40px;
         padding-left: 40px;
         padding-right: 40px;
         padding-bottom: 0; } }
-  .page_narrow blockquote .blockquote-content__cite,
-  .page_narrow blockquote .ckpullquote--author,
-  .page_narrow blockquote .wysiwyg_quote--author,
-  .paragraph-text-block blockquote .blockquote-content__cite,
+  .page_narrow .blockquote-content__cite,
+  .page_narrow .blockquote .ckpullquote--author,
+  .page_narrow .blockquote .wysiwyg_quote--author,
+  .paragraph-text-block blockquote-content__cite,
   .paragraph-text-block blockquote .ckpullquote--author,
   .paragraph-text-block blockquote .wysiwyg_quote--author,
-  .ckpullquote .blockquote-content__cite,
+  .ckpullquote-content__cite,
   .ckpullquote .ckpullquote--author,
   .ckpullquote .wysiwyg_quote--author,
-  .wysiwyg_quote .blockquote-content__cite,
+  .wysiwyg_quote-content__cite,
   .wysiwyg_quote .ckpullquote--author,
   .wysiwyg_quote .wysiwyg_quote--author,
-  .narrow-page-header__subheading blockquote .blockquote-content__cite,
+  .narrow-page-header__subheading blockquote-content__cite,
   .narrow-page-header__subheading blockquote .ckpullquote--author,
   .narrow-page-header__subheading blockquote .wysiwyg_quote--author {
     -webkit-font-smoothing: antialiased;
@@ -9169,19 +9302,19 @@ a[href*="http"] .article-header__date {
     text-transform: uppercase;
     font-style: normal;
     padding-right: 15%; }
-    .page_narrow blockquote .blockquote-content__cite::after,
-    .page_narrow blockquote .ckpullquote--author::after,
-    .page_narrow blockquote .wysiwyg_quote--author::after,
-    .paragraph-text-block blockquote .blockquote-content__cite::after,
+    .page_narrow .blockquote-content__cite::after,
+    .page_narrow .blockquote .ckpullquote--author::after,
+    .page_narrow .blockquote .wysiwyg_quote--author::after,
+    .paragraph-text-block blockquote-content__cite::after,
     .paragraph-text-block blockquote .ckpullquote--author::after,
     .paragraph-text-block blockquote .wysiwyg_quote--author::after,
-    .ckpullquote .blockquote-content__cite::after,
+    .ckpullquote-content__cite::after,
     .ckpullquote .ckpullquote--author::after,
     .ckpullquote .wysiwyg_quote--author::after,
-    .wysiwyg_quote .blockquote-content__cite::after,
+    .wysiwyg_quote-content__cite::after,
     .wysiwyg_quote .ckpullquote--author::after,
     .wysiwyg_quote .wysiwyg_quote--author::after,
-    .narrow-page-header__subheading blockquote .blockquote-content__cite::after,
+    .narrow-page-header__subheading blockquote-content__cite::after,
     .narrow-page-header__subheading blockquote .ckpullquote--author::after,
     .narrow-page-header__subheading blockquote .wysiwyg_quote--author::after {
       content: ' ';
@@ -9191,83 +9324,83 @@ a[href*="http"] .article-header__date {
       background: #052049;
       margin: 0 5px 3px; }
     @media (max-width: 768px) {
-      .page_narrow blockquote .blockquote-content__cite,
-      .page_narrow blockquote .ckpullquote--author,
-      .page_narrow blockquote .wysiwyg_quote--author,
-      .paragraph-text-block blockquote .blockquote-content__cite,
+      .page_narrow .blockquote-content__cite,
+      .page_narrow .blockquote .ckpullquote--author,
+      .page_narrow .blockquote .wysiwyg_quote--author,
+      .paragraph-text-block blockquote-content__cite,
       .paragraph-text-block blockquote .ckpullquote--author,
       .paragraph-text-block blockquote .wysiwyg_quote--author,
-      .ckpullquote .blockquote-content__cite,
+      .ckpullquote-content__cite,
       .ckpullquote .ckpullquote--author,
       .ckpullquote .wysiwyg_quote--author,
-      .wysiwyg_quote .blockquote-content__cite,
+      .wysiwyg_quote-content__cite,
       .wysiwyg_quote .ckpullquote--author,
       .wysiwyg_quote .wysiwyg_quote--author,
-      .narrow-page-header__subheading blockquote .blockquote-content__cite,
+      .narrow-page-header__subheading blockquote-content__cite,
       .narrow-page-header__subheading blockquote .ckpullquote--author,
       .narrow-page-header__subheading blockquote .wysiwyg_quote--author {
         padding-left: 40px; } }
-  .page_narrow blockquote .ckpullquote--org,
+  .page_narrow .blockquote .ckpullquote--org,
   .paragraph-text-block blockquote .ckpullquote--org,
   .ckpullquote .ckpullquote--org,
   .wysiwyg_quote .ckpullquote--org,
   .narrow-page-header__subheading blockquote .ckpullquote--org {
     font-size: 14px;
     padding-right: 15%; }
-  .page_narrow blockquote.blockquote--half-right, .page_narrow blockquote.ckpullquote-right, .page_narrow blockquote.align--right,
-  .paragraph-text-block blockquote.blockquote--half-right,
+  .page_narrow .blockquote--half-right, .page_narrow .blockquote.ckpullquote-right, .page_narrow .blockquote.align--right,
+  .paragraph-text-block blockquote--half-right,
   .paragraph-text-block blockquote.ckpullquote-right,
   .paragraph-text-block blockquote.align--right,
-  .ckpullquote.blockquote--half-right,
+  .ckpullquote--half-right,
   .ckpullquote.ckpullquote-right,
   .ckpullquote.align--right,
-  .wysiwyg_quote.blockquote--half-right,
+  .wysiwyg_quote--half-right,
   .wysiwyg_quote.ckpullquote-right,
   .wysiwyg_quote.align--right,
-  .narrow-page-header__subheading blockquote.blockquote--half-right,
+  .narrow-page-header__subheading blockquote--half-right,
   .narrow-page-header__subheading blockquote.ckpullquote-right,
   .narrow-page-header__subheading blockquote.align--right {
     float: right;
     right: auto;
     margin-right: -20px;
     margin-left: 0; }
-    .page_narrow blockquote.blockquote--half-right .blockquote-content__text,
-    .page_narrow blockquote.blockquote--half-right .ckpullquote--quote,
-    .page_narrow blockquote.blockquote--half-right .wysiwyg_quote--content, .page_narrow blockquote.ckpullquote-right .blockquote-content__text,
-    .page_narrow blockquote.ckpullquote-right .ckpullquote--quote,
-    .page_narrow blockquote.ckpullquote-right .wysiwyg_quote--content, .page_narrow blockquote.align--right .blockquote-content__text,
-    .page_narrow blockquote.align--right .ckpullquote--quote,
-    .page_narrow blockquote.align--right .wysiwyg_quote--content,
-    .paragraph-text-block blockquote.blockquote--half-right .blockquote-content__text,
-    .paragraph-text-block blockquote.blockquote--half-right .ckpullquote--quote,
-    .paragraph-text-block blockquote.blockquote--half-right .wysiwyg_quote--content,
+    .page_narrow .blockquote--half-right .blockquote-content__text,
+    .page_narrow .blockquote--half-right .ckpullquote--quote,
+    .page_narrow .blockquote--half-right .wysiwyg_quote--content, .page_narrow .blockquote.ckpullquote-right .blockquote-content__text,
+    .page_narrow .blockquote.ckpullquote-right .ckpullquote--quote,
+    .page_narrow .blockquote.ckpullquote-right .wysiwyg_quote--content, .page_narrow .blockquote.align--right .blockquote-content__text,
+    .page_narrow .blockquote.align--right .ckpullquote--quote,
+    .page_narrow .blockquote.align--right .wysiwyg_quote--content,
+    .paragraph-text-block blockquote--half-right .blockquote-content__text,
+    .paragraph-text-block blockquote--half-right .ckpullquote--quote,
+    .paragraph-text-block blockquote--half-right .wysiwyg_quote--content,
     .paragraph-text-block blockquote.ckpullquote-right .blockquote-content__text,
     .paragraph-text-block blockquote.ckpullquote-right .ckpullquote--quote,
     .paragraph-text-block blockquote.ckpullquote-right .wysiwyg_quote--content,
     .paragraph-text-block blockquote.align--right .blockquote-content__text,
     .paragraph-text-block blockquote.align--right .ckpullquote--quote,
     .paragraph-text-block blockquote.align--right .wysiwyg_quote--content,
-    .ckpullquote.blockquote--half-right .blockquote-content__text,
-    .ckpullquote.blockquote--half-right .ckpullquote--quote,
-    .ckpullquote.blockquote--half-right .wysiwyg_quote--content,
+    .ckpullquote--half-right .blockquote-content__text,
+    .ckpullquote--half-right .ckpullquote--quote,
+    .ckpullquote--half-right .wysiwyg_quote--content,
     .ckpullquote.ckpullquote-right .blockquote-content__text,
     .ckpullquote.ckpullquote-right .ckpullquote--quote,
     .ckpullquote.ckpullquote-right .wysiwyg_quote--content,
     .ckpullquote.align--right .blockquote-content__text,
     .ckpullquote.align--right .ckpullquote--quote,
     .ckpullquote.align--right .wysiwyg_quote--content,
-    .wysiwyg_quote.blockquote--half-right .blockquote-content__text,
-    .wysiwyg_quote.blockquote--half-right .ckpullquote--quote,
-    .wysiwyg_quote.blockquote--half-right .wysiwyg_quote--content,
+    .wysiwyg_quote--half-right .blockquote-content__text,
+    .wysiwyg_quote--half-right .ckpullquote--quote,
+    .wysiwyg_quote--half-right .wysiwyg_quote--content,
     .wysiwyg_quote.ckpullquote-right .blockquote-content__text,
     .wysiwyg_quote.ckpullquote-right .ckpullquote--quote,
     .wysiwyg_quote.ckpullquote-right .wysiwyg_quote--content,
     .wysiwyg_quote.align--right .blockquote-content__text,
     .wysiwyg_quote.align--right .ckpullquote--quote,
     .wysiwyg_quote.align--right .wysiwyg_quote--content,
-    .narrow-page-header__subheading blockquote.blockquote--half-right .blockquote-content__text,
-    .narrow-page-header__subheading blockquote.blockquote--half-right .ckpullquote--quote,
-    .narrow-page-header__subheading blockquote.blockquote--half-right .wysiwyg_quote--content,
+    .narrow-page-header__subheading blockquote--half-right .blockquote-content__text,
+    .narrow-page-header__subheading blockquote--half-right .ckpullquote--quote,
+    .narrow-page-header__subheading blockquote--half-right .wysiwyg_quote--content,
     .narrow-page-header__subheading blockquote.ckpullquote-right .blockquote-content__text,
     .narrow-page-header__subheading blockquote.ckpullquote-right .ckpullquote--quote,
     .narrow-page-header__subheading blockquote.ckpullquote-right .wysiwyg_quote--content,
@@ -9277,43 +9410,43 @@ a[href*="http"] .article-header__date {
       padding-right: 0;
       padding-left: 15%; }
       @media (max-width: 768px) {
-        .page_narrow blockquote.blockquote--half-right .blockquote-content__text,
-        .page_narrow blockquote.blockquote--half-right .ckpullquote--quote,
-        .page_narrow blockquote.blockquote--half-right .wysiwyg_quote--content, .page_narrow blockquote.ckpullquote-right .blockquote-content__text,
-        .page_narrow blockquote.ckpullquote-right .ckpullquote--quote,
-        .page_narrow blockquote.ckpullquote-right .wysiwyg_quote--content, .page_narrow blockquote.align--right .blockquote-content__text,
-        .page_narrow blockquote.align--right .ckpullquote--quote,
-        .page_narrow blockquote.align--right .wysiwyg_quote--content,
-        .paragraph-text-block blockquote.blockquote--half-right .blockquote-content__text,
-        .paragraph-text-block blockquote.blockquote--half-right .ckpullquote--quote,
-        .paragraph-text-block blockquote.blockquote--half-right .wysiwyg_quote--content,
+        .page_narrow .blockquote--half-right .blockquote-content__text,
+        .page_narrow .blockquote--half-right .ckpullquote--quote,
+        .page_narrow .blockquote--half-right .wysiwyg_quote--content, .page_narrow .blockquote.ckpullquote-right .blockquote-content__text,
+        .page_narrow .blockquote.ckpullquote-right .ckpullquote--quote,
+        .page_narrow .blockquote.ckpullquote-right .wysiwyg_quote--content, .page_narrow .blockquote.align--right .blockquote-content__text,
+        .page_narrow .blockquote.align--right .ckpullquote--quote,
+        .page_narrow .blockquote.align--right .wysiwyg_quote--content,
+        .paragraph-text-block blockquote--half-right .blockquote-content__text,
+        .paragraph-text-block blockquote--half-right .ckpullquote--quote,
+        .paragraph-text-block blockquote--half-right .wysiwyg_quote--content,
         .paragraph-text-block blockquote.ckpullquote-right .blockquote-content__text,
         .paragraph-text-block blockquote.ckpullquote-right .ckpullquote--quote,
         .paragraph-text-block blockquote.ckpullquote-right .wysiwyg_quote--content,
         .paragraph-text-block blockquote.align--right .blockquote-content__text,
         .paragraph-text-block blockquote.align--right .ckpullquote--quote,
         .paragraph-text-block blockquote.align--right .wysiwyg_quote--content,
-        .ckpullquote.blockquote--half-right .blockquote-content__text,
-        .ckpullquote.blockquote--half-right .ckpullquote--quote,
-        .ckpullquote.blockquote--half-right .wysiwyg_quote--content,
+        .ckpullquote--half-right .blockquote-content__text,
+        .ckpullquote--half-right .ckpullquote--quote,
+        .ckpullquote--half-right .wysiwyg_quote--content,
         .ckpullquote.ckpullquote-right .blockquote-content__text,
         .ckpullquote.ckpullquote-right .ckpullquote--quote,
         .ckpullquote.ckpullquote-right .wysiwyg_quote--content,
         .ckpullquote.align--right .blockquote-content__text,
         .ckpullquote.align--right .ckpullquote--quote,
         .ckpullquote.align--right .wysiwyg_quote--content,
-        .wysiwyg_quote.blockquote--half-right .blockquote-content__text,
-        .wysiwyg_quote.blockquote--half-right .ckpullquote--quote,
-        .wysiwyg_quote.blockquote--half-right .wysiwyg_quote--content,
+        .wysiwyg_quote--half-right .blockquote-content__text,
+        .wysiwyg_quote--half-right .ckpullquote--quote,
+        .wysiwyg_quote--half-right .wysiwyg_quote--content,
         .wysiwyg_quote.ckpullquote-right .blockquote-content__text,
         .wysiwyg_quote.ckpullquote-right .ckpullquote--quote,
         .wysiwyg_quote.ckpullquote-right .wysiwyg_quote--content,
         .wysiwyg_quote.align--right .blockquote-content__text,
         .wysiwyg_quote.align--right .ckpullquote--quote,
         .wysiwyg_quote.align--right .wysiwyg_quote--content,
-        .narrow-page-header__subheading blockquote.blockquote--half-right .blockquote-content__text,
-        .narrow-page-header__subheading blockquote.blockquote--half-right .ckpullquote--quote,
-        .narrow-page-header__subheading blockquote.blockquote--half-right .wysiwyg_quote--content,
+        .narrow-page-header__subheading blockquote--half-right .blockquote-content__text,
+        .narrow-page-header__subheading blockquote--half-right .ckpullquote--quote,
+        .narrow-page-header__subheading blockquote--half-right .wysiwyg_quote--content,
         .narrow-page-header__subheading blockquote.ckpullquote-right .blockquote-content__text,
         .narrow-page-header__subheading blockquote.ckpullquote-right .ckpullquote--quote,
         .narrow-page-header__subheading blockquote.ckpullquote-right .wysiwyg_quote--content,
@@ -9324,20 +9457,20 @@ a[href*="http"] .article-header__date {
           padding-left: 40px;
           padding-right: 40px;
           padding-bottom: 0; } }
-    .page_narrow blockquote.blockquote--half-right .blockquote-content__cite,
-    .page_narrow blockquote.blockquote--half-right .ckpullquote--author,
-    .page_narrow blockquote.blockquote--half-right .ckpullquote--org,
-    .page_narrow blockquote.blockquote--half-right .wysiwyg_quote--author, .page_narrow blockquote.ckpullquote-right .blockquote-content__cite,
-    .page_narrow blockquote.ckpullquote-right .ckpullquote--author,
-    .page_narrow blockquote.ckpullquote-right .ckpullquote--org,
-    .page_narrow blockquote.ckpullquote-right .wysiwyg_quote--author, .page_narrow blockquote.align--right .blockquote-content__cite,
-    .page_narrow blockquote.align--right .ckpullquote--author,
-    .page_narrow blockquote.align--right .ckpullquote--org,
-    .page_narrow blockquote.align--right .wysiwyg_quote--author,
-    .paragraph-text-block blockquote.blockquote--half-right .blockquote-content__cite,
-    .paragraph-text-block blockquote.blockquote--half-right .ckpullquote--author,
-    .paragraph-text-block blockquote.blockquote--half-right .ckpullquote--org,
-    .paragraph-text-block blockquote.blockquote--half-right .wysiwyg_quote--author,
+    .page_narrow .blockquote--half-right .blockquote-content__cite,
+    .page_narrow .blockquote--half-right .ckpullquote--author,
+    .page_narrow .blockquote--half-right .ckpullquote--org,
+    .page_narrow .blockquote--half-right .wysiwyg_quote--author, .page_narrow .blockquote.ckpullquote-right .blockquote-content__cite,
+    .page_narrow .blockquote.ckpullquote-right .ckpullquote--author,
+    .page_narrow .blockquote.ckpullquote-right .ckpullquote--org,
+    .page_narrow .blockquote.ckpullquote-right .wysiwyg_quote--author, .page_narrow .blockquote.align--right .blockquote-content__cite,
+    .page_narrow .blockquote.align--right .ckpullquote--author,
+    .page_narrow .blockquote.align--right .ckpullquote--org,
+    .page_narrow .blockquote.align--right .wysiwyg_quote--author,
+    .paragraph-text-block blockquote--half-right .blockquote-content__cite,
+    .paragraph-text-block blockquote--half-right .ckpullquote--author,
+    .paragraph-text-block blockquote--half-right .ckpullquote--org,
+    .paragraph-text-block blockquote--half-right .wysiwyg_quote--author,
     .paragraph-text-block blockquote.ckpullquote-right .blockquote-content__cite,
     .paragraph-text-block blockquote.ckpullquote-right .ckpullquote--author,
     .paragraph-text-block blockquote.ckpullquote-right .ckpullquote--org,
@@ -9346,10 +9479,10 @@ a[href*="http"] .article-header__date {
     .paragraph-text-block blockquote.align--right .ckpullquote--author,
     .paragraph-text-block blockquote.align--right .ckpullquote--org,
     .paragraph-text-block blockquote.align--right .wysiwyg_quote--author,
-    .ckpullquote.blockquote--half-right .blockquote-content__cite,
-    .ckpullquote.blockquote--half-right .ckpullquote--author,
-    .ckpullquote.blockquote--half-right .ckpullquote--org,
-    .ckpullquote.blockquote--half-right .wysiwyg_quote--author,
+    .ckpullquote--half-right .blockquote-content__cite,
+    .ckpullquote--half-right .ckpullquote--author,
+    .ckpullquote--half-right .ckpullquote--org,
+    .ckpullquote--half-right .wysiwyg_quote--author,
     .ckpullquote.ckpullquote-right .blockquote-content__cite,
     .ckpullquote.ckpullquote-right .ckpullquote--author,
     .ckpullquote.ckpullquote-right .ckpullquote--org,
@@ -9358,10 +9491,10 @@ a[href*="http"] .article-header__date {
     .ckpullquote.align--right .ckpullquote--author,
     .ckpullquote.align--right .ckpullquote--org,
     .ckpullquote.align--right .wysiwyg_quote--author,
-    .wysiwyg_quote.blockquote--half-right .blockquote-content__cite,
-    .wysiwyg_quote.blockquote--half-right .ckpullquote--author,
-    .wysiwyg_quote.blockquote--half-right .ckpullquote--org,
-    .wysiwyg_quote.blockquote--half-right .wysiwyg_quote--author,
+    .wysiwyg_quote--half-right .blockquote-content__cite,
+    .wysiwyg_quote--half-right .ckpullquote--author,
+    .wysiwyg_quote--half-right .ckpullquote--org,
+    .wysiwyg_quote--half-right .wysiwyg_quote--author,
     .wysiwyg_quote.ckpullquote-right .blockquote-content__cite,
     .wysiwyg_quote.ckpullquote-right .ckpullquote--author,
     .wysiwyg_quote.ckpullquote-right .ckpullquote--org,
@@ -9370,10 +9503,10 @@ a[href*="http"] .article-header__date {
     .wysiwyg_quote.align--right .ckpullquote--author,
     .wysiwyg_quote.align--right .ckpullquote--org,
     .wysiwyg_quote.align--right .wysiwyg_quote--author,
-    .narrow-page-header__subheading blockquote.blockquote--half-right .blockquote-content__cite,
-    .narrow-page-header__subheading blockquote.blockquote--half-right .ckpullquote--author,
-    .narrow-page-header__subheading blockquote.blockquote--half-right .ckpullquote--org,
-    .narrow-page-header__subheading blockquote.blockquote--half-right .wysiwyg_quote--author,
+    .narrow-page-header__subheading blockquote--half-right .blockquote-content__cite,
+    .narrow-page-header__subheading blockquote--half-right .ckpullquote--author,
+    .narrow-page-header__subheading blockquote--half-right .ckpullquote--org,
+    .narrow-page-header__subheading blockquote--half-right .wysiwyg_quote--author,
     .narrow-page-header__subheading blockquote.ckpullquote-right .blockquote-content__cite,
     .narrow-page-header__subheading blockquote.ckpullquote-right .ckpullquote--author,
     .narrow-page-header__subheading blockquote.ckpullquote-right .ckpullquote--org,
@@ -9384,20 +9517,20 @@ a[href*="http"] .article-header__date {
     .narrow-page-header__subheading blockquote.align--right .wysiwyg_quote--author {
       padding-left: 15%; }
       @media (max-width: 768px) {
-        .page_narrow blockquote.blockquote--half-right .blockquote-content__cite,
-        .page_narrow blockquote.blockquote--half-right .ckpullquote--author,
-        .page_narrow blockquote.blockquote--half-right .ckpullquote--org,
-        .page_narrow blockquote.blockquote--half-right .wysiwyg_quote--author, .page_narrow blockquote.ckpullquote-right .blockquote-content__cite,
-        .page_narrow blockquote.ckpullquote-right .ckpullquote--author,
-        .page_narrow blockquote.ckpullquote-right .ckpullquote--org,
-        .page_narrow blockquote.ckpullquote-right .wysiwyg_quote--author, .page_narrow blockquote.align--right .blockquote-content__cite,
-        .page_narrow blockquote.align--right .ckpullquote--author,
-        .page_narrow blockquote.align--right .ckpullquote--org,
-        .page_narrow blockquote.align--right .wysiwyg_quote--author,
-        .paragraph-text-block blockquote.blockquote--half-right .blockquote-content__cite,
-        .paragraph-text-block blockquote.blockquote--half-right .ckpullquote--author,
-        .paragraph-text-block blockquote.blockquote--half-right .ckpullquote--org,
-        .paragraph-text-block blockquote.blockquote--half-right .wysiwyg_quote--author,
+        .page_narrow .blockquote--half-right .blockquote-content__cite,
+        .page_narrow .blockquote--half-right .ckpullquote--author,
+        .page_narrow .blockquote--half-right .ckpullquote--org,
+        .page_narrow .blockquote--half-right .wysiwyg_quote--author, .page_narrow .blockquote.ckpullquote-right .blockquote-content__cite,
+        .page_narrow .blockquote.ckpullquote-right .ckpullquote--author,
+        .page_narrow .blockquote.ckpullquote-right .ckpullquote--org,
+        .page_narrow .blockquote.ckpullquote-right .wysiwyg_quote--author, .page_narrow .blockquote.align--right .blockquote-content__cite,
+        .page_narrow .blockquote.align--right .ckpullquote--author,
+        .page_narrow .blockquote.align--right .ckpullquote--org,
+        .page_narrow .blockquote.align--right .wysiwyg_quote--author,
+        .paragraph-text-block blockquote--half-right .blockquote-content__cite,
+        .paragraph-text-block blockquote--half-right .ckpullquote--author,
+        .paragraph-text-block blockquote--half-right .ckpullquote--org,
+        .paragraph-text-block blockquote--half-right .wysiwyg_quote--author,
         .paragraph-text-block blockquote.ckpullquote-right .blockquote-content__cite,
         .paragraph-text-block blockquote.ckpullquote-right .ckpullquote--author,
         .paragraph-text-block blockquote.ckpullquote-right .ckpullquote--org,
@@ -9406,10 +9539,10 @@ a[href*="http"] .article-header__date {
         .paragraph-text-block blockquote.align--right .ckpullquote--author,
         .paragraph-text-block blockquote.align--right .ckpullquote--org,
         .paragraph-text-block blockquote.align--right .wysiwyg_quote--author,
-        .ckpullquote.blockquote--half-right .blockquote-content__cite,
-        .ckpullquote.blockquote--half-right .ckpullquote--author,
-        .ckpullquote.blockquote--half-right .ckpullquote--org,
-        .ckpullquote.blockquote--half-right .wysiwyg_quote--author,
+        .ckpullquote--half-right .blockquote-content__cite,
+        .ckpullquote--half-right .ckpullquote--author,
+        .ckpullquote--half-right .ckpullquote--org,
+        .ckpullquote--half-right .wysiwyg_quote--author,
         .ckpullquote.ckpullquote-right .blockquote-content__cite,
         .ckpullquote.ckpullquote-right .ckpullquote--author,
         .ckpullquote.ckpullquote-right .ckpullquote--org,
@@ -9418,10 +9551,10 @@ a[href*="http"] .article-header__date {
         .ckpullquote.align--right .ckpullquote--author,
         .ckpullquote.align--right .ckpullquote--org,
         .ckpullquote.align--right .wysiwyg_quote--author,
-        .wysiwyg_quote.blockquote--half-right .blockquote-content__cite,
-        .wysiwyg_quote.blockquote--half-right .ckpullquote--author,
-        .wysiwyg_quote.blockquote--half-right .ckpullquote--org,
-        .wysiwyg_quote.blockquote--half-right .wysiwyg_quote--author,
+        .wysiwyg_quote--half-right .blockquote-content__cite,
+        .wysiwyg_quote--half-right .ckpullquote--author,
+        .wysiwyg_quote--half-right .ckpullquote--org,
+        .wysiwyg_quote--half-right .wysiwyg_quote--author,
         .wysiwyg_quote.ckpullquote-right .blockquote-content__cite,
         .wysiwyg_quote.ckpullquote-right .ckpullquote--author,
         .wysiwyg_quote.ckpullquote-right .ckpullquote--org,
@@ -9430,10 +9563,10 @@ a[href*="http"] .article-header__date {
         .wysiwyg_quote.align--right .ckpullquote--author,
         .wysiwyg_quote.align--right .ckpullquote--org,
         .wysiwyg_quote.align--right .wysiwyg_quote--author,
-        .narrow-page-header__subheading blockquote.blockquote--half-right .blockquote-content__cite,
-        .narrow-page-header__subheading blockquote.blockquote--half-right .ckpullquote--author,
-        .narrow-page-header__subheading blockquote.blockquote--half-right .ckpullquote--org,
-        .narrow-page-header__subheading blockquote.blockquote--half-right .wysiwyg_quote--author,
+        .narrow-page-header__subheading blockquote--half-right .blockquote-content__cite,
+        .narrow-page-header__subheading blockquote--half-right .ckpullquote--author,
+        .narrow-page-header__subheading blockquote--half-right .ckpullquote--org,
+        .narrow-page-header__subheading blockquote--half-right .wysiwyg_quote--author,
         .narrow-page-header__subheading blockquote.ckpullquote-right .blockquote-content__cite,
         .narrow-page-header__subheading blockquote.ckpullquote-right .ckpullquote--author,
         .narrow-page-header__subheading blockquote.ckpullquote-right .ckpullquote--org,
@@ -9443,27 +9576,27 @@ a[href*="http"] .article-header__date {
         .narrow-page-header__subheading blockquote.align--right .ckpullquote--org,
         .narrow-page-header__subheading blockquote.align--right .wysiwyg_quote--author {
           padding-left: 40px; } }
-  .page_narrow blockquote footer,
+  .page_narrow .blockquote footer,
   .paragraph-text-block blockquote footer,
   .ckpullquote footer,
   .wysiwyg_quote footer,
   .narrow-page-header__subheading blockquote footer {
     margin-bottom: 50px; }
   @media (min-width: 769px) {
-    .page_narrow blockquote.blockquote--half-left, .page_narrow blockquote.ckpullquote-left, .page_narrow blockquote.align--left, .page_narrow blockquote.align--center,
-    .paragraph-text-block blockquote.blockquote--half-left,
+    .page_narrow .blockquote--half-left, .page_narrow .blockquote.ckpullquote-left, .page_narrow .blockquote.align--left, .page_narrow .blockquote.align--center,
+    .paragraph-text-block blockquote--half-left,
     .paragraph-text-block blockquote.ckpullquote-left,
     .paragraph-text-block blockquote.align--left,
     .paragraph-text-block blockquote.align--center,
-    .ckpullquote.blockquote--half-left,
+    .ckpullquote--half-left,
     .ckpullquote.ckpullquote-left,
     .ckpullquote.align--left,
     .ckpullquote.align--center,
-    .wysiwyg_quote.blockquote--half-left,
+    .wysiwyg_quote--half-left,
     .wysiwyg_quote.ckpullquote-left,
     .wysiwyg_quote.align--left,
     .wysiwyg_quote.align--center,
-    .narrow-page-header__subheading blockquote.blockquote--half-left,
+    .narrow-page-header__subheading blockquote--half-left,
     .narrow-page-header__subheading blockquote.ckpullquote-left,
     .narrow-page-header__subheading blockquote.align--left,
     .narrow-page-header__subheading blockquote.align--center {
@@ -9471,17 +9604,17 @@ a[href*="http"] .article-header__date {
       margin-right: 80px;
       padding-left: 56px;
       width: 50%; }
-    .page_narrow blockquote.blockquote--half-right, .page_narrow blockquote.ckpullquote-right, .page_narrow blockquote.align--right,
-    .paragraph-text-block blockquote.blockquote--half-right,
+    .page_narrow .blockquote--half-right, .page_narrow .blockquote.ckpullquote-right, .page_narrow .blockquote.align--right,
+    .paragraph-text-block blockquote--half-right,
     .paragraph-text-block blockquote.ckpullquote-right,
     .paragraph-text-block blockquote.align--right,
-    .ckpullquote.blockquote--half-right,
+    .ckpullquote--half-right,
     .ckpullquote.ckpullquote-right,
     .ckpullquote.align--right,
-    .wysiwyg_quote.blockquote--half-right,
+    .wysiwyg_quote--half-right,
     .wysiwyg_quote.ckpullquote-right,
     .wysiwyg_quote.align--right,
-    .narrow-page-header__subheading blockquote.blockquote--half-right,
+    .narrow-page-header__subheading blockquote--half-right,
     .narrow-page-header__subheading blockquote.ckpullquote-right,
     .narrow-page-header__subheading blockquote.align--right {
       margin-right: -14%;
@@ -9489,40 +9622,71 @@ a[href*="http"] .article-header__date {
       padding-right: 56px;
       width: 50%; } }
   @media (min-width: 1050px) {
-    .page_narrow blockquote.blockquote--half-left, .page_narrow blockquote.ckpullquote-left, .page_narrow blockquote.align--left, .page_narrow blockquote.align--center,
-    .paragraph-text-block blockquote.blockquote--half-left,
+    .page_narrow .blockquote--half-left, .page_narrow .blockquote.ckpullquote-left, .page_narrow .blockquote.align--left, .page_narrow .blockquote.align--center,
+    .paragraph-text-block blockquote--half-left,
     .paragraph-text-block blockquote.ckpullquote-left,
     .paragraph-text-block blockquote.align--left,
     .paragraph-text-block blockquote.align--center,
-    .ckpullquote.blockquote--half-left,
+    .ckpullquote--half-left,
     .ckpullquote.ckpullquote-left,
     .ckpullquote.align--left,
     .ckpullquote.align--center,
-    .wysiwyg_quote.blockquote--half-left,
+    .wysiwyg_quote--half-left,
     .wysiwyg_quote.ckpullquote-left,
     .wysiwyg_quote.align--left,
     .wysiwyg_quote.align--center,
-    .narrow-page-header__subheading blockquote.blockquote--half-left,
+    .narrow-page-header__subheading blockquote--half-left,
     .narrow-page-header__subheading blockquote.ckpullquote-left,
     .narrow-page-header__subheading blockquote.align--left,
     .narrow-page-header__subheading blockquote.align--center {
       margin-left: -20%;
       padding-left: 0; }
-    .page_narrow blockquote.blockquote--half-right, .page_narrow blockquote.ckpullquote-right, .page_narrow blockquote.align--right,
-    .paragraph-text-block blockquote.blockquote--half-right,
+    .page_narrow .blockquote--half-right, .page_narrow .blockquote.ckpullquote-right, .page_narrow .blockquote.align--right,
+    .paragraph-text-block blockquote--half-right,
     .paragraph-text-block blockquote.ckpullquote-right,
     .paragraph-text-block blockquote.align--right,
-    .ckpullquote.blockquote--half-right,
+    .ckpullquote--half-right,
     .ckpullquote.ckpullquote-right,
     .ckpullquote.align--right,
-    .wysiwyg_quote.blockquote--half-right,
+    .wysiwyg_quote--half-right,
     .wysiwyg_quote.ckpullquote-right,
     .wysiwyg_quote.align--right,
-    .narrow-page-header__subheading blockquote.blockquote--half-right,
+    .narrow-page-header__subheading blockquote--half-right,
     .narrow-page-header__subheading blockquote.ckpullquote-right,
     .narrow-page-header__subheading blockquote.align--right {
       margin-right: -20%;
       padding-right: 0; } }
+  .page_narrow .blockquote--full-right,
+  .paragraph-text-block blockquote--full-right,
+  .ckpullquote--full-right,
+  .wysiwyg_quote--full-right,
+  .narrow-page-header__subheading blockquote--full-right {
+    margin: 0 -1.25rem 0 0;
+    padding-right: 6%; }
+    @media (min-width: 769px) {
+      .page_narrow .blockquote--full-right,
+      .paragraph-text-block blockquote--full-right,
+      .ckpullquote--full-right,
+      .wysiwyg_quote--full-right,
+      .narrow-page-header__subheading blockquote--full-right {
+        border-left-width: 1rem;
+        border-left-style: solid;
+        margin: 0 -20% 0 -1rem;
+        padding: 0 9% 0 3.9rem; } }
+    @media (min-width: 1050px) {
+      .page_narrow .blockquote--full-right,
+      .paragraph-text-block blockquote--full-right,
+      .ckpullquote--full-right,
+      .wysiwyg_quote--full-right,
+      .narrow-page-header__subheading blockquote--full-right {
+        padding-right: 6%; } }
+    @media (min-width: 769px) {
+      .page_narrow .blockquote--full-right .blockquote-content__text,
+      .paragraph-text-block blockquote--full-right .blockquote-content__text,
+      .ckpullquote--full-right .blockquote-content__text,
+      .wysiwyg_quote--full-right .blockquote-content__text,
+      .narrow-page-header__subheading blockquote--full-right .blockquote-content__text {
+        padding-right: 0; } }
 
 .ckpullquote {
   padding-bottom: 50px;
@@ -9556,6 +9720,24 @@ a[href*="http"] .article-header__date {
   .blockquote--half-left.in-viewport {
     -webkit-animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
             animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
+
+.blockquote--color-blue {
+  border-color: #007cbe; }
+
+.blockquote--color-grey {
+  border-color: #506380; }
+
+.blockquote--color-green {
+  border-color: #6EA400; }
+
+.blockquote--color-teal {
+  border-color: #058488; }
+
+.blockquote--color-navy {
+  border-color: #052049; }
+
+.blockquote--color-purple {
+  border-color: #716fb2; }
 
 .ucsfcallout {
   background: #f2f4f6;
@@ -10308,7 +10490,6 @@ a.video_preview::before {
 @media (min-width: 769px) {
   #block-footer2resources .menu {
     -webkit-columns: 2;
-       -moz-columns: 2;
             columns: 2; }
     #block-footer2resources .menu .menu-item:first-child {
       margin-top: 0; }
@@ -10336,7 +10517,6 @@ a.video_preview::before {
     float: left; }
   .explorer .footer-bottom .menu {
     -webkit-columns: 0;
-       -moz-columns: 0;
             columns: 0;
     float: left;
     width: 40%; }
