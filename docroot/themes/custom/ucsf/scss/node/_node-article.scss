@@ -446,7 +446,11 @@
   font-size: $font-size-xsm;
   font-family: $font-helvetica-neue-roman;
   font-weight: 500;
-  display: flex;
+
+  li,
+  li * {
+    display: inline-block;
+  }
 
   .news-card__primary-area,
   .article-header__primary-area {
@@ -463,8 +467,6 @@
 
   .article-header__date {
     color: $gray-blue;
-    display: flex;
-    align-items: center;
   }
 
   &.media {
@@ -481,15 +483,19 @@
   }
 }
 
+.article-header__byline {
+  display: flex;
+}
+
 [data-primary-area^="pa-"] + .news-card__date::before,
 [data-primary-area^="pa-"] + .article-header__date::before,
 .article-affiliation::before {
   content: ' ';
-  display: block;
+  display: inline-block;
   height: 3px;
   width: 3px;
   background: $gray-blue;
-  margin: 2px $space 0 $space; // 2 px at the top to visually offset the "dot" from the top of lower case letters
+  margin: 0 10px 3px 10px;
   border-radius: 50%;
 }
 
@@ -1060,7 +1066,7 @@ figure.align-center {
 }
 
 .image-2014_wysiwyg_full,
-.ckimagebox {
+.ckimagebox, {
   p {
     font-size: $font-size-xsm;
     color: $gray-blue;
