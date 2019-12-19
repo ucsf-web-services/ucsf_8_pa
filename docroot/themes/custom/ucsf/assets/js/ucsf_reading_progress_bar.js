@@ -17,7 +17,7 @@
     // Get half the screen height.
     var screenHalfHeight = window.innerHeight / 2;
 
-    window.addEventListener('scroll', function (e) {
+    window.addEventListener('scroll', function () {
       // Get the current scroll position within the article.
       var scrollY = window.scrollY - articleTop;
 

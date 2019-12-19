@@ -39,27 +39,27 @@
     // In Mobile, remove all the fixed classes when toggling the menu.
     var mobileToggle = document.querySelector('.slicknav_btn');
     mobileToggle.addEventListener('click', function () {
-      header.classList.remove('fixed-nav', 'fixed-nav--visible', 'fixed-nav--hidden');
+      header.classList.remove('fixed-nav', 'fixed-nav--visible', 'fixed-nav--hidden', 'fixed-nav--pre-hidden');
     });
 
     // Toggle the .is-fixed class on scroll.
     var lastScroll = 0;
 
-    // calculate weather user is scrolling up or down
-    // to reveal full navbar on up scroll
-    window.addEventListener("scroll", function () {
+    // Sticky Nav callback when scrolling.
+    var scrollCallback = function scrollCallback() {
       var currentScroll = window.pageYOffset;
 
       // make nav fixed only when user scrolled past navigation.
       // In other words, put the navigation back to its normal spot.
       if (currentScroll < headerNavY) {
-        header.classList.remove('fixed-nav', 'fixed-nav--visible', 'fixed-nav--hidden');
+        header.classList.remove('fixed-nav', 'fixed-nav--visible', 'fixed-nav--hidden', 'fixed-nav--pre-hidden');
         return;
       }
 
       // Ignore scrolling until 400px below so that it doesn't
       // mess with the navigation in its normal position.
       if (currentScroll > 400) {
+        // Ignore if the scroll position is the same.
         // If scrolling down
         if (currentScroll > lastScroll) {
           if (!header.classList.contains('fixed-nav--pre-hidden')) {
@@ -72,7 +72,7 @@
             header.classList.remove('fixed-nav--visible');
           }
           // If scrolling up
-        } else {
+        } else if (currentScroll < lastScroll) {
           header.classList.remove('fixed-nav--hidden', 'fixed-nav--pre-hidden');
           header.classList.add('fixed-nav', 'fixed-nav--visible');
         }
@@ -97,7 +97,11 @@
       }
 
       lastScroll = currentScroll;
-    });
+    };
+
+    // calculate weather user is scrolling up or down
+    // to reveal full navbar on up scroll
+    window.addEventListener("scroll", $.throttle(75, scrollCallback));
   });
 })(jQuery);
 //# sourceMappingURL=ucsf_sticky_nav.js.map

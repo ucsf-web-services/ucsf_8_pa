@@ -10,6 +10,7 @@ global:
     assets/js/ucsf_search_placeholder_rotation.js: {}
   dependencies:
     - ucsf/polyfills
+    - ucsf/jquery_throttle
 
 search_news:
   js:
@@ -72,3 +73,9 @@ progress_bar:
 polyfills:
   js:
     https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver: { weight: -100, type: external, minified: true }
+
+jquery_throttle:
+  js:
+    assets/js/jquery.throttle-debounce.min.js: {}
+  dependencies:
+    - core/jquery
