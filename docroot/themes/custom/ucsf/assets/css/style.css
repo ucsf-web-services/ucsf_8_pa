@@ -1385,23 +1385,17 @@ a.icon-transit:hover {
   -webkit-transform: translateY(0);
           transform: translateY(0); }
 
-.fixed-nav--hidden .header-region {
-  -webkit-animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-out;
-          animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-out;
+.fixed-nav--pre-hidden .header-region, .fixed-nav--hidden .header-region {
   -webkit-transform: translateY(-93%);
           transform: translateY(-93%); }
   @media (min-width: 850px) {
-    .fixed-nav--hidden .header-region {
+    .fixed-nav--pre-hidden .header-region, .fixed-nav--hidden .header-region {
       -webkit-transform: translateY(-101%);
               transform: translateY(-101%); } }
 
-.fixed-nav--pre-hidden .header-region {
-  -webkit-transform: translateY(-93%);
-          transform: translateY(-93%); }
-  @media (min-width: 850px) {
-    .fixed-nav--pre-hidden .header-region {
-      -webkit-transform: translateY(-101%);
-              transform: translateY(-101%); } }
+.fixed-nav--hidden .header-region {
+  -webkit-animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-out;
+          animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-out; }
 
 .slicknav_btn {
   position: relative;
@@ -10530,22 +10524,19 @@ a.video_preview::before {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 4px;
+  height: 0.25rem;
   z-index: 1;
-  background: #d6d6d6;
-  color: #5dafdb;
+  background-color: #d6d6d6;
   border: none; }
   @media (min-width: 850px) {
     .progress-bar {
-      bottom: auto; } }
-  .progress-bar::-webkit-progress-value {
-    background: #5dafdb; }
+      bottom: -0.27rem; } }
   .progress-bar::-moz-progress-bar {
-    background: #5dafdb; }
+    background-color: #5dafdb; }
+  .progress-bar::-webkit-progress-bar {
+    background-color: #d6d6d6; }
   .progress-bar::-webkit-progress-value {
     background: #5dafdb; }
-  .progress-bar::-webkit-progress-bar {
-    background: #d6d6d6; }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .explorer {

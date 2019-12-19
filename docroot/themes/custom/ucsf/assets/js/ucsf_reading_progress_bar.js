@@ -14,15 +14,18 @@
     var rect = article.getBoundingClientRect();
     var articleTop = rect.top + document.documentElement.scrollTop;
 
-    // Get the length of the article minus half of the screen height so that
-    // an article will be completed reading once the bottom edge of it is half
-    // way up the screen.
+    // Get half the screen height.
     var screenHalfHeight = window.innerHeight / 2;
-    var articleHeight = article.clientHeight - screenHalfHeight;
 
     window.addEventListener('scroll', function (e) {
       // Get the current scroll position within the article.
       var scrollY = window.scrollY - articleTop;
+
+      // Get the length of the article minus half of the screen height so that
+      // an article will be completed reading once the bottom edge of it is half
+      // way up the screen.
+      var articleHeight = article.clientHeight - screenHalfHeight;
+
       // Get the average progress ratio of article scrolled through.
       var progress = scrollY / articleHeight;
 

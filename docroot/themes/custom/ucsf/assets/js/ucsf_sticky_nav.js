@@ -63,7 +63,12 @@
         // If scrolling down
         if (currentScroll > lastScroll) {
           if (!header.classList.contains('fixed-nav--pre-hidden')) {
-            header.classList.add('fixed-nav--hidden');
+            if (!header.classList.contains('fixed-nav')) {
+              header.classList.add('fixed-nav', 'fixed-nav--pre-hidden');
+            } else {
+              header.classList.add('fixed-nav--hidden');
+            }
+
             header.classList.remove('fixed-nav--visible');
           }
           // If scrolling up
@@ -71,10 +76,20 @@
           header.classList.remove('fixed-nav--hidden', 'fixed-nav--pre-hidden');
           header.classList.add('fixed-nav', 'fixed-nav--visible');
         }
+
+        // In between the normal position and the height where the sticky nav
+        // should start displaying.
       } else if (currentScroll > headerBottomY) {
         if (!header.classList.contains('fixed-nav')) {
           header.classList.add('fixed-nav', 'fixed-nav--pre-hidden');
         }
+
+        // Return to normal position when having never shown a sticky nav.
+        // If a pre-hidden class is applied (and assumed fixed-nav) then the
+        // navigation is vertically smaller than the normal navigation. So we need
+        // to wait until we have travelled to the height of the sticky nav so that
+        // we can then remove the fixed-nav and allow it to animate back to its
+        // normal height.
       } else if (currentScroll < headerFixedBottomY) {
         if (header.classList.contains('fixed-nav--pre-hidden')) {
           header.classList.remove('fixed-nav', 'fixed-nav--pre-hidden');
