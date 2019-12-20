@@ -41,7 +41,7 @@
     };
 
     // throttle the scroll event to reduce, performance issues
-    window.addEventListener("scroll", $.throttle(150, scrollCallback));
+    window.addEventListener("scroll", $.throttle(50, scrollCallback));
   });
 })(jQuery);
 //# sourceMappingURL=ucsf_reading_progress_bar.js.map
