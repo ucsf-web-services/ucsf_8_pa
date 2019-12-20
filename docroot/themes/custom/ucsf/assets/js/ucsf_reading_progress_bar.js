@@ -17,7 +17,7 @@
     // Get half the screen height.
     var screenHalfHeight = window.innerHeight / 2;
 
-    window.addEventListener('scroll', function () {
+    var scrollCallback = function scrollCallback() {
       // Get the current scroll position within the article.
       var scrollY = window.scrollY - articleTop;
 
@@ -38,7 +38,10 @@
 
       // Set the progress bar percent.
       progressBar.setAttribute('value', progress);
-    });
+    };
+
+    // throttle the scroll event to reduce, performance issues
+    window.addEventListener("scroll", $.throttle(150, scrollCallback));
   });
 })(jQuery);
 //# sourceMappingURL=ucsf_reading_progress_bar.js.map

@@ -15,7 +15,7 @@
     // Get half the screen height.
     const screenHalfHeight = window.innerHeight / 2;
 
-    window.addEventListener('scroll', () => {
+    const scrollCallback = () => {
       // Get the current scroll position within the article.
       const scrollY = window.scrollY - articleTop;
 
@@ -36,8 +36,9 @@
 
       // Set the progress bar percent.
       progressBar.setAttribute('value', progress);
-    })
+    }
 
-
+    // throttle the scroll event to reduce, performance issues
+    window.addEventListener("scroll", $.throttle(150, scrollCallback));
   });
 }))(jQuery);
