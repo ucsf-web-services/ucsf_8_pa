@@ -1,13 +1,15 @@
 global:
- css:
-  base:
-   assets/css/style.css: {}
- js:
-   assets/vendor/slicknav-1.0.10/dist/jquery.slicknav.js: {}
-   assets/js/all.js: {}
-   assets/js/ucsf_element_slide.js: {}
-   assets/js/ucsf_sticky_nav.js: {}
-   assets/js/ucsf_search_placeholder_rotation.js: {}
+  css:
+    base:
+      assets/css/style.css: {}
+  js:
+    assets/vendor/slicknav-1.0.10/dist/jquery.slicknav.js: {}
+    assets/js/all.js: {}
+    assets/js/ucsf_element_slide.js: {}
+    assets/js/ucsf_sticky_nav.js: {}
+    assets/js/ucsf_search_placeholder_rotation.js: {}
+  dependencies:
+    - ucsf/polyfills
 
 search_news:
   js:
@@ -62,3 +64,7 @@ element_swoosh:
 element_fade:
   js:
     assets/js/ucsf_element_fade.js: {}
+
+polyfills:
+  js:
+    https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver: { weight: -100, type: external, minified: true }
