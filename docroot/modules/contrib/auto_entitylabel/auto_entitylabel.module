@@ -24,9 +24,7 @@ function auto_entitylabel_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<p>' . t('Patterns for automatic labels are constructed with the help of tokens. Drupal core provides a basic set of <a href="@url_tokens" target="blank">tokens</a>. For a token selection widget install the token. Some entity types (e.g. profile2) provide tokens via the entity_token, which is part of the entity module.', ['@url_tokens' => 'https://www.drupal.org/project/token']) . '</p>';
       $output .= '<p>' . t('Watch the <a href="@url_daily_dose_of_drupal" target="blank">Daily Dose of Drupal</a> screencast by <a href="@url_shane_thomas" target="blank">Shane Thomas</a> for a short introduction and demonstration of the module and some of its features. Demonstration made in D7 but can help a lot.', ['@url_daily_dose_of_drupal' => 'http://codekarate.com/daily-dose-of-drupal/drupal-7-automatic-entity-label-module', '@url_shane_thomas' => 'https://www.drupal.org/user/506260']) . '</p>';
       $output .= '<h3>' . t('Usage') . '</h3>';
-      $output .= '<p>' . t('The configuration can be accessed in <i>Structure</i>  » <i>Automatic label</i> screen.') . '</p>';
-      $output .= '<p>' . t('<a href="@automatic_entitylabel_configuration">Click here</a> to redirect to Automatic Label configuration.', ['@automatic_entitylabel_configuration' => Url::fromRoute('auto_entitylabel.settings')->toString()]) . '</p>';
-      $output .= '<p>' . t('Advanced users can use PHP code for automatically generating labels. See below for more information.') . '</p>';
+      $output .= '<p>' . t('The configuration can be accessed with the <i>Manage automatic entity labels</i> operation or the <i>Automatic label</i> tab when editing entity types. For example, when configuring a node type, visit <i>Administration</i> » <i>Structure</i> » <i>Content types</i> (/admin/structure/types). You can also configure automatic labels for other entity types such as <i>Media<i>, in which case you would visit <i>Administration</i> » <i>Structure</i> » <i>Media</i> (/admin/structure/media).') . '</p>';
       return $output;
   }
 }
@@ -35,27 +33,14 @@ function auto_entitylabel_help($route_name, RouteMatchInterface $route_match) {
  * Implements hook_entity_type_alter().
  *
  * Adds the Auto Label tab to the entity configuration page.
+ *
+ * @param \Drupal\Core\Entity\EntityTypeInterface[] $entity_types
  */
 function auto_entitylabel_entity_type_alter(array &$entity_types) {
   $module_handler = \Drupal::moduleHandler();
   // @var $entity_types \Drupal\Core\Entity\EntityTypeInterface[].
   foreach ($entity_types as $entity_type) {
-    // Support core entity types only. Contrib and custom entity types should
-    // use a hook or service (@todo https://www.drupal.org/node/2829571).
-    $core_entity = FALSE;
-    $module_name = $entity_type->getProvider();
-    if ($module_name != 'core') {
-      // Identify core entity types that are provided by modules.
-      $module = $module_handler->getModule($module_name);
-      if (preg_match('/^core/', $module->getPath())) {
-        $core_entity = TRUE;
-      }
-    }
-    else {
-      // Some core entity types are not provided by a module.
-      $core_entity = TRUE;
-    }
-    if ($core_entity && $entity_type instanceof ConfigEntityType && $entity_type->hasLinkTemplate('edit-form')) {
+    if ($entity_type->getBundleOf() && $entity_type->hasLinkTemplate('edit-form')) {
       $entity_type->setLinkTemplate('auto-label', $entity_type->getLinkTemplate('edit-form') . "/auto-label");
     }
   }
@@ -79,6 +64,34 @@ function auto_entitylabel_form_alter(&$form, FormStateInterface $form_state) {
 function auto_entitylabel_inline_entity_form_entity_form_alter(&$form, &$form_state) {
   $entity = $form['#entity'];
   auto_entitylabel_prepare_entityform($form, $entity);
+}
+
+/**
+ * Implements hook_inline_entity_form_table_fields_alter().
+ */
+function auto_entitylabel_inline_entity_form_table_fields_alter(&$fields, $context) {
+  // Replace label field behavior.
+  if (isset($fields['label'])) {
+    $fields['label']['type'] = 'callback';
+    $fields['label']['callback'] = 'auto_entitylabel_inline_entity_label_callback';
+  }
+}
+
+/**
+ * A callback function to provide autoentitylabel for inline entity form.
+ */
+function auto_entitylabel_inline_entity_label_callback($entity, $variables) {
+  $autolabel = $entity->label();
+  if ($entity instanceof ContentEntityInterface) {
+    $decorator = \Drupal::service('auto_entitylabel.entity_decorator');
+    /** @var \Drupal\auto_entitylabel\AutoEntityLabelManager $decorated_entity */
+    $decorated_entity = $decorator->decorate($entity);
+    if ($decorated_entity->hasLabel() && $decorated_entity->autoLabelNeeded()) {
+      $autolabel = $decorated_entity->setLabel();
+    }
+
+  }
+  return $autolabel;
 }
 
 /**
@@ -119,7 +132,7 @@ function auto_entitylabel_prepare_entityform(&$form, ContentEntityInterface $ent
 
       case AutoEntityLabelManager::PREFILLED:
         if (empty($widget['value']['#default_value'])) {
-          $widget['value']['#default_value'] = $entity->getPattern();
+          $widget['value']['#default_value'] = $entity->setLabel();
         }
         break;
     }
@@ -155,6 +168,30 @@ function auto_entitylabel_entity_presave(EntityInterface $entity) {
     $decorated_entity = $decorator->decorate($entity);
     if ($decorated_entity->hasLabel() && $decorated_entity->autoLabelNeeded()) {
       $decorated_entity->setLabel();
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function auto_entitylabel_entity_insert(EntityInterface $entity) {
+  if ($entity instanceof ContentEntityInterface) {
+    $decorator = \Drupal::service('auto_entitylabel.entity_decorator');
+    /** @var \Drupal\auto_entitylabel\AutoEntityLabelManager $decorated_entity */
+    $decorated_entity = $decorator->decorate($entity);
+    if ($decorated_entity->hasLabel() && ($decorated_entity->hasAutoLabel() || $decorated_entity->hasOptionalAutoLabel())) {
+      // Store the old label.
+      $old_label = $entity->label();
+      // Update the entity label.
+      $decorated_entity->setLabel();
+      // Save it only if the title has changed.
+      if ($entity->label() != $old_label) {
+        if ($entity->getEntityType()->isRevisionable()) {
+          $entity->setNewRevision(FALSE);
+        }
+        $entity->save();
+      }
     }
   }
 }

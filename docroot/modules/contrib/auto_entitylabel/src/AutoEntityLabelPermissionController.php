@@ -57,11 +57,6 @@ class AutoEntityLabelPermissionController implements ContainerInjectionInterface
         ];
       }
     }
-    // Create permission to use PHP in entity label patterns.
-    $permissions['use PHP for auto entity labels'] = [
-      'title' => $this->t('Use PHP for automatic entity label patterns'),
-      'restrict access' => TRUE,
-    ];
     return $permissions;
   }
 

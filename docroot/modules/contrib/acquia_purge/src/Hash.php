@@ -22,7 +22,12 @@ class Hash {
     // MD5 is the fastest algorithm beyond CRC32 (which is 30% faster, but high
     // collision risk), so this is the best bet for now. If collisions are going
     // to be a major problem in the future, we might have to consider a hash DB.
-    return substr(hash('md5', $input), 0, $length);
+    $hex = md5($input);
+    // The produced HEX can be converted to BASE32 number to take less space.
+    // For example 5 characters HEX can be stored in 4 characters BASE32.
+    $hash = base_convert(substr($hex, 0, ceil($length * 1.25)), 16, 32);
+    // Return a hash with consistent length, padding zeroes if needed.
+    return strtolower(str_pad(substr($hash, 0, $length), $length, '0', STR_PAD_LEFT));
   }
 
   /**

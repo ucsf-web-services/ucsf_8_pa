@@ -68,7 +68,6 @@ class Publisher implements PublisherInterface {
    */
   public function postArticle($channel_id, array $data) {
     $response = $this->getPublisher()->post('/channels/{channel_id}/articles', ['channel_id' => $channel_id], $data);
-    \Drupal::logger('Applenews')->notice(print_r($response, true));
     return $this->handleResponse($response);
 
   }
@@ -78,7 +77,6 @@ class Publisher implements PublisherInterface {
    */
   public function updateArticle($article_id, array $data) {
     $response = $this->getPublisher()->post('/articles/{article_id}', ['article_id' => $article_id], $data);
-    \Drupal::logger('Applenews')->notice(print_r($response, true));
     return $this->handleResponse($response);
   }
 
@@ -87,7 +85,6 @@ class Publisher implements PublisherInterface {
    */
   public function deleteArticle($article_id) {
     $response = $this->getPublisher()->delete('/articles/{article_id}', ['article_id' => $article_id]);
-    \Drupal::logger('Applenews')->notice(print_r($response, true));
     return $this->handleResponse($response);
   }
 
@@ -105,7 +102,6 @@ class Publisher implements PublisherInterface {
   protected function handleResponse($response) {
     if (isset($response->errors) && is_array($response->errors)) {
       $error = current($response->errors);
-      \Drupal::logger('Applenews')->notice(print_r($error, true));
       // Update to handle different error cases.
       throw new ApplenewsInvalidResponseException($error->code, '500');
     }
