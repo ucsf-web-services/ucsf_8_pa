@@ -166,17 +166,14 @@ function file_update_8001() {
 }
 
 /**
- * Set filename_sanitization config to the default values.
+ * Set the 'owner' entity key and update the field.
  */
-function file_update_8701() {
-  \Drupal::configFactory()->getEditable('file.settings')
-    ->set('filename_sanitization', [
-      'transliterate' => FALSE,
-      'replace_whitespace' => FALSE,
-      'replace_non_alphanumeric' => FALSE,
-      'dedupe_separators' => FALSE,
-      'lowercase' => FALSE,
-      'replacement_character' => '-',
-    ])
-    ->save(TRUE);
+function file_update_8700() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $definition_update_manager->getEntityType('file');
+  $keys = $entity_type->getKeys();
+  $keys['owner'] = 'uid';
+  $entity_type->set('entity_keys', $keys);
+  $definition_update_manager->updateEntityType($entity_type);
+  $definition_update_manager->updateFieldStorageDefinition($definition_update_manager->getFieldStorageDefinition('uid', 'file'));
 }
