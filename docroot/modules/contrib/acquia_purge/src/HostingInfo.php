@@ -141,7 +141,7 @@ class HostingInfo implements HostingInfoInterface {
 
     // Test the gathered information to determine if this is/isn't Acquia Cloud.
     $this->isThisAcquiaCloud =
-      count($this->balancerAddresses)
+      is_array($this->balancerAddresses)
       && $this->balancerToken
       && $this->siteEnvironment
       && $this->siteIdentifier

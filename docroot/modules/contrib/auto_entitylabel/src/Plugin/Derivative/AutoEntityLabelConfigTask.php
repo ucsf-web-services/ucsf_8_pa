@@ -5,12 +5,14 @@ namespace Drupal\auto_entitylabel\Plugin\Derivative;
 use Drupal\Component\Plugin\Derivative\DeriverBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class for Config Task.
  */
 class AutoEntityLabelConfigTask extends DeriverBase implements ContainerDeriverInterface {
+  use StringTranslationTrait;
 
   /**
    * The entity manager.
@@ -55,7 +57,7 @@ class AutoEntityLabelConfigTask extends DeriverBase implements ContainerDeriverI
       if ($entity_type->hasLinkTemplate('auto-label')) {
         $this->derivatives["$entity_type_id.auto_label_tab"] = [
           'route_name' => "entity.{$entity_type_id}.auto_label",
-          'title' => 'Automatic label',
+          'title' => $this->t('Automatic label'),
           'base_route' => $base_route,
           'weight' => 100,
         ];

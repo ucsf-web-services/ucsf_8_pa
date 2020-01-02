@@ -4,16 +4,16 @@ namespace Drupal\file\Plugin\rest\resource;
 
 use Drupal\Component\Utility\Bytes;
 use Drupal\Component\Utility\Crypt;
+use Drupal\Component\Utility\Environment;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\File\Exception\FileException;
 use Drupal\Core\File\FileSystemInterface;
-use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Utility\Token;
 use Drupal\file\FileInterface;
-use Drupal\file\Event\FileUploadSanitizeNameEvent;
 use Drupal\rest\ModifiedResourceResponse;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\Component\Render\PlainTextOutput;
@@ -23,7 +23,6 @@ use Drupal\rest\Plugin\rest\resource\EntityResourceValidationTrait;
 use Drupal\rest\RequestHandler;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -76,7 +75,7 @@ class FileUploadResource extends ResourceBase {
   /**
    * The file system service.
    *
-   * @var \Drupal\Core\File\FileSystemInterface
+   * @var \Drupal\Core\File\FileSystem
    */
   protected $fileSystem;
 
@@ -128,20 +127,6 @@ class FileUploadResource extends ResourceBase {
   protected $systemFileConfig;
 
   /**
-   * The event dispatcher to dispatch the filename sanitize event.
-   *
-   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-   */
-  protected $eventDispatcher;
-
-  /**
-   * Language manager for retrieving the default langcode during upload.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
    * Constructs a FileUploadResource instance.
    *
    * @param array $configuration
@@ -170,12 +155,8 @@ class FileUploadResource extends ResourceBase {
    *   The lock service.
    * @param \Drupal\Core\Config\Config $system_file_config
    *   The system file configuration.
-   * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $event_dispatcher
-   *   The event dispatcher service.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
-   *   The language manager service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, $serializer_formats, LoggerInterface $logger, FileSystemInterface $file_system, EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, AccountInterface $current_user, MimeTypeGuesserInterface $mime_type_guesser, Token $token, LockBackendInterface $lock, Config $system_file_config, EventDispatcherInterface $event_dispatcher = NULL, LanguageManagerInterface $language_manager = NULL) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, $serializer_formats, LoggerInterface $logger, FileSystemInterface $file_system, EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, AccountInterface $current_user, MimeTypeGuesserInterface $mime_type_guesser, Token $token, LockBackendInterface $lock, Config $system_file_config) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
     $this->fileSystem = $file_system;
     $this->entityTypeManager = $entity_type_manager;
@@ -185,16 +166,6 @@ class FileUploadResource extends ResourceBase {
     $this->token = $token;
     $this->lock = $lock;
     $this->systemFileConfig = $system_file_config;
-    if (!$event_dispatcher) {
-      @trigger_error('The event_dispatcher service must be passed to FileUploadResource::__construct(), it is required before Drupal 9.0.0. See https://www.drupal.org/node/2972665.', E_USER_DEPRECATED);
-      $event_dispatcher = \Drupal::service('event_dispatcher');
-    }
-    $this->eventDispatcher = $event_dispatcher;
-    if (!$language_manager) {
-      @trigger_error('The language_manager service must be passed to FileUploadResource::__construct(), it is required before Drupal 9.0.0. See https://www.drupal.org/node/2972665.', E_USER_DEPRECATED);
-      $language_manager = \Drupal::service('language_manager');
-    }
-    $this->languageManager = $language_manager;
   }
 
   /**
@@ -214,9 +185,7 @@ class FileUploadResource extends ResourceBase {
       $container->get('file.mime_type.guesser'),
       $container->get('token'),
       $container->get('lock'),
-      $container->get('config.factory')->get('system.file'),
-      $container->get('event_dispatcher'),
-      $container->get('language_manager')
+      $container->get('config.factory')->get('system.file')
     );
   }
 
@@ -259,7 +228,7 @@ class FileUploadResource extends ResourceBase {
     $destination = $this->getUploadLocation($field_definition->getSettings());
 
     // Check the destination file path is writable.
-    if (!file_prepare_directory($destination, FILE_CREATE_DIRECTORY)) {
+    if (!$this->fileSystem->prepareDirectory($destination, FileSystemInterface::CREATE_DIRECTORY)) {
       throw new HttpException(500, 'Destination file path is not writable');
     }
 
@@ -272,8 +241,7 @@ class FileUploadResource extends ResourceBase {
 
     $temp_file_path = $this->streamUploadData();
 
-    // This will take care of altering $file_uri if a file already exists.
-    file_unmanaged_prepare($temp_file_path, $file_uri);
+    $file_uri = $this->fileSystem->getDestinationFilename($file_uri, FileSystemInterface::EXISTS_RENAME);
 
     // Lock based on the prepared file URI.
     $lock_id = $this->generateLockIdFromFileUri($file_uri);
@@ -298,8 +266,11 @@ class FileUploadResource extends ResourceBase {
 
     // Move the file to the correct location after validation. Use
     // FILE_EXISTS_ERROR as the file location has already been determined above
-    // in file_unmanaged_prepare().
-    if (!file_unmanaged_move($temp_file_path, $file_uri, FILE_EXISTS_ERROR)) {
+    // in FileSystem::getDestinationFilename().
+    try {
+      $this->fileSystem->move($temp_file_path, $file_uri, FileSystemInterface::EXISTS_ERROR);
+    }
+    catch (FileException $e) {
       throw new HttpException(500, 'Temporary file could not be moved to file location');
     }
 
@@ -491,11 +462,6 @@ class FileUploadResource extends ResourceBase {
    *   The prepared/munged filename.
    */
   protected function prepareFilename($filename, array &$validators) {
-    $language_id = $this->languageManager->getDefaultLanguage()->getId();
-    $event = new FileUploadSanitizeNameEvent($filename, $language_id);
-    $this->eventDispatcher->dispatch(FileUploadSanitizeNameEvent::SANITIZE, $event);
-    $filename = $event->getFilenameWithExtension();
-
     if (!empty($validators['file_validate_extensions'][0])) {
       // If there is a file_validate_extensions validator and a list of
       // valid extensions, munge the filename to protect against possible
@@ -562,7 +528,7 @@ class FileUploadResource extends ResourceBase {
     $settings = $field_definition->getSettings();
 
     // Cap the upload size according to the PHP limit.
-    $max_filesize = Bytes::toInt(file_upload_max_size());
+    $max_filesize = Bytes::toInt(Environment::getUploadMaxSize());
     if (!empty($settings['max_filesize'])) {
       $max_filesize = min($max_filesize, Bytes::toInt($settings['max_filesize']));
     }
