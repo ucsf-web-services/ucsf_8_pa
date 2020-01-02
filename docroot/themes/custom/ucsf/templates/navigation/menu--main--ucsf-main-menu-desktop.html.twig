@@ -72,7 +72,11 @@
           <span>{{ item.title }}</span>
         {% endset %}
 
-        {{ link(title_wrap, item.url, menu_attributes.link) }}
+        {% if menu_attributes.link is empty %}
+          {{ link(title_wrap, item.url) }}
+        {% else %}
+          {{ link(title_wrap, item.url, menu_attributes.link) }}
+        {% endif %}
 
         {% if menu_level > 0 and item.is_expanded %}
           <span class="fas fa-angle-right"></span>
