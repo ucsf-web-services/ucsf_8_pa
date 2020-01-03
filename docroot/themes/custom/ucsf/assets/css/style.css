@@ -9806,7 +9806,9 @@ a[href*="http"] .article-header__date {
   font-size: 26px;
   width: 0;
   position: absolute;
-  z-index: 1; }
+  z-index: 1;
+  -webkit-transition: 0.2s cubic-bezier(0.77, 0, 0.175, 1) opacity;
+  transition: 0.2s cubic-bezier(0.77, 0, 0.175, 1) opacity; }
   .page-node-type-article .article-meta-share {
     margin-top: -200px;
     z-index: 0; }
@@ -9855,7 +9857,11 @@ a[href*="http"] .article-header__date {
         margin-top: 0; } }
   @media (min-width: 1050px) {
     .article-meta-share {
-      grid-row: 2; } }
+      grid-row: 2;
+      position: -webkit-sticky;
+      position: sticky;
+      height: 20rem;
+      top: 80px; } }
   @media (min-width: 1280px) {
     .article-meta-share {
       grid-column: 2 / 3;
@@ -9865,6 +9871,10 @@ a[href*="http"] .article-header__date {
   .article-feature-content .article-meta-share {
     grid-row: 1;
     margin-top: 80px; } }
+
+.article-meta-share--hidden {
+  opacity: 0;
+  pointer-events: none; }
 
 .twitter-background {
   background: #fff;

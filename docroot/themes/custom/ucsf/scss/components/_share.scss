@@ -5,6 +5,7 @@
   width: 0;
   position: absolute;
   z-index: 1;
+  transition: .2s cubic-bezier(0.77, 0, 0.175, 1) opacity;
 
   .page-node-type-article & {
     margin-top: -200px;
@@ -77,6 +78,9 @@
 
   @include breakpoint($new-large) {
     grid-row: 2;
+    position: sticky;
+    height: 20rem;
+    top: $space-ten;
   }
 
   @include breakpoint($new-xl) {
@@ -92,4 +96,9 @@
       margin-top: $space-ten;
     }
   }
+}
+
+.article-meta-share--hidden {
+  opacity: 0;
+  pointer-events: none;
 }

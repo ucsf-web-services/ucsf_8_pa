@@ -78,7 +78,7 @@
     // Get the fixed share icons to detect collision against
     var fixed = document.querySelector('.article-meta-share');
     // The CSS selectors for anything that the share icons can collide with.
-    var selectors = ['.article-feature-overlay-image', '.half-image-left-full', '.half-image-left', '.full-bleed-image', '.callout-left', '.layout-columns__1', '.layout-columns__2', '.layout-columns__3', '.layout-columns__4', '.blockquote-full-width', '.blockquote--half-left', '.paragraph--type--gallery', '.recommended-articles', '.footer-region'];
+    var selectors = ['.half-image-left-full', '.half-image-left', '.full-bleed-image', '.callout-left', '.layout-columns__1', '.layout-columns__2', '.layout-columns__3', '.layout-columns__4', '.blockquote-full-width', '.blockquote--half-left', '.paragraph--type--gallery'];
 
     // Get the NodeList of all the selectors matching elements on the page.
     var elements = document.querySelectorAll(selectors.toString());

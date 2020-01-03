@@ -59,7 +59,6 @@
     const fixed = document.querySelector('.article-meta-share')
     // The CSS selectors for anything that the share icons can collide with.
     const selectors = [
-      '.article-feature-overlay-image',
       '.half-image-left-full',
       '.half-image-left',
       '.full-bleed-image',
@@ -71,8 +70,6 @@
       '.blockquote-full-width',
       '.blockquote--half-left',
       '.paragraph--type--gallery',
-      '.recommended-articles',
-      '.footer-region'
     ];
 
     // Get the NodeList of all the selectors matching elements on the page.
