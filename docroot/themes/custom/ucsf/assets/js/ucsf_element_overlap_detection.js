@@ -1,7 +1,4 @@
 'use strict';
-
-// TODO: Trigger hiding on page load to start the initial visibility
-// TODO: Use MatchMedia to ensure that collision events are only happening in Desktop
 // TODO: Throttle the scrolling to increase performance
 
 (function ($) {
@@ -24,15 +21,16 @@
       y1: element2.getBoundingClientRect().left,
       x2: element2.getBoundingClientRect().bottom,
       y2: element2.getBoundingClientRect().right
+    };
 
-      // no horizontal overlap
-    };if (a.x1 >= b.x2 || b.x1 >= a.x2) return false;
+    // no horizontal overlap
+    if (a.x1 >= b.x2 || b.x1 >= a.x2) return false;
 
     // no vertical overlap
     if (a.y1 >= b.y2 || b.y1 >= a.y2) return false;
 
     return true;
-  }
+  };
 
   /**
    * Check if a target element is overlapping with any elements in a given array.
@@ -70,39 +68,44 @@
       }
     }
 
+    ;
+
     return overlap;
-  }
+  };
 
-  // Wait for the document to be ready.
-  $(function () {
-    // Get the fixed share icons to detect collision against
-    var fixed = document.querySelector('.article-meta-share');
-    // The CSS selectors for anything that the share icons can collide with.
-    var selectors = ['.half-image-left-full', '.half-image-left', '.full-bleed-image', '.callout-left', '.layout-columns__1', '.layout-columns__2', '.layout-columns__3', '.layout-columns__4', '.blockquote-full-width', '.blockquote--half-left', '.paragraph--type--gallery'];
+  // Use MatchMedia to ensure that collision events are only happening in Desktop
+  var mql = matchMedia('(min-width: 1050px)');
+  if (mql.matches) {
+    // Wait for the document to be ready.
+    $(function () {
+      // Get the fixed share icons to detect collision against
+      var fixed = document.querySelector('.article-meta-share');
+      // The CSS selectors for anything that the share icons can collide with.
+      var selectors = ['.half-image-left-full', '.half-image-left', '.full-bleed-image', '.callout-left', '.layout-columns__1', '.layout-columns__2', '.layout-columns__3', '.layout-columns__4', '.blockquote-full-width', '.blockquote--half-left', '.paragraph--type--gallery'];
 
-    // Get the NodeList of all the selectors matching elements on the page.
-    var elements = document.querySelectorAll(selectors.toString());
+      // Get the NodeList of all the selectors matching elements on the page.
+      var elements = document.querySelectorAll(selectors.toString());
 
-    // Set the starting state for if there is anything colliding
-    var overlapState = null;
+      // Set the starting state for if there is anything colliding
+      var overlapState = null;
 
-    window.addEventListener("scroll", function () {
-      console.log('test');
-      // Check if the fixed box collides with any other boxes.
-      var overlap = overlapTarget(fixed, elements);
+      window.addEventListener("scroll", function () {
+        // Check if the fixed box collides with any other boxes.
+        var overlap = overlapTarget(fixed, elements);
 
-      // Check if the state of the overlap has changed.
-      if (overlapState !== overlap) {
-        overlapState = overlap;
+        // Check if the state of the overlap has changed.
+        if (overlapState !== overlap) {
+          overlapState = overlap;
 
-        // Add the hidden class to the fixed box if overlapping.
-        if (overlapState == true) {
-          fixed.classList.add('article-meta-share--hidden');
-        } else {
-          fixed.classList.remove('article-meta-share--hidden');
-        }
-      }
+          // Add the hidden class to the fixed box if overlapping.
+          if (overlapState == true) {
+            fixed.classList.add('article-meta-share--hidden');
+          } else {
+            fixed.classList.remove('article-meta-share--hidden');
+          }
+        };
+      });
     });
-  });
+  }
 })(jQuery);
 //# sourceMappingURL=ucsf_element_overlap_detection.js.map
