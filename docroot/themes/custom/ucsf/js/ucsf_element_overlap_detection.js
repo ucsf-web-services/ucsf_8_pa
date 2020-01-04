@@ -50,51 +50,67 @@
     return overlap;
   };
 
-  // Use MatchMedia to ensure that collision events are only happening in Desktop
-  const mql = matchMedia('(min-width: 1050px)');
-  if(mql.matches) {
-    // Wait for the document to be ready.
-    $(() => {
-      // Get the fixed share icons to detect collision against
-      const fixed = document.querySelector('.article-meta-share');
-      // The CSS selectors for anything that the share icons can collide with.
-      const selectors = [
-        '.half-image-left-full',
-        '.half-image-left',
-        '.full-bleed-image',
-        '.callout-left',
-        '.layout-columns__1',
-        '.layout-columns__2',
-        '.layout-columns__3',
-        '.layout-columns__4',
-        '.blockquote-full-width',
-        '.blockquote--half-left',
-        '.paragraph--type--gallery',
-      ];
+  // Wait for the document to be ready.
+  $(() => {
+    // Get the fixed share icons to detect collision against
+    const fixed = document.querySelector('.article-meta-share');
+    // The CSS selectors for anything that the share icons can collide with.
+    const selectors = [
+      '.half-image-left-full',
+      '.half-image-left',
+      '.full-bleed-image',
+      '.callout-left',
+      '.layout-columns__1',
+      '.layout-columns__2',
+      '.layout-columns__3',
+      '.layout-columns__4',
+      '.blockquote-full-width',
+      '.blockquote--half-left',
+      '.paragraph--type--gallery',
+    ];
 
-      // Get the NodeList of all the selectors matching elements on the page.
-      const elements = document.querySelectorAll(selectors.toString());
+    // Get the NodeList of all the selectors matching elements on the page.
+    const elements = document.querySelectorAll(selectors.toString());
 
-      // Set the starting state for if there is anything colliding
-      let overlapState = null;
+    // Set the starting state for if there is anything colliding
+    let overlapState = null;
 
-      window.addEventListener("scroll", () => {
-        // Check if the fixed box collides with any other boxes.
-        const overlap = overlapTarget(fixed, elements);
+    /**
+     * Hide element if overlap is detected.
+     */
+    const hideOnOverlap = () => {
+      // Check if the fixed box collides with any other boxes.
+      const overlap = overlapTarget(fixed, elements);
 
-        // Check if the state of the overlap has changed.
-        if (overlapState !== overlap) {
-          overlapState = overlap;
+      // Check if the state of the overlap has changed.
+      if (overlapState !== overlap) {
+        overlapState = overlap;
 
-          // Add the hidden class to the fixed box if overlapping.
-          if (overlapState == true) {
-            fixed.classList.add('article-meta-share--hidden');
-          } else {
-            fixed.classList.remove('article-meta-share--hidden');
-          }
-        };
-      });
-    });
-  }
+        // Add the hidden class to the fixed box if overlapping.
+        if (overlapState == true) {
+          fixed.classList.add('article-meta-share--hidden');
+        } else {
+          fixed.classList.remove('article-meta-share--hidden');
+        }
+      };
+    }
+
+    // Use MatchMedia to ensure that collision events are only happening in Desktop
+    const mql = matchMedia('(min-width: 1050px)');
+    // On page load, check if desktop and listen to scroll event.
+    if (mql.matches) {
+      window.addEventListener("scroll", hideOnOverlap);
+    }
+
+    // When screen size changes, add or remove the scroll listener.
+    mql.addListener(event => {
+      if (event.matches) {
+        window.addEventListener("scroll", hideOnOverlap);
+      } else {
+        window.removeEventListener("scroll", hideOnOverlap);
+      }
+    })
+
+  });
+
 }))(jQuery);
-
