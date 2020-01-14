@@ -4,7 +4,7 @@ $bar-height: 0.25rem;
 $bar-bg: #d6d6d6;
 $bar-progress: #5dafdb;
 
-.progress-bar {
+.reading-progress-bar {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -13,27 +13,19 @@ $bar-progress: #5dafdb;
   z-index: 1;
   // This is the whole bar background. (used by firefox)
   background-color: $bar-bg;
-  // Gets rid of the default border in Firefox/Opera.
-  border: none;
 
   @include breakpoint($bp-large) {
     bottom: -($bar-height + 0.02rem);
   }
 
-  // Firefox
-  // This is the current progress value.
-  &::-moz-progress-bar {
+  &__value {
+    position: absolute;
+    height: $bar-height;
+    width: 100%;
     background-color: $bar-progress;
+    left: -100%;
+    transition: .2s ease-out transform;
+    transform: translateX(0%);
   }
 
-  // Chrome
-  // This is the whole bar background.
-  &::-webkit-progress-bar {
-    background-color: $bar-bg;
-  }
-
-  // This is the current progress value.
-  &::-webkit-progress-value {
-    background: $bar-progress;
-  }
 }

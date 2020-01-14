@@ -5,7 +5,7 @@
   // Wait for the document to be ready.
   $(function () {
     // The progress bar which will be updated on scroll.
-    var progressBar = document.querySelector('.progress-bar');
+    var progressBarValue = document.querySelector('.reading-progress-bar__value');
 
     // The article used to detect scroll position.
     var article = document.querySelector('.main-content');
@@ -27,21 +27,20 @@
       var articleHeight = article.clientHeight - screenHalfHeight;
 
       // Get the average progress ratio of article scrolled through.
-      var progress = scrollY / articleHeight;
-
+      var progress = scrollY / articleHeight * 100;
       // Ensure that the progress bar never goes lower than zero or higher than 1
-      if (progress > 1) {
-        progress = 1;
+      if (progress >= 100) {
+        progress = 100;
       } else if (progress < 0) {
         progress = 0;
       }
 
       // Set the progress bar percent.
-      progressBar.setAttribute('value', progress);
+      progressBarValue.style.transform = 'translateX(' + progress + '%)';
     };
 
     // throttle the scroll event to reduce, performance issues
-    window.addEventListener("scroll", $.throttle(50, scrollCallback));
+    window.addEventListener("scroll", $.throttle(250, scrollCallback));
   });
 })(jQuery);
 //# sourceMappingURL=ucsf_reading_progress_bar.js.map
