@@ -25,16 +25,10 @@ heavily with the ``purge`` [cache invalidation framework](https://www.drupal.org
 and should be finished within minutes, get started with the
 [installation instructions](http://cgit.drupalcode.org/acquia_purge/plain/INSTALL.md).
 
-###### Drupal 8 testing program!
-The Drupal 8 version is currently **being tested** by a select group of Acquia
-Clients, so that we learn what it does to hardware requirements and find
-potential bugs and quirks. Everyone with a production environment is **more than
-welcome** to join our program, just file a support ticket or ask your
-Acquia representative!
-
-We're currently in **private beta**, which means you can't just download and
-enable the module just yet... Once we're through this phase, the **public beta**
-will follow, leading up to release candidates and a stable version for all.
+###### Drupal 8
+The Drupal 8 version has had two years of thorough testing in a series of
+private, alpha and beta releases. As of now, the module is officially considered
+stable for most usecases.
 
 ###### Drupal 7
 Owners of Drupal 7 sites are advised to schedule _at least one day_ of testing

@@ -52,6 +52,8 @@ class MigrateSystemConfigurationTest extends MigrateDrupal6TestBase {
       ],
       // temporary_maximum_age is not handled by the migration.
       'temporary_maximum_age' => 21600,
+      // filename_transliteration is not handled by migration.
+      'filename_transliteration' => FALSE,
     ],
     'system.image.gd' => [
       'jpeg_quality' => 75,

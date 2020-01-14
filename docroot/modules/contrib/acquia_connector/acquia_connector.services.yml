@@ -9,7 +9,7 @@ services:
     arguments: ['@config.factory']
   acquia_connector.spi:
     class: Drupal\acquia_connector\Controller\SpiController
-    arguments: ['@acquia_connector.client']
+    arguments: ['@acquia_connector.client', '@config.factory']
   logger.acquia_connector:
     class: Drupal\acquia_connector\CronService
     tags:

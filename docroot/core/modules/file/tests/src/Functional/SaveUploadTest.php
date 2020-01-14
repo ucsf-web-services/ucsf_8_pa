@@ -3,6 +3,7 @@
 namespace Drupal\Tests\file\Functional;
 
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
 use Drupal\Tests\TestFileCreationTrait;
@@ -70,7 +71,7 @@ class SaveUploadTest extends FileManagedTestBase {
     $this->phpfile = current($this->drupalGetTestFiles('php'));
     $this->assertTrue(is_file($this->phpfile->uri), 'The PHP file we are going to upload exists.');
 
-    $this->maxFidBefore = db_query('SELECT MAX(fid) AS fid FROM {file_managed}')->fetchField();
+    $this->maxFidBefore = (int) \Drupal::entityQueryAggregate('file')->aggregate('fid', 'max')->execute()[0]['fid_max'];
 
     // Upload with replace to guarantee there's something there.
     $edit = [
@@ -91,7 +92,7 @@ class SaveUploadTest extends FileManagedTestBase {
    * Test the file_save_upload() function.
    */
   public function testNormal() {
-    $max_fid_after = db_query('SELECT MAX(fid) AS fid FROM {file_managed}')->fetchField();
+    $max_fid_after = (int) \Drupal::entityQueryAggregate('file')->aggregate('fid', 'max')->execute()[0]['fid_max'];
     $this->assertTrue($max_fid_after > $this->maxFidBefore, 'A new file was created.');
     $file1 = File::load($max_fid_after);
     $this->assertTrue($file1, 'Loaded the file.');
@@ -107,7 +108,7 @@ class SaveUploadTest extends FileManagedTestBase {
     $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
     $this->assertResponse(200, 'Received a 200 response for posted test file.');
     $this->assertRaw(t('You WIN!'));
-    $max_fid_after = db_query('SELECT MAX(fid) AS fid FROM {file_managed}')->fetchField();
+    $max_fid_after = (int) \Drupal::entityQueryAggregate('file')->aggregate('fid', 'max')->execute()[0]['fid_max'];
 
     // Check that the correct hooks were called.
     $this->assertFileHooksCalled(['validate', 'insert']);
@@ -133,14 +134,14 @@ class SaveUploadTest extends FileManagedTestBase {
     $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
     $this->assertResponse(200, 'Received a 200 response for posted test file.');
     $this->assertRaw(t('You WIN!'));
-    $this->assertTrue(is_file('temporary://' . $dir . '/' . trim(drupal_basename($image3_realpath))));
+    $this->assertTrue(is_file('temporary://' . $dir . '/' . trim(\Drupal::service('file_system')->basename($image3_realpath))));
   }
 
   /**
-   * Tests filename sanitization.
+   * Tests filename transliteration.
    */
-  public function testSanitization() {
-    $file = $this->generateFile('TÉXT-œ', 64, 5, 'text');
+  public function testTransliteration() {
+    $file = $this->generateFile('TEXT-Ã…â€œ', 64, 5, 'text');
 
     // Upload a file with a name with uppercase and unicode characters.
     $edit = [
@@ -150,35 +151,23 @@ class SaveUploadTest extends FileManagedTestBase {
     ];
     $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
     $this->assertSession()->statusCodeEquals(200);
-    // Test that the file name has not been sanitized.
-    $this->assertSession()->responseContains('File name is TÉXT-œ.txt.');
+    // Test that the file name has not been transliterated.
+    $this->assertSession()->responseContains('File name is TEXT-Ã…â€œ.txt.');
 
-    // Enable sanitization via the UI.
+    // Enable transliteration via the UI.
     $this->drupalLogin($this->rootUser);
-
-    // For now, just transliterate, with no other transformations.
-    $options = [
-      'filename_sanitization[transliterate]' => TRUE,
-      'filename_sanitization[replace_whitespace]' => FALSE,
-      'filename_sanitization[replace_non_alphanumeric]' => FALSE,
-      'filename_sanitization[dedupe_separators]' => FALSE,
-      'filename_sanitization[lowercase]' => FALSE,
-      'filename_sanitization[replacement_character]' => '-',
-    ];
-    $this->drupalPostForm('admin/config/media/file-system', $options, 'Save configuration');
+    $this->drupalPostForm('admin/config/media/file-system', ['filename_transliteration' => TRUE], 'Save configuration');
     $this->drupalLogin($this->account);
 
     // Upload a file with a name with uppercase and unicode characters.
     $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
     $this->assertSession()->statusCodeEquals(200);
     // Test that the file name has been transliterated.
-    $this->assertSession()->responseContains('File name is TEXT-oe.txt.');
-    // Make sure we got a message about the rename.
-    $message = t('Your upload has been renamed to') . ' <em class="placeholder">TEXT-oe.txt</em>';
-    $this->assertSession()->responseContains($message);
+    $this->assertSession()->responseContains('File name is text-a.aeuoe.txt.');
 
-    // Generate another file with a name with All The Things(tm) we care about.
-    $file = $this->generateFile('S  Pácê--táb#	#--🙈', 64, 5, 'text');
+    // Generate another file with a name that will be changed when
+    // transliteration is on.
+    $file = $this->generateFile('S  Pace--Ã°Å¸â„¢Ë†', 64, 5, 'text');
     $edit = [
       'files[file_test_upload]' => \Drupal::service('file_system')->realpath($file),
       'extensions' => 'txt',
@@ -186,72 +175,8 @@ class SaveUploadTest extends FileManagedTestBase {
     ];
     $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
     $this->assertSession()->statusCodeEquals(200);
-    // Test that the file name has only been transliterated.
-    $this->assertSession()->responseContains('File name is S  Pace--tab#	#---.txt.');
-
-    // Leave transliteration on and enable whitespace replacement.
-    $this->drupalLogin($this->rootUser);
-    $options['filename_sanitization[replace_whitespace]'] = TRUE;
-    $this->drupalPostForm('admin/config/media/file-system', $options, 'Save configuration');
-    $this->drupalLogin($this->account);
-
-    // Try again with the monster filename.
-    $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
-    $this->assertSession()->statusCodeEquals(200);
-    // Test that the file name has been transliterated and whitespace replaced.
-    $this->assertSession()->responseContains('File name is S--Pace--tab#-#---.txt.');
-
-    // Leave transliteration and whitespace replacement on, replace non-alpha.
-    $this->drupalLogin($this->rootUser);
-    $options['filename_sanitization[replace_non_alphanumeric]'] = TRUE;
-    $options['filename_sanitization[replacement_character]'] = '_';
-    $this->drupalPostForm('admin/config/media/file-system', $options, 'Save configuration');
-    $this->drupalLogin($this->account);
-
-    // Try again with the monster filename.
-    $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
-    $this->assertSession()->statusCodeEquals(200);
-
-    // Test that the file name has been transliterated, whitespace replaced with
-    // '_', and non-alphanumeric characters replaced with '_'.
-    $this->assertSession()->responseContains('File name is S__Pace--tab___--_.txt.');
-
-    // Now turn on the setting to remove duplicate separators.
-    $this->drupalLogin($this->rootUser);
-    $options['filename_sanitization[dedupe_separators]'] = TRUE;
-    $options['filename_sanitization[replacement_character]'] = '-';
-    $this->drupalPostForm('admin/config/media/file-system', $options, 'Save configuration');
-    $this->drupalLogin($this->account);
-
-    // Try again with the monster filename.
-    $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
-    $this->assertSession()->statusCodeEquals(200);
-
-    // Test that the file name has been transliterated, whitespace replaced,
-    // non-alphanumeric characters replaced, and duplicate separators removed.
-    $this->assertSession()->responseContains('File name is S-Pace-tab-.txt.');
-
-    // Finally, check the lowercase setting.
-    $this->drupalLogin($this->rootUser);
-    $options['filename_sanitization[lowercase]'] = TRUE;
-    $this->drupalPostForm('admin/config/media/file-system', $options, 'Save configuration');
-    $this->drupalLogin($this->account);
-
-    // Generate another file since we're going to start getting collisions with
-    // previously uploaded and renamed copies.
-    $file = $this->generateFile('S  Pácê--táb#	#--🙈-2', 64, 5, 'text');
-    $edit = [
-      'files[file_test_upload]' => \Drupal::service('file_system')->realpath($file),
-      'extensions' => 'txt',
-      'is_image_file' => FALSE,
-    ];
-    $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
-    $this->assertSession()->statusCodeEquals(200);
-    // Make sure all the sanitization options work as intended.
-    $this->assertSession()->responseContains('File name is s-pace-tab-2.txt.');
-    // Make sure we got a message about the rename.
-    $message = t('Your upload has been renamed to') . ' <em class="placeholder">s-pace-tab-2.txt</em>';
-    $this->assertSession()->responseContains($message);
+    // Test that the file name has been transliterated.
+    $this->assertSession()->responseContains('File name is s-pace-adegaace.txt.');
   }
 
   /**
@@ -413,7 +338,7 @@ class SaveUploadTest extends FileManagedTestBase {
    */
   public function testExistingRename() {
     $edit = [
-      'file_test_replace' => FILE_EXISTS_RENAME,
+      'file_test_replace' => FileSystemInterface::EXISTS_RENAME,
       'files[file_test_upload]' => \Drupal::service('file_system')->realpath($this->image->getFileUri()),
     ];
     $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
@@ -472,12 +397,14 @@ class SaveUploadTest extends FileManagedTestBase {
   public function testDrupalMovingUploadedFileError() {
     // Create a directory and make it not writable.
     $test_directory = 'test_drupal_move_uploaded_file_fail';
-    drupal_mkdir('temporary://' . $test_directory, 0000);
+    /** @var \Drupal\Core\File\FileSystemInterface $file_system */
+    $file_system = \Drupal::service('file_system');
+    $file_system->mkdir('temporary://' . $test_directory, 0000);
     $this->assertTrue(is_dir('temporary://' . $test_directory));
 
     $edit = [
       'file_subdir' => $test_directory,
-      'files[file_test_upload]' => \Drupal::service('file_system')->realpath($this->image->getFileUri()),
+      'files[file_test_upload]' => $file_system->realpath($this->image->getFileUri()),
     ];
 
     \Drupal::state()->set('file_test.disable_error_collection', TRUE);
@@ -509,7 +436,7 @@ class SaveUploadTest extends FileManagedTestBase {
       'multipart' => [
         [
           'name'     => 'file_test_replace',
-          'contents' => FILE_EXISTS_RENAME,
+          'contents' => FileSystemInterface::EXISTS_RENAME,
         ],
         [
           'name' => 'form_id',

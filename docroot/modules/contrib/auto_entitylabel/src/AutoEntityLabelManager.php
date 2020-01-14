@@ -2,6 +2,7 @@
 
 namespace Drupal\auto_entitylabel;
 
+use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -147,7 +148,7 @@ class AutoEntityLabelManager implements AutoEntityLabelManagerInterface {
       $label = $this->getAlternativeLabel();
     }
 
-    $label = substr($label, 0, 255);
+    $label = mb_substr($label, 0, 255);
     $label_name = $this->getLabelName();
     $this->entity->$label_name->setValue($label);
 
@@ -172,19 +173,11 @@ class AutoEntityLabelManager implements AutoEntityLabelManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function hasPrefilledAutoLabel() {
-    return $this->getConfig('status') == self::PREFILLED;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function autoLabelNeeded() {
     $not_applied = empty($this->auto_label_applied);
     $required = $this->hasAutoLabel();
     $optional = $this->hasOptionalAutoLabel() && empty($this->entity->label());
-    $prefilled = $this->hasPrefilledAutoLabel();
-    return $not_applied && ($required || $optional || $prefilled);
+    return $not_applied && ($required || $optional);
   }
 
   /**
@@ -263,22 +256,31 @@ class AutoEntityLabelManager implements AutoEntityLabelManagerInterface {
    */
   protected function generateLabel($pattern, $entity) {
     $entity_type = $entity->getEntityType()->id();
+    // To avoid that the token replacement leaking render metadata (which might
+    // be a problem when generating labels using JSON:api or similar) we pass in
+    // metadata to the token replacement.
+    // @see https://www.drupal.org/project/auto_entitylabel/issues/3051165
+    $metadata = new BubbleableMetadata();
     $output = $this->token->replace($pattern,
       [$entity_type => $entity],
-      ['clear' => TRUE]
+      ['clear' => TRUE],
+      $metadata
     );
-
-    // Evaluate PHP.
-    if ($this->getConfig('php')) {
-      $output = $this->evalLabel($output, $this->entity);
-    }
 
     // Decode HTML entities, returning them to their original UTF-8 characters.
     $output = Html::decodeEntities($output);
 
-    // Strip tags and Escape special characters.
+    // Strip tags and Remove special characters.
     $pattern = !empty($this->getConfig('escape')) ? '/[^a-zA-Z0-9\s]|[\t\n\r\0\x0B]/' : '/[\t\n\r\0\x0B]/';
-    $output = preg_replace($pattern, '', strip_tags($output));
+    $output = preg_replace($pattern, ' ', strip_tags($output));
+
+    // Invoke hook_auto_entitylabel_label_alter().
+    $entity_clone = clone $entity;
+    \Drupal::moduleHandler()->alter('auto_entitylabel_label', $output, $entity_clone);
+
+    // Trim stray whitespace from beginning and end. Also converts 2 or more
+    // whitespace characters within label to a single space.
+    $output = preg_replace('/\s{2,}/', ' ', trim($output));
 
     return $output;
   }
@@ -319,27 +321,6 @@ class AutoEntityLabelManager implements AutoEntityLabelManagerInterface {
     }
 
     return $label;
-  }
-
-  /**
-   * Evaluates php code and passes the entity to it.
-   *
-   * @param string $code
-   *   PHP code to evaluate.
-   * @param object $entity
-   *   Content entity to pa ss through to the PHP script.
-   *
-   * @return string
-   *   String to use as label.
-   */
-  protected function evalLabel($code, $entity) {
-    ob_start();
-    // @codingStandardsIgnoreLine
-    print eval('?>' . $code);
-    $output = ob_get_contents();
-    ob_end_clean();
-
-    return $output;
   }
 
   /**
