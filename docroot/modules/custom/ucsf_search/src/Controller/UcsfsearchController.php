@@ -30,7 +30,7 @@ class UcsfsearchController extends ControllerBase {
       '#theme' => 'ucsf_universal_search',
       '#directory' => $people['results'],
       '#websites' => $websites['results'],
-      '#searchterm' => $searchterm,
+      '#searchterm' => htmlspecialchars_decode($searchterm, ENT_QUOTES),
       '#more' => [ 'web'=>$websites['more'], 'people'=>$people['more'] ],
       '#attached' => [
         'library' => [
@@ -52,7 +52,7 @@ class UcsfsearchController extends ControllerBase {
 
     return [
       '#theme' => 'ucsf_news_search',
-      '#searchterm' => $searchterm,
+      '#searchterm' => htmlspecialchars_decode($searchterm, ENT_QUOTES),
       '#more' => [],
       '#cache' => ['max-age' => 0],
       '#attached' => [
@@ -78,7 +78,7 @@ class UcsfsearchController extends ControllerBase {
     return [
       '#theme' => 'ucsf_people_search',
       '#directory' => $directory['results'],
-      '#searchterm' => $searchterm,
+      '#searchterm' => htmlspecialchars_decode($searchterm, ENT_QUOTES),
       '#more' => $directory['more'],
       '#cache' => ['max-age' => 0],
       '#attached' => [
@@ -104,7 +104,7 @@ class UcsfsearchController extends ControllerBase {
     return [
       '#theme' => 'ucsf_websites_search',
       '#websites' => $websites['results'],
-      '#searchterm' => $searchterm,
+      '#searchterm' => htmlspecialchars_decode($searchterm, ENT_QUOTES),
       '#more' => $websites['more'],
       '#cache' => ['max-age' => 0],
       '#attached' => [
