@@ -602,6 +602,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
                 $video_field = $media->get('field_media_video_embed_field');
                 if ($url = $video_field->get(0)->getString()) {
                   $component = $this->getVideoComponent($url);
+                  // don't error if for some reason $component is NULL
                   if (!empty($component)) {
                     $component->setLayout(_ucsf_applenews_video_component_layout());
                   }
@@ -862,6 +863,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
    */
   protected function getVideoComponent($url) {
     $url_parsed = parse_url($url);
+    // RegEx for youtube.com, youtu.be, vimeo.com
     if (preg_match('/(vimeo\.com|youtu\.be|www\.youtube\.com)/', $url_parsed['host'])) {
       if (empty($url_parsed['scheme'])) {
         $url = 'https:' . $url;
