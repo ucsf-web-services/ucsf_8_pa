@@ -6,6 +6,22 @@
     <input type="text" name="search" id="header-search" size="32" class="home-search__form-input" value="{{ searchterm }}" placeholder="Search people, places, ideas" />
     {# this should be /images/search.svg file #}
     <input type="submit" id="edit-submit" name="op" value="Search" class="home-search__form-submit">
+    {# Filter Radio buttons start #}
+    <fieldset class="search-filter">
+      <legend class="visually-hidden">Search result filter options</legend>
+      {# Option 1 #}
+      <label class="search-filter__label search-filter__label--active">
+        <input type="radio" name="filter" class="visually-hidden" checked>
+        <span class="search-filter__option"></span>
+        <span>All UCSF</span>
+      </label>
+      {# Option 2 #}
+      <label class="search-filter__label">
+        <input type="radio" name="filter" class="visually-hidden">
+        <span class="search-filter__option"></span>
+        <span>UCSF News Center</span>
+      </label>
+    </fieldset>
   </form>
 </div>
 </div>

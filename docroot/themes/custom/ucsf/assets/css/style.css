@@ -1699,14 +1699,14 @@ a.icon-transit:hover {
     [block="block-ucsf-main-menu-desktop"] .menu-item .menu-child--wrapper {
       position: relative; }
       [block="block-ucsf-main-menu-desktop"] .menu-item .menu-child--wrapper.wrapper--search-menu {
-        position: absolute !important;
-        clip: rect(1px, 1px, 1px, 1px);
-        overflow: hidden;
-        height: 1px;
-        width: 1px;
-        word-wrap: normal;
+        clip: auto;
+        overflow: visible;
+        -webkit-animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
+        animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
         -webkit-animation: none;
-                animation: none; }
+                animation: none;
+        -webkit-transition: none;
+        transition: none; }
         [block="block-ucsf-main-menu-desktop"] .menu-item .menu-child--wrapper.wrapper--search-menu.active {
           clip: auto;
           overflow: visible;
@@ -6289,6 +6289,31 @@ a[href*="http"] .article-header__date {
     margin-right: 16px !important; }
     .results-content .gsc-control-cse .gsc-cursor-page.gsc-cursor-current-page {
       color: #052049; }
+
+.search-filter {
+  border: none;
+  margin: 0;
+  padding: 0; }
+  @media (min-width: 850px) {
+    .search-filter {
+      display: grid;
+      grid-template-rows: 1fr;
+      grid-template-columns: 1fr 1fr;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center; } }
+  .search-filter__label {
+    display: block;
+    background-color: #d5d9de;
+    padding: .4rem 0;
+    font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center; }
+    .search-filter__label--active {
+      background-color: #f2f4f6;
+      color: #007cbe; }
 
 .cd-container {
   max-width: 1170px;

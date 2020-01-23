@@ -112,6 +112,20 @@
               <form action="/search" accept-charset="utf-8" method="get" class="search__form">
                 <label for="header-desktop-search" class="visually-hidden">search</label>
                 <input type="text" name="search" id="header-desktop-search" size="32" class="home-search__form-input" value="{{ searchterm }}" placeholder="Search people, places, ideas" />
+                {# Filter Radio buttons start #}
+                <fieldset class="search-filter">
+                  <legend class="visually-hidden">Search result filter options</legend>
+                  {# Option 1 #}
+                  <label for="filter-all" class="search-filter__label search-filter__label--active"><input type="radio" name="filter" id="filter-all" class="visually-hidden" checked>
+                    <span class="search-filter__option"></span>
+                    <span>All UCSF</span>
+                  </label>
+                  {# Option 2 #}
+                  <label for="filter-news" class="search-filter__label"><input type="radio" name="filter" id="filter-news" class="visually-hidden">
+                    <span class="search-filter__option"></span>
+                    <span>UCSF News Center</span>
+                  </label>
+                </fieldset>
                 {# this should be /images/search.svg file #}
                 <input type="submit" id="edit-submit" name="op" value="Search" class="home-search__form-submit">
               </form>

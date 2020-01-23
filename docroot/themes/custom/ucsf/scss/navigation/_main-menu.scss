@@ -133,8 +133,10 @@ header .menu--main {
       position: relative;
 
       &.wrapper--search-menu {
-        @include visually-hidden;
+        @include visually-hidden-reset;
+        @include menu-animation;
         animation: none;
+        transition: none;
 
         &.active {
           @include visually-hidden-reset;
