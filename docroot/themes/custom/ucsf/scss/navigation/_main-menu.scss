@@ -263,9 +263,10 @@ header .menu--main {
     &.is-active,
     &:active,
     &:hover {
-      border-bottom: 0;
+      border-bottom: 0; // padding bottom is replaced by the border bottom
     }
   }
+
   /*
   > .menu-item > span {
     &:active,
@@ -369,6 +370,10 @@ header .menu--main {
     & > a {
       border-bottom: $hover-border-size solid $blue;
       padding-bottom: 0;
+    }
+
+    &.search > a  {
+      border-bottom: 0;
     }
   }
 
