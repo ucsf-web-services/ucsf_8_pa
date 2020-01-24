@@ -113,24 +113,26 @@
                 <label for="header-desktop-search" class="visually-hidden">search</label>
                 <input type="text" name="search" id="header-desktop-search" size="32" class="home-search__form-input" value="{{ searchterm }}" placeholder="Search people, places, ideas" />
                 {# Filter Radio buttons start #}
-                <fieldset class="search-filter">
+                <fieldset class="fieldset-reset">
                   <legend class="visually-hidden">Choose what type of search to perform</legend>
-                  {# Option 1 #}
-                  <label>
-                    <input type="radio" name="filter" class="visually-hidden search-filter__radio" value="All" checked>
-                    <div class="search-filter__label">
-                      <span class="search-filter__option"></span>
-                      <span>All UCSF</span>
-                    </div>
-                  </label>
-                  {# Option 2 #}
-                  <label>
-                    <input type="radio" name="filter" class="visually-hidden search-filter__radio" value="News">
-                    <div class="search-filter__label">
-                      <span class="search-filter__option"></span>
-                      <span>UCSF News Center</span>
-                    </div>
-                  </label>
+                  <div class="search-filter">
+                    {# Option 1 #}
+                    <label>
+                      <input type="radio" name="filter" class="visually-hidden search-filter__radio" value="All" checked>
+                      <div class="search-filter__label">
+                        <span class="search-filter__option"></span>
+                        <span>All UCSF</span>
+                      </div>
+                    </label>
+                    {# Option 2 #}
+                    <label>
+                      <input type="radio" name="filter" class="visually-hidden search-filter__radio" value="News">
+                      <div class="search-filter__label">
+                        <span class="search-filter__option"></span>
+                        <span>UCSF News Center</span>
+                      </div>
+                    </label>
+                  </div>
                 </fieldset>
                 {# this should be /images/search.svg file #}
                 <input type="submit" id="edit-submit" name="op" value="Search" class="home-search__form-submit">
