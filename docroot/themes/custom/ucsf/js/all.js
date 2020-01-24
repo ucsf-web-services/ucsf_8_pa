@@ -306,4 +306,23 @@
 
     $('#email').val(decodeURIComponent($.urlParam('email')));
 
+    // Main menu search form redirect
+    Drupal.behaviors.mainMenuSearchFilter = {
+        attach: function attach(context, settings) {
+            // Selector for the form.
+            const $form = $('.search__form', context)
+            $form.submit(function() {
+                const $this = $(this);
+                // Find checked radio button inside the form and get it's value.
+                const option = $this.find('.search-filter__radio:checked').val();
+                // If value is "News" redirect to news search.
+                if (option === 'News') {
+                    $this.attr('action', '/search/news');
+                }
+
+                return true;
+            });
+        }
+    };
+
 })(jQuery);
