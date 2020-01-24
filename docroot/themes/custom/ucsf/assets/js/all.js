@@ -289,5 +289,25 @@
     };
 
     $('#email').val(decodeURIComponent($.urlParam('email')));
+
+    // Main menu search form redirect
+    Drupal.behaviors.mainMenuSearchFilter = {
+        attach: function attach(context, settings) {
+            // Selector for the form.
+            var $form = $('.search__form', context);
+            $form.submit(function () {
+                var $this = $(this);
+                // Find checked radio button inside the form and get it's value.
+                var option = $this.find('.search-filter__radio:checked').val();
+                // If value is "News" redirect to news filter search.
+                if (option === 'News') {
+                    $this.attr('action', '/news/filter');
+                    $this.find('.home-search__form-input').attr('name', 'combine');
+                }
+
+                return true;
+            });
+        }
+    };
 })(jQuery);
 //# sourceMappingURL=all.js.map

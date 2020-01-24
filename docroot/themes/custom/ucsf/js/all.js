@@ -315,9 +315,11 @@
                 const $this = $(this);
                 // Find checked radio button inside the form and get it's value.
                 const option = $this.find('.search-filter__radio:checked').val();
-                // If value is "News" redirect to news search.
+                // If value is "News" redirect to news filter search.
                 if (option === 'News') {
-                    $this.attr('action', '/search/news');
+                    $this.attr('action', '/news/filter');
+                    $this.find('.home-search__form-input')
+                        .attr('name', 'combine');
                 }
 
                 return true;
