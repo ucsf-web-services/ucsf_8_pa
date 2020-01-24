@@ -117,24 +117,26 @@
 
         attach: function (context, settings) {
             const $searchToggle = $('.menu-parent--wrapper .menu-item.search > a', context);
+            const $search = $('.wrapper--search-menu', context);
             $searchToggle.click(function (e) {
                 e.preventDefault();
-                $('.wrapper--search-menu').toggleClass('active');
+                $search.toggleClass('active');
                 $searchToggle.toggleClass('active');
-                $('.wrapper--search-menu .home-search__form-input').focus();
+                if ($searchToggle.hasClass('active')) {
+                    $('.wrapper--search-menu .home-search__form-input').focus();
+                }
             });
 
-            $('.menu-parent--wrapper .menu-item', context).hover(function (e) {
-                if ($(this).hasClass('search')) {
-                    //console.log('search menu');
-                } else {
-                    $('.wrapper--search-menu').removeClass('active');
+            $('.menu-parent--wrapper .menu-item', context).click(function (e) {
+                // If other menu item is clicked close search form
+                if (!$(this).hasClass('search')) {
+                    $search.removeClass('active');
                     $searchToggle.removeClass('active');
+                    //console.log('search menu');
                 }
             });
 
             //Search form opens when focus is inside.
-            const $search = $('.wrapper--search-menu');
             $search.on('focusin', function() {
                 $search.addClass('active');
                 $searchToggle.addClass('active'); // changes toggle icon
@@ -148,8 +150,9 @@
                       $search.removeClass('active');
                       $searchToggle.removeClass('active');
                     }
-                }, 50)
-            })
+                    // delay needs to be at least 150 to avoid a race condition with $searchToggle.toggleClass('active');
+                }, 150);
+            });
         }
     };
 
