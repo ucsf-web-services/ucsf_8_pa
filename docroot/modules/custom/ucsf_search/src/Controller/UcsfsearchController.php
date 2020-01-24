@@ -26,11 +26,13 @@ class UcsfsearchController extends ControllerBase {
       $people   = $this->directoryLookup($searchterm);
     }
 
+    $searchterm = $this->toCurlyQuotes($searchterm);
+
     return [
       '#theme' => 'ucsf_universal_search',
       '#directory' => $people['results'],
       '#websites' => $websites['results'],
-      '#searchterm' => htmlspecialchars_decode($searchterm, ENT_QUOTES),
+      '#searchterm' => $searchterm,
       '#more' => [ 'web'=>$websites['more'], 'people'=>$people['more'] ],
       '#attached' => [
         'library' => [
@@ -50,9 +52,11 @@ class UcsfsearchController extends ControllerBase {
       $searchterm = Xss::filter(htmlspecialchars($searchterm, ENT_QUOTES));
     }
 
+    $searchterm = $this->toCurlyQuotes($searchterm);
+
     return [
       '#theme' => 'ucsf_news_search',
-      '#searchterm' => htmlspecialchars_decode($searchterm, ENT_QUOTES),
+      '#searchterm' => $searchterm,
       '#more' => [],
       '#cache' => ['max-age' => 0],
       '#attached' => [
@@ -75,10 +79,12 @@ class UcsfsearchController extends ControllerBase {
       $directory = $this->directoryLookup($searchterm, 25);
     }
 
+    $searchterm = $this->toCurlyQuotes($searchterm);
+
     return [
       '#theme' => 'ucsf_people_search',
       '#directory' => $directory['results'],
-      '#searchterm' => htmlspecialchars_decode($searchterm, ENT_QUOTES),
+      '#searchterm' => $searchterm,
       '#more' => $directory['more'],
       '#cache' => ['max-age' => 0],
       '#attached' => [
@@ -100,11 +106,12 @@ class UcsfsearchController extends ControllerBase {
       $websites = $this->websiteLookup($searchterm, 25);
     }
 
+    $searchterm = $this->toCurlyQuotes($searchterm);
 
     return [
       '#theme' => 'ucsf_websites_search',
       '#websites' => $websites['results'],
-      '#searchterm' => htmlspecialchars_decode($searchterm, ENT_QUOTES),
+      '#searchterm' => $searchterm,
       '#more' => $websites['more'],
       '#cache' => ['max-age' => 0],
       '#attached' => [
@@ -267,5 +274,10 @@ class UcsfsearchController extends ControllerBase {
       return ['results'=>[], 'more'=>false];
     }
 
+  }
+
+  // Convert regular quotes into curly quotes.
+  protected function toCurlyQuotes($searchterm) {
+    return preg_replace(['/\b&quot;/','/&quot;/','/\b&#039;/','/&#039;/'], ['”','“',"’","‘"], $searchterm );
   }
 }
