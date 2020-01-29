@@ -77,7 +77,13 @@
             });
 
             $('.menu-item-parent').click(function() {
-                  $(this).addClass('menu-item-open').siblings().removeClass('menu-item-open');
+                const $this = $(this);
+                // do not add 'menu-item-open' class if the menu item is search
+                if ($this.hasClass('search')) {
+                    $this.siblings().removeClass('menu-item-open');
+                    return;
+                };
+                $this.addClass('menu-item-open').siblings().removeClass('menu-item-open');
             });
 
               $('.menu-item-close').click(function(e) {
