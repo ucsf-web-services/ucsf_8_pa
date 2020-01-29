@@ -136,7 +136,6 @@
                 if (!$(this).hasClass('search')) {
                     $search.removeClass('active');
                     $searchToggle.removeClass('active');
-                    //console.log('search menu');
                 }
             });
 
@@ -146,16 +145,24 @@
                 $searchToggle.addClass('active'); // changes toggle icon
             });
 
-            //Search form closes when focus is out.
+            //Search form closes when tabbing away.
             $search.on('focusout', function () {
                 //Wait and only remove classes if newly focused element is outside the search form
                 setTimeout(function () {
-                    if ($(document.activeElement).parents('.wrapper--search-menu').length === 0) {
+                    // When browser cant find activeElement it returns <body> or null
+                    // which triggers the false positive for document.activeElement.closest('.wrapper--search-menu') === null
+                    // Clicking on the label inside search box caused this behavior, since labels don't receive focus
+                    if (document.activeElement === document.body || document.activeElement === null) {
+                        return;
+                    }
+
+                    // Close the search box if the currently focused el.
+                    //  is not inside the search box
+                    if (document.activeElement.closest('.wrapper--search-menu') === null) {
                         $search.removeClass('active');
                         $searchToggle.removeClass('active');
                     }
-                    // delay needs to be at least 150 to avoid a race condition with $searchToggle.toggleClass('active');
-                }, 150);
+                }, 50);
             });
         }
     };
