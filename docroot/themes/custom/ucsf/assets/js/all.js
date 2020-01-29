@@ -162,7 +162,8 @@
                         $search.removeClass('active');
                         $searchToggle.removeClass('active');
                     }
-                }, 50);
+                    // delay needs to be at least 150 to avoid a race condition with $searchToggle.toggleClass('active');
+                }, 150);
             });
         }
     };
