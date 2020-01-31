@@ -553,10 +553,12 @@ class MetatagManager implements MetatagManagerInterface {
 
           foreach ($output as $index => $element) {
             // UCSFD8-323 - only display the first valid token from left to right order in the Metatag field(s)
-            $single_tags = ['og_title','og_description','og_image','twitter_cards_title','twitter_cards_description','twitter_cards_image'];
+            $single_tags = ['image_src','og_title','og_description','og_image', 'og_image_secure_url','twitter_cards_title','twitter_cards_description','twitter_cards_image'];
             // String elements might be empty, so we need to skip over those
             if (in_array($tag_name, $single_tags)) {
-              if (trim($element['#attributes']['content'])=='') {
+              if ((isset($element['#attributes']['content']) && trim($element['#attributes']['content']) == '')
+                || (isset($element['#attributes']['href']) && trim($element['#attributes']['href']) == '')
+              ) {
                 continue;
               }
               // Check if raw tag is created there should only be one value

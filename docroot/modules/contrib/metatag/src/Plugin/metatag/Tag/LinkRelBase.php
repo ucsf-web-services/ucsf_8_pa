@@ -12,6 +12,24 @@ abstract class LinkRelBase extends MetaNameBase {
    */
   public function output() {
     $element = parent::output();
+    $element = $this->convertToLink($element);
+    // if $element is an array of multiple elements.
+    if (empty($element['#attributes'])) {
+      foreach ($element as $key => $value) {
+        $element[$key] = $this->convertToLink($value);
+      }
+    }
+
+    return $element;
+  }
+
+  /**
+   * Function to convert Metatag into link.
+   *
+   * @param [array] $element
+   * @return array
+   */
+  public function convertToLink($element) {
     if (!empty($element['#attributes']['content'])) {
       $element['#tag'] = 'link';
       $element['#attributes'] = [

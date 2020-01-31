@@ -14,7 +14,7 @@ namespace Drupal\metatag\Plugin\metatag\Tag;
  *   weight = 4,
  *   type = "image",
  *   secure = FALSE,
- *   multiple = FALSE
+ *   multiple = TRUE
  * )
  */
 class ImageSrc extends LinkRelBase {
