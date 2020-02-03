@@ -383,3 +383,63 @@ fieldset {
       }
     }
 }
+
+.search-filter {
+  border: none;
+  margin: 0;
+  padding: 0;
+
+  @include breakpoint($bp-large) {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+  }
+
+  // !important to have in order to make radios usable on iPhone
+  label > * { pointer-events: none; }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    background-color: $c-border-grey-blue;
+    cursor: pointer;
+    font-family: $font-helvetica-neue-bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 40px;
+    transition: background-color .1s ease-out;
+
+    @include breakpoint($bp-large) {
+      flex-direction: row-reverse;
+      justify-content: center;
+    }
+
+    .search-filter__radio:checked + & {
+      background-color: $c-grey-pale;
+      color: $c-blue-link;
+    }
+  }
+
+  &__option {
+    position: relative;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    border: 1px solid $c-dark-navy;
+    border-radius: 100%;
+    margin: 0 .85em;
+    transition: all .1s ease-out;
+
+    @include breakpoint($bp-large) {
+      margin: 0 0 0 .85em;
+    }
+
+    .search-filter__radio:checked + .search-filter__label & {
+      background-color: $c-blue-link;
+      border-color: $c-blue-link;
+      box-shadow: inset 0 0 0 0.2em #fff;
+    }
+  }
+}
