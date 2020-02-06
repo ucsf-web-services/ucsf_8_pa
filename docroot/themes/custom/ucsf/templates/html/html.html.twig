@@ -36,8 +36,9 @@
 <!DOCTYPE html>
 <html{{ html_attributes }}>
 <head>
-  <head-placeholder token="{{ placeholder_token }}">
+  {# Moved title to be above metatags so that Google Tag manager has it awalible #}
   <title>{{ head_title|safe_join(' | ') }}</title>
+  <head-placeholder token="{{ placeholder_token }}">
   <css-placeholder token="{{ placeholder_token }}">
 
   <script>if (!window.customElements) { document.write('<!--'); }</script>
