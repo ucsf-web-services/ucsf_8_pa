@@ -21,9 +21,21 @@
   }
 
   .overlay-gray & { // Pl: .promo-list
-    background: transparent;
     padding: 58px 40px;
-
+    background: $background-gray;
+    position: relative;
+  
+    &::after {
+      background: #fff;
+      content: ' ';
+      position: absolute;
+      left: auto;
+      right: 0;
+      bottom: -8px;
+      width: $space-five;
+      height: $space-five;
+    }
+    
     h2 {
       line-height: 1;
       margin-bottom: 32px;

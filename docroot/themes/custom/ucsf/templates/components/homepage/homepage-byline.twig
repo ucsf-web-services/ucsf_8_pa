@@ -1,7 +1,7 @@
 {% set primary_area = paragraph.field_news_article.entity.field_primary_area.0.entity.label|clean_class %}
 {% set source = paragraph.field_news_article.entity.field_source.0.entity.label %}
 
-{% set campus_news_subs = ['announcements', 'happenings', 'honors--awards', 'spotlight'] %}
+{% set campus_news_subs = ['campus-news', 'announcements', 'happenings', 'honors--awards', 'spotlight'] %}
 {% if primary_area in campus_news_subs %}
   {% set primary_area = 'campus-news' %}
   {% set primary_area_field = 'Campus News'|t %}
