@@ -109,8 +109,35 @@
             maxWidth: 310
           })
           console.log(infoWindows[index].content);
-
         });
+
+        map.fitBounds(bounds);
+
+        var markup = '';
+
+        $.each(locations, function(type, item) {
+          markup += '<div><input id="' + type + '" type="checkbox" checked="checked" /><label for="' + type + '"><h3>' + type + '</h3></label><ul>' + item.list.join('') + '</ul></div>'
+
+          $('body').on('click', "label[for='" + type + "']", function (){
+            var input = $('input#' + type);
+
+            if (input.is(':checked')) {
+              input.nextAll('ul').hide('fast');
+              $.each(locations[type].indexes, function(index, value) {
+                infoWindows[value].close();
+                markers[value].setVisible(false)
+              })
+            } else {
+              input.nextAll('ul').show('fast');
+              $.each(locations[type].indexes, function(index, value) {
+                infoWindows[value].close();
+                markers[value].setVisible(true)
+              })
+            }
+          })
+        });
+
+        $('#locations-list .loading').html(markup);
       })
 
 
