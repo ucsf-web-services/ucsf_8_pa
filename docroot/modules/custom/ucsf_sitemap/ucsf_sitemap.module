@@ -27,13 +27,13 @@ function ucsf_sitemap_form_alter(&$form, &$form_state, $form_id) {
  * On submit, change Simple XML Sitemap index setting based on the article type.
  *
  * @param array $form
- * Form array.
+ *   Form array.
  * @param FormStateInterface $form_state
- * The form state object.
+ *   The form state object.
  * @return void
  */
 function ucsf_sitemap_entity_form_submit($form, FormStateInterface &$form_state) {
-  // Check article type
+  // Check article type is "Media Coverage".
   $type = $form_state->getValue('field_article_type');
   if ($type[0]['target_id'] == '413496') {
     // If article type is "Media Coverage" set sitemap variant to "Do not index this News entity in variant Default"
