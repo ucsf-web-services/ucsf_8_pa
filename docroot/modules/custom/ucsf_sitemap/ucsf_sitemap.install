@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Contains ucsf_sitemap.install.
+ */
+
+/**
+ * Simple XML Sitemap setting for the existing articles of type "Media Coverage" is set to "no-index"
+ */
+function ucsf_sitemap_update_8001(&$sandbox) {
+  // Get the node IDs for each article that has a "Media Coverage" term.
+  $nids = \Drupal::entityQuery('node')
+    ->condition('type', 'article')
+    ->condition('field_article_type', '413496')
+    ->execute();
+
+  // Create an array of table rows for each node ID.
+  $rows = [];
+  foreach ($nids as $value) {
+    $rows[] = [
+      'entity_type' => 'node',
+      'entity_id' => $value,
+      'inclusion_settings' => 'a:4:{s:5:""index"";b:0;s:8:""priority"";s:3:""1.0"";s:10:""changefreq"";s:5:""daily"";s:14:""include_images"";b:1;}',
+      'type' => 'default'
+    ];
+  }
+
+  // Insert the rows into the table where simple_sitemap stores the data.
+  $database = \Drupal::database();
+  $query = $database->insert('simple_sitemap_entity_overrides')
+    ->fields([
+      'entity_type',
+      'entity_id',
+      'inclusion_settings',
+      'type'
+    ]);
+  foreach ($rows as $record) {
+    $query->values($record);
+  }
+  $query->execute();
+
+  return t('Simple XML Sitemap setting for the existing articles of type "Media Coverage" is set to "no-index"');
+}
