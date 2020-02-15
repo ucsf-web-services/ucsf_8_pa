@@ -1,6 +1,6 @@
 .fact-card {
   border: 1px solid $c-gray-border;
-  box-sizing: content-box;
+  box-sizing: border-box;
   //min-height: 500px;
   height: 100%;
   padding: $space-eight $space-eight $space-ten $space-four;
@@ -29,6 +29,12 @@
         letter-spacing: -0.2px;
       }
     }
+  }
+
+  // Force the height of the icons so that they don't initially load larger than
+  // they will display. That cause jquery to incorrectly calculate the height.
+  img {
+    height: 120px;
   }
 }
 
