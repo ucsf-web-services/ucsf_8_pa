@@ -285,12 +285,28 @@
             // Cache the highest
             var highestBox = 0;
 
-            var $items = $('.fact-card, .promo-list__card, .field-content-promotional-conten', this);
+            // FYI, There are some cards that need the sizing done on a parent
+            // wrapper, and some that need it on an inner child. This is
+            // confusing but due to the way the markup is, we have no other
+            // option.
+            // For example: .field-content-promotional-conten can be by itself
+            // or it can be a sibling to an image. This causes boxes to get
+            // miscalculated. So if .field-content-promotional-image is a
+            // previous sibling we have to apply the style to the parent
+            // wrapper.
+            var $items = $('.fact-card, .promo-list__card, .field-content-promotional-conten, .field-column-content-content:has(.field-content-promotional-image)', this);
 
             // Exit if this column doesn't have anything needing resized.
             if ($items.length < 1) {
                 return;
             }
+
+            // Remove a selector if it is actually a child of the real box selector.
+            $items = $items.filter(function () {
+                if (!$(this).prev('.field-content-promotional-image').length) {
+                    return $(this);
+                }
+            });
 
             // Clear the current height values.
             $items.css('height', 'auto');
