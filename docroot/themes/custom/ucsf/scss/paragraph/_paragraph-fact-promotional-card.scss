@@ -1,6 +1,6 @@
 .fact-card {
   border: 1px solid $c-gray-border;
-  box-sizing: content-box;
+  box-sizing: border-box;
   //min-height: 500px;
   height: 100%;
   padding: $space-eight $space-eight $space-ten $space-four;
@@ -8,8 +8,11 @@
   //grid-template-rows: auto auto auto;
   .layout-column & {
     margin-bottom: 40px;
-    padding: $space-eight $space-four;
-    padding-bottom: $space-ten;
+    padding: $space-six $space-three;
+
+    @include breakpoint($new-small) {
+      padding: $space-eight $space-four;
+    }
   }
 
   .layout-column & {
@@ -29,6 +32,19 @@
         letter-spacing: -0.2px;
       }
     }
+  }
+
+  // Force the height of the icons so that they don't initially load larger than
+  // they will display and cause jquery to incorrectly calculate the height.
+  // unset max-width because icon on  /about page is too wide in it's original size
+  img {
+    height: 5rem;
+    max-width: none;
+    width: auto;
+  }
+
+  figure.align-center {
+    margin: 0 0 $space-four;
   }
 }
 

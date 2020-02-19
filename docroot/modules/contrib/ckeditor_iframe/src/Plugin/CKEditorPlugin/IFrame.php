@@ -14,6 +14,7 @@ use Drupal\editor\Entity\Editor;
  * )
  */
 class IFrame extends CKEditorPluginBase {
+
   /**
    * {@inheritdoc}
    */
@@ -29,8 +30,8 @@ class IFrame extends CKEditorPluginBase {
   }
 
   /**
- * {@inheritdoc}
- */
+   * {@inheritdoc}
+   */
   public function getConfig(Editor $editor) {
     return [];
   }
@@ -40,10 +41,11 @@ class IFrame extends CKEditorPluginBase {
    */
   public function getButtons() {
     return [
-      'Iframe' => array(
+      'Iframe' => [
         'label' => $this->t('Embed iFrame'),
         'image' => 'libraries/iframe/icons/iframe.png',
-      ),
+      ],
     ];
   }
+
 }
