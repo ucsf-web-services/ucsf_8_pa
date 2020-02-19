@@ -1,0 +1,62 @@
+
+.sitemap-main {
+  max-width: 1440px;
+  width: 100%;
+  padding: 0 20px;
+  padding-bottom: 1px;
+  margin: 0;
+
+  @include breakpoint($new-small) {
+    margin: 80px auto 0;
+    padding: 0 80px 80px 80px;
+  }
+
+  .layout__heading {
+    padding: 2rem 0;
+    padding-bottom: 0;
+  }
+
+  ul {
+    padding-left: 0;
+    margin-top: 0;
+
+    li {
+      list-style: none;
+      padding-left: 0;
+
+      ul li a {
+        //padding-left: 2em;
+      }
+
+      &.expanded {
+        span {
+          @include fs-articles-title-hthree
+
+          padding-top: 20px;
+          display: inline-block;
+          display: none;
+        }
+      }
+    }
+  }
+
+  a {
+    padding-left: 2em;
+  }
+
+  @include breakpoint($new-large) {
+    .sitemap-box-menu {
+      .cta--list {
+        columns: 2;
+      }
+    }
+
+    .sitemap-box-terms {
+      .cta--list {
+        > ul {
+          columns: 2;
+        }
+      }
+    }
+  }
+}
