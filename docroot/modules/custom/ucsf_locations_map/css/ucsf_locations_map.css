@@ -1,4 +1,3 @@
-
 body.page-node-type-map {
   height: 100%;
 }
@@ -14,7 +13,7 @@ body.page-node-type-map {
 
 #locations-list {
   width: 400px;
-  background-color: #121212;
+  background-color: #f2f4f6;
   padding: 48px;
   height: 100%;
   overflow-y: scroll;
@@ -26,77 +25,85 @@ body.page-node-type-map {
 }
 
 #locations-list h1 {
-  color: white;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 100;
+  font-family: "HelveticaNeueLTStd-L", Helvetica, Arial, sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: -0.64px;
   margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 56px;
+  margin-bottom: 2rem;
 }
 
 #locations-list h2,
 #locations-list h3 {
-  color: white;
-  font-size: 16px;
-  border-top: rgba(255,255,255,0.1) solid 2px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.78;
+  letter-spacing: 0.2px;
+  padding: 1rem 0;
   margin: 0px;
   cursor: pointer;
-  font-weight: normal;
 }
 
 #locations-list ul {
-  padding-left: 16px;
-  margin: 0px
+  margin: 0;
+  padding: 0;
+}
+
+#locations-list li:first-of-type {
+  border-top: #dce0e6 solid 1px;
 }
 
 #locations-list li {
-  color: #CECECE;
-  font-size: 13px;
-  border-top: rgba(255,255,255,0.1) solid 2px;
-  padding-bottom: 6px;
-  padding-top: 6px;
+  border-bottom: #dce0e6 solid 1px;
+  margin: 0;
+  padding: 1rem 0;
   cursor: pointer;
   list-style: none;
-  transition: padding 0.25s ease-in-out, background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+  background-image: url("/themes/custom/ucsf/assets/images/cta-arrow-navy.svg");
+  background-repeat: no-repeat;
+  background-position: 96% center;
+  background-color: transparent;
+  background-size: 18px 10px;
+  padding-right: 28px;
+  transition:
+    0.2s cubic-bezier(0.33, 0.66, 0.66, 1) border-bottom-color,
+    0.2s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
 }
 
 #locations-list li:hover {
-  padding-left: 16px;
-  background-color: rgba(255,255,255,0.1);
-  color: white;
+  border-bottom-color: #052049;
+  background-position: 100% center;
 }
 
-.loading input[type=checkbox] { display:none; }
-.loading input[type=checkbox] + label:before {
+.loading input[type="checkbox"] {
+  display: none;
+}
+.loading input[type="checkbox"] + label:before {
   font-family: "Font Awesome 5 Free";
   display: inline-block;
   right: 50px;
   position: absolute;
   padding: 8px;
-  color: white;
+  color: #052049;
   font-weight: normal;
   width: 37px;
   height: 40px;
 }
 
-.loading input[type=checkbox] + label:before
-{
+.loading input[type="checkbox"] + label:before {
   content: "\f0c8";
-
 }
-.loading input[type=checkbox]:checked + label:before {
+.loading input[type="checkbox"]:checked + label:before {
   content: "\f14a";
 }
-.loading input[type=checkbox] + label:before {
+.loading input[type="checkbox"] + label:before {
   letter-spacing: 10px;
 }
 
+.loading input[type="checkbox"]:checked + label:before {
+  letter-spacing: 5px;
+}
 
-.loading input[type=checkbox]:checked + label:before { letter-spacing: 5px; }
-
-.loading input[type=checkbox] + label:before {
+.loading input[type="checkbox"] + label:before {
   pointer-events: none;
 }
 
@@ -105,7 +112,111 @@ body.page-node-type-map {
   width: 100%;
 }
 
-#map h2 {
+/* INFOBOX */
+
+/* Outer wrapper for infobox*/
+.gm-style-iw.gm-style-iw-c {
+  width: 266px !important;
+  max-width: 266px !important;
+  min-height: 339.5px !important;
+  padding: 0 !important;
+  border-radius: 8%;
+}
+
+/* Inner wrapper for infobox*/
+.gm-style-iw-d {
+  margin: 0 auto !important;
+  max-width: 100% !important;
+}
+
+/* pop up location information box */
+.infobox {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  grid-row-gap: 1.3rem;
+  margin: 1.2rem 1.2rem 0;
+}
+
+/* Title */
+.infobox h3 {
+  grid-row: 2;
+  font-family: "GranjonLT", "Garamond", "Times New Roman", serif;
+  color: #052049;
+  margin: 0;
+}
+
+/* infobox Images wrapper */
+.infobox .map-images {
+  grid-row: 1;
+  justify-self: center;
+  width: 224px;
+  height: 124px;
+  overflow: hidden;
+}
+
+/* image */
+.map-image img {
+  width: 100%;
+}
+
+.infobox .address {
+  grid-row: 3;
+  font-size: 18px;
+  margin: 0;
+}
+
+/* links wrapper */
+.infobox .link {
+  grid-row: 4;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* link */
+.link a {
+  vertical-align: middle;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 500;
+  color: #007cbe;
+  background-image: url("/themes/custom/ucsf/assets/images/cta-arrow.svg");
+  background-repeat: no-repeat;
+  background-position: 96% 60%;
+  background-color: transparent;
+  background-size: 14px 10px;
+  padding-right: 28px;
+  transition: 0.2s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+}
+
+.link a:hover,
+.link a:focus {
+  background-position: 100% 60%;
+}
+
+/* Infobox close button */
+#map .gm-ui-hover-effect {
+  position: absolute !important;
+  top: 19px !important;
+  right: 21px !important;
+  background-color: #007cbe !important;
+  opacity: 1;
+}
+
+/* icon for the Infobox close button*/
+#map .gm-ui-hover-effect img {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  margin: 0 auto !important;
+  filter: invert(0.8) !important;
+}
+
+/* infobox description */
+#map .body {
+  /* display: none; */
+}
+
+/* #map h2 {
   color: #262626;
 }
 
@@ -153,25 +264,16 @@ body.page-node-type-map {
 
 #map .address {
   font-weight: bold;
-}
-
-@media screen and (min-width: 770px) {
-  .gm-style .gm-style-iw,
-  .gm-style .gm-style-iw > div:first-child {
-    width: 333px !important;
-    max-width: 333px !important;
-  }
-}
-
+} */
 
 @media screen and (max-width: 769px) {
   #map-wrapper {
     right: 0;
-    bottom: 40%;
+    bottom: 60%;
   }
 
   #locations-list {
-    height: 40%;
+    height: 20%;
     overflow: auto;
     position: absolute;
     width: 100%;
@@ -179,6 +281,26 @@ body.page-node-type-map {
     bottom: 0;
     padding: 20px;
   }
+
+  /* Infobox styles */
+
+  /* infobox Images wrapper */
+  .infobox .map-images {
+    grid-row: 1;
+    justify-self: center;
+    width: 224px;
+    height: 124px;
+    max-width: 95%;
+    max-height: auto;
+    overflow: hidden;
+  }
+
+  /* image */
+  .map-image img {
+    width: 100%;
+    height: auto;
+  }
+
   #map .body {
     display: none;
   }

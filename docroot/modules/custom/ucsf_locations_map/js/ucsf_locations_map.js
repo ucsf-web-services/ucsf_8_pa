@@ -8,9 +8,9 @@
   Drupal.behaviors.map = {
     attach: function (context, settings) {
 
-      // Only run this code once.
-      $(window, context).once().each( function() {
 
+      // Only run this code once.
+      $(window, context).once('map').each( function() {
         // Google map set up and center for the map
         var map = new google.maps.Map(document.getElementById('map'), {
           center: { lat: 37.195, lng: -123.775 },
@@ -88,9 +88,10 @@
             // Opening tag for group of images wrapper.
             var imagesMarkup = '<div class="map-images">';
             // loop through all of the images and generate HTML markup for each.
-            $.each(images, function(index, image) {
-              imagesMarkup += '<div class="map-image"><img src="' + image.uri.url + '" alt="' + image.meta.alt + '" /></div>';
-            })
+            if (location.field_location_images.length) {
+                imagesMarkup += '<div class="map-image"><img src="' + images[0].uri.url + '" alt="' + images[0].meta.alt + '" /></div>';
+            }
+
             // Closing tag for group of images wrapper.
             imagesMarkup += '</div>';
 
@@ -98,7 +99,7 @@
             // Displays: Building's Title, Description, Address, Link to driving directions, Website, Location Images,
             infoWindows[index] = new google.maps.InfoWindow({
               content: "<div class='infobox'>" +
-              "<h3>" + location.field_title + "</h3><div class='body'>" + location.field_location_text.processed + "</div>" +
+              "<h3>" + location.field_title + "</h3>" +
               "<p class='address'>" + address + "</p>" +
               "<div class='link'>" +
               "<a class='directions' href='https://www.google.com/maps/dir/Current+Location/" + location.field_geofield.lat + "," + location.field_geofield.lon + "'>Directions</a>" +
