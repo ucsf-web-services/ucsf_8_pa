@@ -6639,6 +6639,9 @@ a[href*="http"] .article-header__date {
     -webkit-transform: translateX(0);
     transform: translateX(0); } }
 
+.alias-sitemap {
+  background: #f2f4f6; }
+
 .sitemap-main {
   max-width: 1440px;
   width: 100%;
@@ -6658,6 +6661,8 @@ a[href*="http"] .article-header__date {
     .sitemap-main ul li {
       list-style: none;
       padding-left: 0; }
+      .sitemap-main ul li ul li a {
+        padding-left: 3em; }
       .sitemap-main ul li.expanded span {
         font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
         font-size: 20px;
@@ -6670,7 +6675,10 @@ a[href*="http"] .article-header__date {
           .sitemap-main ul li.expanded span {
             font-size: 28px; } }
   .sitemap-main a {
-    padding-left: 2em; }
+    padding-left: 2em;
+    -webkit-column-break-inside: avoid;
+       -moz-column-break-inside: avoid;
+            break-inside: avoid-column; }
   @media (min-width: 1050px) {
     .sitemap-main .sitemap-box-menu .cta--list {
       -webkit-columns: 2;
