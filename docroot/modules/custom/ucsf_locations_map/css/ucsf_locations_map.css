@@ -110,12 +110,7 @@
 }
 
 .infobox__image {
-  height: 124px;
-  overflow: hidden;
-}
-
-.infobox__image img {
-  width: 100%;
+display: none;
 }
 
 .infobox__title {
@@ -129,12 +124,13 @@
 
 .infobox__link {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
 .infobox__link a {
   vertical-align: middle;
   display: inline-block;
+  width: min-content;
   font-size: 18px;
   font-weight: 500;
   color: #007cbe;
@@ -184,5 +180,20 @@
 
   #map-wrapper {
     height: 100%;
+  }
+
+  .infobox__image {
+    display: block;
+    height: 124px;
+    overflow: hidden;
+  }
+
+  .infobox__image img {
+    width: 100%;
+  }
+
+  .infobox__link {
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
