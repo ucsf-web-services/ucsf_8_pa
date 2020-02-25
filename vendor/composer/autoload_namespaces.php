@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'WebDriver' => array($vendorDir . '/instaclick/php-webdriver/lib'),
+    'UpdateHelper\\' => array($vendorDir . '/kylekatarnls/update-helper/src'),
     'Twig_Extensions_' => array($vendorDir . '/twig/extensions/lib'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Stack' => array($vendorDir . '/stack/builder/src'),
