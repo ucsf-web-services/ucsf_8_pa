@@ -79,33 +79,30 @@
             // Website Link.
             var link = '';
             if (location.field_location_link) {
-              link = (location.field_location_link.uri ? "<a class='website' href='" + location.field_location_link.uri + "'>Website</a>" : "")
+              link = (location.field_location_link.uri ? "<a class='infobox__website' href='" + location.field_location_link.uri + "'>Website</a>" : "")
             }
 
             // Array of image objects for current location
             var images = location.field_location_images;
 
             // Opening tag for group of images wrapper.
-            var imagesMarkup = '<div class="map-images">';
+            var imagesMarkup = "";
             // loop through all of the images and generate HTML markup for each.
             if (location.field_location_images.length) {
-                imagesMarkup += '<div class="map-image"><img src="' + images[0].uri.url + '" alt="' + images[0].meta.alt + '" /></div>';
+                imagesMarkup += '<div class="infobox__image infobox__item"><img src="' + images[0].uri.url + '" alt="' + images[0].meta.alt + '" /></div>';
             }
-
-            // Closing tag for group of images wrapper.
-            imagesMarkup += '</div>';
 
             // Pop up window above location marker
             // Displays: Building's Title, Description, Address, Link to driving directions, Website, Location Images,
             infoWindows[index] = new google.maps.InfoWindow({
               content: "<div class='infobox'>" +
-              "<h3>" + location.field_title + "</h3>" +
-              "<p class='address'>" + address + "</p>" +
-              "<div class='link'>" +
-              "<a class='directions' href='https://www.google.com/maps/dir/Current+Location/" + location.field_geofield.lat + "," + location.field_geofield.lon + "'>Directions</a>" +
-              link +
-              "</div>" +
-              imagesMarkup +
+                imagesMarkup +
+                "<h3 class='infobox__title infobox__item'>" + location.field_title + "</h3>" +
+                "<div class='infobox__address infobox__item'>" + address + "</div>" +
+                "<div class='infobox__link infobox__item'>" +
+                  "<a class='infobox__directions' href='https://www.google.com/maps/dir/Current+Location/" + location.field_geofield.lat + "," + location.field_geofield.lon + "'>Directions</a>" +
+                  link +
+                "</div>" +
               "</div>",
               // maximup width of the pop up.
               maxWidth: 266
@@ -118,7 +115,7 @@
           var markup = '';
           // Checkbox to show / hide the list of locations by type.
           $.each(locations, function(type, item) {
-            markup += '<div><input id="' + type + '" type="checkbox" checked="checked" /><label for="' + type + '"><h3>' + type + '</h3></label><ul>' + item.list.join('') + '</ul></div>'
+            markup += '<div><input id="' + type + '" type="checkbox" checked="checked" /><label class="locations-label" for="' + type + '"><h3>' + type + '</h3></label><ul>' + item.list.join('') + '</ul></div>'
             // Event handler to capture the click hide / show list items for the checked checkbox category.
             $('body').on('click', "label[for='" + type + "']", function (){
               var input = $('input#' + type);

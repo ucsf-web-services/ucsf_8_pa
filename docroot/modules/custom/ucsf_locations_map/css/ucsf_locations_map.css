@@ -3,16 +3,10 @@ body.page-node-type-map {
 }
 
 #map-wrapper {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 400px;
-  z-index: 1000;
+  height: 70vh;
 }
 
 #locations-list {
-  width: 400px;
   background-color: #f2f4f6;
   padding: 48px;
   height: 100%;
@@ -74,19 +68,23 @@ body.page-node-type-map {
   background-position: 100% center;
 }
 
+.locations-label {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .loading input[type="checkbox"] {
   display: none;
 }
 .loading input[type="checkbox"] + label:before {
   font-family: "Font Awesome 5 Free";
-  display: inline-block;
-  right: 50px;
-  position: absolute;
-  padding: 8px;
   color: #052049;
   font-weight: normal;
-  width: 37px;
-  height: 40px;
+  /* padding-right should match with  #locations-list li background position */
+  padding-right: 4%;
+  pointer-events: none;
 }
 
 .loading input[type="checkbox"] + label:before {
@@ -94,17 +92,6 @@ body.page-node-type-map {
 }
 .loading input[type="checkbox"]:checked + label:before {
   content: "\f14a";
-}
-.loading input[type="checkbox"] + label:before {
-  letter-spacing: 10px;
-}
-
-.loading input[type="checkbox"]:checked + label:before {
-  letter-spacing: 5px;
-}
-
-.loading input[type="checkbox"] + label:before {
-  pointer-events: none;
 }
 
 #map {
@@ -117,64 +104,44 @@ body.page-node-type-map {
 /* Outer wrapper for infobox*/
 .gm-style-iw.gm-style-iw-c {
   width: 266px !important;
-  max-width: 266px !important;
-  min-height: 339.5px !important;
-  padding: 0 !important;
   border-radius: 8%;
+  padding: 21px 21px 0 21px !important;
 }
 
 /* Inner wrapper for infobox*/
 .gm-style-iw-d {
-  margin: 0 auto !important;
-  max-width: 100% !important;
+  overflow: auto !important;
 }
 
 /* pop up location information box */
-.infobox {
-  position: relative;
-  display: grid;
-  grid-template-rows: auto auto auto auto;
-  grid-row-gap: 1.3rem;
-  margin: 1.2rem 1.2rem 0;
+.infobox__item {
+  margin-bottom: 1.25rem;
 }
 
-/* Title */
-.infobox h3 {
-  grid-row: 2;
-  font-family: "GranjonLT", "Garamond", "Times New Roman", serif;
-  color: #052049;
-  margin: 0;
-}
-
-/* infobox Images wrapper */
-.infobox .map-images {
-  grid-row: 1;
-  justify-self: center;
-  width: 224px;
+.infobox__image {
   height: 124px;
   overflow: hidden;
 }
 
-/* image */
-.map-image img {
+.infobox__image img {
   width: 100%;
 }
 
-.infobox .address {
-  grid-row: 3;
-  font-size: 18px;
-  margin: 0;
+.infobox__title {
+  font-family: "GranjonLT", "Garamond", "Times New Roman", serif;
+  color: #052049;
 }
 
-/* links wrapper */
-.infobox .link {
-  grid-row: 4;
+.infobox__address {
+  font-size: 18px;
+}
+
+.infobox__link {
   display: flex;
   justify-content: space-between;
 }
 
-/* link */
-.link a {
+.infobox__link a {
   vertical-align: middle;
   display: inline-block;
   font-size: 18px;
@@ -189,15 +156,15 @@ body.page-node-type-map {
   transition: 0.2s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
 }
 
-.link a:hover,
-.link a:focus {
+.infobox__link a:hover,
+.infobox__link a:focus {
   background-position: 100% 60%;
 }
 
 /* Infobox close button */
 #map .gm-ui-hover-effect {
   position: absolute !important;
-  top: 19px !important;
+  top: 21px !important;
   right: 21px !important;
   background-color: #007cbe !important;
   opacity: 1;
@@ -211,22 +178,17 @@ body.page-node-type-map {
   filter: invert(0.8) !important;
 }
 
-/* infobox description */
-#map .body {
-  /* display: none; */
-}
-
 /* #map h2 {
   color: #262626;
 }
 
-#map a.website, #map a.directions {
+#map .infobox__website, #map a.directions {
   font-size: 12px;
   font-weight: normal;
   color: #007CBE;
 }
 
-#map a.website:hover, #map a.directions:hover {
+#map .infobox__website:hover, #map a.directions:hover {
   text-decoration: underline;
 }
 
@@ -266,52 +228,32 @@ body.page-node-type-map {
   font-weight: bold;
 } */
 
-@media screen and (max-width: 769px) {
+@media screen and (min-width: 769px) {
+  .map-grid-container {
+    display: grid;
+    grid-template-columns: auto 400px;
+  }
+
   #map-wrapper {
-    right: 0;
-    bottom: 60%;
+    /* position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 400px; */
+    /* z-index: 1000; */
   }
 
   #locations-list {
-    height: 20%;
-    overflow: auto;
-    position: absolute;
-    width: 100%;
-    top: auto;
+    /* position: absolute;
+    width: 400px;
+    background-color: #f2f4f6;
+    padding: 48px;
+    height: 100%;
+    overflow-y: scroll;
+    right: 0;
+    top: 0;
     bottom: 0;
-    padding: 20px;
+    z-index: 1005; */
   }
 
-  /* Infobox styles */
-
-  /* infobox Images wrapper */
-  .infobox .map-images {
-    grid-row: 1;
-    justify-self: center;
-    width: 224px;
-    height: 124px;
-    max-width: 95%;
-    max-height: auto;
-    overflow: hidden;
-  }
-
-  /* image */
-  .map-image img {
-    width: 100%;
-    height: auto;
-  }
-
-  #map .body {
-    display: none;
-  }
-  #map .body p {
-    font-size: 14px;
-  }
-  #map h3 {
-    font-size: 17px;
-  }
-  #map .address {
-    font-size: 14px;
-    line-height: 1.2;
-  }
 }
