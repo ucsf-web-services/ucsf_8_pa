@@ -73,7 +73,7 @@
             // Address.
             var address = '';
             if (location.field_address) {
-              address = location.field_address.address_line1 + "<br>" + location.field_address.locality + " " + location.field_address.administrative_area + " " + location.field_address.postal_code;
+              address = location.field_address.address_line1 + "<br>" + location.field_address.locality + " " + location.field_address.administrative_area;
             }
 
             // Website Link.

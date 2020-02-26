@@ -1,3 +1,4 @@
+/* SMALL - MEDIUM SCREEN */
 #map-wrapper {
   height: 70vh;
   z-index: 100;
@@ -5,26 +6,27 @@
 
 #locations-list {
   background-color: #f2f4f6;
-  padding: 48px;
+  padding: 16px 16px 40px 16px;
   height: 100%;
   overflow-y: scroll;
   z-index: 100;
 }
 
 #locations-list h1 {
-  font-family: "HelveticaNeueLTStd-L", Helvetica, Arial, sans-serif;
-  font-size: 2.2rem;
-  letter-spacing: -0.64px;
-  margin-top: 0;
-  margin-bottom: 2rem;
+  font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 24px;
+  letter-spacing: normal;
+  margin: 1rem 0 1.5rem;
 }
 
 #locations-list h2,
 #locations-list h3 {
-  font-size: 1.2rem;
-  font-weight: 600;
-  line-height: 1.78;
-  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  font-family: "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.33;
+  letter-spacing: 1.6px;
   padding: 1rem 0;
   margin: 0px;
   cursor: pointer;
@@ -40,25 +42,16 @@
 }
 
 #locations-list li {
+  font-size: 16px;
   border-bottom: #dce0e6 solid 1px;
   margin: 0;
-  padding: 1rem 0;
-  cursor: pointer;
+  padding: .8rem 0;
   list-style: none;
-  background-image: url("/themes/custom/ucsf/assets/images/cta-arrow-navy.svg");
-  background-repeat: no-repeat;
-  background-position: 96% center;
-  background-color: transparent;
-  background-size: 18px 10px;
-  padding-right: 28px;
-  transition:
-    0.2s cubic-bezier(0.33, 0.66, 0.66, 1) border-bottom-color,
-    0.2s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+  transition: 0.2s cubic-bezier(0.33, 0.66, 0.66, 1) border-bottom-color;
 }
 
 #locations-list li:hover {
   border-bottom-color: #052049;
-  background-position: 100% center;
 }
 
 .locations-label {
@@ -75,6 +68,7 @@
   font-family: "Font Awesome 5 Free";
   color: #052049;
   font-weight: normal;
+  border-radius: 10%;
   /* padding-right should match with  #locations-list li background position */
   padding-right: 4%;
   pointer-events: none;
@@ -118,11 +112,15 @@ display: none;
 .infobox__title {
   font-family: "GranjonLT", "Garamond", "Times New Roman", serif;
   color: #052049;
-  font-size: 20px;
+  font-size: 28px;
+  letter-spacing: -0.6px;
+  padding-right: .5em;
 }
 
 .infobox__address {
   font-size: 18px;
+  font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  letter-spacing: 0.2px;
 }
 
 .infobox__link {
@@ -135,7 +133,9 @@ display: none;
   display: inline-block;
   width: min-content;
   font-size: 18px;
+  font-family: "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   font-weight: 500;
+  line-height: 1.33;
   color: #007cbe;
   background-image: url("/themes/custom/ucsf/assets/images/cta-arrow.svg");
   background-repeat: no-repeat;
@@ -154,6 +154,8 @@ display: none;
 /* Infobox close button */
 #map .gm-ui-hover-effect {
   position: absolute !important;
+  width: 26px !important;
+  height: 26px !important;
   top: 21px !important;
   right: 21px !important;
   background-color: #007cbe !important;
@@ -162,12 +164,12 @@ display: none;
 
 /* icon for the Infobox close button*/
 #map .gm-ui-hover-effect img {
-  width: 1.5rem !important;
-  height: 1.5rem !important;
   margin: 0 auto !important;
   filter: invert(0.8) !important;
+  transform: scale(2) !important;
 }
 
+/* BIG SCREEN */
 @media screen and (min-width: 769px) {
   .map-grid-container {
     position:absolute;
@@ -181,10 +183,59 @@ display: none;
     grid-template-rows: 100%;
   }
 
+  /* Locations List Start */
+  #locations-list {
+    padding: 48px;
+  }
+
+  #locations-list h1 {
+    font-size: 36px;
+    letter-spacing: -0.64px;
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+
+  #locations-list h2,
+  #locations-list h3 {
+    text-transform: none;
+    letter-spacing: 1.6px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.78;
+    letter-spacing: 0.2px;
+  }
+
+  #locations-list li:first-of-type {
+    border-top: #dce0e6 solid 1px;
+  }
+
+  #locations-list li {
+    font-size: 18px;
+    padding: 1rem 0;
+    cursor: pointer;
+    background-image: url("/themes/custom/ucsf/assets/images/cta-arrow-navy.svg");
+    background-repeat: no-repeat;
+    background-position: 96% center;
+    background-color: transparent;
+    background-size: 18px 10px;
+    border-bottom: #dce0e6 solid 1px;
+    padding-right: 28px;
+    transition:
+      0.2s cubic-bezier(0.33, 0.66, 0.66, 1) border-bottom-color,
+      0.2s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+  }
+
+  #locations-list li:hover {
+    border-bottom-color: #052049;
+    background-position: 100% center;
+  }
+  /* Locations List End */
+
   #map-wrapper {
     height: 100%;
   }
 
+  /* Infobox Start */
   .infobox__image {
     display: block;
     height: 124px;
