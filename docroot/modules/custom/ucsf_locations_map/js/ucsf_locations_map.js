@@ -191,4 +191,8 @@
 
     return locations;
   }
+
+  // Use minimized header nav whenever this file is used
+  var header = document.querySelector('.combined-header-region')
+  header.classList.add('fixed-nav', 'fixed-nav--visible');
 })(jQuery, Drupal, drupalSettings, window);
