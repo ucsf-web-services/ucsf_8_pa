@@ -145,6 +145,8 @@
                 infoWindow.close()
               });
               infoWindows[index].open(map, markers[index])
+              scrollToTop();
+              showHeader ();
             }));
 
             google.maps.event.addListener(markers[index], 'click', (function () {
@@ -190,6 +192,16 @@
     }
 
     return locations;
+  }
+
+  // Scroll To Top
+  function scrollToTop() {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  // Show header
+  function showHeader () {
+    header.classList.remove('fixed-nav--hidden').add('fixed-nav--visible');
   }
 
   // Use minimized header nav whenever this file is used
