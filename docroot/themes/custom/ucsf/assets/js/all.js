@@ -183,11 +183,6 @@
                     $('body', context).once('fixExplorer').addClass('explorer');
                     $('.skip-link').once('fixExplorer').after('<div class="ie-message">' + 'Looks like you’re visiting us on Internet Explorer. For the best UCSF.edu experience, ' + 'please use <a href="https://www.google.com/chrome/" target="_blank">Chrome</a> or <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">Firefox</a>. ' + '</div>');
                 }
-
-                if (Number(version) >= 12) {
-                    $('body', context).once('fixExplorer').addClass('explorer');
-                    $('.skip-link').once('fixExplorer').after('<div class="ie-message">' + 'We\'re currently working to improve our website on Edge. For the best UCSF.edu experience, ' + 'please use <a href="https://www.google.com/chrome/" target="_blank">Chrome</a> or <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">Firefox</a>. ' + '</div>');
-                }
             }
         }
     };
