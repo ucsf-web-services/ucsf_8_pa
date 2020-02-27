@@ -70,7 +70,7 @@
       text-transform: uppercase;
       font-family: $font-helvetica-neue-regular;
       font-weight: bold;
-      letter-spacing: 1.6px;
+      // letter-spacing: 1.6px;
       font-size: 12px;
       padding: 1rem 0;
       margin: 0px;
@@ -80,47 +80,17 @@
         text-transform: none;
         font-family: $font-helvetica-neue-light;
         font-size: 18px;
-        letter-spacing: 0.2px;
+        // letter-spacing: 0.2px;
       }
     }
 
-    ul {
-      margin: 0;
-      padding: 0;
-    }
-
-    li {
-      font-size: 14px;
-      border-bottom: #dce0e6 solid 1px;
-      margin: 0;
-      padding: .5rem 0;
-      list-style: none;
-      transition: 0.2s cubic-bezier(0.33, 0.66, 0.66, 1) border-bottom-color;
+    a {
+      font-family: $font-helvetica-neue-light;
       cursor: pointer;
 
       @include breakpoint($new-small) {
-        font-size: 18px;
-        padding: 1rem 28px 1rem 0;
         background-image: url("/themes/custom/ucsf/assets/images/cta-arrow-navy.svg");
-        background-repeat: no-repeat;
-        background-position: 96% center;
-        background-color: transparent;
-        background-size: 18px 10px;
-        transition:
-          0.2s cubic-bezier(0.33, 0.66, 0.66, 1) border-bottom-color,
-          0.2s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
-      }
-
-      &:hover {
-        border-bottom-color: #052049;
-
-        @include breakpoint($new-small) {
-          background-position: 100% center;
-        }
-      }
-
-      &:first-of-type {
-        border-top: #dce0e6 solid 1px;
+        color: $c-navy;
       }
     }
   }
@@ -135,24 +105,24 @@
   .loading {
     input[type="checkbox"] {
       display: none;
-    }
 
-    input[type="checkbox"] + label:before {
-      font-family: "Font Awesome 5 Free";
-      color: #052049;
-      font-weight: normal;
-      border-radius: 10%;
-      /* padding-right should match with  #locations-list li background position */
-      padding-right: 4%;
-      pointer-events: none;
-    }
+      & + label:before {
+        font-family: "Font Awesome 5 Free";
+        color: #052049;
+        font-weight: normal;
+        border-radius: 10%;
+        // padding-right should match with .cta--list a background position
+        padding-right: 2%;
+        pointer-events: none;
+      }
 
-    input[type="checkbox"] + label:before {
-      content: "\f0c8";
-    }
+      & + label:before {
+        content: "\f0c8";
+      }
 
-    input[type="checkbox"]:checked + label:before {
-      content: "\f14a";
+      &:checked + label:before {
+        content: "\f14a";
+      }
     }
   }
 
