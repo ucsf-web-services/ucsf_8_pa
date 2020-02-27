@@ -1,3 +1,6 @@
+$map-height-min-nav: calc(100vh - 50px);
+$map-height-max-nav: calc(100vh - 64px);
+
 .page-node-type-map {
   // remove the top header region.
   .universal-header-region {
@@ -13,11 +16,11 @@
     z-index: 100;
 
     @include breakpoint($new-small) {
-      min-height: calc(100vh - 64px);
+      min-height: $map-height-max-nav;
     }
 
     @include breakpoint(769px 849px) {
-      min-height: calc(100vh - 50px);
+      min-height: $map-height-min-nav;
     }
   }
 
@@ -54,6 +57,11 @@
 
     @include breakpoint($new-small) {
       padding: 44px 48px;
+      max-height: $map-height-max-nav;
+    }
+
+    @include breakpoint(769px 849px) {
+      max-height: $map-height-min-nav;
     }
 
     h1 {
