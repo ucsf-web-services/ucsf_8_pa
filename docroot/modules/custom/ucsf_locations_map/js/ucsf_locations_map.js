@@ -79,7 +79,7 @@
             // Website Link.
             var link = '';
             if (location.field_location_link) {
-              link = (location.field_location_link.uri ? "<a class='infobox__website' href='" + location.field_location_link.uri + "'>Website</a>" : "")
+              link = (location.field_location_link.uri ? "<a class='infobox__website link--cta' href='" + location.field_location_link.uri + "'>Website</a>" : "")
             }
 
             // Array of image objects for current location
@@ -100,7 +100,7 @@
                 "<h3 class='infobox__title infobox__item'>" + location.field_title + "</h3>" +
                 "<div class='infobox__address infobox__item'>" + address + "</div>" +
                 "<div class='infobox__link infobox__item'>" +
-                  "<a class='infobox__directions' href='https://www.google.com/maps/dir/Current+Location/" + location.field_geofield.lat + "," + location.field_geofield.lon + "'>Directions</a>" +
+                  "<a class='infobox__directions link--cta' href='https://www.google.com/maps/dir/Current+Location/" + location.field_geofield.lat + "," + location.field_geofield.lon + "'>Directions</a>" +
                   link +
                 "</div>" +
               "</div>",

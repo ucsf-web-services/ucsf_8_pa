@@ -54,13 +54,10 @@
     }
 
     h1 {
-      font-family: $font-helvetica-neue-light;
-      font-size: 24px;
-      letter-spacing: normal;
+      @include fs-articles-title();
       margin: 1rem 0 1.5rem;
 
       @include breakpoint($new-small) {
-        font-size: 36px;
         margin: 0 0 1.8rem;
       }
     }
@@ -143,8 +140,7 @@
 
   // pop up location information box
   .infobox {
-    font-family: $font-helvetica-neue-regular;
-    font-size: 18px;
+    @include fs-body();
     line-height: 1.33;
 
     &__item {
@@ -155,6 +151,7 @@
       display: none;
       height: 124px;
       overflow: hidden;
+      margin-bottom: 1.5rem;
 
       @include breakpoint($new-small) {
         display: block;
@@ -166,14 +163,10 @@
     }
 
     &__title {
-      color: #052049;
-      font-family: $font-granjon;
-      font-size: 28px;
+      @include fs-heading-two-sm();
       padding-right: 1.8rem;
 
       @include breakpoint($new-small) {
-        font-size: 28px;
-
         .infobox__image + & {
           padding-right: 0;
         }
@@ -190,22 +183,12 @@
       }
 
       a {
-        vertical-align: middle;
-        display: inline-block;
-        width: min-content;
-        font-family: $font-helvetica-neue-medium;
-        color: #007cbe;
-        background-image: url("/themes/custom/ucsf/assets/images/cta-arrow.svg");
-        background-repeat: no-repeat;
         background-position: 96% 60%;
-        background-color: transparent;
-        background-size: 14px 10px;
-        padding-right: 28px;
-        transition: 0.2s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
 
         &:hover,
         &:focus {
           background-position: 100% 60%;
+          padding-right: $space-three;
         }
       }
     }

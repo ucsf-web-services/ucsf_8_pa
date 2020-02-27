@@ -6734,11 +6734,14 @@ a[href*="http"] .article-header__date {
   .page-node-type-map #locations-list h1 {
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 24px;
-    letter-spacing: normal;
+    line-height: 1.4;
+    letter-spacing: -0.8px;
     margin: 1rem 0 1.5rem; }
+    @media (min-width: 600px) {
+      .page-node-type-map #locations-list h1 {
+        font-size: 36px; } }
     @media (min-width: 769px) {
       .page-node-type-map #locations-list h1 {
-        font-size: 36px;
         margin: 0 0 1.8rem; } }
   .page-node-type-map #locations-list h2,
   .page-node-type-map #locations-list h3 {
@@ -6801,30 +6804,44 @@ a[href*="http"] .article-header__date {
   overflow: auto !important; }
 
 .page-node-type-map .infobox {
-  font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   font-size: 18px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 32px;
+  letter-spacing: 0.2px;
+  color: #052049;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
   line-height: 1.33; }
   .page-node-type-map .infobox__item {
     margin-bottom: 1rem; }
   .page-node-type-map .infobox__image {
     display: none;
     height: 124px;
-    overflow: hidden; }
+    overflow: hidden;
+    margin-bottom: 1.5rem; }
     @media (min-width: 769px) {
       .page-node-type-map .infobox__image {
         display: block; } }
     .page-node-type-map .infobox__image img {
       width: 100%; }
   .page-node-type-map .infobox__title {
-    color: #052049;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    font-weight: 500;
     font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif;
     font-size: 28px;
+    line-height: 1;
+    letter-spacing: -0.6px;
+    color: #052049;
     padding-right: 1.8rem; }
     @media (min-width: 769px) {
-      .page-node-type-map .infobox__title {
-        font-size: 28px; }
-        .infobox__image + .page-node-type-map .infobox__title {
-          padding-right: 0; } }
+      .infobox__image + .page-node-type-map .infobox__title {
+        padding-right: 0; } }
   .page-node-type-map .infobox__link {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -6843,23 +6860,10 @@ a[href*="http"] .article-header__date {
             -ms-flex-pack: justify;
                 justify-content: space-between; } }
     .page-node-type-map .infobox__link a {
-      vertical-align: middle;
-      display: inline-block;
-      width: -webkit-min-content;
-      width: -moz-min-content;
-      width: min-content;
-      font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-      color: #007cbe;
-      background-image: url("/themes/custom/ucsf/assets/images/cta-arrow.svg");
-      background-repeat: no-repeat;
-      background-position: 96% 60%;
-      background-color: transparent;
-      background-size: 14px 10px;
-      padding-right: 28px;
-      -webkit-transition: 0.2s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
-      transition: 0.2s cubic-bezier(0.33, 0.66, 0.66, 1) background-position; }
+      background-position: 96% 60%; }
       .page-node-type-map .infobox__link a:hover, .page-node-type-map .infobox__link a:focus {
-        background-position: 100% 60%; }
+        background-position: 100% 60%;
+        padding-right: 24px; }
 
 .page-node-type-map .gm-ui-hover-effect {
   position: absolute !important;
