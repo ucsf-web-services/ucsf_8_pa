@@ -13,7 +13,11 @@
     z-index: 100;
 
     @include breakpoint($new-small) {
-      height: 100%;
+      min-height: calc(100vh - 64px);
+    }
+
+    @include breakpoint(769px 849px) {
+      min-height: calc(100vh - 50px);
     }
   }
 
@@ -35,7 +39,6 @@
       grid-template-rows: 100%;
     }
 
-    // @media screen and (max-width: 849px) and (min-width: 769px) {
     @include breakpoint(769px 849px) {
       // top should be offset by the height of the header nav
       top: 50px;
