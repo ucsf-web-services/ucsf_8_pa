@@ -90,9 +90,18 @@
       background-image: none;
       border-bottom: 1px solid $c-navy;
       cursor: pointer;
+
+      &:first-of-type {
+        border-top: 1px solid $c-navy;
+      }
+
       @include breakpoint($new-small) {
         background-image: url("/themes/custom/ucsf/assets/images/cta-arrow-navy.svg");
-        border-color: $c-grey-pale;
+        border-bottom: 1px solid #ddd;
+
+        &:first-of-type {
+          border-top: 1px solid #ddd;
+        }
       }
     }
   }
