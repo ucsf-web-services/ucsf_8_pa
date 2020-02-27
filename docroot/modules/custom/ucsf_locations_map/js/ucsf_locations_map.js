@@ -5,6 +5,10 @@
  */
 (function ($, Drupal, drupalSettings, window) {
 
+  // Use minimized header nav whenever this file is used
+  var header = document.querySelector('.combined-header-region')
+  header.classList.add('fixed-nav', 'fixed-nav--visible');
+
   Drupal.behaviors.map = {
     attach: function (context, settings) {
 
@@ -119,7 +123,6 @@
             // Event handler to capture the click hide / show list items for the checked checkbox category.
             $('body').on('click', "label[for='" + type + "']", function (){
               var input = $('input#' + type);
-
               if (input.is(':checked')) {
                 input.nextAll('ul').hide('fast');
                 $.each(locations[type].indexes, function(index, value) {
@@ -146,7 +149,6 @@
               });
               infoWindows[index].open(map, markers[index])
               scrollToTop();
-              showHeader ();
             }));
 
             google.maps.event.addListener(markers[index], 'click', (function () {
@@ -197,14 +199,8 @@
   // Scroll To Top
   function scrollToTop() {
     window.scrollTo({top: 0, behavior: 'smooth'});
-  }
-
-  // Show header
-  function showHeader () {
+    // Show the header in case it was hidden when scrolling down.
     header.classList.remove('fixed-nav--hidden').add('fixed-nav--visible');
   }
 
-  // Use minimized header nav whenever this file is used
-  var header = document.querySelector('.combined-header-region')
-  header.classList.add('fixed-nav', 'fixed-nav--visible');
 })(jQuery, Drupal, drupalSettings, window);
