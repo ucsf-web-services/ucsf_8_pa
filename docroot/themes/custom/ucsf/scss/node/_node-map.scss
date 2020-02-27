@@ -1,5 +1,5 @@
 .page-node-type-map {
-  /* SMALL - MEDIUM SCREEN */
+  // remove the top header region.
   .universal-header-region {
     display: none;
   }
@@ -11,11 +11,35 @@
   #map-wrapper {
     height: 70vh;
     z-index: 100;
+
+    @include breakpoint($new-small) {
+      height: 100%;
+    }
   }
 
   #map {
     height: 100%;
     width: 100%;
+  }
+
+  .map-grid-container {
+    @include breakpoint($new-small) {
+      position: absolute;
+      /* top should be offset by the height of the header nav */
+      top: 64px;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      display: grid;
+      grid-template-columns: auto 400px;
+      grid-template-rows: 100%;
+    }
+
+    // @media screen and (max-width: 849px) and (min-width: 769px) {
+    @include breakpoint(769px 849px) {
+      // top should be offset by the height of the header nav
+      top: 50px;
+    }
   }
 
   #locations-list {
@@ -25,23 +49,39 @@
     overflow-y: scroll;
     z-index: 100;
 
+    @include breakpoint($new-small) {
+      padding: 44px 48px;
+    }
+
     h1 {
-      font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+      font-family: $font-helvetica-neue-light;
       font-size: 24px;
       letter-spacing: normal;
       margin: 1rem 0 1.5rem;
+
+      @include breakpoint($new-small) {
+        font-size: 36px;
+        margin: 0 0 1.8rem;
+      }
     }
 
     h2,
     h3 {
       text-transform: uppercase;
-      font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+      font-family: $font-helvetica-neue-regular;
       font-weight: bold;
       letter-spacing: 1.6px;
       font-size: 12px;
       padding: 1rem 0;
       margin: 0px;
       cursor: pointer;
+
+      @include breakpoint($new-small) {
+        text-transform: none;
+        font-family: $font-helvetica-neue-light;
+        font-size: 18px;
+        letter-spacing: 0.2px;
+      }
     }
 
     ul {
@@ -56,9 +96,27 @@
       padding: .5rem 0;
       list-style: none;
       transition: 0.2s cubic-bezier(0.33, 0.66, 0.66, 1) border-bottom-color;
+      cursor: pointer;
+
+      @include breakpoint($new-small) {
+        font-size: 18px;
+        padding: 1rem 28px 1rem 0;
+        background-image: url("/themes/custom/ucsf/assets/images/cta-arrow-navy.svg");
+        background-repeat: no-repeat;
+        background-position: 96% center;
+        background-color: transparent;
+        background-size: 18px 10px;
+        transition:
+          0.2s cubic-bezier(0.33, 0.66, 0.66, 1) border-bottom-color,
+          0.2s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+      }
 
       &:hover {
         border-bottom-color: #052049;
+
+        @include breakpoint($new-small) {
+          background-position: 100% center;
+        }
       }
 
       &:first-of-type {
@@ -98,6 +156,7 @@
     }
   }
 
+
   // INFOBOX
 
   // Outer wrapper for infobox.
@@ -114,7 +173,7 @@
 
   // pop up location information box
   .infobox {
-    font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-family: $font-helvetica-neue-regular;
     font-size: 18px;
     line-height: 1.33;
 
@@ -124,43 +183,66 @@
 
     &__image {
       display: none;
+      height: 124px;
+      overflow: hidden;
+
+      @include breakpoint($new-small) {
+        display: block;
+      }
+
+      img {
+        width: 100%;
+      }
     }
 
     &__title {
       color: #052049;
-      font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif;
+      font-family: $font-granjon;
       font-size: 28px;
       padding-right: 1.8rem;
+
+      @include breakpoint($new-small) {
+        font-size: 28px;
+
+        .infobox__image + & {
+          padding-right: 0;
+        }
+      }
     }
 
     &__link {
       display: flex;
       flex-direction: column;
-    }
 
-    &__link a {
-      vertical-align: middle;
-      display: inline-block;
-      width: min-content;
-      font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-      color: #007cbe;
-      background-image: url("/themes/custom/ucsf/assets/images/cta-arrow.svg");
-      background-repeat: no-repeat;
-      background-position: 96% 60%;
-      background-color: transparent;
-      background-size: 14px 10px;
-      padding-right: 28px;
-      transition: 0.2s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
-    }
+      @include breakpoint($new-small) {
+        flex-direction: row;
+        justify-content: space-between;
+      }
 
-    &__link a:hover,
-    &__link a:focus {
-      background-position: 100% 60%;
+      a {
+        vertical-align: middle;
+        display: inline-block;
+        width: min-content;
+        font-family: $font-helvetica-neue-medium;
+        color: #007cbe;
+        background-image: url("/themes/custom/ucsf/assets/images/cta-arrow.svg");
+        background-repeat: no-repeat;
+        background-position: 96% 60%;
+        background-color: transparent;
+        background-size: 14px 10px;
+        padding-right: 28px;
+        transition: 0.2s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+
+        &:hover,
+        &:focus {
+          background-position: 100% 60%;
+        }
+      }
     }
   }
 
   // Infobox close button
-  #map .gm-ui-hover-effect {
+  .gm-ui-hover-effect {
     position: absolute !important;
     width: 26px !important;
     height: 26px !important;
@@ -174,107 +256,6 @@
       margin: 0 auto !important;
       filter: brightness(0) invert(1) !important;
       transform: scale(2) !important;
-    }
-  }
-
-  // BIG SCREEN
-  @include breakpoint($new-small) {
-    .map-grid-container {
-      position: absolute;
-      /* top should be offset by the height of the header nav */
-      top: 64px;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      display: grid;
-      grid-template-columns: auto 400px;
-      grid-template-rows: 100%;
-    }
-
-    #map-wrapper {
-      height: 100%;
-    }
-
-    /* Locations List Start */
-    #locations-list {
-      padding: 44px 48px;
-
-      h1 {
-        font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-        letter-spacing: normal;
-        font-size: 36px;
-        margin-top: 0;
-        margin-bottom: 1.8rem;
-      }
-
-      h2,
-      h3 {
-        font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-        text-transform: none;
-        font-size: 18px;
-        letter-spacing: 0.2px;
-      }
-
-      li:first-of-type {
-        border-top: #dce0e6 solid 1px;
-      }
-
-      li {
-        font-size: 18px;
-        padding: 1rem 0;
-        cursor: pointer;
-        background-image: url("/themes/custom/ucsf/assets/images/cta-arrow-navy.svg");
-        background-repeat: no-repeat;
-        background-position: 96% center;
-        background-color: transparent;
-        background-size: 18px 10px;
-        border-bottom: #dce0e6 solid 1px;
-        padding-right: 28px;
-        transition:
-          0.2s cubic-bezier(0.33, 0.66, 0.66, 1) border-bottom-color,
-          0.2s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
-      }
-
-      li:hover {
-        border-bottom-color: #052049;
-        background-position: 100% center;
-      }
-    }
-
-    // Infobox
-    .infobox {
-      &__image {
-        display: block;
-        height: 124px;
-        overflow: hidden;
-
-        img {
-          width: 100%;
-        }
-      }
-
-      &__image
-      &__title {
-        font-size: 28px;
-      }
-
-      &__image + &__title {
-        padding-right: 0;
-      }
-
-      &__link {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-    }
-
-  }
-
-
-  @media screen and (max-width: 849px) and (min-width: 769px) {
-    .map-grid-container {
-      /* top should be offset by the height of the header nav */
-      top: 50px;
     }
   }
 
