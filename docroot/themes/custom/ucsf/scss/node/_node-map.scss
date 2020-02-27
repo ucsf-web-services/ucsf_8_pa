@@ -46,7 +46,7 @@
   }
 
   #locations-list {
-    background-color: #f2f4f6;
+    background-color: $c-background-gray;
     padding: 16px 16px 40px 16px;
     height: 100%;
     overflow-y: scroll;
@@ -87,8 +87,11 @@
     a {
       font-family: $font-helvetica-neue-light;
       color: $c-navy;
-      background-image: url("/themes/custom/ucsf/assets/images/cta-arrow-navy.svg");
+      background-image: none;
       cursor: pointer;
+      @include breakpoint($new-small) {
+        background-image: url("/themes/custom/ucsf/assets/images/cta-arrow-navy.svg");
+      }
     }
   }
 
@@ -105,7 +108,6 @@
 
       & + label:before {
         font-family: "Font Awesome 5 Free";
-        color: #052049;
         font-weight: normal;
         border-radius: 10%;
         // padding-right should match with .cta--list a background position
