@@ -163,6 +163,11 @@ $map-height-max-nav: calc(100vh - 64px);
   .infobox {
     @include fs-body();
     line-height: 1.33;
+    font-size: 16px;
+
+    @include breakpoint($new-small) {
+      font-size: 18px;
+    }
 
     &__item {
       margin-bottom: 1rem;
@@ -186,8 +191,10 @@ $map-height-max-nav: calc(100vh - 64px);
     &__title {
       @include fs-heading-two-sm();
       padding-right: 1.8rem;
+      font-size: 24px;
 
       @include breakpoint($new-small) {
+        font-size: 28px;
         .infobox__image + & {
           padding-right: 0;
         }
