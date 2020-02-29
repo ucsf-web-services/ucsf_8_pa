@@ -203,8 +203,14 @@ $map-height-max-nav: calc(100vh - 64px);
 
     &__link {
       display: flex;
-      justify-content: space-between;
-      max-width: 100%;
+      flex-direction: column;
+
+
+      @include breakpoint($new-small) {
+        flex-direction: row;
+        justify-content: space-between;
+        max-width: 100%;
+      }
 
       a {
         max-width: min-content;
