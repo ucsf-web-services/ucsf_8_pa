@@ -6,6 +6,7 @@
 {% set image_value = paragraph.field_image_media.entity.field_media_image.entity.uri.value %}
 {% set background = image_value ? file_url(image_value | image_style('homepage_promo_list__card')) : false %}
 <li{{ attributes.addClass(classes) }}
+  {# Check if background image exists #}
   {% if background %}
     style="background: url('{{ background }}') no-repeat left bottom  / cover transparent;"
   {% endif %}
