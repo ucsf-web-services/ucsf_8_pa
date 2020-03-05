@@ -1509,6 +1509,9 @@ a.icon-transit:hover {
     .slicknav_nav ul.menu-parent-wrapper .search {
       display: none; }
 
+.header--search.header--search-active + .slicknav-placeholder .slicknav_nav {
+  top: 250px; }
+
 .path-news .slicknav_nav ul.menu-parent-wrapper .menu-child-wrapper a[href="/news"],
 .page-node-type-article .slicknav_nav ul.menu-parent-wrapper .menu-child-wrapper a[href="/news"],
 .page-node-type-news-package .slicknav_nav ul.menu-parent-wrapper .menu-child-wrapper a[href="/news"],
@@ -1716,7 +1719,8 @@ a.icon-transit:hover {
           clip: auto;
           overflow: visible;
           -webkit-animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
-          animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both; }
+          animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
+          z-index: 1; }
       [block="block-ucsf-main-menu-desktop"] .menu-item .menu-child--wrapper .menu-item-close {
         display: block;
         position: absolute;
@@ -5091,7 +5095,7 @@ figure.align-center {
     background: url("/themes/custom/ucsf/assets/images/magnifier-hover.svg") no-repeat center transparent;
     background-size: 28px; }
 
-@media (min-width: 769px) {
+@media (min-width: 850px) {
   .home-search__form .home-search__form-input {
     height: 100px;
     padding-left: 32px;
@@ -6688,6 +6692,217 @@ a[href*="http"] .article-header__date {
       -webkit-columns: 2;
          -moz-columns: 2;
               columns: 2; } }
+
+.page-node-type-map .universal-header-region {
+  display: none; }
+
+.page-node-type-map .header-region {
+  top: 0;
+  z-index: 780; }
+
+.page-node-type-map .slicknav_nav {
+  top: 50px; }
+
+.page-node-type-map .header--search.header--search-active + .slicknav-placeholder .slicknav_nav {
+  top: 210px; }
+
+.page-node-type-map #map-wrapper {
+  height: 70vh;
+  z-index: 1; }
+  @media (min-width: 769px) {
+    .page-node-type-map #map-wrapper {
+      min-height: calc(100vh - 64px); } }
+  @media (min-width: 769px) and (max-width: 849px) {
+    .page-node-type-map #map-wrapper {
+      min-height: calc(100vh - 50px); } }
+
+.page-node-type-map #map {
+  height: 100%;
+  width: 100%; }
+
+@media (min-width: 769px) {
+  .page-node-type-map .map-grid-container {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: grid;
+    grid-template-columns: auto 400px;
+    grid-template-rows: 100%; } }
+
+@media (min-width: 769px) and (max-width: 849px) {
+  .page-node-type-map .map-grid-container {
+    top: 50px; } }
+
+.page-node-type-map #locations-list {
+  background-color: #f2f4f6;
+  padding: 16px 16px 10px 16px;
+  height: 100%;
+  overflow-y: scroll;
+  z-index: 100; }
+  @media (min-width: 769px) {
+    .page-node-type-map #locations-list {
+      padding: 44px 48px;
+      max-height: calc(100vh - 64px); } }
+  @media (min-width: 769px) and (max-width: 849px) {
+    .page-node-type-map #locations-list {
+      max-height: calc(100vh - 50px); } }
+  .page-node-type-map #locations-list h1 {
+    font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-size: 24px;
+    line-height: 1.4;
+    letter-spacing: -0.8px;
+    margin: 1rem 0 1.5rem; }
+    @media (min-width: 600px) {
+      .page-node-type-map #locations-list h1 {
+        font-size: 36px; } }
+    @media (min-width: 769px) {
+      .page-node-type-map #locations-list h1 {
+        margin: 0 0 1.8rem; } }
+  .page-node-type-map #locations-list h2,
+  .page-node-type-map #locations-list h3 {
+    text-transform: uppercase;
+    font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 1rem 0;
+    margin: 0px;
+    cursor: pointer; }
+    @media (min-width: 769px) {
+      .page-node-type-map #locations-list h2,
+      .page-node-type-map #locations-list h3 {
+        text-transform: none;
+        font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+        font-size: 18px; } }
+  .page-node-type-map #locations-list a {
+    font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    color: #052049;
+    background-image: none;
+    border-bottom: 1px solid #052049;
+    cursor: pointer; }
+    .page-node-type-map #locations-list a:first-of-type {
+      border-top: 1px solid #052049; }
+    @media (min-width: 769px) {
+      .page-node-type-map #locations-list a {
+        background-image: url("/themes/custom/ucsf/assets/images/cta-arrow-navy.svg");
+        border-bottom: 1px solid #ddd; }
+        .page-node-type-map #locations-list a:first-of-type {
+          border-top: 1px solid #ddd; } }
+
+.page-node-type-map .locations-label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+.page-node-type-map .loading input[type="checkbox"] {
+  display: none; }
+  .page-node-type-map .loading input[type="checkbox"] + label:before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: normal;
+    border-radius: 10%;
+    padding-right: 2%;
+    pointer-events: none; }
+  .page-node-type-map .loading input[type="checkbox"] + label:before {
+    content: "\f0c8"; }
+  .page-node-type-map .loading input[type="checkbox"]:checked + label:before {
+    content: "\f14a"; }
+
+.page-node-type-map .gm-style-iw.gm-style-iw-c {
+  width: 266px !important;
+  border-radius: 8%;
+  padding: 21px 21px 0 21px !important; }
+
+.page-node-type-map .gm-style-iw-d {
+  overflow: auto !important; }
+
+.page-node-type-map .infobox {
+  font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 32px;
+  letter-spacing: 0.2px;
+  color: #052049;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+  line-height: 1.33;
+  font-size: 16px; }
+  @media (min-width: 769px) {
+    .page-node-type-map .infobox {
+      font-size: 18px; } }
+  .page-node-type-map .infobox__item {
+    margin-bottom: 1rem; }
+  .page-node-type-map .infobox__image {
+    display: none;
+    height: 124px;
+    overflow: hidden;
+    margin-bottom: 1.5rem; }
+    @media (min-width: 769px) {
+      .page-node-type-map .infobox__image {
+        display: block; } }
+    .page-node-type-map .infobox__image img {
+      width: 100%; }
+  .page-node-type-map .infobox__title {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    font-weight: 500;
+    font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif;
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: -0.6px;
+    color: #052049;
+    padding-right: 1.8rem;
+    font-size: 24px; }
+    @media (min-width: 769px) {
+      .page-node-type-map .infobox__title {
+        font-size: 28px; }
+        .infobox__image + .page-node-type-map .infobox__title {
+          padding-right: 0; } }
+  .page-node-type-map .infobox__link {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    max-width: 100%; }
+    .page-node-type-map .infobox__link a {
+      max-width: -webkit-min-content;
+      max-width: -moz-min-content;
+      max-width: min-content;
+      background-position: 96% 60%; }
+      .page-node-type-map .infobox__link a:hover, .page-node-type-map .infobox__link a:focus {
+        background-position: 100% 60%;
+        padding-right: 24px; }
+
+.page-node-type-map .gm-ui-hover-effect {
+  position: absolute !important;
+  width: 26px !important;
+  height: 26px !important;
+  top: 21px !important;
+  right: 21px !important;
+  background-color: #007cbe !important;
+  opacity: 1; }
+  .page-node-type-map .gm-ui-hover-effect img {
+    margin: 0 auto !important;
+    -webkit-filter: brightness(0) invert(1) !important;
+            filter: brightness(0) invert(1) !important;
+    -webkit-transform: scale(2) !important;
+            transform: scale(2) !important; }
 
 .path-taxonomy {
   background: #f2f4f6; }
