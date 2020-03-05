@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Contains ucsf_sitemap.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function ucsf_sitemap_form_alter(&$form, &$form_state, $form_id) {
+  // Exit if this is not a News content type.
+  if ($form_id != 'node_article_form' && $form_id != "node_article_edit_form") {
+    return;
+  }
+
+  // Add custom submit hook at start of array
+  // so that it executes before Simple Sitemap submit handler
+  if (isset($form['actions']['submit']['#submit'])) {
+    array_unshift($form['actions']['submit']['#submit'], 'ucsf_sitemap_entity_form_submit');
+  }
+}
+
+/**
+ * On submit, change Simple XML Sitemap index setting based on the article type.
+ *
+ * @param array $form
+ *   Form array.
+ * @param FormStateInterface $form_state
+ *   The form state object.
+ * @return void
+ */
+function ucsf_sitemap_entity_form_submit($form, FormStateInterface &$form_state) {
+  // Check article type is "Media Coverage".
+  $type = $form_state->getValue('field_article_type');
+  if ($type[0]['target_id'] == '413496') {
+    // If article type is "Media Coverage" set sitemap variant to "Do not index this News entity in variant Default"
+    $form_state->setValue('index_default_node_settings', 0);
+  }
+}
