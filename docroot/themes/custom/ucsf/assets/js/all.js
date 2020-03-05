@@ -46,26 +46,43 @@
             // Set dropdown heights based on the content within.
             var dropdown = $('[data-level="level-0"]');
 
-            dropdown.each(function () {
+            var resizeMenuPanel = function resizeMenuPanel() {
 
-                var self = $(this);
-                var mainHeight = self.height();
-                var childMenu = self.find('.menu-child--wrapper');
-                var totalHeight = mainHeight;
-                var childHeight = 0;
+                dropdown.each(function () {
 
-                childMenu.each(function () {
-                    childHeight = $(this)[0].clientHeight;
-                    if (childHeight + 48 >= mainHeight) {
-                        totalHeight = childHeight;
-                    }
+                    var self = $(this);
+                    // reset the height on screen resize
+                    self.height("auto");
+                    var mainHeight = self.height();
+                    var childMenu = self.find('.menu-child--wrapper');
+                    var totalHeight = mainHeight;
+                    var childHeight = 0;
+
+                    childMenu.each(function () {
+                        childHeight = $(this)[0].clientHeight;
+                        if (childHeight + 48 >= mainHeight) {
+                            totalHeight = childHeight;
+                        }
+                    });
+
+                    self.height(totalHeight + 68);
+                    self.find('.menu-child--label').width(totalHeight + 20);
                 });
-                childMenu.each(function () {
-                    $(this).height(totalHeight);
+            };
+
+            $(window, context).once('menuheight').each(function () {
+                // Select and loop the container element of the elements you want to equalise
+                resizeMenuPanel();
+
+                // At the end of a screen resize.
+                var resizeTimer = null;
+                $(window).on('resize', context, function () {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(function () {
+                        // resizing has "stopped".
+                        resizeMenuPanel();
+                    }, 250);
                 });
-                self.height(totalHeight + 68);
-                self.find('.menu-child--label').width(totalHeight + 20);
-                //return false;
             });
 
             var nolink = $('.menu-item a.nolink');
@@ -189,7 +206,7 @@
 
     Drupal.behaviors.fixHeights = {
         attach: function attach(context, settings) {
-            $(window, context).once().each(function () {
+            $(window, context).once('fixheight').each(function () {
                 // Select and loop the container element of the elements you want to equalise
                 resizeCards();
 
