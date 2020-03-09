@@ -2,7 +2,8 @@
 
 namespace Drupal\socialfeed\Services;
 
-use MetzWeb\Instagram\Instagram;
+use Drupal\Core\Url;
+use EspressoDev\InstagramBasicDisplay\InstagramBasicDisplay;
 
 /**
  * Class InstagramPostCollector.
@@ -19,6 +20,20 @@ class InstagramPostCollector {
   protected $apiKey;
 
   /**
+   * Instagram application api secret.
+   *
+   * @var string
+   */
+  protected $apiSecret;
+
+  /**
+   * Instagram application redirect Uri.
+   *
+   * @var string
+   */
+  protected $redirectUri;
+
+  /**
    * Instagram application access token.
    *
    * @var string
@@ -28,7 +43,7 @@ class InstagramPostCollector {
   /**
    * Instagram client.
    *
-   * @var \MetzWeb\Instagram\Instagram
+   * @var \EspressoDev\InstagramBasicDisplay\InstagramBasicDisplay
    */
   protected $instagram;
 
@@ -37,15 +52,21 @@ class InstagramPostCollector {
    *
    * @param string $apiKey
    *   Instagram API key.
+   * @param string $apiSecret
+   *   Instagram API secret.
+   * @param string $redirectUri
+   *   Instagram Redirect URI.
    * @param string $accessToken
    *   Instagram Access token.
-   * @param \MetzWeb\Instagram\Instagram|null $instagram
+   * @param \EspressoDev\InstagramBasicDisplay\InstagramBasicDisplay|null $instagram
    *   Instagram client.
    *
    * @throws \Exception
    */
-  public function __construct($apiKey, $accessToken, Instagram $instagram = NULL) {
+  public function __construct($apiKey, $apiSecret, $redirectUri, $accessToken, InstagramBasicDisplay $instagram = NULL) {
     $this->apiKey = $apiKey;
+    $this->apiSecret = $apiSecret;
+    $this->redirectUri = $redirectUri;
     $this->accessToken = $accessToken;
     $this->instagram = $instagram;
     $this->setInstagramClient();
@@ -58,7 +79,11 @@ class InstagramPostCollector {
    */
   public function setInstagramClient() {
     if (NULL === $this->instagram) {
-      $this->instagram = new Instagram($this->apiKey);
+      $this->instagram = new InstagramBasicDisplay([
+        'appId' => $this->apiKey,
+        'appSecret' => $this->apiSecret,
+        'redirectUri' => $this->redirectUri,
+      ]);
       $this->instagram->setAccessToken($this->accessToken);
     }
   }
@@ -68,43 +93,26 @@ class InstagramPostCollector {
    *
    * @param int $numPosts
    *   Number of posts to get.
-   * @param string $resolution
-   *   The resolution to get.
+   * @param string $user_id
+   *   The user id from whom to get media. Defaults to the user that the access
+   *   token was created for.
    *
    * @return array
    *   An array of stdClass posts.
    */
-  public function getPosts($numPosts, $resolution) {
+  public function getPosts($numPosts, $user_id = 'me') {
     $posts = [];
-    $response = $this->instagram->getUserMedia('self', $numPosts);
+    $response = $this->instagram->getUserMedia($user_id, $numPosts);
     if (isset($response->data)) {
-      $posts = array_map(function ($post) use ($resolution) {
-        $type = $this->getMediaArrayKey($post->type);
+      $posts = array_map(function ($post) {
         return [
           'raw' => $post,
-          'media_url' => isset($post->{$type}->{$resolution}) ? $post->{$type}->{$resolution}->url : '',
-          'type' => $post->type,
+          'media_url' => $post->media_url,
+          'type' => $post->media_type,
         ];
       }, $response->data);
     }
     return $posts;
-  }
-
-  /**
-   * Retrieve the array key to fetch the post media url.
-   *
-   * @param string $type
-   *   The post type.
-   *
-   * @return string
-   *   The array key to fetch post media url.
-   */
-  protected function getMediaArrayKey($type) {
-    $mediaType = 'images';
-    if ($type === 'video') {
-      $mediaType = 'videos';
-    }
-    return $mediaType;
   }
 
 }

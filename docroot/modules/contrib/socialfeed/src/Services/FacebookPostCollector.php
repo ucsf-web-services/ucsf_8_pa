@@ -18,11 +18,11 @@ class FacebookPostCollector {
    * @var array
    */
   protected $fields = [
-    'link',
+    'permalink_url',
     'message',
     'created_time',
     'picture',
-    'type',
+    'status_type',
   ];
 
   /**
@@ -45,13 +45,6 @@ class FacebookPostCollector {
    * @var string
    */
   protected $userToken;
-
-  /**
-   * Facebook permanent page token.
-   *
-   * @var string
-   */
-  protected $pagePermanentToken;
 
   /**
    * Facebook Client.
@@ -103,7 +96,7 @@ class FacebookPostCollector {
         'app_id' => $this->appId,
         'app_secret' => $this->appSecret,
         'default_access_token' => $this->defaultAccessToken(),
-        'default_graph_version' => 'v3.2',
+        'default_graph_version' => 'v4.0',
       ]);
     }
   }
@@ -162,7 +155,7 @@ class FacebookPostCollector {
     // Filtering needed.
     if (TRUE == is_string($post_types)) {
       $posts = array_filter($posts, function ($post) use ($post_types) {
-        return $post['type'] === $post_types;
+        return $post['status_type'] === $post_types;
       });
       return $posts;
     }
@@ -176,8 +169,8 @@ class FacebookPostCollector {
    *   The access token.
    */
   protected function defaultAccessToken() {
-
-    $config = \Drupal::service('config.factory')->getEditable('socialfeed.facebooksettings');
+    $config = \Drupal::service('config.factory')
+      ->getEditable('socialfeed.facebooksettings');
     $permanent_token = $config->get('page_permanent_token');
     if (empty($permanent_token)) {
       $args = [
@@ -186,18 +179,23 @@ class FacebookPostCollector {
         'appsecret' => $this->appSecret,
         'pageid' => $this->pageName,
       ];
+      $client = \Drupal::httpClient();
       // Token.
-      $graph_response = json_decode(file_get_contents("https://graph.facebook.com/v3.2/oauth/access_token?grant_type=fb_exchange_token&client_id={$args['appid']}&client_secret={$args['appsecret']}&fb_exchange_token={$args['usertoken']}"));
-      $long_token = $graph_response->access_token;
+      $request = $client->request('GET', "https://graph.facebook.com/v4.0/oauth/access_token?grant_type=fb_exchange_token&client_id={$args['appid']}&client_secret={$args['appsecret']}&fb_exchange_token={$args['usertoken']}");
+      $request = json_decode($request->getBody()->getContents());
+      $long_token = $request->access_token;
       // User ID.
-      $graph_response = json_decode(file_get_contents("https://graph.facebook.com/v3.2/me?access_token={$long_token}"));
-      $user_id = $graph_response->id;
+      $request = $client->request('GET', "https://graph.facebook.com/v4.0/me?access_token={$long_token}");
+      $request = json_decode($request->getBody()->getContents());
+      $account_id = $request->id;
       // Page ID.
-      $graph_response = json_decode(file_get_contents("https://graph.facebook.com/v3.2/{$args['pageid']}?fields=id&access_token={$long_token}"));
-      $page_id = $graph_response->id;
+      $request = $client->request('GET', "https://graph.facebook.com/v4.0/{$args['pageid']}?fields=id&access_token={$long_token}");
+      $request = json_decode($request->getBody()->getContents());
+      $page_id = $request->id;
       // Permanent Token.
-      $graph_response = json_decode(file_get_contents("https://graph.facebook.com/v3.2/{$user_id}/accounts?access_token={$long_token}"));
-      foreach ($graph_response->data as $response_data) {
+      $request = $client->request('GET', "https://graph.facebook.com/v4.0/{$account_id}/accounts?access_token={$long_token}");
+      $request = json_decode($request->getBody()->getContents());
+      foreach ($request->data as $response_data) {
         if ($response_data->id == $page_id) {
           $config->set('page_permanent_token', $response_data->access_token)->save();
           return $response_data->access_token;

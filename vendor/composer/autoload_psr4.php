@@ -98,6 +98,7 @@ return array(
     'CloudFlarePhpSdk\\' => array($vendorDir . '/d8-contrib-modules/cloudflarephpsdk/src'),
     'Cheppers\\GatherContent\\' => array($vendorDir . '/cheppers/gathercontent-client/src'),
     'ChapterThree\\AppleNewsAPI\\' => array($vendorDir . '/chapter-three/apple-news-api/src'),
+    'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
     'Brumann\\Polyfill\\' => array($vendorDir . '/brumann/polyfill-unserialize/src'),
     'Behat\\Mink\\Driver\\' => array($vendorDir . '/behat/mink-browserkit-driver/src', $vendorDir . '/behat/mink-goutte-driver/src', $vendorDir . '/behat/mink-selenium2-driver/src'),
     'Behat\\Mink\\' => array($vendorDir . '/behat/mink/src'),
@@ -105,5 +106,4 @@ return array(
     'Alchemy\\Zippy\\' => array($vendorDir . '/alchemy/zippy/src'),
     'Acquia\\ContentHubClient\\' => array($vendorDir . '/acquia/content-hub-php/src'),
     'Abraham\\TwitterOAuth\\' => array($vendorDir . '/abraham/twitteroauth/src'),
-    '' => array($vendorDir . '/nesbot/carbon/src'),
 );

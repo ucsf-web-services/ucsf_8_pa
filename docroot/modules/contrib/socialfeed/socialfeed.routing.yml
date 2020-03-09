@@ -2,9 +2,9 @@ socialfeed.socialfeed:
   path: '/admin/config/services/socialfeed'
   defaults:
     _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
-    _title: 'Social Feed'
+    _title: 'Socialfeed'
   requirements:
-    _permission: 'administer social feeds'
+    _permission: 'administer socialfeed'
   options:
     _admin_route: TRUE
 
@@ -14,7 +14,7 @@ socialfeed.facebook_settings_form:
     _form: '\Drupal\socialfeed\Form\FacebookSettingsForm'
     _title: 'Facebook'
   requirements:
-    _permission: 'administer social feeds'
+    _permission: 'administer socialfeed'
   options:
     _admin_route: TRUE
 
@@ -24,7 +24,7 @@ socialfeed.twitter_settings_form:
     _form: '\Drupal\socialfeed\Form\TwitterSettingsForm'
     _title: 'Twitter'
   requirements:
-    _permission: 'administer social feeds'
+    _permission: 'administer socialfeed'
   options:
     _admin_route: TRUE
 
@@ -34,6 +34,14 @@ socialfeed.instagram_settings_form:
     _form: '\Drupal\socialfeed\Form\InstagramSettingsForm'
     _title: 'Instagram'
   requirements:
-    _permission: 'administer social feeds'
+    _permission: 'administer socialfeed'
   options:
     _admin_route: TRUE
+
+socialfeed.instagram_auth:
+  path: '/socialfeed/instagram/auth'
+  defaults:
+    _controller: '\Drupal\socialfeed\Controller\InstagramAuthController::accessToken'
+    _title: 'Socialfeed Instagram Auth'
+  requirements:
+    _permission: 'access content'

@@ -79,7 +79,10 @@ class TwitterPostCollector {
    *   An array of posts.
    */
   public function getPosts($count) {
-    return $this->twitter->get('statuses/user_timeline', ['count' => $count]);
+    return $this->twitter->get('statuses/user_timeline', [
+      'count' => $count,
+      'tweet_mode' => 'extended',
+    ]);
   }
 
   /**

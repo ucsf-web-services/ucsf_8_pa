@@ -14,6 +14,7 @@ class TwitterOAuthTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->twitter = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
+        $this->userId = explode('-', ACCESS_TOKEN)[0];
     }
 
     public function testBuildClient()
@@ -123,9 +124,12 @@ class TwitterOAuthTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAccountVerifyCredentials()
     {
-        // Include entities boolean added to test parameter value cohearsion
-        $this->twitter->get('account/verify_credentials', ["include_entities" => false]);
+        $user = $this->twitter->get('account/verify_credentials', [
+            'include_entities' => false,
+            'include_email' => true
+        ]);
         $this->assertEquals(200, $this->twitter->getLastHttpCode());
+        $this->assertObjectHasAttribute('email', $user);
     }
 
     // BUG: testing is too unreliable for now
@@ -185,6 +189,35 @@ class TwitterOAuthTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(200, $this->twitter->getLastHttpCode());
     }
 
+    public function testPostDirectMessagesEventsNew()
+    {
+        $data = [
+            'event' => [
+                'type' => 'message_create',
+                'message_create' => [
+                    'target' => [
+                        'recipient_id' => $this->userId
+                    ],
+                    'message_data' => [
+                        'text' => 'Hello World!'
+                    ]
+                ]
+            ]
+        ];
+        $result = $this->twitter->post('direct_messages/events/new', $data, true);
+        $this->assertEquals(200, $this->twitter->getLastHttpCode());
+        return $result;
+    }
+
+    /**
+     * @depends testPostDirectMessagesEventsNew
+     */
+    public function testDeleteDirectMessagesEventsDestroy($message)
+    {
+        $this->twitter->delete('direct_messages/events/destroy', ['id' => $message->event->id]);
+        $this->assertEquals(204, $this->twitter->getLastHttpCode());
+    }
+
     public function testPostStatusesUpdateWithMedia()
     {
         $this->twitter->setTimeouts(60, 30);
@@ -200,6 +233,14 @@ class TwitterOAuthTest extends \PHPUnit_Framework_TestCase
             $result = $this->twitter->post('statuses/destroy/' . $result->id_str);
         }
         return $result;
+    }
+
+    public function testPostStatusUpdateWithInvalidMediaThrowsException()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $file_path = __DIR__ . '/12345678900987654321.jpg';
+        $this->assertFalse(\is_readable($file_path));
+        $result = $this->twitter->upload('media/upload', ['media' => $file_path]);
     }
 
     public function testPostStatusesUpdateWithMediaChunked()

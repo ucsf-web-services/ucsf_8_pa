@@ -19,7 +19,7 @@ abstract class SocialBlockBase extends BlockBase {
   public function blockForm($form, FormStateInterface $form_state) {
     $form = parent::blockForm($form, $form_state);
     $settings = $this->getConfiguration();
-    $access = $this->currentUser->hasPermission('administer social feeds');
+    $access = $this->currentUser->hasPermission('administer socialfeed');
 
     $form['override'] = [
       '#type' => 'checkbox',
@@ -52,7 +52,7 @@ abstract class SocialBlockBase extends BlockBase {
    */
   protected function blockFormElementStates(array &$form) {
     $global_config = $this->config;
-    $privileged_user = $this->currentUser->hasPermission('administer social feeds');
+    $privileged_user = $this->currentUser->hasPermission('administer socialfeed');
     $config_is_incomplete = FALSE;
     foreach ($form['overrides'] as $key => $val) {
       if (strrpos($key, '#') === 0) {
@@ -60,6 +60,10 @@ abstract class SocialBlockBase extends BlockBase {
       }
 
       if (isset($form['overrides'][$key]['#states']['required'])) {
+        continue;
+      }
+
+      if (isset($form['overrides'][$key]['#markup'])) {
         continue;
       }
 

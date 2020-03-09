@@ -185,6 +185,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'CloudFlarePhpSdk\\' => 17,
             'Cheppers\\GatherContent\\' => 23,
             'ChapterThree\\AppleNewsAPI\\' => 26,
+            'Carbon\\' => 7,
         ),
         'B' => 
         array (
@@ -575,6 +576,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/chapter-three/apple-news-api/src',
         ),
+        'Carbon\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
+        ),
         'Brumann\\Polyfill\\' => 
         array (
             0 => __DIR__ . '/..' . '/brumann/polyfill-unserialize/src',
@@ -607,23 +612,12 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         ),
     );
 
-    public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/..' . '/nesbot/carbon/src',
-    );
-
     public static $prefixesPsr0 = array (
         'W' => 
         array (
             'WebDriver' => 
             array (
                 0 => __DIR__ . '/..' . '/instaclick/php-webdriver/lib',
-            ),
-        ),
-        'U' => 
-        array (
-            'UpdateHelper\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/kylekatarnls/update-helper/src',
             ),
         ),
         'T' => 
@@ -1269,7 +1263,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit380e5124de96ceb79a5aab5c54e86348::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit380e5124de96ceb79a5aab5c54e86348::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit380e5124de96ceb79a5aab5c54e86348::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit380e5124de96ceb79a5aab5c54e86348::$prefixesPsr0;
             $loader->fallbackDirsPsr0 = ComposerStaticInit380e5124de96ceb79a5aab5c54e86348::$fallbackDirsPsr0;
             $loader->classMap = ComposerStaticInit380e5124de96ceb79a5aab5c54e86348::$classMap;

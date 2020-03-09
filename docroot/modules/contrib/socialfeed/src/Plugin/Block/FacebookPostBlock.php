@@ -69,7 +69,7 @@ class FacebookPostBlock extends SocialBlockBase implements ContainerFactoryPlugi
    */
   public function blockForm($form, FormStateInterface $form_state) {
     $form = parent::blockForm($form, $form_state);
-    $post_type_options = ['link', 'status', 'photo', 'video'];
+    $post_type_options = ['permalink_url', 'status', 'photo', 'video'];
 
     $form['overrides']['page_name'] = [
       '#type' => 'textfield',
@@ -168,25 +168,28 @@ class FacebookPostBlock extends SocialBlockBase implements ContainerFactoryPlugi
         $this->getSetting('no_feeds')
       );
       foreach ($posts as $post) {
-        $items[] = [
-          '#theme' => [
-            'socialfeed_facebook_post__' . $post['type'],
-            'socialfeed_facebook_post',
-          ],
-          '#post' => $post,
-          '#cache' => [
-            // Cache for 1 hour.
-            'max-age' => 60 * 60,
-            'cache tags' => $this->config->getCacheTags(),
-            'context' => $this->config->getCacheContexts(),
-          ],
-        ];
+        if ($post['status_type'] = !NULL) {
+          $items[] = [
+            '#theme' => [
+              'socialfeed_facebook_post__' . $post['status_type'],
+              'socialfeed_facebook_post',
+            ],
+            '#post' => $post,
+            '#cache' => [
+              // Cache for 1 hour.
+              'max-age' => 60 * 60,
+              'cache tags' => $this->config->getCacheTags(),
+              'context' => $this->config->getCacheContexts(),
+            ],
+          ];
+        }
       }
     }
     catch (\Exception $exception) {
-      \Drupal::logger('socialfeed')->error($this->t('Error loading Facebook feed: @exception', [
-        '@exception' => $exception->getMessage(),
-      ]));
+      \Drupal::logger('socialfeed')
+        ->error($this->t('Exception: @exception', [
+          '@exception' => $exception->getMessage(),
+        ]));
     }
 
     $build['posts'] = [

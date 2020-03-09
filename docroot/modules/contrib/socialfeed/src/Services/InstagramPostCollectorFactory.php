@@ -3,6 +3,7 @@
 namespace Drupal\socialfeed\Services;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Url;
 
 /**
  * Class InstagramPostCollectorFactory.
@@ -17,6 +18,20 @@ class InstagramPostCollectorFactory {
    * @var string
    */
   protected $defaultApiKey;
+
+  /**
+   * Default Instagram application api secret.
+   *
+   * @var string
+   */
+  protected $defaultApiSecret;
+
+  /**
+   * Default Instagram redirect URI.
+   *
+   * @var string
+   */
+  protected $defaultRedirectUri;
 
   /**
    * Default Instagram application access token.
@@ -34,6 +49,8 @@ class InstagramPostCollectorFactory {
   public function __construct(ConfigFactoryInterface $configFactory) {
     $config = $configFactory->get('socialfeed.instagramsettings');
     $this->defaultApiKey = $config->get('client_id');
+    $this->defaultApiSecret = $config->get('api_secret');
+    $this->defaultRedirectUri = $config->get('redirect_uri');
     $this->defaultAccessToken = $config->get('access_token');
   }
 
@@ -42,6 +59,8 @@ class InstagramPostCollectorFactory {
    *
    * @param string|null $apiKey
    *   $apiKey.
+   * @param string|null $apiSecret
+   *   $apiSecret.
    * @param string|null $accessToken
    *   $accessToken.
    *
@@ -50,9 +69,11 @@ class InstagramPostCollectorFactory {
    *
    * @throws \Exception
    */
-  public function createInstance($apiKey, $accessToken) {
+  public function createInstance($apiKey, $apiSecret, $redirectUri, $accessToken) {
     return new InstagramPostCollector(
       $apiKey ?: $this->defaultApiKey,
+      $apiSecret ?: $this->defaultApiSecret,
+      $redirectUri ?: $this->defaultRedirectUri,
       $accessToken ?: $this->defaultAccessToken
     );
   }

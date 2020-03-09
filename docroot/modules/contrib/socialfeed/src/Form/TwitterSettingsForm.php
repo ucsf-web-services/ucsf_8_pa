@@ -35,7 +35,7 @@ class TwitterSettingsForm extends ConfigFormBase {
     $config = $this->config('socialfeed.twittersettings');
     $form['consumer_key'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Default Twitter Consumer Key'),
+      '#title' => $this->t('Default Twitter API Key'),
       '#default_value' => $config->get('consumer_key'),
       '#size' => 60,
       '#maxlength' => 100,
@@ -43,7 +43,7 @@ class TwitterSettingsForm extends ConfigFormBase {
     ];
     $form['consumer_secret'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Default Twitter Consumer Secret'),
+      '#title' => $this->t('Default Twitter API Secret Key'),
       '#default_value' => $config->get('consumer_secret'),
       '#size' => 60,
       '#maxlength' => 100,
