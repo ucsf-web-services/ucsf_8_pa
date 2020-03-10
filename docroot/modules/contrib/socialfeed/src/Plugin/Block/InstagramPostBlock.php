@@ -202,7 +202,7 @@ HTML;
     );
 
     foreach ($posts as $post) {
-      $theme_type = strtolower($post['raw']->media_type);
+      $theme_type = ($post['raw']->media_type == 'VIDEO') ? 'video' : 'image';
 
       // Set the post link.
       $post_link = $this->getSetting('post_link');

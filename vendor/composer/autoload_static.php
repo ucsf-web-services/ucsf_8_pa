@@ -153,6 +153,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         ),
         'E' => 
         array (
+            'EspressoDev\\InstagramBasicDisplay\\' => 34,
             'Embed\\' => 6,
             'Egulias\\EmailValidator\\' => 23,
         ),
@@ -468,6 +469,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'Facebook\\' => 
         array (
             0 => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook',
+        ),
+        'EspressoDev\\InstagramBasicDisplay\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/espresso-dev/instagram-basic-display-php/src',
         ),
         'Embed\\' => 
         array (
