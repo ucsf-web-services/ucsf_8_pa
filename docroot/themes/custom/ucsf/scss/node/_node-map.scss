@@ -1,0 +1,255 @@
+$map-height-min-nav: calc(100vh - 50px);
+$map-height-max-nav: calc(100vh - 64px);
+
+.page-node-type-map {
+  // remove the top header region.
+  .universal-header-region {
+    display: none;
+  }
+
+  .header-region {
+    top: 0;
+    z-index: $z-quicklinks-open-page;
+  }
+
+  // // when menu is open
+  .slicknav_nav {
+    top: 50px;
+  }
+  // when search and menu are open
+  .header--search.header--search-active + .slicknav-placeholder .slicknav_nav {
+    top: 210px;
+  }
+
+  #map-wrapper {
+    height: 70vh;
+    z-index: 1;
+
+    @include breakpoint($new-small) {
+      min-height: $map-height-max-nav;
+    }
+
+    @include breakpoint(769px 849px) {
+      min-height: $map-height-min-nav;
+    }
+  }
+
+  #map {
+    height: 100%;
+    width: 100%;
+  }
+
+  .map-grid-container {
+    @include breakpoint($new-small) {
+      position: absolute;
+      /* top should be offset by the height of the header nav */
+      top: 64px;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      display: grid;
+      grid-template-columns: auto 400px;
+      grid-template-rows: 100%;
+    }
+
+    @include breakpoint(769px 849px) {
+      // top should be offset by the height of the header nav
+      top: 50px;
+    }
+  }
+
+  #locations-list {
+    background-color: $c-background-gray;
+    padding: 16px 16px 10px 16px;
+    height: 100%;
+    overflow-y: scroll;
+    z-index: 100;
+
+    @include breakpoint($new-small) {
+      padding: 44px 48px;
+      max-height: $map-height-max-nav;
+    }
+
+    @include breakpoint(769px 849px) {
+      max-height: $map-height-min-nav;
+    }
+
+    h1 {
+      @include fs-articles-title();
+      margin: 1rem 0 1.5rem;
+
+      @include breakpoint($new-small) {
+        margin: 0 0 1.8rem;
+      }
+    }
+
+    h2,
+    h3 {
+      text-transform: uppercase;
+      font-family: $font-helvetica-neue-regular;
+      font-weight: bold;
+      // letter-spacing: 1.6px;
+      font-size: 12px;
+      padding: 1rem 0;
+      margin: 0px;
+      cursor: pointer;
+
+      @include breakpoint($new-small) {
+        text-transform: none;
+        font-family: $font-helvetica-neue-light;
+        font-size: 18px;
+        // letter-spacing: 0.2px;
+      }
+    }
+
+    a {
+      font-family: $font-helvetica-neue-light;
+      color: $c-navy;
+      background-image: none;
+      border-bottom: 1px solid $c-navy;
+      cursor: pointer;
+
+      &:first-of-type {
+        border-top: 1px solid $c-navy;
+      }
+
+      @include breakpoint($new-small) {
+        background-image: url("/themes/custom/ucsf/assets/images/cta-arrow-navy.svg");
+        border-bottom: 1px solid #ddd;
+        padding-right: 28px;
+
+        &:first-of-type {
+          border-top: 1px solid #ddd;
+        }
+      }
+    }
+  }
+
+  .locations-label {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .loading {
+    input[type="checkbox"] {
+      display: none;
+
+      & + label:before {
+        font-family: "Font Awesome 5 Free";
+        font-weight: normal;
+        border-radius: 10%;
+        // padding-right should match with .cta--list a background position
+        padding-right: 2%;
+        pointer-events: none;
+      }
+
+      & + label:before {
+        content: "\f0c8";
+      }
+
+      &:checked + label:before {
+        content: "\f14a";
+      }
+    }
+  }
+
+
+  // INFOBOX
+
+  // Outer wrapper for infobox.
+  .gm-style-iw.gm-style-iw-c {
+    width: 266px !important;
+    border-radius: 8%;
+    padding: 21px 21px 0 21px !important;
+  }
+
+  // Inner wrapper for infobox.
+  .gm-style-iw-d {
+    overflow: auto !important;
+  }
+
+  // pop up location information box
+  .infobox {
+    @include fs-body();
+    line-height: 1.33;
+    font-size: 16px;
+
+    @include breakpoint($new-small) {
+      font-size: 18px;
+    }
+
+    &__item {
+      margin-bottom: 1rem;
+    }
+
+    &__image {
+      display: none;
+      height: 124px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+
+      @include breakpoint($new-small) {
+        display: block;
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+    &__title {
+      @include fs-heading-two-sm();
+      padding-right: 1.8rem;
+      font-size: 24px;
+
+      @include breakpoint($new-small) {
+        font-size: 28px;
+        .infobox__image + & {
+          padding-right: 0;
+        }
+      }
+    }
+
+    &__link {
+      display: flex;
+      justify-content: space-between;
+      max-width: 100%;
+
+      a {
+        max-width: min-content;
+        background-position: 96% 60%;
+
+        &:hover,
+        &:focus {
+          background-position: 100% 60%;
+          padding-right: $space-three;
+        }
+      }
+    }
+  }
+
+  // Infobox close button
+  .gm-ui-hover-effect {
+    position: absolute !important;
+    width: 26px !important;
+    height: 26px !important;
+    top: 21px !important;
+    right: 21px !important;
+    background-color: #007cbe !important;
+    opacity: 1;
+
+    // icon for the Infobox close button
+    img {
+      margin: 0 auto !important;
+      filter: brightness(0) invert(1) !important;
+      transform: scale(2) !important;
+    }
+  }
+
+  // google's infobox link
+  .poi-info-window .view-link {
+    padding-bottom: 21px !important;
+  }
+}
