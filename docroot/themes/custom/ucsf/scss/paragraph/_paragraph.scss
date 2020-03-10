@@ -736,14 +736,24 @@
 
 #block-instagramblock-2 {
   margin-top: $space-two;
-  ul {
+
+  @include breakpoint($new-medium) {
+    margin-right: 2.3rem;
+  }
+  .item-list ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: .5rem;
     list-style: none;
-    align-items: end;
-    margin: 0 2.5rem 0 0;
     padding: 0;
+  }
+
+  .post {
+    display: block;
+    // hack for responsive images, height is controlled by padding-bottom
+    height: 0;
+    padding-bottom: 100%; // aspect ratio of 1:1
+    overflow: hidden;
   }
 }
 
