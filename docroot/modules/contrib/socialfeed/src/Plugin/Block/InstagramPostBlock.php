@@ -247,7 +247,7 @@ HTML;
     $days_later = 50 * 24 * 60 * 60;
 
     // Exit if the token doesn't need updating.
-    if (($config->get('access_token_date') + $days_later) > time()) {
+    if (empty($config->get('access_token_date')) || ($config->get('access_token_date') + $days_later) > time()) {
       return;
     }
 
