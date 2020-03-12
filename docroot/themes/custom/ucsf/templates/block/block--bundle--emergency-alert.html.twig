@@ -1,13 +1,17 @@
 
 {{ attach_library('ucsf/vertical_tabs') }}
 
-<div class="emergency-alert">
+{% if '1' in content.field_display_closed[0] %}
+  {% set emerclass = 'emergency-alert__collapsed' %}
+{% endif %}
+
+<div class="emergency-alert {{ emerclass }}">
   {{ title_prefix }}
   {% if label %}
     <h2 class="emergency-alert__header">{{ label }}</h2>
   {% endif %}
   {{ title_suffix }}
   {% block content %}
-    {{ content }}
+    {{ content|without('field_display_closed') }}
   {% endblock %}
 </div>
