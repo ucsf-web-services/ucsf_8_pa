@@ -42,36 +42,36 @@
 
     Drupal.behaviors.desktopDropdownHeight = {
         attach: function (context, settings) {
+            $(window, context).once('menu-desktop').each( function() {
 
-            // Set dropdown heights based on the content within.
-            var dropdown = $('[data-level="level-0"]');
+                // Set dropdown heights based on the content within.
+                var dropdown = $('[data-level="level-0"]');
 
-            const resizeMenuPanel = () => {
+                const resizeMenuPanel = () => {
 
-                dropdown.each(function () {
+                    dropdown.each(function () {
 
-                    var self = $(this);
-                    // reset the height on screen resize
-                    self.height("auto")
-                    var mainHeight = self.height();
-                    var childMenu = self.find('.menu-child--wrapper');
-                    var totalHeight = mainHeight;
-                    var childHeight = 0;
+                        var self = $(this);
+                        // reset the height on screen resize
+                        self.height("auto")
+                        var mainHeight = self.height();
+                        var childMenu = self.find('.menu-child--wrapper');
+                        var totalHeight = mainHeight;
+                        var childHeight = 0;
 
-                    childMenu.each(function () {
-                        childHeight = $(this)[0].clientHeight;
-                        if ((childHeight + 48) >= mainHeight) {
-                            totalHeight = childHeight;
-                        }
+                        childMenu.each(function () {
+                            childHeight = $(this)[0].clientHeight;
+                            if ((childHeight + 48) >= mainHeight) {
+                                totalHeight = childHeight;
+                            }
+                        });
+
+                        self.height(totalHeight + 68);
+                        self.find('.menu-child--label').width(totalHeight + 20);
                     });
 
-                    self.height(totalHeight + 68);
-                    self.find('.menu-child--label').width(totalHeight + 20);
-                });
+                }
 
-            }
-
-            $(window, context).once('menuheight').each( function() {
                 // Select and loop the container element of the elements you want to equalise
                 resizeMenuPanel();
 
@@ -84,54 +84,55 @@
                         resizeMenuPanel();
                     }, 250);
                 });
-            });
 
-            var nolink = $('.menu-item a.nolink');
-            nolink.each(function() {
-                $(this).on('click', function(event){
-                    event.preventDefault();
+                var nolink = $('.menu-item a.nolink');
+                nolink.each(function() {
+                    $(this).on('click', function(event){
+                        event.preventDefault();
+                    });
+
                 });
 
-            });
+                $('.menu-item-parent').click(function() {
+                    const $this = $(this);
+                    // do not add 'menu-item-open' class if the menu item is search
+                    if ($this.hasClass('search')) {
+                        $this.siblings().removeClass('menu-item-open');
+                        return;
+                    };
+                    $this.addClass('menu-item-open').siblings().removeClass('menu-item-open');
+                });
 
-            $('.menu-item-parent').click(function() {
-                const $this = $(this);
-                // do not add 'menu-item-open' class if the menu item is search
-                if ($this.hasClass('search')) {
-                    $this.siblings().removeClass('menu-item-open');
-                    return;
-                };
-                $this.addClass('menu-item-open').siblings().removeClass('menu-item-open');
-            });
+                $('.menu-item-close').click(function(e) {
+                    e.stopPropagation(); // Key line to work perfectly
+                    if ($(this).parent().parent().hasClass('menu-item-open')) {
+                    $(this).parent().parent().removeClass('menu-item-open');
+                    };
+                });
 
-              $('.menu-item-close').click(function(e) {
-                e.stopPropagation(); // Key line to work perfectly
-                if ($(this).parent().parent().hasClass('menu-item-open')) {
-                  $(this).parent().parent().removeClass('menu-item-open');
-                };
-              });
+                // Shows menus when it's being tabbed through
+                const $dropdown = $('.menu-child--wrapper', context);
+                $dropdown.on('focusin', function() {
+                    // Menu dropdowns open on focus.
+                    $(this).parents('.menu-item--expanded').addClass('menu-item-open');
+                });
 
-            // Shows menus when it's being tabbed through
-            const $dropdown = $('.menu-child--wrapper', context);
-            $dropdown.on('focusin', function() {
-                // Menu dropdowns open on focus.
-                $(this).parents('.menu-item--expanded').addClass('menu-item-open');
-            });
+                // Menu dropdown closes when focus is out.
+                $dropdown.on('focusout', function() {
+                    const $this = $(this);
+                    // Waits and only removes class if newly focused element is outside the dropdown
+                    setTimeout(function() {
+                        // Closes second level subnav
+                        if ($(document.activeElement).parents('.menu-child--wrapper').length === 0) {
+                            $this.parents('.menu-item-parent').removeClass('menu-item-open');
+                        }
+                        // Closes the third level subnav if the current focused element is not in it.
+                        else if ($this.has(document.activeElement).length === 0) {
+                            $this.parents('.menu-item--expanded').first().removeClass('menu-item-open');
+                        }
+                    }, 50);
+                });
 
-            // Menu dropdown closes when focus is out.
-            $dropdown.on('focusout', function() {
-                const $this = $(this);
-                // Waits and only removes class if newly focused element is outside the dropdown
-                setTimeout(function() {
-                    // Closes second level subnav
-                    if ($(document.activeElement).parents('.menu-child--wrapper').length === 0) {
-                        $this.parents('.menu-item-parent').removeClass('menu-item-open');
-                    }
-                    // Closes the third level subnav if the current focused element is not in it.
-                    else if ($this.has(document.activeElement).length === 0) {
-                        $this.parents('.menu-item--expanded').first().removeClass('menu-item-open');
-                    }
-                }, 50);
             });
 
         }
