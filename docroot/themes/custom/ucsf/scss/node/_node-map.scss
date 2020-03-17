@@ -1,6 +1,27 @@
 $map-height-min-nav: calc(100vh - 50px);
 $map-height-max-nav: calc(100vh - 64px);
 
+// Styles for custom UCSF map infobox and Google's own infobox
+%infobox__text {
+  @include fs-body();
+  line-height: 1.33;
+  font-size: 16px;
+
+  @include breakpoint($new-small) {
+    font-size: 18px;
+  }
+}
+
+%infobox__title {
+  @include fs-heading-two-sm();
+  padding-right: 1.8rem;
+  font-size: 24px;
+
+  @include breakpoint($new-small) {
+    font-size: 28px;
+  }
+}
+
 .page-node-type-map {
   // remove the top header region.
   .universal-header-region {
@@ -140,7 +161,7 @@ $map-height-max-nav: calc(100vh - 64px);
         font-family: "Font Awesome 5 Free";
         font-weight: normal;
         border-radius: 10%;
-        // padding-right should match with .cta--list a background position
+        // padding-right should match with .cta--list <a> background position
         padding-right: 2%;
         pointer-events: none;
       }
@@ -156,7 +177,7 @@ $map-height-max-nav: calc(100vh - 64px);
   }
 
 
-  // INFOBOX
+  // UCSF INFOBOX
 
   // Outer wrapper for infobox.
   .gm-style-iw.gm-style-iw-c {
@@ -172,13 +193,7 @@ $map-height-max-nav: calc(100vh - 64px);
 
   // pop up location information box
   .infobox {
-    @include fs-body();
-    line-height: 1.33;
-    font-size: 16px;
-
-    @include breakpoint($new-small) {
-      font-size: 18px;
-    }
+    @extend %infobox__text;
 
     &__item {
       margin-bottom: 1rem;
@@ -200,12 +215,10 @@ $map-height-max-nav: calc(100vh - 64px);
     }
 
     &__title {
-      @include fs-heading-two-sm();
-      padding-right: 1.8rem;
-      font-size: 24px;
+      @extend %infobox__title;
 
       @include breakpoint($new-small) {
-        font-size: 28px;
+
         .infobox__image + & {
           padding-right: 0;
         }
@@ -218,8 +231,8 @@ $map-height-max-nav: calc(100vh - 64px);
       max-width: 100%;
 
       a {
-        max-width: min-content;
         background-position: 96% 60%;
+        max-width: min-content;
 
         &:hover,
         &:focus {
@@ -248,8 +261,49 @@ $map-height-max-nav: calc(100vh - 64px);
     }
   }
 
-  // google's infobox link
-  .poi-info-window .view-link {
-    padding-bottom: 21px !important;
+  // GOOGLE'S INFOBOX
+  .poi-info-window {
+    @extend %infobox;
+
+    .title,
+    .transit-title span {
+      @extend %infobox__title;
+      margin-bottom: 1rem;
+    }
+
+    // link wrapper
+    .view-link {
+      text-decoration: none;
+
+      a {
+        @extend %infobox__text;
+        @include link--cta();
+        @include arrow-c-blue-after-text();
+        font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+        margin-bottom: 21px !important;
+        // Overwrites for mixin
+        background-size: 14px 10px;
+        background-position: 98% 60%;
+      }
+    }
+
+    // address wrapper
+    .address {
+      margin-bottom: 1rem;
+    }
+
+    // div for each address line
+    & .address-line {
+      @extend %infobox__text;
+
+      &.full-width {
+        width: auto !important;
+      }
+    }
+
+    // make sure icon is not covered by the "X" button
+    .transit-wheelchair-icon {
+      display: block !important;
+    }
   }
 }

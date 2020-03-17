@@ -206,6 +206,36 @@
 
 }
 
+// Use when unable to add class .link--cta
+@mixin link--cta {
+  @include link-text();
+  display: inline-block;
+  transition: .2s ease-out background-position;
+
+  &:hover {
+    background-position: 100% 60%;
+  }
+}
+
+// Requirements: link text color is $c-blue
+// Arrow icon follows link text
+// Both link and background image are at the left edge of the element, so that
+// there is room for the icon to move right on hover
+@mixin arrow-c-blue-after-text {
+  background-image: url("../images/cta-arrow.svg");
+  // if arrow is too close to text, adjust background-position-x
+  background-position: 96% 60%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-size: 14px 14px;
+  padding-right: 24px;
+}
+
+// TODO @mixin arrow-c-blue-right-edge
+// for links where text is at the left edge of the element
+// and background image is at the right edge of the element
+// icon still needs to move right on hover, link text should stay in place
+
 @mixin tables {
   .table-wrapper-responsive {
     overflow: scroll;
