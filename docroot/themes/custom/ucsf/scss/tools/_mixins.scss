@@ -17,9 +17,9 @@
   min-height: $space-eight;
 
   &:hover {
-    background-color: $blue;
+    background-color: $c-blue-link;
     color: $white;
-    border-color: $blue;
+    border-color: $c-blue-link;
     transition: $transition-time-short ease background-color;
   }
 }
@@ -27,8 +27,8 @@
 @mixin button-alt {
   @include button;
 
-  border-color: $blue;
-  color: $blue;
+  border-color: $c-blue-link;
+  color: $c-blue-link;
 }
 
 @mixin button-alt-2 {
@@ -64,7 +64,7 @@
 }
 
 // use the fordward slash if f is present.
-@mixin fa-icon-before($icon-code: '', $color: $c-blue) {
+@mixin fa-icon-before($icon-code: '', $color: $c-blue-link) {
   &::before {
     margin-right: 5px;
     color: $color;
@@ -195,12 +195,12 @@
   }
 
   .slick-next {
-    @include background-image('cta-arrow-white.svg', center center/12px 12px , $c-blue);
+    @include background-image('cta-arrow-white.svg', center center/12px 12px , $c-blue-link);
     right: 35px;
   }
 
   .slick-prev {
-    @include background-image('cta-arrow-white-left.svg', center center/12px 12px , $c-blue);
+    @include background-image('cta-arrow-white-left.svg', center center/12px 12px , $c-blue-link);
     left: 35px;
   }
 
@@ -217,9 +217,9 @@
   }
 }
 
-// Requirements: link text color is $c-blue
+// Requirements: link text color is $c-blue-link
 // Arrow icon follows link text
-// Both link and background image are at the left edge of the element, so that
+// Link text, and background image are both at the left edge of the element, so that
 // there is room for the icon to move right on hover
 @mixin arrow-c-blue-after-text {
   background-image: url("../images/cta-arrow.svg");
