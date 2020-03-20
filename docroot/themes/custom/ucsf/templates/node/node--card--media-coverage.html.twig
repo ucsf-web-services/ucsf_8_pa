@@ -1,0 +1,11 @@
+{% extends "node--card.html.twig" %}
+
+{% set attributes = attributes.addClass('news-card--media-coverage') %}
+
+{% set source_label = node.field_source.0.entity.label ? node.field_source.0.entity.label : 'Media Coverage' %}
+{% block byline %}
+  <ul class="article-header__byline">
+    <li class="article-header__primary-area" data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">{{ source_label }}</li>
+    <li class="article-header__date">{{ content.field_date_and_time }}</li>
+  </ul>
+{% endblock %}

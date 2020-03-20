@@ -38,7 +38,9 @@
     {% endif %}
 
     <header class="news-card__copy">
-      {% include '@theme/article/byline.twig' %}
+      {% block byline %}
+        {% include '@theme/article/byline.twig' %}
+      {% endblock %}
       {% if content.field_short_title|render|striptags != ''  %}
         <h2>{{ content.field_short_title }}</h2>
       {% else %}
