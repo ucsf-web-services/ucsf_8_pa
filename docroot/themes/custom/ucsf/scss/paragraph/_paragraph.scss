@@ -734,6 +734,29 @@
   }
 }
 
+.block-socialfeed {
+  margin-top: $space-two;
+
+  @include breakpoint($new-medium) {
+    margin-right: 2.3rem;
+  }
+  .item-list ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: .5rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .post {
+    display: block;
+    // hack for responsive images, height is controlled by padding-bottom
+    height: 0;
+    padding-bottom: 100%; // aspect ratio of 1:1
+    overflow: hidden;
+  }
+}
+
 .layout-columns__1,
 .layout-columns__2,
 .layout-columns__3,
