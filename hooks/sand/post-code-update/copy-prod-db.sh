@@ -12,7 +12,6 @@ sand_alias=$site'.sand'
 prod_alias=$site'.prod'
 
 echo "Site: $site"
-echo "Sand Env: $sand_alias"
 echo "Sand Drush Alias: $sand_alias"
 echo "Prod Drush Alias: $prod_alias"
 
