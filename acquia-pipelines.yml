@@ -25,10 +25,6 @@ events:
             - echo "Create/Update a new On Demand Environment for $PIPELINE_DEPLOY_VCS_PATH"
             - pipelines-deploy
             - pipelines-sync-dbs ucsfpa8
-            # For the dev git branch, only pull the database.
-            - elif [ "$SOURCE_VCS_PATH" == "dev" ]; then
-            - pipelines-sync-dbs ucsfpa8
-            - fi
 
   # When a GitHub pull request is merged, this deletes the corresponding ODE.
   pr-merged:
