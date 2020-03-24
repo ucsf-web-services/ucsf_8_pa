@@ -21,14 +21,14 @@ events:
       - deploy:
           # Build on Pull Request only (but not for the dev branch since it already has its own Sand environment).
           script:
-            - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ] && [ "$SOURCE_VCS_PATH != "dev" ]; then
+            - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ] && [ "$SOURCE_VCS_PATH" != "dev" ]; then
             - echo "Create/Update a new On Demand Environment for $PIPELINE_DEPLOY_VCS_PATH"
             - pipelines-deploy
             - pipelines-sync-dbs ucsfpa8
             - fi
           # For the dev git branch, only pull the database.
           # script:
-          #   - if [ "$SOURCE_VCS_PATH == "dev" ]; then
+          #   - if [ "$SOURCE_VCS_PATH" == "dev" ]; then
           #   - pipelines-sync-dbs ucsfpa8
           #   - fi
 
