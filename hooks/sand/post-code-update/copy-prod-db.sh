@@ -2,8 +2,7 @@
 #
 # Cloud Hook: post-code-update
 #
-# Setup On-Demand Environment after the database has been pulled from Prod. Run
-# drush cache-clear all in the target environment.
+# Copy the database from production.
 
 
 # Map the script inputs to convenient names.
