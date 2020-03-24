@@ -15,4 +15,4 @@ echo "Site: $site"
 echo "Sand Drush Alias: $sand_alias"
 echo "Prod Drush Alias: $prod_alias"
 
-drush sql-sync @$prod_alias --source-database=ucsfpa8 @$sand_alias
+drush sql-sync @$prod_alias @$sand_alias --source-database=ucsfpa8 --target-database=ucsfpa8
