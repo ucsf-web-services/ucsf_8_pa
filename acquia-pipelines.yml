@@ -27,10 +27,10 @@ events:
             - pipelines-sync-dbs ucsfpa8
             - fi
           # For the dev git branch, only pull the database.
-          script:
-            - if [ "$SOURCE_VCS_PATH == "dev" ]; then
-            - pipelines-sync-dbs ucsfpa8
-            - fi
+          # script:
+          #   - if [ "$SOURCE_VCS_PATH == "dev" ]; then
+          #   - pipelines-sync-dbs ucsfpa8
+          #   - fi
 
   # When a GitHub pull request is merged, this deletes the corresponding ODE.
   pr-merged:
