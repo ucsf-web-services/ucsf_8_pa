@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * Contains socialfeed.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function socialfeed_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the socialfeed module.
+    case 'help.page.socialfeed':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Socialfeed module allows you to fetch feeds directly from Facebook, Twitter & Instagram by simply installing it via <code>composer require drupal/socialfeed</code>') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function socialfeed_theme($existing, $type, $theme, $path) {
+  $themes = [];
+
+  $themes['socialfeed_facebook_post'] = [
+    'variables' => ['post' => []],
+    'file' => 'socialfeed.theme.inc',
+  ];
+
+  $themes['socialfeed_twitter_post'] = [
+    'variables' => ['post' => []],
+    'file' => 'socialfeed.theme.inc',
+  ];
+
+  $themes['socialfeed_instagram_post_video'] = [
+    'variables' => ['post' => []],
+    'file' => 'socialfeed.theme.inc',
+  ];
+
+  $themes['socialfeed_instagram_post_image'] = [
+    'variables' => ['post' => []],
+    'file' => 'socialfeed.theme.inc',
+  ];
+
+  return $themes;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function socialfeed_theme_suggestions_socialfeed_facebook_post(array $variables) {
+  $suggestions = [
+    'socialfeed_facebook_post__' . $variables['post']['status_type'],
+  ];
+  return $suggestions;
+}

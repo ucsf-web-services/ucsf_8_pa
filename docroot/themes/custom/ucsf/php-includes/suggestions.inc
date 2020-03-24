@@ -66,3 +66,16 @@ function ucsf_theme_suggestions_views_view_unformatted_alter(array &$suggestions
   $suggestions[] = 'views_view_unformatted__' . $view->id();
   $suggestions[] = 'views_view_unformatted__' . $view->id() . '__' . $view->current_display;
 }
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function ucsf_theme_suggestions_node_alter(array &$suggestions, array $variables) {
+  $node = $variables['elements']['#node'];
+  $view_mode = $variables['elements']['#view_mode'];
+
+  if ($node->getType() == 'article' && $view_mode == 'card') {
+    $term_name = $node->field_article_type->entity->getName();
+    $suggestions[] = 'node__card__' . strtolower(str_replace(' ', '_', $term_name));
+  }
+}

@@ -33,6 +33,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'a16312f9300fed4a097923eacb0ba814' => __DIR__ . '/..' . '/igorw/get-in/src/get_in.php',
         '5a12a5271c58108e0aa33355e6ac54ea' => __DIR__ . '/..' . '/drupal/console-core/src/functions.php',
+        'c65d09b6820da036953a371c8c73a9b1' => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook/polyfills.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -125,6 +126,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         ),
         'M' => 
         array (
+            'MetzWeb\\Instagram\\' => 18,
             'Masterminds\\' => 12,
         ),
         'J' => 
@@ -147,9 +149,11 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'F' => 
         array (
             'FontLib\\' => 8,
+            'Facebook\\' => 9,
         ),
         'E' => 
         array (
+            'EspressoDev\\InstagramBasicDisplay\\' => 34,
             'Embed\\' => 6,
             'Egulias\\EmailValidator\\' => 23,
         ),
@@ -182,6 +186,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'CloudFlarePhpSdk\\' => 17,
             'Cheppers\\GatherContent\\' => 23,
             'ChapterThree\\AppleNewsAPI\\' => 26,
+            'Carbon\\' => 7,
         ),
         'B' => 
         array (
@@ -194,6 +199,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'Asm89\\Stack\\' => 12,
             'Alchemy\\Zippy\\' => 14,
             'Acquia\\ContentHubClient\\' => 24,
+            'Abraham\\TwitterOAuth\\' => 21,
         ),
     );
 
@@ -416,6 +422,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/oomphinc/composer-installers-extender/src',
         ),
+        'MetzWeb\\Instagram\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/cosenary/instagram/src',
+        ),
         'Masterminds\\' => 
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
@@ -455,6 +465,14 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'FontLib\\' => 
         array (
             0 => __DIR__ . '/..' . '/phenx/php-font-lib/src/FontLib',
+        ),
+        'Facebook\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook',
+        ),
+        'EspressoDev\\InstagramBasicDisplay\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/espresso-dev/instagram-basic-display-php/src',
         ),
         'Embed\\' => 
         array (
@@ -563,6 +581,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/chapter-three/apple-news-api/src',
         ),
+        'Carbon\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
+        ),
         'Brumann\\Polyfill\\' => 
         array (
             0 => __DIR__ . '/..' . '/brumann/polyfill-unserialize/src',
@@ -588,6 +610,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'Acquia\\ContentHubClient\\' => 
         array (
             0 => __DIR__ . '/..' . '/acquia/content-hub-php/src',
+        ),
+        'Abraham\\TwitterOAuth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/abraham/twitteroauth/src',
         ),
     );
 

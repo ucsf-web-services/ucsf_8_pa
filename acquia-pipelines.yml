@@ -19,8 +19,9 @@ events:
     steps:
       # Deploy the build artifact to a Cloud on-demand environment.
       - deploy:
+          # Build on Pull Request only but not for the dev branch (vcs master) since it already has its own Sand environment.
           script:
-            - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ]; then
+            - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ] && [ "$SOURCE_VCS_PATH" != "master" ]; then
             - echo "Create/Update a new On Demand Environment for $PIPELINE_DEPLOY_VCS_PATH"
             - pipelines-deploy
             - pipelines-sync-dbs ucsfpa8
