@@ -53,8 +53,7 @@ class MenuLinkContentAccessControlHandler extends EntityAccessControlHandler imp
         if ($account->hasPermission('administer menu')) {
           return AccessResult::allowed()->cachePerPermissions()->addCacheableDependency($entity);
         }
-        // If menu link is internal, and user has access, grant view access to
-        // the menu link.
+        // If menu link is internal, and user has access, grant view access to menu link.
         if (($url_object = $entity->getUrlObject()) && ($url_object->isRouted())) {
           $link_access = $this->accessManager->checkNamedRoute($url_object->getRouteName(), $url_object->getRouteParameters(), $account, TRUE);
           if ($link_access->isAllowed()) {
