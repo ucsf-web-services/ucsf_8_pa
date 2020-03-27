@@ -29,6 +29,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
         //var config = editor.config.y3titemplatemenuButtons.split(',');
         //var button =  config['pullquote'] == undefined ? 'Create a Pullquote' : undefined;
         var pluginDirectory = this.path;
+
         editor.addContentsCss(pluginDirectory + 'css/ucsfcalloutbox.css');
 
         editor.ui.addButton('ucsfcalloutbox', {
@@ -65,7 +66,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                 },
                 image: {
                     selector: '.callout__image',
-                    allowedContent: 'img[*](*); picture[*](*); source[*](*); video[*](*); drupal-entity[*](*); figure[*](*); article[*](*);'
+                    allowedContent: 'img[*](*); picture[*](*); source[*](*); video[*](*); drupal-entity[*](*); figure[*](*); article[*](*); span[*](*);'
                 }
             },
 
@@ -74,7 +75,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                 '<div class="callout__image"><img id="callout_image_0" src="/sites/default/files/media-icons/generic/no-thumbnail.png" /></div>' +
                 '<div class="callout__content">'    +
                     '<h3 class="eyebrow-title">Take Action</h3>'     +
-                    '<time>Oct. 24, 2018</time>'    +
+                    '<time>Oct. 24, 2020</time>'    +
                     '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ultricies sit amet.</p>' +
                     '<p><a href="/">Learn More</a></p>' +
                 '</div>' +
@@ -82,6 +83,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
 
             button: 'Create a Callout Box',
             dialog: 'ucsfcalloutbox',
+
             upcast: function (element) {
                 return element.name == 'aside' && element.hasClass('ucsfcallout');
             },
@@ -94,9 +96,10 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                     this.setData('align', 'right');
                 if (this.element.hasClass('callout-center'))
                     this.setData('align', 'center');
+
+                // Set data to image option
                 if (this.data.callout)
                     this.setData('calloutImage', this.data.callout);
-
             },
             data: function () {
                 //called everytime dialog is opened and closed.
@@ -107,13 +110,18 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                 if (this.data.align) {
                     this.element.addClass('callout-' + this.data.align);
                 }
-                //console.log('data(): ' + this.data.callout);
-                if (this.data.callout && this.data.callout != 'none') {
-                    //set the image tag
+
+                // The value is a 1 but given as a string. We will check against
+                // any 1 value (string or integer).
+                if (this.data.callout && this.data.callout == 1) {
+                    //set the image tag to show or hide
                     //this.element.setAttribute('data-image', this.data.callout);
-                    var images = this.element.getElementsByTag('img');
+                    var imageCallout = this.element.find('.callout__image');
+                    imageCallout.$[0].classList.remove('hidden')
+
                 } else {
-                    //hide image div
+                    var imageCallout = this.element.find('.callout__image');
+                    imageCallout.$[0].classList.add('hidden')
                 }
             }
         });
