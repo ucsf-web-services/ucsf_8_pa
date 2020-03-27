@@ -59,19 +59,20 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
             //allowedContent: 'aside div(*); time;',
             requiredContent: 'aside(!ucsfcallout);',
 
+            // Editables need to be in the order they are placed in DOM.
             editables: {
+                image: {
+                    selector: '.callout__image',
+                    allowedContent: 'img[*](*); picture[*](*); source[*](*); video[*](*); drupal-entity[*](*); figure[*](*); article[*](*); span[*](*); div[*](*);'
+                },
                 content: {
                     selector: '.callout__content',
                     allowedContent: 'h2[*](*); h3[*](*); h4[*](*); h5[*](*); h6[*](*); p[*](*); strong[*](*); a[*](*); picture br em cite i strike sub sup ul[*](*); ol[*](*); li dl dd dt address[*](*); abbr;'
-                },
-                image: {
-                    selector: '.callout__image',
-                    allowedContent: 'img[*](*); picture[*](*); source[*](*); video[*](*); drupal-entity[*](*); figure[*](*); article[*](*); span[*](*);'
                 }
             },
 
             template:
-            '<aside class="ucsfcallout callout-left" data-image="none">' +
+            '<aside class="ucsfcallout callout-left" data-image="0">' +
                 '<div class="callout__image"><img id="callout_image_0" src="/sites/default/files/media-icons/generic/no-thumbnail.png" /></div>' +
                 '<div class="callout__content">'    +
                     '<h3 class="eyebrow-title">Take Action</h3>'     +
@@ -98,8 +99,9 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                     this.setData('align', 'center');
 
                 // Set data to image option
-                if (this.data.callout)
-                    this.setData('calloutImage', this.data.callout);
+                var calloutImage = this.element.getAttribute('data-image');
+                var calloutImageData = (calloutImage) ? calloutImage : 0;
+                this.setData('callout', calloutImageData);
             },
             data: function () {
                 //called everytime dialog is opened and closed.
@@ -115,11 +117,12 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                 // any 1 value (string or integer).
                 if (this.data.callout && this.data.callout == 1) {
                     //set the image tag to show or hide
-                    //this.element.setAttribute('data-image', this.data.callout);
+                    this.element.setAttribute('data-image', this.data.callout);
                     var imageCallout = this.element.find('.callout__image');
                     imageCallout.$[0].classList.remove('hidden')
 
                 } else {
+                    this.element.setAttribute('data-image', 0);
                     var imageCallout = this.element.find('.callout__image');
                     imageCallout.$[0].classList.add('hidden')
                 }
