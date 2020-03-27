@@ -65,13 +65,13 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                 },
                 image: {
                     selector: '.callout__image',
-                    allowedContent: 'img[*](*); picture[*](*); source[*](*); video[*](*); drupal-entity[*](*);'
+                    allowedContent: 'img[*](*); picture[*](*); source[*](*); video[*](*); drupal-entity[*](*); figure[*](*); article[*](*);'
                 }
             },
 
             template:
             '<aside class="ucsfcallout callout-left" data-image="none">' +
-                '<div class="callout__image hidden"><img id="callout_image_0" src="/sites/default/files/media-icons/generic/no-thumbnail.png" /></div>' +
+                '<div class="callout__image"><img id="callout_image_0" src="/sites/default/files/media-icons/generic/no-thumbnail.png" /></div>' +
                 '<div class="callout__content">'    +
                     '<h3 class="eyebrow-title">Take Action</h3>'     +
                     '<time>Oct. 24, 2018</time>'    +
