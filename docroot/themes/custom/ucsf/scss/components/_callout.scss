@@ -32,8 +32,13 @@
   }
 
   @include breakpoint($new-small) {
-    margin-left: -14%
+    margin-left: -14%;
+
+    &.in-viewport {
+      animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    }
   }
+
   @include breakpoint($new-large) {
     margin-left: -20%;
   }
@@ -49,28 +54,43 @@
   }
 
   @include breakpoint($new-small) {
-    margin-right: -14%
-  }
-  @include breakpoint($new-large) {
-    margin-right: -20%;
-  }
-}
+    margin-right: -14%;
 
-.hidden {
-  display: none;
-  line-height: 0;
-}
-
-@include breakpoint($new-small) {
-  .callout-right {
     &.in-viewport {
       animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
     }
   }
 
-  .callout-left {
-    &.in-viewport {
-      animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-    }
+  @include breakpoint($new-large) {
+    margin-right: -20%;
   }
+}
+
+.callout__image {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 2rem;
+  margin-top: -155px;
+
+  .embedded-entity {
+    margin: 0;
+  }
+
+  .callout-left & {
+    transform: translateX(-50%);
+  }
+
+  .callout-right & {
+    float: right;
+    transform: translateX(50%);
+  }
+}
+
+.callout__content {
+  clear: both;
+}
+
+.hidden {
+  display: none;
+  line-height: 0;
 }

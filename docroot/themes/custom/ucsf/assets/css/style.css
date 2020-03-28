@@ -1169,16 +1169,16 @@ a.icon-transit:hover {
     -webkit-transform: translateX(-50px);
             transform: translateX(-50px); }
   100% {
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px); } }
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px); } }
 
 @keyframes element-slide-right {
   0% {
     -webkit-transform: translateX(-50px);
             transform: translateX(-50px); }
   100% {
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px); } }
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px); } }
 
 @-webkit-keyframes slide-in {
   from {
@@ -10231,7 +10231,10 @@ a[href*="http"] .article-header__date {
       margin-right: 0; } }
   @media (min-width: 769px) {
     .callout-left {
-      margin-left: -14%; } }
+      margin-left: -14%; }
+      .callout-left.in-viewport {
+        -webkit-animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+                animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
   @media (min-width: 1050px) {
     .callout-left {
       margin-left: -20%; } }
@@ -10245,22 +10248,35 @@ a[href*="http"] .article-header__date {
       margin-left: 0; } }
   @media (min-width: 769px) {
     .callout-right {
-      margin-right: -14%; } }
+      margin-right: -14%; }
+      .callout-right.in-viewport {
+        -webkit-animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+                animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
   @media (min-width: 1050px) {
     .callout-right {
       margin-right: -20%; } }
 
+.callout__image {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 2rem;
+  margin-top: -155px; }
+  .callout__image .embedded-entity {
+    margin: 0; }
+  .callout-left .callout__image {
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%); }
+  .callout-right .callout__image {
+    float: right;
+    -webkit-transform: translateX(50%);
+            transform: translateX(50%); }
+
+.callout__content {
+  clear: both; }
+
 .hidden {
   display: none;
   line-height: 0; }
-
-@media (min-width: 769px) {
-  .callout-right.in-viewport {
-    -webkit-animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-            animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
-  .callout-left.in-viewport {
-    -webkit-animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-            animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
 
 .article-meta-share {
   list-style: none;
