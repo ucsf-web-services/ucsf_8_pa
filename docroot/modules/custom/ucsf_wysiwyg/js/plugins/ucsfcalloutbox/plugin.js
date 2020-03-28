@@ -67,7 +67,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                 },
                 content: {
                     selector: '.callout__content',
-                    allowedContent: 'h2[*](*); h3[*](*); h4[*](*); h5[*](*); h6[*](*); p[*](*); strong[*](*); a[*](*); picture br em cite i strike sub sup ul[*](*); ol[*](*); li dl dd dt address[*](*); abbr;'
+                    allowedContent: 'h2[*](*); h3[*](*); h4[*](*); h5[*](*); h6[*](*); p[*](*); strong[*](*); a[*](*); picture br em cite i strike sub sup ul[*](*); ol[*](*); li dl dd dt address[*](*); abbr; drupal-entity[*](*); figure[*](*); article[*](*); span[*](*); div[*](*);'
                 }
             },
 
