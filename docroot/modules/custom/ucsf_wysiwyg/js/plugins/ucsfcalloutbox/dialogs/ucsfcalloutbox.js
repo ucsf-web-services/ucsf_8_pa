@@ -30,7 +30,7 @@ CKEDITOR.dialog.add('ucsfcalloutbox', function( editor ) {
           {
             id: 'callout',
             type: 'radio',
-            label: 'Default Callout Image',
+            label: 'Corner Image',
             items: [
               [ 'On', 1 ],
               [ 'Off', 0 ]
