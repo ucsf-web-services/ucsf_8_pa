@@ -1,6 +1,7 @@
-$callout-offsetY: 14%;
+$callout-offsetX: 14%;
+// Callout corner image
 $callout-image-offsetX-small: 3.5rem;
-$callout-image-offsetX-medium: $callout-offsetY;
+$callout-image-offsetX-medium: $callout-offsetX;
 
 .ucsfcallout {
   background: $background-gray;
@@ -23,6 +24,15 @@ $callout-image-offsetX-medium: $callout-offsetY;
   @include breakpoint($new-small) {
     width: 50%;
     padding: 80px 10%;
+  }
+
+  // Callout box has corner image
+  &[data-image="1"] {
+    margin-top: 3rem;
+
+    @include breakpoint($new-large) {
+      margin-top: 5rem;
+    }
   }
 }
 
@@ -95,7 +105,7 @@ $callout-image-offsetX-medium: $callout-offsetY;
 
     @include breakpoint($new-small) {
       float: none;
-      margin-left: -$callout-offsetY;
+      margin-left: -$callout-offsetX;
     }
 
     @include breakpoint($new-large) {
@@ -111,7 +121,7 @@ $callout-image-offsetX-medium: $callout-offsetY;
 
     @include breakpoint($new-small) {
       margin-left: 0;
-      margin-right: -$callout-offsetY;
+      margin-right: -$callout-offsetX;
       float: right;
     }
 

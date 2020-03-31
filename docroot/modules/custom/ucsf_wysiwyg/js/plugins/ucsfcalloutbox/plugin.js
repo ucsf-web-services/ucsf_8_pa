@@ -84,8 +84,6 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
             dialog: 'ucsfcalloutbox',
 
             upcast: function (element) {
-                // <drupal-entity data-caption="" data-embed-button="media_assets" data-entity-embed-display="entity_reference:media_thumbnail" data-entity-embed-display-settings="{&quot;image_style&quot;:&quot;default_callout_image&quot;,&quot;image_link&quot;:&quot;&quot;,&quot;link_url&quot;:&quot;&quot;}" data-entity-type="media" data-entity-uuid="dd64b36a-7127-43a6-8b69-c19ee6b77cd1"></drupal-entity>
-
                 return element.name == 'aside' && element.hasClass('ucsfcallout');
             },
 
