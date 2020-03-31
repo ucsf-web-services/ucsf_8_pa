@@ -77,7 +77,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                     '<h3 class="eyebrow-title">Take Action</h3>'     +
                     '<time>Oct. 24, 2020</time>'    +
                     '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ultricies sit amet.</p>' +
-                    '<p><a href="/">Learn More</a></p>' +
+                    '<p><a class="link link--cta" href="/">Learn More</a></p>' +
                 '</div>' +
             '</aside>',
             button: 'Create a Callout Box',
