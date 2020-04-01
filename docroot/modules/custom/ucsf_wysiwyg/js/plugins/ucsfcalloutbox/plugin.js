@@ -72,7 +72,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
 
             template:
             '<aside class="ucsfcallout callout-left" data-image="0">' +
-                '<div class="callout__image">Remove this text and add an image.</div>' +
+                '<div class="callout__image">Remove this text and use the embed button to add an image.</div>' +
                 '<div class="callout__content">'    +
                     '<h3 class="eyebrow-title">Take Action</h3>'     +
                     '<time>Oct. 24, 2020</time>'    +
