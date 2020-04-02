@@ -60,6 +60,7 @@
       '.half-image-left',
       '.full-bleed-image',
       '.callout-left',
+      '.callout-left .callout__image',
       '.layout-columns__1',
       '.layout-columns__2',
       '.layout-columns__3',
