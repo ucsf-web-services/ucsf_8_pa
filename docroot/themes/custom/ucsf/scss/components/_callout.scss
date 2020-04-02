@@ -1,5 +1,7 @@
 $callout-offsetX: 14%;
 // Callout corner image
+$callout-image-size: 100px;
+$callout-image-size-large: 150px;
 $callout-image-offsetX-small: 3.5rem;
 $callout-image-offsetX-medium: $callout-offsetX;
 
@@ -81,13 +83,15 @@ $callout-image-offsetX-medium: $callout-offsetX;
 }
 
 .callout__image {
-  width: 150px;
-  height: 150px;
+  width: $callout-image-size;
+  height: $callout-image-size;
   overflow: hidden;
   margin-bottom: 2rem;
   margin-top: -5rem;
 
-  @include breakpoint($new-small) {
+  @include breakpoint($new-x-small) {
+    width: $callout-image-size-large;
+    height: $callout-image-size-large;
     margin-top: -8rem;
   }
 
@@ -100,9 +104,14 @@ $callout-image-offsetX-medium: $callout-offsetX;
   }
 
   img {
-    width: 150px;
-    height: 150px;
+    width: $callout-image-size;
+    height: $callout-image-size;
     object-fit: cover;
+
+    @include breakpoint($new-x-small) {
+      width: $callout-image-size-large;
+      height: $callout-image-size-large;
+    }
   }
 
   .callout-left & {
