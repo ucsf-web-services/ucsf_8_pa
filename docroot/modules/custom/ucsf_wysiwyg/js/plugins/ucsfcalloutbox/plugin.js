@@ -29,6 +29,7 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
         //var config = editor.config.y3titemplatemenuButtons.split(',');
         //var button =  config['pullquote'] == undefined ? 'Create a Pullquote' : undefined;
         var pluginDirectory = this.path;
+
         editor.addContentsCss(pluginDirectory + 'css/ucsfcalloutbox.css');
 
         editor.ui.addButton('ucsfcalloutbox', {
@@ -58,30 +59,30 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
             //allowedContent: 'aside div(*); time;',
             requiredContent: 'aside(!ucsfcallout);',
 
+            // Editables need to be in the order they are placed in DOM.
             editables: {
-                content: {
-                    selector: '.callout__content',
-                    allowedContent: 'h2[*](*); h3[*](*); h4[*](*); h5[*](*); h6[*](*); p[*](*); strong[*](*); a[*](*); picture br em cite i strike sub sup ul[*](*); ol[*](*); li dl dd dt address[*](*); abbr;'
-                },
                 image: {
                     selector: '.callout__image',
-                    allowedContent: 'img[*](*); picture[*](*); source[*](*); video[*](*); drupal-entity[*](*);'
+                    allowedContent: 'img[*](*); picture[*](*); source[*](*); video[*](*); drupal-entity[*](*); figure[*](*); article[*](*); span[*](*); div[*](*);'
+                },
+                content: {
+                    selector: '.callout__content'
                 }
             },
 
             template:
-            '<aside class="ucsfcallout callout-left" data-image="none">' +
-                '<div class="callout__image hidden"><img id="callout_image_0" src="/sites/default/files/media-icons/generic/no-thumbnail.png" /></div>' +
+            '<aside class="ucsfcallout callout-left" data-image="0">' +
+                '<div class="callout__image">Remove this text and use the embed button to add an image.</div>' +
                 '<div class="callout__content">'    +
                     '<h3 class="eyebrow-title">Take Action</h3>'     +
-                    '<time>Oct. 24, 2018</time>'    +
+                    '<time>Oct. 24, 2020</time>'    +
                     '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ultricies sit amet.</p>' +
-                    '<p><a href="/">Learn More</a></p>' +
+                    '<p><a class="link link--cta" href="/">Learn More</a></p>' +
                 '</div>' +
             '</aside>',
-
             button: 'Create a Callout Box',
             dialog: 'ucsfcalloutbox',
+
             upcast: function (element) {
                 return element.name == 'aside' && element.hasClass('ucsfcallout');
             },
@@ -94,9 +95,11 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                     this.setData('align', 'right');
                 if (this.element.hasClass('callout-center'))
                     this.setData('align', 'center');
-                if (this.data.callout)
-                    this.setData('calloutImage', this.data.callout);
 
+                // Set data to image option
+                var calloutImage = this.element.getAttribute('data-image');
+                var calloutImageData = (calloutImage) ? calloutImage : 0;
+                this.setData('callout', calloutImageData);
             },
             data: function () {
                 //called everytime dialog is opened and closed.
@@ -107,13 +110,19 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                 if (this.data.align) {
                     this.element.addClass('callout-' + this.data.align);
                 }
-                //console.log('data(): ' + this.data.callout);
-                if (this.data.callout && this.data.callout != 'none') {
-                    //set the image tag
-                    //this.element.setAttribute('data-image', this.data.callout);
-                    var images = this.element.getElementsByTag('img');
+
+                // The value is a 1 but given as a string. We will check against
+                // any 1 value (string or integer).
+                if (this.data.callout && this.data.callout == 1) {
+                    //set the image tag to show or hide
+                    this.element.setAttribute('data-image', this.data.callout);
+                    var imageCallout = this.element.find('.callout__image');
+                    imageCallout.$[0].classList.remove('hidden')
+
                 } else {
-                    //hide image div
+                    this.element.setAttribute('data-image', 0);
+                    var imageCallout = this.element.find('.callout__image');
+                    imageCallout.$[0].classList.add('hidden')
                 }
             }
         });

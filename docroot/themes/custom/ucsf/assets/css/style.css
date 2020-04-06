@@ -1169,16 +1169,16 @@ a.icon-transit:hover {
     -webkit-transform: translateX(-50px);
             transform: translateX(-50px); }
   100% {
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px); } }
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px); } }
 
 @keyframes element-slide-right {
   0% {
     -webkit-transform: translateX(-50px);
             transform: translateX(-50px); }
   100% {
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px); } }
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px); } }
 
 @-webkit-keyframes slide-in {
   from {
@@ -10221,6 +10221,11 @@ a[href*="http"] .article-header__date {
     .ucsfcallout {
       width: 50%;
       padding: 80px 10%; } }
+  .ucsfcallout[data-image="1"] {
+    margin-top: 3rem; }
+    @media (min-width: 1050px) {
+      .ucsfcallout[data-image="1"] {
+        margin-top: 5rem; } }
 
 .callout-left {
   float: left;
@@ -10231,7 +10236,10 @@ a[href*="http"] .article-header__date {
       margin-right: 0; } }
   @media (min-width: 769px) {
     .callout-left {
-      margin-left: -14%; } }
+      margin-left: -14%; }
+      .callout-left.in-viewport {
+        -webkit-animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+                animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
   @media (min-width: 1050px) {
     .callout-left {
       margin-left: -20%; } }
@@ -10245,22 +10253,72 @@ a[href*="http"] .article-header__date {
       margin-left: 0; } }
   @media (min-width: 769px) {
     .callout-right {
-      margin-right: -14%; } }
+      margin-right: -14%; }
+      .callout-right.in-viewport {
+        -webkit-animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+                animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
   @media (min-width: 1050px) {
     .callout-right {
       margin-right: -20%; } }
 
+.callout__image {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  margin-top: -5rem; }
+  @media (min-width: 600px) {
+    .callout__image {
+      width: 150px;
+      height: 150px;
+      margin-top: -8rem; } }
+  @media (min-width: 1050px) {
+    .callout__image {
+      margin-top: -10rem; } }
+  .callout__image .embedded-entity {
+    margin: 0; }
+  .callout__image img {
+    width: 100px;
+    height: 100px;
+    -o-object-fit: cover;
+       object-fit: cover; }
+    @media (min-width: 600px) {
+      .callout__image img {
+        width: 150px;
+        height: 150px; } }
+  .callout-left .callout__image {
+    float: right;
+    margin-right: -3.5rem; }
+    @media (min-width: 769px) {
+      .callout-left .callout__image {
+        float: none;
+        margin-left: -14%; } }
+    @media (min-width: 1050px) {
+      .callout-left .callout__image {
+        margin-right: 0;
+        margin-left: 0;
+        -webkit-transform: translateX(-50%);
+                transform: translateX(-50%); } }
+  .callout-right .callout__image {
+    float: left;
+    margin-left: -3.5rem; }
+    @media (min-width: 769px) {
+      .callout-right .callout__image {
+        margin-left: 0;
+        margin-right: -14%;
+        float: right; } }
+    @media (min-width: 1050px) {
+      .callout-right .callout__image {
+        margin-right: 0;
+        -webkit-transform: translateX(50%);
+                transform: translateX(50%); } }
+
+.callout__content {
+  clear: both; }
+
 .hidden {
   display: none;
   line-height: 0; }
-
-@media (min-width: 769px) {
-  .callout-right.in-viewport {
-    -webkit-animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-            animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
-  .callout-left.in-viewport {
-    -webkit-animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-            animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
 
 .article-meta-share {
   list-style: none;
