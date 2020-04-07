@@ -337,15 +337,15 @@
         });
     }
 
-    // for emergency alerts data-emergency-alert-toggle
+    // for emergency alerts
     $('.emergency-alert__toggle').on('click', function (e) {
         var $this = $(this);
-        $('.emergency-alert').toggleClass("emergency-alert--collapsed"); //you can list several class names
+        $this.closest('.emergency-alert').toggleClass('emergency-alert--collapsed'); //you can list several class names
 
-        if ($this.attr("aria-expanded") === "true") {
-            $this.attr("aria-expanded", "false");
+        if ($this.attr('aria-expanded') === 'true') {
+            $this.attr('aria-expanded', 'false');
         } else {
-            $this.attr("aria-expanded", "true");
+            $this.attr('aria-expanded', 'true');
         }
         e.preventDefault();
     });
