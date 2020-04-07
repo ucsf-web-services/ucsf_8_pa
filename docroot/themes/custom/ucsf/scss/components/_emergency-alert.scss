@@ -7,23 +7,23 @@
     padding-right: 20px;
   }
 
-  .emergency-alert__header,
-  .emergency-alert__content {
+  &__header,
+  &__content {
     margin: 0 auto;
     max-width: $full-width-elements;
     padding: 0 20px;
   }
 
-  .emergency-alert__header {
+  &__header {
     color: $white;
     font-family: $font-helvetica-neue-light;
     font-size: 36px;
     margin-bottom: 0;
     background: url("../images/accordion-arrow-open.svg") no-repeat transparent;
-    filter: brightness(0) invert(1); // making it white
     background-size: 24px 24px;
     background-position: right 20px center;
     cursor: pointer;
+    filter: brightness(0) invert(1); // making it white
 
     @include breakpoint($new-x-small-max) {
       font-size: 24px;
@@ -31,10 +31,10 @@
     }
   }
 
-  .emergency-alert__content {
+  &__content {
     margin-top: $space-three;
 
-    &  > :last-child {
+    > :last-child {
       margin-bottom: 0;
     }
   }
@@ -45,39 +45,34 @@
     color: $white;
   }
 
-  &.emergency-alert__collapsed {
+  &--collapsed {
     padding: $space-two 0;
 
     .emergency-alert__header {
-      background: url("../images/accordion-arrow-closed.svg") no-repeat transparent;
-      background-size: 24px 24px;
-      background-position: right 20px center;
-
-      @include breakpoint($new-x-small-max) {
-        background-size: 20px 20px;
-      }
+      background-image: url("../images/accordion-arrow-closed.svg");
+      margin-bottom: 0;
     }
 
     .emergency-alert__content {
       display: none;
     }
   }
-}
 
-.emergency-alert.background-yellow {
-  background-color: $c-yellow;
-  color: $c-navy;
-
-  .link--cta {
-    background-image: url("../images/cta-arrow-navy.svg");
-  }
-
-  a {
+  &--background-yellow {
+    background-color: $c-yellow;
     color: $c-navy;
-  }
 
-  .emergency-alert__header {
-    color: $c-navy;
-    filter: none;
+    .link--cta {
+      background-image: url("../images/cta-arrow-navy.svg");
+    }
+
+    a {
+      color: $c-navy;
+    }
+
+    .emergency-alert__header {
+      color: $c-navy;
+      filter: none;
+    }
   }
 }

@@ -2,10 +2,10 @@
 {{ attach_library('ucsf/vertical_tabs') }}
 
 {% if '1' in content.field_display_closed[0] %}
-  {% set emerclass = 'emergency-alert__collapsed' %}
+  {% set emerclass = 'emergency-alert--collapsed' %}
 {% endif %}
 
-{% set bg_color = 'background-yellow' %}
+{% set bg_color = 'emergency-alert--background-yellow' %}
 {% if content.field_textbox_background_color.0 %}
   {% set bg_color = 'background-' ~ content.field_textbox_background_color[0]['#title']|clean_class %}
 {% endif %}

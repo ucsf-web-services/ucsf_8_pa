@@ -339,7 +339,7 @@
 
     // for emergency alerts
     $('.emergency-alert__header').on('click', function (e) {
-        $('.emergency-alert').toggleClass("emergency-alert__collapsed"); //you can list several class names
+        $('.emergency-alert').toggleClass("emergency-alert--collapsed"); //you can list several class names
         e.preventDefault();
     });
 
