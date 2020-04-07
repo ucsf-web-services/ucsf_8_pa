@@ -5,13 +5,18 @@
   {% set emerclass = 'emergency-alert__collapsed' %}
 {% endif %}
 
-<div class="emergency-alert {{ emerclass }}">
+{% set bg_color = 'background-yellow' %}
+{% if content.field_textbox_background_color.0 %}
+  {% set bg_color = 'background-' ~ content.field_textbox_background_color[0]['#title']|clean_class %}
+{% endif %}
+
+<div class="emergency-alert {{ emerclass }} {{ bg_color }}">
   {{ title_prefix }}
   {% if label %}
     <h2 class="emergency-alert__header">{{ label }}</h2>
   {% endif %}
   {{ title_suffix }}
   {% block content %}
-    {{ content|without('field_display_closed') }}
+    {{ content|without('field_display_closed','field_textbox_background_color') }}
   {% endblock %}
 </div>
