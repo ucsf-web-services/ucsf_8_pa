@@ -45,6 +45,12 @@
     color: $white;
   }
 
+  a {
+    @include link-colors($white);
+  }
+
+  // Modifiers
+
   &--collapsed {
     padding: $space-two 0;
 
@@ -67,7 +73,7 @@
     }
 
     a {
-      color: $c-navy;
+      @include link-colors($c-navy);
     }
 
     .emergency-alert__header {

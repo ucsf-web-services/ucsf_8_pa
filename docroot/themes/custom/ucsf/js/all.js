@@ -350,10 +350,17 @@
         });
     }
 
-    // for emergency alerts
-    $('.emergency-alert__header').on('click', function(e) {
-      $('.emergency-alert').toggleClass("emergency-alert--collapsed"); //you can list several class names
-      e.preventDefault();
+    // for emergency alerts data-emergency-alert-toggle
+    $('[data-emergency-alert-toggle]').on('click', function(e) {
+        const $this = $(this);
+        $('.emergency-alert').toggleClass("emergency-alert--collapsed"); //you can list several class names
+
+        if ($this.attr("aria-expanded") === "true") {
+            $this.attr("aria-expanded", "false")
+        } else {
+            $this.attr("aria-expanded", "true")
+        }
+        e.preventDefault();
     });
 
     $.urlParam = function(name){
