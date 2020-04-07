@@ -1,17 +1,30 @@
 
 {{ attach_library('ucsf/vertical_tabs') }}
 
+{% set expanded = 'true' %}
 {% if '1' in content.field_display_closed[0] %}
-  {% set emerclass = 'emergency-alert__collapsed' %}
+  {% set emerclass = 'emergency-alert--collapsed' %}
+  {% set expanded = 'false' %}
 {% endif %}
 
-<div class="emergency-alert {{ emerclass }}">
+{% set bg_color = 'emergency-alert--background-yellow' %}
+{% if content.field_textbox_background_color.0 %}
+  {% set bg_color = 'background-' ~ content.field_textbox_background_color[0]['#title']|clean_class %}
+{% endif %}
+{{ devel_breakpoint() }}
+<section class="emergency-alert {{ emerclass }} {{ bg_color }}">
   {{ title_prefix }}
   {% if label %}
-    <h2 class="emergency-alert__header">{{ label }}</h2>
+    <h2 class="emergency-alert__header">
+      <a href="#collapse-{{derivative_plugin_id}}" class="emergency-alert__toggle" role="button" aria-expanded="{{expanded}}" aria-controls="collapse-{{derivative_plugin_id}}">
+        {{ label }}
+      </a>
+    </h2>
   {% endif %}
   {{ title_suffix }}
-  {% block content %}
-    {{ content|without('field_display_closed') }}
-  {% endblock %}
-</div>
+  <div class="emergency-alert__content" id="collapse-{{derivative_plugin_id}}">
+    {% block content %}
+      {{ content|without('field_display_closed','field_textbox_background_color') }}
+    {% endblock %}
+  </div>
+</section>

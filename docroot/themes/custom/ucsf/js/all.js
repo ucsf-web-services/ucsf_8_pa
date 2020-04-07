@@ -351,9 +351,16 @@
     }
 
     // for emergency alerts
-    $('.emergency-alert__header').on('click', function(e) {
-      $('.emergency-alert').toggleClass("emergency-alert__collapsed"); //you can list several class names
-      e.preventDefault();
+    $('.emergency-alert__toggle').on('click', function(e) {
+        const $this = $(this);
+        $this.closest('.emergency-alert').toggleClass('emergency-alert--collapsed'); //you can list several class names
+
+        if ($this.attr('aria-expanded') === 'true') {
+            $this.attr('aria-expanded', 'false')
+        } else {
+            $this.attr('aria-expanded', 'true')
+        }
+        e.preventDefault();
     });
 
     $.urlParam = function(name){
