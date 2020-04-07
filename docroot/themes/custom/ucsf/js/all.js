@@ -351,7 +351,7 @@
     }
 
     // for emergency alerts data-emergency-alert-toggle
-    $('[data-emergency-alert-toggle]').on('click', function(e) {
+    $('.emergency-alert__toggle').on('click', function(e) {
         const $this = $(this);
         $('.emergency-alert').toggleClass("emergency-alert--collapsed"); //you can list several class names
 
