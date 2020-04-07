@@ -225,6 +225,8 @@ class UcsfsearchController extends ControllerBase {
 
     //url encode the string for searching
     //@todo make #search the cache key, $directory the cache items
+    // disregard quotes and match results in people directory
+    $search = $this->removeAllQuotes($search);
     $search = urlencode($search);
     $cachekey = "people.{$search}";
 
@@ -279,5 +281,10 @@ class UcsfsearchController extends ControllerBase {
   // Convert regular quotes into curly quotes.
   protected function toCurlyQuotes($searchterm) {
     return preg_replace(['/\b&quot;/','/&quot;/','/\b&#039;/','/&#039;/'], ['”','“',"’","‘"], $searchterm );
+  }
+
+  // Remove all quotes from the search string.
+  protected function removeAllQuotes($searchterm) {
+    return str_replace(["‘", "’", "“", "”", "`","\"","b&quot;", "&quot;", "b&#039;", "&#039;"], "", $searchterm);
   }
 }

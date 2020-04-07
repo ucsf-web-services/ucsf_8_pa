@@ -1,3 +1,11 @@
+$callout-offsetX: 14%;
+
+// Callout corner image
+$callout-image-size: 100px;
+$callout-image-size-large: 150px;
+$callout-image-offsetX-small: 3.5rem;
+$callout-image-offsetX-medium: $callout-offsetX;
+
 .ucsfcallout {
   background: $background-gray;
   margin: 10%;
@@ -20,6 +28,15 @@
     width: 50%;
     padding: 80px 10%;
   }
+
+  // Callout box has corner image
+  &[data-image="1"] {
+    margin-top: 3rem;
+
+    @include breakpoint($new-large) {
+      margin-top: 5rem;
+    }
+  }
 }
 
 .callout-left {
@@ -32,8 +49,13 @@
   }
 
   @include breakpoint($new-small) {
-    margin-left: -14%
+    margin-left: -$callout-offsetX;
+
+    &.in-viewport {
+      animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    }
   }
+
   @include breakpoint($new-large) {
     margin-left: -20%;
   }
@@ -49,28 +71,88 @@
   }
 
   @include breakpoint($new-small) {
-    margin-right: -14%
-  }
-  @include breakpoint($new-large) {
-    margin-right: -20%;
-  }
-}
+    margin-right: -$callout-offsetX;
 
-.hidden {
-  display: none;
-  line-height: 0;
-}
-
-@include breakpoint($new-small) {
-  .callout-right {
     &.in-viewport {
       animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
     }
   }
 
-  .callout-left {
-    &.in-viewport {
-      animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+  @include breakpoint($new-large) {
+    margin-right: -20%;
+  }
+}
+
+.callout__image {
+  width: $callout-image-size;
+  height: $callout-image-size;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  margin-top: -5rem;
+
+  @include breakpoint($new-x-small) {
+    width: $callout-image-size-large;
+    height: $callout-image-size-large;
+    margin-top: -8rem;
+  }
+
+  @include breakpoint($new-large) {
+    margin-top: -10rem;
+  }
+
+  .embedded-entity {
+    margin: 0;
+  }
+
+  img {
+    width: $callout-image-size;
+    height: $callout-image-size;
+    object-fit: cover;
+
+    @include breakpoint($new-x-small) {
+      width: $callout-image-size-large;
+      height: $callout-image-size-large;
     }
   }
+
+  .callout-left & {
+    float: right;
+    margin-right: -$callout-image-offsetX-small;
+
+    @include breakpoint($new-small) {
+      float: none;
+      margin-left: -$callout-offsetX;
+    }
+
+    @include breakpoint($new-large) {
+      margin-right: 0;
+      margin-left: 0;
+      transform: translateX(-50%);
+    }
+  }
+
+  .callout-right & {
+    float: left;
+    margin-left: -$callout-image-offsetX-small;
+
+    @include breakpoint($new-small) {
+      margin-left: 0;
+      margin-right: -$callout-offsetX;
+      float: right;
+    }
+
+    @include breakpoint($new-large) {
+      margin-right: 0;
+      transform: translateX(50%);
+    }
+  }
+}
+
+.callout__content {
+  clear: both;
+}
+
+.hidden {
+  display: none;
+  line-height: 0;
 }
