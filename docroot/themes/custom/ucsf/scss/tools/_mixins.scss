@@ -219,7 +219,7 @@
 
 // Requirements: link text color is $c-blue-link
 // Arrow icon follows link text
-// Link text, and background image are both at the left edge of the element, so that
+// Link text, and background image are both at the left edge of the parent element, so that
 // there is room for the icon to move right on hover
 @mixin arrow-c-blue-after-text {
   background-image: url("../images/cta-arrow.svg");
@@ -235,6 +235,10 @@
 // for links where text is at the left edge of the element
 // and background image is at the right edge of the element
 // icon still needs to move right on hover, link text should stay in place
+@mixin arrow-c-white {
+  color: $white;
+  background-image: url("../images/cta-arrow-white.svg");
+}
 
 @mixin tables {
   .table-wrapper-responsive {
@@ -355,4 +359,28 @@
 @mixin menu-animation {
   -webkit-animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
   animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
+}
+
+/**
+* Creates .[parent class].[$color-application]-[color] class chain and applies corresponding box-shadow or background color
+* For example .emergency-alert.overlay-gray or .emergency-alert.background-gray
+*/
+  // Get color value from color-map array (@tools/_variables.scss)
+@mixin colored($color-application:"background") {
+  @each $name, $color in $color-map {
+    // create a class name based on the color name
+    &.#{$color-application}-#{$name} {
+      @if ($color-application == "background") {
+        background-color: $color;
+      }
+
+      @if ($color-application == "overlay")  {
+        // convert hex value into rgba box-shadow
+        box-shadow: inset 0 0 0 1000px rgba($color, 0.8);
+        &:hover {
+          box-shadow: inset 0 0 0 1000px rgba($color, 0.95);
+        }
+      }
+    }
+  }
 }
