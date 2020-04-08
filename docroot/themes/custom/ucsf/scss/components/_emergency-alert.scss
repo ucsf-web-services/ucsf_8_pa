@@ -1,5 +1,5 @@
 .emergency-alert {
-  @include colored();
+  @include colored(); // creates background colors or box shadows
   color: $white;
   padding: $space-five 0 $space 0;
 
@@ -70,8 +70,24 @@
     }
   }
 
-  &--background-yellow {
-    background-color: $c-yellow;
+  &.background-yellow {
+    color: $c-navy;
+
+    .link--cta {
+      background-image: url("../images/cta-arrow-navy.svg");
+    }
+
+    a {
+      @include link-colors($c-navy);
+    }
+
+    .emergency-alert__header {
+      color: $c-navy;
+      filter: none;
+    }
+  }
+
+  &.background-yellow {
     color: $c-navy;
 
     .link--cta {
