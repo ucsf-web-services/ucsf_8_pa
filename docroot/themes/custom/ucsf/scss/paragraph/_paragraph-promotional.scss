@@ -66,7 +66,7 @@
     font-size: 12px;
 
     &::after {
-      background: $white;
+      background-color: $white;
     }
   }
 
@@ -76,7 +76,14 @@
     }
 
     .promo-list__card-title {
+      @include eyebrow;
+      display: inline-block;
       color: $c-navy;
+
+      &::after {
+        display: inline-block;
+        background-color: $c-navy;
+      }
     }
 
     .link--cta {
