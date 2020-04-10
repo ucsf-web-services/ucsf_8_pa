@@ -16,13 +16,14 @@
         {{ content }}
         {# main nav #}
       </div>
-      {# TODO load this element only on http://ucsf.edu/cphp #}
-      {# {% if parnassus_subnav %} #}
+      {# var has_subnav is created through php-includes\region.inc #}
+      {% if has_subnav %}
+        {# TODO If we made it this far, load the styles and JS for submenu #}
         {# {{ attach_library('ucsf/parnassus-subnav') }} #}
         <div class="parnassus-subnav-wrapper">
           {{ drupal_block('parnassusheightssubnav') }}
         </div>
-      {# {% endif %} #}
+      {% endif %}
     </section>
   </header>
 {% endblock content %}
