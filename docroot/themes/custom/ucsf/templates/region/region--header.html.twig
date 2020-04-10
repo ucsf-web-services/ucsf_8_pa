@@ -16,6 +16,13 @@
         {{ content }}
         {# main nav #}
       </div>
+      {# TODO load this element only on http://ucsf.edu/cphp #}
+      {# {% if parnassus_subnav %} #}
+        {# {{ attach_library('ucsf/parnassus-subnav') }} #}
+        <div class="parnassus-subnav-wrapper">
+          {{ drupal_block('parnassusheightssubnav') }}
+        </div>
+      {# {% endif %} #}
     </section>
   </header>
 {% endblock content %}

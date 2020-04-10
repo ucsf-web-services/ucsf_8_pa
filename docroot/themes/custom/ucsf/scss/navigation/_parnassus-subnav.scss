@@ -1,0 +1,72 @@
+// Borders
+$subnav-border-top: 1px;
+$link-hover-border-size: 4px;
+
+// Heights
+// Total height of the .parnassus-subnav-wrapper when full menu is visible
+$subnav-height: 60px;
+// Total height of the .parnassus-subnav-wrapper when header nav is sticky at the top.
+$subnav-height-sticky: 50px;
+$menu-line-height: calc(#{$subnav-height} - #{$hover-border-size} - #{$subnav-border-top});
+
+// Font sizes
+$subnav-item-font-size: 16px;
+
+.parnassus-subnav-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: $subnav-height;
+  bottom: -($subnav-height);
+  border-top: $subnav-border-top solid $c-gray-border;
+  box-shadow: 0 10px 20px -5px rgba($c-gray-border, .4);
+  background-color: green;
+}
+
+.parnassus-subnav {
+  @include wrapper;
+  max-width: $full-width-elements;
+  padding: 0 20px;
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+
+  & &__title {
+    @include fs-option-label;
+    font-family: $font-helvetica-neue-medium;
+    font-size: $subnav-item-font-size;
+    color: $c-navy;
+    margin: 0;
+    &::after {
+      content: "|";
+      padding-left: 25px;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    .menu-item {
+      display: inline-block;
+      padding-left: 25px;
+
+      a {
+        display: inline-block;
+        line-height: $menu-line-height;
+        color: $c-navy;
+        font-size: $subnav-item-font-size;
+        padding-bottom: $link-hover-border-size;
+        outline: none;
+
+        &:hover {
+          color: $c-blue;
+          border-bottom: $link-hover-border-size solid $c-blue;
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+}
