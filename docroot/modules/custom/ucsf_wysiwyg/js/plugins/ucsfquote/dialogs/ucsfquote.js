@@ -66,11 +66,12 @@ CKEDITOR.dialog.add('ucsfquote', function( editor ) {
             label: 'Color Accent',
             items: [
               [ 'Blue', 'blue' ],
-              [ 'Grey', 'grey' ],
+              [ 'Gray', 'gray' ],
               [ 'Green', 'green' ],
               [ 'Teal', 'teal' ],
               [ 'Navy', 'navy' ],
-              [ 'Purple', 'purple' ]
+              [ 'Purple', 'purple' ],
+              [ 'Yellow', 'yellow' ]
             ],
             setup: function( widget ) {
               this.setValue( widget.data.colorAccent ? widget.data.colorAccent : 'blue' );
