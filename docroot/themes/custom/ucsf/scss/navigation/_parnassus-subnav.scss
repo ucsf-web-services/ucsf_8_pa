@@ -5,12 +5,18 @@ $link-hover-border-size: 4px;
 // Heights
 // Total height of the .parnassus-subnav-wrapper when full menu is visible
 $subnav-height: 60px;
-// Total height of the .parnassus-subnav-wrapper when header nav is sticky at the top.
-$subnav-height-sticky: 50px;
+// Total height of the .parnassus-subnav-wrapper when Header Navigation is sticky.
+$subnav-height-small: 56px;
 $menu-line-height: calc(#{$subnav-height} - #{$hover-border-size} - #{$subnav-border-top});
+$menu-line-height-small: calc(#{$subnav-height-small} - #{$hover-border-size} - #{$subnav-border-top});
 
 // Font sizes
 $subnav-item-font-size: 16px;
+
+//  Prevent elements inside .region-content from moving under the subnav
+.combined-header-region--has-subnav {
+  padding-bottom: $subnav-height;
+}
 
 .header-subnav-wrapper {
   position: absolute;
@@ -19,35 +25,66 @@ $subnav-item-font-size: 16px;
   height: $subnav-height;
   bottom: -($subnav-height);
   border-top: $subnav-border-top solid $c-gray-border;
+  border-bottom: $subnav-border-top solid $c-gray-border;
   box-shadow: 0 10px 20px -5px rgba($c-gray-border, .4);
-  background-color: green;
+  background-color: $white;
+  z-index: 1;
+
+  // When Header Navigation is sticky reduce the Header Subnav height and reposition it
+  .fixed-nav & {
+    height: $subnav-height-small;
+    bottom: -($subnav-height-small);
+  }
 }
 
+// TODO rename .parnassus-subnav to .header-subnav to make it more reusable
 .parnassus-subnav {
   @include wrapper;
-  max-width: $full-width-elements;
   padding: 0 20px;
-  grid-column: 1 / -1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+
+  @include breakpoint($bp-large) {
+    max-width: $full-width-elements;
+    grid-column: 1 / -1;
+    flex-direction: row;
+  }
 
   & &__title {
     @include fs-option-label;
     font-family: $font-helvetica-neue-medium;
     font-size: $subnav-item-font-size;
     color: $c-navy;
+    line-height: $menu-line-height-small;
     margin: 0;
+    cursor: pointer;
     &::after {
-      content: "|";
-      padding-left: 25px;
+      font-family: 'Font Awesome 5 Free';
+      content: "\f107";
+      display: inline-block;
+      font-size: 0.8em;
+    }
+
+    @include breakpoint($bp-large) {
+      line-height: $menu-line-height;
+      &::after {
+        content: "|";
+        padding-left: 25px;
+      }
     }
   }
 
   &__menu {
-    display: flex;
+    flex-direction: column;
     margin: 0;
     padding: 0;
     list-style: none;
+    display: none;
+
+    @include breakpoint($bp-large) {
+      display: flex;
+      flex-direction: row;
+    }
 
     .menu-item {
       display: inline-block;
@@ -67,6 +104,14 @@ $subnav-item-font-size: 16px;
           padding-bottom: 0;
         }
       }
+    }
+  }
+
+  // When Header Navigation is sticky reduce the line height of element
+  .fixed-nav & {
+
+    a {
+      line-height: $menu-line-height-small;
     }
   }
 }

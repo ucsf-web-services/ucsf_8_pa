@@ -1409,11 +1409,17 @@ a.icon-transit:hover {
   -webkit-transform: translateY(0);
           transform: translateY(0); }
 
+.fixed-nav--pre-hidden .header-region, .fixed-nav--hidden .header-region {
+  -webkit-transform: translateY(-93%);
+          transform: translateY(-93%); }
+  @media (min-width: 850px) {
+    .fixed-nav--pre-hidden .header-region, .fixed-nav--hidden .header-region {
+      -webkit-transform: translateY(-105%);
+              transform: translateY(-105%); } }
+
 .fixed-nav--hidden .header-region {
   -webkit-animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-out;
-          animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-out;
-  -webkit-transform: translateY(-105%);
-          transform: translateY(-105%); }
+          animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-out; }
 
 .slicknav_btn {
   position: relative;
@@ -2486,6 +2492,9 @@ body.loading .quicklinks {
     -webkit-transform: translateX(0px);
             transform: translateX(0px); } }
 
+.combined-header-region--has-subnav {
+  padding-bottom: 60px; }
+
 .header-subnav-wrapper {
   position: absolute;
   left: 0;
@@ -2493,23 +2502,35 @@ body.loading .quicklinks {
   height: 60px;
   bottom: -60px;
   border-top: 1px solid #9ba6b6;
+  border-bottom: 1px solid #9ba6b6;
   -webkit-box-shadow: 0 10px 20px -5px rgba(155, 166, 182, 0.4);
           box-shadow: 0 10px 20px -5px rgba(155, 166, 182, 0.4);
-  background-color: green; }
+  background-color: #fff;
+  z-index: 1; }
+  .fixed-nav .header-subnav-wrapper {
+    height: 56px;
+    bottom: -56px; }
 
 .parnassus-subnav {
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
-  max-width: 1320px;
   padding: 0 20px;
-  grid-column: 1 / -1;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center; }
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+  @media (min-width: 850px) {
+    .parnassus-subnav {
+      max-width: 1320px;
+      grid-column: 1 / -1;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: row;
+              flex-direction: row; } }
   .parnassus-subnav .parnassus-subnav__title {
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 14px;
@@ -2518,17 +2539,38 @@ body.loading .quicklinks {
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 16px;
     color: #052049;
-    margin: 0; }
+    line-height: calc(56px - 4px - 1px);
+    margin: 0;
+    cursor: pointer; }
     .parnassus-subnav .parnassus-subnav__title::after {
-      content: "|";
-      padding-left: 25px; }
+      font-family: 'Font Awesome 5 Free';
+      content: "\f107";
+      display: inline-block;
+      font-size: 0.8em; }
+    @media (min-width: 850px) {
+      .parnassus-subnav .parnassus-subnav__title {
+        line-height: calc(60px - 4px - 1px); }
+        .parnassus-subnav .parnassus-subnav__title::after {
+          content: "|";
+          padding-left: 25px; } }
   .parnassus-subnav__menu {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     margin: 0;
     padding: 0;
-    list-style: none; }
+    list-style: none;
+    display: none; }
+    @media (min-width: 850px) {
+      .parnassus-subnav__menu {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row; } }
     .parnassus-subnav__menu .menu-item {
       display: inline-block;
       padding-left: 25px; }
@@ -2543,6 +2585,8 @@ body.loading .quicklinks {
           color: #007cbe;
           border-bottom: 4px solid #007cbe;
           padding-bottom: 0; }
+  .fixed-nav .parnassus-subnav a {
+    line-height: calc(56px - 4px - 1px); }
 
 .footer-ctas-wrapper {
   grid-column: 1/-1;

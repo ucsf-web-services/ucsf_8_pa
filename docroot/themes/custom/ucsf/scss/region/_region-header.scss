@@ -138,6 +138,11 @@ $icon-logo-height-sticky: 30px;
   }
 }
 
+/**
+ * ----------------------------------------
+ * Sticky Navbar on scroll up
+ * ----------------------------------------
+ */
 .fixed-nav {
   // Same as header nav height.
   // calculated with JavaScript
@@ -162,9 +167,26 @@ $icon-logo-height-sticky: 30px;
   }
 }
 
+%fixed-nav--hidden {
+  transform: translateY(-93%);
+
+  @include breakpoint($bp-large) {
+    transform: translateY(-105%); // To hide current page underline in Chrome
+  }
+}
+
+// No animation so that when pre-hiding the navbar it won't slide in and out.
+.fixed-nav--pre-hidden {
+  .header-region {
+    @extend %fixed-nav--hidden;
+  }
+}
+
+// Adding an animation so that the navbar will slide out of view from a once
+// visible state.
 .fixed-nav--hidden {
   .header-region {
+    @extend %fixed-nav--hidden;
     animation: $transition-time cubic-bezier(0.77, 0, 0.175, 1) slide-out;
-    transform: translateY(-105%);
   }
 }
