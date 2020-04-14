@@ -2,15 +2,6 @@
 $padding-quote-left: 3.9rem;
 $quote-border-left: 1rem;
 
-$blockquote-colors: (
-  blue: $c-blue,
-  grey: $c-gray-blue,
-  green: #6EA400,
-  teal: $c-teal,
-  navy: $c-navy,
-  purple: $c-purple
-);
-
 .blockquote {
   @include clearfix;
 
@@ -331,11 +322,8 @@ $blockquote-colors: (
 }
 
 // Border colors.
-@each $item in $blockquote-colors {
-  $key: nth($item, 1);
-  $value: nth($item, 2);
-
-  .blockquote--color-#{$key} {
-    border-color: $value;
+@each $name, $color in $color-map {
+  .blockquote--color-#{$name} {
+    border-color: $color;
   }
 }
