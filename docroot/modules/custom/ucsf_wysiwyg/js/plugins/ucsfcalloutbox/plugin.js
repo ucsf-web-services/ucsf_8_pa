@@ -117,12 +117,15 @@ CKEDITOR.plugins.add('ucsfcalloutbox', {
                     //set the image tag to show or hide
                     this.element.setAttribute('data-image', this.data.callout);
                     var imageCallout = this.element.find('.callout__image');
-                    imageCallout.$[0].classList.remove('hidden')
-
+                    if (typeof imageCallout.$[0] !== 'undefined') {
+                        imageCallout.$[0].classList.remove('hidden')
+                    }
                 } else {
                     this.element.setAttribute('data-image', 0);
                     var imageCallout = this.element.find('.callout__image');
-                    imageCallout.$[0].classList.add('hidden')
+                    if (typeof imageCallout.$[0] !== 'undefined') {
+                        imageCallout.$[0].classList.add('hidden')
+                    }
                 }
             }
         });
