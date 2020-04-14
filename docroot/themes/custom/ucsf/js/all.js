@@ -124,11 +124,11 @@
                     setTimeout(function() {
                         // Closes second level subnav
                         if ($(document.activeElement).parents('.menu-child--wrapper').length === 0) {
-                            $this.parents('.menu-item-parent').removeClass('menu-item-open');
+                            // $this.parents('.menu-item-parent').removeClass('menu-item-open');
                         }
                         // Closes the third level subnav if the current focused element is not in it.
                         else if ($this.has(document.activeElement).length === 0) {
-                            $this.parents('.menu-item--expanded').first().removeClass('menu-item-open');
+                            // $this.parents('.menu-item--expanded').first().removeClass('menu-item-open');
                         }
                     }, 50);
                 });
