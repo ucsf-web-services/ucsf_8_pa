@@ -101,7 +101,7 @@
                     });
                 });
 
-                $('.menu-item-parent').click(function () {
+                $('.menu-item-parent').on('click touchstart', function () {
                     var $this = $(this);
                     // do not add 'menu-item-open' class if the menu item is search
                     if ($this.hasClass('search')) {
@@ -111,11 +111,11 @@
                     $this.addClass('menu-item-open').siblings().removeClass('menu-item-open');
                 });
 
-                $('.menu-item-close').click(function (e) {
+                $('.menu-item-close').on('click touchstart', function (e) {
                     e.stopPropagation(); // Key line to work perfectly
                     if ($(this).parent().parent().hasClass('menu-item-open')) {
                         $(this).parent().parent().removeClass('menu-item-open');
-                    };
+                    }
                 });
 
                 // Shows menus when it's being tabbed through
@@ -138,7 +138,7 @@
                         else if ($this.has(document.activeElement).length === 0) {
                                 $this.parents('.menu-item--expanded').first().removeClass('menu-item-open');
                             }
-                    }, 50);
+                    }, 500);
                 });
             });
         }
