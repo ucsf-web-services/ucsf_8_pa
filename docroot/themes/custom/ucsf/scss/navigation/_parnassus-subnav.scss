@@ -1,5 +1,5 @@
 // Borders
-$subnav-border-top: 1px;
+$subnav-border: 1px;
 $link-hover-border-size: 4px;
 
 // Heights
@@ -7,8 +7,9 @@ $link-hover-border-size: 4px;
 $subnav-height: 60px;
 // Total height of the .parnassus-subnav-wrapper when Header Navigation is sticky.
 $subnav-height-small: 56px;
-$menu-line-height: calc(#{$subnav-height} - #{$hover-border-size} - 2px);
-$menu-line-height-small: calc(#{$subnav-height-small} - #{$hover-border-size} - 2px);
+// $menu-line-height subtract 2px for top and bottom borders
+$menu-line-height: 54px;
+$menu-line-height-small: 48px;
 
 // Font sizes
 $subnav-item-font-size: 16px;
@@ -18,26 +19,6 @@ $subnav-item-font-size: 16px;
   padding-bottom: $subnav-height;
 }
 
-.header-subnav-wrapper {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: $subnav-height;
-  bottom: -($subnav-height);
-  border-top: $subnav-border-top solid $c-gray-border;
-  border-bottom: $subnav-border-top solid $c-gray-border;
-  box-shadow: 0 10px 20px -5px rgba($c-gray-border, .4);
-  background-color: $white;
-  z-index: 1;
-
-  // When Header Navigation is sticky reduce the Header Subnav height and reposition it
-  .fixed-nav & {
-    height: $subnav-height-small;
-    bottom: -($subnav-height-small);
-  }
-}
-
-// TODO rename .parnassus-subnav to .header-subnav to make it more reusable
 .header-subnav {
   display: flex;
   flex-direction: column;
@@ -55,9 +36,10 @@ $subnav-item-font-size: 16px;
     left: 0;
     right: 0;
     height: $subnav-height;
+    background-color: $white;
     bottom: -($subnav-height);
-    border-top: $subnav-border-top solid $c-gray-border;
-    border-bottom: $subnav-border-top solid $c-gray-border;
+    border-top: $subnav-border solid $c-gray-border;
+    border-bottom: $subnav-border solid $c-gray-border;
     box-shadow: 0 10px 20px -5px rgba($c-gray-border, .4);
     z-index: 1;
 
@@ -69,6 +51,10 @@ $subnav-item-font-size: 16px;
 
       // Reduce the line height of element
       a {
+        line-height: $menu-line-height-small;
+      }
+
+      .header-subnav__title {
         line-height: $menu-line-height-small;
       }
     }
@@ -85,13 +71,6 @@ $subnav-item-font-size: 16px;
     padding: 0 20px;
     cursor: pointer;
 
-    &::after {
-      position: absolute;
-      right: 20px;
-      font-family: 'Font Awesome 5 Free';
-      content: "\f107";
-      display: inline-block;
-    }
 
     @include breakpoint($bp-large) {
       line-height: $menu-line-height;
@@ -106,9 +85,20 @@ $subnav-item-font-size: 16px;
     }
   }
 
+  &__toggle {
+    &::after {
+      position: absolute;
+      right: 20px;
+      font-family: 'Font Awesome 5 Free';
+      content: "\f107";
+      display: inline-block;
+    }
+  }
+
   &__menu {
     display: none;
     padding: 0;
+    margin: 0;
     list-style: none;
     flex-direction: column;
     background-color: $c-background-gray;
