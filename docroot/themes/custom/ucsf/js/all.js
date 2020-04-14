@@ -75,10 +75,8 @@
                         // Set the min-height of each of the ul's child data-level="level-1"
                         // so that inner menu panel has enough height to hover from parent link to it
                         if ($innerMenu.length !== 0) {
-                            console.log(innerMenuHeight);
                             var $innerMenuChild = $innerMenu.find('[data-level="level-1"]');
                             $innerMenuChild.css('min-height', innerMenuHeight + 'px');
-
                         }
                     });
                 }
