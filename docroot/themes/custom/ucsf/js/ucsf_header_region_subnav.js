@@ -2,9 +2,44 @@
 
   // Wait for the document to be ready.
   $(() => {
-    const header = document.querySelector('.combined-header-region');
-    const headerSubnav = document.querySelector('.header-subnav-wrapper');
+    // wrapper for all header elements
+    const $header = $('.combined-header-region');
+    // toggle element for expanding the subnav
+    const $subnavToggle = $('.header-subnav__toggle');
     // add class for css styling
-    $( header).has( headerSubnav ).addClass( "combined-header-region--has-subnav" );
+    $header.has('.header-subnav-wrapper').addClass('combined-header-region--has-subnav');
+
+    // toggle mobile subnav menu open and closed
+    $subnavToggle.on('click', (e) => {
+      const $this = $(this);
+      $('.header-subnav__menu').toggleClass('header-subnav__menu--expanded');
+      console.log($this.text());
+
+      if ($this.attr('aria-expanded') === 'true') {
+        $this.attr('aria-expanded', 'false');
+      } else {
+        $this.attr('aria-expanded', 'true');
+      }
+      e.preventDefault();
+    });
+
+    const toggleSubnav = (event) => {
+      console.log("made it");
+      if (event.matches) {
+        $subnavToggle.attr('aria-expanded', 'false');
+        console.log("mobile");
+
+      } else {
+        console.log("desktop")
+        $subnavToggle.removeAttr('aria-expanded');
+      }
+    }
+
+    // Use MatchMedia to ensure that collision events are only happening in Desktop
+    const mql = matchMedia('(max-width: 849px)');
+    toggleSubnav(mql);
+    mql.addListener(toggleSubnav);
+
   });
 }))(jQuery);
+console.log('test4');

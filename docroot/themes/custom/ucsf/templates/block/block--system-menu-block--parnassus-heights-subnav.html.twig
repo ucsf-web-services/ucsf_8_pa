@@ -1,3 +1,10 @@
 {% extends "block--system-menu-block.html.twig" %}
-{% set  attributes = attributes.addClass('parnassus-subnav') %}
-{% set  title_attributes = title_attributes.setAttribute('class', 'parnassus-subnav__title') %}
+{% set  title_classes = [
+  'parnassus-subnav__title',
+  'header-subnav__title',
+  'header-subnav__toggle'
+] %}
+
+{% set  attributes = attributes.addClass('parnassus-subnav header-subnav') %}
+{% set  title_attributes = title_attributes.setAttribute('class', title_classes) %}
+

@@ -7,8 +7,8 @@ $link-hover-border-size: 4px;
 $subnav-height: 60px;
 // Total height of the .parnassus-subnav-wrapper when Header Navigation is sticky.
 $subnav-height-small: 56px;
-$menu-line-height: calc(#{$subnav-height} - #{$hover-border-size} - #{$subnav-border-top});
-$menu-line-height-small: calc(#{$subnav-height-small} - #{$hover-border-size} - #{$subnav-border-top});
+$menu-line-height: calc(#{$subnav-height} - #{$hover-border-size} - 2px);
+$menu-line-height-small: calc(#{$subnav-height-small} - #{$hover-border-size} - 2px);
 
 // Font sizes
 $subnav-item-font-size: 16px;
@@ -38,36 +38,71 @@ $subnav-item-font-size: 16px;
 }
 
 // TODO rename .parnassus-subnav to .header-subnav to make it more reusable
-.parnassus-subnav {
-  @include wrapper;
-  padding: 0 20px;
+.header-subnav {
   display: flex;
   flex-direction: column;
 
   @include breakpoint($bp-large) {
+    @include wrapper;
+    padding: 0 20px;
     max-width: $full-width-elements;
     grid-column: 1 / -1;
     flex-direction: row;
   }
 
+  &-wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: $subnav-height;
+    bottom: -($subnav-height);
+    border-top: $subnav-border-top solid $c-gray-border;
+    border-bottom: $subnav-border-top solid $c-gray-border;
+    box-shadow: 0 10px 20px -5px rgba($c-gray-border, .4);
+    z-index: 1;
+    background-color: $c-grey-pale;
+
+    @include breakpoint($bp-large) {
+      background-color: $white;
+    }
+
+    // When Header Navigation is sticky:
+    // Reduce the Header Subnav height and reposition it
+    .fixed-nav & {
+      height: $subnav-height-small;
+      bottom: -($subnav-height-small);
+
+      // Reduce the line height of element
+      a {
+        line-height: $menu-line-height-small;
+      }
+    }
+  }
+
   & &__title {
+    position: relative;
     @include fs-option-label;
     font-family: $font-helvetica-neue-medium;
     font-size: $subnav-item-font-size;
     color: $c-navy;
     line-height: $menu-line-height-small;
     margin: 0;
+    padding: 0 20px;
     cursor: pointer;
+
     &::after {
+      position: absolute;
+      right: 0;
       font-family: 'Font Awesome 5 Free';
       content: "\f107";
       display: inline-block;
-      font-size: 0.8em;
     }
 
     @include breakpoint($bp-large) {
       line-height: $menu-line-height;
+      background-color: $white;
       &::after {
+        position: static;
         content: "|";
         padding-left: 25px;
       }
@@ -75,43 +110,52 @@ $subnav-item-font-size: 16px;
   }
 
   &__menu {
-    flex-direction: column;
-    margin: 0;
+    display: none;
     padding: 0;
     list-style: none;
-    display: none;
+    flex-direction: column;
+    background-color: $c-background-gray;
 
     @include breakpoint($bp-large) {
       display: flex;
       flex-direction: row;
+      margin: 0;
+      background-color: $white;
+    }
+
+    &--expanded {
+      display: flex;
     }
 
     .menu-item {
       display: inline-block;
-      padding-left: 25px;
+      padding: 0 20px;
+      @include breakpoint($bp-large) {
+        padding-right: 0;
+
+      }
 
       a {
-        display: inline-block;
-        line-height: $menu-line-height;
+        display: block;
         color: $c-navy;
         font-size: $subnav-item-font-size;
-        padding-bottom: $link-hover-border-size;
+        line-height: $menu-line-height;
+        border-bottom: 1px solid #ddd;
         outline: none;
+        @include breakpoint($bp-large) {
+          display: inline-block;
+          padding-bottom: $link-hover-border-size;
+        }
 
         &:hover {
-          color: $c-blue;
-          border-bottom: $link-hover-border-size solid $c-blue;
-          padding-bottom: 0;
+
+          @include breakpoint($bp-large) {
+            border-bottom: $link-hover-border-size solid $c-blue;
+            padding-bottom: 0;
+            color: $c-blue;
+          }
         }
       }
-    }
-  }
-
-  // When Header Navigation is sticky reduce the line height of element
-  .fixed-nav & {
-
-    a {
-      line-height: $menu-line-height-small;
     }
   }
 }
