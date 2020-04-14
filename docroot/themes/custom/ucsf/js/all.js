@@ -46,7 +46,6 @@
 
                 // Set dropdown heights based on the content within.
                 var dropdown = $('[data-level="level-0"]');
-
                 const resizeMenuPanel = () => {
 
                     dropdown.each(function () {
@@ -68,8 +67,18 @@
 
                         self.height(totalHeight + 68);
                         self.find('.menu-child--label').width(totalHeight + 20);
-                    });
 
+                        // Get the height of the ul .menu-child--menu
+                        const $innerMenu = self.children('.menu-child--menu');
+                        const innerMenuHeight = $innerMenu.height();
+
+                        // Set the min-height of each of the ul's child data-level="level-1"
+                        // so that inner menu panel has enough height to hover from parent link to it
+                        if ($innerMenu.length !== 0) {
+                            var $innerMenuChild = $innerMenu.find('[data-level="level-1"]');
+                            $innerMenuChild.css('min-height', innerMenuHeight + 'px');
+                        }
+                    });
                 }
 
                 // Select and loop the container element of the elements you want to equalise
@@ -93,7 +102,7 @@
 
                 });
 
-                $('.menu-item-parent').click(function() {
+                $('.menu-item-parent').on('click touchstart', function() {
                     const $this = $(this);
                     // do not add 'menu-item-open' class if the menu item is search
                     if ($this.hasClass('search')) {
@@ -103,11 +112,11 @@
                     $this.addClass('menu-item-open').siblings().removeClass('menu-item-open');
                 });
 
-                $('.menu-item-close').click(function(e) {
+                $('.menu-item-close').on('click touchstart', function(e) {
                     e.stopPropagation(); // Key line to work perfectly
                     if ($(this).parent().parent().hasClass('menu-item-open')) {
                     $(this).parent().parent().removeClass('menu-item-open');
-                    };
+                    }
                 });
 
                 // Shows menus when it's being tabbed through
@@ -130,7 +139,7 @@
                         else if ($this.has(document.activeElement).length === 0) {
                             $this.parents('.menu-item--expanded').first().removeClass('menu-item-open');
                         }
-                    }, 50);
+                    }, 500);
                 });
 
             });
