@@ -60,11 +60,6 @@ $subnav-item-font-size: 16px;
     border-bottom: $subnav-border-top solid $c-gray-border;
     box-shadow: 0 10px 20px -5px rgba($c-gray-border, .4);
     z-index: 1;
-    background-color: $c-grey-pale;
-
-    @include breakpoint($bp-large) {
-      background-color: $white;
-    }
 
     // When Header Navigation is sticky:
     // Reduce the Header Subnav height and reposition it
@@ -92,7 +87,7 @@ $subnav-item-font-size: 16px;
 
     &::after {
       position: absolute;
-      right: 0;
+      right: 20px;
       font-family: 'Font Awesome 5 Free';
       content: "\f107";
       display: inline-block;
@@ -101,6 +96,7 @@ $subnav-item-font-size: 16px;
     @include breakpoint($bp-large) {
       line-height: $menu-line-height;
       background-color: $white;
+      padding-right: 0;
       &::after {
         position: static;
         content: "|";
@@ -120,7 +116,7 @@ $subnav-item-font-size: 16px;
       display: flex;
       flex-direction: row;
       margin: 0;
-      background-color: $white;
+      background-color: transparent;
     }
 
     &--expanded {
@@ -144,6 +140,7 @@ $subnav-item-font-size: 16px;
         outline: none;
         @include breakpoint($bp-large) {
           display: inline-block;
+          border-bottom: none;
           padding-bottom: $link-hover-border-size;
         }
 

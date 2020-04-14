@@ -2541,11 +2541,7 @@ body.loading .quicklinks {
     border-bottom: 1px solid #9ba6b6;
     -webkit-box-shadow: 0 10px 20px -5px rgba(155, 166, 182, 0.4);
             box-shadow: 0 10px 20px -5px rgba(155, 166, 182, 0.4);
-    z-index: 1;
-    background-color: #f2f4f6; }
-    @media (min-width: 850px) {
-      .header-subnav-wrapper {
-        background-color: #fff; } }
+    z-index: 1; }
     .fixed-nav .header-subnav-wrapper {
       height: 56px;
       bottom: -56px; }
@@ -2566,14 +2562,15 @@ body.loading .quicklinks {
     cursor: pointer; }
     .header-subnav .header-subnav__title::after {
       position: absolute;
-      right: 0;
+      right: 20px;
       font-family: 'Font Awesome 5 Free';
       content: "\f107";
       display: inline-block; }
     @media (min-width: 850px) {
       .header-subnav .header-subnav__title {
         line-height: calc(60px - 4px - 2px);
-        background-color: #fff; }
+        background-color: #fff;
+        padding-right: 0; }
         .header-subnav .header-subnav__title::after {
           position: static;
           content: "|";
@@ -2597,7 +2594,7 @@ body.loading .quicklinks {
             -ms-flex-direction: row;
                 flex-direction: row;
         margin: 0;
-        background-color: #fff; } }
+        background-color: transparent; } }
     .header-subnav__menu--expanded {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -2618,6 +2615,7 @@ body.loading .quicklinks {
         @media (min-width: 850px) {
           .header-subnav__menu .menu-item a {
             display: inline-block;
+            border-bottom: none;
             padding-bottom: 4px; } }
         @media (min-width: 850px) {
           .header-subnav__menu .menu-item a:hover {

@@ -10,17 +10,16 @@
     $header.has('.header-subnav-wrapper').addClass('combined-header-region--has-subnav');
 
     // toggle mobile subnav menu open and closed
-    $subnavToggle.on('click', (e) => {
+    $subnavToggle.on('click', function(event) {
       const $this = $(this);
       $('.header-subnav__menu').toggleClass('header-subnav__menu--expanded');
-      console.log($this.text());
 
       if ($this.attr('aria-expanded') === 'true') {
         $this.attr('aria-expanded', 'false');
       } else {
         $this.attr('aria-expanded', 'true');
       }
-      e.preventDefault();
+      event.preventDefault();
     });
 
     const toggleSubnav = (event) => {
@@ -42,4 +41,4 @@
 
   });
 }))(jQuery);
-console.log('test4');
+console.log('test7');

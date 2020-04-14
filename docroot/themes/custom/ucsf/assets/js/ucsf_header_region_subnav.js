@@ -12,17 +12,16 @@
     $header.has('.header-subnav-wrapper').addClass('combined-header-region--has-subnav');
 
     // toggle mobile subnav menu open and closed
-    $subnavToggle.on('click', function (e) {
-      var $this = $(undefined);
+    $subnavToggle.on('click', function (event) {
+      var $this = $(this);
       $('.header-subnav__menu').toggleClass('header-subnav__menu--expanded');
-      console.log($this.text());
 
       if ($this.attr('aria-expanded') === 'true') {
         $this.attr('aria-expanded', 'false');
       } else {
         $this.attr('aria-expanded', 'true');
       }
-      e.preventDefault();
+      event.preventDefault();
     });
 
     var toggleSubnav = function toggleSubnav(event) {
@@ -42,5 +41,5 @@
     mql.addListener(toggleSubnav);
   });
 })(jQuery);
-console.log('test4');
+console.log('test7');
 //# sourceMappingURL=ucsf_header_region_subnav.js.map
