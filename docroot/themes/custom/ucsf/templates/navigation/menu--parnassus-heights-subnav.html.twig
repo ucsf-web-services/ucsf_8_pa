@@ -1,2 +1,8 @@
 {% extends 'menu.html.twig' %}
-{% set  attributes = attributes.addClass('parnassus-subnav__menu header-subnav__menu') %}
+{% set  menu_classes = [
+  'parnassus-subnav__menu',
+  'header-subnav__menu'
+] %}
+{% set  attributes = attributes.addClass(menu_classes) %}
+{# unique id is needed for acessibility controls #}
+{% set  attributes = attributes.setAttribute('id', 'collapse-parnassus-subnav') %}
