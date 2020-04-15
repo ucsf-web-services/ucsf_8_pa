@@ -27,6 +27,18 @@
       $subnavToggle.removeAttr('aria-expanded aria-controls role tabindex');
     };
 
+    var toggleMenu = function toggleMenu(event) {
+      var $this = $(this);
+      $subnavMenu.toggleClass('header-subnav--expanded');
+
+      if ($this.attr('aria-expanded') === 'true') {
+        $this.attr('aria-expanded', 'false');
+      } else {
+        $this.attr('aria-expanded', 'true');
+      }
+      event.preventDefault();
+    };
+
     // Only execute subnav extend / collapse code in mobile
     var mobileDetect = function mobileDetect(event) {
       // Mobile
@@ -36,17 +48,7 @@
         addAriaControlls();
 
         // toggle mobile subnav menu open and closed
-        $subnavToggle.on('click', function (event) {
-          var $this = $(this);
-          $subnavMenu.toggleClass('header-subnav--expanded');
-
-          if ($this.attr('aria-expanded') === 'true') {
-            $this.attr('aria-expanded', 'false');
-          } else {
-            $this.attr('aria-expanded', 'true');
-          }
-          event.preventDefault();
-        });
+        $subnavToggle.on('click', toggleMenu);
 
         // Desktop
       } else {

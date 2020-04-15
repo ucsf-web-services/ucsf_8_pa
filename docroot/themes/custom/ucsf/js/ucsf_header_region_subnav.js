@@ -25,7 +25,17 @@
       $subnavToggle.removeAttr('aria-expanded aria-controls role tabindex');
     }
 
+    const toggleMenu = function(event) {
+      const $this = $(this);
+      $subnavMenu.toggleClass('header-subnav--expanded');
 
+      if ($this.attr('aria-expanded') === 'true') {
+        $this.attr('aria-expanded', 'false');
+      } else {
+        $this.attr('aria-expanded', 'true');
+      }
+      event.preventDefault();
+    }
 
     // Only execute subnav extend / collapse code in mobile
     const mobileDetect = (event) => {
@@ -36,17 +46,7 @@
         addAriaControlls();
 
         // toggle mobile subnav menu open and closed
-        $subnavToggle.on('click', function(event) {
-          const $this = $(this);
-          $subnavMenu.toggleClass('header-subnav--expanded');
-
-          if ($this.attr('aria-expanded') === 'true') {
-            $this.attr('aria-expanded', 'false');
-          } else {
-            $this.attr('aria-expanded', 'true');
-          }
-          event.preventDefault();
-        });
+        $subnavToggle.on('click', toggleMenu);
 
       // Desktop
       } else {
