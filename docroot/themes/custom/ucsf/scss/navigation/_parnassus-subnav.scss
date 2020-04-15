@@ -103,21 +103,20 @@ $subnav-item-font-size: 16px;
 
   &__menu {
     display: none;
+    flex-direction: column;
     padding: 0;
     margin: 0;
+    height: 100vh;
     list-style: none;
-    flex-direction: column;
+    overflow-y: auto;
     background-color: $c-background-gray;
+    animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
 
     @include breakpoint($bp-large) {
       display: flex;
       flex-direction: row;
       margin: 0;
       background-color: transparent;
-    }
-
-    &--expanded {
-      display: flex;
     }
 
     .menu-item {
@@ -156,6 +155,20 @@ $subnav-item-font-size: 16px;
           line-height: $menu-line-height-small;
         }
       }
+    }
+  }
+
+  // Modifiers
+  &--expanded {
+    .header-subnav__toggle {
+
+      &::after {
+        transform: rotate(180deg);
+      }
+    }
+
+    .header-subnav__menu {
+      display: flex;
     }
   }
 }

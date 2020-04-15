@@ -6,7 +6,7 @@
     const $header = $('.combined-header-region');
     // toggle element for expanding the subnav
     const $subnavToggle = $('.header-subnav__title');
-    const $subnavMenu = $('.header-subnav__menu');
+    const $subnavMenu = $('.header-subnav');
     // add class for css styling
     $header.has('.header-subnav-wrapper').addClass('combined-header-region--has-subnav');
 
@@ -20,7 +20,7 @@
         // toggle mobile subnav menu open and closed
         $subnavToggle.on('click', function(event) {
           const $this = $(this);
-          $subnavMenu.toggleClass('header-subnav__menu--expanded');
+          $subnavMenu.toggleClass('header-subnav--expanded');
 
           if ($this.attr('aria-expanded') === 'true') {
             $this.attr('aria-expanded', 'false');
