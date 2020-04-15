@@ -2544,7 +2544,7 @@ body.loading .quicklinks {
     letter-spacing: .16px;
     line-height: 14px;
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     color: #052049;
     line-height: 50px;
     margin: 0;
@@ -2554,7 +2554,7 @@ body.loading .quicklinks {
       .header-subnav .header-subnav__title {
         line-height: 54px;
         background-color: #fff;
-        padding-right: 0;
+        padding: 0;
         cursor: auto; }
         .header-subnav .header-subnav__title::after {
           position: static;
@@ -2576,12 +2576,7 @@ body.loading .quicklinks {
             flex-direction: column;
     padding: 0;
     margin: 0;
-    height: 100vh;
-    list-style: none;
-    overflow-y: auto;
-    background-color: #f2f4f6;
-    -webkit-animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
-            animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both; }
+    list-style: none; }
     @media (min-width: 850px) {
       .header-subnav__menu {
         display: -webkit-box;
@@ -2590,9 +2585,7 @@ body.loading .quicklinks {
         -webkit-box-orient: horizontal;
         -webkit-box-direction: normal;
             -ms-flex-direction: row;
-                flex-direction: row;
-        margin: 0;
-        background-color: transparent; } }
+                flex-direction: row; } }
     .header-subnav__menu .menu-item {
       display: inline-block;
       padding: 0 20px; }
@@ -2602,7 +2595,7 @@ body.loading .quicklinks {
       .header-subnav__menu .menu-item a {
         display: block;
         color: #052049;
-        font-size: 16px;
+        font-size: 14px;
         line-height: 54px;
         border-bottom: 1px solid #ddd;
         outline: none; }
@@ -2624,7 +2617,12 @@ body.loading .quicklinks {
   .header-subnav--expanded .header-subnav__menu {
     display: -webkit-box;
     display: -ms-flexbox;
-    display: flex; }
+    display: flex;
+    height: 100vh;
+    background-color: #f2f4f6;
+    -webkit-animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
+            animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
+    overflow-y: auto; }
 
 .footer-ctas-wrapper {
   grid-column: 1/-1;

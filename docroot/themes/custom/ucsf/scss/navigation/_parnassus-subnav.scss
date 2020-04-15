@@ -14,7 +14,7 @@ $subnav-height-small: 56px;
 $menu-line-height-small: 50px;
 
 // Font sizes
-$subnav-item-font-size: 16px;
+$subnav-item-font-size: 14px;
 
 //  Prevent elements inside .region-content from moving under the subnav
 .combined-header-region--has-subnav {
@@ -75,7 +75,7 @@ $subnav-item-font-size: 16px;
     @include breakpoint($bp-large) {
       line-height: $menu-line-height;
       background-color: $white;
-      padding-right: 0;
+      padding: 0;
       cursor: auto;
       &::after {
         position: static;
@@ -106,17 +106,11 @@ $subnav-item-font-size: 16px;
     flex-direction: column;
     padding: 0;
     margin: 0;
-    height: 100vh;
     list-style: none;
-    overflow-y: auto;
-    background-color: $c-background-gray;
-    animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
 
     @include breakpoint($bp-large) {
       display: flex;
       flex-direction: row;
-      margin: 0;
-      background-color: transparent;
     }
 
     .menu-item {
@@ -169,6 +163,10 @@ $subnav-item-font-size: 16px;
 
     .header-subnav__menu {
       display: flex;
+      height: 100vh;
+      background-color: $c-background-gray;
+      animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
+      overflow-y: auto;
     }
   }
 }
