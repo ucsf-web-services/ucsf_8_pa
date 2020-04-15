@@ -13,10 +13,11 @@ module.exports = {
       includePaths: [],
       autoPrefixer: {
         browers: [
-          'last 2 versions',
+          'last 5 versions',
           '>= 1%',
-          'ie >= 11',
-          'safari >= 7'
+          'IE >= 11',
+          'Safari >= 7',
+          'Firefox 14'
         ],
         grid: false
         //strict: "grid"
