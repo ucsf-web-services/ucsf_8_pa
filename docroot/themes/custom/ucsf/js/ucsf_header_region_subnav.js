@@ -46,7 +46,8 @@
       // Desktop
       } else {
         $subnavToggle.off('click');
-        $subnavMenu.removeClass('header-subnav__menu--expanded');
+        $subnavToggle.off('keypress');
+        $subnavMenu.removeClass('header-subnav--expanded');
         $subnavToggle.removeClass('header-subnav__toggle');
         // Remove unnecessary Aria controls from desktop subnav
         $subnavToggle.removeAttr('aria-expanded aria-controls role tabindex');
