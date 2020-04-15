@@ -46,7 +46,6 @@
 
                 // Set dropdown heights based on the content within.
                 var dropdown = $('[data-level="level-0"]');
-
                 var resizeMenuPanel = function resizeMenuPanel() {
 
                     dropdown.each(function () {
@@ -68,6 +67,17 @@
 
                         self.height(totalHeight + 68);
                         self.find('.menu-child--label').width(totalHeight + 20);
+
+                        // Get the height of the ul .menu-child--menu
+                        var $innerMenu = self.children('.menu-child--menu');
+                        var innerMenuHeight = $innerMenu.height();
+
+                        // Set the min-height of each of the ul's child data-level="level-1"
+                        // so that inner menu panel has enough height to hover from parent link to it
+                        if ($innerMenu.length !== 0) {
+                            var $innerMenuChild = $innerMenu.find('[data-level="level-1"]');
+                            $innerMenuChild.css('min-height', innerMenuHeight + 'px');
+                        }
                     });
                 };
 

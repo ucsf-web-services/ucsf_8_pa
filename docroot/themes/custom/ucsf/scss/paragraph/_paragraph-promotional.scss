@@ -66,7 +66,29 @@
     font-size: 12px;
 
     &::after {
-      background: $white;
+      background-color: $white;
+    }
+  }
+
+  &.overlay-yellow {
+    .promo-list__card-link {
+      color: $c-navy;
+    }
+
+    .promo-list__card-title {
+      @include eyebrow;
+      display: inline-block;
+      color: $c-navy;
+
+      &::after {
+        display: inline-block;
+        background-color: $c-navy;
+      }
+    }
+
+    .link--cta {
+      background-image: url("../images/cta-arrow-navy.svg");
+      color: $c-navy;
     }
   }
 }

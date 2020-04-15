@@ -514,55 +514,14 @@
   background: $white;
 }
 
-.overlay-purple,
-.overlay-teal,
-.overlay-blue,
-.overlay-green,
-.overlay-navy {
-  box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.8);
-
-  &:hover {
-    box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.95);
-  }
-}
-
-.overlay-teal {
-  box-shadow: inset 0 0 0 1000px rgba(5, 132, 136, 0.8);
-
-  &:hover {
-    box-shadow: inset 0 0 0 1000px rgba(5, 132, 136, 0.95);
-  }
-}
-
-.overlay-blue {
-  box-shadow: inset 0 0 0 1000px rgba(0, 124, 190, 0.8);
-
-  &:hover {
-    box-shadow: inset 0 0 0 1000px rgba(0, 124, 190, 0.95);
-  }
-}
-
-.overlay-green {
-  box-shadow: inset 0 0 0 1000px rgba(110, 164, 0, 0.8);
-
-  &:hover {
-    box-shadow: inset 0 0 0 1000px rgba(110, 164, 0, 0.95);
-  }
-}
-
-.overlay-navy {
-  box-shadow: inset 0 0 0 1000px rgba(5, 32, 73, 0.8);
-
-  &:hover {
-    box-shadow: inset 0 0 0 1000px rgba(5, 32, 73, 0.95);
-  }
-}
-
-.overlay-gray {
-  box-shadow: inset 0 0 0 1000px rgba(80, 99, 128, .8);
-
-  &:hover {
-    box-shadow: inset 0 0 0 1000px rgba(80, 99, 128, 0.95);
+@each $name, $color in $color-map {
+  // create a class name based on the color name
+  .overlay-#{$name} {
+    // convert hex value into rgba box-shadow
+    box-shadow: inset 0 0 0 1000px rgba($color, 0.8);
+    &:hover {
+      box-shadow: inset 0 0 0 1000px rgba($color, 0.95);
+    }
   }
 }
 
