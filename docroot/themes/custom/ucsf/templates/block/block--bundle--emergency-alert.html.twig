@@ -6,12 +6,17 @@
   {% set expanded = 'false' %}
 {% endif %}
 
+{% if '1' in content.field_small_title[0] %}
+  {% set emertitleclass = 'emergency-alert--small-title' %}
+  {% set expanded = 'false' %}
+{% endif %}
+
 {% set bg_color = 'background-yellow' %}
 {% if content.field_textbox_background_color.0 %}
   {% set bg_color = 'background-' ~ content.field_textbox_background_color[0]['#plain_text']|clean_class %}
 {% endif %}
 
-<section class="emergency-alert {{ emerclass }} {{ bg_color }}">
+<section class="emergency-alert {{ emerclass }} {{ bg_color }} {{ emertitleclass }}">
   {{ title_prefix }}
   {% if label %}
     <h2 class="emergency-alert__header">
@@ -23,7 +28,7 @@
   {{ title_suffix }}
   <div class="emergency-alert__content" id="collapse-{{derivative_plugin_id}}">
     {% block content %}
-      {{ content|without('field_display_closed','field_textbox_background_color') }}
+      {{ content|without('field_display_closed','field_textbox_background_color', 'field_small_title') }}
     {% endblock %}
   </div>
 </section>
