@@ -97,7 +97,9 @@ $icon-logo-height-sticky: 30px;
       @include visually-hidden-reset;
       @include menu-animation;
 
-      z-index: 1;
+      // z-index needs to be above 1 so that Subnav menu (ucsf.edu/cphp)
+      //  doesn't cover it in mobile.
+      z-index: 2;
       width: 100%;
       position: relative !important;
       top: 10px;
