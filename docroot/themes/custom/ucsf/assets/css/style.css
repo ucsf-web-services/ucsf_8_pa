@@ -1410,12 +1410,12 @@ a.icon-transit:hover {
           transform: translateY(0); }
 
 .fixed-nav--pre-hidden .header-region, .fixed-nav--hidden .header-region {
-  -webkit-transform: translateY(-93%);
-          transform: translateY(-93%); }
+  -webkit-transform: translateY(-100%);
+          transform: translateY(-100%); }
   @media (min-width: 850px) {
     .fixed-nav--pre-hidden .header-region, .fixed-nav--hidden .header-region {
-      -webkit-transform: translateY(-107%);
-              transform: translateY(-107%); } }
+      -webkit-transform: translateY(-106%);
+              transform: translateY(-106%); } }
 
 .fixed-nav--hidden .header-region {
   -webkit-animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-out;
@@ -2493,7 +2493,10 @@ body.loading .quicklinks {
             transform: translateX(0px); } }
 
 .combined-header-region--has-subnav {
-  padding-bottom: 60px; }
+  padding-bottom: 56px; }
+  @media (min-width: 850px) {
+    .combined-header-region--has-subnav {
+      padding-bottom: 60px; } }
 
 .header-subnav {
   display: -webkit-box;
@@ -2519,21 +2522,21 @@ body.loading .quicklinks {
     position: absolute;
     left: 0;
     right: 0;
-    height: 60px;
+    height: 56px;
+    bottom: -56px;
     background-color: #fff;
-    bottom: -60px;
     border-top: 1px solid #9ba6b6;
     border-bottom: 1px solid #9ba6b6;
     -webkit-box-shadow: 0 10px 20px -5px rgba(155, 166, 182, 0.4);
             box-shadow: 0 10px 20px -5px rgba(155, 166, 182, 0.4);
     z-index: 1; }
+    @media (min-width: 850px) {
+      .header-subnav-wrapper {
+        height: 60px;
+        bottom: -60px; } }
     .fixed-nav .header-subnav-wrapper {
       height: 56px;
       bottom: -56px; }
-      .fixed-nav .header-subnav-wrapper a {
-        line-height: 48px; }
-      .fixed-nav .header-subnav-wrapper .header-subnav__title {
-        line-height: 48px; }
   .header-subnav .header-subnav__title {
     position: relative;
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
@@ -2543,7 +2546,7 @@ body.loading .quicklinks {
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 16px;
     color: #052049;
-    line-height: 48px;
+    line-height: 50px;
     margin: 0;
     padding: 0 20px;
     cursor: pointer; }
@@ -2557,6 +2560,8 @@ body.loading .quicklinks {
           position: static;
           content: "|";
           padding-left: 25px; } }
+    .fixed-nav .header-subnav .header-subnav__title {
+      line-height: 50px; }
   .header-subnav__toggle::after {
     position: absolute;
     right: 20px;
@@ -2611,6 +2616,8 @@ body.loading .quicklinks {
             border-bottom: 4px solid #007cbe;
             padding-bottom: 0;
             color: #007cbe; } }
+        .fixed-nav .header-subnav__menu .menu-item a {
+          line-height: 50px; }
 
 .footer-ctas-wrapper {
   grid-column: 1/-1;
