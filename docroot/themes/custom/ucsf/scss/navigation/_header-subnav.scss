@@ -1,24 +1,21 @@
 // Borders
-$subnav-border: 1px;
+$subnav-border: 0.5px;
 $link-hover-border-size: 4px;
 
 // Heights
 // Total height of the .parnassus-subnav-wrapper when full menu is visible
 $subnav-height: 60px;
-// $menu-line-height = $subnav-height - $link-hover-border-size - 2px for top and bottom borders;
-$menu-line-height: 54px;
+// $menu-line-height = $subnav-height - $link-hover-border-size - $subnav-border;
+$menu-line-height: 55px;
 
 // Total height of the .parnassus-subnav-wrapper when Header Navigation is sticky.
 $subnav-height-small: 56px;
-// $menu-line-height-small = $subnav-height-small - $link-hover-border-size - 2px for top and bottom borders;
-$menu-line-height-small: 50px;
-
-// Font sizes
-$subnav-item-font-size: 14px;
+// $menu-line-height-small = $subnav-height-small - $link-hover-border-size - $subnav-border;
+$menu-line-height-small: 51px;
 
 //  Prevent elements inside .region-content from moving under the subnav
 .combined-header-region--has-subnav {
-  padding-bottom: $subnav-height-small;
+  padding-bottom: $menu-line-height-small;
 
   @include breakpoint($bp-large) {
     padding-bottom: $subnav-height;
@@ -41,11 +38,10 @@ $subnav-item-font-size: 14px;
     position: absolute;
     left: 0;
     right: 0;
-    height: $subnav-height-small;
-    bottom: -($subnav-height-small);
+    height: $menu-line-height-small;
+    bottom: - $menu-line-height-small;
     background-color: $white;
-    border-top: $subnav-border solid $c-gray-border;
-    border-bottom: $subnav-border solid $c-gray-border;
+    border-top: $subnav-border solid #D8D8D8;
     box-shadow: 0 10px 20px -5px rgba($c-gray-border, .4);
     z-index: 1;
 
@@ -65,9 +61,10 @@ $subnav-item-font-size: 14px;
     position: relative;
     @include fs-option-label;
     font-family: $font-helvetica-neue-medium;
-    font-size: $subnav-item-font-size;
+    font-size: 14px;
     color: $c-navy;
-    line-height: $menu-line-height-small;
+    // 1px to get rid of the gap between title and nav in mobile
+    line-height: $menu-line-height-small - 1px;
     margin: 0;
     padding: 0 20px;
     cursor: pointer;
@@ -80,7 +77,7 @@ $subnav-item-font-size: 14px;
       &::after {
         position: static;
         content: "|";
-        padding-left: 25px;
+        padding-left: 20px;
       }
     }
 
@@ -123,8 +120,8 @@ $subnav-item-font-size: 14px;
 
       a {
         display: block;
+        @include fs-small-body;
         color: $c-navy;
-        font-size: $subnav-item-font-size;
         line-height: $menu-line-height;
         border-bottom: 1px solid #ddd;
         outline: none;
@@ -135,12 +132,13 @@ $subnav-item-font-size: 14px;
           padding-bottom: $link-hover-border-size;
         }
 
-        &:hover {
+        &:hover,
+        &:active {
+          color: $c-blue;
 
           @include breakpoint($bp-large) {
             border-bottom: $link-hover-border-size solid $c-blue;
             padding-bottom: 0;
-            color: $c-blue;
           }
         }
 
