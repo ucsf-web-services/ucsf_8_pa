@@ -69,6 +69,16 @@ class RouteSubscriber extends RouteSubscriberBase {
           $entity_type_id => ['type' => 'entity:' . $entity_type_id],
         ]);
 
+      // Special case for menu link content.
+      // Menu link content does not work properly with custom operation.
+      // This case must be removed when issue #3016038
+      // (https://www.drupal.org/project/drupal/issues/3016038) was closed.
+      if ($entity_type_id === 'menu_link_content') {
+        $route->setRequirements([
+          '_permission' => 'clone ' . $entity_type_id . ' entity',
+        ]);
+      }
+
       return $route;
     }
   }
