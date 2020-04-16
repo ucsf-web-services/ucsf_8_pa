@@ -129,16 +129,17 @@ $menu-line-height-small: 51px;
         @include breakpoint($bp-large) {
           display: inline-block;
           border-bottom: none;
-          padding-bottom: $link-hover-border-size;
+          padding-bottom: $link-hover-border-size; // padding bottom will be replaced by the border bottom on hover
         }
 
         &:hover,
-        &:active {
+        &:active,
+        &.is-active {
           color: $c-blue-link;
 
           @include breakpoint($bp-large) {
-            border-bottom: $link-hover-border-size solid $c-blue-link;
-            padding-bottom: 0;
+            border-bottom: $hover-border-size solid $c-blue-link;
+            padding-bottom: 0; // padding bottom is replaced by the border bottom
           }
         }
 
