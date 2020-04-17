@@ -8,16 +8,9 @@ $subnav-height: 48px;
 
 // Desktop. Total height of the .parnassus-subnav-wrapper when full menu is visible
 $subnav-height-big: 60px;
-// $menu-line-height = $subnav-height - $link-hover-border-size;
-$menu-line-height-big: 56px;
 
 // Desktop. Total height of the .parnassus-subnav-wrapper when Header Navigation is sticky.
 $subnav-height-small: 56px;
-// $menu-line-height-small = $subnav-height-small - $link-hover-border-size - $subnav-border;
-$menu-line-height-small: 52px;
-
-
-
 
 .header-subnav {
   display: flex;
@@ -35,33 +28,16 @@ $menu-line-height-small: 52px;
     position: absolute;
     left: 0;
     right: 0;
-    height: $subnav-height;
-    bottom: - $subnav-height;
+    top: 100%;
     background-color: $white;
     border-top: $subnav-border solid #D8D8D8;
     box-shadow: 0 10px 20px -5px rgba($c-gray-border, .4);
-    z-index: 1;
-
-    @include breakpoint($bp-large) {
-      height: $subnav-height-big;
-      bottom: -($subnav-height-big);
-    }
-
-    // Desktop. When Header Nav is sticky
-    .fixed-nav & {
-      height: $subnav-height;
-      bottom: -($subnav-height);
-
-      @include breakpoint($bp-large) {
-        height: $subnav-height-small;
-        bottom: -($subnav-height-small);
-      }
-    }
+    z-index: 1; // need at least 1 so that it's not hidden behind content
   }
 
   & &__title {
-    position: relative;
     @include fs-option-label;
+    position: relative;
     font-family: $font-helvetica-neue-medium;
     font-size: 14px;
     color: $c-navy;
@@ -71,7 +47,8 @@ $menu-line-height-small: 52px;
     cursor: pointer;
 
     @include breakpoint($bp-large) {
-      line-height: $menu-line-height-big;
+      height: $subnav-height-big;
+      line-height: $subnav-height-big;
       padding: 0;
       cursor: auto;
       &::after {
@@ -85,6 +62,7 @@ $menu-line-height-small: 52px;
       @include breakpoint($bp-large) {
         // Desktop. When Header Nav is sticky
         line-height: $subnav-height-small;
+        height: $subnav-height-small;
       }
     }
   }
@@ -101,7 +79,7 @@ $menu-line-height-small: 52px;
     display: none;
     flex-direction: column;
     padding: 0;
-    margin: -1px 0 0; // there is a 1px gap between title and menu in mobile
+    margin: 0;
     list-style: none;
 
     @include breakpoint($bp-large) {
@@ -110,7 +88,6 @@ $menu-line-height-small: 52px;
     }
 
     .menu-item {
-      display: inline-block;
       padding: 0 20px;
 
       @include breakpoint($bp-large) {
@@ -118,18 +95,18 @@ $menu-line-height-small: 52px;
       }
 
       a {
-        display: block;
         @include fs-small-body;
+        display: block;
         color: $c-navy;
-        line-height: $menu-line-height-big;
+        line-height: $subnav-height;
         border-bottom: 1px solid #ddd;
         outline: none;
-        transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) line-height;
+        transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) height;
 
         @include breakpoint($bp-large) {
-          display: inline-block;
+          height: $subnav-height-big;
+          line-height: $subnav-height-big;
           border-bottom: none;
-          padding-bottom: $link-hover-border-size; // padding bottom will be replaced by the border bottom on hover
         }
 
         &:hover,
@@ -139,13 +116,13 @@ $menu-line-height-small: 52px;
 
           @include breakpoint($bp-large) {
             border-bottom: $hover-border-size solid $c-blue-link;
-            padding-bottom: 0; // padding bottom is replaced by the border bottom
           }
         }
 
         // Desktop. When Header Nav is sticky
         .fixed-nav & {
-          line-height: $menu-line-height-small;
+          line-height: $subnav-height-small;
+          height: $subnav-height-small;
         }
       }
     }
@@ -167,7 +144,7 @@ $menu-line-height-small: 52px;
   }
 }
 
-//  Prevent elements inside .region-content from moving under the subnav
+// Prevent elements inside .region-content from moving under the subnav
 .combined-header-region--has-subnav {
   padding-bottom: $subnav-height;
 

@@ -4,6 +4,7 @@
   $(() => {
     // wrapper for all header elements
     const $header = $('.combined-header-region');
+    const $body = $('body');
     // toggle element for expanding the subnav
     const $subnavToggle = $('.header-subnav__title');
     const $subnavMenu = $('.header-subnav');
@@ -16,12 +17,14 @@
     const toggleMenu = function(event) {
       const $this = $(this);
       $subnavMenu.toggleClass('header-subnav--expanded');
+      $body.toggleClass('fixed')
 
       if ($this.attr('aria-expanded') === 'true') {
         $this.attr('aria-expanded', 'false');
       } else {
         $this.attr('aria-expanded', 'true');
       }
+
       event.preventDefault();
     }
 
@@ -45,6 +48,7 @@
 
       // Desktop
       } else {
+        $body.removeClass('fixed')
         $subnavToggle.off('click');
         $subnavToggle.off('keypress');
         $subnavMenu.removeClass('header-subnav--expanded');

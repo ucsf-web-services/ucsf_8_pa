@@ -2516,30 +2516,18 @@ body.loading .quicklinks {
     position: absolute;
     left: 0;
     right: 0;
-    height: 48px;
-    bottom: -48px;
+    top: 100%;
     background-color: #fff;
     border-top: 0.5px solid #D8D8D8;
     -webkit-box-shadow: 0 10px 20px -5px rgba(155, 166, 182, 0.4);
             box-shadow: 0 10px 20px -5px rgba(155, 166, 182, 0.4);
     z-index: 1; }
-    @media (min-width: 850px) {
-      .header-subnav-wrapper {
-        height: 60px;
-        bottom: -60px; } }
-    .fixed-nav .header-subnav-wrapper {
-      height: 48px;
-      bottom: -48px; }
-      @media (min-width: 850px) {
-        .fixed-nav .header-subnav-wrapper {
-          height: 56px;
-          bottom: -56px; } }
   .header-subnav .header-subnav__title {
-    position: relative;
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 14px;
     letter-spacing: .16px;
     line-height: 14px;
+    position: relative;
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 14px;
     color: #052049;
@@ -2549,7 +2537,8 @@ body.loading .quicklinks {
     cursor: pointer; }
     @media (min-width: 850px) {
       .header-subnav .header-subnav__title {
-        line-height: 56px;
+        height: 60px;
+        line-height: 60px;
         padding: 0;
         cursor: auto; }
         .header-subnav .header-subnav__title::after {
@@ -2558,7 +2547,8 @@ body.loading .quicklinks {
           padding-left: 25px; } }
     @media (min-width: 850px) {
       .fixed-nav .header-subnav .header-subnav__title {
-        line-height: 56px; } }
+        line-height: 56px;
+        height: 56px; } }
   .header-subnav__toggle::after {
     position: absolute;
     right: 20px;
@@ -2572,7 +2562,7 @@ body.loading .quicklinks {
         -ms-flex-direction: column;
             flex-direction: column;
     padding: 0;
-    margin: -1px 0 0;
+    margin: 0;
     list-style: none; }
     @media (min-width: 850px) {
       .header-subnav__menu {
@@ -2584,36 +2574,35 @@ body.loading .quicklinks {
             -ms-flex-direction: row;
                 flex-direction: row; } }
     .header-subnav__menu .menu-item {
-      display: inline-block;
       padding: 0 20px; }
       @media (min-width: 850px) {
         .header-subnav__menu .menu-item {
           padding: 0 0 0 25px; } }
       .header-subnav__menu .menu-item a {
-        display: block;
         font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
         font-size: 14px;
         line-height: 1.71;
         letter-spacing: 0.3px;
+        display: block;
         color: #052049;
-        line-height: 56px;
+        line-height: 48px;
         border-bottom: 1px solid #ddd;
         outline: none;
-        -webkit-transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) line-height;
-        transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) line-height; }
+        -webkit-transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) height;
+        transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) height; }
         @media (min-width: 850px) {
           .header-subnav__menu .menu-item a {
-            display: inline-block;
-            border-bottom: none;
-            padding-bottom: 4px; } }
+            height: 60px;
+            line-height: 60px;
+            border-bottom: none; } }
         .header-subnav__menu .menu-item a:hover, .header-subnav__menu .menu-item a:active, .header-subnav__menu .menu-item a.is-active {
           color: #0071ad; }
           @media (min-width: 850px) {
             .header-subnav__menu .menu-item a:hover, .header-subnav__menu .menu-item a:active, .header-subnav__menu .menu-item a.is-active {
-              border-bottom: 4px solid #0071ad;
-              padding-bottom: 0; } }
+              border-bottom: 4px solid #0071ad; } }
         .fixed-nav .header-subnav__menu .menu-item a {
-          line-height: 52px; }
+          line-height: 56px;
+          height: 56px; }
   .header-subnav--expanded .header-subnav__toggle::after {
     -webkit-transform: rotate(180deg);
             transform: rotate(180deg); }

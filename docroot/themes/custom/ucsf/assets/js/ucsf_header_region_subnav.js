@@ -6,6 +6,7 @@
   $(function () {
     // wrapper for all header elements
     var $header = $('.combined-header-region');
+    var $body = $('body');
     // toggle element for expanding the subnav
     var $subnavToggle = $('.header-subnav__title');
     var $subnavMenu = $('.header-subnav');
@@ -18,12 +19,14 @@
     var toggleMenu = function toggleMenu(event) {
       var $this = $(this);
       $subnavMenu.toggleClass('header-subnav--expanded');
+      $body.toggleClass('fixed');
 
       if ($this.attr('aria-expanded') === 'true') {
         $this.attr('aria-expanded', 'false');
       } else {
         $this.attr('aria-expanded', 'true');
       }
+
       event.preventDefault();
     };
 
@@ -47,6 +50,7 @@
 
         // Desktop
       } else {
+        $body.removeClass('fixed');
         $subnavToggle.off('click');
         $subnavToggle.off('keypress');
         $subnavMenu.removeClass('header-subnav--expanded');
