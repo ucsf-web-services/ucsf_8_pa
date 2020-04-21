@@ -16,6 +16,14 @@
         {{ content }}
         {# main nav #}
       </div>
+      {# var has_subnav is created through php-includes\region.inc #}
+      {% if has_subnav %}
+        {# If we made it this far, load ucsf\js\ucsf_header_region_subnav.js #}
+        {{ attach_library('ucsf/header_subnav') }}
+        <div class="header-subnav-wrapper">
+          {{ drupal_block('parnassusheightssubnav') }}
+        </div>
+      {% endif %}
     </section>
   </header>
 {% endblock content %}
