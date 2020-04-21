@@ -11,7 +11,6 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationManager;
 use Drupal\entity_clone\EntityClone\EntityCloneFormInterface;
 use Drupal\entity_clone\EntityCloneSettingsManager;
@@ -21,8 +20,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Class ContentEntityCloneFormBase.
  */
 class ContentEntityCloneFormBase implements EntityHandlerInterface, EntityCloneFormInterface {
-
-  use StringTranslationTrait;
 
   /**
    * The entity type manager.
@@ -106,25 +103,8 @@ class ContentEntityCloneFormBase implements EntityHandlerInterface, EntityCloneF
       if ($parent) {
         $form = array_merge([
           'description' => [
-            '#markup' => $this->t("
-            <p>Specify the child entities (the entities referenced by this entity) that should also be cloned as part of
-            the cloning process.  If they're not included, these fields' referenced entities will be the same as in the
-            original.  In other words, fields in both the original entity and the cloned entity will refer to the same
-            referenced entity.  Examples:</p>
-
-            <p>If you have a Paragraph field in your entity, and you choose not to clone it here, deleting the original
-            or cloned entity will also delete the Paragraph field from the other one.  So you probably want to clone
-            Paragraph fields.</p>
-
-            <p>However, if you have a User reference field, you probably don't want to clone it here because a new User
-            will be created for referencing by the clone.</p>
-
-            <p>Some options may be disabled here, preventing you from changing them, as set by your administrator.  Some
-            options may also be missing, hidden by your administrator, forcing you to clone with the default settings.
-            It's possible that there are no options here for you at all, or none need to be set, in which case you may
-            simply hit the <em>Clone</em> button.</p>
-          "),
-            '#access' => $this->descriptionShouldBeShown($form),
+            '#markup' => $this->getFormDescription($form, $entity),
+            '#access' => TRUE,
           ],
         ], $form);
       }
@@ -156,7 +136,7 @@ class ContentEntityCloneFormBase implements EntityHandlerInterface, EntityCloneF
     $fieldset_access = !$this->entityCloneSettingsManager->getHiddenValue($field_definition->getFieldStorageDefinition()->getSetting('target_type'));
     $form_element[$field_definition->id()] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Entities referenced by field <em>@label (@field_id)</em>.', [
+      '#title' => $this->translationManager->translate('Entities referenced by field <em>@label (@field_id)</em>.', [
         '@label' => $field_definition->label(),
         '@field_id' => $field_id,
       ]),
@@ -180,13 +160,13 @@ class ContentEntityCloneFormBase implements EntityHandlerInterface, EntityCloneF
         ];
         $form_element[$field_definition->id()]['references'][$referenced_entity->id()]['circular'] = [
           '#type' => 'item',
-          '#markup' => 'Circular reference detected',
+          '#markup' => $this->translationManager->translate('Circular reference detected'),
         ];
       }
       else {
         $form_element[$field_definition->id()]['references'][$referenced_entity->id()]['clone'] = [
           '#type' => 'checkbox',
-          '#title' => $this->t('Clone entity <strong>ID:</strong> <em>@entity_id</em>, <strong>Type:</strong> <em>@entity_type - @bundle</em>, <strong>Label:</strong> <em>@entity_label</em>', [
+          '#title' => $this->translationManager->translate('Clone entity <strong>ID:</strong> <em>@entity_id</em>, <strong>Type:</strong> <em>@entity_type - @bundle</em>, <strong>Label:</strong> <em>@entity_label</em>', [
             '@entity_id' => $referenced_entity->id(),
             '@entity_type' => $referenced_entity->getEntityTypeId(),
             '@bundle' => $referenced_entity->bundle(),
@@ -196,9 +176,9 @@ class ContentEntityCloneFormBase implements EntityHandlerInterface, EntityCloneF
           '#access' => $referenced_entity->access('view label'),
         ];
 
-        if ($this->entityCloneSettingsManager->getDisableValue($referenced_entity->getEntityTypeId())) {
-          $form_element[$field_definition->id()]['references'][$referenced_entity->id()]['clone']['#attributes'] = [
-            'disabled' => TRUE,
+      if ($this->entityCloneSettingsManager->getDisableValue($referenced_entity->getEntityTypeId())) {
+        $form_element[$field_definition->id()]['references'][$referenced_entity->id()]['clone']['#attributes'] = [
+          'disabled' => TRUE,
           ];
           $form_element[$field_definition->id()]['references'][$referenced_entity->id()]['clone']['#value'] = $form_element[$field_definition->id()]['references'][$referenced_entity->id()]['clone']['#default_value'];
         }
@@ -253,34 +233,60 @@ class ContentEntityCloneFormBase implements EntityHandlerInterface, EntityCloneF
   }
 
   /**
-   * Checks if description should be shown.
+   * Get the clone form confirmation page description.
    *
-   * If there are no recursive elements visible, the description should be
-   * hidden.
+   * If there are no recursive elements visible, the default description should
+   * be shown.
    *
    * @param array $form
-   *   Form.
+   *   The clone form.
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The entity.
    *
-   * @return bool
-   *   TRUE if description should be shown.
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup
+   *   Description to be shown
    */
-  protected function descriptionShouldBeShown(array $form) {
-    $show_description = TRUE;
-    if (!isset($form['recursive'])) {
-      $show_description = FALSE;
+  protected function getFormDescription(array $form, EntityInterface $entity) {
+    $has_recursive = FALSE;
+    $elements_visible = FALSE;
+
+    if (isset($form['recursive'])) {
+      $has_recursive = TRUE;
     }
 
-    $visible = FALSE;
-    array_walk_recursive($form['recursive'], function ($item, $key) use (&$visible) {
+    array_walk_recursive($form['recursive'], function ($item, $key) use (&$elements_visible) {
       if ($key === '#description_should_be_shown') {
-        $visible = ($visible || $item);
+        $elements_visible = ($elements_visible || $item);
       }
     });
 
-    if (!$visible) {
-      $show_description = FALSE;
+    if ($has_recursive && $elements_visible) {
+      return $this->translationManager->translate("
+            <p>Specify the child entities (the entities referenced by this entity) that should also be cloned as part of
+            the cloning process.  If they're not included, these fields' referenced entities will be the same as in the
+            original.  In other words, fields in both the original entity and the cloned entity will refer to the same
+            referenced entity.  Examples:</p>
+
+            <p>If you have a Paragraph field in your entity, and you choose not to clone it here, deleting the original
+            or cloned entity will also delete the Paragraph field from the other one.  So you probably want to clone
+            Paragraph fields.</p>
+
+            <p>However, if you have a User reference field, you probably don't want to clone it here because a new User
+            will be created for referencing by the clone.</p>
+
+            <p>Some options may be disabled here, preventing you from changing them, as set by your administrator.  Some
+            options may also be missing, hidden by your administrator, forcing you to clone with the default settings.
+            It's possible that there are no options here for you at all, or none need to be set, in which case you may
+            simply hit the <em>Clone</em> button.</p>
+          ");
     }
-    return $show_description;
+    else {
+      return $this->translationManager->translate("<p>Do you want to clone the <em>@type</em> entity named <em>@title</em></p>", [
+        "@type" => $entity->getEntityType()->getLabel(),
+        "@title" => $entity->label(),
+      ]);
+    }
+
   }
 
 }
