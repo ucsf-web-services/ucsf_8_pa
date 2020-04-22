@@ -1,0 +1,46 @@
+{% set layout = node.field_banner_layout.value %}
+
+{% set body_classes = not node.isPublished() ? "node--unpublished" %}
+{{ attach_library('ucsf/element_overlap_detection') }}
+<main class="main {{ body_classes }}">
+  {# link is in html.html.twig #}
+  <a id="main-content" tabindex="-1"></a>
+  {% if layout == 'feature' %}
+    {% include '@theme/article/article-layout-feature.twig' %}
+  {% elseif layout == 'featureoverlaydark' %}
+      {% include '@theme/article/article-layout-feature-overlay.twig' %}
+  {% elseif layout == 'featureoverlaylight' %}
+      {% include '@theme/article/article-layout-feature-overlay.twig' %}
+  {% elseif layout == 'twocolleftlight' %}
+    {% include '@theme/article/article-layout-twocol.twig' %}
+  {% elseif layout == 'twocolrightlight' %}
+    {% include '@theme/article/article-layout-twocol.twig' %}
+  {% elseif layout == 'twocolleftdark' %}
+    {% include '@theme/article/article-layout-twocol.twig' %}
+  {% elseif layout == 'twocolrightdark' %}
+    {% include '@theme/article/article-layout-twocol.twig' %}
+  {% else %}
+    {% include '@theme/article/article-layout-default.twig' %}
+  {% endif %}
+</main>
+
+{# @todo Wrapper should probably be conditional. #}
+<section class="recommended-articles{{ content.field_recommended_article|render ? ' has-recommended-article' }} ">
+
+  {% if content.field_topics|render or content.field_tags|render or content.field_primary_area|render %}
+    <div class="recommended-articles__banner">
+      <h2 class="recommended-articles__title">{{ "Recommended Reading"|t }}</h2>
+      {{ content.field_recommended_article }}
+    </div>
+  {% endif %}
+
+  {% if content.field_topics|render or content.field_tags|render %}
+    {{ drupal_view('articles_by_term', 'block_1') }}
+  {% else %}
+    {{ drupal_view('articles_by_term', 'block_2') }}
+  {% endif %}
+
+  <div class="footer-ctas-wrapper">
+    {{ content.field_ankle_cta }}
+  </div>
+</section>
