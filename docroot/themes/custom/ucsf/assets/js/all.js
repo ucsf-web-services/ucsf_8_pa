@@ -402,7 +402,7 @@
                 // Toggle the .is-visible class on scroll.
                 var lastScroll = 0;
 
-                var nameThis = function nameThis() {
+                var hideAndShow = function hideAndShow() {
                     // calculate weather user is scrolling up or down
                     var currentScroll = window.pageYOffset;
                     if (currentScroll > lastScroll) {
@@ -423,11 +423,11 @@
                         // Remove print icon
                         $iconPrint.css('display', 'none');
 
-                        window.addEventListener('scroll', nameThis);
+                        window.addEventListener('scroll', hideAndShow);
 
                         // Desktop
                     } else {
-                        window.removeEventListener('scroll', nameThis);
+                        window.removeEventListener('scroll', hideAndShow);
                         // Add print icon
                         $iconPrint.css('display', 'initial');
                         $socialIcons.removeClass('is-visible');
