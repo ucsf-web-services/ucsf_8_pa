@@ -25,13 +25,9 @@ $icon-map: (
   bottom: -100%;
   list-style: none;
   background-color: $c-background-gray;
-  transition: .2s cubic-bezier(0.77, 0, 0.175, 1) opacity;
+  transition: $transition-time-short cubic-bezier(0.77, 0, 0.175, 1);
+  transition-property: opacity, bottom;
   z-index: 1;
-
-  @include breakpoint($bp-large) {
-    // position: absolute;
-
-  }
 
   @include breakpoint($bp-page-narrow) {
     grid-row: 2;
