@@ -407,48 +407,56 @@
 
     Drupal.behaviors.socialIconsMobile = {
         attach: function attach(context, settings) {
-            const $socialIcons = $('.article-meta-share');
-            const $iconPrint = $('li').has('a[title="Print Article"]');
 
-            // Toggle the .is-visible class on scroll.
-            let lastScroll = 0;
+            $(window, context).once('social-icon-context').each( function() {
 
+                const $socialIcons = $('.article-meta-share', context);
+                const $iconPrint = $('li', context).has('a[title="Print Article"]');
 
-            // Only execute Social Navbar upscroll code in mobile
-            const mobileDetect = (event) => {
-                // Mobile
-                if (event.matches) {
-                    // Remove print icon
-                    $iconPrint.css('display', 'none');
+                // Toggle the .is-visible class on scroll.
+                let lastScroll = 0;
 
-                    window.addEventListener("scroll", () => {
-                        // calculate weather user is scrolling up or down
-                        const currentScroll = window.pageYOffset;
-                        if (currentScroll > lastScroll) {
-                            // If scrolling down
-                            $socialIcons.removeClass('is-visible');
-                        } else {
-                            // If scrolling up
-                            $socialIcons.addClass('is-visible');
-                        }
+                const nameThis = () => {
+                    // calculate weather user is scrolling up or down
+                    const currentScroll = window.pageYOffset;
+                    if (currentScroll > lastScroll) {
+                        // If scrolling down
+                        $socialIcons.removeClass('is-visible');
+                    } else {
+                        // If scrolling up
+                        $socialIcons.addClass('is-visible');
+                    }
 
-                        lastScroll = currentScroll;
-                    });
-                    // Desktop
-                } else {
-                    // Add print icon
-                    $iconPrint.css('display', 'initial');
-                    $socialIcons.removeClass('is-visible');
-
+                    lastScroll = currentScroll;
                 }
-            }
 
-            // Use MatchMedia to ensure that Social Navbar upscroll is only happening in mobile
-            const mql = matchMedia('(max-width: 1049px)');
-            // Detect mobile on page load.
-            mobileDetect(mql);
-            // Watch to see if the page size changes.
-            mql.addListener(mobileDetect);
+                // Only execute Social Navbar upscroll code in mobile
+                const mobileDetect = (event) => {
+                    // Mobile
+                    if (event.matches) {
+                        // Remove print icon
+                        $iconPrint.css('display', 'none');
+
+                        window.addEventListener('scroll', nameThis);
+
+                    // Desktop
+                    } else {
+                        window.removeEventListener('scroll', nameThis)
+                        // Add print icon
+                        $iconPrint.css('display', 'initial');
+                        $socialIcons.removeClass('is-visible');
+
+                    }
+                }
+
+                // Use MatchMedia to ensure that Social Navbar upscroll is only happening in mobile
+                const mql = matchMedia('(max-width: 1049px)');
+                // Detect mobile on page load.
+                mobileDetect(mql);
+                // Watch to see if the page size changes.
+                mql.addListener(mobileDetect);
+
+            });
         }
     };
 
