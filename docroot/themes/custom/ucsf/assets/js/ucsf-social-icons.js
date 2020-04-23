@@ -7,7 +7,6 @@
 
         var $socialIcons = $(".article-meta-share", context);
         var $iconPrint = $("li", context).has('a[title="Print Article"]');
-
         // Toggle the .is-visible class on scroll.
         var lastScroll = 0;
 
@@ -16,10 +15,10 @@
           var currentScroll = window.pageYOffset;
           if (currentScroll > lastScroll) {
             // If scrolling down
-            $socialIcons.removeClass("is-visible");
+            $socialIcons.addClass("is-hidden");
           } else {
             // If scrolling up
-            $socialIcons.addClass("is-visible");
+            $socialIcons.removeClass("is-hidden");
           }
 
           lastScroll = currentScroll;
@@ -39,7 +38,7 @@
             window.removeEventListener("scroll", hideAndShow);
             // Add print icon
             $iconPrint.css("display", "initial");
-            $socialIcons.removeClass("is-visible");
+            $socialIcons.removeClass("is-hidden");
           }
         };
 
