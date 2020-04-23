@@ -390,5 +390,50 @@
             });
         }
     };
+
+    Drupal.behaviors.socialIconsMobile = {
+        attach: function attach(context, settings) {
+            var $socialIcons = $('.article-meta-share');
+            var $iconPrint = $('li').has('a[title="Print Article"]');
+
+            // Toggle the .is-visible class on scroll.
+            var lastScroll = 0;
+
+            // Only execute Social Navbar upscroll code in mobile
+            var mobileDetect = function mobileDetect(event) {
+                // Mobile
+                if (event.matches) {
+                    // Remove print icon
+                    $iconPrint.css('display', 'none');
+
+                    window.addEventListener("scroll", function () {
+                        // calculate weather user is scrolling up or down
+                        var currentScroll = window.pageYOffset;
+                        if (currentScroll > lastScroll) {
+                            // If scrolling down
+                            $socialIcons.removeClass('is-visible');
+                        } else {
+                            // If scrolling up
+                            $socialIcons.addClass('is-visible');
+                        }
+
+                        lastScroll = currentScroll;
+                    });
+                    // Desktop
+                } else {
+                    // Add print icon
+                    $iconPrint.css('display', 'initial');
+                    $socialIcons.removeClass('is-visible');
+                }
+            };
+
+            // Use MatchMedia to ensure that Social Navbar upscroll is only happening in mobile
+            var mql = matchMedia('(max-width: 1049px)');
+            // Detect mobile on page load.
+            mobileDetect(mql);
+            // Watch to see if the page size changes.
+            mql.addListener(mobileDetect);
+        }
+    };
 })(jQuery);
 //# sourceMappingURL=all.js.map
