@@ -1,24 +1,27 @@
-$search-form-height: 52px;
+$search-form-height: 80px;
 $search-form-height-desktop: 96px;
-
 $search-icon-size: 2.5rem;
+// overlay submit button on top of search textbox
+$search-btn-offset-right: 4rem;
 
 .search-form-filter {
   position: relative;
+  display: flex;
+  align-items: center;
 
   & &__input {
-    // position: absolute;
     border: 1px solid $near-white;
+    font-size: $font-size;
     box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
     color: $gray-blue;
     font-family: $font-helvetica-neue-light;
-    font-size: $font-size;
     height: $search-form-height;
     padding-right: 80px;
     width: 100%;
 
-    @include breakpoint($bp-medium) {
+    @include breakpoint($bp-large) {
       height: $search-form-height-desktop;
+      font-size: $font-size-bg;
     }
 
     &::placeholder {
@@ -28,37 +31,25 @@ $search-icon-size: 2.5rem;
 
   & &__button {
     @include background-image('magnifier.svg', center);
+    position: absolute;
     appearance: none;
     background-size: 23px;
     border: 0;
     box-shadow: none;
     height: $search-icon-size;
     width: $search-icon-size;
-    margin: 0 15px 0 -60px;
     min-height: auto;
     padding: 6px;
-    right: 90px;
+    right: 1.5rem;
     text-indent: -9999px;
-    // top: -8px;
 
-    @include breakpoint($bp-medium) {
-      margin-left: -75px;
+    @include breakpoint($bp-large) {
+      // margin-left: -75px;
       background-size: 28px;
       // height: 80px;
-      right: 23px;
-      top: 47px;
+      // right: 23px;
+      // top: 47px;
       // width: 45px;
-    }
-
-    @include breakpoint($new-medium) {
-      right: 44px;
-      top: 90px;
-    }
-
-    @include breakpoint($new-large) {
-      left: 757px;
-      right: auto;
-      top: 90px;
     }
 
     &:hover {

@@ -11298,20 +11298,27 @@ a.video_preview::before {
         margin-left: 24px; } }
 
 .search-form-filter {
-  position: relative; }
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
   .search-form-filter .search-form-filter__input {
     border: 1px solid #efefef;
+    font-size: 18px;
     -webkit-box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
             box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
     color: #506380;
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-    font-size: 18px;
-    height: 52px;
+    height: 80px;
     padding-right: 80px;
     width: 100%; }
-    @media (min-width: 600px) {
+    @media (min-width: 850px) {
       .search-form-filter .search-form-filter__input {
-        height: 96px; } }
+        height: 96px;
+        font-size: 24px; } }
     .search-form-filter .search-form-filter__input::-webkit-input-placeholder {
       color: #506380; }
     .search-form-filter .search-form-filter__input::-moz-placeholder {
@@ -11322,6 +11329,7 @@ a.video_preview::before {
       color: #506380; }
   .search-form-filter .search-form-filter__button {
     background: url("/themes/custom/ucsf/assets/images/magnifier.svg") no-repeat center transparent;
+    position: absolute;
     -webkit-appearance: none;
        -moz-appearance: none;
             appearance: none;
@@ -11331,26 +11339,13 @@ a.video_preview::before {
             box-shadow: none;
     height: 2.5rem;
     width: 2.5rem;
-    margin: 0 15px 0 -60px;
     min-height: auto;
     padding: 6px;
-    right: 90px;
+    right: 1.5rem;
     text-indent: -9999px; }
-    @media (min-width: 600px) {
-      .search-form-filter .search-form-filter__button {
-        margin-left: -75px;
-        background-size: 28px;
-        right: 23px;
-        top: 47px; } }
     @media (min-width: 850px) {
       .search-form-filter .search-form-filter__button {
-        right: 44px;
-        top: 90px; } }
-    @media (min-width: 1050px) {
-      .search-form-filter .search-form-filter__button {
-        left: 757px;
-        right: auto;
-        top: 90px; } }
+        background-size: 28px; } }
     .search-form-filter .search-form-filter__button:hover {
       cursor: pointer;
       background-color: transparent;
