@@ -106,4 +106,33 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     unset($form['field_date_and_time_value_2']);
     unset($form['actions']);
   }
+
+
+  if ($form['#id'] == 'views-exposed-form-press-releases-block-1') {
+
+    // TODO: Ask if they have a view mode that already looks correct for the article displays
+
+    // TODO: Style the "more-link" in docroot\themes\custom\ucsf\php-includes\views.inc
+
+    // TODO: add the advanced button (code is above) and link to /news/filter?combine=&tid%5B714%5D=714&field_date_and_time_value_1=All&field_date_and_time_value_2=All
+    // TODO: style the advanced button
+
+    // TODO: Style the Search input field
+    // TODO: Style the Search button magnify glass
+
+    $test = '';
+
+    // $form["#attributes"]["class"][] = "search-form pr-search-form";
+
+    // $form['top']['count'] = [
+    //   '#type' => 'container',
+    //   'count_markup' => ['#markup' => $result_count . ' Results <span class="desktop-results">in the UCSF Press Releases<span>'],
+    //   '#attributes' => [
+    //     'class' => [
+    //       'count'
+    //     ]
+    //   ]
+    // ];
+  }
+
 }
