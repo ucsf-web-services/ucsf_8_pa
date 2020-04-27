@@ -22,7 +22,7 @@ $icon-map: (
   padding: 0 20px;
   margin: 0;
   position: fixed;
-  bottom: 0;
+  bottom: -100%;
   list-style: none;
   background-color: $c-background-gray;
   transition: $transition-time-short cubic-bezier(0.77, 0, 0.175, 1);
@@ -110,8 +110,8 @@ $icon-map: (
     display: block;
   }
 
-  &.is-hidden {
-    bottom: -100%;
+  &.is-visible {
+    bottom: 0;
   }
 
   // applied in ucsf_element_overlap_detection.js
