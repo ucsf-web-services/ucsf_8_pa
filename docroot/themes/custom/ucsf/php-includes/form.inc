@@ -107,8 +107,11 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     unset($form['actions']);
   }
 
-
+  // Styling Press Releases block (news-media/journalists)
   if ($form['#id'] == 'views-exposed-form-press-releases-block-1') {
+    $form["#attributes"]["class"][] = 'search-form';
+    $form['combine']['#attributes']['class'][] = 'search-form__input';
+    $form['actions']['submit']['#attributes']['class'][] = 'search-form__submit';
 
     // TODO: Ask if they have a view mode that already looks correct for the article displays
 
@@ -116,23 +119,20 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
 
     // TODO: add the advanced button (code is above) and link to /news/filter?combine=&tid%5B714%5D=714&field_date_and_time_value_1=All&field_date_and_time_value_2=All
     // TODO: style the advanced button
-
-    // TODO: Style the Search input field
-    // TODO: Style the Search button magnify glass
-
-    $test = '';
-
-    // $form["#attributes"]["class"][] = "search-form pr-search-form";
-
-    // $form['top']['count'] = [
-    //   '#type' => 'container',
-    //   'count_markup' => ['#markup' => $result_count . ' Results <span class="desktop-results">in the UCSF Press Releases<span>'],
-    //   '#attributes' => [
-    //     'class' => [
-    //       'count'
-    //     ]
-    //   ]
-    // ];
   }
+}
 
+/**
+ * Implements hook_input__submit().
+ */
+function ucsf_preprocess_input__submit(&$variables) {
+  // Getting rid of the .button class because search button shouldn't look like a button
+  if (isset($variables['element']['#id']) && $variables['element']['#id'] == 'edit-submit-press-releases') {
+    foreach ($variables['attributes']['class'] as $key => $value) {
+      if ($value == 'button') {
+        unset($variables['attributes']['class'][$key]);
+        break;
+      }
+    }
+  }
 }
