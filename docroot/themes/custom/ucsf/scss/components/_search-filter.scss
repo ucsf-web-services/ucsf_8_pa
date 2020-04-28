@@ -1,23 +1,29 @@
 $search-form-height: 80px;
 $search-form-height-desktop: 96px;
 
-$search-btn-size: 1.45rem;
-$search-btn-size-desktop: 1.75rem;
+$icon-btn-size: 1.45rem;
+$icon-btn-size-desktop: 1.75rem;
 // overlay submit button on top of search textbox
 $search-btn-offset-right: 4rem;
 
 .search-form {
   position: relative;
-  height: $search-form-height;
+  // height: $search-form-height;
 
   @include breakpoint($bp-large) {
-    height: $search-form-height-desktop;
+    // height: $search-form-height-desktop;
+  }
+
+  label {
+    @include visually-hidden();
+  }
+
+  .form--inline .form-item {
+    float: none;
+    margin: 0;
   }
 
   & &__input {
-    position: absolute;
-    top: 0;
-    left: 0;
     height: $search-form-height;
     width: 100%;
     border: 1px solid $near-white;
@@ -41,20 +47,20 @@ $search-btn-offset-right: 4rem;
     @include background-image('magnifier.svg', center);
     position: absolute;
     top: 0;
-    background-size: $search-btn-size;
+    background-size: $icon-btn-size;
     border: 0;
     // box-shadow: none;
     height: $search-form-height;
-    width: $search-btn-size;
+    width: $icon-btn-size;
     min-height: auto;
     padding: 6px;
     right: 1.5rem;
     text-indent: -9999px;
 
     @include breakpoint($bp-large) {
-      background-size: $search-btn-size-desktop;
+      background-size: $icon-btn-size-desktop;
       height: $search-form-height-desktop;
-      width: $search-btn-size-desktop;
+      width: $icon-btn-size-desktop;
       right: 2rem;
     }
 
@@ -62,6 +68,22 @@ $search-btn-offset-right: 4rem;
       cursor: pointer;
       background-color: transparent;
       border-color: transparent;
+    }
+  }
+
+  .search-filter__advanced {
+    @include background-image('filter.svg', left);
+    @include link-reset();
+    font-family: $font-helvetica-neue-medium;
+    background-size: $icon-btn-size;
+    padding-left: calc(#{$icon-btn-size} + .5rem);
+    float: right;
+    transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1);
+    transition-property: padding-left margin-right;
+
+    &:hover {
+      padding-left: calc(#{$icon-btn-size} + 1rem);
+      margin-right: -.5rem;
     }
   }
 }

@@ -112,10 +112,21 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     $form["#attributes"]["class"][] = 'search-form';
     $form['combine']['#attributes']['class'][] = 'search-form__input';
     $form['actions']['submit']['#attributes']['class'][] = 'search-form__submit';
-
     // TODO: Ask if they have a view mode that already looks correct for the article displays
     // TODO: add the advanced button (code is above) and link to /news/filter?combine=&tid%5B714%5D=714&field_date_and_time_value_1=All&field_date_and_time_value_2=All
     // TODO: style the advanced button
+
+        // Top Container - Advanced button.
+        $form['top']['advanced'] = [
+          '#type' => 'link',
+          '#url' => Url::fromUri('internal:#open'),
+          '#title' => t('Advanced'),
+          '#attributes' => [
+            'class' => [
+              'search-filter__advanced'
+            ]
+          ]
+        ];
   }
 }
 

@@ -11298,15 +11298,18 @@ a.video_preview::before {
         margin-left: 24px; } }
 
 .search-form {
-  position: relative;
-  height: 80px; }
-  @media (min-width: 850px) {
-    .search-form {
-      height: 96px; } }
+  position: relative; }
+  .search-form label {
+    position: absolute !important;
+    clip: rect(1px, 1px, 1px, 1px);
+    overflow: hidden;
+    height: 1px;
+    width: 1px;
+    word-wrap: normal; }
+  .search-form .form--inline .form-item {
+    float: none;
+    margin: 0; }
   .search-form .search-form__input {
-    position: absolute;
-    top: 0;
-    left: 0;
     height: 80px;
     width: 100%;
     border: 1px solid #efefef;
@@ -11350,6 +11353,26 @@ a.video_preview::before {
       cursor: pointer;
       background-color: transparent;
       border-color: transparent; }
+  .search-form .search-filter__advanced {
+    background: url("/themes/custom/ucsf/assets/images/filter.svg") no-repeat left transparent;
+    text-decoration: none;
+    border-bottom: none;
+    background-color: transparent;
+    font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    background-size: 1.45rem;
+    padding-left: calc(1.45rem + .5rem);
+    float: right;
+    -webkit-transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1);
+    transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1);
+    -webkit-transition-property: padding-left margin-right;
+    transition-property: padding-left margin-right; }
+    .search-form .search-filter__advanced:hover, .search-form .search-filter__advanced:active, .search-form .search-filter__advanced:visited {
+      text-decoration: none;
+      border-bottom: none;
+      background-color: transparent; }
+    .search-form .search-filter__advanced:hover {
+      padding-left: calc(1.45rem + 1rem);
+      margin-right: -.5rem; }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .explorer {
