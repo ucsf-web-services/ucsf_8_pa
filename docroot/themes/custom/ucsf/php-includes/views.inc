@@ -7,7 +7,26 @@ function ucsf_preprocess_views_view(&$variables) {
     $variables['#attached']['library'][] = 'ucsf/element_swoosh';
   }
 
-  // TODO: set the correct href for the "more-link" in the "press-release" view.
-  // TODO: add a class onto the "more-link" so that it looks correct.
-  // /news/filter?combine=&tid%5B714%5D=714&field_date_and_time_value_1=All&field_date_and_time_value_2=All
+  // Set the correct href for the "more-link" in the "press-release" view.
+  if ($variables['id'] == 'press_releases') {
+    $variables['more']['#options']['attributes']['class'] = [
+      'button',
+    ];
+
+    if (isset($variables['more']['#url'])) {
+      // search term from exposed filter input
+      $term = $variables['exposed']['combine']['#value'];
+      // Build search query for the 'news/filter'
+      $query = [
+        'combine' => $term,
+        // Only search within 'Press Releases
+        'tid[714]' => '714',
+        'field_date_and_time_value_1' => 'All',
+        'field_date_and_time_value_2' => 'All',
+      ];
+
+      $variables['more']['#url']->setOption('query', $query);
+    }
+
+  }
 }
