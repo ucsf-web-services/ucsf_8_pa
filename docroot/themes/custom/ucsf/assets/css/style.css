@@ -11299,22 +11299,23 @@ a.video_preview::before {
 
 .search-form {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center; }
+  height: 80px; }
+  @media (min-width: 850px) {
+    .search-form {
+      height: 96px; } }
   .search-form .search-form__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 80px;
+    width: 100%;
     border: 1px solid #efefef;
     font-size: 18px;
     -webkit-box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
             box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
     color: #506380;
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-    height: 80px;
-    padding-right: 80px;
-    width: 100%; }
+    padding-right: 80px; }
     @media (min-width: 850px) {
       .search-form .search-form__input {
         height: 96px;
@@ -11330,22 +11331,21 @@ a.video_preview::before {
   .search-form .search-form__submit {
     background: url("/themes/custom/ucsf/assets/images/magnifier.svg") no-repeat center transparent;
     position: absolute;
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-    background-size: 23px;
+    top: 0;
+    background-size: 1.45rem;
     border: 0;
-    -webkit-box-shadow: none;
-            box-shadow: none;
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 80px;
+    width: 1.45rem;
     min-height: auto;
     padding: 6px;
     right: 1.5rem;
     text-indent: -9999px; }
     @media (min-width: 850px) {
       .search-form .search-form__submit {
-        background-size: 28px; } }
+        background-size: 1.75rem;
+        height: 96px;
+        width: 1.75rem;
+        right: 2rem; } }
     .search-form .search-form__submit:hover {
       cursor: pointer;
       background-color: transparent;

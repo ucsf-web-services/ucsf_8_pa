@@ -114,9 +114,6 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     $form['actions']['submit']['#attributes']['class'][] = 'search-form__submit';
 
     // TODO: Ask if they have a view mode that already looks correct for the article displays
-
-    // TODO: Style the "more-link" in docroot\themes\custom\ucsf\php-includes\views.inc
-
     // TODO: add the advanced button (code is above) and link to /news/filter?combine=&tid%5B714%5D=714&field_date_and_time_value_1=All&field_date_and_time_value_2=All
     // TODO: style the advanced button
   }
