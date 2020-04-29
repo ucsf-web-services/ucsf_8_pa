@@ -111,7 +111,6 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     $form["#attributes"]["class"][] = 'search-form';
     $form['combine']['#attributes']['class'][] = 'search-form__input';
     $form['actions']['submit']['#attributes']['class'][] = 'search-form__submit';
-    // TODO: Ask if they have a view mode that already looks correct for the article displays
 
     // Advanced Filter - build url query for redirect.
     $query = [
