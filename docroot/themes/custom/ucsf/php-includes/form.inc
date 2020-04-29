@@ -4,8 +4,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Component\Utility\Html;
 
-function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id)
-{
+function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   if ($form['#id'] == 'views-exposed-form-news-filter-page-1') {
 
@@ -113,20 +112,31 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     $form['combine']['#attributes']['class'][] = 'search-form__input';
     $form['actions']['submit']['#attributes']['class'][] = 'search-form__submit';
     // TODO: Ask if they have a view mode that already looks correct for the article displays
-    // TODO: add the advanced button (code is above) and link to /news/filter?combine=&tid%5B714%5D=714&field_date_and_time_value_1=All&field_date_and_time_value_2=All
-    // TODO: style the advanced button
 
-        // Top Container - Advanced button.
-        $form['top']['advanced'] = [
-          '#type' => 'link',
-          '#url' => Url::fromUri('internal:#open'),
-          '#title' => t('Advanced'),
-          '#attributes' => [
-            'class' => [
-              'search-filter__advanced'
-            ]
-          ]
-        ];
+    // Advanced Filter - build url query for redirect.
+    $query = [
+      'combine' => '',
+      // Only search within 'Press Releases'
+      'tid[714]' => '714',
+      'field_date_and_time_value_1' => 'All',
+      'field_date_and_time_value_2' => 'All',
+    ];
+
+    $url = Url::fromRoute('view.news_filter.page_1');
+    $url->setOption('query', $query);
+    $url->setOption('fragment', 'open');
+
+    // Advanced Filter button.
+    $form['top']['advanced'] = [
+      '#type' => 'link',
+      '#url' => $url,
+      '#title' => t('Advanced'),
+      '#attributes' => [
+        'class' => [
+          'search-filter__advanced'
+        ]
+      ]
+    ];
   }
 }
 
