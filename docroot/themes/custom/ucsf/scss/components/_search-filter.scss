@@ -48,8 +48,7 @@ $search-btn-offset-right: 4rem;
     position: absolute;
     top: 0;
     background-size: $icon-btn-size;
-    border: 0;
-    // box-shadow: none;
+    border: none;
     height: $search-form-height;
     width: $icon-btn-size;
     min-height: auto;
@@ -68,6 +67,14 @@ $search-btn-offset-right: 4rem;
       cursor: pointer;
       background-color: transparent;
       border-color: transparent;
+    }
+
+    // Initially this class is not present, I'm removing it in form.inc,
+    // For some reason it comes back after search button is pressed.
+    &.button,
+    &.button:hover {
+      border: none;
+      background-color: transparent;
     }
   }
 
