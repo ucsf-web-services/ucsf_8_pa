@@ -92,6 +92,21 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     $form['dropdown']['pub_year']['#attributes'] = ['class' => ['fieldgroup']];
     $form['dropdown']['pub_year']['field_date_and_time_value_1'] = $field_date_and_time_value_1;
     $form['dropdown']['pub_year']['field_date_and_time_value_2'] = $field_date_and_time_value_2;
+    // RANGE START
+    $form['dropdown']['pub_year_range'] = [
+      '#type' => 'range',
+      '#attributes' => [
+        'class' => [
+          'publication-range'
+        ],
+        'data-values' =>'multiple',
+        'min' => '2000',
+        'max' => '2021',
+        'value' => '2000,2021',
+      ]
+    ];
+    // RANGE END
+
     $form['dropdown']['tid_1'] = $tid_1; // Health and Science
     $form['dropdown']['field_topics_target_id'] = $field_topics_target_id; //Campus Topics
     $form['dropdown']['actions'] = $actions;

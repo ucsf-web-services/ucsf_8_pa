@@ -55,13 +55,16 @@
 
         // Hide label if there are no active filters.
         if (filter_item.length > 0) {
-          console.log(filter_item);
+          // console.log(filter_item);
           $('.search-filter__indicator-list label').removeClass('visually-hidden')
         }
       }
 
-      removeFilter();
+      const $rangeValue = $('#edit-pub-year-range').attr("value");
+      const $rangeValues = $rangeValue === null ? [] : $rangeValue.split(",");
+      console.log($rangeValues);
 
+      removeFilter();
     }
   };
 
