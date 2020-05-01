@@ -94,15 +94,14 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     $form['dropdown']['pub_year']['field_date_and_time_value_2'] = $field_date_and_time_value_2;
     // RANGE START
     $form['dropdown']['pub_year_range'] = [
-      '#type' => 'range',
+      '#type' => 'container',
       '#attributes' => [
+        'id' => 'slider', // used by jQuery.ui.slider
         'class' => [
-          'publication-range'
+          'multirange', // default multirange CSS styling
+          'publication-range', // overwrites for default styling
         ],
-        'data-values' =>'multiple',
-        'min' => '2000',
-        'max' => '2021',
-        'value' => '2000,2021',
+        'data-testid' =>'range-multiple', // for cypress testing
       ]
     ];
     // RANGE END

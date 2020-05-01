@@ -62,9 +62,36 @@
         }
       }
 
-      var $rangeValue = $('#edit-pub-year-range').attr("value");
-      var $rangeValues = $rangeValue === null ? [] : $rangeValue.split(",");
-      console.log($rangeValues);
+      // MULTIRANGE SLIDER START
+      $(document).ready(function () {
+        $("#slider").slider({
+          min: 0,
+          max: 100,
+          step: 1,
+          values: [10, 90],
+          slide: function slide(event, ui) {
+            for (var i = 0; i < ui.values.length; ++i) {
+              $("input.sliderValue[data-index=" + i + "]").val(ui.values[i]);
+            }
+          }
+        });
+        var $handle = $(".ui-slider-handle", slider);
+        $handle.first().addClass("multirange__handle publication-range__handle");
+        $handle.first().attr({
+          'data-value': 'min',
+          'data-testid': 'puplication-year-min'
+        });
+        $handle.last().addClass("multirange__handle publication-range__handle");
+        $handle.last().attr({
+          'data-value': 'max',
+          'data-testid': 'puplication-year-max'
+        });
+        // $("input.sliderValue").change(function() {
+        //     var $this = $(this);
+        //     $("#slider").slider("values", $this.data("index"), $this.val());
+        // });
+      });
+      // MULTIRANGE SLIDER END
 
       removeFilter();
     }
