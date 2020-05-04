@@ -105,51 +105,5 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     unset($form['field_date_and_time_value_2']);
     unset($form['actions']);
   }
-
-  // Styling Press Releases block (news-media/journalists)
-  if ($form['#id'] == 'views-exposed-form-press-releases-block-1') {
-    $form["#attributes"]["class"][] = 'search-form';
-    $form['combine']['#attributes']['class'][] = 'search-form__input';
-    $form['actions']['submit']['#attributes']['class'][] = 'search-form__submit';
-
-    // Advanced Filter - build url query for redirect.
-    $query = [
-      'combine' => '',
-      // Only search within 'Press Releases'
-      'tid[714]' => '714',
-      'field_date_and_time_value_1' => 'All',
-      'field_date_and_time_value_2' => 'All',
-    ];
-
-    $url = Url::fromRoute('view.news_filter.page_1');
-    $url->setOption('query', $query);
-    $url->setOption('fragment', 'open');
-
-    // Advanced Filter button.
-    $form['top']['advanced'] = [
-      '#type' => 'link',
-      '#url' => $url,
-      '#title' => t('Advanced'),
-      '#attributes' => [
-        'class' => [
-          'search-filter__advanced'
-        ]
-      ]
-    ];
-  }
 }
 
-/**
- * Implements hook_input__submit().
- */
-function ucsf_preprocess_input__submit(&$variables) {
-  // Getting rid of the .button class because search button shouldn't look like a button
-  if (isset($variables['element']['#id']) && $variables['element']['#id'] == 'edit-submit-press-releases') {
-    foreach ($variables['attributes']['class'] as $key => $value) {
-      if ($value == 'button') {
-        unset($variables['attributes']['class'][$key]);
-        break;
-      }
-    }
-  }
-}

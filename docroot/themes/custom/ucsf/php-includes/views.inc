@@ -11,14 +11,12 @@ function ucsf_preprocess_views_view(&$variables) {
   if ($variables['id'] == 'press_releases') {
     $variables['more']['#options']['attributes']['class'] = [
       'button',
+      'redirect-to-advanced'
     ];
 
     if (isset($variables['more']['#url'])) {
-      // search term from exposed filter input
-      $term = $variables['exposed']['combine']['#value'];
       // Build search query for the 'news/filter'
       $query = [
-        'combine' => $term,
         // Only search within 'Press Releases
         'tid[714]' => '714',
         'field_date_and_time_value_1' => 'All',
@@ -27,6 +25,5 @@ function ucsf_preprocess_views_view(&$variables) {
 
       $variables['more']['#url']->setOption('query', $query);
     }
-
   }
 }

@@ -11312,16 +11312,6 @@ a.video_preview::before {
 
 .search-form {
   position: relative; }
-  .search-form label {
-    position: absolute !important;
-    clip: rect(1px, 1px, 1px, 1px);
-    overflow: hidden;
-    height: 1px;
-    width: 1px;
-    word-wrap: normal; }
-  .search-form .form--inline .form-item {
-    float: none;
-    margin: 0; }
   .search-form .search-form__input {
     height: 80px;
     width: 100%;
@@ -11366,24 +11356,26 @@ a.video_preview::before {
       cursor: pointer;
       background-color: transparent;
       border-color: transparent; }
-    .search-form .search-form__submit.button, .search-form .search-form__submit.button:hover {
-      border: none;
-      background-color: transparent; }
   .search-form .search-filter__advanced {
     background: url("/themes/custom/ucsf/assets/images/filter.svg") no-repeat left transparent;
-    text-decoration: none;
-    border-bottom: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    border: none;
     background-color: transparent;
+    min-height: auto;
+    color: #0071ad;
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     background-size: 1.45rem;
-    padding-left: calc(1.45rem + .5rem);
+    padding: 0 0 0 calc(1.45rem + .5rem);
+    padding-right: 0;
     float: right;
     -webkit-transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1);
     transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1);
     margin-top: 1rem;
     -webkit-transition-property: padding-left margin-right;
     transition-property: padding-left margin-right; }
-    .search-form .search-filter__advanced:hover, .search-form .search-filter__advanced:active, .search-form .search-filter__advanced:visited {
+    .search-form .search-filter__advanced:hover {
       text-decoration: none;
       border-bottom: none;
       background-color: transparent; }
