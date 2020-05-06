@@ -66,8 +66,8 @@
       $(document).ready(function () {
         // Default values for min and max publication year handles
         // TODO: Update next year
-        var currentMinValue = 2019;
-        var currentMaxValue = 2020;
+        // let currentMinValue = 2019;
+        // let currentMaxValue = 2020;
 
         // JQUERY SLIDER UI OBJECT https://api.jqueryui.com/slider/#event-slide
         var $publicationRange = $('.publication-range', context);
@@ -76,39 +76,42 @@
           min: 2000,
           max: 2020,
           step: 1,
-          values: [currentMinValue, currentMaxValue],
+          values: [2019, 2020]
 
           // Triggered on every mouse move during slide
-          slide: function slide(event, ui) {
-            currentMinValue = ui.values[0];
-            currentMaxValue = ui.values[1];
-            updateHandleLabel(currentMinValue, currentMaxValue);
-          },
+          // slide: function( event, ui ) {
+          //   $('.min-limit').val( ui.values[0] );
+          //   $('.min-limit').attr({value:ui.values[0]})
 
-          // Triggered after the user slides a handle.
-          stop: function stop(event, ui) {
-            currentMinValue = ui.values[0];
-            currentMaxValue = ui.values[1];
-            updateHandleLabel(currentMinValue, currentMaxValue);
-          }
+          //   $('.max-limit').val( ui.values[1] );
+          //   $('max-limit').attr({value:ui.values[1]})
+          // },
+
+          // // Triggered after the user slides a handle.
+          // stop: function( event, ui ) {
+          //   currentMinValue = ui.values[0];
+          //   currentMaxValue = ui.values[1];
+          //   updateHandleLabel(currentMinValue, currentMaxValue);
+          // },
         });
 
         var publicationMin = $publicationRange.slider("option", "min");
         var publicationMax = $publicationRange.slider("option", "max");
 
-        var updateHandleLabel = function updateHandleLabel(minValue, maxValue) {
-          $('.min-limit').attr({
-            value: minValue,
-            placeholder: minValue,
-            max: maxValue
-          });
+        // Update values for the floating input
+        // const updateHandleLabel = (minValue, maxValue) => {
+        //   $('.min-limit').attr({
+        //     value: minValue,
+        //     placeholder: minValue,
+        //     max: maxValue,
+        //   });
 
-          $('.max-limit').attr({
-            value: maxValue,
-            placeholder: maxValue,
-            min: minValue
-          });
-        };
+        //   $('.max-limit').attr({
+        //     value: maxValue,
+        //     placeholder: maxValue,
+        //     min: minValue
+        //   });
+        // }
 
         // Minimum Publication Year handle
         var $handle = $('.ui-slider-handle');
@@ -119,7 +122,7 @@
         });
 
         // Create label and input for Minimum Publication Year handle
-        var yearLabelMin = "<label for='min-limit' class='visually-hidden'>\n              Minimum year of publication:\n            </label>\n            <input type='number' min='" + publicationMin + "' max='" + currentMaxValue + "' value ='" + currentMinValue + "' id='min-limit' class='ui-slider__handle-label min-limit' maxlength='4' pattern='d{4}'/>\n          ";
+        var yearLabelMin = "<label for='min-limit' class='visually-hidden'>\n              Minimum year of publication:\n            </label>\n            <input type='number' value='2019' min='" + publicationMin + "' id='min-limit' class='ui-slider__handle-label min-limit' maxlength='4' pattern='d{4}'/>\n          ";
         handleMin.append(yearLabelMin);
 
         // Maximum Publication Year handle
@@ -130,8 +133,46 @@
         });
 
         // Create label and input for Maximum Publication Year handle
-        var yearLabelMax = "<label for='max-limit' class='visually-hidden'>\n              Maximum year of publication:\n            </label>\n            <input type='number' min='" + currentMinValue + "' max='" + publicationMax + "' value ='" + currentMaxValue + "' id='max-limit' class='ui-slider__handle-label max-limit' maxlength='4' pattern='d{4}'/>\n          ";
+        var yearLabelMax = "<label for='max-limit' class='visually-hidden'>\n              Maximum year of publication:\n            </label>\n            <input type='number' value='2020' max='" + publicationMax + "' id='max-limit' class='ui-slider__handle-label max-limit' maxlength='4' pattern='d{4}'/>\n          ";
         handleMax.append(yearLabelMax);
+
+        // $('.min-limit').one('focus', function() {
+        //   $(this).val('');
+        // });
+
+        // $('.max-limit').one('focus', function() {
+        //   $(this).val('');
+        // });
+
+        // If user typed in a year move handle to that year
+
+        var minLimit = $('.min-limit');
+        var maxLimit = $('.max-limit');
+
+        var validateMinMax = function validateMinMax(value) {
+          var year = new Date().getFullYear();
+          var newValue = parseInt(value);
+
+          if (newValue < 2000) {
+            newValue = 2000;
+          } else if (newValue > year) {
+            newValue = year;
+          }
+
+          return newValue;
+        };
+
+        minLimit.change(function () {
+          var newYear = validateMinMax($(this).val());
+          $publicationRange.slider('values', 0, newYear);
+          console.log($(this).val());
+        });
+
+        maxLimit.change(function () {
+          var newYear = validateMinMax($(this).val());
+          $publicationRange.slider('values', 1, newYear);
+          console.log($(this).val());
+        });
 
         // TRACK FOR RANGE SLIDER
         // Label for the range track
