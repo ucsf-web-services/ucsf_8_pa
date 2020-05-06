@@ -62,36 +62,87 @@
         }
       }
 
-      // MULTIRANGE SLIDER START
+      // PUBLICATION YEAR MULTIRANGE SLIDER START
       $(document).ready(function () {
-        $("#slider").slider({
-          min: 0,
-          max: 100,
+        // Default values for min and max publication year handles
+        // TODO: Update next year
+        var currentMinValue = 2019;
+        var currentMaxValue = 2020;
+
+        // JQUERY SLIDER UI OBJECT https://api.jqueryui.com/slider/#event-slide
+        var $publicationRange = $('.publication-range');
+        $publicationRange.slider({
+          range: true,
+          min: 2000,
+          // TODO: Update next year
+          max: 2020,
           step: 1,
-          values: [10, 90],
+          values: [currentMinValue, currentMaxValue],
+
+          // Triggered on every mouse move during slide
           slide: function slide(event, ui) {
-            for (var i = 0; i < ui.values.length; ++i) {
-              $("input.sliderValue[data-index=" + i + "]").val(ui.values[i]);
-            }
+            currentMinValue = ui.values[0];
+            currentMaxValue = ui.values[1];
+            updateHandleLabel(currentMinValue, currentMaxValue);
+          },
+
+          // Triggered after the user slides a handle.
+          stop: function stop(event, ui) {
+            currentMinValue = ui.values[0];
+            currentMaxValue = ui.values[1];
+            updateHandleLabel(currentMinValue, currentMaxValue);
           }
         });
-        var $handle = $(".ui-slider-handle", slider);
-        $handle.first().addClass("multirange__handle publication-range__handle");
-        $handle.first().attr({
+
+        // Min and max allowed values
+        var publicationMin = $(".publication-range").slider("option", "min");
+        var publicationMax = $(".publication-range").slider("option", "max");
+
+        // HANDLES FOR RANGE SLIDER
+        var $handle = $('.ui-slider-handle', context);
+        // Update values based off handle position on the track
+        var updateHandleLabel = function updateHandleLabel(minValue, maxValue) {
+          $('.min-limit').attr({
+            value: minValue,
+            placeholder: minValue,
+            max: maxValue
+          });
+
+          $('.max-limit').attr({
+            value: maxValue,
+            placeholder: maxValue,
+            min: minValue
+          });
+        };
+
+        // Minimum Publication Year handle
+        var handleMin = $handle.first();
+        handleMin.attr({
           'data-value': 'min',
           'data-testid': 'puplication-year-min'
         });
-        $handle.last().addClass("multirange__handle publication-range__handle");
-        $handle.last().attr({
+
+        // Create label and input for Minimum Publication Year handle
+        var yearLabelMin = "<label for='min-limit' class='visually-hidden'>\n            Minimum year of publication:\n          </label>\n          <input type='number' min='" + publicationMin + "' max='" + currentMaxValue + "' value ='" + currentMinValue + "' id='min-limit' class='ui-slider__handle-label min-limit' maxlength='4' pattern='d{4}'/>";
+        handleMin.append(yearLabelMin);
+
+        // Maximum Publication Year handle
+        var handleMax = $handle.last();
+        handleMax.attr({
           'data-value': 'max',
           'data-testid': 'puplication-year-max'
         });
-        // $("input.sliderValue").change(function() {
-        //     var $this = $(this);
-        //     $("#slider").slider("values", $this.data("index"), $this.val());
-        // });
+
+        // Create label and input for Maximum Publication Year handle
+        var yearLabelMax = "<label for='max-limit' class='visually-hidden'>\n            Maximum year of publication:\n          </label>\n          <input type='number' min='" + currentMinValue + "' max='" + publicationMax + "' value ='" + currentMaxValue + "' id='max-limit' class='ui-slider__handle-label max-limit' maxlength='4' pattern='d{4}'/>";
+        handleMax.append(yearLabelMax);
+
+        // TRACK FOR RANGE SLIDER
+        // Label for the range track
+        var trackLabel = "<p class='ui-slider__track-label'>\n            <span class='visually-hidden'>Available publication years range from</span>\n            <span>" + publicationMin + "</span>\n            <span class='visually-hidden'>to</span>\n            <span>" + publicationMax + "</span>\n          </p>";
+        $('.publication-range', context).append(trackLabel);
       });
-      // MULTIRANGE SLIDER END
+      // PUBLICATION YEAR MULTIRANGE SLIDER END
 
       removeFilter();
     }
