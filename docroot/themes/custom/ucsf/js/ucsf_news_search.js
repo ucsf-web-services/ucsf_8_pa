@@ -68,11 +68,10 @@
         let currentMaxValue = 2020;
 
         // JQUERY SLIDER UI OBJECT https://api.jqueryui.com/slider/#event-slide
-        const $publicationRange = $('.publication-range');
+        const $publicationRange = $('.publication-range', context);
         $publicationRange.slider({
           range:true,
           min: 2000,
-          // TODO: Update next year
           max: 2020,
           step: 1,
           values: [currentMinValue, currentMaxValue],
@@ -92,13 +91,9 @@
           },
         })
 
-        // Min and max allowed values
-        const  publicationMin= $(".publication-range").slider("option", "min");
-        const publicationMax = $(".publication-range").slider("option", "max");
+        const publicationMin = $publicationRange.slider("option", "min");
+        const publicationMax = $publicationRange.slider("option", "max");
 
-        // HANDLES FOR RANGE SLIDER
-        const $handle = $('.ui-slider-handle', context);
-        // Update values based off handle position on the track
         const updateHandleLabel = (minValue, maxValue) => {
           $('.min-limit').attr({
             value: minValue,
@@ -114,6 +109,7 @@
         }
 
         // Minimum Publication Year handle
+        const $handle = $('.ui-slider-handle');
         const handleMin = $handle.first();
         handleMin.attr({
           'data-value': 'min',
@@ -123,9 +119,10 @@
         // Create label and input for Minimum Publication Year handle
         const yearLabelMin =
           `<label for='min-limit' class='visually-hidden'>
-            Minimum year of publication:
-          </label>
-          <input type='number' min='${publicationMin}' max='${currentMaxValue}' value ='${currentMinValue}' id='min-limit' class='ui-slider__handle-label min-limit' maxlength='4' pattern='\d{4}'/>`;
+              Minimum year of publication:
+            </label>
+            <input type='number' min='${publicationMin}' max='${currentMaxValue}' value ='${currentMinValue}' id='min-limit' class='ui-slider__handle-label min-limit' maxlength='4' pattern='\d{4}'/>
+          `;
         handleMin.append(yearLabelMin);
 
 
@@ -139,9 +136,10 @@
         // Create label and input for Maximum Publication Year handle
         const yearLabelMax =
           `<label for='max-limit' class='visually-hidden'>
-            Maximum year of publication:
-          </label>
-          <input type='number' min='${currentMinValue}' max='${publicationMax}' value ='${currentMaxValue}' id='max-limit' class='ui-slider__handle-label max-limit' maxlength='4' pattern='\d{4}'/>`;
+              Maximum year of publication:
+            </label>
+            <input type='number' min='${currentMinValue}' max='${publicationMax}' value ='${currentMaxValue}' id='max-limit' class='ui-slider__handle-label max-limit' maxlength='4' pattern='\d{4}'/>
+          `;
         handleMax.append(yearLabelMax);
 
         // TRACK FOR RANGE SLIDER
