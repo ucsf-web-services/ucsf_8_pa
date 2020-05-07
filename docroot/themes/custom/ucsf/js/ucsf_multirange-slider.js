@@ -1,34 +1,59 @@
 (($ => {
   // Wait for the document to be ready.
   $(() => {
-    // PUBLICATION YEAR MULTIRANGE SLIDER START
+    const $selectMin = $("#edit-field-date-and-time-value-1");
+    const $selectMax = $("#edit-field-date-and-time-value-2");
+
+    // Min and Max year range.
+    const minRange = parseInt($selectMin.find('option:nth-child(2)').text());
+    const maxRange = parseInt($selectMax.find('option:nth-child(2)').text());
+
     // Default values for min and max publication year handles
-    const currentYear = new Date().getFullYear();
-    let currentMinValue = 2019;
-    let currentMaxValue = currentYear;
+    let currentMinValue = minRange;
+    let currentMaxValue = maxRange;
+
+
 
     // JQUERY SLIDER UI OBJECT https://api.jqueryui.com/slider/#event-slide
     const $publicationRange = $('.publication-range');
     $publicationRange.slider({
-      range:true,
-      min: 2000,
-      max: currentYear,
+      range: true,
+      min: minRange,
+      max: maxRange,
       step: 1,
       values: [currentMinValue, currentMaxValue],
 
       // Triggered on every mouse move during slide
-      slide: function( event, ui ) {
+      slide: function(event, ui) {
         currentMinValue = ui.values[0];
         currentMaxValue = ui.values[1];
+
         // Update floating labels for handles
         $('.min-limit').text(currentMinValue);
         $('.max-limit').text(currentMaxValue);
-
       },
-    });
 
-    const publicationMin = $publicationRange.slider("option", "min");
-    const publicationMax = $publicationRange.slider("option", "max");
+      stop: function(event, ui) {
+        currentMinValue = ui.values[0];
+        currentMaxValue = ui.values[1];
+
+        // Find out what the select value of a chosen date is.
+        let $selectMinOptionVal = $selectMin.find(`option:contains(${currentMinValue})`).val();
+        let $selectMaxOptionVal = $selectMax.find(`option:contains(${currentMaxValue})`).val();
+
+        // Sanitize.
+        if ($selectMinOptionVal === undefined) {
+          $selectMinOptionVal = 'All'
+        }
+        if ($selectMaxOptionVal === undefined) {
+          $selectMaxOptionVal = 'All'
+        }
+
+        // Set the selected option.
+        $selectMin.val($selectMinOptionVal);
+        $selectMax.val($selectMaxOptionVal);
+      }
+    });
 
     // Minimum Publication Year handle
     const handleMin = $('.ui-slider-handle').first();
@@ -68,11 +93,10 @@
     const trackLabel =
       `<p class='ui-slider__track-label'>
         <span class='visually-hidden'>Available publication years range from</span>
-        <span>${publicationMin}</span>
+        <span>${minRange}</span>
         <span class='visually-hidden'>to</span>
-        <span>${publicationMax}</span>
+        <span>${maxRange}</span>
       </p>`;
     $('.publication-range').append(trackLabel);
-    // PUBLICATION YEAR MULTIRANGE SLIDER END
   });
 }))(jQuery);
