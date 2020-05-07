@@ -89,7 +89,9 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     $form['dropdown']['field_primary_area_target_id'] = $field_primary_area_target_id; // Area of Focus
     $form['dropdown']['pub_year']['#type'] = 'fieldset';
     $form['dropdown']['pub_year']['#title'] = t('Date of Publication');
-    // RANGE START
+    $form['dropdown']['pub_year']['#attributes'] = ['class' => ['fieldgroup']];
+
+    // PUBLICATION YEAR RANGE START
     $form['dropdown']['pub_year']['range'] = [
       '#type' => 'container',
       '#attributes' => [
@@ -100,11 +102,16 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
         'data-testid' =>'range-multiple', // for cypress testing
       ]
     ];
-    // RANGE END
+    // PUBLICATION YEAR RANGE END
 
-    // $form['dropdown']['pub_year-dropdown']['#attributes'] = ['class' => ['fieldgroup']];
-    // $form['dropdown']['pub_year-dropdown']['field_date_and_time_value_1'] = $field_date_and_time_value_1;
-    // $form['dropdown']['pub_year-dropdown']['field_date_and_time_value_2'] = $field_date_and_time_value_2;
+    // PUBLICATION YEAR MIN/MAX DROPDOWNS START
+    // Same functionality as range slider. Keeping around for accessibility,
+    // range slider and dropdowns sync up with each other
+    $form['dropdown']['pub_year']['field_date_and_time_value_1'] = $field_date_and_time_value_1;
+    $form['dropdown']['pub_year']['field_date_and_time_value_1']['#attributes'] = ['class' => ['visually-hidden']];
+    $form['dropdown']['pub_year']['field_date_and_time_value_2'] = $field_date_and_time_value_2;
+    $form['dropdown']['pub_year']['field_date_and_time_value_2']['#attributes'] = ['class' => ['visually-hidden']];
+    // PUBLICATION YEAR MIN/MAX DROPDOWNS END
 
     $form['dropdown']['tid_1'] = $tid_1; // Health and Science
     $form['dropdown']['field_topics_target_id'] = $field_topics_target_id; //Campus Topics
