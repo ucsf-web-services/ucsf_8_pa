@@ -6,7 +6,7 @@
     attach: function attach(context) {
 
       // Toggle Advanced Filter by Advanced Filter Icon.
-      $(".search-filter__advanced", context).click(function () {
+      $(".search-filter__advanced", context).once().click(function () {
         openAdvancedFilter();
       });
 
@@ -22,10 +22,11 @@
         $("#edit-field-primary-area-target-id-1026", context).click();
       });
 
+      // Commented out because the element is not being used ( search-filter-indicator.twig )
       // Toggle Advanced Filter and Focus on Date input by Date Change link.
-      $(".search-filter__advanced-date", context).click(function () {
-        openAdvancedFilter(true);
-      });
+      // $(".search-filter__advanced-date", context).click(function () {
+      //   openAdvancedFilter(true);
+      // });
 
       // Toggle Advanced Filter Function.
       function openAdvancedFilter(dateFocus) {
