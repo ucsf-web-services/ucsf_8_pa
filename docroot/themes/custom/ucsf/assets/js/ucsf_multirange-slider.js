@@ -1,10 +1,12 @@
-"use strict";
+'use strict';
 
 (function ($) {
   // Wait for the document to be ready.
   $(function () {
-    var $selectMin = $("#edit-field-date-and-time-value-1");
-    var $selectMax = $("#edit-field-date-and-time-value-2");
+    var $dropdownPanel = $('.search-filter__dropdown');
+
+    var $selectMin = $('#edit-field-date-and-time-value-1');
+    var $selectMax = $('#edit-field-date-and-time-value-2');
 
     // Min and Max year range.
     var minRange = parseInt($selectMin.find('option:nth-child(2)').text());
@@ -38,8 +40,8 @@
         currentMaxValue = ui.values[1];
 
         // Find out what the select value of a chosen date is.
-        var $selectMinOptionVal = $selectMin.find("option:contains(" + currentMinValue + ")").val();
-        var $selectMaxOptionVal = $selectMax.find("option:contains(" + currentMaxValue + ")").val();
+        var $selectMinOptionVal = $selectMin.find('option:contains(' + currentMinValue + ')').val();
+        var $selectMaxOptionVal = $selectMax.find('option:contains(' + currentMaxValue + ')').val();
 
         // Sanitize.
         if ($selectMinOptionVal === undefined) {
@@ -62,7 +64,7 @@
     });
 
     // Create floating labe for Minimum Publication Year handle
-    var yearLabelMin = "<span class='ui-slider__handle-label min-limit'>\n        <span class='visually-hidden'>\n          Minimum year of publication:\n        </span>\n        " + currentMinValue + "\n      </span>";
+    var yearLabelMin = '<span class=\'visually-hidden\'>Minimum year of publication:</span>\n      <span class=\'ui-slider__handle-label min-limit\'></span>';
     handleMin.append(yearLabelMin);
 
     // Maximum Publication Year handle
@@ -72,13 +74,44 @@
     });
 
     // Create floating label for Maximum Publication Year handle
-    var yearLabelMax = "<span class='ui-slider__handle-label max-limit'>\n        <span class='visually-hidden'>\n          Maximum year of publication:\n        </span>\n        " + currentMaxValue + "\n      </span>";
+    var yearLabelMax = '<span class=\'visually-hidden\'>Maximum year of publication:</span>\n      <span class=\'ui-slider__handle-label max-limit\'></span>';
     handleMax.append(yearLabelMax);
 
     // TRACK FOR RANGE SLIDER
     // Label for the range track
-    var trackLabel = "<p class='ui-slider__track-label'>\n        <span class='visually-hidden'>Available publication years range from</span>\n        <span>" + minRange + "</span>\n        <span class='visually-hidden'>to</span>\n        <span>" + maxRange + "</span>\n      </p>";
+    var trackLabel = '<p class=\'ui-slider__track-label\'>\n        <span class=\'visually-hidden\'>Available publication years range from</span>\n        <span>' + minRange + '</span>\n        <span class=\'visually-hidden\'>to</span>\n        <span>' + maxRange + '</span>\n      </p>';
     $('.publication-range').append(trackLabel);
+
+    // MAKING SLIDER HANDLES STAY AT THE POSITION OF PREVIOUSLY SUBMITTED QUERY WHEN PANEL IS REOPENED
+    // Sync multirange slider with filter data from dropdowns.
+    var updateSlider = function updateSlider() {
+      // Find what dropdown values are selected
+      var $selectMinOption = parseInt($selectMin.find(':selected').text());
+      var $selectMaxOption = parseInt($selectMax.find(':selected').text());
+
+      // Sanitize.
+      if (isNaN($selectMinOption)) {
+        $selectMinOption = minRange;
+      };
+      if (isNaN($selectMaxOption)) {
+        $selectMaxOption = maxRange;
+      };
+
+      // Provide selected values to the multirange slider
+      $publicationRange.slider('values', 0, $selectMinOption);
+      $publicationRange.slider('values', 1, $selectMaxOption);
+
+      // Update floating labels for multirange slider handles
+      $('.min-limit').text($selectMinOption);
+      $('.max-limit').text($selectMaxOption);
+    };
+
+    // Check if Advanced Filter Panel is open.
+    $('.search-filter__advanced').one().click(function () {
+      if ($dropdownPanel.hasClass('js-search_filter__dropdown-open')) {
+        updateSlider();
+      }
+    });
   });
 })(jQuery);
 //# sourceMappingURL=ucsf_multirange-slider.js.map

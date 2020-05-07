@@ -1,8 +1,10 @@
 (($ => {
   // Wait for the document to be ready.
   $(() => {
-    const $selectMin = $("#edit-field-date-and-time-value-1");
-    const $selectMax = $("#edit-field-date-and-time-value-2");
+    const $dropdownPanel = $('.search-filter__dropdown');
+
+    const $selectMin = $('#edit-field-date-and-time-value-1');
+    const $selectMax = $('#edit-field-date-and-time-value-2');
 
     // Min and Max year range.
     const minRange = parseInt($selectMin.find('option:nth-child(2)').text());
@@ -11,8 +13,6 @@
     // Default values for min and max publication year handles
     let currentMinValue = minRange;
     let currentMaxValue = maxRange;
-
-
 
     // JQUERY SLIDER UI OBJECT https://api.jqueryui.com/slider/#event-slide
     const $publicationRange = $('.publication-range');
@@ -63,12 +63,8 @@
 
     // Create floating labe for Minimum Publication Year handle
     const yearLabelMin =
-      `<span class='ui-slider__handle-label min-limit'>
-        <span class='visually-hidden'>
-          Minimum year of publication:
-        </span>
-        ${currentMinValue}
-      </span>`;
+      `<span class='visually-hidden'>Minimum year of publication:</span>
+      <span class='ui-slider__handle-label min-limit'></span>`;
     handleMin.append(yearLabelMin);
 
 
@@ -80,12 +76,8 @@
 
     // Create floating label for Maximum Publication Year handle
     const yearLabelMax =
-      `<span class='ui-slider__handle-label max-limit'>
-        <span class='visually-hidden'>
-          Maximum year of publication:
-        </span>
-        ${currentMaxValue}
-      </span>`;
+      `<span class='visually-hidden'>Maximum year of publication:</span>
+      <span class='ui-slider__handle-label max-limit'></span>`;
     handleMax.append(yearLabelMax);
 
     // TRACK FOR RANGE SLIDER
@@ -98,5 +90,37 @@
         <span>${maxRange}</span>
       </p>`;
     $('.publication-range').append(trackLabel);
+
+
+    // MAKING SLIDER HANDLES STAY AT THE POSITION OF PREVIOUSLY SUBMITTED QUERY WHEN PANEL IS REOPENED
+    // Sync multirange slider with filter data from dropdowns.
+    const updateSlider = () => {
+      // Find what dropdown values are selected
+      let $selectMinOption = parseInt($selectMin.find(':selected').text());
+      let $selectMaxOption = parseInt($selectMax.find(':selected').text());
+
+      // Sanitize.
+      if (isNaN($selectMinOption)) {
+        $selectMinOption = minRange;
+      };
+      if (isNaN($selectMaxOption)) {
+        $selectMaxOption = maxRange;
+      };
+
+      // Provide selected values to the multirange slider
+      $publicationRange.slider('values', 0, $selectMinOption);
+      $publicationRange.slider('values', 1, $selectMaxOption);
+
+      // Update floating labels for multirange slider handles
+      $('.min-limit').text($selectMinOption);
+      $('.max-limit').text($selectMaxOption);
+    };
+
+    // Check if Advanced Filter Panel is open.
+    $('.search-filter__advanced').one().click(function() {
+      if ($dropdownPanel.hasClass('js-search_filter__dropdown-open')) {
+        updateSlider();
+      }
+    });
   });
 }))(jQuery);
