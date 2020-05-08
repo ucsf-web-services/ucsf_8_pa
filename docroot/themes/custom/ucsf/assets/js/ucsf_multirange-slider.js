@@ -3,7 +3,7 @@
 (function ($) {
   // Wait for the document to be ready.
   $(function () {
-    var $dropdownPanel = $('.search-filter__dropdown');
+    var $publicationRange = $('.publication-range');
 
     var $selectMin = $('#edit-field-date-and-time-value-1');
     var $selectMax = $('#edit-field-date-and-time-value-2');
@@ -12,136 +12,169 @@
     var minRange = parseInt($selectMin.find('option:nth-child(2)').text());
     var maxRange = parseInt($selectMax.find('option:nth-child(2)').text());
 
-    // Default values for min and max publication year handles
-    var currentMinValue = minRange;
-    var currentMaxValue = maxRange;
+    /**
+     * Get the current minimum value after preventing min/max from overlapping.
+     *
+     * @param {number} minValue The minimum value of the current slider.
+     * @param {number} maxValue The maximum value of the current slider.
+     * @param {number} minLimit The lowest the minimum value can go.
+     *   Defaults to the minimum range allowed in the slider.
+     */
+    var getCurrentMinAfterOverlap = function getCurrentMinAfterOverlap(minValue, maxValue) {
+      var minLimit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : minRange;
 
-    if (currentMinValue >= currentMaxValue) {
-      currentMinValue -= 1;
-    }
+      if (minValue >= maxValue) {
+        if (minValue <= minLimit) {
+          minValue = minLimit;
+        } else {
+          minValue -= 1;
+        }
+      }
 
-    // Only execute subnav extend / collapse code in mobile
-    var desktopDetect = function desktopDetect(event) {
-      var $publicationRange = $('.publication-range');
+      return minValue;
+    };
 
-      // Desktop
-      if (event.matches) {
-        // JQUERY SLIDER UI OBJECT https://api.jqueryui.com/slider/#event-slide
-        $publicationRange.slider({
-          range: true,
-          min: minRange,
-          max: maxRange,
-          step: 1,
-          values: [currentMinValue, currentMaxValue],
-          animate: "fast",
+    /**
+     * Sync multirange slider with filter data from dropdowns.
+     */
+    var updateSlider = function updateSlider() {
+      // Find what dropdown values are selected
+      var selectMinOption = parseInt($selectMin.find(':selected').text());
+      var selectMaxOption = parseInt($selectMax.find(':selected').text());
 
-          // Triggered on every mouse move during slide
-          slide: function slide(event, ui) {
-            currentMinValue = ui.values[0];
-            currentMaxValue = ui.values[1];
+      // Sanitize.
+      if (isNaN(selectMinOption)) {
+        selectMinOption = minRange;
+      };
+      if (isNaN(selectMaxOption)) {
+        selectMaxOption = maxRange;
+      };
 
-            if (currentMinValue >= currentMaxValue) {
-              return false;
-            }
+      selectMinOption = getCurrentMinAfterOverlap(selectMinOption, selectMaxOption);
 
-            // Update floating labels for handles
-            $('.min-limit').text(currentMinValue);
-            $('.max-limit').text(currentMaxValue);
-          },
+      // Provide selected values to the multirange slider
+      $publicationRange.slider('values', 0, selectMinOption);
+      $publicationRange.slider('values', 1, selectMaxOption);
 
-          stop: function stop(event, ui) {
-            currentMinValue = ui.values[0];
-            currentMaxValue = ui.values[1];
+      // Update floating labels for multirange slider handles
+      $('.min-limit').text(selectMinOption);
+      $('.max-limit').text(selectMaxOption);
+    };
 
-            // Find out what the select value of a chosen date is.
-            var $selectMinOptionVal = $selectMin.find('option:contains(' + currentMinValue + ')').val();
-            var $selectMaxOptionVal = $selectMax.find('option:contains(' + currentMaxValue + ')').val();
+    /**
+     * Create the jQuery UI Range Slider
+     *
+     * https://api.jqueryui.com/slider/#event-slide
+     */
+    var createSlider = function createSlider() {
+      // Default values for min and max publication year handles
+      var currentMinValue = getCurrentMinAfterOverlap(minRange, maxRange);
+      var currentMaxValue = maxRange;
 
-            // Sanitize.
-            if ($selectMinOptionVal === undefined) {
-              $selectMinOptionVal = 'All';
-            }
-            if ($selectMaxOptionVal === undefined) {
-              $selectMaxOptionVal = 'All';
-            }
+      // JQUERY SLIDER UI OBJECT
+      $publicationRange.slider({
+        range: true,
+        min: minRange,
+        max: maxRange,
+        step: 1,
+        values: [currentMinValue, currentMaxValue],
+        animate: "fast",
 
-            // Set the selected option.
-            $selectMin.val($selectMinOptionVal);
-            $selectMax.val($selectMaxOptionVal);
+        // Triggered on every mouse move during slide
+        slide: function slide(event, ui) {
+          currentMinValue = ui.values[0];
+          currentMaxValue = ui.values[1];
+
+          if (currentMinValue >= currentMaxValue) {
+            return false;
           }
-        });
 
-        // Minimum Publication Year handle
-        var $handleMin = $('.ui-slider-handle').first();
-        $handleMin.attr({
-          'data-testid': 'puplication-year-min'
-        });
+          // Update floating labels for handles
+          $('.min-limit').text(currentMinValue);
+          $('.max-limit').text(currentMaxValue);
+        },
 
-        // Create floating labe for Minimum Publication Year handle
-        var yearLabelMin = '<span class=\'visually-hidden\'>Minimum year of publication:</span>\n          <span class=\'ui-slider__handle-label min-limit\'></span>';
-        $handleMin.append(yearLabelMin);
+        stop: function stop(event, ui) {
+          currentMinValue = ui.values[0];
+          currentMaxValue = ui.values[1];
 
-        // Maximum Publication Year handle
-        var $handleMax = $('.ui-slider-handle').last();
-        $handleMax.attr({
-          'data-testid': 'puplication-year-max'
-        });
-
-        // Create floating label for Maximum Publication Year handle
-        var yearLabelMax = '<span class=\'visually-hidden\'>Maximum year of publication:</span>\n          <span class=\'ui-slider__handle-label max-limit\'></span>';
-        $handleMax.append(yearLabelMax);
-
-        // TRACK FOR RANGE SLIDER
-        // Label for the range track
-        var trackLabel = '<p class=\'ui-slider__track-label\'>\n            <span class=\'visually-hidden\'>Available publication years range from</span>\n            <span>' + minRange + '</span>\n            <span class=\'visually-hidden\'>to</span>\n            <span>' + maxRange + '</span>\n          </p>';
-        $('.publication-range').append(trackLabel);
-
-        // MAKING SLIDER HANDLES STAY AT THE POSITION OF PREVIOUSLY SUBMITTED QUERY WHEN PANEL IS REOPENED
-        // Sync multirange slider with filter data from dropdowns.
-        var updateSlider = function updateSlider() {
-          // Find what dropdown values are selected
-          var selectMinOption = parseInt($selectMin.find(':selected').text());
-          var selectMaxOption = parseInt($selectMax.find(':selected').text());
+          // Find out what the select value of a chosen date is.
+          var $selectMinOptionVal = $selectMin.find('option:contains(' + currentMinValue + ')').val();
+          var $selectMaxOptionVal = $selectMax.find('option:contains(' + currentMaxValue + ')').val();
 
           // Sanitize.
-          if (isNaN(selectMinOption)) {
-            selectMinOption = minRange;
-          };
-          if (isNaN(selectMaxOption)) {
-            selectMaxOption = maxRange;
-          };
-
-          if (selectMinOption >= selectMaxOption) {
-            selectMinOption -= 1;
+          if ($selectMinOptionVal === undefined) {
+            $selectMinOptionVal = 'All';
+          }
+          if ($selectMaxOptionVal === undefined) {
+            $selectMaxOptionVal = 'All';
           }
 
-          // Provide selected values to the multirange slider
-          $publicationRange.slider('values', 0, selectMinOption);
-          $publicationRange.slider('values', 1, selectMaxOption);
+          // Set the selected option.
+          $selectMin.val($selectMinOptionVal);
+          $selectMax.val($selectMaxOptionVal);
+        }
+      });
 
-          // Update floating labels for multirange slider handles
-          $('.min-limit').text(selectMinOption);
-          $('.max-limit').text(selectMaxOption);
-        };
+      // Minimum Publication Year handle
+      var $handleMin = $('.ui-slider-handle').first();
+      $handleMin.attr({
+        'data-testid': 'puplication-year-min'
+      });
 
-        // Check if Advanced Filter Panel is open.
-        $('.search-filter__advanced').one().click(function () {
-          if ($dropdownPanel.hasClass('js-search_filter__dropdown-open')) {
-            updateSlider();
-          }
-        });
-        updateSlider();
+      // Create floating label for Minimum Publication Year handle
+      var yearLabelMin = '<span class=\'visually-hidden\'>Minimum year of publication:</span>\n        <span class=\'ui-slider__handle-label min-limit\'></span>';
+      $handleMin.append(yearLabelMin);
+
+      // Maximum Publication Year handle
+      var $handleMax = $('.ui-slider-handle').last();
+      $handleMax.attr({
+        'data-testid': 'puplication-year-max'
+      });
+
+      // Create floating label for Maximum Publication Year handle
+      var yearLabelMax = '<span class=\'visually-hidden\'>Maximum year of publication:</span>\n        <span class=\'ui-slider__handle-label max-limit\'></span>';
+      $handleMax.append(yearLabelMax);
+
+      // TRACK FOR RANGE SLIDER
+      // Label for the range track
+      var trackLabel = '<p class=\'ui-slider__track-label\'>\n          <span class=\'visually-hidden\'>Available publication years range from</span>\n          <span>' + minRange + '</span>\n          <span class=\'visually-hidden\'>to</span>\n          <span>' + maxRange + '</span>\n        </p>';
+      $('.publication-range').append(trackLabel);
+
+      updateSlider();
+    };
+
+    /**
+     * Initialize the range slider if a desktop display has been detected.
+     *
+     * @param {MediaQueryList} mql
+     */
+    var desktopDetect = function desktopDetect(mql) {
+      // Desktop
+      if (mql.matches) {
+        createSlider();
       } else {
-        $publicationRange.slider('destroy').empty();
+        // Remove the range slider in mobile.
+        try {
+          $publicationRange.slider('destroy').empty();
+        } catch (e) {}
       }
     };
 
-    // Use MatchMedia to ensure that subnav expand/collapse is only happening in mobile
-    var mql = matchMedia('(min-width: 1027px)');
-    // Detect Desktop on page load.
-    desktopDetect(mql);
-    // Watch to see if the page size changes.
-    mql.addListener(desktopDetect);
+    /**
+     * Watch for when the screen resizes horizontally from mobile to desktop.
+     */
+    var watchResize = function watchResize() {
+      // Use MatchMedia to ensure that the range slider only happens in desktop.
+      var mql = matchMedia('(min-width: 1027px)');
+      // Detect Desktop on page load.
+      desktopDetect(mql);
+      // Watch to see if the page size changes.
+      mql.addListener(desktopDetect);
+    };
+
+    // Initialize.
+    watchResize();
   });
 })(jQuery);
 //# sourceMappingURL=ucsf_multirange-slider.js.map
