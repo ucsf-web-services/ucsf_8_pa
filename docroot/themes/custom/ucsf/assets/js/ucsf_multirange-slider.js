@@ -15,6 +15,11 @@
     // Default values for min and max publication year handles
     var currentMinValue = minRange;
     var currentMaxValue = maxRange;
+
+    if (currentMinValue >= currentMaxValue) {
+      currentMinValue -= 1;
+    }
+
     // Only execute subnav extend / collapse code in mobile
     var desktopDetect = function desktopDetect(event) {
       // Desktop
@@ -32,6 +37,10 @@
           slide: function slide(event, ui) {
             currentMinValue = ui.values[0];
             currentMaxValue = ui.values[1];
+
+            if (currentMinValue >= currentMaxValue) {
+              return false;
+            }
 
             // Update floating labels for handles
             $('.min-limit').text(currentMinValue);
@@ -89,24 +98,28 @@
         // Sync multirange slider with filter data from dropdowns.
         var updateSlider = function updateSlider() {
           // Find what dropdown values are selected
-          var $selectMinOption = parseInt($selectMin.find(':selected').text());
-          var $selectMaxOption = parseInt($selectMax.find(':selected').text());
+          var selectMinOption = parseInt($selectMin.find(':selected').text());
+          var selectMaxOption = parseInt($selectMax.find(':selected').text());
 
           // Sanitize.
-          if (isNaN($selectMinOption)) {
-            $selectMinOption = minRange;
+          if (isNaN(selectMinOption)) {
+            selectMinOption = minRange;
           };
-          if (isNaN($selectMaxOption)) {
-            $selectMaxOption = maxRange;
+          if (isNaN(selectMaxOption)) {
+            selectMaxOption = maxRange;
           };
+
+          if (selectMinOption >= selectMaxOption) {
+            selectMinOption -= 1;
+          }
 
           // Provide selected values to the multirange slider
-          $publicationRange.slider('values', 0, $selectMinOption);
-          $publicationRange.slider('values', 1, $selectMaxOption);
+          $publicationRange.slider('values', 0, selectMinOption);
+          $publicationRange.slider('values', 1, selectMaxOption);
 
           // Update floating labels for multirange slider handles
-          $('.min-limit').text($selectMinOption);
-          $('.max-limit').text($selectMaxOption);
+          $('.min-limit').text(selectMinOption);
+          $('.max-limit').text(selectMaxOption);
         };
 
         // Check if Advanced Filter Panel is open.
