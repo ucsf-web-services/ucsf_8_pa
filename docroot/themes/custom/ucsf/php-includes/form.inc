@@ -105,12 +105,8 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     // PUBLICATION YEAR RANGE END
 
     // PUBLICATION YEAR MIN/MAX DROPDOWNS START
-    // Same functionality as range slider. Keeping around for accessibility,
-    // range slider and dropdowns sync up with each other
     $form['dropdown']['pub_year']['field_date_and_time_value_1'] = $field_date_and_time_value_1;
-    $form['dropdown']['pub_year']['field_date_and_time_value_1']['#attributes'] = ['class' => ['visually-hidden']];
     $form['dropdown']['pub_year']['field_date_and_time_value_2'] = $field_date_and_time_value_2;
-    $form['dropdown']['pub_year']['field_date_and_time_value_2']['#attributes'] = ['class' => ['visually-hidden']];
     // PUBLICATION YEAR MIN/MAX DROPDOWNS END
 
     $form['dropdown']['tid_1'] = $tid_1; // Health and Science

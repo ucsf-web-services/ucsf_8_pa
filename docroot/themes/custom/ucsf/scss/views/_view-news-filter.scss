@@ -14,13 +14,9 @@
     }
   }
 
-  label[for=edit-combine],
-  label[for=edit-field-date-and-time-value-1],
-  label[for=edit-field-date-and-time-value-2] {
+  label[for=edit-combine] {
     @include visually-hidden;
   }
-
-
 
   // Advanced.
 
@@ -543,5 +539,20 @@
 
   form {
     padding: 0;
+  }
+}
+
+// Publication min/max date labels
+label[for=edit-field-date-and-time-value-1],
+label[for=edit-field-date-and-time-value-2] {
+  @include breakpoint(1027px) {
+    @include visually-hidden;
+  }
+}
+// Publication min/max date inputs
+.form-item-field-date-and-time-value-1,
+.form-item-field-date-and-time-value-2 {
+  @include breakpoint(1027px) {
+    @include visually-hidden;
   }
 }
