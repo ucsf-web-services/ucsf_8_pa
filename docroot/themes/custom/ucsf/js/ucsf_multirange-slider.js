@@ -20,16 +20,18 @@
 
     // Only execute subnav extend / collapse code in mobile
     const desktopDetect = (event) => {
+      const $publicationRange = $('.publication-range');
+
       // Desktop
       if (event.matches) {
         // JQUERY SLIDER UI OBJECT https://api.jqueryui.com/slider/#event-slide
-        const $publicationRange = $('.publication-range');
         $publicationRange.slider({
           range: true,
           min: minRange,
           max: maxRange,
           step: 1,
           values: [currentMinValue, currentMaxValue],
+          animate: "fast",
 
           // Triggered on every mouse move during slide
           slide: function(event, ui) {
@@ -64,12 +66,12 @@
             // Set the selected option.
             $selectMin.val($selectMinOptionVal);
             $selectMax.val($selectMaxOptionVal);
-          }
+          },
         });
 
         // Minimum Publication Year handle
-        const handleMin = $('.ui-slider-handle').first();
-        handleMin.attr({
+        const $handleMin = $('.ui-slider-handle').first();
+        $handleMin.attr({
           'data-testid':'puplication-year-min',
         });
 
@@ -77,12 +79,12 @@
         const yearLabelMin =
           `<span class='visually-hidden'>Minimum year of publication:</span>
           <span class='ui-slider__handle-label min-limit'></span>`;
-        handleMin.append(yearLabelMin);
+        $handleMin.append(yearLabelMin);
 
 
         // Maximum Publication Year handle
-        const handleMax = $('.ui-slider-handle').last();
-        handleMax.attr({
+        const $handleMax = $('.ui-slider-handle').last();
+        $handleMax.attr({
           'data-testid':'puplication-year-max',
         });
 
@@ -90,7 +92,7 @@
         const yearLabelMax =
           `<span class='visually-hidden'>Maximum year of publication:</span>
           <span class='ui-slider__handle-label max-limit'></span>`;
-        handleMax.append(yearLabelMax);
+        $handleMax.append(yearLabelMax);
 
         // TRACK FOR RANGE SLIDER
         // Label for the range track
@@ -138,6 +140,9 @@
             updateSlider();
           }
         });
+        updateSlider()
+      } else {
+        $publicationRange.slider('destroy').empty();
       }
     }
 

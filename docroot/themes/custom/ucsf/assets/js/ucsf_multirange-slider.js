@@ -22,16 +22,18 @@
 
     // Only execute subnav extend / collapse code in mobile
     var desktopDetect = function desktopDetect(event) {
+      var $publicationRange = $('.publication-range');
+
       // Desktop
       if (event.matches) {
         // JQUERY SLIDER UI OBJECT https://api.jqueryui.com/slider/#event-slide
-        var $publicationRange = $('.publication-range');
         $publicationRange.slider({
           range: true,
           min: minRange,
           max: maxRange,
           step: 1,
           values: [currentMinValue, currentMaxValue],
+          animate: "fast",
 
           // Triggered on every mouse move during slide
           slide: function slide(event, ui) {
@@ -70,24 +72,24 @@
         });
 
         // Minimum Publication Year handle
-        var handleMin = $('.ui-slider-handle').first();
-        handleMin.attr({
+        var $handleMin = $('.ui-slider-handle').first();
+        $handleMin.attr({
           'data-testid': 'puplication-year-min'
         });
 
         // Create floating labe for Minimum Publication Year handle
         var yearLabelMin = '<span class=\'visually-hidden\'>Minimum year of publication:</span>\n          <span class=\'ui-slider__handle-label min-limit\'></span>';
-        handleMin.append(yearLabelMin);
+        $handleMin.append(yearLabelMin);
 
         // Maximum Publication Year handle
-        var handleMax = $('.ui-slider-handle').last();
-        handleMax.attr({
+        var $handleMax = $('.ui-slider-handle').last();
+        $handleMax.attr({
           'data-testid': 'puplication-year-max'
         });
 
         // Create floating label for Maximum Publication Year handle
         var yearLabelMax = '<span class=\'visually-hidden\'>Maximum year of publication:</span>\n          <span class=\'ui-slider__handle-label max-limit\'></span>';
-        handleMax.append(yearLabelMax);
+        $handleMax.append(yearLabelMax);
 
         // TRACK FOR RANGE SLIDER
         // Label for the range track
@@ -128,6 +130,9 @@
             updateSlider();
           }
         });
+        updateSlider();
+      } else {
+        $publicationRange.slider('destroy').empty();
       }
     };
 

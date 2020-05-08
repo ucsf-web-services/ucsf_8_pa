@@ -6,7 +6,6 @@ $font-family-label: $font-helvetica-neue-bold;
 // Publication Date Slider (used on /news/filter)
 .publication-range {
   display: none;
-
   @include breakpoint(1027px) {
     display: block;
     &.ui-slider {
@@ -26,6 +25,11 @@ $font-family-label: $font-helvetica-neue-bold;
         display: flex;
         justify-content: center;
         align-self: center;
+        cursor: grab;
+
+        &:active{
+          cursor: grabbing;
+        }
       }
 
       &__handle-label {
