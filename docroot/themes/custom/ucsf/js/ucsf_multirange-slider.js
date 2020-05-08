@@ -31,6 +31,36 @@
     }
 
     /**
+     * If min/max handle is at left/right edge, don't center text inside floating label
+     */
+    const positionLabelHorizontally = () => {
+      const $labelMin = $('.min-limit');
+      const $labelMax = $('.max-limit');
+
+      const $handleMin = $('.ui-slider-handle--min');
+      const $handleMax = $('.ui-slider-handle--max');
+
+
+      if ($labelMin.text() === minRange.toString()) {
+        $handleMin.addClass('ui-slider-handle--snap-left')
+      } else {
+        if ($handleMin.hasClass('ui-slider-handle--snap-left')) {
+          $handleMin.removeClass('ui-slider-handle--snap-left')
+        }
+        return
+      }
+
+      if ($labelMax.text() === maxRange.toString()) {
+        $handleMax.addClass('ui-slider-handle--snap-right')
+      } else {
+        if ($handleMax.hasClass('ui-slider-handle--snap-right')) {
+          $handleMax.removeClass('ui-slider-handle--snap-right')
+        }
+        return
+      }
+    }
+
+    /**
      * Sync multirange slider with filter data from dropdowns.
      */
     const updateSlider = () => {
@@ -55,6 +85,7 @@
       // Update floating labels for multirange slider handles
       $('.min-limit').text(selectMinOption);
       $('.max-limit').text(selectMaxOption);
+      positionLabelHorizontally();
     };
 
     /**
@@ -88,6 +119,7 @@
           // Update floating labels for handles
           $('.min-limit').text(currentMinValue);
           $('.max-limit').text(currentMaxValue);
+          positionLabelHorizontally();
         },
 
         stop: function(event, ui) {
@@ -114,6 +146,7 @@
 
       // Minimum Publication Year handle
       const $handleMin = $('.ui-slider-handle').first();
+      $handleMin.addClass('ui-slider-handle--min')
       $handleMin.attr({
         'data-testid':'puplication-year-min',
       });
@@ -127,6 +160,7 @@
 
       // Maximum Publication Year handle
       const $handleMax = $('.ui-slider-handle').last();
+      $handleMax.addClass('ui-slider-handle--max')
       $handleMax.attr({
         'data-testid':'puplication-year-max',
       });

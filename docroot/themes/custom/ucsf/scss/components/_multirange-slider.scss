@@ -10,7 +10,7 @@ $font-family-label: $font-helvetica-neue-bold;
     display: block;
     &.ui-slider {
       @include multirange-track($publication-track-height, rgba($c-navy, .5));
-      margin-top: 3rem;
+      margin: 3rem 0 0 0;
     }
 
     .ui-slider {
@@ -24,11 +24,29 @@ $font-family-label: $font-helvetica-neue-bold;
         border-radius: 50%;
         display: flex;
         justify-content: center;
-        align-self: center;
+        align-items: center;
         cursor: grab;
 
         &:active{
           cursor: grabbing;
+        }
+
+        // align label and handle to the left edge
+        &--snap-left {
+          left: .6rem !important;
+          .min-limit {
+            text-align: start;
+            left: 0 !important;
+          }
+        }
+
+        // align label and handle to the right edge
+        &--snap-right {
+          right: .6rem !important;
+          .max-limit {
+            text-align: end;
+            right: 0 !important;
+          }
         }
       }
 
