@@ -8,15 +8,17 @@ $font-family-label: $font-helvetica-neue-bold;
   display: none;
   @include breakpoint(1027px) {
     display: block;
+
     &.ui-slider {
       @include multirange-track($publication-track-height, rgba($c-navy, .5));
-      margin: 3rem 0 0 0;
     }
 
     .ui-slider {
       &-range {
         @include multirange-track(); // selected range
         top: -$publication-track-height;
+        margin: 3rem 0 0 0;
+        cursor: grab;
       }
 
       &-handle {
@@ -27,10 +29,9 @@ $font-family-label: $font-helvetica-neue-bold;
         align-items: center;
         cursor: grab;
 
-        &:active{
+        &.ui-state-active{
           cursor: grabbing;
         }
-
         // align label and handle to the left edge
         &--snap-left {
           left: .6rem !important;
