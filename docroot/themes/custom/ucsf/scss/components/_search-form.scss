@@ -1,0 +1,78 @@
+$search-form-textbox-height: 80px;
+$search-form-textbox-height-desktop: 96px;
+$icon-btn-size: 1.45rem;
+$icon-btn-size-desktop: 1.75rem;
+
+.search-form {
+  position: relative;
+
+  & &__input {
+    height: $search-form-textbox-height;
+    width: 100%;
+    border: 1px solid $near-white;
+    font-size: $font-size;
+    box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
+    color: $gray-blue;
+    font-family: $font-helvetica-neue-light;
+    padding-right: 80px;
+
+    @include breakpoint($bp-large) {
+      height: $search-form-textbox-height-desktop;
+      font-size: $font-size-bg;
+    }
+
+    &::placeholder {
+      color: $gray-blue;
+    }
+  }
+
+  & &__submit {
+    @include background-image('magnifier.svg', center);
+    position: absolute;
+    top: 0;
+    background-size: $icon-btn-size;
+    border: none;
+    height: $search-form-textbox-height;
+    width: $icon-btn-size;
+    min-height: auto;
+    padding: 6px;
+    right: 1.5rem;
+    text-indent: -9999px;
+
+    @include breakpoint($bp-large) {
+      background-size: $icon-btn-size-desktop;
+      height: $search-form-textbox-height-desktop;
+      width: $icon-btn-size-desktop;
+      right: 2rem;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: transparent;
+      border-color: transparent;
+    }
+  }
+
+  .search-filter__advanced {
+    @include background-image('filter.svg', left);
+    @include button-reset();
+    color: $c-blue-link;
+    font-family: $font-helvetica-neue-medium;
+    background-size: $icon-btn-size;
+    // Moves background image to the left of text + some padding to separate image from text
+    padding: 0 0 0 calc(#{$icon-btn-size} + .5rem);
+    padding-right: 0;
+    float: right;
+    transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1);
+    margin-top: 1rem;
+    transition-property: padding-left margin-right;
+
+
+    // Padding is increased by the same amount as negative margin
+    // Increased padding will keep icon in place, while negative margin will cause text to move
+    &:hover {
+      padding-left: calc(#{$icon-btn-size} + 1rem);
+      margin-right: -.5rem;
+    }
+  }
+}
