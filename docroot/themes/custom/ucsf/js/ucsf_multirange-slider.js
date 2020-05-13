@@ -148,7 +148,7 @@
       const $handleMin = $('.ui-slider-handle').first();
       $handleMin.addClass('ui-slider-handle--min')
       $handleMin.attr({
-        'data-testid':'puplication-year-min',
+        'data-testid':'publication-year-min',
       });
 
       // Create floating label for Minimum Publication Year handle
@@ -162,7 +162,7 @@
       const $handleMax = $('.ui-slider-handle').last();
       $handleMax.addClass('ui-slider-handle--max')
       $handleMax.attr({
-        'data-testid':'puplication-year-max',
+        'data-testid':'publication-year-max',
       });
 
       // Create floating label for Maximum Publication Year handle
@@ -170,17 +170,6 @@
         `<span class='visually-hidden'>Maximum year of publication:</span>
         <span class='ui-slider__handle-label max-limit'></span>`;
       $handleMax.append(yearLabelMax);
-
-      // TRACK FOR RANGE SLIDER
-      // Label for the range track
-      const trackLabel =
-        `<p class='ui-slider__track-label'>
-          <span class='visually-hidden'>Available publication years range from</span>
-          <span>${minRange}</span>
-          <span class='visually-hidden'>to</span>
-          <span>${maxRange}</span>
-        </p>`;
-      $('.publication-range').append(trackLabel);
 
       updateSlider();
     };
