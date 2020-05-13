@@ -9,6 +9,12 @@
       return;
     }
 
+    // Exit if it's a news/filter page
+    const pathname = window.location.pathname;
+    if (pathname === '/news/filter') {
+      return;
+    }
+
     const header = document.querySelector('.combined-header-region');
     const headerNav = document.querySelector('.header-region .header');
     const headerTop = document.querySelector('.universal-header-region');
