@@ -25,35 +25,21 @@ $font-family-label: $font-helvetica-neue-bold;
         @include multirange-handle();
         border-radius: 50%;
         display: flex;
-        justify-content: center;
         align-items: center;
         cursor: grab;
+
+        // Snap label and handle to the right edge
+        &--max {
+          justify-content: end;
+        }
 
         &.ui-state-active {
           cursor: grabbing;
         }
 
-        // align label and handle to the left edge
-        &--snap-left {
-          left: .6rem !important;
-          .min-limit {
-            text-align: start;
-            left: 0 !important;
-          }
-        }
-
-        // align label and handle to the right edge
-        &--snap-right {
-          right: .6rem !important;
-          .max-limit {
-            text-align: end;
-            right: 0 !important;
-          }
-        }
       }
 
       &__handle-label {
-        text-align: center;
         position: absolute;
         top: -2rem;
         font-family: $font-family-label;
