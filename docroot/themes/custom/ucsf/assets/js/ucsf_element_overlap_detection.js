@@ -97,11 +97,11 @@
       if (overlapState !== overlap) {
         overlapState = overlap;
 
-        // Add the hidden class to the fixed box if overlapping.
+        // Add the class to hide the fixed box if overlapping.
         if (overlapState == true) {
-          fixed.classList.add('article-meta-share--hidden');
+          fixed.classList.add('is-overlapping');
         } else {
-          fixed.classList.remove('article-meta-share--hidden');
+          fixed.classList.remove('is-overlapping');
         }
       };
     };

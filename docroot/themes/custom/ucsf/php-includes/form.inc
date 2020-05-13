@@ -4,8 +4,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Component\Utility\Html;
 
-function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id)
-{
+function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   if ($form['#id'] == 'views-exposed-form-news-filter-page-1') {
 
@@ -124,3 +123,4 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     unset($form['actions']);
   }
 }
+
