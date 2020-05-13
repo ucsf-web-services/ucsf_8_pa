@@ -11,6 +11,13 @@
       return;
     }
 
+    // Exit if it's a news filter page
+    // advanced filter page
+    var pathname = window.location.pathname;
+    if (pathname === '/news/filter') {
+      return;
+    }
+
     var header = document.querySelector('.combined-header-region');
     var headerNav = document.querySelector('.header-region .header');
     var headerTop = document.querySelector('.universal-header-region');
