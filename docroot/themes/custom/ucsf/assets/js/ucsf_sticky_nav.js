@@ -13,7 +13,8 @@
 
     // Exit if page has sticky searchbar at the top
     var pathname = window.location.pathname;
-    if (pathname === '/news/filter' || pathname === '/search') {
+    var advancedSearch = /search(.*)/;
+    if (pathname === '/news/filter' || advancedSearch.test(pathname) === true) {
       return;
     }
 
