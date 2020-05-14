@@ -9,9 +9,9 @@
       return;
     }
 
-    // Exit if it's a news/filter page
+    // Exit if page has sticky searchbar at the top
     const pathname = window.location.pathname;
-    if (pathname === '/news/filter') {
+    if (pathname === '/news/filter' || pathname === '/search') {
       return;
     }
 
