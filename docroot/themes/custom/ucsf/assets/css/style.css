@@ -883,6 +883,12 @@ a.icon-transit:hover {
       background-image: url(/themes/custom/ucsf/assets/images/card/media.svg);
       padding-left: 48px; } }
 
+.news-card--media-coverage figure,
+.news-card--magazine-article figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px; }
+
 [data-primary-area="pa-about"] figure,
 [data-primary-area="pa-campus-news"] figure,
 [data-primary-area="pa-announcements"] figure,
@@ -924,12 +930,10 @@ a.icon-transit:hover {
   background-color: #058488;
   background-size: 48px 48px; }
 
-.news-card--media-coverage figure {
+.news-card--media-coverage figure,
+.news-card--magazine-article figure {
   background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg);
-  background-color: #716fb2;
-  background-size: 48px 48px;
-  background-position: 50% 35%;
-  background-repeat: no-repeat; }
+  background-color: #716fb2; }
 
 .vertical-tab {
   grid-column: 1/-1;
@@ -4434,10 +4438,15 @@ figure.align-center {
     color: #052049;
     background-image: url("../images/cta-arrow-navy.svg"); }
 
-.news-card--media-coverage [data-primary-area] {
+.news-card--media-coverage [data-primary-area],
+.news-card--magazine-article [data-primary-area] {
   color: #716fb2; }
-  .news-card--media-coverage [data-primary-area]::before {
+  .news-card--media-coverage [data-primary-area]::before,
+  .news-card--magazine-article [data-primary-area]::before {
     background: #716fb2; }
+
+.magazine-article-card__date {
+  text-transform: capitalize; }
 
 .recommended-articles {
   grid-column: 1/-1;
