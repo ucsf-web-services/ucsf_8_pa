@@ -9,6 +9,13 @@
       return;
     }
 
+    // Exit if page has sticky searchbar at the top
+    const pathname = window.location.pathname;
+    const advancedSearch = /search(.*)/;
+    if (pathname === '/news/filter' || advancedSearch.test(pathname) === true) {
+      return;
+    }
+
     const header = document.querySelector('.combined-header-region');
     const headerNav = document.querySelector('.header-region .header');
     const headerTop = document.querySelector('.universal-header-region');
