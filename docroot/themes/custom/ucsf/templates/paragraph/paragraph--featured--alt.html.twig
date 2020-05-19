@@ -38,10 +38,9 @@
       <header class="news-card__copy">
         {% block article_byline %}
           {% if article_type == 'magazine_article' %}
-            {% set source_label = 'UCSF Magazine' %}
             <ul class="news-card__byline">
-              <li class="news-card__primary-area" data-primary-area="pa-ucsf-magazine">{{ source_label }}</li>
-              <li class="article-header__date news-card__date">{{ content.field_magazine_issue.0 }}</li>
+              <li class="news-card__primary-area" data-primary-area="pa-ucsf-magazine">UCSF Magazine</li>
+              <li class="article-header__date news-card__date">{{ drupal_field('field_magazine_issue', 'node', paragraph.field_news_article.target_id, 'card') }}</li>
             </ul>
           {% else %}
             {% include '@theme/homepage/homepage-byline.twig' %}
