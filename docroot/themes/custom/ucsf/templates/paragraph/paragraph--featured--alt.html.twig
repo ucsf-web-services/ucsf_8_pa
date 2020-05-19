@@ -13,7 +13,12 @@
 {% endif %}
 
 {% block wrapper_top %}
-  <li{{attributes.addClass(classes)}}>
+  {% set magazine_class = '' %}
+  {% if article_type == 'magazine_article' %}
+    {% set magazine_class = 'magazine-article' %}
+  {% endif %}
+
+  <li{{attributes.addClass(classes, magazine_class)}}>
     {% set unique_title = paragraph.field_news_article.entity.label %}
     <article class="news-card" aria-label="Teaser for: {{unique_title}}">
       <a href="{{ link }}" class="news-card__link">
@@ -32,7 +37,15 @@
 
       <header class="news-card__copy">
         {% block article_byline %}
-          {% include '@theme/homepage/homepage-byline.twig' %}
+          {% if article_type == 'magazine_article' %}
+            {% set source_label = 'UCSF Magazine' %}
+            <ul class="news-card__byline">
+              <li class="news-card__primary-area" data-primary-area="pa-ucsf-magazine">{{ source_label }}</li>
+              <li class="article-header__date news-card__date">{{ content.field_magazine_issue.0 }}</li>
+            </ul>
+          {% else %}
+            {% include '@theme/homepage/homepage-byline.twig' %}
+          {% endif %}
         {% endblock article_byline %}
 
         <h2>
