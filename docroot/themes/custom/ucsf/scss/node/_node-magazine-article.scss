@@ -1,0 +1,204 @@
+body.page-node-type-magazine-article {
+  background: $c-white;
+}
+body.page-node-type-magazine-article #block-ucsf-content {
+  @include fs-body-magazine;
+
+  //updating font
+  .article-header .field-sub-title {
+    font-family: $font-helvetica-neue-light;
+  }
+
+  //updating colors
+  p.feature-text,
+  .article-art-credit,
+  .field-image-caption,
+  figcaption,
+  .topics-list__description,
+  .field-featured-media-article .news-card__date,
+  .media-coverage__list-date,
+  .article-header__date,
+  .field-featured-media-article .news-card__date::before,
+  .media-coverage__list-date::before,
+  .article-header__date::before,
+  .tags-menu-region .tags-menu .tags-menu__item::before,
+  figure.half-image-left figcaption,
+  figure.half-image-right figcaption,
+  .article-header__author,
+  .article-header__author a,
+  .basic-header__subheading,
+  .article-header .field-sub-title,
+  [data-primary-area^="pa-"] + .news-card__date::before,
+  [data-primary-area^="pa-"] + .article-header__date::before,
+  .article-affiliation,
+  .article-affiliation::before,
+  .article-header__byline .article-header__date,
+  .news-card__byline .article-header__date,
+  .article-header__byline.media,
+  .news-card__byline.media {
+    color: $magazine-gray-blue;
+  }
+
+  .twocolleftdark,
+  .twocolrightdark {
+    background: $c-black;
+
+    .article-twocol-header {
+      background: $c-black;
+
+      h1,
+      .field-sub-title,
+      .article-header__author {
+        color: $c-white;
+
+        a {
+          color: $c-white;
+          border-bottom: 1px solid $c-white;
+
+          &:hover {
+            background: transparent;
+            border-bottom: none;
+          }
+        }
+      }
+
+      .article-header__byline {
+        .article-header__primary-area,
+        .article-header__date {
+          color: $c-white;
+
+          &::before {
+            background: $c-white;
+          }
+        }
+      }
+
+      .article-affiliation {
+        color: $c-white;
+
+        &::before {
+          background: $c-white;
+        }
+      }
+    }
+  }
+
+  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .field-sub-title,
+  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-header__author {
+    color: $c-white;
+  }
+
+  //fixing width | postioning
+  .page_narrow,
+  .paragraph-text-block {
+    @include breakpoint($magazine-small) {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0;
+      padding-bottom: 1px;
+    }
+
+    @include breakpoint($new-large) {
+      background: $white;
+      grid-column: 2 / -2;
+    }
+
+    @include breakpoint($new-xl) {
+      grid-column: 5 / -5;
+    }
+
+    &.gallery-background-fill {
+      display: none;
+    }
+  }
+
+  .paragraph--type--gallery {
+    margin-top: 40px;
+  }
+
+  .field-column-content-content {
+    .paragraph-text-block {
+      margin: 0;
+      max-width: none;
+    }
+  }
+
+  figure {
+    @include breakpoint($new-xl) {
+      &.half-image-right {
+        margin-right: -35%;
+
+        figcaption {
+          padding-right: 44%;
+        }
+      }
+
+      &.half-image-left {
+        margin-left: -35%;
+
+        figcaption {
+          padding-left: 44%;
+        }
+      }
+
+      &.half-image-right-full {
+        margin-right: -60%;
+
+        figcaption {
+          padding-right: 53%;
+        }
+      }
+
+      &.half-image-left-full {
+        margin-left: -60%;
+
+        figcaption {
+          padding-left: 53%;
+        }
+      }
+    }
+  }
+
+  .ucsfcallout {
+    width: 75%;
+    font-family: $font-helvetica-neue-light;
+
+    &.callout-left {
+      margin-left: -50%;
+    }
+
+    &.callout-right {
+      margin-right: -50%;
+    }
+  }
+
+  .blockquote {
+    width: 75%;
+    background: $c-white;
+
+    &.blockquote--half-right {
+      margin-right: -50%;
+    }
+
+    &.blockquote--half-left {
+      margin-left: -50%;
+    }
+
+    &.blockquote--full-right {
+      width: 100%;
+    }
+  }
+
+  .article-header__mag-topic-area {
+    font-size: 13px;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: $font-helvetica-neue-medium;
+
+    &::before {
+      display: none;
+    }
+  }
+
+}
