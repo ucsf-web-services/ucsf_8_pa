@@ -20,6 +20,7 @@
 
   <li{{attributes.addClass(classes, magazine_class)}}>
     {% set unique_title = paragraph.field_news_article.entity.label %}
+
     {% if article_type == 'magazine_article' %}
     <article class="news-card" aria-label="Teaser for: {{unique_title}}" data-primary-area="pa-ucsf-magazine">
     {% else %}
@@ -35,7 +36,16 @@
         {% else %}
           {% block article_image %}
             {# Feature Paragraph > News Article (News) > Card Image #}
-            {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id) }}
+            {% if drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id, 'card')|render %}
+              {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id, 'card') }}
+            {% else %}
+              {# Fall back when no image is provided in the article or card overwrite field #}
+              <figure>
+                <picture>
+                  <img class="element-fade" src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image">
+                </picture>
+              </figure>
+            {% endif %}
           {% endblock article_image %}
         {% endif %}
       </div>
