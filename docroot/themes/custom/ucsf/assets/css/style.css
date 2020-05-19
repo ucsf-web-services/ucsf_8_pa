@@ -893,6 +893,12 @@ a.icon-transit:hover {
       background-image: url(/themes/custom/ucsf/assets/images/card/media.svg);
       padding-left: 48px; } }
 
+[data-primary-area="pa-ucsf-magazine"] figure, .news-card--media-coverage figure,
+.news-card--magazine-article figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px; }
+
 [data-primary-area="pa-about"] figure,
 [data-primary-area="pa-campus-news"] figure,
 [data-primary-area="pa-announcements"] figure,
@@ -934,12 +940,14 @@ a.icon-transit:hover {
   background-color: #058488;
   background-size: 48px 48px; }
 
-.news-card--media-coverage figure {
+[data-primary-area="pa-ucsf-magazine"] figure {
   background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg);
-  background-color: #716fb2;
-  background-size: 48px 48px;
-  background-position: 50% 35%;
-  background-repeat: no-repeat; }
+  background-color: #716fb2; }
+
+.news-card--media-coverage figure,
+.news-card--magazine-article figure {
+  background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg);
+  background-color: #716fb2; }
 
 .vertical-tab {
   grid-column: 1/-1;
@@ -1841,6 +1849,8 @@ a.icon-transit:hover {
       background: #007cbe; }
     [block="block-ucsf-main-menu-desktop"] [data-level="level-0"] > .menu-child--label[data-section="section-research"] {
       background: #058488; }
+    [block="block-ucsf-main-menu-desktop"] [data-level="level-0"] > .menu-child--label[data-section="section-ucsf-magazine"] {
+      background: #716fb2; }
 
 .fixed-nav [block="block-ucsf-main-menu-desktop"] .menu-item a {
   line-height: 60px; }
@@ -3478,6 +3488,11 @@ body.loading .quicklinks {
   [data-primary-area="pa-research"]::before {
     background: #18a3ac; }
 
+[data-primary-area="pa-ucsf-magazine"] {
+  color: #716fb2; }
+  [data-primary-area="pa-ucsf-magazine"]::before {
+    background: #716fb2; }
+
 .basic-header__subheading,
 .article-header .field-sub-title {
   font-size: 20px;
@@ -4444,10 +4459,17 @@ figure.align-center {
     color: #052049;
     background-image: url("../images/cta-arrow-navy.svg"); }
 
-.news-card--media-coverage [data-primary-area] {
+.news-card--media-coverage [data-primary-area],
+.news-card--magazine-article [data-primary-area] {
   color: #716fb2; }
-  .news-card--media-coverage [data-primary-area]::before {
+  .news-card--media-coverage [data-primary-area]::before,
+  .news-card--magazine-article [data-primary-area]::before {
     background: #716fb2; }
+
+.magazine-article-card__date {
+  text-transform: capitalize; }
+  .magazine-article-card__date a {
+    color: #506380; }
 
 .recommended-articles {
   grid-column: 1/-1;
@@ -5931,6 +5953,12 @@ figure.align-center {
     margin: .95rem 10px 3px 7px;
     border-radius: 50%; }
 
+.magazine-article-card__date.news-card__date::before {
+  display: none; }
+
+.magazine-article-card__date.article-header__date::before {
+  display: none; }
+
 a[href*="http"] .field-featured-media-article .news-card__date,
 a[href*="http"] .media-coverage__list-date,
 a[href*="http"] .article-header__date {
@@ -6245,6 +6273,9 @@ a[href*="http"] .article-header__date {
     -webkit-box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.08);
             box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.08);
     padding: 0; }
+    @media (min-width: 850px) {
+      .search-box-container.scrolled {
+        width: 100%; } }
     .search-box-container.scrolled .home-search__form,
     .search-box-container.scrolled form {
       max-width: 1440px;
@@ -11487,6 +11518,7 @@ body.page-node-type-magazine-article #block-ucsf-content {
   body.page-node-type-magazine-article #block-ucsf-content .article-header .field-sub-title,
   body.page-node-type-magazine-article #block-ucsf-content [data-primary-area^="pa-"] + .news-card__date::before,
   body.page-node-type-magazine-article #block-ucsf-content [data-primary-area^="pa-"] + .article-header__date::before,
+  body.page-node-type-magazine-article #block-ucsf-content .article-affiliation,
   body.page-node-type-magazine-article #block-ucsf-content .article-affiliation::before,
   body.page-node-type-magazine-article #block-ucsf-content .article-header__byline .article-header__date,
   body.page-node-type-magazine-article #block-ucsf-content .news-card__byline .article-header__date,

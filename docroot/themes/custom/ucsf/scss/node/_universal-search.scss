@@ -33,6 +33,10 @@
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.08);
     padding: 0;
 
+    @include breakpoint($new-medium) {
+      width: 100%;
+    }
+
     .home-search__form,
     form {
       max-width: $bp-full;
@@ -62,11 +66,11 @@
     }
   }
 
-fieldset {
+  fieldset {
   display: none;
-}
+  }
 
-@include breakpoint($new-x-small-max) {
+  @include breakpoint($new-x-small-max) {
   fieldset {
     border: none;
     display: none;
@@ -130,7 +134,7 @@ fieldset {
       label > * { pointer-events:none; }
     }
   }
-}
+  }
 
   button.home-search__form-submit-advanced {
     margin: $space-four auto;
