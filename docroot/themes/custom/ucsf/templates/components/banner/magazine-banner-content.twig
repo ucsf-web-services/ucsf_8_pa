@@ -1,0 +1,41 @@
+{% include '@theme/article/magazine-byline.twig' %}
+<h1>{{ label }}</h1>
+{{ content.field_sub_title }}
+<p class="article-header__author">
+
+  {# Merge field_author with field_custom_author. #}
+  {% if content.field_author['#items'] %}
+    {% set authors = content.field_author['#items'] %}
+  {% else %}
+    {% set authors = [] %}
+  {% endif %}
+  {% if content.field_custom_author['#items'] %}
+    {% set authors = authors|merge(content.field_custom_author['#items']) %}
+  {% endif %}
+
+  {% if authors %}
+    {{ "By"|t }}
+  {% endif %}
+
+  {# Output each author with proper separator. #}
+  {%- for author in authors -%}
+    {%- if loop.first -%}
+      {%- include '@theme/banner/magazine-banner-author.twig' -%}
+    {%- elseif loop.last and loop.length == 2 -%}
+      {%- include '@theme/banner/magazine-banner-author.twig' with {separator: ' and '} -%}
+    {%- elseif loop.last -%}
+      {%- include '@theme/banner/magazine-banner-author.twig'  with {separator: ', and '}-%}
+    {%- else -%}
+      {%- include '@theme/banner/magazine-banner-author.twig' with {separator: ', '}-%}
+    {%- endif -%}
+  {%- endfor -%}
+  {% if content.field_article_affiliation|render %}
+    {{ content.field_article_affiliation  }}
+  {% endif %}
+  
+  {{ content.field_magazine_issue }}
+
+  {% if content.field_art_credit|render %}
+    {{ content.field_art_credit  }}
+  {% endif %}
+</p>
