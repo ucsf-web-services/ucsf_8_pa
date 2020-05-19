@@ -20,7 +20,12 @@
 
   <li{{attributes.addClass(classes, magazine_class)}}>
     {% set unique_title = paragraph.field_news_article.entity.label %}
-    <article class="news-card" aria-label="Teaser for: {{unique_title}}">
+    {% if article_type == 'magazine_article' %}
+    <article class="news-card" aria-label="Teaser for: {{unique_title}}" data-primary-area="pa-ucsf-magazine">
+    {% else %}
+    <article class="news-card" aria-label="Teaser for: {{unique_title}}" data-primary-area="{{'pa-' ~ primary_area|clean_class}}">
+    {% endif %}
+
       <a href="{{ link }}" class="news-card__link">
       {% endblock wrapper_top %}
       <div class="news-card__image">
@@ -40,7 +45,7 @@
           {% if article_type == 'magazine_article' %}
             <ul class="news-card__byline">
               <li class="news-card__primary-area" data-primary-area="pa-ucsf-magazine">UCSF Magazine</li>
-              <li class="article-header__date news-card__date">{{ drupal_field('field_magazine_issue', 'node', paragraph.field_news_article.target_id, 'card') }}</li>
+              <li class="news-card__date article-header__date magazine-article-card__date">{{ drupal_field('field_magazine_issue', 'node', paragraph.field_news_article.target_id, 'card') }}</li>
             </ul>
           {% else %}
             {% include '@theme/homepage/homepage-byline.twig' %}
