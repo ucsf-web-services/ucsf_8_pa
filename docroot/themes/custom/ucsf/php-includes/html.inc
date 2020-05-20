@@ -20,18 +20,6 @@ function ucsf_preprocess_html(&$variables) {
   $variables['attributes']['class'][] = $class;
 
   $variables['ckeditor_y3ti_plugins'] = '/' . drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/elements/build.html';
-
-  // In order to use Sass BEM naming convention adding block class .magazine to the <body>
-  // Get current path
-  $current_path = \Drupal::service('path.current')->getPath();
-  $alias = \Drupal::service('path.alias_manager')->getAliasByPath($current_path);
-
-  // check if path has /magazine in it
-  if (strpos($alias, '/magazine') === 0) {
-    // Add class to the <body>
-    $variables['attributes']['class'][] = 'magazine';
-  }
-
 }
 
 function ucsf_page_attachments_alter(array &$page) {
