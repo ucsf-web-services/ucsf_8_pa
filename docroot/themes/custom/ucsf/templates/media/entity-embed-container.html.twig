@@ -13,9 +13,7 @@
  */
 #}
 
-{% if media_type == 'image' %}
-  <figure{{ attributes }}>{%if url %}<a href='{{ url }}'>{% endif %}<picture>{{ children }}</picture>{%if url %}</a>{% endif %}</figure>
-{% elseif media_type == 'svg' %}
+{% if media_type == 'image' or media_type == 'svg'%}
   <figure{{ attributes }}>{%if url %}<a href='{{ url }}'>{% endif %}<picture>{{ children }}</picture>{%if url %}</a>{% endif %}</figure>
 {% else %}
   <article{{ attributes }}>{{ children }}</article>

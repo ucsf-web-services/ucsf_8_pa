@@ -197,6 +197,10 @@
   .article-twocol-header {
     margin-top: 0;
     background: $c-white;
+
+    .article-header__author {
+      width: 100%;
+    }
   }
 
   @include breakpoint($new-large) {
@@ -215,6 +219,7 @@
 
       .article-header__author {
         border-bottom: none;
+        width: 100%;
 
         .article-art-credit {
           position: absolute;
@@ -570,7 +575,9 @@
 
 //MOVE THIS TO images
 figure.half-image-left,
-figure.half-image-right {
+figure.half-image-right,
+.embedded-entity.half-image-left,
+.embedded-entity.half-image-right {
   float: left;
   margin: 20px;
   margin-top: 0;
@@ -631,11 +638,11 @@ figure.half-image-right {
   }
 }
 
-figure.half-image-right {
+figure.half-image-right,
+.embedded-entity.half-image-right {
   float: right;
   margin-left: 0;
   margin-right: -20px;
-
 
   figcaption {
     float: left;
@@ -671,7 +678,9 @@ figure.half-image-right {
 }
 
 figure.half-image-right-full,
-figure.half-image-left-full {
+figure.half-image-left-full,
+.embedded-entity.half-image-right-full,
+.embedded-entity.half-image-left-full {
   float: right;
   margin: $space-decuple;
   margin-top: 0;
@@ -725,7 +734,8 @@ figure.half-image-left-full {
   }
 }
 
-figure.half-image-left-full {
+figure.half-image-left-full,
+.embedded-entity.half-image-left-full {
   float: left;
   margin-right: 0;
   margin-left: -20px;

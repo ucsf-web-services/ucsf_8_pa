@@ -56,6 +56,7 @@ body.page-node-type-magazine-article #block-ucsf-content {
 
     .article-twocol-header {
       background: $c-black;
+      width:100%;
 
       h1,
       .field-sub-title,
@@ -116,6 +117,8 @@ body.page-node-type-magazine-article #block-ucsf-content {
 
   .article-no-banner {
     background: none;
+    text-align: center;
+    color: $c-dark-navy;
 
     @include breakpoint($magazine-small) {
       max-width: 600px;
@@ -132,6 +135,17 @@ body.page-node-type-magazine-article #block-ucsf-content {
     @include breakpoint($new-xl) {
       grid-column: 5 / -5;
     }
+
+    // color changes
+    h1,
+    .article-header__subheading,
+    .article-header__author {
+      color: $c-dark-navy;
+    }
+  }
+
+  .article-header__author {
+    width: 100%;
   }
 
   .page_narrow,
@@ -168,7 +182,8 @@ body.page-node-type-magazine-article #block-ucsf-content {
     }
   }
 
-  figure {
+  figure,
+  .embedded-entity {
     @include breakpoint($new-xl) {
       &.half-image-right {
         margin-right: -35%;
