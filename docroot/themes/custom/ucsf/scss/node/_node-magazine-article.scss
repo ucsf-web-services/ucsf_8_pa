@@ -41,7 +41,7 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .article-header .field-sub-title,
   [data-primary-area^="pa-"] + .news-card__date::before,
   [data-primary-area^="pa-"] + .article-header__date::before,
-  .article-affiliation,
+  .article-header__byline .article-affiliation,
   .article-affiliation::before,
   .article-header__byline .article-header__date,
   .news-card__byline .article-header__date,
@@ -111,6 +111,18 @@ body.page-node-type-magazine-article #block-ucsf-content {
     @include breakpoint($new-large-max) {
       color: $c-white;
     }
+  }
+
+  .news-card__copy,
+  .recommended-article__copy {
+    .field--name-title {
+      color: $c-dark-navy;
+    }
+  }
+
+  .recommended-articles__title,
+  .recommended-article__image {
+    background-color: transparent;
   }
 
   //fixing width | postioning
@@ -305,6 +317,16 @@ body.page-node-type-magazine-article #block-ucsf-content {
     &::before {
       display: none;
     }
+  }
+
+  .recommended-article__image {
+    padding-right: 0;
+  }
+  // RECOMMENDED READING
+  .news-card__copy,
+  .recommended-article__copy {
+    margin-left: 0; // notch treatment
+    margin-right: 0; // notch treatment
   }
 
   .article-affiliation {
