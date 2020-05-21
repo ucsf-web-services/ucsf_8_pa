@@ -9,6 +9,11 @@ body.page-node-type-magazine-article #block-ucsf-content {
     font-family: $font-helvetica-neue-light;
   }
 
+  strong {
+    font-family: $font-ivar;
+    font-weight: $fw-bold;
+  }
+
   //updating colors
   p.feature-text,
   .article-art-credit,
@@ -190,15 +195,23 @@ body.page-node-type-magazine-article #block-ucsf-content {
   }
 
   .article-header__mag-topic-area {
+    color: $c-dark-navy;
     font-size: 13px;
     margin: 0;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    font-family: $font-helvetica-neue-medium;
+    letter-spacing: 1.6px;
+    font-family: $font-helvetica-neue-bold;
+    font-weight: $fw-medium;
 
     &::before {
       display: none;
     }
   }
 
+  .article-affiliation {
+    // force whole line of text to shift down if screen size is too small
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }
+
