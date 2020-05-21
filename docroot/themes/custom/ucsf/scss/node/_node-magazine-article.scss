@@ -107,6 +107,27 @@ body.page-node-type-magazine-article #block-ucsf-content {
   }
 
   //fixing width | postioning
+
+  .article-no-banner {
+    background: none;
+
+    @include breakpoint($magazine-small) {
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0;
+    }
+
+    @include breakpoint($new-large) {
+      background: $white;
+      grid-column: 2 / -2;
+    }
+
+    @include breakpoint($new-xl) {
+      grid-column: 5 / -5;
+    }
+  }
+
   .page_narrow,
   .paragraph-text-block {
     @include breakpoint($magazine-small) {
