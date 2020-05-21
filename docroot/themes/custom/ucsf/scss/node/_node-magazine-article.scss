@@ -5,8 +5,19 @@ body.page-node-type-magazine-article #block-ucsf-content {
   @include fs-body-magazine;
 
   //updating font
-  .article-header .field-sub-title {
+  .article-header .field-sub-title,
+  .field-blockquote-source-org {
     font-family: $font-helvetica-neue-light;
+  }
+
+  strong {
+    font-family: $font-ivar;
+    font-weight: $fw-bold;
+  }
+
+  em {
+    font-family: $font-ivar-italic;
+    font-style: normal;
   }
 
   //updating colors
@@ -84,11 +95,45 @@ body.page-node-type-magazine-article #block-ucsf-content {
   }
 
   .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .field-sub-title,
-  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-header__author {
-    color: $c-white;
+  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-header__author,
+  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-topic-area,
+  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-affiliation,
+  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-issue,
+  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-art-credit {
+    @include breakpoint($new-large) {
+      color: $c-white;
+    }
+  }
+
+  .twocolleftdark .article-twocol-header .article-art-credit,
+  .twocolrightdark .article-twocol-header .article-art-credit {
+    @include breakpoint($new-large-max) {
+      color: $c-white;
+    }
   }
 
   //fixing width | postioning
+
+  .article-no-banner {
+    background: none;
+
+    @include breakpoint($magazine-small) {
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0;
+    }
+
+    @include breakpoint($new-large) {
+      background: $white;
+      grid-column: 2 / -2;
+    }
+
+    @include breakpoint($new-xl) {
+      grid-column: 5 / -5;
+    }
+  }
+
   .page_narrow,
   .paragraph-text-block {
     @include breakpoint($magazine-small) {
@@ -160,32 +205,76 @@ body.page-node-type-magazine-article #block-ucsf-content {
   }
 
   .ucsfcallout {
-    width: 75%;
     font-family: $font-helvetica-neue-light;
 
-    &.callout-left {
-      margin-left: -50%;
+    @include breakpoint($new-medium) {
+      &.callout-left {
+        margin-left: -20%;
+      }
+
+      &.callout-right {
+        margin-right: -20%;
+      }
     }
 
-    &.callout-right {
-      margin-right: -50%;
+    @include breakpoint($new-large) {
+      width: 60%;
+      padding: 64px;
+
+      &.callout-left {
+        margin-left: -30%;
+      }
+
+      &.callout-right {
+        margin-right: -30%;
+      }
+    }
+
+    @include breakpoint($new-xl) {
+      width: 75%;
+      padding: 64px;
+
+      &.callout-left {
+        margin-left: -50%;
+      }
+
+      &.callout-right {
+        margin-right: -50%;
+      }
     }
   }
 
   .blockquote {
-    width: 75%;
     background: $c-white;
 
-    &.blockquote--half-right {
-      margin-right: -50%;
+    @include breakpoint($new-xl) {
+      width: 75%;
+
+      &.blockquote--half-right {
+        margin-right: -50%;
+      }
+
+      &.blockquote--half-left {
+        margin-left: -50%;
+      }
+
+      &.blockquote--full-right {
+        width: 100%;
+      }
+    }
+  }
+
+  .blockquote.blockquote-full-width {
+    width: 100%;
+
+    .blockquote-content {
+      background: $c-white;
     }
 
-    &.blockquote--half-left {
-      margin-left: -50%;
-    }
-
-    &.blockquote--full-right {
-      width: 100%;
+    .field-blockquote-image {
+      @include breakpoint($new-small-max) {
+        margin-top: -15%;
+      }
     }
   }
 
@@ -209,4 +298,3 @@ body.page-node-type-magazine-article #block-ucsf-content {
     white-space: nowrap;
   }
 }
-
