@@ -6,7 +6,8 @@ body.page-node-type-magazine-article #block-ucsf-content {
 
   //updating font
   .article-header .field-sub-title,
-  .field-blockquote-source-org {
+  .field-blockquote-source-org,
+  p.feature-text {
     font-family: $font-helvetica-neue-light;
   }
 
@@ -293,6 +294,13 @@ body.page-node-type-magazine-article #block-ucsf-content {
 
       &.callout-right {
         margin-right: -50%;
+      }
+    }
+
+    .link--cta {
+      @include link-bg-image-hover();
+      &:hover {
+        padding-right: $space-three;
       }
     }
   }
