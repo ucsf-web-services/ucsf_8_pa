@@ -28,10 +28,8 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .topics-list__description,
   .field-featured-media-article .news-card__date,
   .media-coverage__list-date,
-  .article-header__date,
   .field-featured-media-article .news-card__date::before,
   .media-coverage__list-date::before,
-  .article-header__date::before,
   .tags-menu-region .tags-menu .tags-menu__item::before,
   figure.half-image-left figcaption,
   figure.half-image-right figcaption,
@@ -39,19 +37,38 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .article-header__author a,
   .basic-header__subheading,
   .article-header .field-sub-title,
-  [data-primary-area^="pa-"] + .news-card__date::before,
-  [data-primary-area^="pa-"] + .article-header__date::before,
-  .article-header__byline .article-affiliation,
   .article-affiliation::before,
-  .article-header__byline .article-header__date,
-  .news-card__byline .article-header__date,
   .article-header__byline.media,
   .news-card__byline.media {
     color: $magazine-gray-blue;
   }
 
-  .article-header__byline .article-affiliation:before{
-    background-color: $magazine-gray-blue;
+  .article-header__date,
+  .article-header__byline .article-header__date,
+  .news-card__byline .article-header__date,
+  .recommended-article__copy .field--name-title,
+  .news-card__copy .field--name-title,
+  .blockquote-content__cite,
+  .field-blockquote-,
+  .article-header__byline .article-affiliation {
+    color: $c-dark-navy;
+  }
+
+  [data-primary-area^="pa-"] + .news-card__date,
+  [data-primary-area^="pa-"] + .article-header__date,
+  .article-header__date,
+  .article-header__byline .article-affiliation {
+    &::before  {
+      background-color: $c-dark-navy;;
+    }
+  }
+
+  .blockquote-content__cite,
+  .field-blockquote-source {
+    &::after {
+      color: $c-dark-navy;
+      background-color: $c-dark-navy;
+    }
   }
 
   .twocolleftdark,
@@ -117,22 +134,6 @@ body.page-node-type-magazine-article #block-ucsf-content {
     }
   }
 
-  .news-card__copy,
-  .recommended-article__copy {
-    .field--name-title {
-      color: $c-dark-navy;
-    }
-  }
-
-  .blockquote-content__cite,
-  .field-blockquote-source {
-    color: $c-dark-navy;
-
-    &::after {
-      color: $c-dark-navy;
-      background-color: $c-dark-navy;
-    }
-  }
 
   .recommended-articles__title,
   .recommended-article__image {
