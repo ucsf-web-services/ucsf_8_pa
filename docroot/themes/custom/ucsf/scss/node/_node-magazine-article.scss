@@ -40,7 +40,7 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .article-header .field-sub-title,
   .article-affiliation::before,
   .article-header__byline.media,
-  .news-card__byline.media, {
+  .news-card__byline.media {
     color: $magazine-gray-blue;
   }
 
@@ -294,6 +294,13 @@ body.page-node-type-magazine-article #block-ucsf-content {
 
       &.callout-right {
         margin-right: -50%;
+      }
+    }
+
+    .link--cta {
+      @include link-bg-image-hover();
+      &:hover {
+        padding-right: $space-three;
       }
     }
   }
