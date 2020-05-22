@@ -63,7 +63,7 @@
   }
 }
 
-// use the fordward slash if f is present.
+// use the forward slash if f is present.
 @mixin fa-icon-before($icon-code: '', $color: $c-blue-link) {
   &::before {
     margin-right: 5px;
@@ -219,38 +219,24 @@
   }
 }
 
-// Use when unable to add class .link--cta
-@mixin link--cta {
-  @include link-text();
-  display: inline-block;
-  transition: .2s ease-out background-position;
-
-  &:hover {
-    background-position: 100% 60%;
-  }
-}
-
-// Requirements: link text color is $c-blue-link
-// Arrow icon follows link text
-// Link text, and background image are both at the left edge of the parent element, so that
-// there is room for the icon to move right on hover
-@mixin arrow-c-blue-after-text {
-  background-image: url("../images/cta-arrow.svg");
-  // if arrow is too close to text, adjust background-position-x
-  background-position: 96% 60%;
+@mixin link-bg-image($file-name) {
+  background-image: url('../images//#{$file-name}');
   background-repeat: no-repeat;
   background-color: transparent;
   background-size: 14px 14px;
-  padding-right: 24px;
+  padding-right: $space-three;
 }
 
-// TODO @mixin arrow-c-blue-right-edge
-// for links where text is at the left edge of the element
-// and background image is at the right edge of the element
-// icon still needs to move right on hover, link text should stay in place
-@mixin arrow-c-white {
-  color: $white;
-  background-image: url("../images/cta-arrow-white.svg");
+// Use to fix bug in Chrome where link-cta styles in bace.scss cause container element expand on hover.
+// if bg image is too close to link text, adjust default background-position-x
+@mixin link-bg-image-hover($default: 98%, $hovered: 100%) {
+  background-position: $default 60%;
+  transition: 0.15s $transition-type background-position;
+
+  &:hover {
+    // on hover, add padding-right: $space-three; to prevent padding increase used in base.scss
+    background-position: $hovered 60%; // instead of padding-right change bg-position on hover
+  }
 }
 
 @mixin tables {

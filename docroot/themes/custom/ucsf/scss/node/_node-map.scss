@@ -275,13 +275,13 @@ $map-height-max-nav: calc(100vh - 64px);
 
       a {
         @extend %infobox__text;
-        @include link--cta();
-        @include arrow-c-blue-after-text();
+        @include link-text();
+        @include link-bg-image("cta-arrow.svg");
+        @include link-bg-image-hover(98%, 100%);
+        display: inline-block;
         font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
         margin-bottom: 21px !important;
-        // Overwrites for mixin
         background-size: 14px 10px;
-        background-position: 98% 60%;
       }
     }
 

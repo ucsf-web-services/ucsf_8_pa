@@ -52,9 +52,13 @@
     }
 
     .link--cta {
-      @include background-image('cta-arrow-white.svg', right center, transparent);
+      @include link-bg-image('cta-arrow-white.svg');
+      @include link-bg-image-hover();
       background-size: 14px 10px;
       color: $white;
+      &:hover {
+        padding-right: $space-three;
+      }
     }
   }
 
