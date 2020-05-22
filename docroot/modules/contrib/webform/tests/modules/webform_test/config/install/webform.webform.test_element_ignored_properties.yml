@@ -15,29 +15,73 @@ title: 'Test: Element: Ignore properties'
 description: 'Test ignored element properties and callbacks.'
 category: 'Test: Element'
 elements: |
-  test:
+  textfield:
     '#type': textfield
-    '#title': test
+    '#title': textfield
     '#tree': '#tree'
-    '#array_parents': '#array_parents'
-    '#weight': '#weight'
-    '#after_build': '#after_build'
-    '#element_validate': '#element_validate'
-    '#post_render': '#post_render'
-    '#pre_render': '#pre_render'
-    '#process': '#process'
-    '#submit': '#submit'
-    '#validate': '#validate'
-    '#value_callback': '#value_callback'
-  
+    '#array_parents': { }
+    '#weight': 0
+    '#after_build':
+      - 'webform_test_ignored_element_callback'
+    '#element_validate':
+      - 'webform_test_ignored_element_callback'
+    '#post_render':
+      - 'webform_test_ignored_element_callback'
+    '#pre_render':
+      - 'webform_test_ignored_element_callback'
+    '#process':
+      - 'webform_test_ignored_element_callback'
+    '#submit':
+      - 'webform_test_ignored_element_callback'
+    '#validate':
+      - 'webform_test_ignored_element_callback'
+    '#value_callback':
+      - 'webform_test_ignored_element_callback'
+  actions:
+    '#type': actions
+    '#title': actions
+    '#pre_render':
+      - 'webform_test_ignored_element_callback'
+  select_other:
+    '#title': select_other
+    '#type': webform_select_other
+    '#options':
+      One: One
+      Two: Two
+      Three: Three
+    '#other__element_validate':
+      - 'webform_test_ignored_element_callback'
+    '#other__pre_render':
+      - 'webform_test_ignored_element_callback'
+  name:
+    '#title': name
+    '#type': webform_name
+    '#first__element_validate':
+      - 'webform_test_ignored_element_callback'
+    '#first__pre_render':
+      - 'webform_test_ignored_element_callback'
+  custom_composite:
+    '#type': webform_custom_composite
+    '#title': custom_composite
+    '#element':
+      textfield:
+        '#type': textfield
+        '#title': custom_composite_textfield
+        '#pre_render':
+          - 'webform_test_ignored_element_callback'
+
 css: ''
 javascript: ''
 settings:
   ajax: false
   ajax_scroll_top: form
+  ajax_progress_type: ''
+  ajax_effect: ''
+  ajax_speed: null
   page: true
   page_submit_path: ''
   page_confirm_path: ''
+  page_admin_theme: false
   form_title: source_entity_webform
   form_submit_once: false
   form_exception_message: ''
@@ -91,6 +135,7 @@ settings:
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_progress_link: false
+  wizard_progress_states: false
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -109,6 +154,8 @@ settings:
   draft_auto_save: false
   draft_saved_message: ''
   draft_loaded_message: ''
+  draft_pending_single_message: ''
+  draft_pending_multiple_message: ''
   confirmation_type: page
   confirmation_title: ''
   confirmation_message: ''
@@ -119,6 +166,7 @@ settings:
   confirmation_back_attributes: {  }
   confirmation_exclude_query: false
   confirmation_exclude_token: false
+  confirmation_update: false
   limit_total: null
   limit_total_interval: null
   limit_total_message: ''
@@ -135,6 +183,8 @@ settings:
   purge_days: null
   results_disabled: true
   results_disabled_ignore: true
+  results_customize: false
+  token_view: false
   token_update: false
 access:
   create:
@@ -184,3 +234,4 @@ access:
     users: {  }
     permissions: {  }
 handlers: {  }
+variants: {  }

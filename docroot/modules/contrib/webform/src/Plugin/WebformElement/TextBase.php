@@ -3,7 +3,10 @@
 namespace Drupal\webform\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\webform\Element\WebformHtmlEditor;
 use Drupal\webform\Plugin\WebformElementBase;
+use Drupal\webform\Utility\WebformElementHelper;
+use Drupal\webform\Utility\WebformHtmlHelper;
 use Drupal\webform\Utility\WebformTextHelper;
 use Drupal\webform\WebformSubmissionInterface;
 
@@ -17,25 +20,27 @@ abstract class TextBase extends WebformElementBase {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultProperties() {
+  protected function defineDefaultProperties() {
     return [
       'readonly' => FALSE,
-      'size' => '',
-      'minlength' => '',
-      'maxlength' => '',
+      'size' => NULL,
+      'minlength' => NULL,
+      'maxlength' => NULL,
       'placeholder' => '',
       'autocomplete' => 'on',
       'pattern' => '',
       'pattern_error' => '',
-    ] + parent::getDefaultProperties();
+    ] + parent::defineDefaultProperties();
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getTranslatableProperties() {
-    return array_merge(parent::getTranslatableProperties(), ['counter_message', 'pattern_error']);
+  protected function defineTranslatableProperties() {
+    return array_merge(parent::defineTranslatableProperties(), ['counter_minimum_message', 'counter_maximum_message', 'pattern_error']);
   }
+
+  /****************************************************************************/
 
   /**
    * {@inheritdoc}
@@ -67,9 +72,16 @@ abstract class TextBase extends WebformElementBase {
         'counter_maximum_message',
       ];
       foreach ($data_attributes as $data_attribute) {
-        if (!empty($element['#' . $data_attribute])) {
-          $element['#attributes']['data-' . str_replace('_', '-', $data_attribute)] = $element['#' . $data_attribute];
+        if (empty($element['#' . $data_attribute])) {
+          continue;
         }
+
+        $data_attribute_name = 'data-' . str_replace('_', '-', $data_attribute);
+        $data_attribute_value = $element['#' . $data_attribute];
+        if (in_array($data_attribute, ['counter_minimum_message', 'counter_maximum_message'])) {
+          $data_attribute_value = WebformHtmlEditor::stripTags($data_attribute_value);
+        }
+        $element['#attributes'][$data_attribute_name] = $data_attribute_value;
       }
 
       $element['#attributes']['class'][] = 'js-webform-counter';
@@ -100,6 +112,7 @@ abstract class TextBase extends WebformElementBase {
 
       $element['#attributes']['class'][] = 'js-webform-input-mask';
       $element['#attached']['library'][] = 'webform/webform.element.inputmask';
+      $element['#element_validate'][] = [get_called_class(), 'validateInputMask'];
     }
 
     // Input hiding.
@@ -115,11 +128,11 @@ abstract class TextBase extends WebformElementBase {
       $element['#attributes']['pattern'] = $element['#pattern'];
       $element['#element_validate'][] = [get_called_class(), 'validatePattern'];
 
-      // Set required error message using #pattern_error.
+      // Set pattern error message using #pattern_error.
       // @see Drupal.behaviors.webformRequiredError
       // @see webform.form.js
-      if (!empty($element['#pattern_error']) && empty($element['#required_error'])) {
-        $element['#attributes']['data-webform-required-error'] = $element['#pattern_error'];
+      if (!empty($element['#pattern_error'])) {
+        $element['#attributes']['data-webform-pattern-error'] = WebformHtmlHelper::toPlainText($element['#pattern_error']);
       }
     }
   }
@@ -157,8 +170,10 @@ abstract class TextBase extends WebformElementBase {
     $form['validation']['pattern'] = [
       '#type' => 'webform_checkbox_value',
       '#title' => $this->t('Pattern'),
-      '#description' => $this->t('A <a href=":href">regular expression</a> that the element\'s value is checked against.', [':href' => 'http://www.w3schools.com/js/js_regexp.asp']),
+      '#description' => $this->t('A <a href=":href">regular expression</a> that the element\'s value is checked against.', [':href' => 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions']),
       '#value__title' => $this->t('Pattern regular expression'),
+      '#value__description' => $this->t('Enter a <a href=":href">regular expression</a> that the element\'s value should match.', [':href' => 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions']),
+      '#value__maxlength' => NULL,
     ];
     $form['validation']['pattern_error'] = [
       '#type' => 'textfield',
@@ -190,8 +205,7 @@ abstract class TextBase extends WebformElementBase {
    * Form API callback. Validate (word/character) counter.
    */
   public static function validateCounter(array &$element, FormStateInterface $form_state) {
-    $name = $element['#name'];
-    $value = $form_state->getValue($name);
+    $value = $element['#value'];
     if ($value === '') {
       return;
     }
@@ -230,6 +244,45 @@ abstract class TextBase extends WebformElementBase {
   }
 
   /**
+   * Form API callback. Validate input mask and display required error message.
+   *
+   * Makes sure a required element's value doesn't include the default
+   * input mask as the submitted value.
+   *
+   * Applies only to the currency input mask.
+   */
+  public static function validateInputMask(&$element, FormStateInterface $form_state, &$complete_form) {
+    // Set required error when input mask is submitted.
+    if (!empty($element['#required'])
+      && static::isDefaultInputMask($element, $element['#value'])) {
+      WebformElementHelper::setRequiredError($element, $form_state);
+    }
+  }
+
+  /**
+   * Check if an element's value is the input mask's default value.
+   *
+   * @param array $element
+   *   An element.
+   * @param string $value
+   *   A value.
+   *
+   * @return bool
+   *   TRUE if an element's value is the input mask's default value.
+   */
+  public static function isDefaultInputMask(array $element, $value) {
+    if (empty($element['#input_mask']) || $value === '') {
+      return FALSE;
+    }
+
+    $input_mask = $element['#input_mask'];
+    $input_masks = [
+      "'alias': 'currency'" => '$ 0.00',
+    ];
+    return (isset($input_masks[$input_mask]) && $input_masks[$input_mask] === $value) ? TRUE : FALSE;
+  }
+
+  /**
    * Form API callback. Validate unicode pattern and display a custom error.
    *
    * @see https://www.drupal.org/project/drupal/issues/2633550
@@ -243,7 +296,7 @@ abstract class TextBase extends WebformElementBase {
       $pattern = '{^(?:' . $pcre_pattern . ')$}u';
       if (!preg_match($pattern, $element['#value'])) {
         if (!empty($element['#pattern_error'])) {
-          $form_state->setError($element, $element['#pattern_error']);
+          $form_state->setError($element, WebformHtmlHelper::toHtmlMarkup($element['#pattern_error']));
         }
         else {
           $form_state->setError($element, t('%name field is not in the right format.', ['%name' => $element['#title']]));
@@ -296,11 +349,11 @@ abstract class TextBase extends WebformElementBase {
    *   example, and patterh.
    */
   protected function getInputMasks() {
-    return [
+    $input_masks = [
       "'alias': 'currency'" => [
         'title' => $this->t('Currency'),
         'example' => '$ 9.99',
-        'pattern' => '^\$ \d+.\d\d$',
+        'pattern' => '^\$ [0-9]{1,3}(,[0-9]{3})*.\d\d$',
       ],
       "'alias': 'datetime'" => [
         'title' => $this->t('Date'),
@@ -358,10 +411,21 @@ abstract class TextBase extends WebformElementBase {
         'example' => 'UPPERCASE',
       ],
       "'casing': 'lower'" => [
-        'title' => $this->t('Lowercase '),
+        'title' => $this->t('Lowercase'),
         'example' => 'lowercase',
       ],
     ];
+
+    // Get input masks.
+    $modules = \Drupal::moduleHandler()->getImplementations('webform_element_input_masks');
+    foreach ($modules as $module) {
+      $input_masks += \Drupal::moduleHandler()->invoke($module, 'webform_element_input_masks');
+    }
+
+    // Alter input masks.
+    \Drupal::moduleHandler()->alter('webform_element_input_masks', $input_masks);
+
+    return $input_masks;
   }
 
   /**

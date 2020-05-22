@@ -38,7 +38,7 @@
         var options = $.extend({
           mode: $(this).attr('data-webform-codemirror-mode'),
           lineNumbers: true,
-          c: ($(this).attr('wrap') === 'off') ? false : true,
+          lineWrapping: ($(this).attr('wrap') === 'off') ? false : true,
           viewportMargin: Infinity,
           readOnly: ($(this).prop('readonly') || $(this).prop('disabled')) ? true : false,
           extraKeys: {
@@ -70,10 +70,31 @@
         // Now, close details.
         $details.removeAttr('open');
 
+        // Apply the textarea's min/max-height to the CodeMirror editor.
+        if ($input.css('min-height')) {
+          var minHeight = $input.css('min-height');
+          $(editor.getWrapperElement())
+            .css('min-height', minHeight)
+            .find('.CodeMirror-scroll')
+            .css('min-height', minHeight);
+        }
+        if ($input.css('max-height')) {
+          var maxHeight = $input.css('max-height');
+          $(editor.getWrapperElement())
+            .css('max-height', maxHeight)
+            .find('.CodeMirror-scroll')
+            .css('max-height', maxHeight);
+        }
+
         // Issue #2764443: CodeMirror is not setting submitted value when
-        // rendered within a webform UI dialog.
-        editor.on('blur', function (event) {
-          editor.save();
+        // rendered within a webform UI dialog or within an Ajaxified element.
+        var changeTimer = null;
+        editor.on('change', function () {
+          if (changeTimer) {
+            window.clearTimeout(changeTimer);
+            changeTimer = null;
+          }
+          changeTimer = setTimeout(function () {editor.save();}, 500);
         });
 
         // Update CodeMirror when the textarea's value has changed.
@@ -112,10 +133,13 @@
       });
 
       // Webform CodeMirror syntax coloring.
-      $(context).find('.js-webform-codemirror-runmode').once('webform-codemirror-runmode').each(function () {
-        // Mode Runner - http://codemirror.net/demo/runmode.html
-        CodeMirror.runMode($(this).addClass('cm-s-default').text(), $(this).attr('data-webform-codemirror-mode'), this);
-      });
+      if (window.CodeMirror.runMode) {
+        $(context).find('.js-webform-codemirror-runmode').once('webform-codemirror-runmode').each(function () {
+          // Mode Runner - http://codemirror.net/demo/runmode.html
+          CodeMirror.runMode($(this).addClass('cm-s-default').text(), $(this).attr('data-webform-codemirror-mode'), this);
+        });
+      }
+
     }
   };
 

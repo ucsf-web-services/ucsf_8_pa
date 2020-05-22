@@ -10,6 +10,10 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\SubformState;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
+use Drupal\webform\Element\WebformMessage;
+use Drupal\webform\Plugin\WebformElement\WebformTable;
+use Drupal\webform\Plugin\WebformElement\WebformTableRow;
+use Drupal\webform\Plugin\WebformElementVariantInterface;
 use Drupal\webform\Utility\WebformDialogHelper;
 use Drupal\webform\Form\WebformDialogFormTrait;
 use Drupal\webform\Plugin\WebformElementManagerInterface;
@@ -220,6 +224,7 @@ abstract class WebformUiElementFormBase extends FormBase implements WebformUiEle
           '#title' => $this->t('Cancel'),
           '#url' => new Url('entity.webform_ui.element.edit_form', $route_parameters),
           '#attributes' => WebformDialogHelper::getOffCanvasDialogAttributes(WebformDialogHelper::DIALOG_NORMAL, ['button', 'button--small']),
+          '#prefix' => ' ',
         ];
         $form['properties']['element']['type']['#description'] = '(' . $this->t('Changing from %type', ['%type' => $original_webform_element->getPluginLabel()]) . ')';
       }
@@ -229,38 +234,68 @@ abstract class WebformUiElementFormBase extends FormBase implements WebformUiEle
           '#title' => $this->t('Change'),
           '#url' => new Url('entity.webform_ui.change_element', $route_parameters),
           '#attributes' => WebformDialogHelper::getModalDialogAttributes(WebformDialogHelper::DIALOG_NORMAL, ['button', 'button--small']),
+          '#prefix' => ' ',
         ];
       }
     }
 
     // Set element key reserved word warning message.
+    // @see Drupal.behaviors.webformUiElementKey
     if (!$key) {
-      $reserved_keys = ['form_build_id', 'form_token', 'form_id', 'data', 'op'];
+      $reserved_keys = ['form_build_id', 'form_token', 'form_id', 'data', 'op', 'destination'];
       $reserved_keys = array_merge($reserved_keys, array_keys($this->entityFieldManager->getBaseFieldDefinitions('webform_submission')));
       $form['#attached']['drupalSettings']['webform_ui']['reserved_keys'] = $reserved_keys;
       $form['properties']['element']['key_warning'] = [
         '#type' => 'webform_message',
         '#message_type' => 'warning',
-        '#message_message' => $this->t("Please avoid using the reserved word '@key' as the element's key."),
+        '#message_message' => [
+          '#markup' => $this->t("Please avoid using the reserved word '@key' as the element's key."),
+          '#prefix' => '<div id="webform-ui-reserved-key-warning">',
+          '#suffix' => '</div>',
+        ],
         '#weight' => -99,
         '#attributes' => ['style' => 'display:none'],
       ];
     }
 
-    // Set element key.
+    // Set element key with custom machine name pattern.
+    // @see \Drupal\webform\WebformEntityElementsValidator::validateNames
+    $machine_name_pattern = $this->config('webform.settings')->get('element.machine_name_pattern') ?: 'a-z0-9_';
+    switch ($machine_name_pattern) {
+      case 'a-z0-9_':
+        $machine_name_requirements = $this->t('lowercase letters, numbers, and underscores');
+        break;
+
+      case 'a-zA-Z0-9_':
+        $machine_name_requirements = $this->t('letters, numbers, and underscores');
+        break;
+
+      case 'a-z0-9_-':
+        $machine_name_requirements = $this->t('lowercase letters, numbers, and underscores');
+        break;
+
+      case 'a-zA-Z0-9_-':
+        $machine_name_requirements = $this->t('letters, numbers, underscores, and dashes');
+        break;
+    }
+    $t_args = ['@requirements' => $machine_name_requirements];
+
     $form['properties']['element']['key'] = [
       '#type' => 'machine_name',
       '#title' => $this->t('Key'),
+      '#description' => $this->t('A unique element key. Can only contain @requirements.', $t_args),
       '#machine_name' => [
         'label' => '<br/>' . $this->t('Key'),
         'exists' => [$this, 'exists'],
         'source' => ['title'],
+        'replace_pattern' => '[^' . $machine_name_pattern . ']+',
+        'error' => $this->t('The element key name must contain only @requirements.', $t_args),
       ],
       '#required' => TRUE,
       '#parents' => ['key'],
       '#disabled' => ($key) ? TRUE : FALSE,
       '#default_value' => $key ?: $this->getDefaultKey(),
-      '#weight' => -98,
+      '#weight' => -97,
     ];
 
     // Remove the key's help text (aka description) once it has been set.
@@ -271,6 +306,20 @@ abstract class WebformUiElementFormBase extends FormBase implements WebformUiEle
     if (isset($form['properties']['element']['title'])) {
       $form['properties']['element']['key']['#machine_name']['source'] = ['properties', 'element', 'title'];
       $form['properties']['element']['title']['#id'] = 'title';
+    }
+
+    // Prefix table row child elements with the table row key.
+    if ($this->isNew()
+      && $parent_prefix = $this->getParentKeyPrefix($parent_key)) {
+      $form['properties']['element']['key']['#field_prefix'] = $parent_prefix . '_';
+      $form['properties']['element']['table_message'] = [
+        '#type' => 'webform_message',
+        '#message_message' => $this->t("Element keys are automatically prefixed with parent row's key."),
+        '#message_type' => 'warning',
+        '#message_close' => TRUE,
+        '#message_storage' => WebformMessage::STORAGE_SESSION,
+        '#weight' => -98,
+      ];
     }
 
     // Set flex.
@@ -289,7 +338,10 @@ abstract class WebformUiElementFormBase extends FormBase implements WebformUiEle
       '#button_type' => 'primary',
       '#_validate_form' => TRUE,
     ];
-    if ($this->operation === 'create' && $this->isAjax()) {
+    if ($this->operation === 'create'
+      && $this->isAjax()
+      && !$element_plugin instanceof WebformTable
+      && !$element_plugin instanceof WebformTableRow) {
       $form['actions']['save_add_element'] = [
         '#type' => 'submit',
         '#value' => $this->t('Save + Add element'),
@@ -340,6 +392,13 @@ abstract class WebformUiElementFormBase extends FormBase implements WebformUiEle
 
     $parent_key = $form_state->getValue('parent_key');
     $key = $form_state->getValue('key');
+
+    // Prefix table row child elements with the table row key.
+    if ($this->isNew()
+      && $parent_prefix = $this->getParentKeyPrefix($parent_key)) {
+      $key = $parent_prefix . '_' . $key;
+      $form_state->setValue('key', $key);
+    }
 
     // Update key for new and duplicated elements.
     $this->key = $key;
@@ -406,9 +465,16 @@ abstract class WebformUiElementFormBase extends FormBase implements WebformUiEle
     }
 
     // Still set the redirect URL just to be safe.
-    $query = ['update' => $key];
-    if ($save_and_add_element) {
-      $query['add_element'] = $add_element;
+    // Variants require the entire page to be reloaded so that Variants tab
+    // is made visible,
+    if ($this->getWebformElementPlugin() instanceof WebformElementVariantInterface) {
+      $query = ['reload' => 'true'];
+    }
+    else {
+      $query = ['update' => $key];
+      if ($save_and_add_element) {
+        $query['add_element'] = $add_element;
+      }
     }
     $form_state->setRedirectUrl($this->webform->toUrl('edit-form', ['query' => $query]));
   }
@@ -452,7 +518,7 @@ abstract class WebformUiElementFormBase extends FormBase implements WebformUiEle
    * {@inheritdoc}
    */
   public function getWebformElementPlugin() {
-    return $this->elementManager->getElementInstance($this->element);
+    return $this->elementManager->getElementInstance($this->element, $this->getWebform());
   }
 
   /**
@@ -481,6 +547,54 @@ abstract class WebformUiElementFormBase extends FormBase implements WebformUiEle
     }
 
     return FALSE;
+  }
+
+  /**
+   * Determine if parent key prefixing is enabled.
+   *
+   * @param string|null $parent_key
+   *   The element's parent key.
+   *
+   * @return bool
+   *   TRUE if parent key prefixing is enabled.
+   */
+  protected function isParentKeyPrefixEnabled($parent_key) {
+    while ($parent_key) {
+      $parent_element = $this->getWebform()->getElement($parent_key);
+      if ($parent_element['#type'] === 'webform_table') {
+        return (!isset($parent_element['#prefix_children']) || $parent_element['#prefix_children'] === TRUE);
+      }
+      $parent_key = $parent_element['#webform_parent_key'];
+    }
+    return FALSE;
+  }
+
+  /**
+   * Get the parent key prefix.
+   *
+   * Parent key prefix only applies to elements withing a
+   * 'webform_table_row'.
+   *
+   * @param string|null $parent_key
+   *   The element's parent key.
+   *
+   * @return string|null
+   *   The parent key prefix or NULL is no parent key prefix is applicable.
+   */
+  protected function getParentKeyPrefix($parent_key) {
+    if (!$this->isParentKeyPrefixEnabled($parent_key)) {
+      return NULL;
+    }
+
+    while ($parent_key) {
+      $parent_element = $this->getWebform()->getElement($parent_key);
+      if (strpos($parent_key, '01') !== FALSE
+        && $parent_element['#type'] === 'webform_table_row') {
+        return $parent_element['#webform_key'];
+      }
+      $parent_key = $parent_element['#webform_parent_key'];
+    }
+    return NULL;
   }
 
   /****************************************************************************/
@@ -518,6 +632,11 @@ abstract class WebformUiElementFormBase extends FormBase implements WebformUiEle
 
     $base_key = $element_plugin->getDefaultKey();
     $elements = $this->getWebform()->getElementsDecodedAndFlattened();
+
+    if (preg_match('/(^|_)(\d+$)($|_)/', $base_key) && !isset($elements[$base_key])) {
+      return $base_key;
+    }
+
     $increment = NULL;
     foreach ($elements as $element_key => $element) {
       if (strpos($element_key, $base_key) === 0) {
@@ -612,9 +731,7 @@ abstract class WebformUiElementFormBase extends FormBase implements WebformUiEle
         '#type' => 'submit',
         '#value' => $this->t('Set default value'),
         '#submit' => ['::setDefaultValue'],
-        // Disable client-site validation to allow tokens to be posted back to
-        // server.
-        '#attributes' => ['class' => ['js-webform-novalidate']],
+        '#attributes' => ['formnovalidate' => 'formnovalidate'],
         '#_validate_form' => TRUE,
       ];
 
