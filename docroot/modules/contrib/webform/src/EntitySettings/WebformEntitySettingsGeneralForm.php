@@ -3,6 +3,8 @@
 namespace Drupal\webform\EntitySettings;
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityWithPluginCollectionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Url;
@@ -241,6 +243,18 @@ class WebformEntitySettingsGeneralForm extends WebformEntitySettingsBaseForm {
         ],
       ];
     }
+    $form['page_settings']['page_admin_theme'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use the administration theme when displaying the webform as a page'),
+      '#description' => $this->t('If checked, when the webform is displayed as a page with a dedicated URL, it will use the administrative theme.'),
+      '#default_value' => $settings['page_admin_theme'],
+      '#return_value' => TRUE,
+      '#states' => [
+        'visible' => [
+          ':input[name="page"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
 
     // Ajax settings.
     $elements = $webform->getElementsDecoded();
@@ -251,15 +265,25 @@ class WebformEntitySettingsGeneralForm extends WebformEntitySettingsBaseForm {
       '#open' => TRUE,
       '#access' => empty($elements['#method']),
     ];
-    $form['ajax_settings']['ajax'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Use Ajax'),
-      '#description' => $this->t('If checked, paging, saving of drafts, previews, submissions, and confirmations will not initiate a page refresh.'),
-      '#return_value' => TRUE,
-      '#default_value' => $settings['ajax'],
+
+    $ajax_behaviors = [
+      'ajax' => [
+        'title' => $this->t('Use Ajax'),
+        'all_description' => $this->t('Ajax is enabled for all forms.'),
+        'form_description' => $this->t('If checked, paging, saving of drafts, previews, submissions, and confirmations will not initiate a page refresh.'),
+      ],
     ];
-    $form['ajax_settings']['ajax_scroll_top'] = [
-      '#type' => 'radios',
+    $this->appendBehaviors($form['ajax_settings'], $ajax_behaviors, $settings, $default_settings);
+    $form['ajax_settings']['ajax_container'] = [
+      '#type' => 'container',
+      '#states' => [
+        'visible' => [
+          ':input[name="ajax"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    $form['ajax_settings']['ajax_container']['ajax_scroll_top'] = [
+      '#type' => 'select',
       '#title' => $this->t('On Ajax load, scroll to the top of the…'),
       '#description' => $this->t("Select where the page should be scrolled to when paging, saving of drafts, previews, submissions, and confirmations. Select 'None' to disable scrolling."),
       '#options' => [
@@ -267,12 +291,52 @@ class WebformEntitySettingsGeneralForm extends WebformEntitySettingsBaseForm {
         'form' => $this->t('Form'),
         'page' => $this->t('Page'),
       ],
+      '#default_value' => $settings['ajax_scroll_top'],
+      '#attributes' => ['data-webform-states-no-clear' => TRUE],
+    ];
+    $form['ajax_settings']['ajax_container']['ajax_progress_type'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Ajax progress type'),
+      '#description' => $this->t("Select the progress indicator displayed when Ajax is triggered."),
+      '#options' => [
+        '' => '',
+        'throbber' => $this->t('Throbber'),
+        'fullscreen' => $this->t('Full screen'),
+
+      ],
+      '#default_value' => $settings['ajax_progress_type'],
+    ];
+    $form['ajax_settings']['ajax_container']['ajax_effect'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Ajax effect'),
+      '#description' => $this->t("Select the effect displayed when Ajax is triggered."),
+      '#options' => [
+        '' => '',
+        'none' => $this->t('None'),
+        'fade' => $this->t('Fade'),
+        'slide' => $this->t('Slide'),
+      ],
+      '#default_value' => $settings['ajax_effect'],
+    ];
+    $form['ajax_settings']['ajax_container']['ajax_speed'] = [
+      '#type' => 'webform_select_other',
+      '#title' => $this->t('Ajax speed'),
+      '#description' => $this->t("Select the effect speed."),
+      '#other__type' => 'number',
+      '#other__placeholder' => '',
+      '#other__field_suffix' => $this->t('milliseconds'),
+      '#options' => [
+        '' => '',
+        '500' => $this->t('@number milliseconds', ['@number' => '500']),
+        '1000' => $this->t('@number milliseconds', ['@number' => '1000']),
+        '1500' => $this->t('@number milliseconds', ['@number' => '1500']),
+      ],
       '#states' => [
         'visible' => [
-          ':input[name="ajax"]' => ['checked' => TRUE],
+          ':input[name="ajax_effect]"]' => ['!value' => 'none'],
         ],
       ],
-      '#default_value' => $settings['ajax_scroll_top'],
+      '#default_value' => $settings['ajax_speed'],
     ];
 
     // Dialog settings.
@@ -402,6 +466,26 @@ class WebformEntitySettingsGeneralForm extends WebformEntitySettingsBaseForm {
     $form['#attached']['library'][] = 'webform/webform.admin.settings';
 
     return parent::form($form, $form_state);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function copyFormValuesToEntity(EntityInterface $entity, array $form, FormStateInterface $form_state) {
+    $values = $form_state->getValues();
+
+    if ($this->entity instanceof EntityWithPluginCollectionInterface) {
+      // Do not manually update values represented by plugin collections.
+      $values = array_diff_key($values, $this->entity->getPluginCollections());
+    }
+
+    // Do not manually update third party settings.
+    // @see \Drupal\webform\EntitySettings\WebformEntitySettingsGeneralForm::save
+    unset($values['third_party_settings']);
+
+    foreach ($values as $key => $value) {
+      $entity->set($key, $value);
+    }
   }
 
   /**

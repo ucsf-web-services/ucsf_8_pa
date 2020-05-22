@@ -9,11 +9,28 @@ use Drupal\Core\StringTranslation\PluralTranslatableMarkup;
 use Drupal\webform\Utility\WebformDialogHelper;
 use Drupal\webform\Utility\WebformOptionsHelper;
 use Drupal\webform\Utility\WebformArrayHelper;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a form to set webform image select images.
  */
 class WebformImageSelectImagesForm extends EntityForm {
+
+  /**
+   * Module extension list.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected $moduleExtensionList;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    $instance = parent::create($container);
+    $instance->moduleExtensionList = $container->get('extension.list.module');
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -73,7 +90,7 @@ class WebformImageSelectImagesForm extends EntityForm {
         'label' => '<br/>' . $this->t('Machine name'),
       ],
       '#maxlength' => 32,
-      '#field_suffix' => ' (' . $this->t('Maximum @max characters', ['@max' => 32]) . ')',
+      '#field_suffix' => ($webform_images->isNew()) ? ' (' . $this->t('Maximum @max characters', ['@max' => 32]) . ')' : '',
       '#required' => TRUE,
       '#disabled' => !$webform_images->isNew(),
       '#default_value' => $webform_images->id(),
@@ -91,6 +108,7 @@ class WebformImageSelectImagesForm extends EntityForm {
         '#type' => 'webform_codemirror',
         '#mode' => 'yaml',
         '#title' => $this->t('Images (YAML)'),
+        '#attributes' => ['style' => 'min-height: 200px'],
         '#default_value' => $this->getImages(),
       ];
     }
@@ -109,7 +127,7 @@ class WebformImageSelectImagesForm extends EntityForm {
     if (!$webform_images->isNew()) {
       $hook_name = 'webform_image_select_images_' . $webform_images->id() . '_alter';
       $alter_hooks = $this->moduleHandler->getImplementations($hook_name);
-      $module_info = system_get_info('module');
+      $module_info = $this->moduleExtensionList->getAllInstalledInfo();
       $module_names = [];
       foreach ($alter_hooks as $options_alter_hook) {
         $module_name = str_replace($hook_name, '', $options_alter_hook);

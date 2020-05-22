@@ -26,7 +26,10 @@ class WebformSubmissionStorageTest extends KernelTestBase {
    */
   public function setUp() {
     parent::setUp();
-
+    // @todo Remove once Drupal 8.8.x is only supported.
+    if (floatval(\Drupal::VERSION) >= 8.8) {
+      $this->installEntitySchema('path_alias');
+    }
     $this->installSchema('webform', ['webform']);
     $this->installConfig('webform');
     $this->installEntitySchema('webform_submission');
@@ -57,6 +60,7 @@ class WebformSubmissionStorageTest extends KernelTestBase {
    * @dataProvider providerPurge
    */
   public function testPurge($webform_purging, $webform_submissions_definition, $purged) {
+    $request_time = \Drupal::time()->getRequestTime();
     $days_to_seconds = 60 * 60 * 24;
     $purge_days = 10;
     $purge_amount = 2;
@@ -80,7 +84,7 @@ class WebformSubmissionStorageTest extends KernelTestBase {
           'webform_id' => $v->id(),
         ]);
         $webform_submission->in_draft = $definition[0];
-        $webform_submission->setCreatedTime($definition[1] ? (REQUEST_TIME - ($purge_days + 1) * $days_to_seconds) : REQUEST_TIME);
+        $webform_submission->setCreatedTime($definition[1] ? ($request_time - ($purge_days + 1) * $days_to_seconds) : $request_time);
         $webform_submission->save();
       }
     }
@@ -93,7 +97,7 @@ class WebformSubmissionStorageTest extends KernelTestBase {
     $query->accessCheck(FALSE);
     $query->condition('webform_id', $webform_no_purging->id());
     $result = $query->execute();
-    $this->assertEquals(count($webform_submissions_definition), count($result), 'No purging is executed when webform not not set up to purge.');
+    $this->assertEquals(count($webform_submissions_definition), count($result), 'No purging is executed when webform is not set up to purge.');
 
     $query = \Drupal::entityTypeManager()->getStorage('webform_submission')->getQuery();
     $query->accessCheck(FALSE);
@@ -103,7 +107,7 @@ class WebformSubmissionStorageTest extends KernelTestBase {
       $result[$submission->serial()] = $submission;
     }
     foreach ($purged as $sequence_id) {
-      $this->assertFalse(isset($result[$sequence_id]), 'Webform submission with sequence ' . $sequence_id . ' is purged.');
+      $this->assertArrayNotHasKey($sequence_id, $result, 'Webform submission with sequence ' . $sequence_id . ' is purged.');
     }
     $this->assertEquals(count($webform_submissions_definition) - count($purged), count($result), 'Remaining webform submissions are not purged.');
   }
