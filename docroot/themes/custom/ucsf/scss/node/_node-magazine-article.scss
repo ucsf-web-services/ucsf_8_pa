@@ -365,9 +365,21 @@ body.page-node-type-magazine-article #block-ucsf-content {
     margin-right: 0; // notch treatment
   }
 
+  .news-card__copy {
+    @include breakpoint($new-small) {
+      margin-top: 0;
+      padding-left: 0;
+    }
+  }
+
+
   .article-affiliation {
     // force whole line of text to shift down if screen size is too small
     overflow: hidden;
     white-space: nowrap;
+  }
+
+  .recommended-article__bg {
+    display: none;
   }
 }
