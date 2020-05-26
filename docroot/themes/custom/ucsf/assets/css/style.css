@@ -269,9 +269,11 @@ a {
 .promo-list__card-two .link--cta {
   display: inline-block;
   background-image: url("../images/cta-arrow.svg");
-  background-position: right center;
   background-repeat: no-repeat;
   background-color: transparent;
+  background-size: 14px 14px;
+  padding-right: 24px;
+  background-position: right center;
   background-size: 14px 10px;
   padding-right: 24px;
   text-decoration: none;
@@ -7222,19 +7224,18 @@ a[href*="http"] .article-header__date {
   text-decoration: none; }
   .page-node-type-map .poi-info-window .view-link a {
     text-decoration: none;
-    display: inline-block;
-    -webkit-transition: .2s ease-out background-position;
-    transition: .2s ease-out background-position;
-    background-image: url("../images/cta-arrow.svg");
-    background-position: 96% 60%;
+    background-image: url("../images//cta-arrow.svg");
     background-repeat: no-repeat;
     background-color: transparent;
     background-size: 14px 14px;
     padding-right: 24px;
+    background-position: 98% 60%;
+    -webkit-transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+    transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+    display: inline-block;
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     margin-bottom: 21px !important;
-    background-size: 14px 10px;
-    background-position: 98% 60%; }
+    background-size: 14px 10px; }
     .page-node-type-map .poi-info-window .view-link a:link {
       color: #0071ad; }
     .page-node-type-map .poi-info-window .view-link a:visited, .page-node-type-map .poi-info-window .view-link a:link:visited {
@@ -8672,7 +8673,22 @@ a[href*="http"] .article-header__date {
     padding: 80px 32px; }
     .promo-list__card a.promo-list__card-link:hover .link--cta {
       text-decoration: underline;
-      padding-right: 32px !important; }
+      padding-right: 32px;
+      background-position: 100% 60%; }
+  .promo-list__card .link--cta {
+    background-image: url("../images//cta-arrow-white.svg");
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: 14px 14px;
+    padding-right: 24px;
+    background-position: 96% 60%;
+    background-size: 14px 10px;
+    color: #fff;
+    padding-right: 32px;
+    -webkit-transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+    transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position; }
+  .promo-list__card:hover .link--cta {
+    background-image: url("../images/cta-arrow-white.svg"); }
   .promo-list__card .field-promo-text {
     font-size: 24px;
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
@@ -8687,10 +8703,20 @@ a[href*="http"] .article-header__date {
       .promo-list__card .promo-list__card-more a:hover {
         color: #fff;
         text-decoration: underline; }
-    .promo-list__card .promo-list__card-more .link--cta {
-      background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat right center transparent;
+    .promo-list__card .promo-list__card-more a.link--cta {
+      background-image: url("../images//cta-arrow-white.svg");
+      background-repeat: no-repeat;
+      background-color: transparent;
+      background-size: 14px 14px;
+      padding-right: 24px;
+      background-position: 96% 60%;
+      -webkit-transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+      transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
       background-size: 14px 10px;
-      color: #fff; }
+      color: #fff;
+      padding-right: 32px; }
+      .promo-list__card .promo-list__card-more a.link--cta:hover {
+        background-position: 98% 60%; }
   .promo-list__card .promo-list__card-title {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -10546,6 +10572,14 @@ a[href*="http"] .article-header__date {
     @media (min-width: 1050px) {
       .ucsfcallout[data-image="1"] {
         margin-top: 5rem; } }
+  .ucsfcallout .link--cta {
+    background-position: 98% 60%;
+    -webkit-transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+    transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position; }
+    .ucsfcallout .link--cta:hover {
+      background-position: 100% 60%; }
+    .ucsfcallout .link--cta:hover {
+      padding-right: 24px; }
 
 .callout-left {
   float: left;
@@ -11591,7 +11625,7 @@ body.page-node-type-magazine-article #block-ucsf-content {
   body.page-node-type-magazine-article #block-ucsf-content .recommended-article__copy .field--name-title,
   body.page-node-type-magazine-article #block-ucsf-content .news-card__copy .field--name-title,
   body.page-node-type-magazine-article #block-ucsf-content .blockquote-content__cite,
-  body.page-node-type-magazine-article #block-ucsf-content .field-blockquote-,
+  body.page-node-type-magazine-article #block-ucsf-content .field-blockquote-source,
   body.page-node-type-magazine-article #block-ucsf-content .article-header__byline .article-affiliation {
     color: #121a31; }
   body.page-node-type-magazine-article #block-ucsf-content [data-primary-area^="pa-"] + .news-card__date::before,
@@ -11765,6 +11799,14 @@ body.page-node-type-magazine-article #block-ucsf-content {
           margin-left: -50%; }
         body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout.callout-right {
           margin-right: -50%; } }
+    body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout .link--cta {
+      background-position: 98% 60%;
+      -webkit-transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+      transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position; }
+      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout .link--cta:hover {
+        background-position: 100% 60%; }
+      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout .link--cta:hover {
+        padding-right: 24px; }
   body.page-node-type-magazine-article #block-ucsf-content .blockquote {
     background: #fff; }
     @media (min-width: 1280px) {
@@ -11793,15 +11835,29 @@ body.page-node-type-magazine-article #block-ucsf-content {
     font-weight: 500; }
     body.page-node-type-magazine-article #block-ucsf-content .article-header__mag-topic-area::before {
       display: none; }
-  body.page-node-type-magazine-article #block-ucsf-content .recommended-article__image {
-    padding-right: 0; }
   body.page-node-type-magazine-article #block-ucsf-content .news-card__copy,
   body.page-node-type-magazine-article #block-ucsf-content .recommended-article__copy {
     margin-left: 0;
     margin-right: 0; }
+  @media (min-width: 769px) {
+    body.page-node-type-magazine-article #block-ucsf-content .news-card__copy {
+      margin-top: 0;
+      padding-left: 0; } }
   body.page-node-type-magazine-article #block-ucsf-content .article-affiliation {
     overflow: hidden;
     white-space: nowrap; }
+  body.page-node-type-magazine-article #block-ucsf-content .recommended-article__bg {
+    display: none; }
+  body.page-node-type-magazine-article #block-ucsf-content .recommended-article__image {
+    padding-right: 0; }
+  body.page-node-type-magazine-article #block-ucsf-content .link--cta {
+    background-position: 98% 60%;
+    -webkit-transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+    transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position; }
+    body.page-node-type-magazine-article #block-ucsf-content .link--cta:hover {
+      background-position: 100% 60%; }
+    body.page-node-type-magazine-article #block-ucsf-content .link--cta:hover {
+      padding-right: 24px; }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .explorer {

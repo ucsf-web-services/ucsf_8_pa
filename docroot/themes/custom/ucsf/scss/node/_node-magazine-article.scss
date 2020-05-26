@@ -40,7 +40,7 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .article-header .field-sub-title,
   .article-affiliation::before,
   .article-header__byline.media,
-  .news-card__byline.media, {
+  .news-card__byline.media {
     color: $magazine-gray-blue;
   }
 
@@ -50,7 +50,7 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .recommended-article__copy .field--name-title,
   .news-card__copy .field--name-title,
   .blockquote-content__cite,
-  .field-blockquote-,
+  .field-blockquote-source,
   .article-header__byline .article-affiliation {
     color: $c-dark-navy;
   }
@@ -60,7 +60,7 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .article-header__date,
   .article-header__byline .article-affiliation {
     &::before  {
-      background-color: $c-dark-navy;;
+      background-color: $c-dark-navy;
     }
   }
 
@@ -296,6 +296,13 @@ body.page-node-type-magazine-article #block-ucsf-content {
         margin-right: -50%;
       }
     }
+
+    .link--cta {
+      @include link-bg-image-hover();
+      &:hover {
+        padding-right: $space-three;
+      }
+    }
   }
 
   .blockquote {
@@ -347,20 +354,41 @@ body.page-node-type-magazine-article #block-ucsf-content {
     }
   }
 
-  .recommended-article__image {
-    padding-right: 0;
-  }
 
   // RECOMMENDED READING
   .news-card__copy,
   .recommended-article__copy {
-    margin-left: 0; // notch treatment
-    margin-right: 0; // notch treatment
+    //removing notch treatment
+    margin-left: 0;
+    margin-right: 0;
   }
+
+  .news-card__copy {
+    @include breakpoint($new-small) {
+      margin-top: 0;
+      padding-left: 0;
+    }
+  }
+
 
   .article-affiliation {
     // force whole line of text to shift down if screen size is too small
     overflow: hidden;
     white-space: nowrap;
+  }
+
+  .recommended-article__bg {
+    display: none;
+  }
+
+  .recommended-article__image {
+    padding-right: 0;
+  }
+
+  .link--cta {
+    @include link-bg-image-hover();
+    &:hover {
+      padding-right: $space-three;
+    }
   }
 }
