@@ -51,7 +51,8 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .news-card__copy .field--name-title,
   .blockquote-content__cite,
   .field-blockquote-source,
-  .article-header__byline .article-affiliation {
+  .article-header__byline .article-affiliation,
+  .footer-ctas-wrapper h2 {
     color: $c-dark-navy;
   }
 
@@ -409,8 +410,21 @@ body.page-node-type-magazine-article #block-ucsf-content {
 
   // Footer
   .footer-ctas-wrapper {
+    button {
+      color: $c-dark-navy;
+      border-color: $c-dark-navy;
+      &:hover {
+        color: $c-white;
+        border-color: $c-blue;
+      }
+    }
+
     em {
       @include fs-articles-title;
+    }
+
+    #email {
+      font-family: $font-helvetica-neue-light;
     }
   }
 }
