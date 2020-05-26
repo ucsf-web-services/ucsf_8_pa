@@ -356,12 +356,27 @@ body.page-node-type-magazine-article #block-ucsf-content {
 
 
   // RECOMMENDED READING
+  .has-recommended-article {
+    // moving title closer to the image
+    @include breakpoint($new-medium) {
+      .recommended-articles__banner {
+        grid-template-rows: auto;
+      }
+
+      .recommended-articles__title {
+        grid-row: 1;
+        margin-bottom: $space-five;
+      }
+    }
+  }
+
   .news-card__copy,
   .recommended-article__copy {
     //removing notch treatment
     margin-left: 0;
     margin-right: 0;
   }
+
 
   .news-card__copy {
     @include breakpoint($new-small) {
