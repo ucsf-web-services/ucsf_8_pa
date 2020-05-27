@@ -1,6 +1,17 @@
 body.page-node-type-magazine-article {
   background: $c-white;
+
+  strong {
+    font-family: $font-ivar;
+    font-weight: $fw-bold;
+  }
+
+  em {
+    font-family: $font-ivar-italic;
+    font-style: normal;
+  }
 }
+
 body.page-node-type-magazine-article #block-ucsf-content {
   @include fs-body-magazine;
 
@@ -11,14 +22,21 @@ body.page-node-type-magazine-article #block-ucsf-content {
     font-family: $font-helvetica-neue-light;
   }
 
-  strong {
-    font-family: $font-ivar;
-    font-weight: $fw-bold;
-  }
+  // Overwriting default strong and em font
+  .caption-drupal-entity,
+  .blockquote-content__text,
+  .ucsfcallout,
+  .blockquote,
+  .embedded-entity,
+  h2 {
+    em {
+      font-family: $font-helvetica-neue-light;
+      font-style: italic;
+    }
 
-  em {
-    font-family: $font-ivar-italic;
-    font-style: normal;
+    strong {
+      font-family: $font-helvetica-neue-roman;
+    }
   }
 
   //updating colors
@@ -407,6 +425,7 @@ body.page-node-type-magazine-article #block-ucsf-content {
       padding-right: $space-three;
     }
   }
+
 
   // Footer
   .footer-ctas-wrapper {
