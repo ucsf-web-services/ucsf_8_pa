@@ -75,23 +75,34 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .blockquote,
   .embedded-entity,
   .footer-ctas-wrapper {
-    em {
-      font-family: $font-helvetica-neue-light;
-      font-style: italic;
-    }
-
     strong {
       font-family: $font-helvetica-neue-medium;
       font-weight: normal;
     }
   }
 
-  figcaption em {
+  dom-twocolumn-layout,
+  .layout__heading,
+  .paragraph--type--column-content h2,
+  .caption-drupal-entity,
+  .ucsfcallout,
+  .blockquote,
+  .footer-ctas-wrapper {
+    em {
+      font-family: $font-helvetica-neue-light;
+      font-style: italic;
+    }
+  }
+
+  .embedded-entity em {
     font-family: $font-helvetica-neue-roman;
   }
 
-  blockquote em {
-    font-family: $font-granjon;
+  blockquote,
+  .blockquote-content__text {
+    em {
+      font-family: $font-granjon;
+    }
   }
 
   //updating colors
