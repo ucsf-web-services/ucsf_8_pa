@@ -230,12 +230,12 @@
 // Use to fix bug in Chrome where link-cta styles in bace.scss cause container element expand on hover.
 // if bg image is too close to link text, adjust default background-position-x
 @mixin link-bg-image-hover($default: 98%, $hovered: 100%) {
-  background-position: $default 60%;
+  background-position: $default center;
   transition: 0.15s $transition-type background-position;
 
   &:hover {
     // on hover, add padding-right: $space-three; to prevent padding increase used in base.scss
-    background-position: $hovered 60%; // instead of padding-right change bg-position on hover
+    background-position: $hovered center; // instead of padding-right change bg-position on hover
   }
 }
 
