@@ -1,16 +1,6 @@
 body.page-node-type-magazine-article {
   background: $c-white;
 
-  strong {
-    font-family: $font-ivar;
-    font-weight: $fw-bold;
-  }
-
-  em {
-    font-family: $font-ivar-italic;
-    font-style: normal;
-  }
-
   // Possibly HTML nesting bug .recommended-articles is a sibling of #block-ucsf-content
   // instead of being it's child element on following page
   //  /magazine/seeking-immunity-what-will-it-take-get-vaccine
@@ -58,6 +48,16 @@ body.page-node-type-magazine-article {
 body.page-node-type-magazine-article #block-ucsf-content {
   @include fs-body-magazine;
 
+  strong {
+    font-family: $font-ivar;
+    font-weight: $fw-bold;
+  }
+
+  em {
+    font-family: $font-ivar-italic;
+    font-style: normal;
+  }
+
   //updating font
   .article-header .field-sub-title,
   .field-blockquote-source-org,
@@ -84,6 +84,14 @@ body.page-node-type-magazine-article #block-ucsf-content {
       font-family: $font-helvetica-neue-medium;
       font-weight: normal;
     }
+  }
+
+  figcaption em {
+    font-family: $font-helvetica-neue-roman;
+  }
+
+  blockquote em {
+    font-family: $font-granjon;
   }
 
   //updating colors
