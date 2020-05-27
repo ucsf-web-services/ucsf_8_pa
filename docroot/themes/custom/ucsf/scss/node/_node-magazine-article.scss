@@ -1,6 +1,60 @@
 body.page-node-type-magazine-article {
   background: $c-white;
+
+  strong {
+    font-family: $font-ivar;
+    font-weight: $fw-bold;
+  }
+
+  em {
+    font-family: $font-ivar-italic;
+    font-style: normal;
+  }
+
+  // Possibly HTML nesting bug .recommended-articles is a sibling of #block-ucsf-content
+  // instead of being it's child element on following page
+  //  /magazine/seeking-immunity-what-will-it-take-get-vaccine
+  .recommended-articles__title {
+    color: $c-dark-navy;
+  }
+
+  .recommended-articles .news-card__copy .article-affiliation {
+    color: $magazine-gray-blue;
+  }
+
+  .recommended-articles .news-card__copy .article-affiliation:before {
+    &::before  {
+      background-color: $magazine-gray-blue;
+    }
+  }
+
+  // Footer
+  .footer-ctas-wrapper {
+    em {
+      font-family: $font-helvetica-neue-light;
+      font-style: italic;
+    }
+
+    strong {
+      font-family: $font-helvetica-neue-medium;
+      font-weight: normal;
+    }
+
+    button {
+      color: $c-dark-navy;
+      border-color: $c-dark-navy;
+      &:hover {
+        color: $c-white;
+        border-color: $c-blue;
+      }
+    }
+
+    #email {
+      font-family: $font-helvetica-neue-light;
+    }
+  }
 }
+
 body.page-node-type-magazine-article #block-ucsf-content {
   @include fs-body-magazine;
 
@@ -11,14 +65,25 @@ body.page-node-type-magazine-article #block-ucsf-content {
     font-family: $font-helvetica-neue-light;
   }
 
-  strong {
-    font-family: $font-ivar;
-    font-weight: $fw-bold;
-  }
+  // Overwriting default strong and em font
+  dom-twocolumn-layout,
+  .layout__heading,
+  .paragraph--type--column-content h2,
+  .caption-drupal-entity,
+  .blockquote-content__text,
+  .ucsfcallout,
+  .blockquote,
+  .embedded-entity,
+  .footer-ctas-wrapper {
+    em {
+      font-family: $font-helvetica-neue-light;
+      font-style: italic;
+    }
 
-  em {
-    font-family: $font-ivar-italic;
-    font-style: normal;
+    strong {
+      font-family: $font-helvetica-neue-medium;
+      font-weight: normal;
+    }
   }
 
   //updating colors
@@ -40,18 +105,24 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .article-header .field-sub-title,
   .article-affiliation::before,
   .article-header__byline.media,
-  .news-card__byline.media {
+  .news-card__byline.media,
+  .news-card__copy .article-header__date,
+  .news-card__copy .field--type-datetime {
     color: $magazine-gray-blue;
   }
 
   .article-header__date,
   .article-header__byline .article-header__date,
-  .news-card__byline .article-header__date,
   .recommended-article__copy .field--name-title,
   .news-card__copy .field--name-title,
   .blockquote-content__cite,
   .field-blockquote-source,
-  .article-header__byline .article-affiliation {
+  .article-header__byline .article-affiliation,
+  .recommended-articles__title,
+  .tags-menu__title,
+  .eyebrow-title,
+  .bg-gray .layout__heading,
+  .footer-ctas-wrapper h2 {
     color: $c-dark-navy;
   }
 
@@ -60,12 +131,13 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .article-header__date,
   .article-header__byline .article-affiliation {
     &::before  {
-      background-color: $c-dark-navy;
+      background-color: $magazine-gray-blue;
     }
   }
 
   .blockquote-content__cite,
-  .field-blockquote-source {
+  .field-blockquote-source,
+  .eyebrow-title {
     &::after {
       color: $c-dark-navy;
       background-color: $c-dark-navy;
@@ -169,6 +241,10 @@ body.page-node-type-magazine-article #block-ucsf-content {
     .article-header__subheading,
     .article-header__author {
       color: $c-dark-navy;
+    }
+
+    .article-header__author {
+      color: $magazine-gray-blue;
     }
   }
 
@@ -366,6 +442,7 @@ body.page-node-type-magazine-article #block-ucsf-content {
       .recommended-articles__title {
         grid-row: 1;
         margin-bottom: $space-five;
+        color: $c-dark-navy;
       }
     }
   }
@@ -404,6 +481,23 @@ body.page-node-type-magazine-article #block-ucsf-content {
     @include link-bg-image-hover();
     &:hover {
       padding-right: $space-three;
+    }
+  }
+
+
+  // Footer
+  .footer-ctas-wrapper {
+    button {
+      color: $c-dark-navy;
+      border-color: $c-dark-navy;
+      &:hover {
+        color: $c-white;
+        border-color: $c-blue;
+      }
+    }
+
+    #email {
+      font-family: $font-helvetica-neue-light;
     }
   }
 }
