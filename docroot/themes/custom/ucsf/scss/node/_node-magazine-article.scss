@@ -232,7 +232,8 @@ body.page-node-type-magazine-article #block-ucsf-content {
 
 
   .recommended-articles__title,
-  .recommended-article__image {
+  .recommended-article__image,
+  .paragraph-text-block {
     background-color: transparent;
   }
 
@@ -275,6 +276,12 @@ body.page-node-type-magazine-article #block-ucsf-content {
     width: 100%;
   }
 
+  .page_narrow {
+    @include breakpoint($new-large) {
+      background: $white;
+    }
+  }
+
   .page_narrow,
   .paragraph-text-block {
     @include breakpoint($magazine-small) {
@@ -285,7 +292,6 @@ body.page-node-type-magazine-article #block-ucsf-content {
     }
 
     @include breakpoint($new-large) {
-      background: $white;
       grid-column: 2 / -2;
     }
 
