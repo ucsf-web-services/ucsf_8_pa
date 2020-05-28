@@ -1,16 +1,6 @@
 body.page-node-type-magazine-article {
   background: $c-white;
 
-  strong {
-    font-family: $font-ivar;
-    font-weight: $fw-bold;
-  }
-
-  em {
-    font-family: $font-ivar-italic;
-    font-style: normal;
-  }
-
   // Possibly HTML nesting bug .recommended-articles is a sibling of #block-ucsf-content
   // instead of being it's child element on following page
   //  /magazine/seeking-immunity-what-will-it-take-get-vaccine
@@ -58,6 +48,16 @@ body.page-node-type-magazine-article {
 body.page-node-type-magazine-article #block-ucsf-content {
   @include fs-body-magazine;
 
+  strong {
+    font-family: $font-ivar;
+    font-weight: $fw-bold;
+  }
+
+  em {
+    font-family: $font-ivar-italic;
+    font-style: normal;
+  }
+
   //updating font
   .article-header .field-sub-title,
   .field-blockquote-source-org,
@@ -74,15 +74,38 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .ucsfcallout,
   .blockquote,
   .embedded-entity,
-  .footer-ctas-wrapper {
+  .footer-ctas-wrapper,
+  h2,
+  h3 {
+    strong {
+      font-family: $font-helvetica-neue-medium;
+      font-weight: normal;
+    }
+  }
+
+  dom-twocolumn-layout,
+  .layout__heading,
+  .paragraph--type--column-content h2,
+  .caption-drupal-entity,
+  .ucsfcallout,
+  .blockquote,
+  .footer-ctas-wrapper,
+  h2,
+  h3 {
     em {
       font-family: $font-helvetica-neue-light;
       font-style: italic;
     }
+  }
 
-    strong {
-      font-family: $font-helvetica-neue-medium;
-      font-weight: normal;
+  .caption-drupal-entity em {
+    font-family: $font-helvetica-neue-roman;
+  }
+
+  blockquote,
+  .blockquote-content__text {
+    em {
+      font-family: $font-granjon;
     }
   }
 
@@ -113,6 +136,7 @@ body.page-node-type-magazine-article #block-ucsf-content {
 
   .article-header__date,
   .article-header__byline .article-header__date,
+  .article-header .field--name-title,
   .recommended-article__copy .field--name-title,
   .news-card__copy .field--name-title,
   .blockquote-content__cite,
@@ -122,7 +146,9 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .tags-menu__title,
   .eyebrow-title,
   .bg-gray .layout__heading,
-  .footer-ctas-wrapper h2 {
+  .footer-ctas-wrapper h2,
+  h1,
+  h2 {
     color: $c-dark-navy;
   }
 
@@ -209,7 +235,8 @@ body.page-node-type-magazine-article #block-ucsf-content {
 
 
   .recommended-articles__title,
-  .recommended-article__image {
+  .recommended-article__image,
+  .paragraph-text-block {
     background-color: transparent;
   }
 
@@ -238,18 +265,24 @@ body.page-node-type-magazine-article #block-ucsf-content {
 
     // color changes
     h1,
-    .article-header__subheading,
     .article-header__author {
       color: $c-dark-navy;
     }
 
-    .article-header__author {
+    .article-header__author,
+    .article-header__subheading {
       color: $magazine-gray-blue;
     }
   }
 
   .article-header__author {
     width: 100%;
+  }
+
+  .page_narrow {
+    @include breakpoint($new-large) {
+      background: $white;
+    }
   }
 
   .page_narrow,
@@ -262,7 +295,6 @@ body.page-node-type-magazine-article #block-ucsf-content {
     }
 
     @include breakpoint($new-large) {
-      background: $white;
       grid-column: 2 / -2;
     }
 
