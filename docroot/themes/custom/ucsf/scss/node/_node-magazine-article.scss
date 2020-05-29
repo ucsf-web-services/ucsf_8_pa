@@ -35,6 +35,12 @@ body.page-node-type-magazine-article {
     }
   }
 
+  .recommended-articles__title,
+  .recommended-article__image,
+  .paragraph-text-block {
+    background-color: transparent;
+  }
+
   .news-card__copy,
   .recommended-article__copy {
     //removing notch treatment
@@ -223,7 +229,9 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .col-white-text .layout__heading,
 
   .featureoverlaydark .field--name-title {
-    color: $c-white;
+    @include breakpoint($new-large) {
+      color: $c-white;
+    }
   }
 
   .twocolleftdark,
