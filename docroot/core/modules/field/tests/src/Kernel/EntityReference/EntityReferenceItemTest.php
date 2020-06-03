@@ -39,7 +39,16 @@ class EntityReferenceItemTest extends FieldKernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['node', 'comment', 'file', 'taxonomy', 'text', 'filter', 'views', 'field'];
+  public static $modules = [
+    'node',
+    'comment',
+    'file',
+    'taxonomy',
+    'text',
+    'filter',
+    'views',
+    'field',
+  ];
 
   /**
    * The taxonomy vocabulary to test with.
@@ -242,7 +251,7 @@ class EntityReferenceItemTest extends FieldKernelTestBase {
     $entity = EntityTest::create();
     $entity->field_test_entity_test_string_id->target_id = $this->entityStringId->id();
     $entity->save();
-    $storage = \Drupal::entityManager()->getStorage('entity_test');
+    $storage = \Drupal::entityTypeManager()->getStorage('entity_test');
     $storage->resetCache();
     $this->assertEqual($this->entityStringId->id(), $storage->load($entity->id())->field_test_entity_test_string_id->target_id);
     // Verify that the label for the target ID property definition is correct.

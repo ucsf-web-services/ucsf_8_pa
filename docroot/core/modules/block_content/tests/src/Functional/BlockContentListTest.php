@@ -23,6 +23,11 @@ class BlockContentListTest extends BlockContentTestBase {
   public static $modules = ['block', 'block_content', 'config_translation'];
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'classy';
+
+  /**
    * Tests the custom block listing page.
    */
   public function testListing() {
@@ -30,11 +35,11 @@ class BlockContentListTest extends BlockContentTestBase {
     $this->drupalGet('admin/structure/block/block-content');
 
     // Test for the page title.
-    $this->assertTitle(t('Custom block library') . ' | Drupal');
+    $this->assertTitle('Custom block library | Drupal');
 
     // Test for the table.
     $element = $this->xpath('//div[@class="layout-content"]//table');
-    $this->assertTrue($element, 'Configuration entity list table found.');
+    $this->assertNotEmpty($element, 'Configuration entity list table found.');
 
     // Test the table header.
     $elements = $this->xpath('//div[@class="layout-content"]//table/thead/tr/th');
@@ -72,7 +77,7 @@ class BlockContentListTest extends BlockContentTestBase {
 
     // Edit the entity using the operations link.
     $blocks = $this->container
-      ->get('entity.manager')
+      ->get('entity_type.manager')
       ->getStorage('block_content')
       ->loadByProperties(['info' => $label]);
     $block = reset($blocks);
@@ -97,7 +102,7 @@ class BlockContentListTest extends BlockContentTestBase {
     $delete_text = t('Delete');
     $this->clickLink($delete_text);
     $this->assertResponse(200);
-    $this->assertTitle(strip_tags(t('Are you sure you want to delete the custom block %label?', ['%label' => $new_label]) . ' | Drupal'));
+    $this->assertTitle("Are you sure you want to delete the custom block $new_label? | Drupal");
     $this->drupalPostForm(NULL, [], $delete_text);
 
     // Verify that the text of the label and machine name does not appear in

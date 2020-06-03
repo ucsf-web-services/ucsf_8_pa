@@ -19,7 +19,14 @@ class NodeBodyFieldStorageTest extends KernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['user', 'system', 'field', 'node', 'text', 'filter'];
+  public static $modules = [
+    'user',
+    'system',
+    'field',
+    'node',
+    'text',
+    'filter',
+  ];
 
   protected function setUp() {
     parent::setUp();
@@ -36,7 +43,7 @@ class NodeBodyFieldStorageTest extends KernelTestBase {
    */
   public function testFieldOverrides() {
     $field_storage = FieldStorageConfig::loadByName('node', 'body');
-    $this->assertTrue($field_storage, 'Node body field storage exists.');
+    $this->assertNotEmpty($field_storage, 'Node body field storage exists.');
     $type = NodeType::create(['name' => 'Ponies', 'type' => 'ponies']);
     $type->save();
     node_add_body_field($type);
@@ -48,7 +55,7 @@ class NodeBodyFieldStorageTest extends KernelTestBase {
     $this->assertTrue(count($field_storage->getBundles()) == 0, 'Node body field storage exists after deleting the only instance of a field.');
     \Drupal::service('module_installer')->uninstall(['node']);
     $field_storage = FieldStorageConfig::loadByName('node', 'body');
-    $this->assertFalse($field_storage, 'Node body field storage does not exist after uninstalling the Node module.');
+    $this->assertNull($field_storage, 'Node body field storage does not exist after uninstalling the Node module.');
   }
 
 }

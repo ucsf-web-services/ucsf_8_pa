@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\tracker\Functional;
 
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\comment\CommentInterface;
 use Drupal\comment\Tests\CommentTestTrait;
 use Drupal\Core\Cache\Cache;
@@ -28,7 +29,18 @@ class TrackerTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['block', 'comment', 'tracker', 'history', 'node_test'];
+  public static $modules = [
+    'block',
+    'comment',
+    'tracker',
+    'history',
+    'node_test',
+  ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
 
   /**
    * The main user for testing.
@@ -200,7 +212,7 @@ class TrackerTest extends BrowserTestBase {
     $this->assertNoLink($unpublished->label());
     // Verify that title and tab title have been set correctly.
     $this->assertText('Activity', 'The user activity tab has the name "Activity".');
-    $this->assertTitle(t('@name | @site', ['@name' => $this->user->getAccountName(), '@site' => $this->config('system.site')->get('name')]), 'The user tracker page has the correct page title.');
+    $this->assertTitle($this->user->getAccountName() . ' | Drupal');
 
     // Verify that unpublished comments are removed from the tracker.
     $admin_user = $this->drupalCreateUser(['post comments', 'administer comments', 'access user profiles']);
@@ -388,7 +400,7 @@ class TrackerTest extends BrowserTestBase {
 
     // Assert that all node titles are displayed.
     foreach ($nodes as $i => $node) {
-      $this->assertText($node->label(), format_string('Node @i is displayed on the tracker listing pages.', ['@i' => $i]));
+      $this->assertText($node->label(), new FormattableMarkup('Node @i is displayed on the tracker listing pages.', ['@i' => $i]));
     }
 
     // Fetch the site-wide tracker.
@@ -396,7 +408,7 @@ class TrackerTest extends BrowserTestBase {
 
     // Assert that all node titles are displayed.
     foreach ($nodes as $i => $node) {
-      $this->assertText($node->label(), format_string('Node @i is displayed on the tracker listing pages.', ['@i' => $i]));
+      $this->assertText($node->label(), new FormattableMarkup('Node @i is displayed on the tracker listing pages.', ['@i' => $i]));
     }
   }
 

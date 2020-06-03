@@ -17,11 +17,14 @@ use Drupal\filter\Entity\FilterFormat;
 class FilterImageStyleTest extends BrowserTestBase {
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   protected static $modules = ['filter', 'file', 'editor', 'node', 'image'];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
 
   /**
    * A text format allowing images and with FilterImageStyle applied.
@@ -82,7 +85,7 @@ class FilterImageStyleTest extends BrowserTestBase {
    * Tests that images not uploaded through media module are unmolested.
    */
   public function testImageNoStyle() {
-    $file_url = Url::fromUri('base:core/themes/bartik/screenshot.png')->toString();
+    $file_url = Url::fromUri('base:core/themes/stark/screenshot.png')->toString();
 
     $image_html = '<img src="' . $file_url . '" width="220">';
     $this->nodeHelper($image_html);
@@ -103,14 +106,14 @@ class FilterImageStyleTest extends BrowserTestBase {
   public function testImageStyle() {
     $this->assertArrayHasKey('medium', $this->container->get('entity_type.manager')->getStorage('image_style')->loadMultiple());
 
-    $file = File::create(['uri' => 'core/themes/bartik/screenshot.png']);
+    $file = File::create(['uri' => 'core/themes/stark/screenshot.png']);
     $file->save();
 
-    $image_html = '<img src="' . file_url_transform_relative($file->url()) . '" data-entity-type="file" data-entity-uuid="' . $file->uuid() . '" data-image-style="medium" width="220">';
+    $image_html = '<img src="' . $file->createFileUrl() . '" data-entity-type="file" data-entity-uuid="' . $file->uuid() . '" data-image-style="medium" width="220">';
     $this->nodeHelper($image_html);
 
     /** @var \Behat\Mink\Element\NodeElement $img_element */
-    $image_element = $this->getSession()->getPage()->find('css', 'img.image-style-medium');
+    $image_element = $this->getSession()->getPage()->find('css', 'img[data-entity-uuid="' . $file->uuid() . '"]');
     $this->assertNotEmpty($image_element);
 
     $this->assertContains('medium', $image_element->getAttribute('src'));

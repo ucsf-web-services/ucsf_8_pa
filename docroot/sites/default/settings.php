@@ -564,13 +564,15 @@ $settings['file_public_path'] = 'sites/default/files';
  * See https://www.drupal.org/documentation/modules/file for more information
  * about securing private files.
  */
-
+# set the file temp path and private file paths for Acquia
 if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
+  $settings['file_temp_path'] = '/mnt/gfs/' . $_ENV['AH_SITE_GROUP']. '.' . $_ENV['AH_SITE_ENVIRONMENT'] . '/files/tmp';
   $settings['file_private_path'] = '/mnt/files/' . $_ENV['AH_SITE_GROUP'] . '.' . $_ENV['AH_SITE_ENVIRONMENT'] . '/' . $site_path . '/files-private';
-}
-else {
+ } else {
+  $settings['file_temp_path'] = '/tmp';
   $settings['file_private_path'] = 'sites/default/files-private';
 }
+
 
 /**
  * Session write interval:

@@ -10,6 +10,11 @@ namespace Drupal\FunctionalTests\Installer;
 class InstallerTest extends InstallerTestBase {
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * Ensures that the user page is available after installation.
    */
   public function testInstaller() {
@@ -27,6 +32,13 @@ class InstallerTest extends InstallerTestBase {
     // Ensure that the timezone is correct for sites under test after installing
     // interactively.
     $this->assertEqual($this->config('system.date')->get('timezone.default'), 'Australia/Sydney');
+
+    // Ensure the profile has a weight of 1000.
+    $module_extension_list = \Drupal::service('extension.list.module');
+    $extensions = $module_extension_list->getList();
+
+    $this->assertArrayHasKey('testing', $extensions);
+    $this->assertEquals(1000, $extensions['testing']->weight);
   }
 
   /**
@@ -76,8 +88,8 @@ class InstallerTest extends InstallerTestBase {
     // Test that SiteConfigureForm::buildForm() has made the site directory and
     // the settings file non-writable.
     $site_directory = $this->container->get('app.root') . '/' . $this->siteDirectory;
-    $this->assertFalse(is_writable($site_directory));
-    $this->assertFalse(is_writable($site_directory . '/settings.php'));
+    $this->assertDirectoryNotIsWritable($site_directory);
+    $this->assertFileNotIsWritable($site_directory . '/settings.php');
 
     parent::setUpSite();
   }

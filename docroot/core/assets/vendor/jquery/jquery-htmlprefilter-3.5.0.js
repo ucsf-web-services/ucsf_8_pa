@@ -63,22 +63,14 @@
   // an <option> or <optgroup>, but it did that in local code that we can't
   // backport directly. Instead, we filter such cases out. To do so, we need to
   // determine when jQuery would otherwise invoke the vulnerable code, which it
-  // uses this regular expression to determine. The regular expression changed
-  // for version 3.4.0.
-  // @see https://github.com/jquery/jquery/blob/3.2.1/dist/jquery.js#L4695
-  // @see https://github.com/jquery/jquery/blob/3.4.0/dist/jquery.js#L4712
-  var rtagName;
-  if (minorVersion < 4) {
-    rtagName = /<([a-z][^\/\0>\x20\t\r\n\f]+)/i;
-  }
-  else {
-    rtagName = /<([a-z][^\/\0>\x20\t\r\n\f]*)/i;
-  }
+  // uses this regular expression to determine.
+  // @see https://github.com/jquery/jquery/blob/3.4.1/dist/jquery.js#L4716
+  var rtagName = ( /<([a-z][^\/\0>\x20\t\r\n\f]*)/i );
 
   jQuery.extend({
     htmlPrefilter: function (html) {
       // This is how jQuery determines the first tag in the HTML.
-      // @see https://github.com/jquery/jquery/blob/3.2.1/dist/jquery.js#L4794
+      // @see https://github.com/jquery/jquery/blob/3.4.1/dist/jquery.js#L4815
       var tag = ( rtagName.exec( html ) || [ "", "" ] )[ 1 ].toLowerCase();
 
       // It is not valid HTML for <option> or <optgroup> to have <select> as
@@ -90,9 +82,9 @@
         html = '';
       }
 
-      // Retain jQuery 3.2's conversion of pseudo-XHTML, but for only the
+      // Retain jQuery 3.4's conversion of pseudo-XHTML, but for only the
       // tags in the `selfClosingTagsToReplace` list defined above.
-      // @see https://github.com/jquery/jquery/blob/3.2.1/dist/jquery.js#L5822
+      // @see https://github.com/jquery/jquery/blob/3.4.1/dist/jquery.js#L5979
       // @see https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-11022
       html = html.replace(rxhtmlTagWithoutSpaceOrAttributes, "<$1></$1>");
       html = html.replace(rxhtmlTagWithSpaceAndMaybeAttributes, "<$1$2></$1>");
