@@ -147,13 +147,13 @@ class StylesCombo extends CKEditorPluginBase implements CKEditorPluginConfigurab
       // Parse.
       list($selector, $label) = explode('|', $style);
       $classes = explode('.', $selector);
-      $element = array_shift($classes);
+      $elements = preg_split('/, */', trim(array_shift($classes)));
 
       // Build the data structure CKEditor's stylescombo plugin expects.
       // @see https://ckeditor.com/docs/ckeditor4/latest/guide/dev_howtos_styles.html
       $configured_style = [
         'name' => trim($label),
-        'element' => trim($element),
+        'element' => (count($elements) === 1) ? $elements[0] : $elements,
       ];
       if (!empty($classes)) {
         $configured_style['attributes'] = [
