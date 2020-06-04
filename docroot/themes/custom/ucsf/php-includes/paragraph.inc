@@ -15,8 +15,10 @@ function ucsf_preprocess_paragraph(&$variables) {
 
       // get variable for primary area to use in twig
       $term = $node->field_areas->entity;
-      $primary_area = $term->getName();
-      $variables['primary_area'] = $primary_area;
+      if ($term) {
+        $primary_area = $term->getName();
+        $variables['primary_area'] = $primary_area;
+      }
     }
   }
 }
