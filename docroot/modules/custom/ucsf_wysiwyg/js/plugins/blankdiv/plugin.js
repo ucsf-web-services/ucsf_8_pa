@@ -4,8 +4,12 @@ CKEDITOR.plugins.add('blankdiv', {
 
   init: function(editor) {
     CKEDITOR.dialog.add('blankdiv', this.path + 'dialogs/blankdiv.js' );
-    var config = editor.config.y3titemplatemenuButtons.split(',');
-    var button =  config['blankdiv'] == undefined ? 'Create a Empty div' : undefined;
+    var button = undefined;
+
+    if (editor.config.y3titemplatemenuButtons) {
+      var config = editor.config.y3titemplatemenuButtons.split(',');
+      var button =  config['blankdiv'] == undefined ? 'Create a Empty div' : button;
+    }
 
     editor.widgets.add('blankdiv', {
       allowedContent:
