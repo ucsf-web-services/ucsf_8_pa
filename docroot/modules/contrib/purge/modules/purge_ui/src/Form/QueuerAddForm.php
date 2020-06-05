@@ -2,14 +2,12 @@
 
 namespace Drupal\purge_ui\Form;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
+use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\purge\Plugin\Purge\Queuer\QueuersServiceInterface;
-use Drupal\purge_ui\Form\CloseDialogTrait;
-use Drupal\purge_ui\Form\ReloadConfigFormCommand;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Add a queuer.
@@ -18,19 +16,19 @@ class QueuerAddForm extends ConfigFormBase {
   use CloseDialogTrait;
 
   /**
+   * The 'purge.queuers' service.
+   *
    * @var \Drupal\purge\Plugin\Purge\Queuer\QueuersServiceInterface
    */
   protected $purgeQueuers;
 
   /**
-   * Constructs a QueuerAddForm object.
+   * Construct a QueuerAddForm object.
    *
    * @param \Drupal\purge\Plugin\Purge\Queuer\QueuersServiceInterface $purge_queuers
    *   The purge queuers service.
-   *
-   * @return void
    */
-  public function __construct(QueuersServiceInterface $purge_queuers) {
+  final public function __construct(QueuersServiceInterface $purge_queuers) {
     $this->purgeQueuers = $purge_queuers;
   }
 
@@ -40,7 +38,6 @@ class QueuerAddForm extends ConfigFormBase {
   public static function create(ContainerInterface $container) {
     return new static($container->get('purge.queuers'));
   }
-
 
   /**
    * {@inheritdoc}
@@ -52,7 +49,7 @@ class QueuerAddForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getFormID() {
+  public function getFormId() {
     return 'purge_ui.queuer_add_form';
   }
 
@@ -67,7 +64,7 @@ class QueuerAddForm extends ConfigFormBase {
     // List all available queuers.
     $options = [];
     foreach ($this->purgeQueuers->getPluginsAvailable() as $plugin_id) {
-      $options[$plugin_id] = t("@label: @description", [
+      $options[$plugin_id] = $this->t("@label: @description", [
         '@label' => $definitions[$plugin_id]['label'],
         '@description' => $definitions[$plugin_id]['description'],
       ]);
@@ -104,6 +101,7 @@ class QueuerAddForm extends ConfigFormBase {
    *   The current state of the form.
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
+   *   The AJAX response object.
    */
   public function addQueuer(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();

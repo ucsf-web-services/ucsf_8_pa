@@ -17,11 +17,14 @@ class TransitionAccessTest extends BrowserTestBase {
   use ContentModerationTestTrait;
 
   /**
-   * Modules to install.
-   *
-   * @var array
+   * {@inheritdoc}
    */
-  public static $modules = ['content_moderation', 'scheduler_content_moderation_integration'];
+  protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected static $modules = ['content_moderation', 'scheduler_content_moderation_integration'];
 
   /**
    * User.
@@ -48,10 +51,10 @@ class TransitionAccessTest extends BrowserTestBase {
     $workflow->getTypePlugin()->addEntityTypeAndBundle('node', 'page');
     $workflow->save();
 
-    $this->user = $this->drupalCreateUser([
+    $this->schedulerUser = $this->drupalCreateUser([
       'access content',
       'create page content',
-      'edit own page content',
+      'edit any page content',
       'schedule publishing of nodes',
       'view latest version',
       'view any unpublished content',
@@ -60,13 +63,24 @@ class TransitionAccessTest extends BrowserTestBase {
       'use editorial transition publish',
       'use editorial transition archive',
     ]);
+
+    $this->restrictedUser = $this->drupalCreateUser([
+      'access content',
+      'create page content',
+      'edit own page content',
+      'view latest version',
+      'view any unpublished content',
+      'access content overview',
+      'use editorial transition create_new_draft',
+    ]);
+
   }
 
   /**
    * Test TransitionAccessConstraintValidator.
    */
   public function testTransitionAccess() {
-    $this->drupalLogin($this->user);
+    $this->drupalLogin($this->schedulerUser);
 
     // Create a node and publish it using the "publish" transition.
     $edit = [
@@ -100,7 +114,62 @@ class TransitionAccessTest extends BrowserTestBase {
     ];
     $this->drupalPostForm('node/' . $node->id() . '/edit', $edit, 'Save');
     $date_formatter = \Drupal::service('date.formatter');
-    $this->assertSession()->pageTextContains('This post is unpublished and will be published ' . $date_formatter->format($publish_time, 'long'));
+    $this->assertSession()->pageTextContains(sprintf('%s is scheduled to be published %s.', $node->getTitle(), $date_formatter->format($publish_time, 'long')));
+  }
+
+  /**
+   * Test access to scheduled content for users without right to transition.
+   */
+  public function testRestrictedTransitionAccess() {
+    // Create a draft as restricted user.
+    $this->drupalLogin($this->restrictedUser);
+    $edit = [
+      'title[0][value]' => $this->randomString(),
+      'moderation_state[0][state]' => 'draft',
+    ];
+    $this->drupalPostForm('node/add/page', $edit, 'Save');
+
+    $node = $this->drupalGetNodeByTitle($edit['title[0][value]']);
+    $publish_time = strtotime('+2 days');
+    $date_formatter = \Drupal::service('date.formatter');
+
+    // Schedule publishing.
+    $this->drupalLogin($this->schedulerUser);
+    $edit = [
+      'moderation_state[0][state]' => 'draft',
+      'publish_on[0][value][date]' => date('Y-m-d', $publish_time),
+      'publish_on[0][value][time]' => date('H:i:s', $publish_time),
+      'publish_state[0]' => 'published',
+    ];
+    $this->drupalPostForm('node/' . $node->id() . '/edit', $edit, 'Save');
+
+    $this->assertSession()
+      ->pageTextContains(sprintf('%s is scheduled to be published %s.', $node->getTitle(), $date_formatter->format($publish_time, 'long')));
+
+    $this->drupalGet('node/' . $node->id() . '/edit');
+    $this->assertResponse(200, 'Scheduler user should be able to edit the node."');
+
+    // Restricted user does not have permission to scheduled transition,
+    // editing access should be denied.
+    $this->drupalLogin($this->restrictedUser);
+    $this->drupalGet('node/' . $node->id() . '/edit');
+    $this->assertResponse(403, 'Restricted user should not be able to edit the node."');
+
+    // Remove scheduling info.
+    $this->drupalLogin($this->schedulerUser);
+    $edit = [
+      'moderation_state[0][state]' => 'draft',
+      'publish_on[0][value][date]' => NULL,
+      'publish_on[0][value][time]' => NULL,
+      'publish_state[0]' => '_none',
+    ];
+    $this->drupalPostForm('node/' . $node->id() . '/edit', $edit, 'Save');
+
+    // Check if node is editable when there is no scheduling
+    // (using 'create_new_draft' transition).
+    $this->drupalLogin($this->restrictedUser);
+    $this->drupalGet('node/' . $node->id() . '/edit');
+    $this->assertResponse(200, 'Restricted user should be able to edit the node."');
   }
 
 }

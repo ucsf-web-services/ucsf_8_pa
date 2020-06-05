@@ -1,22 +1,71 @@
-[//]: # ( clear&&curl -s -F input_files[]=@INSTALL.md -F from=markdown -F to=html http://c.docverter.com/convert|tail -n+11|head -n-2 )
-[//]: # ( curl -s -F input_files[]=@INSTALL.md -F from=markdown -F to=pdf http://c.docverter.com/convert>INSTALL.pdf )
-
 # Installation
 
-The Acquia Purge module provides integration with the [Purge module](https://www.drupal.org/project/purge)
-and makes it extremely simple to achieve accurate, efficient cache invalidation
-on your Acquia Cloud site.
+The Acquia Purge module provides integration with the
+[Purge module](https://www.drupal.org/project/purge) and makes it extremely
+simple to achieve accurate, efficient cache invalidation on your Acquia Cloud
+environment.
 
 Setting it all up shouldn't take long:
 
-1. Download and enable the required modules: ``drush en acquia_purge --yes``
+1. Download and enable the required modules:
 
-2. Add the "Acquia Cloud" purger at ``/admin/config/development/performance/purge``.
+   ```
+   drush en acquia_purge --yes
+   ```
 
-3. Verify if there are no diagnostic issues by running ``drush p-diagnostics``.
+2. Also enable the necessary Purge components:
 
-Do you have any questions, bugs or comments? Feel free to lookup common
-questions in the ``FAQ.md`` file or file a issue on Drupal.org.
+   ```
+   drush en purge_drush purge_queuer_coretags \
+   purge_processor_lateruntime purge_processor_cron purge_ui  --yes
+   ```
+
+3. Add the "`Acquia Cloud`" purger to your configuration:
+
+   ```
+   drush p:purger-add --if-not-exists acquia_purge
+   ```
+
+4. To invalidate your _Acquia Platform CDN_ subscription, add a second purger:
+
+   ```
+   drush p:purger-add --if-not-exists acquia_platform_cdn
+   ```
+   ```
+   drush p:purger-ls|grep acquia_platform_cdn
+     f0eed62e59   acquia_platform_cdn   Acquia Platform CDN (beta)
+   ```
+   ```
+   drush p:purger-mvu f0eed62e59
+   ```
+   ```
+   drush p:purger-ls
+    ------------ --------------------- ----------------------------
+     Instance     Plugin                Label
+    ------------ --------------------- ----------------------------
+     f0eed62e59   acquia_platform_cdn   Acquia Platform CDN (beta)
+     bcddfb627d   acquia_purge          Acquia Cloud
+    ------------ --------------------- ----------------------------
+   ```
+
+5. Verify if purge reports that your setup is working:
+   ```
+   drush p:diagnostics --fields=title,severity
+    ------------------------------ ----------
+     Title                          Severity
+    ------------------------------ ----------
+     Acquia Purge Recommendations   OK
+     Acquia Platform CDN            OK
+     Acquia Cloud                   OK
+     Queuers                        OK
+     Page cache max age             OK
+     Page cache                     OK
+     Purgers                        OK
+     Capacity                       OK
+     Queue size                     OK
+     Processors                     OK
+    ------------------------------ ----------
+   ```
 
 ### Tuning
 

@@ -5,7 +5,7 @@ namespace Drupal\Tests\blazy\Kernel;
 use Drupal\Core\Cache\Cache;
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\blazy\Blazy;
-use Drupal\blazy\Dejavu\BlazyDefault;
+use Drupal\blazy\BlazyDefault;
 
 /**
  * Tests the Blazy manager methods.
@@ -46,10 +46,13 @@ class BlazyManagerTest extends BlazyKernelTestBase {
    * @dataProvider providerTestPreRenderImage
    */
   public function testPreRenderImage(array $settings = [], $expected_responsive_image_style_id = '') {
-    $build             = $this->data;
+    $build = $this->data;
     $settings['count'] = $this->maxItems;
-    $settings['uri']   = $this->uri;
-    $build['settings'] = array_merge($build['settings'], $settings);
+    $settings['uri'] = $this->uri;
+    $settings['responsive_image_style_id'] = '';
+    $settings['resimage'] = empty($settings['responsive_image_style']) ? FALSE : $this->blazyManager->entityLoad($settings['responsive_image_style'], 'responsive_image_style');
+    $build['settings'] = array_merge($build['settings'], $settings) + BlazyDefault::itemSettings();
+    $switch_css = str_replace('_', '-', $settings['media_switch']);
 
     $element = $this->doPreRenderImage($build);
 
@@ -58,7 +61,7 @@ class BlazyManagerTest extends BlazyKernelTestBase {
       $this->assertArrayHasKey('#url', $element);
     }
     else {
-      $this->assertArrayHasKey('data-' . $settings['media_switch'] . '-trigger', $element['#url_attributes']);
+      $this->assertArrayHasKey('data-' . $switch_css . '-trigger', $element['#url_attributes']);
       $this->assertArrayHasKey('#url', $element);
     }
 
@@ -201,9 +204,9 @@ class BlazyManagerTest extends BlazyKernelTestBase {
    * @dataProvider providerBuildAttributes
    */
   public function testBuildAttributes(array $settings, $uri, $item, $iframe, $expected) {
-    $content   = [];
     $variables = ['attributes' => []];
-    $settings  = array_merge($this->getFormatterSettings(), $settings);
+    $settings = array_merge($this->getFormatterSettings(), $settings);
+    $settings += BlazyDefault::itemSettings();
 
     $settings['blazy']           = TRUE;
     $settings['lazy']            = 'blazy';
@@ -220,7 +223,7 @@ class BlazyManagerTest extends BlazyKernelTestBase {
 
     Blazy::buildAttributes($variables);
 
-    $image  = $expected == TRUE ? !empty($variables['image']) : empty($variables['image']);
+    $image = $expected == TRUE ? !empty($variables['image']) : empty($variables['image']);
     $iframe = $iframe == TRUE ? !empty($variables['iframe_attributes']) : empty($variables['iframe_attributes']);
 
     $this->assertTrue($image);
@@ -232,7 +235,6 @@ class BlazyManagerTest extends BlazyKernelTestBase {
    */
   public function providerBuildAttributes() {
     $breakpoints = $this->getDataBreakpoints();
-    $breakpoints_cleaned = $this->getDataBreakpoints(TRUE);
 
     $data[] = [
       [
@@ -363,7 +365,6 @@ class BlazyManagerTest extends BlazyKernelTestBase {
    * @covers ::attach
    * @covers ::buildDataBlazy
    * @covers ::getLightboxes
-   * @covers ::setLightboxes
    * @covers ::buildSkins
    * @covers ::getCache
    *
@@ -377,9 +378,10 @@ class BlazyManagerTest extends BlazyKernelTestBase {
     $this->assertArrayHasKey('blazy', $attachments['drupalSettings']);
 
     // Tests Blazy [data-blazy] attributes.
-    $build    = $this->data;
-    $settings = &$build['settings'];
-    $item     = $build['item'];
+    $build     = $this->data;
+    $settings  = &$build['settings'];
+    $settings += BlazyDefault::itemSettings();
+    $item      = $build['item'];
 
     $settings['item']        = $item;
     $settings['uri']         = $this->uri;
@@ -392,11 +394,8 @@ class BlazyManagerTest extends BlazyKernelTestBase {
     $this->assertNotEmpty($settings['blazy']);
 
     // Tests Blazy lightboxes.
-    $this->blazyManager->setLightboxes('blazy_test');
     $lightboxes = $this->blazyManager->getLightboxes();
-
     $this->assertFalse(in_array('nixbox', $lightboxes));
-    $this->assertTrue(in_array('blazy_test', $lightboxes));
 
     // Tests for skins.
     // Tests skins with a single expected method BlazySkinTest::skins().

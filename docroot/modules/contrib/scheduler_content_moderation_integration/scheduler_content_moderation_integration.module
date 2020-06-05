@@ -11,12 +11,51 @@
  * @see https://www.drupal.org/project/scheduler/issues/2798689
  */
 
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\workflows\Transition;
+
+/**
+ * Implements hook_entity_access().
+ *
+ * Deny access to users not having access to scheduled transitions, similar to
+ * what is done in content_moderation_entity_access() by checking for valid
+ * transitions.
+ */
+function scheduler_content_moderation_integration_entity_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  /** @var \Drupal\content_moderation\ModerationInformationInterface $moderation_info */
+  $moderation_info = Drupal::service('content_moderation.moderation_information');
+
+  if ($operation === 'update' && $moderation_info->isModeratedEntity($entity) && $entity->moderation_state
+    && ($entity->publish_on->value || $entity->unpublish_on->value)) {
+
+    /** @var \Drupal\workflows\WorkflowInterface $workflow */
+    $workflow = $moderation_info->getWorkflowForEntity($entity);
+    $current_state = $workflow->getTypePlugin()->getState($entity->moderation_state->value);
+    /** @var \Drupal\content_moderation\StateTransitionValidation $transition_validation */
+    $transition_validation = \Drupal::service('content_moderation.state_transition_validation');
+    foreach ([$entity->publish_state, $entity->unpublish_state] as $state) {
+      try {
+        $scheduled_state = $workflow->getTypePlugin()->getState($state->value);
+        if (!$transition_validation->isTransitionValid($workflow, $current_state, $scheduled_state, $account, $entity)) {
+
+          return AccessResult::forbidden('Scheduled transition is not valid for the given account.');
+        }
+      }
+      catch (\InvalidArgumentException $exception) {
+        // Just move on when there is no valid state.
+      }
+    }
+  }
+
+  return AccessResult::neutral();
+}
 
 /**
  * Implements hook_entity_base_field_info().
@@ -171,7 +210,8 @@ function scheduler_content_moderation_integration_scheduler_hide_publish_on_fiel
   if ($moderation_information->isModeratedEntity($node)) {
     // If no moderation transitions are available for publish_state then hide
     // the publish_on scheduler field.
-    $return = (count($form['publish_state']['widget'][0]['#options']) <= 1);
+    $options_without_none = array_diff_key($form['publish_state']['widget'][0]['#options'], ['_none' => '']);
+    $return = (count($options_without_none) == 0);
   }
   return $return;
 }
@@ -190,7 +230,8 @@ function scheduler_content_moderation_integration_scheduler_hide_unpublish_on_fi
   if ($moderation_information->isModeratedEntity($node)) {
     // If no moderation transitions are available for unpublish_state then hide
     // the unpublish_on scheduler field.
-    $return = (count($form['unpublish_state']['widget'][0]['#options']) <= 1);
+    $options_without_none = array_diff_key($form['unpublish_state']['widget'][0]['#options'], ['_none' => '']);
+    $return = (count($options_without_none) == 0);
   }
   return $return;
 }

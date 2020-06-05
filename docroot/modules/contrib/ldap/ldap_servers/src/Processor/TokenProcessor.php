@@ -3,7 +3,7 @@
 namespace Drupal\ldap_servers\Processor;
 
 use Drupal\Core\File\FileSystem;
-use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Unicode;
 use Drupal\ldap_servers\Entity\Server;
 use Drupal\ldap_servers\Helper\ConversionHelper;
 use Drupal\ldap_servers\Helper\CredentialsStorage;
@@ -155,8 +155,8 @@ class TokenProcessor {
     }
     list($ldap_entry, $tokens) = $this->compileLdapTokenEntries($ldap_entry, $token_keys, $pre, $post);
 
-    // Include the dn.  it will not be handled correctly by previous loops.
-    $tokens[$pre . 'dn' . $post] = SafeMarkup::checkPlain($ldap_entry['dn']);
+    // Include the dn. It will not be handled correctly by previous loops.
+    $tokens[$pre . 'dn' . $post] = $ldap_entry['dn'];
     return $tokens;
   }
 
@@ -263,11 +263,11 @@ class TokenProcessor {
       $value = mb_strtolower($value);
     }
 
-    $tokens[$pre . $token . $post] = SafeMarkup::checkPlain($value)->__toString();
+    $tokens[$pre . $token . $post] = $value;
     // We are redundantly setting the lowercase value here for consistency with
     // parent function.
     if ($token != mb_strtolower($token)) {
-      $tokens[$pre . mb_strtolower($token) . $post] = SafeMarkup::checkPlain($value);
+      $tokens[$pre . mb_strtolower($token) . $post] = $value;
     }
 
     return $tokens;
@@ -396,14 +396,10 @@ class TokenProcessor {
     foreach ($dn_parts as $pair) {
       list($attribute_name, $attribute_value) = explode('=', $pair);
       $attribute_value = ConversionHelper::unescapeDnValue($attribute_value);
-      try {
-        $attribute_value = SafeMarkup::checkPlain($attribute_value);
-      }
-      catch (\Exception $e) {
-        $this->detailLog->log('Skipped tokenization of attribute %attr_name because the value would not pass check_plain function.', [
+      if (!Unicode::validateUtf8($attribute_value)) {
+        $this->detailLog->log('Skipped tokenization of attribute %attr_name because the value is not valid UTF-8 string.', [
           '%attr_name' => $attribute_name,
         ]);
-        // Don't tokenize data that can't pass check_plain.
         continue;
       }
 
@@ -454,22 +450,22 @@ class TokenProcessor {
     $attribute_value = $ldap_entry[$attribute_name];
     if (is_array($attribute_value) && is_scalar($attribute_value[0]) && $attribute_value['count'] == 1) {
       // Only one entry, example output: ['cn', 'cn:0', 'cn:last'].
-      $tokens[$pre . mb_strtolower($attribute_name) . $post] = SafeMarkup::checkPlain($attribute_value[0]);
-      $tokens[$pre . mb_strtolower($attribute_name) . self::DELIMITER . '0' . $post] = SafeMarkup::checkPlain($attribute_value[0]);
-      $tokens[$pre . mb_strtolower($attribute_name) . self::DELIMITER . 'last' . $post] = SafeMarkup::checkPlain($attribute_value[0]);
+      $tokens[$pre . mb_strtolower($attribute_name) . $post] = $attribute_value[0];
+      $tokens[$pre . mb_strtolower($attribute_name) . self::DELIMITER . '0' . $post] = $attribute_value[0];
+      $tokens[$pre . mb_strtolower($attribute_name) . self::DELIMITER . 'last' . $post] = $attribute_value[0];
     }
     elseif (is_array($attribute_value) && $attribute_value['count'] > 1) {
       // Multiple entries, example: ['cn:last', 'cn:0', 'cn:1'].
-      $tokens[$pre . mb_strtolower($attribute_name) . self::DELIMITER . 'last' . $post] = SafeMarkup::checkPlain($attribute_value[$attribute_value['count'] - 1]);
+      $tokens[$pre . mb_strtolower($attribute_name) . self::DELIMITER . 'last' . $post] = $attribute_value[$attribute_value['count'] - 1];
       for ($i = 0; $i < $attribute_value['count']; $i++) {
-        $tokens[$pre . mb_strtolower($attribute_name) . self::DELIMITER . $i . $post] = SafeMarkup::checkPlain($attribute_value[$i]);
+        $tokens[$pre . mb_strtolower($attribute_name) . self::DELIMITER . $i . $post] = $attribute_value[$i];
       }
     }
     elseif (is_scalar($attribute_value)) {
       // Only one entry (as string), example output: ['cn', 'cn:0', 'cn:last'].
-      $tokens[$pre . mb_strtolower($attribute_name) . $post] = SafeMarkup::checkPlain($attribute_value);
-      $tokens[$pre . mb_strtolower($attribute_name) . self::DELIMITER . '0' . $post] = SafeMarkup::checkPlain($attribute_value);
-      $tokens[$pre . mb_strtolower($attribute_name) . self::DELIMITER . 'last' . $post] = SafeMarkup::checkPlain($attribute_value);
+      $tokens[$pre . mb_strtolower($attribute_name) . $post] = $attribute_value;
+      $tokens[$pre . mb_strtolower($attribute_name) . self::DELIMITER . '0' . $post] = $attribute_value;
+      $tokens[$pre . mb_strtolower($attribute_name) . self::DELIMITER . 'last' . $post] = $attribute_value;
     }
     return $tokens;
   }
@@ -523,11 +519,11 @@ class TokenProcessor {
     }
     $value = ConversionHelper::convertAttribute($value, $conversion);
 
-    $tokens[$pre . $full_token_key . $post] = SafeMarkup::checkPlain($value);
+    $tokens[$pre . $full_token_key . $post] = $value;
     // We are redundantly setting the lowercase value here for consistency with
     // parent function.
     if ($full_token_key != mb_strtolower($full_token_key)) {
-      $tokens[$pre . mb_strtolower($full_token_key) . $post] = SafeMarkup::checkPlain($value);
+      $tokens[$pre . mb_strtolower($full_token_key) . $post] = $value;
     }
     return $tokens;
   }

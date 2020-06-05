@@ -140,7 +140,7 @@ class StylesCombo extends CKEditorPluginBase implements CKEditorPluginConfigurab
       }
 
       // Validate syntax: element[.class...]|label pattern expected.
-      if (!preg_match('@^ *[a-zA-Z0-9]+ *(\\.[a-zA-Z0-9_-]+ *)*\\| *.+ *$@', $style)) {
+      if (!preg_match('@^ *[a-zA-Z0-9,]+ *(\\.[a-zA-Z0-9_-]+ *)*\\| *.+ *$@', $style)) {
         return FALSE;
       }
 
@@ -153,7 +153,7 @@ class StylesCombo extends CKEditorPluginBase implements CKEditorPluginConfigurab
       // @see https://ckeditor.com/docs/ckeditor4/latest/guide/dev_howtos_styles.html
       $configured_style = [
         'name' => trim($label),
-        'element' => (count($elements) === 1) ? $elements[0] : $elements,
+        'element' => (count($elements) === 1) ? $elements[0] : $elements
       ];
       if (!empty($classes)) {
         $configured_style['attributes'] = [

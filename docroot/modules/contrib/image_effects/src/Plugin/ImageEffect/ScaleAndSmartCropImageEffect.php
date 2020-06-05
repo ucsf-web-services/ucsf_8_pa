@@ -66,8 +66,8 @@ class ScaleAndSmartCropImageEffect extends ConfigurableImageEffectBase {
     $form['upscale'] = [
       '#type' => 'checkbox',
       '#default_value' => $this->configuration['upscale'],
-      '#title' => t('Allow Upscaling'),
-      '#description' => t('Let scale make images larger than their original size.'),
+      '#title' => $this->t('Allow Upscaling'),
+      '#description' => $this->t('Let scale make images larger than their original size.'),
     ];
 
     $form['advanced'] = [
@@ -87,8 +87,8 @@ class ScaleAndSmartCropImageEffect extends ConfigurableImageEffectBase {
     $form['advanced']['simulate'] = [
       '#type' => 'checkbox',
       '#default_value' => $this->configuration['simulate'],
-      '#title' => t('Simulate'),
-      '#description' => t('If selected, the crop will not be executed; the crop area will be highlighted on the source image instead.'),
+      '#title' => $this->t('Simulate'),
+      '#description' => $this->t('If selected, the crop will not be executed; the crop area will be highlighted on the source image instead.'),
     ];
 
     return $form;

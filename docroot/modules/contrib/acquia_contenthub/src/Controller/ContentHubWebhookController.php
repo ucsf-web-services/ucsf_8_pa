@@ -151,7 +151,7 @@ class ContentHubWebhookController extends ControllerBase {
     if ($webhook = Json::decode($webhook)) {
       $log_msg .= '(Request ID: @request_id - Entity: @uuid.) ';
       $context += [
-        '@request_id' => $webhook['requestid'],
+        '@request_id' => $webhook['requestid'] ?? 'NOT_FOUND',
         '@uuid' => $webhook['uuid'],
       ];
 

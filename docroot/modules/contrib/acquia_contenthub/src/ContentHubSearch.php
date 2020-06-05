@@ -241,9 +241,7 @@ class ContentHubSearch {
           $tags = explode(',', $value);
           foreach ($tags as $tag) {
             $keywordQuery = $this->getQueryFromString($tag);
-            $tags_bool_queries['bool']['should'] = [
-              $keywordQuery
-            ];
+            $tags_bool_queries['bool']['should'][] = $keywordQuery;
           }
           $query['query']['bool']['must'][] = $tags_bool_queries;
           break;

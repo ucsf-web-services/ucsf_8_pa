@@ -105,6 +105,7 @@ abstract class SlickFileFormatterBase extends BlazyFileFormatterBase {
         }
 
         $this->getMediaItem($element, $file);
+        $settings = $element['settings'];
       }
 
       // Image with responsive image, lazyLoad, and lightbox supports.

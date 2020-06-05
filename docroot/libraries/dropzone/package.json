@@ -1,6 +1,6 @@
 {
   "name": "dropzone",
-  "version": "5.5.1",
+  "version": "5.7.0",
   "description": "Handles drag and drop of files for you.",
   "keywords": [
     "dragndrop",
@@ -24,6 +24,10 @@
       "web": "http://www.colorglare.com"
     }
   ],
+  "scripts": {
+    "test": "grunt && npm run test-prebuilt",
+    "test-prebuilt": "mocha-headless-chrome -f test/test-prebuilt.html -a no-sandbox -a disable-setuid-sandbox"
+  },
   "bugs": {
     "email": "m@tias.me",
     "url": "https://gitlab.com/meno/dropzone/issues"
@@ -32,5 +36,21 @@
   "repository": {
     "type": "git",
     "url": "https://gitlab.com/meno/dropzone.git"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "chai": "4.2.x",
+    "grunt": "^1.0.4",
+    "grunt-babel": "^8.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-text-replace": "^0.4.0",
+    "marked": "^0.8.0",
+    "mocha": "^7.0.1",
+    "mocha-headless-chrome": "^2.0.3",
+    "sinon": "8.1.1"
   }
 }

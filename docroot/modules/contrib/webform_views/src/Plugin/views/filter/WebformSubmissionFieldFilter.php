@@ -47,25 +47,16 @@ class WebformSubmissionFieldFilter extends StringFilter {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
+    $instance = parent::create(
+      $container,
       $configuration,
       $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager'),
-      $container->get('plugin.manager.element_info'),
-      $container->get('current_route_match')
+      $plugin_definition
     );
-  }
-
-  /**
-   * WebformSubmissionFieldFilter constructor.
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, ElementInfoManagerInterface $element_info_manager, RouteMatchInterface $route_match) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-
-    $this->entityTypeManager = $entity_type_manager;
-    $this->elementInfoManager = $element_info_manager;
-    $this->routeMatch = $route_match;
+    $instance->setEntityTypeManager($container->get('entity_type.manager'));
+    $instance->setElementInfoManager($container->get('plugin.manager.element_info'));
+    $instance->setRouteMatch($container->get('current_route_match'));
+    return $instance;
   }
 
   /**
@@ -262,6 +253,36 @@ class WebformSubmissionFieldFilter extends StringFilter {
     unset($value_form['#prefix'], $value_form['#suffix']);
 
     return $value_form;
+  }
+
+  /**
+   * Setter for entity type manager.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   Entity type manager service to inject.
+   */
+  public function setEntityTypeManager(EntityTypeManagerInterface $entity_type_manager) {
+    $this->entityTypeManager = $entity_type_manager;
+  }
+
+  /**
+   * Setter for element info manager.
+   *
+   * @param \Drupal\Core\Render\ElementInfoManagerInterface $element_info_manager
+   *   Element info manager service to inject.
+   */
+  public function setElementInfoManager(ElementInfoManagerInterface $element_info_manager) {
+    $this->elementInfoManager = $element_info_manager;
+  }
+
+  /**
+   * Setter for route match.
+   *
+   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
+   *   Route match service to inject.
+   */
+  public function setRouteMatch(RouteMatchInterface $route_match) {
+    $this->routeMatch = $route_match;
   }
 
   /**

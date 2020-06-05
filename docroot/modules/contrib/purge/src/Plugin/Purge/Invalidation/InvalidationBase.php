@@ -2,13 +2,11 @@
 
 namespace Drupal\purge\Plugin\Purge\Invalidation;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\purge\Plugin\Purge\Purger\Exception\BadPluginBehaviorException;
-use Drupal\purge\Plugin\Purge\Invalidation\InvalidationInterface;
-use Drupal\purge\Plugin\Purge\Invalidation\ImmutableInvalidationBase;
 use Drupal\purge\Plugin\Purge\Invalidation\Exception\InvalidExpressionException;
-use Drupal\purge\Plugin\Purge\Invalidation\Exception\MissingExpressionException;
 use Drupal\purge\Plugin\Purge\Invalidation\Exception\InvalidStateException;
+use Drupal\purge\Plugin\Purge\Invalidation\Exception\MissingExpressionException;
+use Drupal\purge\Plugin\Purge\Purger\Exception\BadPluginBehaviorException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides base implementations for the invalidation object.
@@ -97,7 +95,7 @@ abstract class InvalidationBase extends ImmutableInvalidationBase implements Inv
    */
   public function setProperty($key, $value) {
     if (is_null($this->context)) {
-      throw new \LogicException('Call ::setStateContext() before deleting properties!');
+      throw new \LogicException('Call ::setStateContext() before setting properties!');
     }
     if (!isset($this->properties[$this->context])) {
       $this->properties[$this->context] = [];
@@ -142,7 +140,7 @@ abstract class InvalidationBase extends ImmutableInvalidationBase implements Inv
     $both_strings = $old_is_string && $new_is_string;
     $transferring = $both_strings && ($this->context != $purger_instance_id);
     if ($transferring || ($old_is_string && $new_is_null)) {
-      if (!in_array($this->getState(), $this->states_after_processing)) {
+      if (!in_array($this->getState(), $this->statesAfterProcessing)) {
         throw new BadPluginBehaviorException("Only NOT_SUPPORTED, PROCESSING, SUCCEEDED and FAILED are valid outbound states.");
       }
     }
@@ -155,18 +153,18 @@ abstract class InvalidationBase extends ImmutableInvalidationBase implements Inv
    */
   public function validateExpression() {
     $d = $this->getPluginDefinition();
-    $topt = ['@type' => strtolower($d['label'])];
+    $type = strtolower($d['label']);
     if ($d['expression_required'] && is_null($this->expression)) {
-      throw new MissingExpressionException($this->t("Argument required for @type invalidation.", $topt));
+      throw new MissingExpressionException(sprintf("Argument required for %s invalidation.", $type));
     }
     elseif ($d['expression_required'] && empty($this->expression) && !$d['expression_can_be_empty']) {
-      throw new InvalidExpressionException($this->t("Argument required for @type invalidation.", $topt));
+      throw new InvalidExpressionException(sprintf("Argument required for %s invalidation.", $type));
     }
     elseif (!$d['expression_required'] && !is_null($this->expression)) {
-      throw new InvalidExpressionException($this->t("Argument given for @type invalidation.", $topt));
+      throw new InvalidExpressionException(sprintf("Argument given for %s invalidation.", $type));
     }
     elseif (!is_null($this->expression) && !is_string($this->expression) && $d['expression_must_be_string']) {
-      throw new InvalidExpressionException($this->t("String argument required for @type invalidation.", $topt));
+      throw new InvalidExpressionException(sprintf("String argument required for %s invalidation.", $type));
     }
   }
 

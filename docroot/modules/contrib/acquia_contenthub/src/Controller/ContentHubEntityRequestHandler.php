@@ -127,8 +127,7 @@ class ContentHubEntityRequestHandler extends RequestHandler {
     }
 
     // Invoke the operation on the resource plugin.
-    $unserialized = NULL;
-    $response = call_user_func_array([$resource, $method], array_merge($parameters, [$unserialized, $request]));
+    $response = call_user_func_array([$resource, $method], array_merge($parameters, [$request]));
 
     // Render response.
     $data = $response->getResponseData();

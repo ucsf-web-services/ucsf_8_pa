@@ -340,7 +340,7 @@ function core_drush_command() {
     // Drupal 7 needs DRUSH_BOOTSTRAP_DRUPAL_CONFIGURATION, while Drupal 8 needs _FULL.
     // Therefore we bootstrap to _FULL in commands/core/drupal/update.inc.
     'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_CONFIGURATION,
-    'aliases' => array('updatedb:batch:process'),
+    'aliases' => array('updatedb:batch-process'),
   );
   $items['core-global-options'] = array(
     'description' => 'All global options',
@@ -353,7 +353,7 @@ function core_drush_command() {
       'field-labels' => array('label' => 'Label', 'description' => 'Description'),
       'output-data-type' => 'format-table',
     ),
-    'aliases' => array('core:global:options'),
+    'aliases' => array('core:global-options'),
   );
   $items['core-quick-drupal'] = array(
     'description' => 'Download, install, serve and login to Drupal with minimal configuration and dependencies.',
@@ -523,9 +523,15 @@ function _core_path_aliases($project = '') {
       }
       if (drush_drupal_major_version() >= 8 && drush_has_boostrapped(DRUSH_BOOTSTRAP_DRUPAL_CONFIGURATION)) {
         try {
+          $config_labels = ['sync' => 'sync'];
           if (isset($GLOBALS['config_directories'])) {
-            foreach ($GLOBALS['config_directories'] as $label => $unused) {
-              $paths["%config-$label"] = config_get_config_directory($label);
+            $config_labels = $GLOBALS['config_directories'];
+          }
+
+          foreach ($config_labels as $label => $unused) {
+            $path = drush_config_get_config_directory($label);
+            if (!empty($path)) {
+              $paths["%config-$label"] = $path;
             }
           }
         }

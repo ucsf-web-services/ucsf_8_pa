@@ -2,7 +2,10 @@
 
 namespace Drupal\Tests\redirect\Unit;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Language\Language;
+use Drupal\path_alias\AliasManagerInterface;
 use Drupal\redirect\EventSubscriber\RedirectRequestSubscriber;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit_Framework_MockObject_MockObject;
@@ -11,13 +14,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * Tests the redirect logic.
  *
  * @group redirect
  *
- * @coversDefaultClass Drupal\redirect\EventSubscriber\RedirectRequestSubscriber
+ * @coversDefaultClass \Drupal\redirect\EventSubscriber\RedirectRequestSubscriber
  */
 class RedirectRequestSubscriberTest extends UnitTestCase {
 
@@ -136,7 +140,7 @@ class RedirectRequestSubscriberTest extends UnitTestCase {
       ->method('canRedirect')
       ->will($this->returnValue(TRUE));
 
-    $context = $this->getMock('Symfony\Component\Routing\RequestContext');
+    $context = $this->createMock('Symfony\Component\Routing\RequestContext');
 
     $inbound_path_processor = $this->getMockBuilder('Drupal\Core\PathProcessor\InboundPathProcessorInterface')
       ->disableOriginalConstructor()
@@ -156,21 +160,17 @@ class RedirectRequestSubscriberTest extends UnitTestCase {
         return $path;
       });
 
-    $alias_manager = $this->getMockBuilder('Drupal\Core\Path\AliasManager')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $module_handler = $this->getMockBuilder('Drupal\Core\Extension\ModuleHandlerInterface')
-      ->getMock();
-    $entity_manager = $this->getMockBuilder('Drupal\Core\Entity\EntityManagerInterface')
-      ->getMock();
+    $alias_manager = $this->createMock(AliasManagerInterface::class);
+    $module_handler = $this->createMock(ModuleHandlerInterface::class);
+    $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
 
     $subscriber = new RedirectRequestSubscriber(
       $this->getRedirectRepositoryStub('findMatchingRedirect', $redirect),
       $this->getLanguageManagerStub(),
-      $this->getConfigFactoryStub(array('redirect.settings' => array('passthrough_querystring' => $retain_query))),
+      $this->getConfigFactoryStub(['redirect.settings' => ['passthrough_querystring' => $retain_query]]),
       $alias_manager,
       $module_handler,
-      $entity_manager,
+      $entity_type_manager,
       $checker,
       $context,
       $inbound_path_processor
@@ -255,7 +255,7 @@ class RedirectRequestSubscriberTest extends UnitTestCase {
    * @return \Symfony\Component\HttpKernel\Event\PostResponseEvent
    *   The post response event object.
    */
-  protected function getPostResponseEvent($headers = array()) {
+  protected function getPostResponseEvent($headers = []) {
     $http_kernel = $this->getMockBuilder('\Symfony\Component\HttpKernel\HttpKernelInterface')
       ->getMock();
     $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
@@ -280,7 +280,7 @@ class RedirectRequestSubscriberTest extends UnitTestCase {
 
     $http_kernel = $this->getMockBuilder('\Symfony\Component\HttpKernel\HttpKernelInterface')
       ->getMock();
-    return new GetResponseEvent($http_kernel, $request, 'test');
+    return new GetResponseEvent($http_kernel, $request, HttpKernelInterface::MASTER_REQUEST);
   }
 
   /**
@@ -293,7 +293,7 @@ class RedirectRequestSubscriberTest extends UnitTestCase {
       ->getMock();
     $language_manager->expects($this->any())
       ->method('getCurrentLanguage')
-      ->will($this->returnValue(new Language(array('id' => 'en'))));
+      ->will($this->returnValue(new Language(['id' => 'en'])));
 
     return $language_manager;
   }

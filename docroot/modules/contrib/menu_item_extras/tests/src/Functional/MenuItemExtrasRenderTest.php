@@ -47,6 +47,9 @@ class MenuItemExtrasRenderTest extends BrowserTestBase {
    */
   protected $linksNumber = 3;
 
+  /**
+   * {@inheritdoc}
+   */
   public static $modules = ['menu_item_extras'];
 
   /**

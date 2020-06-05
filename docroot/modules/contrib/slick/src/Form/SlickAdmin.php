@@ -123,8 +123,8 @@ class SlickAdmin implements SlickAdminInterface {
    */
   public function openingForm(array &$form, $definition = []) {
     $path         = drupal_get_path('module', 'slick');
-    $readme       = Url::fromUri('base:' . $path . '/README.txt')->toString();
-    $readme_field = Url::fromUri('base:' . $path . '/src/Plugin/Field/README.txt')->toString();
+    $readme       = Url::fromUri('base:' . $path . '/README.md')->toString();
+    $readme_field = Url::fromUri('base:' . $path . '/src/Plugin/Field/README.md')->toString();
     $arrows       = $this->getSkinsByGroupOptions('arrows');
     $dots         = $this->getSkinsByGroupOptions('dots');
 
@@ -218,7 +218,7 @@ class SlickAdmin implements SlickAdminInterface {
 
     if (isset($form['skin'])) {
       $form['skin']['#title'] = $this->t('Skin main');
-      $form['skin']['#description'] = $this->t('Skins allow various layouts with just CSS. Some options below depend on a skin. However a combination of skins and options may lead to unpredictable layouts, get yourself dirty. E.g.: Skin Split requires any split layout option. Failing to choose the expected layout makes it useless. See <a href=":url" target="_blank">SKINS section at README.txt</a> for details on Skins. Leave empty to DIY. Or use hook_slick_skins_info() and implement \Drupal\slick\SlickSkinInterface to register ones.', [':url' => $readme]);
+      $form['skin']['#description'] = $this->t('Skins allow various layouts with just CSS. Some options below depend on a skin. However a combination of skins and options may lead to unpredictable layouts, get yourself dirty. E.g.: Skin Split requires any split layout option. Failing to choose the expected layout makes it useless. See <a href=":url" target="_blank">SKINS section at README.md</a> for details on Skins. Leave empty to DIY. Or use hook_slick_skins_info() and implement \Drupal\slick\SlickSkinInterface to register ones.', [':url' => $readme]);
     }
 
     if (isset($form['layout'])) {

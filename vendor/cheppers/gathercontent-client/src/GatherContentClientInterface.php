@@ -17,6 +17,8 @@ interface GatherContentClientInterface
 
     const PROJECT_TYPE_OTHER = 'other';
 
+    const INTEGRATION_VERSION = '1.0';
+
     public function getResponse();
 
     public function getEmail();
@@ -39,6 +41,36 @@ interface GatherContentClientInterface
      * @return $this
      */
     public function setBaseUri($value);
+
+    /**
+     * @return string[]
+     */
+    public function getIntegrationVersion();
+
+    /**
+     * @return $this
+     */
+    public function setFrameworkVersion($value);
+
+    /**
+     * @return string[]
+     */
+    public function getFrameworkVersion();
+
+    /**
+     * @return $this
+     */
+    public function setFrameworkName($value);
+
+    /**
+     * @return string[]
+     */
+    public function getFrameworkName();
+
+    /**
+     * @return string[]
+     */
+    public function getVersionString();
 
     /**
      * GatherContentClientInterface constructor.
@@ -153,4 +185,11 @@ interface GatherContentClientInterface
      * @see https://docs.gathercontent.com/reference#get-template-by-id
      */
     public function templateGet($templateId);
+
+    /**
+     * @see https://docs.gathercontent.com/reference#get-folders
+     *
+     * @return \Cheppers\GatherContent\DataTypes\Folder[]
+     */
+    public function foldersGet($projectId);
 }

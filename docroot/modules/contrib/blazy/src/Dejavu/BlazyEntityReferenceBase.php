@@ -48,7 +48,7 @@ abstract class BlazyEntityReferenceBase extends BlazyEntityBase {
     }
 
     // Optional image with responsive image, lazyLoad, and lightbox supports.
-    $element[$item_id] = empty($element['item']) ? [] : $this->formatter->getImage($element);
+    $element[$item_id] = empty($element['item']) ? [] : $this->formatter()->getImage($element);
 
     // Captions if so configured.
     $this->getCaption($element, $entity, $langcode);
@@ -73,7 +73,7 @@ abstract class BlazyEntityReferenceBase extends BlazyEntityBase {
     // Build the thumbnail item.
     if (!empty($settings['nav'])) {
       // Thumbnail usages: asNavFor pagers, dot, arrows, photobox thumbnails.
-      $element[$item_id]  = empty($settings['thumbnail_style']) ? [] : $this->formatter->getThumbnail($element['settings'], $element['item']);
+      $element[$item_id]  = empty($settings['thumbnail_style']) ? [] : $this->formatter()->getThumbnail($element['settings'], $element['item']);
       $element['caption'] = empty($settings['thumbnail_caption']) ? [] : $this->getFieldRenderable($entity, $settings['thumbnail_caption'], $view_mode);
 
       $build['thumb']['items'][$delta] = $element;
@@ -187,10 +187,10 @@ abstract class BlazyEntityReferenceBase extends BlazyEntityBase {
         }
         // If a VEF with a text, or link field.
         elseif (isset($value[0]['value']) || isset($value[0]['uri'])) {
-          $external_url = $this->getFieldString($entity, $stage, $langcode);
+          $settings['input_url'] = $this->getFieldString($entity, $stage, $langcode);
 
-          if ($external_url) {
-            $this->buildVideo($settings, $external_url);
+          if ($settings['input_url']) {
+            $this->buildVideo($settings);
             $element['item'] = $value;
           }
         }

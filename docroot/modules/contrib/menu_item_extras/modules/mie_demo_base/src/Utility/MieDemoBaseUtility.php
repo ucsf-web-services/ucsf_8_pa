@@ -2,6 +2,7 @@
 
 namespace Drupal\mie_demo_base\Utility;
 
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\file\Entity\File;
 use Drupal\Core\StreamWrapper\PublicStream;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
@@ -24,7 +25,15 @@ class MieDemoBaseUtility {
    *   Drupal File entity.
    */
   public static function createFile($file_name, $module_path = 'mie_demo_base') {
-    file_unmanaged_copy(drupal_get_path('module', 'mie_demo_base') . '/files/' . $file_name, PublicStream::basePath());
+    $source = drupal_get_path('module', 'mie_demo_base') . '/files/' . $file_name;
+    $destination = PublicStream::basePath();
+    /** @var \Drupal\Core\File\FileSystemInterface $file_system */
+    $file_system = \Drupal::service('file_system');
+    try {
+      $file_system->copy($source, $destination, FileSystemInterface::EXISTS_RENAME);
+    }
+    catch (\Exception $e) {
+    }
     $demo_image_uri = 'public://' . $file_name;
     /** @var \Drupal\file\FileInterface $file */
     $demo_image = File::create(['uri' => $demo_image_uri, 'status' => FILE_STATUS_PERMANENT]);

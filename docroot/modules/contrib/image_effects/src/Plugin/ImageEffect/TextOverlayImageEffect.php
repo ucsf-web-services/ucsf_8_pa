@@ -1126,8 +1126,8 @@ class TextOverlayImageEffect extends ConfigurableImageEffectBase implements Cont
         '#uri' => $textimage->getUri(),
         '#width' => $textimage->getWidth(),
         '#height' => $textimage->getHeight(),
-        '#title' => t('Text overlay preview'),
-        '#alt' => t('Text overlay preview.'),
+        '#title' => $this->t('Text overlay preview'),
+        '#alt' => $this->t('Text overlay preview.'),
       ];
       $textimage->getBubbleableMetadata()->applyTo($render);
       return [

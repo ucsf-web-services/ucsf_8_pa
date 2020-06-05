@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 
@@ -13,15 +14,15 @@ use Drupal\Core\Session\AccountInterface;
  * Implements hook_theme().
  */
 function entity_embed_test_theme($existing, $type, $theme, $path) {
-  $items['entity_embed_twig_test'] = array(
+  $items['entity_embed_twig_test'] = [
     'template' => 'entity_embed_twig_test',
-    'variables' => array(
+    'variables' => [
       'entity_type' => '',
       'id' => '',
       'display_plugin' => 'default',
-      'display_settings' => array(),
-    ),
-  );
+      'display_settings' => [],
+    ],
+  ];
   return $items;
 }
 
@@ -35,7 +36,7 @@ function entity_embed_test_entity_embed_display_plugins_alter(&$info) {
   }
 
   // Prefix each plugin name with 'testing_hook:'.
-  $new_info = array();
+  $new_info = [];
   foreach ($info as $key => $value) {
     $new_key = "testing_hook:" . $key;
     $new_info[$new_key] = $info[$key];
@@ -55,7 +56,7 @@ function entity_embed_test_entity_embed_context_alter(array &$context, EntityInt
 
   // Force to use 'Label' plugin.
   $context['data-entity-embed-display'] = 'entity_reference:entity_reference_label';
-  $context['data-entity-embed-display-settings'] = array('link' => 1);
+  $context['data-entity-embed-display-settings'] = ['link' => 1];
 
   // Set title of the entity.
   $entity->setTitle("Title set by hook_entity_embed_context_alter");
@@ -70,6 +71,9 @@ function entity_embed_test_entity_embed_alter(array &$build, EntityInterface $en
     return;
   }
 
+  // Adding classes is as simple as appending to an array.
+  $build['#attributes']['class'][] = 'test-class-added-in-alter-hook';
+
   // Set title of the 'node' entity.
   $entity->setTitle("Title set by hook_entity_embed_alter");
 }
@@ -81,4 +85,13 @@ function entity_embed_test_entity_access(EntityInterface $entity, $operation, Ac
   if ($entity->label() == 'Embed Test Node') {
     return AccessResult::neutral()->addCacheTags(['foo:' . $entity->id()]);
   }
+}
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function entity_embed_test_entity_view_alter(&$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  $build['#attributes']['data-entity-embed-test-view-mode'] = $display->getMode();
+  // @see \Drupal\Tests\entity_embed\FunctionalJavascript\MediaImageTest::testPreviewUsesDefaultTheme()
+  $build['#attributes']['data-entity-embed-test-active-theme'] = \Drupal::theme()->getActiveTheme()->getName();
 }

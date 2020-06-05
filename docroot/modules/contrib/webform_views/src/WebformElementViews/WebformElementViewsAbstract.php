@@ -58,7 +58,7 @@ abstract class WebformElementViewsAbstract implements WebformElementViewsInterfa
    * {@inheritdoc}
    */
   public function getViewsData($element, WebformInterface $webform) {
-    $table_alias = 'webform_submission_field_' . $webform->id() . '_' . $element['#webform_key'];
+    $table_alias = $this->tableName($element, $webform);
     $element_title = (isset($element['#title']) && $element['#title']) ? $element['#title'] : $element['#webform_key'];
     $element_plugin = $this->webformElementManager->getElementInstance($element);
 
@@ -109,6 +109,22 @@ abstract class WebformElementViewsAbstract implements WebformElementViewsInterfa
         'multiple' => $element_plugin->hasMultipleValues($element),
       ],
     ];
+  }
+
+  /**
+   * Generate views table name that represents a given element within a webform.
+   *
+   * @param array $element
+   *   Webform element for which to generate views table name.
+   * @param \Drupal\webform\WebformInterface $webform
+   *   Webform for which to generate views table name.
+   *
+   * @return string
+   *   Views table name that represents provided webform element within provided
+   *   webform.
+   */
+  protected function tableName($element, WebformInterface $webform) {
+    return 'webform_submission_field_' . $webform->id() . '_' . $element['#webform_key'];
   }
 
 }

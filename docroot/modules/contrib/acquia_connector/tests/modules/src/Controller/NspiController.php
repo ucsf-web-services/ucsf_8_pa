@@ -5,11 +5,17 @@ namespace Drupal\acquia_connector_test\Controller;
 use Drupal\acquia_connector\CryptConnector;
 use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Class NspiController.
+ *
+ * This class mocks a Guzzle response from the relevant APIs.
+ *
+ * It used to mock the responses in Symfony via a Drupal controller, but this
+ * caused the process to block itself when run on the single threaded PHP
+ * built-in server.
  *
  * @package Drupal\acquia_connector_test\Controller
  */
@@ -30,21 +36,14 @@ class NspiController extends ControllerBase {
   protected $acquiaHosted;
 
   const ACQTEST_SUBSCRIPTION_NOT_FOUND = 1000;
-  const ACQTEST_SUBSCRIPTION_KEY_MISMATCH = 1100;
   const ACQTEST_SUBSCRIPTION_EXPIRED = 1200;
-  const ACQTEST_SUBSCRIPTION_REPLAY_ATTACK = 1300;
-  const ACQTEST_SUBSCRIPTION_KEY_NOT_FOUND = 1400;
   const ACQTEST_SUBSCRIPTION_MESSAGE_FUTURE = 1500;
   const ACQTEST_SUBSCRIPTION_MESSAGE_EXPIRED = 1600;
   const ACQTEST_SUBSCRIPTION_MESSAGE_INVALID = 700;
   const ACQTEST_SUBSCRIPTION_VALIDATION_ERROR = 1800;
-  const ACQTEST_SUBSCRIPTION_SITE_NOT_FOUND = 1900;
-  const ACQTEST_SUBSCRIPTION_PROVISION_ERROR = 9000;
   // 15*60.
   const ACQTEST_SUBSCRIPTION_MESSAGE_LIFETIME = 900;
   const ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE = 503;
-  const ACQTEST_EMAIL = 'TEST_networkuser@example.com';
-  const ACQTEST_PASS = 'TEST_password';
   const ACQTEST_ID = 'TEST_AcquiaConnectorTestID';
   const ACQTEST_KEY = 'TEST_AcquiaConnectorTestKey';
   const ACQTEST_ERROR_ID = 'TEST_AcquiaConnectorTestIDErr';
@@ -67,14 +66,14 @@ class NspiController extends ControllerBase {
   /**
    * SPI API site update.
    *
-   * @param \Symfony\Component\HttpFoundation\Request $request
+   * @param \GuzzleHttp\Psr7\Request $request
    *   Request.
    *
-   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   * @return \GuzzleHttp\Psr7\Response
    *   JsonResponse.
    */
   public function nspiUpdate(Request $request) {
-    $data = json_decode($request->getContent(), TRUE);
+    $data = json_decode($request->getBody(), TRUE);
 
     $fields = [
       'time' => 'is_numeric',
@@ -84,14 +83,14 @@ class NspiController extends ControllerBase {
     $result = $this->basicAuthenticator($fields, $data);
 
     if (!empty($result['error'])) {
-      return new JsonResponse($result);
+      return new Response(200, [], json_encode($result));
     }
     if (!empty($data['authenticator']['identifier'])) {
       if ($data['authenticator']['identifier'] != self::ACQTEST_ID && $data['authenticator']['identifier'] != self::ACQTEST_ERROR_ID) {
-        return new JsonResponse($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Subscription not found')), self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE);
+        return new Response(self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE, [], json_encode($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Subscription not found'))));
       }
       if ($data['authenticator']['identifier'] == self::ACQTEST_ERROR_ID) {
-        return new JsonResponse(FALSE);
+        return new Response();
       }
       else {
         $result = $this->validateAuthenticator($data);
@@ -131,7 +130,7 @@ class NspiController extends ControllerBase {
             \Drupal::state()->set('acqtest_site_acquia_hosted', $acquia_hosted);
 
             $result['body']['nspi_messages'][] = $this->t('This is the first connection from this site, it may take awhile for it to appear.');
-            return new JsonResponse($result);
+            return new Response(200, [], json_encode($result));
 
           case 'update':
             $update = $this->updateNspiSite($spi_data);
@@ -142,13 +141,13 @@ class NspiController extends ControllerBase {
             \Drupal::state()->delete('acqtest_site_blocked');
             $result['body']['spi_error'] = '';
             $result['body']['nspi_messages'][] = $this->t('Your site has been enabled and is sending data to Acquia Cloud.');
-            return new JsonResponse($result);
+            return new Response(200, [], json_encode($result));
 
           case 'block':
             \Drupal::state()->set('acqtest_site_blocked', TRUE);
             $result['body']['spi_error'] = '';
             $result['body']['nspi_messages'][] = $this->t('You have disabled your site from sending data to Acquia Cloud.');
-            return new JsonResponse($result);
+            return new Response(200, [], json_encode($result));
 
         }
 
@@ -171,15 +170,15 @@ class NspiController extends ControllerBase {
           $result['body']['nspi_messages'][] = $changes['response'];
           $result['body']['spi_error'] = TRUE;
           $result['body']['spi_environment_changes'] = json_encode($changes['changes']);
-          return new JsonResponse($result);
+          return new Response(200, [], json_encode($result));
         }
 
         unset($result['secret']);
-        return new JsonResponse($result);
+        return new Response(200, [], json_encode($result));
       }
     }
     else {
-      return new JsonResponse($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Invalid arguments')), self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE);
+      return new Response(self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE, [], json_encode($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Invalid arguments'))));
     }
   }
 
@@ -295,12 +294,12 @@ class NspiController extends ControllerBase {
   /**
    * Return spi definition.
    *
-   * @param \Symfony\Component\HttpFoundation\Request $request
+   * @param \GuzzleHttp\Psr7\Request $request
    *   Request.
    * @param string $version
    *   Version.
    *
-   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   * @return \GuzzleHttp\Psr7\Response
    *   JsonResponse.
    */
   public function spiDefinition(Request $request, $version) {
@@ -320,23 +319,23 @@ class NspiController extends ControllerBase {
     ];
     $data = [
       'drupal_version' => (string) $version,
-      'timestamp' => (string) (REQUEST_TIME + 9),
+      'timestamp' => (string) (\Drupal::time()->getRequestTime() + 9),
       'acquia_spi_variables' => $vars,
     ];
-    return new JsonResponse($data);
+    return new Response(200, [], json_encode($data));
   }
 
   /**
    * Test return communication settings for an account.
    *
-   * @param \Symfony\Component\HttpFoundation\Request $request
+   * @param \GuzzleHttp\Psr7\Request $request
    *   Request.
    *
-   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   * @return \GuzzleHttp\Psr7\Response
    *   JsonResponse.
    */
   public function getCommunicationSettings(Request $request) {
-    $data = json_decode($request->getContent(), TRUE);
+    $data = json_decode($request->getBody(), TRUE);
     $fields = [
       'time' => 'is_numeric',
       'nonce' => 'is_string',
@@ -346,22 +345,22 @@ class NspiController extends ControllerBase {
     // Authenticate.
     $result = $this->basicAuthenticator($fields, $data);
     if (!empty($result['error'])) {
-      return new JsonResponse($result);
+      return new Response(200, [], json_encode($result));
     }
 
     if (!isset($data['body']) || !isset($data['body']['email'])) {
-      return new JsonResponse($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Invalid arguments')), self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE);
+      return new Response(self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE, [], json_encode($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Invalid arguments'))));
     }
     $account = user_load_by_mail($data['body']['email']);
     if (empty($account) || $account->isAnonymous()) {
-      return new JsonResponse($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Account not found')), self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE);
+      return new Response(self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE, [], json_encode($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Account not found'))));
     }
     $result = [
       'algorithm' => 'sha512',
       'hash_setting' => substr($account->getPassword(), 0, 12),
       'extra_md5' => FALSE,
     ];
-    return new JsonResponse($result);
+    return new Response(200, [], json_encode($result));
   }
 
   /**
@@ -382,7 +381,7 @@ class NspiController extends ControllerBase {
         return $this->errorResponse(self::ACQTEST_SUBSCRIPTION_MESSAGE_INVALID, $this->t('Authenticator field @field is missing or invalid.', ['@field' => $field]));
       }
     }
-    $now = REQUEST_TIME;
+    $now = \Drupal::time()->getRequestTime();
     if ($data['authenticator']['time'] > ($now + self::ACQTEST_SUBSCRIPTION_MESSAGE_LIFETIME)) {
       return $this->errorResponse(self::ACQTEST_SUBSCRIPTION_MESSAGE_FUTURE, $this->t('Message time ahead of server time.'));
     }
@@ -399,14 +398,14 @@ class NspiController extends ControllerBase {
   /**
    * Test returns subscriptions for an email.
    *
-   * @param \Symfony\Component\HttpFoundation\Request $request
+   * @param \GuzzleHttp\Psr7\Request $request
    *   Request.
    *
-   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   * @return \GuzzleHttp\Psr7\Response
    *   JsonResponse.
    */
   public function getCredentials(Request $request) {
-    $data = json_decode($request->getContent(), TRUE);
+    $data = json_decode($request->getBody(), TRUE);
 
     $fields = [
       'time' => 'is_numeric',
@@ -415,18 +414,18 @@ class NspiController extends ControllerBase {
     ];
     $result = $this->basicAuthenticator($fields, $data);
     if (!empty($result['error'])) {
-      return new JsonResponse($result, self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE);
+      return new Response(self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE, [], $result);
     }
 
     if (!empty($data['body']['email'])) {
       $account = user_load_by_mail($data['body']['email']);
       $this->getLogger('getCredentials password')->debug($account->getPassword());
       if (empty($account) || $account->isAnonymous()) {
-        return new JsonResponse($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Account not found')), self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE);
+        return new Response(self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE, [], json_encode($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Account not found'))));
       }
     }
     else {
-      return new JsonResponse($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Invalid arguments')), self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE);
+      return new Response(self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE, [], json_encode($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Invalid arguments'))));
     }
 
     $hash = CryptConnector::acquiaHash($account->getPassword(), $data['authenticator']['time'] . ':' . $data['authenticator']['nonce']);
@@ -438,32 +437,32 @@ class NspiController extends ControllerBase {
         'key' => self::ACQTEST_KEY,
         'name' => self::ACQTEST_ID,
       ];
-      return new JsonResponse($result);
+      return new Response(200, [], json_encode($result));
     }
     else {
-      return new JsonResponse($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Incorrect password.')), self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE);
+      return new Response(self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE, [], json_encode($this->errorResponse(self::ACQTEST_SUBSCRIPTION_VALIDATION_ERROR, $this->t('Incorrect password.'))));
     }
   }
 
   /**
    * Test validates an Acquia subscription.
    *
-   * @param \Symfony\Component\HttpFoundation\Request $request
+   * @param \GuzzleHttp\Psr7\Request $request
    *   Request.
    *
-   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   * @return \GuzzleHttp\Psr7\Response
    *   JsonResponse.
    */
   public function getSubscription(Request $request) {
-    $data = json_decode($request->getContent(), TRUE);
+    $data = json_decode($request->getBody(), TRUE);
     $result = $this->validateAuthenticator($data);
     if (empty($result['error'])) {
       $result['authenticator']['hash'] = CryptConnector::acquiaHash($result['secret']['key'], $result['authenticator']['time'] . ':' . $result['authenticator']['nonce']);
       unset($result['secret']);
-      return new JsonResponse($result);
+      return new Response(200, [], json_encode($result));
     }
     unset($result['secret']);
-    return new JsonResponse($result, self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE);
+    return new Response(self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE, [], json_encode($result));
   }
 
   /**
@@ -525,9 +524,9 @@ class NspiController extends ControllerBase {
     }
 
     // Record connections.
-    $connections = $this->config('acquia_connector.settings')->get('test_connections' . $data['authenticator']['identifier']);
+    $connections = \Drupal::state()->get('test_connections' . $data['authenticator']['identifier']);
     $connections++;
-    \Drupal::configFactory()->getEditable('acquia_connector.settings')->set('test_connections' . $data['authenticator']['identifier'], $connections)->save();
+    \Drupal::state()->set('test_connections' . $data['authenticator']['identifier'], $connections);
     if ($connections == 3 && $data['authenticator']['identifier'] == self::ACQTEST_503_ID) {
       // Trigger a 503 response on 3rd call to this (1st is
       // acquia.agent.subscription and 2nd is acquia.agent.validate)

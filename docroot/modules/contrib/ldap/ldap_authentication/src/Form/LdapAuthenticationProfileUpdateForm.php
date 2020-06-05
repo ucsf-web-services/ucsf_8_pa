@@ -2,7 +2,7 @@
 
 namespace Drupal\ldap_authentication\Form;
 
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Session\AccountInterface;
@@ -31,7 +31,7 @@ class LdapAuthenticationProfileUpdateForm extends FormBase {
   /**
    * Constructor.
    */
-  public function __construct(AccountInterface $current_user, EntityTypeManager $entity_type_manager) {
+  public function __construct(AccountInterface $current_user, EntityTypeManagerInterface $entity_type_manager) {
     $this->currentUser = $current_user;
     $this->entityTypeManager = $entity_type_manager;
   }

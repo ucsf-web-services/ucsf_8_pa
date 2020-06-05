@@ -185,7 +185,7 @@ function hook_blazy_alter(array &$image, array $settings = []) {
  * blazy-related formatters within the designated compact form.
  * While third party settings offer more fine-grained control over a specific
  * formatter, this offers a swap to various blazy-related formatters at one go.
- * Any class extending \Drupal\blazy\Dejavu\BlazyDefault will be capable
+ * Any class extending \Drupal\blazy\BlazyDefault will be capable
  * to modify both form and UI options at one go.
  *
  * This requires 4 things: option definitions (this alter), schema, extended
@@ -204,7 +204,7 @@ function hook_blazy_alter(array &$image, array $settings = []) {
  *
  * In addition to the schema, implement hook_blazy_complete_form_element_alter()
  * to provide the actual extended forms, see far below. And lastly, implement
- * the options at fron-end via hook_preprocess().
+ * the options at front-end via hook_preprocess().
  *
  * @param array $settings
  *   The settings being modified.
@@ -213,7 +213,7 @@ function hook_blazy_alter(array &$image, array $settings = []) {
  *
  * @ingroup blazy_api
  */
-function hook_blazy_base_settings_alter(array &$settings, $context = []) {
+function hook_blazy_base_settings_alter(array &$settings, array $context = []) {
   // One override for both various Slick field formatters and Slick views style.
   // SlickDefault extends BlazyDefault, hence capable to modify/ extend options.
   // These options will be available at many Slick formatters at one go.
@@ -232,11 +232,10 @@ function hook_blazy_base_settings_alter(array &$settings, $context = []) {
  *
  * @ingroup blazy_api
  */
-function hook_blazy_complete_form_element_alter(array &$form, $definition = []) {
+function hook_blazy_complete_form_element_alter(array &$form, array $definition = []) {
   // Limit the scope to Slick formatters, blazy, gridstack, etc. Or swap em all.
   if (isset($definition['namespace']) && $definition['namespace'] == 'slick') {
     // Extend the formatter form elements as needed.
-    // SlickExtended::slickFormElementAlter($form, $definition);
   }
 }
 

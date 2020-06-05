@@ -14,24 +14,29 @@ use Drupal\Core\Language\Language;
  */
 class ImporterService {
 
+  /**
+   * List of status messages to be output in screen.
+   *
+   * @var array
+   */
   public static $messages = [];
 
   /**
    * Main method: execute parsing and saving of redirects.
    *
    * @param mixed $file
-   *    Either a Drupal file object (ui) or a path to a file (drush).
+   *   Either a Drupal file object (ui) or a path to a file (drush).
    * @param str[] $options
-   *    User-supplied default flags.
+   *   User-supplied default flags.
    */
-  public static function import($file, $options) {
+  public static function import($file, array $options) {
     // Parse the CSV file into a readable array.
     $data = self::read($file, $options);
 
     // Perform Drupal-specific validation logic on each row.
-    $data = array_filter($data, array('self', 'preSave'));
+    $data = array_filter($data, ['self', 'preSave']);
 
-    if ($options['suppress_messages'] != 1) {
+    if ($options['suppress_messages'] != 1 && !empty(self::$messages['warning'])) {
       // Messaging/logging is separated out in case we want to suppress these.
       foreach (self::$messages['warning'] as $warning) {
         drupal_set_message($warning, 'warning');
@@ -39,29 +44,29 @@ class ImporterService {
     }
 
     if (empty($data)) {
-      drupal_set_message(t('The uploaded file contains no rows with compatible redirect data. No redirects have imported. Compare your file to <a href=":sample">this sample data.</a>', array(':sample' => '/' . drupal_get_path('module', 'path_redirect_import') . '/redirect-example-file.csv')), 'warning');
+      drupal_set_message(t('The uploaded file contains no rows with compatible redirect data. No redirects have imported. Compare your file to <a href=":sample">this sample data.</a>', [':sample' => '/' . drupal_get_path('module', 'path_redirect_import') . '/redirect-example-file.csv']), 'warning');
     }
     else {
       if (PHP_SAPI == 'cli' && function_exists('drush_main')) {
         foreach ($data as $redirect_array) {
-          self::save($redirect_array, $options['override'], array());
+          self::save($redirect_array, $options['override'], []);
         }
       }
       else {
         // Save valid redirects.
         foreach ($data as $row) {
-          $operations[] = array(
-            array('\Drupal\path_redirect_import\ImporterService', 'save'),
-            array($row, $options['override']),
-          );
+          $operations[] = [
+            ['\Drupal\path_redirect_import\ImporterService', 'save'],
+            [$row, $options['override']],
+          ];
         }
 
-        $batch = array(
+        $batch = [
           'title' => t('Saving Redirects'),
           'operations' => $operations,
-          'finished' => array('\Drupal\path_redirect_import\ImporterService', 'finish'),
+          'finished' => ['\Drupal\path_redirect_import\ImporterService', 'finish'],
           'file' => drupal_get_path('module', 'path_redirect_import') . '/path_redirect_import.module',
-        );
+        ];
 
         batch_set($batch);
       }
@@ -85,15 +90,15 @@ class ImporterService {
    * Convert CSV file into readable PHP array.
    *
    * @param mixed $file
-   *    A Drupal file object.
+   *   A Drupal file object.
    * @param str[] $options
-   *    User-passed defaults.
+   *   User-passed defaults.
    *
    * @return str[]
-   *    Keyed array of redirects, in the format
+   *   Keyed array of redirects, in the format
    *    [source, redirect, status_code, language].
    */
-  protected static function read($file, $options = array()) {
+  protected static function read($file, array $options = []) {
     if (PHP_SAPI == 'cli' && function_exists('drush_main')) {
       $filepath = $file;
     }
@@ -102,22 +107,22 @@ class ImporterService {
     }
 
     if (!$f = fopen($filepath, 'r')) {
-      return array('success' => FALSE, 'message' => array(t('Unable to read the file')));
+      return ['success' => FALSE, 'message' => [t('Unable to read the file')]];
     }
-    $options += array(
+    $options += [
       'delimiter' => ',',
       'no_headers' => FALSE,
       'override' => FALSE,
       'status_code' => '301',
       'language' => Language::LANGCODE_NOT_SPECIFIED,
-    );
+    ];
 
     $line_no = 0;
-    $messages = array();
+    $messages = [];
     $success = FALSE;
     $data = [];
     while ($line = fgetcsv($f, 0, $options['delimiter'])) {
-      $message = array();
+      $message = [];
       $line_no++;
       if ($line_no == 1 && !$options['no_headers']) {
         drupal_set_message(t('Skipping the header row.'));
@@ -125,11 +130,11 @@ class ImporterService {
       }
 
       if (!is_array($line)) {
-        self::$messages['warning'][] = t('Line @line_no is invalid; bypassed.', array('@line_no' => $line_no));
+        self::$messages['warning'][] = t('Line @line_no is invalid; bypassed.', ['@line_no' => $line_no]);
         continue;
       }
       if (empty($line[0]) || empty($line[1])) {
-        self::$messages['warning'][] = t('Line @line_no contains invalid data; bypassed.', array('@line_no' => $line_no));
+        self::$messages['warning'][] = t('Line @line_no contains invalid data; bypassed.', ['@line_no' => $line_no]);
         continue;
       }
       if (empty($line[2])) {
@@ -138,7 +143,7 @@ class ImporterService {
       else {
         $redirect_options = redirect_status_code_options();
         if (!isset($redirect_options[$line[2]])) {
-          self::$messages['warning'][] = t('Line @line_no contains invalid status code; bypassed.', array('@line_no' => $line_no));
+          self::$messages['warning'][] = t('Line @line_no contains invalid status code; bypassed.', ['@line_no' => $line_no]);
           continue;
         }
       }
@@ -147,17 +152,17 @@ class ImporterService {
         $line[3] = $options['language'];
       }
       elseif (!self::isValidLanguage($line[3])) {
-        self::$messages['warning'][] = t('Line @line_no contains an invalid language code; bypassed.', array('@line_no' => $line_no));
+        self::$messages['warning'][] = t('Line @line_no contains an invalid language code; bypassed.', ['@line_no' => $line_no]);
         continue;
       }
 
       // Build a row of data.
-      $data[$line_no] = array(
+      $data[$line_no] = [
         'source' => self::stripLeadingSlash($line[0]),
         'redirect' => isset($line[1]) ? self::stripLeadingSlash($line[1]) : NULL,
         'status_code' => $line[2],
         'language' => isset($line[3]) ? $line[3] : $options['language'],
-      );
+      ];
 
     }
     fclose($f);
@@ -168,34 +173,34 @@ class ImporterService {
    * Check for problematic data and remove or clean up.
    *
    * @param str[] $row
-   *    Keyed array of redirects, in the format
+   *   Keyed array of redirects, in the format
    *    [source, redirect, status_code, language].
    *
    * @return bool
-   *    A TRUE/FALSE value to be used by array_filter.
+   *   A TRUE/FALSE value to be used by array_filter.
    */
-  public static function preSave($row) {
+  public static function preSave(array $row) {
     // Disallow redirects from <front>.
     if ($row['source'] == '<front>') {
-      self::$messages['warning'][] = t('You cannot create a redirect from the front page. Bypassing "@source".', array('@source' => $row['source']));
+      self::$messages['warning'][] = t('You cannot create a redirect from the front page. Bypassing "@source".', ['@source' => $row['source']]);
       return FALSE;
     }
 
     // Disallow redirects from anchor fragments.
     if (strpos($row['source'], '#') !== FALSE) {
-      self::$messages['warning'][] = t('Redirects from anchor fragments (i.e., with "#) are not allowed. Bypassing "@source".', array('@source' => $row['source']));
+      self::$messages['warning'][] = t('Redirects from anchor fragments (i.e., with "#) are not allowed. Bypassing "@source".', ['@source' => $row['source']]);
       return FALSE;
     }
 
     // Disallow redirects to nonexistent internal paths.
-    if (self::InternalPathMissing($row['redirect'])) {
-      self::$messages['warning'][] = t('The destination path "@redirect" does not exist on the site. Redirect from "@source" bypassed.', array('@redirect' => $row['redirect'], '@source' => $row['source']));
+    if (self::internalPathMissing($row['redirect'])) {
+      self::$messages['warning'][] = t('The destination path "@redirect" does not exist on the site. Redirect from "@source" bypassed.', ['@redirect' => $row['redirect'], '@source' => $row['source']]);
       return FALSE;
     }
 
     // Disallow infinite redirects.
     if (self::sourceIsDestination($row)) {
-      self::$messages['warning'][] = t('You are attempting to redirect "@redirect" to itself. Bypassed, as this will result in an infinite loop.', array('@redirect' => $row['redirect']));
+      self::$messages['warning'][] = t('You are attempting to redirect "@redirect" to itself. Bypassed, as this will result in an infinite loop.', ['@redirect' => $row['redirect']]);
       return FALSE;
     }
 
@@ -206,12 +211,12 @@ class ImporterService {
    * Save an individual redirect entity, if no redirect already exists.
    *
    * @param str[] $redirect_array
-   *    Keyed array of redirects, in the format
+   *   Keyed array of redirects, in the format
    *    [source, redirect, status_code, language].
    * @param bool $override
-   *    A 1 indicates that existing redirects should be updated.
+   *   A 1 indicates that existing redirects should be updated.
    */
-  public static function save($redirect_array, $override) {
+  public static function save(array $redirect_array, $override) {
     if ($redirects = self::redirectExists($redirect_array)) {
       if ($override == 1) {
         $redirect = reset($redirects);
@@ -235,7 +240,7 @@ class ImporterService {
     // Currently, the Redirect module's setRedirect function assumes
     // all paths are internal. If external, we will use redirect_redirect->set.
     if (parse_url($redirect_array['redirect'], PHP_URL_SCHEME)) {
-      $redirect->redirect_redirect->set(0, array('uri' => $redirect_array['redirect']));
+      $redirect->redirect_redirect->set(0, ['uri' => $redirect_array['redirect']]);
     }
     else {
       $redirect->setRedirect($redirect_array['redirect']);
@@ -243,11 +248,11 @@ class ImporterService {
     $redirect->setStatusCode($redirect_array['status_code']);
     $redirect->setLanguage($redirect_array['language']);
     $redirect->save();
-    drupal_set_message(t('@message_type redirect from @source to @redirect', array(
+    drupal_set_message(t('@message_type redirect from @source to @redirect', [
       '@message_type' => $message_type,
       '@source' => $redirect_array['source'],
       '@redirect' => $redirect_array['redirect'],
-    )),
+    ]),
     'status');
   }
 
@@ -255,10 +260,10 @@ class ImporterService {
    * Remove leading slash, if present.
    *
    * @param string $path
-   *    A user-supplied URL path.
+   *   A user-supplied URL path.
    *
    * @return string
-   *    A URL without the leading slash.
+   *   A URL without the leading slash.
    */
   protected static function stripLeadingSlash($path) {
     if (strpos($path, '/') === 0) {
@@ -271,10 +276,10 @@ class ImporterService {
    * Add leading slash, if not present.
    *
    * @param string $path
-   *    A user-supplied URL path.
+   *   A user-supplied URL path.
    *
    * @return string
-   *    A URL with the leading slash.
+   *   A URL with the leading slash.
    */
   protected static function addLeadingSlash($path) {
     if (strpos($path, '/') !== 0) {
@@ -287,9 +292,12 @@ class ImporterService {
    * Check if the path is internal, and if so, if it is missing.
    *
    * @param string $destination
-   *    A user-supplied URL path.
+   *   A user-supplied URL path.
+   *
+   * @return bool
+   *   TRUE on missing internal path, FALSE otherwise.
    */
-  protected static function InternalPathMissing($destination) {
+  protected static function internalPathMissing($destination) {
     if ($destination == '<front>') {
       return FALSE;
     }
@@ -327,10 +335,13 @@ class ImporterService {
    * Check for infinite loops.
    *
    * @param str[] $row
-   *    Keyed array of redirects, in the format
+   *   Keyed array of redirects, in the format
    *    [source, redirect, status_code, language].
+   *
+   * @return bool
+   *   TRUE if Redirect source is the same that destination. FALSE otherwise.
    */
-  protected static function sourceIsDestination($row) {
+  protected static function sourceIsDestination(array $row) {
     // Check if the user-supplied source & redirect are identical.
     if ($row['source'] == $row['redirect']) {
       return TRUE;
@@ -360,20 +371,21 @@ class ImporterService {
     catch (\InvalidArgumentException $e) {
       // Do nothing, we want to only compare the resulting URLs.
     }
+    return FALSE;
   }
 
   /**
    * Check if a redirect already exists for this source path.
    *
    * @param str[] $row
-   *    Keyed array of redirects, in the format
+   *   Keyed array of redirects, in the format
    *    [source, redirect, status_code, language].
    *
    * @return mixed
-   *    FALSE if the redirect does not exist, array of redirect objects
+   *   FALSE if the redirect does not exist, array of redirect objects
    *    if it does.
    */
-  protected static function redirectExists($row) {
+  protected static function redirectExists(array $row) {
     // @todo memoize the query.
     $parsed_url = UrlHelper::parse(trim($row['source']));
     $path = isset($parsed_url['path']) ? $parsed_url['path'] : NULL;
@@ -381,9 +393,9 @@ class ImporterService {
     $hash = Redirect::generateHash($path, $query, $row['language']);
 
     // Search for duplicate.
-    $redirects = \Drupal::entityManager()
+    $redirects = \Drupal::entityTypeManager()
       ->getStorage('redirect')
-      ->loadByProperties(array('hash' => $hash));
+      ->loadByProperties(['hash' => $hash]);
     if (!empty($redirects)) {
       return $redirects;
     }
@@ -412,7 +424,7 @@ class ImporterService {
    * Retrieve languages in the system.
    *
    * @return str[]
-   *    A list of langcodes known to the system.
+   *   A list of langcodes known to the system.
    */
   protected static function validLanguages() {
     $languages = \Drupal::languageManager()->getLanguages();

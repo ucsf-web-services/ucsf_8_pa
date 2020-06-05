@@ -26,6 +26,7 @@ Compatible with `application/vnd.gathercontent.v0.5+json`
 - [GET:  /items/:item_id/files](https://docs.gathercontent.com/reference#get-item-files) `$gc->itemFilesGet()`
 - [GET:  /templates](https://docs.gathercontent.com/reference#get-templates) `$gc->templatesGet()`
 - [GET:  /templates/:template_id](https://docs.gathercontent.com/reference#get-template-by-id) `$gc->templateGet()`
+- [GET:  /folders](https://docs.gathercontent.com/reference#get-folders) `$gc->foldersGet()`
 
 
 ## Basic usage

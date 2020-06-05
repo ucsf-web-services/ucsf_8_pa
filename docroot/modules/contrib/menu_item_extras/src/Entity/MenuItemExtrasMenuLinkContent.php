@@ -11,6 +11,8 @@ use Drupal\menu_link_content\Entity\MenuLinkContent;
  */
 class MenuItemExtrasMenuLinkContent extends MenuLinkContent implements MenuItemExtrasMenuLinkContentInterface {
 
+  const MENU_LINK_CONTENT_PREFIX = 'menu_link_content:';
+
   /**
    * {@inheritdoc}
    */
@@ -26,16 +28,35 @@ class MenuItemExtrasMenuLinkContent extends MenuLinkContent implements MenuItemE
    */
   public function getCacheTagsToInvalidate() {
     $tags = parent::getCacheTagsToInvalidate();
-    if ($this->isNew() && $this->getParentId()) {
+    $parent_id = $this->getParentId();
+    if ($this->isNew() && $parent_id) {
       // Need to invalidate the parent to clear the render cache generated
       // in MenuLinkTreeHandler::getMenuLinkItemContent().
-      list(, $parent_uuid) = explode(':', $this->getParentId());
-      /** @var \Drupal\Core\Entity\ContentEntityStorageInterface $storage */
-      $storage = $this->entityTypeManager()->getStorage($this->getEntityTypeId());
-      $loaded_entities = $storage->loadByProperties(['uuid' => $parent_uuid]);
-      $parent = reset($loaded_entities);
-      if ($parent) {
-        return Cache::mergeTags($tags, ['menu_link_content:' . $parent->id()]);
+      if (strpos($parent_id, self::MENU_LINK_CONTENT_PREFIX) === 0) {
+        $parent_uuid = substr($parent_id, strlen(self::MENU_LINK_CONTENT_PREFIX));
+        /** @var \Drupal\Core\Entity\ContentEntityStorageInterface $storage */
+        $storage = $this->entityTypeManager()
+          ->getStorage($this->getEntityTypeId());
+        $loaded_entities = $storage->loadByProperties(['uuid' => $parent_uuid]);
+        $parent = reset($loaded_entities);
+
+        if ($parent) {
+          return Cache::mergeTags($tags, [self::MENU_LINK_CONTENT_PREFIX . $parent->id()]);
+        }
+      }
+      else {
+        /** @var \Drupal\Core\Menu\MenuLinkManagerInterface $menu_link_manager */
+        $menu_link_manager = \Drupal::service('plugin.manager.menu.link');
+
+        if ($menu_link_manager->hasDefinition($parent_id)) {
+
+          /** @var \Drupal\Core\Menu\MenuLinkInterface $parent */
+          $parent = $menu_link_manager->createInstance($parent_id);
+
+          if ($parent) {
+            return Cache::mergeTags($tags, $parent->getCacheTags());
+          }
+        }
       }
     }
     return $tags;

@@ -9,6 +9,7 @@ use Acquia\ContentHubClient\Asset;
 use Acquia\ContentHubClient\Attribute;
 use Drupal\acquia_contenthub\Session\ContentHubUserSession;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Url;
 use Drupal\path\Plugin\Field\FieldType\PathFieldItemList;
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\acquia_contenthub\ContentHubException;
@@ -235,7 +236,7 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
 
     // Checking for entity access permission to this particular account.
     $entity_access = $entity->access('view', $account, TRUE);
-    if (!$entity_access->isAllowed()) {
+    if (!$entity_access->isAllowed() && !$entity_access->isNeutral()) {
       return NULL;
     }
 
@@ -421,6 +422,53 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
           $contenthub_entity->setAttributeValue('vocabulary', $items[0]['target_id'], $langcode);
         }
         continue;
+      }
+
+      if ($entity->get($name)->getFieldDefinition()->getType() === 'path' && version_compare(\Drupal::VERSION, '8.8.0', '>=')) {
+        $storage = $this->entityTypeManager->getStorage('path_alias');
+        $aliases = $storage->loadByProperties(['path' => "/{$entity->toUrl()->getInternalPath()}"]);
+        if ($aliases) {
+          $alias_uuid_attribute = new Attribute(Attribute::TYPE_ARRAY_REFERENCE);
+          $uuids = [];
+          foreach ($aliases as $alias) {
+            $uuids[$alias->language()->getId()][] = $alias->uuid();
+          }
+          foreach ($uuids as $uuid_langcode => $values) {
+            $alias_uuid_attribute->setValue($values, $uuid_langcode);
+          }
+          $contenthub_entity->setAttribute('path_uuid', $alias_uuid_attribute);
+        }
+      }
+
+      // For path-aliases adding a UUID of the target entity.
+      /** @var \Drupal\path_alias\Entity\PathAlias $entity */
+      if ($name ==='path' && $entity->getEntityTypeId() === 'path_alias') {
+        // Extracting entities from route.
+        $route_params = Url::fromUserInput($entity->getPath())->getRouteParameters();
+        $target_entity_uuid_attribute = new Attribute(Attribute::TYPE_ARRAY_REFERENCE);
+        $target_entity_type_attribute = new Attribute(Attribute::TYPE_STRING);
+        foreach ($route_params as $entity_type_id => $entity_id) {
+          if (!$this->entityTypeManager->hasDefinition($entity_type_id)) {
+            // Skip in case of unknown entity type.
+            continue;
+          }
+
+          $entity_from_route = $this->entityTypeManager
+            ->getStorage($entity_type_id)
+            ->load($entity_id);
+
+          if ($entity->getPath() !== "/{$entity_from_route->toUrl()->getInternalPath()}") {
+            // Skip mismatched entities.
+            continue;
+          }
+
+          $target_entity_uuid_attribute->setValue([$entity_from_route->uuid()], $langcode);
+          $target_entity_type_attribute->setValue($entity_type_id, $langcode);
+        }
+
+        $contenthub_entity->setAttribute('title', (new Attribute(Attribute::TYPE_STRING))->setValue($entity->getAlias(), $langcode));
+        $contenthub_entity->setAttribute('path_uuid', $target_entity_uuid_attribute);
+        $contenthub_entity->setAttribute('target_entity_type', $target_entity_type_attribute);
       }
 
       // To make it work with Paragraphs, we are converting the field
@@ -1155,14 +1203,30 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
         }
       }
     }
-    // Default Langcode is only used for initial entity creation. Remove now.
-    $contenthub_entity->removeAttribute('langcode');
+
     // Store the translation source outside the CDF.
     $content_translation_source = $contenthub_entity->getAttribute('content_translation_source');
     $contenthub_entity->removeAttribute('content_translation_source');
 
+    // Make sure those langcodes exist in the site.
+    $site_langcodes = array_keys($this->languageManager->getLanguages());
+    if (!in_array($default_langcode, $site_langcodes, TRUE)) {
+      $langcodes = array_intersect($site_langcodes, $langcodes);
+
+      // The default language in the CDF does not exist in the site, then we
+      // can use the site default's language as the entity default language and
+      // if that does not exist either, then just take the first language of
+      // the available ones in this site.
+      $site_default_language = $this->languageManager->getDefaultLanguage()->getId();
+      $default_langcode = in_array($site_default_language, $langcodes, TRUE) ? $site_default_language : reset($langcodes);
+    }
+
+    // Default Langcode is only used for initial entity creation. Remove now.
+    $contenthub_entity->removeAttribute('langcode');
+
     // Does this entity exist in this site already?
     $source_entity = $this->entityRepository->loadEntityByUuid($entity_type, $contenthub_entity->getUuid());
+    $this->processPassAlias($entity_type, $contenthub_entity, $langcodes);
     if ($source_entity == NULL) {
 
       // Transforming Content Hub Entity into a Drupal Entity.
@@ -1182,8 +1246,14 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
         $values['default_langcode'] = $default_langcode == $this->languageManager->getDefaultLanguage()->getId();
       }
       else {
-        // Set the default langcode of the parent entity.
-        $values['default_langcode'] = $default_langcode;
+        if (!in_array($values['content_translation_source'], $langcodes, TRUE)) {
+          $values['content_translation_source'] = LanguageInterface::LANGCODE_NOT_SPECIFIED;
+          $contenthub_entity->removeAttribute('default_langcode');
+        }
+        else {
+          // Set the default langcode of the parent entity.
+          $values['default_langcode'] = $default_langcode;
+        }
       }
 
       // Special treatment according to entity types.
@@ -1197,9 +1267,11 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
           $status = $contenthub_entity->getAttribute('status') ? $contenthub_entity->getAttribute('status')['value'][$default_langcode] : 0;
           $values['status'] = $status ? $status : 0;
 
-          // Check if Workbench Moderation is enabled.
+          // Check if Workbench Moderation or Content Moderation modules are
+          // enabled, if so, set the moderation_state to "published".
           $workbench_moderation_enabled = \Drupal::moduleHandler()->moduleExists('workbench_moderation');
-          if ($values['status'] && $workbench_moderation_enabled) {
+          $content_moderation_enabled = \Drupal::moduleHandler()->moduleExists('content_moderation');
+          if ($values['status'] && ($workbench_moderation_enabled || $content_moderation_enabled)) {
             $values['moderation_state'] = 'published';
           }
           break;
@@ -1282,6 +1354,11 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
           $contenthub_entity->setAttributes($attributes);
           $contenthub_entity->removeAttribute('parent_uuid');
           break;
+
+      }
+
+      if ($contenthub_entity->getAttribute('path_uuid')) {
+        $contenthub_entity->removeAttribute('path_uuid');
       }
 
       $langcode_key = $this->entityTypeManager->getDefinition($entity_type)->getKey('langcode');
@@ -1429,13 +1506,61 @@ class ContentEntityCdfNormalizer extends NormalizerBase {
       if (!file_prepare_directory($filepath, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
         // Log that directory could not be created.
         $this->loggerFactory->get('acquia_contenthub')
-          ->error('Cannot create files subdirectory "!dir". Please check filesystem permissions.', [
-            '!dir' => $filepath,
+          ->error('Cannot create files subdirectory "@dir". Please check filesystem permissions.', [
+            '@dir' => $filepath,
           ]);
         $file_uri = NULL;
       }
     }
     return $file_uri;
+  }
+
+  /**
+   * Processes path alias entities.
+   *
+   * For imported entity replaces 'path' value by the local path.
+   * Removes some extra attributes like: title, path_uuid, target_entity_type.
+   *
+   * @param string $entity_type
+   * @param \Acquia\ContentHubClient\Entity $contenthub_entity
+   * @param array $langcodes
+   *
+   * @throws \Drupal\Core\Entity\EntityMalformedException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  private function processPassAlias(string $entity_type, ContentHubEntity $contenthub_entity, array $langcodes) {
+    if ($entity_type !== 'path_alias') {
+      return;
+    }
+
+    $path_uuid = $contenthub_entity->getAttribute('path_uuid');
+    $target_entity_type = $contenthub_entity->getAttribute('target_entity_type');
+    $path_attribute = new Attribute(Attribute::TYPE_ARRAY_STRING);
+    foreach ($langcodes as $langcode) {
+      if (empty($path_uuid['value'][$langcode])) {
+        continue;
+      }
+
+      $local_target_entity = $this->entityRepository->loadEntityByUuid(
+        $target_entity_type['value'][$langcode],
+        $path_uuid['value'][$langcode]
+      );
+
+      if (empty($local_target_entity)) {
+        continue;
+      }
+
+      $local_path = '/' . ltrim($local_target_entity->toUrl()->getInternalPath(), '/');
+      $path_attribute->setValue($local_path, $langcode);
+    }
+    // Replace path attribute by local path.
+    $attributes = $contenthub_entity->getAttributes();
+    $attributes['path'] = (array) $path_attribute;
+    $contenthub_entity->setAttributes($attributes);
+
+    $contenthub_entity->removeAttribute('title');
+    $contenthub_entity->removeAttribute('path_uuid');
+    $contenthub_entity->removeAttribute('target_entity_type');
   }
 
 }

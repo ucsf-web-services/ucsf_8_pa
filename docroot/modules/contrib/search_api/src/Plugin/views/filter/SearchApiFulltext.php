@@ -3,7 +3,6 @@
 namespace Drupal\search_api\Plugin\views\filter;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element;
 use Drupal\search_api\Entity\Index;
 use Drupal\search_api\ParseMode\ParseModePluginManager;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
@@ -299,13 +298,15 @@ class SearchApiFulltext extends FilterPluginBase {
       return;
     }
     $fields = $this->options['fields'];
-    $fields = $fields ? $fields : array_keys($this->getFulltextFields());
+    $fields = $fields ?: array_keys($this->getFulltextFields());
     $query = $this->getQuery();
-    if ($query->shouldAbort()) {
-      return;
-    }
+
+    // Save any keywords that were already set.
+    $old = $query->getKeys();
+    $old_original = $query->getOriginalKeys();
 
     if ($this->options['parse_mode']) {
+      /** @var \Drupal\search_api\ParseMode\ParseModeInterface $parse_mode */
       $parse_mode = $this->getParseModeManager()
         ->createInstance($this->options['parse_mode']);
       $query->setParseMode($parse_mode);
@@ -313,8 +314,9 @@ class SearchApiFulltext extends FilterPluginBase {
 
     // If something already specifically set different fields, we silently fall
     // back to mere filtering.
-    $old = $query->getFulltextFields();
-    $use_conditions = $old && (array_diff($old, $fields) || array_diff($fields, $old));
+    $old_fields = $query->getFulltextFields();
+    $use_conditions = $old_fields
+      && (array_diff($old_fields, $fields) || array_diff($fields, $old_fields));
 
     if ($use_conditions) {
       $conditions = $query->createConditionGroup('OR');
@@ -333,8 +335,6 @@ class SearchApiFulltext extends FilterPluginBase {
     }
 
     $query->setFulltextFields($fields);
-    $old = $query->getKeys();
-    $old_original = $query->getOriginalKeys();
     $query->keys($this->value);
     if ($this->operator == 'not') {
       $keys = &$query->getKeys();
@@ -344,6 +344,7 @@ class SearchApiFulltext extends FilterPluginBase {
       else {
         // We can't know how negation is expressed in the server's syntax.
       }
+      unset($keys);
     }
 
     // If there were fulltext keys set, we take care to combine them in a
@@ -360,7 +361,8 @@ class SearchApiFulltext extends FilterPluginBase {
         else {
           // If the conjunction or negation settings aren't the same, we have to
           // nest both old and new keys array.
-          if (!empty($keys['#negation']) != !empty($old['#negation']) || $keys['#conjunction'] != $old['#conjunction']) {
+          if (empty($keys['#negation']) !== empty($old['#negation'])
+              || $keys['#conjunction'] !== $old['#conjunction']) {
             $keys = [
               '#conjunction' => 'AND',
               $old,
@@ -370,8 +372,11 @@ class SearchApiFulltext extends FilterPluginBase {
           // Otherwise, just add all individual words from the old keys to the
           // new ones.
           else {
-            foreach (Element::children($old) as $i) {
-              $keys[] = $old[$i];
+            foreach ($old as $key => $value) {
+              if (substr($key, 0, 1) === '#') {
+                continue;
+              }
+              $keys[] = $value;
             }
           }
         }
@@ -384,6 +389,7 @@ class SearchApiFulltext extends FilterPluginBase {
         $query->keys($combined_keys);
         $keys = $combined_keys;
       }
+      unset($keys);
     }
   }
 

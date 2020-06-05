@@ -2,12 +2,11 @@
 
 namespace Drupal\menu_position\Form;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\ProxyClass\Routing\RouteBuilder;
+use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Routing\RouteBuilderInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Menu\MenuLinkManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -29,28 +28,41 @@ class MenuPositionRuleOrderForm extends FormBase {
   /**
    * The menu link manager.
    *
-   * @var \Drupal\Core\Menu\MenuLinkManagerInterface.
+   * @var \Drupal\Core\Menu\MenuLinkManagerInterface
    */
   protected $menu_link_manager;
 
+  /**
+   * The Route Builder.
+   *
+   * @var \Drupal\Core\Routing\RouteBuilderInterface
+   */
+  protected $route_builder;
+
+  /**
+   * {@inheritdoc}
+   */
   public function __construct(
-    QueryFactory $entity_query,
     MenuLinkManagerInterface $menu_link_manager,
     EntityTypeManagerInterface $entity_type_manager,
-    RouteBuilder $route_builder) {
+    RouteBuilderInterface $route_builder,
+    MessengerInterface $messenger) {
 
-    $this->entity_query = $entity_query;
-    $this->menu_link_manager = $menu_link_manager;
     $this->entityTypeManager = $entity_type_manager;
+    $this->menu_link_manager = $menu_link_manager;
     $this->route_builder = $route_builder;
+    $this->messenger = $messenger;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity.query'),
       $container->get('plugin.manager.menu.link'),
       $container->get('entity_type.manager'),
-      $container->get('router.builder')
+      $container->get('router.builder'),
+      $container->get('messenger')
     );
   }
 
@@ -65,10 +77,8 @@ class MenuPositionRuleOrderForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('menu_position.menupositionruleorder_config');
-
     // Get all the rules.
-    $query = $this->entity_query->get('menu_position_rule');
+    $query = $this->entityTypeManager->getStorage('menu_position_rule')->getQuery();
     $results = $query->sort('weight')->execute();
     $rules = $this->entityTypeManager->getStorage('menu_position_rule')->loadMultiple($results);
 
@@ -87,9 +97,9 @@ class MenuPositionRuleOrderForm extends FormBase {
       ],
       '#tabledrag' => [
         [
-         'action' => 'order',
-         'relationship' => 'sibling',
-         'group' => 'rules-weight',
+          'action' => 'order',
+          'relationship' => 'sibling',
+          'group' => 'rules-weight',
         ],
       ],
     ];
@@ -120,7 +130,7 @@ class MenuPositionRuleOrderForm extends FormBase {
           '#title' => $this->t('Weight for @title', ['@title' => $rule->getLabel()]),
           '#title_display' => 'invisible',
           '#default_value' => $rule->getWeight(),
-          '#delta' => ceil(count($rules)/2),
+          '#delta' => ceil(count($rules) / 2),
           '#attributes' => ['class' => ['rules-weight']],
         ],
         'operations' => [
@@ -174,6 +184,7 @@ class MenuPositionRuleOrderForm extends FormBase {
     // Flush appropriate menu cache.
     $this->route_builder->rebuild();
 
-    drupal_set_message($this->t('The new rules ordering has been applied.'));
+    $this->messenger->addMessage($this->t('The new rules ordering has been applied.'));
   }
+
 }

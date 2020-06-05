@@ -14,7 +14,6 @@ namespace Symfony\Component\Cache\Adapter;
 use Psr\Cache\CacheItemInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Cache\Exception\InvalidArgumentException;
 use Symfony\Component\Cache\ResettableInterface;
@@ -25,6 +24,11 @@ use Symfony\Component\Cache\Traits\AbstractTrait;
  */
 abstract class AbstractAdapter implements AdapterInterface, LoggerAwareInterface, ResettableInterface
 {
+    /**
+     * @internal
+     */
+    const NS_SEPARATOR = ':';
+
     use AbstractTrait;
 
     private static $apcuSupported;
@@ -39,12 +43,12 @@ abstract class AbstractAdapter implements AdapterInterface, LoggerAwareInterface
      */
     protected function __construct($namespace = '', $defaultLifetime = 0)
     {
-        $this->namespace = '' === $namespace ? '' : CacheItem::validateKey($namespace).':';
+        $this->namespace = '' === $namespace ? '' : CacheItem::validateKey($namespace).static::NS_SEPARATOR;
         if (null !== $this->maxIdLength && \strlen($namespace) > $this->maxIdLength - 24) {
-            throw new InvalidArgumentException(sprintf('Namespace must be %d chars max, %d given ("%s")', $this->maxIdLength - 24, \strlen($namespace), $namespace));
+            throw new InvalidArgumentException(sprintf('Namespace must be %d chars max, %d given ("%s").', $this->maxIdLength - 24, \strlen($namespace), $namespace));
         }
         $this->createCacheItem = \Closure::bind(
-            function ($key, $value, $isHit) use ($defaultLifetime) {
+            static function ($key, $value, $isHit) use ($defaultLifetime) {
                 $item = new CacheItem();
                 $item->key = $key;
                 $item->value = $value;
@@ -58,7 +62,7 @@ abstract class AbstractAdapter implements AdapterInterface, LoggerAwareInterface
         );
         $getId = function ($key) { return $this->getId((string) $key); };
         $this->mergeByLifetime = \Closure::bind(
-            function ($deferred, $namespace, &$expiredIds) use ($getId) {
+            static function ($deferred, $namespace, &$expiredIds) use ($getId) {
                 $byLifetime = [];
                 $now = time();
                 $expiredIds = [];
@@ -81,11 +85,10 @@ abstract class AbstractAdapter implements AdapterInterface, LoggerAwareInterface
     }
 
     /**
-     * @param string               $namespace
-     * @param int                  $defaultLifetime
-     * @param string               $version
-     * @param string               $directory
-     * @param LoggerInterface|null $logger
+     * @param string $namespace
+     * @param int    $defaultLifetime
+     * @param string $version
+     * @param string $directory
      *
      * @return AdapterInterface
      */
@@ -112,14 +115,12 @@ abstract class AbstractAdapter implements AdapterInterface, LoggerAwareInterface
         if (null !== $logger) {
             $fs->setLogger($logger);
         }
-        if (!self::$apcuSupported) {
+        if (!self::$apcuSupported || (\in_array(\PHP_SAPI, ['cli', 'phpdbg'], true) && !filter_var(ini_get('apc.enable_cli'), FILTER_VALIDATE_BOOLEAN))) {
             return $fs;
         }
 
         $apcu = new ApcuAdapter($namespace, (int) $defaultLifetime / 5, $version);
-        if ('cli' === \PHP_SAPI && !filter_var(ini_get('apc.enable_cli'), FILTER_VALIDATE_BOOLEAN)) {
-            $apcu->setLogger(new NullLogger());
-        } elseif (null !== $logger) {
+        if (null !== $logger) {
             $apcu->setLogger($logger);
         }
 
@@ -129,7 +130,7 @@ abstract class AbstractAdapter implements AdapterInterface, LoggerAwareInterface
     public static function createConnection($dsn, array $options = [])
     {
         if (!\is_string($dsn)) {
-            throw new InvalidArgumentException(sprintf('The %s() method expect argument #1 to be string, %s given.', __METHOD__, \gettype($dsn)));
+            throw new InvalidArgumentException(sprintf('The "%s()" method expect argument #1 to be string, "%s" given.', __METHOD__, \gettype($dsn)));
         }
         if (0 === strpos($dsn, 'redis://')) {
             return RedisAdapter::createConnection($dsn, $options);
@@ -138,7 +139,7 @@ abstract class AbstractAdapter implements AdapterInterface, LoggerAwareInterface
             return MemcachedAdapter::createConnection($dsn, $options);
         }
 
-        throw new InvalidArgumentException(sprintf('Unsupported DSN: %s.', $dsn));
+        throw new InvalidArgumentException(sprintf('Unsupported DSN: "%s".', $dsn));
     }
 
     /**
@@ -269,6 +270,16 @@ abstract class AbstractAdapter implements AdapterInterface, LoggerAwareInterface
         }
 
         return $ok;
+    }
+
+    public function __sleep()
+    {
+        throw new \BadMethodCallException('Cannot serialize '.__CLASS__);
+    }
+
+    public function __wakeup()
+    {
+        throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
     }
 
     public function __destruct()

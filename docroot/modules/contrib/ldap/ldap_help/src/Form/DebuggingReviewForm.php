@@ -3,7 +3,7 @@
 namespace Drupal\ldap_help\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -31,7 +31,7 @@ class DebuggingReviewForm extends FormBase {
   /**
    * Class constructor.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, ModuleHandler $module_handler, EntityTypeManager $entity_type_manager) {
+  public function __construct(ConfigFactoryInterface $config_factory, ModuleHandler $module_handler, EntityTypeManagerInterface $entity_type_manager) {
     $this->config = $config_factory;
     $this->moduleHandler = $module_handler;
     $this->entityTypeManager = $entity_type_manager;

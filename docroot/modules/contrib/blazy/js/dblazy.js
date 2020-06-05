@@ -329,7 +329,7 @@
     // IE >= 9 compat, else SCRIPT445: Object doesn't support this action.
     // https://msdn.microsoft.com/library/ff975299(v=vs.85).aspx
     try {
-      event = custom ? new CustomEvent(eventName, {detail: custom}) : addEvent(eventName);
+      event = custom ? new CustomEvent(eventName, {detail : custom}) : addEvent(eventName);
     }
     catch (e) {
       event = addEvent(eventName, custom);

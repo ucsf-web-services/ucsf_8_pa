@@ -251,7 +251,7 @@ class SlickManager extends BlazyManagerBase implements BlazyManagerInterface, Sl
 
     // Adds helper class if thumbnail on dots hover provided.
     $dots_class = [];
-    if (!empty($settings['thumbnail_style']) && !empty($settings['thumbnail_effect'])) {
+    if (!empty($settings['thumbnail_effect']) && (!empty($settings['thumbnail_style']) || !empty($settings['thumbnail']))) {
       $dots_class[] = 'slick-dots--thumbnail-' . $settings['thumbnail_effect'];
     }
 

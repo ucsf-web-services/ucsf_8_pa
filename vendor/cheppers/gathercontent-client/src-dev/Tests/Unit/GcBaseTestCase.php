@@ -331,6 +331,7 @@ class GcBaseTestCase extends TestCase
             'id' => static::getUniqueInt(),
             'project_id' => static::getUniqueInt(),
             'parent_id' => static::getUniqueInt(),
+            'folder_uuid' => static::getUniqueString('folder_uuid'),
             'template_id' => static::getUniqueInt(),
             'custom_state_id' => static::getUniqueInt(),
             'position' => static::getUniqueString('position'),
@@ -387,7 +388,20 @@ class GcBaseTestCase extends TestCase
         return $template;
     }
 
-    public static function reKeyArray(array $array, $key)
+    protected static function getUniqueResponseFolder()
+    {
+        return [
+            'id' => static::getUniqueInt(),
+            'name' => static::getUniqueString('name'),
+            'position' => static::getUniqueString('position'),
+            'parent_uuid' => static::getUniqueInt(),
+            'project_id' => static::getUniqueInt(),
+            'type' => static::getUniqueString('type'),
+            'archived_at' => static::getUniqueInt(),
+        ];
+    }
+
+    protected static function reKeyArray(array $array, $key)
     {
         $items = [];
         foreach ($array as $item) {

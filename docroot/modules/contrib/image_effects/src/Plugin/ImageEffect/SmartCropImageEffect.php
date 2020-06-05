@@ -66,8 +66,8 @@ class SmartCropImageEffect extends ConfigurableImageEffectBase {
     $form['square'] = [
       '#type' => 'checkbox',
       '#default_value' => $this->configuration['square'],
-      '#title' => t('Square'),
-      '#description' => t('Forces the crop to be a square. Applies if only one crop dimension is set, and specified as % of the source image.'),
+      '#title' => $this->t('Square'),
+      '#description' => $this->t('Forces the crop to be a square. Applies if only one crop dimension is set, and specified as % of the source image.'),
       '#states' => [
         'visible' => [
           [':radio[name="data[width][c0][c1][uom]"]' => ['value' => 'perc']],
@@ -93,8 +93,8 @@ class SmartCropImageEffect extends ConfigurableImageEffectBase {
     $form['advanced']['simulate'] = [
       '#type' => 'checkbox',
       '#default_value' => $this->configuration['simulate'],
-      '#title' => t('Simulate'),
-      '#description' => t('If selected, the crop will not be executed; the crop area will be highlighted on the source image instead.'),
+      '#title' => $this->t('Simulate'),
+      '#description' => $this->t('If selected, the crop will not be executed; the crop area will be highlighted on the source image instead.'),
     ];
 
     return $form;

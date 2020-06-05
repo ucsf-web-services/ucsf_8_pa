@@ -89,6 +89,7 @@ class ContentHubEntityDependency {
     $post_dependencies = [
       'field_collection_item' => 'field_collection_item',
       'paragraph' => 'paragraph',
+      'path_alias' => 'path_alias',
     ];
 
     return $post_dependencies;

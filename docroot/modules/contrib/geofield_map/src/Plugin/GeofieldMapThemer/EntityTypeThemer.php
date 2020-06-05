@@ -17,7 +17,9 @@ use Drupal\Core\Entity\EntityInterface;
  * @MapThemer(
  *   id = "geofieldmap_entity_type",
  *   name = @Translation("Entity Type (geofield_map) - Image Upload (deprecated)"),
- *   description = "This Geofield Map Themer allows the Image Upload of different Marker Icons based on Entity Types/Bundles.(<u>Note:</u> NOT compatible with D8 Consifguration Management)",
+ *   description = "This Geofield Map Themer allows the Image Upload of
+ * different Marker Icons based on Entity Types/Bundles.
+ * (<u>Note:</u> NOT compatible with D8 Consifguration Management)",
  *   context = {"ViewStyle"},
  *   weight = 3,
  *   markerIconSelection = {
@@ -42,10 +44,12 @@ class EntityTypeThemer extends EntityTypeThemerUrl {
     // Get the existing (Default) Element settings.
     $default_element = $this->getDefaultThemerElement($defaults);
 
-    // Get the View Filtered entity bundles.
+    // Get the MapThemer Entity type and bundles.
     $entity_type = $geofieldMapView->getViewEntityType();
     $entity_bundles = $this->entityTypeBundleInfo->getBundleInfo($entity_type);
-    $view_bundles = !empty($geofieldMapView->getViewFilteredBundles()) ? array_intersect(array_keys($entity_bundles), $geofieldMapView->getViewFilteredBundles()) : array_keys($entity_bundles);
+    // Filter the View Bundles based on the View Filtered Bundles,
+    // but only if the MapThemer is working on the View base table entity type.
+    $view_bundles = $this->getMapThemerEntityBundles($geofieldMapView, $entity_type, $entity_bundles);
 
     // Reorder the entity bundles based on existing (Default) Element settings.
     if (!empty($default_element)) {

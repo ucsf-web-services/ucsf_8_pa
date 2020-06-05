@@ -100,13 +100,6 @@ class Slick extends ConfigEntityBase implements SlickInterface {
   private static $slickId;
 
   /**
-   * {@inheritdoc}
-   */
-  public function __construct(array $values, $entity_type = 'slick') {
-    parent::__construct($values, $entity_type);
-  }
-
-  /**
    * Overrides Drupal\Core\Entity\Entity::id().
    */
   public function id() {

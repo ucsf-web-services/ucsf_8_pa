@@ -30,7 +30,7 @@ class BlazyGridUnitTest extends UnitTestCase {
 
     $items = [];
     foreach (range(1, 3) as $key) {
-      $items[] = '<img src="/core/misc/druplicon.png" alt="thumbnail">';
+      $items[] = '<img src="/core/misc/druplicon.png" alt="thumbnail ' . $key . '">';
     }
 
     $element = BlazyGrid::build($items, $settings);

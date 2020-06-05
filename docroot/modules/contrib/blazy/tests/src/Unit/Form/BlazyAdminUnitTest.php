@@ -23,9 +23,9 @@ class BlazyAdminUnitTest extends UnitTestCase {
   protected function setUp() {
     parent::setUp();
 
-    $this->entityDisplayRepository = $this->getMock('\Drupal\Core\Entity\EntityDisplayRepositoryInterface');
-    $this->typedConfig = $this->getMock('\Drupal\Core\Config\TypedConfigManagerInterface');
-    $this->blazyManager = $this->getMock('\Drupal\blazy\BlazyManagerInterface');
+    $this->entityDisplayRepository = $this->createMock('\Drupal\Core\Entity\EntityDisplayRepositoryInterface');
+    $this->typedConfig = $this->createMock('\Drupal\Core\Config\TypedConfigManagerInterface');
+    $this->blazyManager = $this->createMock('\Drupal\blazy\BlazyManagerInterface');
   }
 
   /**
@@ -36,7 +36,7 @@ class BlazyAdminUnitTest extends UnitTestCase {
    * @covers ::blazyManager
    */
   public function testBlazyAdminCreate() {
-    $container = $this->getMock(ContainerInterface::class);
+    $container = $this->createMock(ContainerInterface::class);
     $exception = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
 
     $map = [

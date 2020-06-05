@@ -64,7 +64,7 @@ class StatusController extends ControllerBase {
       return AccessResultForbidden::forbidden();
     }
 
-    $sub_data = $connector_config->get('subscription_data');
+    $sub_data = $this->state()->get('acquia_subscription_data');
     $sub_uuid = $this->getIdFromSub($sub_data);
 
     if (!empty($sub_uuid)) {

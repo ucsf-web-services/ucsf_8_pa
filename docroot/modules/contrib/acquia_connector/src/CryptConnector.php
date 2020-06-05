@@ -36,13 +36,6 @@ class CryptConnector extends PhpassHashedPassword {
   private $setting;
 
   /**
-   * If not empty password needs to be hashed with MD5 first.
-   *
-   * @var mixed
-   */
-  private $extraMd5;
-
-  /**
    * CryptConnector constructor.
    *
    * @param string $algo
@@ -54,13 +47,12 @@ class CryptConnector extends PhpassHashedPassword {
    *   An existing hash or the output of $this->generateSalt(). Must be at least
    *   12 characters (the settings and salt).
    * @param mixed $extra_md5
-   *   If not empty password needs to be hashed with MD5 first.
+   *   (Deprecated) If not empty password needs to be hashed with MD5 first.
    */
   public function __construct($algo, $password, $setting, $extra_md5) {
     $this->algo = $algo;
     $this->password = $password;
     $this->setting = $setting;
-    $this->extraMd5 = $extra_md5;
   }
 
   /**
@@ -70,15 +62,7 @@ class CryptConnector extends PhpassHashedPassword {
    *   Crypt password.
    */
   public function cryptPass() {
-    // Server may state that password needs to be hashed with MD5 first.
-    if ($this->extraMd5) {
-      $this->password = md5($this->password);
-    }
     $crypt_pass = $this->crypt($this->algo, $this->password, $this->setting);
-
-    if ($this->extraMd5) {
-      $crypt_pass = 'U' . $crypt_pass;
-    }
 
     return $crypt_pass;
   }

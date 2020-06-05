@@ -263,25 +263,25 @@ class ContentEntityCloneFormBase implements EntityHandlerInterface, EntityCloneF
     if ($has_recursive && $elements_visible) {
       return $this->translationManager->translate("
             <p>Specify the child entities (the entities referenced by this entity) that should also be cloned as part of
-            the cloning process.  If they're not included, these fields' referenced entities will be the same as in the
+            the cloning process. If they're not included, these fields' referenced entities will be the same as in the
             original.  In other words, fields in both the original entity and the cloned entity will refer to the same
-            referenced entity.  Examples:</p>
+            referenced entity. Examples:</p>
 
             <p>If you have a Paragraph field in your entity, and you choose not to clone it here, deleting the original
-            or cloned entity will also delete the Paragraph field from the other one.  So you probably want to clone
+            or cloned entity will also delete the Paragraph field from the other one. So you probably want to clone
             Paragraph fields.</p>
 
             <p>However, if you have a User reference field, you probably don't want to clone it here because a new User
             will be created for referencing by the clone.</p>
 
-            <p>Some options may be disabled here, preventing you from changing them, as set by your administrator.  Some
+            <p>Some options may be disabled here, preventing you from changing them, as set by your administrator. Some
             options may also be missing, hidden by your administrator, forcing you to clone with the default settings.
             It's possible that there are no options here for you at all, or none need to be set, in which case you may
             simply hit the <em>Clone</em> button.</p>
           ");
     }
     else {
-      return $this->translationManager->translate("<p>Do you want to clone the <em>@type</em> entity named <em>@title</em></p>", [
+      return $this->translationManager->translate("<p>Do you want to clone the <em>@type</em> entity named <em>@title</em>?</p>", [
         "@type" => $entity->getEntityType()->getLabel(),
         "@title" => $entity->label(),
       ]);

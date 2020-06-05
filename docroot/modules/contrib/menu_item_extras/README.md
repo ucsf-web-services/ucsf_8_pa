@@ -19,7 +19,6 @@ This module requires the following modules:
 
  * Block (Drupal core)
  * Text (Drupal core)
- * CKEditor (Drupal core)
  * Menu link content (Drupal core)
 
 ## INSTALLATION:

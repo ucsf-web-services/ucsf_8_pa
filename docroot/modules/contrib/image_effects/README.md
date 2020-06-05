@@ -80,11 +80,10 @@ information.
 
 ## Installing
 
-__Versions 8.x-1.x:__ Install as usual, see the [official documentation](https://www.drupal.org/documentation/install/modules-themes/modules-8)
-for further information.
-
-__Versions 8.x-2.x:__ The module requires [using Composer to manage Drupal site dependencies](https://www.drupal.org/node/2718229). Require the module via
-```composer require drupal/image_effects:~2.0```, then enable the module as usual.
+The module requires
+[using Composer to manage Drupal site dependencies](https://www.drupal.org/node/2718229).
+Require the module via ```composer require drupal/image_effects:^3```, then
+enable the module as usual.
 
 
 ## Configuration
@@ -116,6 +115,16 @@ __Versions 8.x-2.x:__ The module requires [using Composer to manage Drupal site 
 - Define image styles at _Manage > Configuration > Media > Image styles_ and add
   one or more effects defined by this module.
 - Use the image styles via e.g. the formatters of image fields.
+
+
+## Related modules
+
+- Use the [_Entity Clone_](https://www.drupal.org/project/entity_clone) module
+  to make clones of image style configurations.
+- Install the
+  [_JQuery Colorpicker_](https://www.drupal.org/project/jquery_colorpicker)
+  module to allow using the JQuery Colorpicker widget to select colors in the
+  image effects' configuration UI.
 
 
 ## Support

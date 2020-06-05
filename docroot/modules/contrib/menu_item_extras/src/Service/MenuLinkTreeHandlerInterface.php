@@ -72,10 +72,16 @@ interface MenuLinkTreeHandlerInterface {
    *
    * @param array $items
    *   Menu tree items.
+   * @param string $menu_name
+   *   Menu name.
+   * @param int $menu_level
+   *   Menu level number.
+   * @param bool $show_item_link
+   *   Show or not item link.
    *
    * @return array
    *   Returns modified menu tree items array.
    */
-  public function processMenuLinkTree(array &$items);
+  public function processMenuLinkTree(array &$items, $menu_name, $menu_level = -1, $show_item_link = FALSE);
 
 }

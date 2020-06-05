@@ -36,8 +36,8 @@ class AutoOrient extends GDImageToolkitOperationBase {
 
     // Read EXIF data.
     $file = \Drupal::service('file_metadata_manager')->uri($source_path);
-    $orientation = $file->getMetadata('exif', 'Orientation')['value'];
-    if ($orientation !== NULL) {
+    $exif_orientation = $file->getMetadata('exif', 'Orientation');
+    if ($exif_orientation && $exif_orientation['value'] !== NULL) {
       // http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html:
       // 1 = Horizontal (normal)                 [top-left].
       // 2 = Mirror horizontal                   [top-right].
@@ -47,7 +47,7 @@ class AutoOrient extends GDImageToolkitOperationBase {
       // 6 = Rotate 90 CW                        [right-top].
       // 7 = Mirror horizontal and rotate 90 CW  [right-bottom].
       // 8 = Rotate 270 CW                       [left-bottom].
-      switch ($orientation) {
+      switch ($exif_orientation['value']) {
         case 2:
           return $this->getToolkit()->apply('mirror', ['x_axis' => TRUE]);
 

@@ -15,7 +15,6 @@ use Drupal\Core\Session\AccountProxyInterface;
 class FormHelper {
   use StringTranslationTrait;
 
-  const PRIORITY_DEFAULT = 0.5;
   const PRIORITY_HIGHEST = 10;
   const PRIORITY_DIVIDER = 10;
 
@@ -224,6 +223,13 @@ class FormHelper {
   }
 
   /**
+   * @return bool
+   */
+  public function entityIsNew() {
+    return !empty($entity = $this->getFormEntity()) ? $entity->isNew() : TRUE;
+  }
+
+  /**
    * @param array $form_fragment
    * @return $this
    */
@@ -408,7 +414,7 @@ class FormHelper {
         $this->setEntityTypeId($entity_type_id);
         $this->setBundleName($this->entityHelper->getEntityInstanceBundleName($form_entity));
         // New menu link's id is '' instead of NULL, hence checking for empty.
-        $this->setInstanceId(!empty($form_entity->id()) ? $form_entity->id() : NULL);
+        $this->setInstanceId(!$this->entityIsNew() ? $form_entity->id() : NULL);
         break;
 
       default:
@@ -420,7 +426,7 @@ class FormHelper {
   /**
    * Gets the object entity of the form if available.
    *
-   * @return \Drupal\Core\Entity\Entity|false
+   * @return \Drupal\Core\Entity\EntityBase|false
    *   Entity or FALSE if non-existent or if form operation is
    *   'delete'.
    */
@@ -432,6 +438,7 @@ class FormHelper {
       && in_array($form_object->getOperation(), self::$allowedFormOperations)) {
       return $form_object->getEntity();
     }
+
     return FALSE;
   }
 
@@ -451,17 +458,6 @@ class FormHelper {
     $this->settings = NULL;
 
     return $this;
-  }
-
-  /**
-   * Gets new entity Id after entity creation.
-   * To be used in an entity form submit.
-   *
-   * @return int
-   *   Entity ID.
-   */
-  public function getFormEntityId() {
-    return $this->formState->getFormObject()->getEntity()->id();
   }
 
   /**

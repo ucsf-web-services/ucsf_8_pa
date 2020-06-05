@@ -124,7 +124,7 @@ class MenuLinkContentService implements MenuLinkContentServiceInterface {
   public function updateMenuItemBundle(MenuLinkContentInterface $item, $extras_enabled = TRUE, $save = FALSE) {
     $item->set(
       'bundle',
-      ($extras_enabled) ? $item->get('menu_name')->getString() : 'menu_link_content'
+      ($extras_enabled) ? $item->getMenuName() : $item->getEntityTypeId()
     );
     if ($save) {
       $item->save();
@@ -160,6 +160,7 @@ class MenuLinkContentService implements MenuLinkContentServiceInterface {
       // Get the old data.
       $existing_data[$table] = $this->connection->select($table)
         ->fields($table)
+        ->orderBy('id', 'ASC')
         ->execute()
         ->fetchAll(\PDO::FETCH_ASSOC);
       // Wipe it.
@@ -215,6 +216,17 @@ class MenuLinkContentService implements MenuLinkContentServiceInterface {
     $entity_type = $this->entityTypeManager
       ->getDefinition('menu_link_content');
     $this->entityDefinitionUpdateManager->updateEntityType($entity_type);
+  }
+
+  /**
+   * Runs bundle field dtorage definition updates for menu_link_content entity.
+   */
+  public function doBundleFieldUpdate() {
+    $entity_type = $this->entityTypeManager
+      ->getDefinition('menu_link_content');
+    $this->entityDefinitionUpdateManager->updateFieldStorageDefinition(
+      $this->entityDefinitionUpdateManager->getFieldStorageDefinition('bundle', $entity_type->id())
+    );
   }
 
   /**

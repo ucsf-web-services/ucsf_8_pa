@@ -1,5 +1,5 @@
 services:
-  acquia_connector_test.nspi_request:
-    class: Drupal\acquia_connector_test\Controller\NspiRequest
+  acquia_connector_test.client_middleware:
+    class: Drupal\acquia_connector_test\AcquiaConnectorMiddleware
     tags:
-      - {name: event_subscriber}
+      - { name: http_client_middleware }

@@ -5,17 +5,17 @@ namespace Drupal\Tests\search_api_db_defaults\Functional;
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\comment\Tests\CommentTestTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\field\Tests\EntityReference\EntityReferenceTestTrait;
+use Drupal\Tests\field\Traits\EntityReferenceTestTrait;
 use Drupal\search_api\Entity\Index;
 use Drupal\search_api\Entity\Server;
-use Drupal\Tests\search_api\Functional\SearchApiBrowserTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Tests the correct installation of the default configs.
  *
  * @group search_api
  */
-class IntegrationTest extends SearchApiBrowserTestBase {
+class IntegrationTest extends BrowserTestBase {
 
   use StringTranslationTrait, CommentTestTrait, EntityReferenceTestTrait;
 
@@ -71,7 +71,7 @@ class IntegrationTest extends SearchApiBrowserTestBase {
 
     $this->drupalPostForm(NULL, [], 'Continue');
 
-    $this->assertSession()->pageTextContains('2 modules have been enabled: Database Search Defaults, Database Search');
+    $this->assertSession()->pageTextContains('3 modules have been enabled: Database Search Defaults, Database Search, Search API');
 
     $this->rebuildContainer();
 
@@ -79,10 +79,10 @@ class IntegrationTest extends SearchApiBrowserTestBase {
     $this->assertSession()->pageTextContains('The server was successfully saved.');
 
     $server = Server::load('default_server');
-    $this->assertTrue($server, 'Server can be loaded');
+    $this->assertInstanceOf(Server::class, $server, 'Server can be loaded');
 
     $index = Index::load('default_index');
-    $this->assertTrue($index, 'Index can be loaded');
+    $this->assertInstanceOf(Index::class, $index, 'Index can be loaded');
 
     $this->drupalLogin($this->authenticatedUser);
     $this->drupalGet('search/content');

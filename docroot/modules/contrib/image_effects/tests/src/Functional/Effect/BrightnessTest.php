@@ -37,7 +37,7 @@ class BrightnessTest extends ImageEffectsTestBase {
     $this->changeToolkit($toolkit_id, $toolkit_config, $toolkit_settings);
 
     // Test on the PNG test image.
-    $original_uri = $this->getTestImageCopyUri('/files/image-test.png', 'simpletest');
+    $original_uri = $this->getTestImageCopyUri('core/tests/fixtures/files/image-test.png');
 
     // Test data.
     $test_data = [

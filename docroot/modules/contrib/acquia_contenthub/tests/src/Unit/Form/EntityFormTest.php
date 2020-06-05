@@ -131,6 +131,8 @@ class EntityFormTest extends UnitTestCase {
       ->method('isAutoUpdate')
       ->willReturn($is_auto_update);
 
+    $this->entityForm->setStringTranslation($this->getStringTranslationStub());
+
     $form = $this->entityForm->getForm($node);
     $this->assertEquals($has_local_change_text, $form['auto_update_label']['#markup']);
     $this->assertTrue($has_local_change === isset($form['auto_update_local_changes_label']));

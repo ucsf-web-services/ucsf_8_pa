@@ -44,7 +44,7 @@ trait PdoTrait
 
         if ($connOrDsn instanceof \PDO) {
             if (\PDO::ERRMODE_EXCEPTION !== $connOrDsn->getAttribute(\PDO::ATTR_ERRMODE)) {
-                throw new InvalidArgumentException(sprintf('"%s" requires PDO error mode attribute be set to throw Exceptions (i.e. $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION))', __CLASS__));
+                throw new InvalidArgumentException(sprintf('"%s" requires PDO error mode attribute be set to throw Exceptions (i.e. $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION)).', __CLASS__));
             }
 
             $this->conn = $connOrDsn;
@@ -177,7 +177,13 @@ trait PdoTrait
         }
         $stmt->execute();
 
-        while ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
+        if (method_exists($stmt, 'iterateNumeric')) {
+            $stmt = $stmt->iterateNumeric();
+        } else {
+            $stmt->setFetchMode(\PDO::FETCH_NUM);
+        }
+
+        foreach ($stmt as $row) {
             if (null === $row[1]) {
                 $expired[] = $row[0];
             } else {

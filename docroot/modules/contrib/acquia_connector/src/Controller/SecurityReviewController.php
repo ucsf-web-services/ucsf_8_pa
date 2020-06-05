@@ -2,7 +2,6 @@
 
 namespace Drupal\acquia_connector\Controller;
 
-use Drupal\Component\PhpStorage\FileStorage;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DrupalKernel;
 use Drupal\Core\Session\AccountInterface;
@@ -128,7 +127,7 @@ class SecurityReviewController extends ControllerBase {
 
     }
     $check_result = array_merge($check, $return);
-    $check_result['lastrun'] = REQUEST_TIME;
+    $check_result['lastrun'] = \Drupal::time()->getRequestTime();
 
     // Do not log if result is NULL.
     if ($log && !is_null($return['result'])) {
@@ -350,7 +349,14 @@ class SecurityReviewController extends ControllerBase {
     else {
       $contents = file_get_contents($directory . '/.htaccess');
       // Text from includes/file.inc.
-      $expected = FileStorage::htaccessLines(FALSE);
+      $expected = '';
+      // Todo: remove conditional when Drupal 8.7 is EOL.
+      foreach (['\Drupal\Component\FileSecurity\FileSecurity', '\Drupal\Component\PhpStorage\FileStorage'] as $class) {
+        if (method_exists($class, 'htaccessLines')) {
+          $expected = $class::htaccessLines(FALSE);
+          break;
+        }
+      }
       if ($contents !== $expected) {
         $result = FALSE;
         $check_result_value[] = 'incorrect_htaccess';

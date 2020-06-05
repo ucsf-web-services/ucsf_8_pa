@@ -222,8 +222,9 @@ class ContentHubEntityExportController extends ControllerBase {
     $normalized_entities = [];
     $entities = $_GET;
     foreach ($entities as $entity => $entity_ids) {
-      $ids = explode(', ', $entity_ids);
+      $ids = explode(',', $entity_ids);
       foreach ($ids as $id) {
+        $id = trim($id);
         try {
           $bulk_cdf = $this->internalRequest->getEntityCDFByInternalRequest($entity, $id);
           $bulk_cdf = array_pop($bulk_cdf);
@@ -234,13 +235,13 @@ class ContentHubEntityExportController extends ControllerBase {
           }
         }
         catch (\Exception $e) {
-          // Do nothing, route does not exist, but report it..
+          // Do nothing, route does not exist, but report it.
           $args = [
-            '!type' => $entity,
-            '!id' => $id,
-            '!msg' => $e->getMessage(),
+            '@type' => $entity,
+            '@id' => $id,
+            '@msg' => $e->getMessage(),
           ];
-          $this->loggerFactory->get('acquia_contenthub')->error('Could not obtain the CDF for entity (!type, !id) : !msg', $args);
+          $this->loggerFactory->get('acquia_contenthub')->error('Could not obtain the CDF for entity (@type, @id) : @msg', $args);
         }
       }
     }

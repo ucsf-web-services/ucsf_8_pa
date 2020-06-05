@@ -2,6 +2,10 @@
 
 namespace Drupal\sharemessage\Tests;
 
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\file\Entity\File;
+
 /**
  * Check if Share Message is exposed as block.
  *
@@ -14,7 +18,7 @@ class ShareMessageExposeToBlockTest extends ShareMessageTestBase {
    *
    * @var array
    */
-  public static $modules = ['contextual', 'node', 'token', 'field_ui'];
+  public static $modules = ['contextual', 'node', 'token', 'field_ui', 'image'];
 
   /**
    * {@inheritdoc}
@@ -40,12 +44,33 @@ class ShareMessageExposeToBlockTest extends ShareMessageTestBase {
 
     // Create an article content type and an article node.
     $this->drupalCreateContentType(['type' => 'article', 'name' => 'Article']);
+    FieldStorageConfig::create([
+      'entity_type' => 'node',
+      'field_name' => 'image_test',
+      'type' => 'image',
+    ])->save();
+    FieldConfig::create([
+      'entity_type' => 'node',
+      'field_name' => 'image_test',
+      'bundle' => 'article',
+      'settings' => [
+        'file_extensions' => 'jpg png',
+      ],
+    ])->save();
+
+    $files[] = $this->getTestFiles('image');
+    $uri = 'public://file.png';
+    \Drupal::service('file_system')->copy($files[0][0]->uri, $uri);
+    $file = File::create(['uri' => $uri]);
+    $file->save();
+
     $node = $this->drupalCreateNode([
       'type' => 'article',
       'title' => 'Share Message article',
       'body' => [
         'value' => 'Test context to show block on routes with node parameter.',
       ],
+      'image_test' => $file,
     ]);
     $this->drupalGet('node/' . $node->id());
     $this->assertTitle('Share Message article | Drupal');
@@ -57,6 +82,9 @@ class ShareMessageExposeToBlockTest extends ShareMessageTestBase {
       'id' => 'sharemessage_test_label',
       'message_short' => 'AddThis sharemessage short description.',
       'message_long' => '[node:title]',
+      'image_url' => '[node:image_test:entity:url]',
+      'image_width' => '[node:image_test:width]',
+      'image_height' => '[node:image_test:height]',
     ];
     $this->drupalPostForm('admin/config/services/sharemessage/add', $sharemessage, t('Save'));
     // Check for confirmation message and listing of the Share Message entity.
@@ -83,13 +111,21 @@ class ShareMessageExposeToBlockTest extends ShareMessageTestBase {
     $sharemessage_values = $sharemessage;
     $sharemessage_values['message_long'] = 'Share Message article';
     $this->assertShareButtons($sharemessage_values, 'addthis_16x16_style', TRUE);
+
+    $image = \Drupal::service('image.factory')->get($file->getFileUri());
+    $image_width = $image->getWidth();
+    $image_height = $image->getHeight();
+    $this->assertOGTags('og:image', $file->createFileUrl(FALSE));
+    $this->assertOGTags('og:image:width', $image_width);
+    $this->assertOGTags('og:image:height', $image_height);
+
     // Edit, create new review and check the Share Message block.
     $this->drupalGet('node/' . $node->id() . '/edit');
     $edit = [
       'revision' => TRUE,
       'title[0][value]' => 'Share Message article edit',
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save and keep published');
+    $this->drupalPostForm(NULL, $edit, 'Save');
     $this->assertTitle('Share Message article edit | Drupal');
     $this->assertRaw('<h2>Share Message test block</h2>');
     $sharemessage_values['message_long'] = 'Share Message article edit';

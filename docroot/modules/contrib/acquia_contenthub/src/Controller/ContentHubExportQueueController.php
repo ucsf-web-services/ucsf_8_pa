@@ -2,6 +2,7 @@
 
 namespace Drupal\acquia_contenthub\Controller;
 
+use Drupal\acquia_contenthub\ContentHubEntityDependency;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -77,6 +78,11 @@ class ContentHubExportQueueController extends ControllerBase {
     $exported_entities = [];
     foreach ($candidate_entities as $candidate_entity) {
       $entity_type = $candidate_entity->getEntityTypeId();
+      // Do not enqueue post-dependent entities like paragraphs.
+      $post_dependency_types = ContentHubEntityDependency::getPostDependencyEntityTypes();
+      if (in_array($entity_type, $post_dependency_types)) {
+        continue;
+      }
       $entity_id = $candidate_entity->id();
       $entity_uuid = $candidate_entity->uuid();
       $exported_entities[] = [

@@ -54,6 +54,15 @@ class BlockContentTypeTest extends BlockContentTestBase {
 
     $expected = '</head><body><div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><p>block_body_value</p></div><div data-content-barrier-exclude="true"></div></body></html>';
     $this->assertRaw($expected, 'The block--block-content--acquia-contenthub.html.twig template have no extra markup.');
+    $this->assertOffCanvasWrapperRemoved();
+  }
+
+  /**
+   * Assert that off-canvas wrapper has been removed.
+   */
+  protected function assertOffCanvasWrapperRemoved() {
+    $this->assertNoRaw('dialog-off-canvas-main-canvas', 'The off-canvas wrapper class was not found on the page.');
+    $this->assertNoRaw('data-off-canvas-main-canvas', 'The off-canvas wrapper attribute was not found on the page.');
   }
 
 }

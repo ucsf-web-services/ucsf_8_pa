@@ -4,26 +4,11 @@ namespace Drupal\blazy\Dejavu;
 
 use Drupal\Component\Utility\Xss;
 use Drupal\Component\Utility\Html;
-use Drupal\Component\Utility\Unicode;
 
 /**
  * A Trait common for optional views style plugins.
  */
 trait BlazyStylePluginTrait {
-
-  /**
-   * The blazy manager service.
-   *
-   * @var \Drupal\blazy\BlazyManagerInterface
-   */
-  protected $blazyManager;
-
-  /**
-   * Returns the blazy manager.
-   */
-  public function blazyManager() {
-    return $this->blazyManager;
-  }
 
   /**
    * Returns available fields for select options.
@@ -32,6 +17,7 @@ trait BlazyStylePluginTrait {
     $field_names = $this->displayHandler->getFieldLabels();
     $definition = [];
     $stages = [
+      'blazy_media',
       'block_field',
       'colorbox',
       'entity_reference_entity_view',
@@ -200,7 +186,7 @@ trait BlazyStylePluginTrait {
    */
   public function isImageRenderable($row, $index, $field_image = '') {
     if (!empty($field_image) && $image = $this->getFieldRenderable($row, $index, $field_image)) {
-      if ($item = $this->getImageItem($image)) {
+      if ($this->getImageItem($image)) {
         return $image;
       }
 
@@ -288,20 +274,6 @@ trait BlazyStylePluginTrait {
   }
 
   /**
-   * Returns the renderable array of field containing rendered and raw data.
-   */
-  public function getFieldRenderable($row, $index, $field_name = '', $multiple = FALSE) {
-    if (empty($field_name)) {
-      return FALSE;
-    }
-
-    // Be sure to not check "Use field template" under "Style settings" to have
-    // renderable array to work with, otherwise flattened string!
-    $result = isset($this->view->field[$field_name]) ? $this->view->field[$field_name]->getItems($row) : [];
-    return empty($result) ? [] : ($multiple ? $result : $result[0]);
-  }
-
-  /**
    * Returns the string values for the expected Title, ET label, List, Term.
    *
    * @todo re-check this, or if any consistent way to retrieve string values.
@@ -324,13 +296,13 @@ trait BlazyStylePluginTrait {
         $tags = explode(',', $value);
         $rendered_tags = [];
         foreach ($tags as $tag) {
-          $rendered_tags[] = Html::cleanCssIdentifier(Unicode::strtolower(trim($tag)));
+          $rendered_tags[] = Html::cleanCssIdentifier(mb_strtolower(trim($tag)));
         }
         $values[$index] = implode(' ', $rendered_tags);
       }
       else {
         $value = is_string($value) ? $value : (isset($value[0]['value']) && !empty($value[0]['value']) ? $value[0]['value'] : '');
-        $values[$index] = empty($value) ? '' : Html::cleanCssIdentifier(Unicode::strtolower($value));
+        $values[$index] = empty($value) ? '' : Html::cleanCssIdentifier(mb_strtolower($value));
       }
     }
 
@@ -341,7 +313,7 @@ trait BlazyStylePluginTrait {
         foreach ($renderable as $key => $render) {
           $class = isset($render['rendered']['#title']) ? $render['rendered']['#title'] : $renderer->render($render['rendered']);
           $class = trim(strip_tags($class));
-          $value[$key] = Html::cleanCssIdentifier(Unicode::strtolower($class));
+          $value[$key] = Html::cleanCssIdentifier(mb_strtolower($class));
         }
         $values[$index] = empty($value) ? '' : implode(' ', $value);
       }

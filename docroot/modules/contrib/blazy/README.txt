@@ -36,18 +36,32 @@ REQUIREMENTS
 
 
 INSTALLATION
-Install the module as usual, more info can be found on:
-http://drupal.org/documentation/install/modules-themes/modules-7
+  1. MANUAL:
+  Install the module as usual, more info can be found on:
+  https://www.drupal.org/docs/8/extending-drupal-8/installing-drupal-8-modules
+
+  2 COMPOSER:
+  There are various ways to install third party bower/npm asset libraries. Check
+  out any below suitable to your workflow:
+  https://www.drupal.org/project/blazy/issues/3021902
+  https://www.drupal.org/project/slick/issues/2907371
+  Or jump here:
+  https://www.drupal.org/project/slick/issues/2907371#comment-12882235
+
+  It is up to you to decide which works best. Composer is not designed to manage
+  JS, CSS or HTML framework assets. It is for PHP. Then come Composer plugins,
+  and other workarounds to make Composer workflow easier. As many alternatives,
+  it is not covered here. Please find more info on the above-mentioned issues.
 
 
 USAGES
 Be sure to enable Blazy UI which can be uninstalled at production later.
 o Go to Manage display page, e.g.:
-  admin/structure/types/manage/page/display
+  /admin/structure/types/manage/page/display
 
 o Find "Blazy" formatter under "Manage display".
 
-o Go to "admin/config/media/blazy" to manage few global options, including
+o Go to "/admin/config/media/blazy" to manage few global options, including
   enabling support for lazyloading core Responsive image.
 
 
@@ -101,7 +115,7 @@ Add a min-height CSS to individual element to avoid layout reflow if not using
 Adjust, and override blazy CSS files accordingly.
 
 
-ROADMAP/TODO
+ROADMAP/ TODO
 [x] Adds a basic configuration to load the library, probably an image formatter.
     2/24/2016
 [x] Media entity image/video, and Video embed field lazyloading, if any.
@@ -116,7 +130,7 @@ CURRENT DEVELOPMENT STATUS
 A full release should be reasonable after proper feedbacks from the community,
 some code cleanup, and optimization where needed. Patches are very much welcome.
 
-Alpha and Beta releases are for developers only. Be aware of possible breakage.
+Alpha, Beta, DEV releases are for developers only. Beware of possible breakage.
 
 
 UPDATE SOP:
@@ -156,13 +170,47 @@ o If breakpoints provided with tons of images, using image styles with ANY crop
   applies.
 
 SUBMITTING PATCHES OR ISSUES
-When submitting bug reports, please be kind with proper reproduction, and enough
-details. Mentioning library version, module version, active theme, or anything
-which may help us identify issue better would be very helpful. Please consider
-the following to help you explain better and to help us understand better your
-bug reports, or patches as needed:
+Please consider the following to help you explain better, and to help us
+understand better your bug reports, or patches as needed:
 https://www.drupal.org/issue-summaries
 https://www.drupal.org/node/1326662
+
+o If you hate formalism, consider a crystal clear line, or two in the body text.
+o Avoid explaining everything in the title.
+o Use body text for explanation purposes.
+o If language is a barrier, use google translate, or alike.
+
+1. SUBMITTING ISSUES
+When submitting bug reports, please:
+o be kind with proper reproduction, and enough details.
+o mention library version, related-module version, if any, active theme, or
+  anything which may help us identify issue better.
+o ensure the library is loaded, not 404.
+o switch to stock Bartik for just in case it is your custom theme.
+o use matching or similar branches or tags for related modules.
+o check out dups.
+o file it a support request, if unsure. We'll mark a bug a bug even if you
+  file it under support requests.
+
+2. SUBMITTING PATCHES
+We consider a patch as help, they consider it a sale, so thank you in advanced!
+In order for you to help, or buy, us successfully, please consider:
+o communicating and filling out the body text with proper explanations, not in
+  comments (unless for comment patches, of course).
+  I've seen patches which broke a module, so explanation is a must.
+  If you have no time to write it in the body text, please hold off till later!
+o providing optional links to the change records, or docs, if any.
+o providing links to docs is a must for coding standards issues.
+  This also lets us, you and me, learn from the actual docs, not told by tools!
+  We can just run `drupalcs ...`, but help is welcome, too, in case a miss.
+o checking out the latest dev branch in case already resolved.
+o providing reproduction steps for bug reports is a must. No repro, no bugs.
+
+You must speak like human to human, and help us respect you, and your time.
+Dumping patches with empty body text will be disregarded, till the above is met.
+
+Thank you for your kind consideration, cooperation, and contribution!
+
 
 AUTHOR/MAINTAINER/CREDITS
 gausarts

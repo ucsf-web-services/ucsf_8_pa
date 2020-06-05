@@ -2,6 +2,7 @@
 
 namespace Drupal\entity_clone\EntityClone\Config;
 
+use Drupal\Core\Config\Entity\ConfigEntityStorage;
 use Drupal\Core\Entity\EntityHandlerInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -68,10 +69,17 @@ class ConfigEntityCloneFormBase implements EntityHandlerInterface, EntityCloneFo
       ];
     }
 
+    // In common casse, config entities IDs are limited to 64 characters ...
+    $max_length = 64;
+    if ($entity->getEntityType()->getBundleOf()) {
+      // ... Except for bundle definition, that are limited to 32 characters.
+      $max_length = EntityTypeInterface::BUNDLE_MAX_LENGTH;
+    }
+
     $form['id'] = [
       '#type' => 'machine_name',
       '#title' => $this->translationManager->translate('New Id'),
-      '#maxlength' => 255,
+      '#maxlength' => $max_length,
       '#required' => TRUE,
     ];
 

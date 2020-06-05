@@ -42,7 +42,7 @@ trait FilesystemCommonTrait
         $directory .= \DIRECTORY_SEPARATOR;
         // On Windows the whole path is limited to 258 chars
         if ('\\' === \DIRECTORY_SEPARATOR && \strlen($directory) > 234) {
-            throw new InvalidArgumentException(sprintf('Cache directory too long (%s)', $directory));
+            throw new InvalidArgumentException(sprintf('Cache directory too long (%s).', $directory));
         }
 
         $this->directory = $directory;
@@ -114,6 +114,16 @@ trait FilesystemCommonTrait
     public static function throwError($type, $message, $file, $line)
     {
         throw new \ErrorException($message, 0, $type, $file, $line);
+    }
+
+    public function __sleep()
+    {
+        throw new \BadMethodCallException('Cannot serialize '.__CLASS__);
+    }
+
+    public function __wakeup()
+    {
+        throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
     }
 
     public function __destruct()

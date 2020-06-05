@@ -62,6 +62,11 @@ class ContentHubSubscriberController extends ControllerBase {
   protected $state;
 
   /**
+   * The version of content hub module.
+   */
+  const CH_VERSION = '1';
+
+  /**
    * ContentHubSubscriberController constructor.
    *
    * @param \Drupal\core\Config\ConfigFactoryInterface $config_factory
@@ -195,6 +200,7 @@ class ContentHubSubscriberController extends ControllerBase {
     $form["#attached"]['drupalSettings']['acquia_contenthub_subscriber']['cookie'] = $cookie_header;
     $form["#attached"]['drupalSettings']['acquia_contenthub_subscriber']['languages_supported_by_subscriber'] = $languages_supported;
     $form["#attached"]['drupalSettings']['acquia_contenthub_subscriber']['entity_types_bundles_supported_by_subscriber'] = $entity_types_bundles;
+    $form["#attached"]['drupalSettings']['acquia_contenthub_subscriber']['ch_version'] = static::CH_VERSION;
 
     if (empty($config->get('origin'))) {
       drupal_set_message($this->t('Acquia Content Hub must be configured to view any content. Please contact your administrator.'), 'warning');

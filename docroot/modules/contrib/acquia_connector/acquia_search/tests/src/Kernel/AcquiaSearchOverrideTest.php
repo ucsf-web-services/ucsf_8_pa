@@ -230,8 +230,7 @@ class AcquiaSearchOverrideTest extends KernelTestBase {
   protected function assertGetUpdateQueryException(SearchApiSolrAcquiaConnector $solr_connector) {
 
     // Set the expectation for exception.
-    $this->setExpectedException('Exception',
-      'The Search API Server serving this index is currently in read-only mode.');
+    $this->expectExceptionMessage('The Search API Server serving this index is currently in read-only mode.');
 
     // Run the code that should throw the exception.
     // If exception occurred - test passes. If no exception occurred - test
@@ -313,11 +312,9 @@ class AcquiaSearchOverrideTest extends KernelTestBase {
     $storage = new Storage();
     $storage->setIdentifier($acquia_identifier);
 
-    \Drupal::configFactory()->getEditable('acquia_connector.settings')
-      ->set('subscription_data', [
-        'heartbeat_data' => ['search_cores' => $available_cores],
-      ])
-      ->save();
+    \Drupal::state()->set('acquia_subscription_data', [
+      'heartbeat_data' => ['search_cores' => $available_cores],
+    ]);
 
   }
 

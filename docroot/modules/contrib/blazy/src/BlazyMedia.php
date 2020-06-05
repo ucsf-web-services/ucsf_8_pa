@@ -16,17 +16,19 @@ class BlazyMedia {
    *
    * @param object $media
    *   The media being rendered.
+   * @param array $settings
+   *   The contextual settings array.
    *
    * @return array|bool
    *   The renderable array of the media field, or false if not applicable.
    */
-  public static function build($media, $settings = []) {
+  public static function build($media, array $settings = []) {
     // Prevents fatal error with disconnected internet when having ME Facebook,
     // ME SlideShare, resorted to static thumbnails to avoid broken displays.
     if (!empty($settings['input_url'])) {
       // @todo: Remove when ME Facebook alike handles this.
       try {
-        $response = \Drupal::httpClient()->get($settings['input_url']);
+        \Drupal::httpClient()->get($settings['input_url']);
       }
       catch (\Exception $e) {
         return FALSE;

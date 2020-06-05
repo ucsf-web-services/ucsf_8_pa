@@ -3,9 +3,11 @@
 namespace Drupal\media_entity_twitter\Plugin\Validation\Constraint;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\media_entity_twitter\Plugin\media\Source\Twitter;
 use Drupal\Core\Field\FieldItemInterface;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -47,7 +49,7 @@ class TweetVisibleConstraintValidator extends ConstraintValidator implements Con
     if (is_string($value)) {
       $data = $value;
     }
-    elseif ($value instanceof FieldItemList) {
+    elseif ($value instanceof FieldItemListInterface) {
       $fieldtype = $value->getFieldDefinition()->getType();
       $field_value = $value->getValue();
       if ($fieldtype == 'link') {
@@ -76,7 +78,13 @@ class TweetVisibleConstraintValidator extends ConstraintValidator implements Con
     }
 
     // Fetch content from the given url.
-    $response = $this->httpClient->get($matches[0][0], ['allow_redirects' => FALSE]);
+    try {
+      $response = $this->httpClient->get($matches[0][0], ['allow_redirects' => FALSE]);
+    }
+    catch (ClientException $e) {
+      $this->context->addViolation($constraint->message);
+      return;
+    }
 
     if ($response->getStatusCode() == 302 && ($location = $response->getHeader('location'))) {
       $effective_url_parts = parse_url($location[0]);

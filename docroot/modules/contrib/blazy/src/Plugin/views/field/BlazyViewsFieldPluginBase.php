@@ -5,7 +5,7 @@ namespace Drupal\blazy\Plugin\views\field;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Drupal\views\ResultRow;
-use Drupal\blazy\Dejavu\BlazyDefault;
+use Drupal\blazy\BlazyDefault;
 use Drupal\blazy\BlazyManagerInterface;
 use Drupal\blazy\Dejavu\BlazyEntityTrait;
 use Drupal\blazy\Dejavu\BlazyVideoTrait;

@@ -62,13 +62,10 @@ class MenuController extends ControllerBase {
 
   /**
    * Provides removing extra data action.
-   *
-   * @return array
-   *   Returns redirect to the uninstall page.
    */
   public function removeExtraData() {
     $this->menuLinkContentHelper->clearMenuData('all');
-    drupal_set_message($this->t('Extra data for all menus were deleted.'), 'status');
+    $this->messenger()->addStatus($this->t('Extra data for all menus were deleted.'), 'status');
     return $this->redirect('system.modules_uninstall');
   }
 

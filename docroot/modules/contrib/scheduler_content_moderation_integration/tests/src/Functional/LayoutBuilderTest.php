@@ -17,6 +17,11 @@ class LayoutBuilderTest extends BrowserTestBase {
   use ContentModerationTestTrait;
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * User.
    *
    * @var \Drupal\user\Entity\User
@@ -24,11 +29,9 @@ class LayoutBuilderTest extends BrowserTestBase {
   protected $user;
 
   /**
-   * Modules to install.
-   *
-   * @var array
+   * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'node',
     'content_moderation',
     'scheduler_content_moderation_integration',

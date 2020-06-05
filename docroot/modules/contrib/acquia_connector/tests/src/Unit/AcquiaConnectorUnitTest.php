@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\acquia_connector\Tests\Unit\AcquiaConnectorUnitTest.
+ * Contains \Drupal\Tests\acquia_connector\Unit\AcquiaConnectorUnitTest.
  */
 
 namespace Drupal\Tests\acquia_connector\Unit;
@@ -31,7 +31,7 @@ class AcquiaConnectorUnitTest extends UnitTestCase {
     $params = ['time', 'nonce', 'hash'];
 
     $client = new ClientTest();
-    $result = $client->buildAuthenticator($key, $params);
+    $result = $client->buildAuthenticator($key, time(), $params);
     // Test Client::buildAuthenticator.
     $valid = is_array($result);
     $this->assertTrue($valid, 'Client::buildAuthenticator returns an array');
@@ -45,7 +45,7 @@ class AcquiaConnectorUnitTest extends UnitTestCase {
       $this->assertTrue($valid, 'Array has expected keys');
     }
     // Test Client::buildAuthenticator.
-    $result = $client->buildAuthenticator($identifier, []);
+    $result = $client->buildAuthenticator($identifier, time(), []);
     $valid = is_array($result);
     $this->assertTrue($valid, 'Client::buildAuthenticator returns an array');
     if ($valid) {
@@ -85,9 +85,9 @@ class ClientTest extends Client {
   /**
    * {@inheritdoc}
    */
-  public function buildAuthenticator($key, array $params = []) {
+  public function buildAuthenticator($key, int $request_time, array $params = []) {
 
-    $authenticator = parent::buildAuthenticator($key, $params);
+    $authenticator = parent::buildAuthenticator($key, $request_time, $params);
 
     return $authenticator;
 

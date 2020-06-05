@@ -1,16 +1,13 @@
 language: php
+
 # The Travis CI container mode has random functional test fails, so we must use
 # sudo here.
 sudo: true
 
-notifications:
-  email:
-    recipients:
-      - jonathan1055@sandfordsolutions.com
-
 php:
   - 5.6
-  - 7.0
+  - 7.1
+  - 7.3
 
 services:
   - mysql
@@ -19,16 +16,21 @@ env:
   global:
     - MODULE=scheduler
   matrix:
-    - DRUPAL_CORE=8.6.x
     - DRUPAL_CORE=8.7.x
     - DRUPAL_CORE=8.8.x
+    - DRUPAL_CORE=8.9.x
 
 matrix:
   fast_finish: true
-  # Core 8.8 no longer supports PHP5, so don't run that combination.
+  # PHP7.3 is not supported on Core 8.7 and earlier.
+  # PHP5 is not supported on Core 8.8 and later.
   exclude:
+    - php: 7.3
+      env: DRUPAL_CORE=8.7.x
     - php: 5.6
       env: DRUPAL_CORE=8.8.x
+    - php: 5.6
+      env: DRUPAL_CORE=8.9.x
 
 # Be sure to cache composer downloads.
 cache:
@@ -64,7 +66,7 @@ before_script:
   - cp -R $TRAVIS_BUILD_DIR/* $DRUPAL_ROOT/modules/$MODULE/
 
   # Install dependencies.
-  - travis_retry git clone --branch 8.x-3.x --depth 1 https://github.com/fago/rules.git modules/rules
+  - travis_retry git clone --branch 8.x-3.x --depth 1 https://git.drupalcode.org/project/rules.git modules/rules
   - travis_retry git clone --branch 8.x-2.1 --depth 1 https://git.drupalcode.org/project/devel.git modules/devel
   - travis_retry git clone --branch 8.x-1.x --depth 1 https://git.drupalcode.org/project/typed_data.git modules/typed_data
 
@@ -76,6 +78,9 @@ before_script:
       travis_retry composer run-script drupal-phpunit-upgrade;
     fi
 
+  # Install drush
+  - travis_retry composer require drush/drush:^9.0
+
   # Coder is already installed as part of composer install. We just need to set
   # the installed_paths to pick up the Drupal standards.
   - $DRUPAL_ROOT/vendor/bin/phpcs --config-set installed_paths $DRUPAL_ROOT/vendor/drupal/coder/coder_sniffer
@@ -86,18 +91,32 @@ before_script:
   # Export web server URL for browser tests.
   - export SIMPLETEST_BASE_URL=http://localhost:8888
 
+  # TEMP - Patch Scheduler to cater for latest Rules and Typed Data changes.
+  # See https://www.drupal.org/project/scheduler/issues/3101377
+  - cd $DRUPAL_ROOT/modules/$MODULE
+  - wget -q -O - https://www.drupal.org/files/issues/2019-12-18/3101377-7.context_definitions.patch | patch -p1
+
 script:
   # Run the PHPUnit tests.
-  - ./vendor/bin/phpunit -c ./core/phpunit.xml.dist ./modules/$MODULE/tests/
+  - cd $DRUPAL_ROOT
+  # Do not run the Javascript tests on PHP5.6
+  # See https://www.drupal.org/project/scheduler/issues/3133151
+  - if [ $TRAVIS_PHP_VERSION == "5.6" ]; then
+        ./vendor/bin/phpunit -c ./core/phpunit.xml.dist ./modules/$MODULE/tests/ --filter='/(?!.*Javascript)^.*$/';
+      else
+        ./vendor/bin/phpunit -c ./core/phpunit.xml.dist ./modules/$MODULE/tests/;
+    fi
 
   # Check for coding standards. First change directory to our module.
   - cd $DRUPAL_ROOT/modules/$MODULE
 
   # List all the sniffs that were used.
+  - $DRUPAL_ROOT/vendor/bin/phpcs --version
+  - $DRUPAL_ROOT/vendor/bin/phpcs -i
   - $DRUPAL_ROOT/vendor/bin/phpcs -e
 
   # Show the violations in detail and do not fail for any errors or warnings.
   - $DRUPAL_ROOT/vendor/bin/phpcs --runtime-set ignore_warnings_on_exit 1 --runtime-set ignore_errors_on_exit 1
 
-  # Run again to give a summary and total count, and fail for errors (not warnings).
-  - $DRUPAL_ROOT/vendor/bin/phpcs --report=summary --runtime-set ignore_warnings_on_exit 1
+  # Run again to give a summary and totals, and fail for errors and warnings.
+  - $DRUPAL_ROOT/vendor/bin/phpcs --report=summary

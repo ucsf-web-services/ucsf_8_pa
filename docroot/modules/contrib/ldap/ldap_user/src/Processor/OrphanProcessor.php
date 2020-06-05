@@ -3,7 +3,7 @@
 namespace Drupal\ldap_user\Processor;
 
 use Drupal\Core\Config\ConfigFactory;
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Mail\MailManagerInterface;
@@ -31,7 +31,7 @@ class OrphanProcessor {
   /**
    * Constructor.
    */
-  public function __construct(LoggerChannelInterface $logger, ConfigFactory $config, ServerFactory $factory, MailManagerInterface $mail_manager, LanguageManagerInterface $language_manager, StateInterface $state, EntityTypeManager $entity_type_manager) {
+  public function __construct(LoggerChannelInterface $logger, ConfigFactory $config, ServerFactory $factory, MailManagerInterface $mail_manager, LanguageManagerInterface $language_manager, StateInterface $state, EntityTypeManagerInterface $entity_type_manager) {
     $this->logger = $logger;
     $this->configFactory = $config;
     $this->configLdapUser = $config->get('ldap_user.settings');
@@ -59,7 +59,7 @@ class OrphanProcessor {
       $batches = floor(count($uids) / $this->ldapQueryOrLimit) + 1;
       $queriedUsers = [];
       for ($batch = 1; $batch <= $batches; $batch++) {
-        $queriedUsers += $this->batchQueryUsers($batch, $uids);
+        $queriedUsers = array_merge($queriedUsers, $this->batchQueryUsers($batch, $uids));
       }
 
       $this->processOrphanedAccounts($queriedUsers);

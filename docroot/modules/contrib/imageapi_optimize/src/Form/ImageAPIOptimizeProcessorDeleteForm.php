@@ -43,7 +43,7 @@ class ImageAPIOptimizeProcessorDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-    return $this->imageAPIOptimizePipeline->urlInfo('edit-form');
+    return $this->imageAPIOptimizePipeline->toUrl('edit-form');
   }
 
   /**
@@ -68,8 +68,8 @@ class ImageAPIOptimizeProcessorDeleteForm extends ConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->imageAPIOptimizePipeline->deleteProcessor($this->imageAPIOptimizeProcessor);
-    drupal_set_message($this->t('The Image Optimize processor %name has been deleted.', ['%name' => $this->imageAPIOptimizeProcessor->label()]));
-    $form_state->setRedirectUrl($this->imageAPIOptimizePipeline->urlInfo('edit-form'));
+    $this->messenger()->addMessage($this->t('The Image Optimize processor %name has been deleted.', ['%name' => $this->imageAPIOptimizeProcessor->label()]));
+    $form_state->setRedirectUrl($this->imageAPIOptimizePipeline->toUrl('edit-form'));
   }
 
 }

@@ -36,7 +36,7 @@ function acquia_connector_requirements($phase) {
       if ($has_credentials) {
         $key = sha1(Drupal::service('private_key')->get());
         $description = '';
-        $ago = REQUEST_TIME - $last_sent;
+        $ago = \Drupal::time()->getRequestTime() - $last_sent;
 
         $blocked = $config->get('spi.blocked');
         $environment_change = \Drupal::service('acquia_connector.spi')->checkEnvironmentChange();
@@ -131,7 +131,7 @@ function acquia_connector_requirements($phase) {
         ];
       }
       else {
-        $subscription = $config->get('subscription_data');
+        $subscription = \Drupal::state()->get('acquia_subscription_data');
         $href = isset($subscription['uuid']) ? 'https://cloud.acquia.com/app/develop/applications/' . $subscription['uuid'] : 'https://cloud.acquia.com';
         $requirements['acquia_subscription_status'] = [
           'title' => t('Acquia Subscription status'),
@@ -274,4 +274,33 @@ function acquia_connector_update_8006() {
   }
 
   $config->save(TRUE);
+}
+
+/**
+ * Move subscription data to state.
+ */
+function acquia_connector_update_8007() {
+  $config = \Drupal::configFactory()->getEditable('acquia_connector.settings');
+
+  // Handle subscription data first.
+  $subscription_data = $config->get('subscription_data');
+  if ($subscription_data) {
+    \Drupal::state()->set('acquia_subscription_data', $subscription_data);
+    $config->clear('subscription_data')->save();
+  }
+
+  // Now handle SPI vars.
+  $spi_moved_keys = [
+    'def_vars',
+    'def_waived_vars',
+    'def_timestamp',
+    'new_optional_data',
+  ];
+  foreach ($spi_moved_keys as $key) {
+    $data = $config->get("spi.$key");
+    if ($data) {
+      \Drupal::state()->set("acquia_spi_data.$key", $data);
+      $config->clear("spi.$key")->save();
+    }
+  }
 }

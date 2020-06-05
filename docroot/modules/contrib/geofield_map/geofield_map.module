@@ -5,6 +5,7 @@
  * Contains the geofield_map.module.
  */
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
@@ -19,7 +20,7 @@ function geofield_map_help($route_name, RouteMatchInterface $route_match) {
   $output = '';
   switch ($route_name) {
     case 'help.page.geofield_map':
-      $output .= '<h3>' . t('Geofield Map About') . '</h3>';
+      $output .= '<h3>' . t('Geofield Map Help') . '</h3>';
       $output .= '<p>' . t('Map Widget, Formatter and Views integration for Geofields.') . '</p>';
       $output .= '<p>' . t('For more info: @readme', [
         '@readme' => Link::fromTextAndUrl(t('Readme.md'), Url::fromUri('base:/' . drupal_get_path('module', 'geofield_map') . '/README.md', ['attributes' => ['target' => '_blank']]))->toString(),
@@ -47,20 +48,6 @@ function geofield_map_theme($existing, $type, $theme, $path) {
         'height' => '450px',
       ],
     ],
-    'geofield_static_google_map' => [
-      'variables' => [
-        'width' => NULL,
-        'height' => NULL,
-        'scale' => NULL,
-        'locations' => NULL,
-        'zoom' => NULL,
-        'langcode' => NULL,
-        'static_map_type' => NULL,
-        'apikey' => NULL,
-        'marker_color' => NULL,
-        'marker_size' => NULL,
-      ],
-    ],
   ];
 }
 
@@ -75,16 +62,48 @@ function geofield_map_theme($existing, $type, $theme, $path) {
  */
 function geofield_map_googlemap_render(array $js_settings) {
 
+  $attached_libraries = [
+    'geofield_map/geojson',
+    'geofield_map/geofield_google_map',
+  ];
+
+  // Add the intersection_observer library, if lazy load is enabled.
+  if ($js_settings['map_settings']['map_lazy_load']) {
+    $attached_libraries[] = 'geofield_map/intersection_observer';
+  }
+
+  // Add the Marker Cluster library, if asked.
+  if ($js_settings['map_settings']['map_markercluster']['markercluster_control']) {
+    $attached_libraries[] = 'geofield_map/marker_cluster';
+  }
+
+  // Add the OverlappingMarkerSpiderfier library, if asked.
+  if (!isset($js_settings['map_settings']['map_oms']['map_oms_control']) || $js_settings['map_settings']['map_oms']['map_oms_control']) {
+    $attached_libraries[] = 'geofield_map/overlappingmarkerspiderfier';
+  }
+
+  // Add the Leaflet Geocoder library and functionalities, if requested,
+  // and the user has access to Geocoder Api Enpoints.
+  if (\Drupal::service('module_handler')->moduleExists('geocoder')
+    && class_exists('\Drupal\geocoder\Controller\GeocoderApiEnpoints')
+    && isset($js_settings['map_settings']['map_geocoder'])
+    && $js_settings['map_settings']['map_geocoder']['control']
+    && \Drupal::service('current_user')->hasPermission('access geocoder api endpoints')) {
+    $attached_libraries[] = 'geofield_map/geocoder';
+
+    /* @var \Drupal\geofield_map\Services\GeocoderService $geofield_map_geocoder_service */
+    $geofield_map_geocoder_service = \Drupal::service('geofield_map.geocoder');
+    // Get Filtered Js Map Geocoder Settings.
+    $js_settings['map_settings']['map_geocoder']['settings'] = $geofield_map_geocoder_service->getJsGeocoderSettings($js_settings['map_settings']['map_geocoder']['settings']);
+  }
+
   $render_array = [
     '#theme' => 'geofield_google_map',
     '#mapid' => $js_settings['mapid'],
     '#height' => $js_settings['map_settings']['map_dimensions']['height'],
     '#width' => $js_settings['map_settings']['map_dimensions']['width'],
     '#attached' => [
-      'library' => [
-        'geofield_map/geojson',
-        'geofield_map/geofield_gmap',
-      ],
+      'library' => $attached_libraries,
       'drupalSettings' => [
         'geofield_google_map' => [$js_settings['mapid'] => $js_settings],
       ],
@@ -93,16 +112,6 @@ function geofield_map_googlemap_render(array $js_settings) {
       'contexts' => ['url.path', 'url.query_args'],
     ],
   ];
-
-  // Add the Marker Cluster library, if asked.
-  if ($js_settings['map_settings']['map_markercluster']['markercluster_control']) {
-    $render_array['#attached']['library'][] = 'geofield_map/marker_cluster';
-  }
-
-  // Add the OverlappingMarkerSpiderfier library, if asked.
-  if (!isset($js_settings['map_settings']['map_oms']['map_oms_control']) || $js_settings['map_settings']['map_oms']['map_oms_control']) {
-    $render_array['#attached']['library'][] = 'geofield_map/overlappingmarkerspiderfier';
-  }
 
   return $render_array;
 }

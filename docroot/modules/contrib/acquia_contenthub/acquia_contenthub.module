@@ -279,6 +279,30 @@ function acquia_contenthub_reexport_finished($success, $results, $operations) {
 }
 
 /**
+ * Implements hook_element_info_alter().
+ */
+function acquia_contenthub_element_info_alter(&$type) {
+  // Remove the off-canvas page wrapper that was added to core in 8.5.0.
+  // This wrapper is only needed for the off-canvas dialog.
+  if (\Drupal::routeMatch()->getRouteName() === 'acquia_contenthub.content_entity_display.entity') {
+    unset($type['page']['#theme_wrappers']['off_canvas_page_wrapper']);
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function acquia_contenthub_module_implements_alter(&$implementations, $hook) {
+  // Ensure that our implementation of hook_element_info_alter runs after the
+  // system modules implementation.
+  if ($hook === 'element_info_alter') {
+    $implementation = $implementations['acquia_contenthub'];
+    unset($implementations['acquia_contenthub']);
+    $implementations['acquia_contenthub'] = $implementation;
+  }
+}
+
+/**
  * Checks published entities and compares them with Content Hub.
  *
  * This method also republishes entities if they are not in sync with what

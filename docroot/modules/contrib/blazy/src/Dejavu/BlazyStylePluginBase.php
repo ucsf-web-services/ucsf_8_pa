@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 abstract class BlazyStylePluginBase extends StylePluginBase {
 
+  use BlazyStyleBaseTrait;
   use BlazyStylePluginTrait;
 
   /**

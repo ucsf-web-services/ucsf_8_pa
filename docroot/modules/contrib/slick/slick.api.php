@@ -5,6 +5,8 @@
  * Hooks and API provided by the Slick module.
  */
 
+use Drupal\slick\Entity\Slick;
+
 /**
  * @defgroup slick_api Slick API
  * @{
@@ -152,12 +154,12 @@
  *       // Individual slide supports some useful settings like layout, classes,
  *       // etc.
  *       // Meaning each slide can have different layout, or classes.
- *       // @see src/Plugin/Field/README.txt
+ *       // @see src/Plugin/Field/README.md
  *       'settings' => [
  *
  *         // Optionally add a custom layout, can be a static uniform value, or
  *         // dynamic one based on the relevant field value.
- *         // @see src/Plugin/Field/README.txt for the supported layout keys.
+ *         // @see src/Plugin/Field/README.md for the supported layout keys.
  *         'layout' => 'bottom',
  *
  *         // Optionally add a custom class, can be a static uniform class, or
@@ -286,6 +288,7 @@
  *     // Define both main and thumbnail optionset names at the main display.
  *     'optionset' => 'optionset_main_name',
  *     'optionset_thumbnail' => 'optionset_thumbnail_name',
+ *     'nav' => TRUE,
  *
  *     // The rest is optional, just FYI.
  *     'id' => 'slick-asnavfor',
@@ -510,8 +513,8 @@ function hook_slick_overridable_options_info_alter(&$options) {
 /**
  * Modifies Slick optionset before being passed to preprocess, or templates.
  *
- * @param object $slick
- *   The \Drupal\slick\Entity\Slick Slick object being modified.
+ * @param \Drupal\slick\Entity\Slick $slick
+ *   The Slick object being modified.
  * @param array $settings
  *   The contextual settings related to UI and HTML layout settings.
  *
@@ -519,7 +522,7 @@ function hook_slick_overridable_options_info_alter(&$options) {
  *
  * @ingroup slick_api
  */
-function hook_slick_optionset_alter(\Drupal\slick\Entity\Slick &$slick, array $settings) {
+function hook_slick_optionset_alter(Slick &$slick, array $settings) {
   if ($slick->id() == 'x_slick_nav') {
     // Overrides the main settings of navigation with optionset ID x_slick_nav.
     // To see available options, see config/install/slick.optionset.default.yml.

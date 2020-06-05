@@ -55,7 +55,7 @@ function blazy_test_blazy_alter(array &$image, array $settings = []) {
 }
 
 /**
- * #pre_render callback: Sets blazy_test related URL attributes.
+ * The #pre_render callback: Sets blazy_test related URL attributes.
  */
 function blazy_test_pre_render($image) {
   $settings = isset($image['#settings']) ? $image['#settings'] : [];
@@ -76,23 +76,27 @@ function blazy_test_hook_info() {
   return $hooks;
 }
 
+/**
+ * Implements hook_library_info_alter().
+ */
+function blazy_test_library_info_alter(array &$libraries, $extension) {
+  if ($extension !== 'blazy') {
+    return;
+  }
+
+  $path = \Drupal::root() . '/libraries/blazy/blazy.min.js';
+  if (!is_file($path)) {
+    $libraries['blazy']['js'] = ['https://cdn.jsdelivr.net/blazy/latest/blazy.min.js' => ['type' => 'external', 'weight' => -4]];
+    unset($libraries['blazy']['js']['/libraries/blazy/blazy.min.js']);
+  }
+}
+
 if (!function_exists('token_theme')) {
 
   /**
    * Dummy function.
    */
   function token_theme() {
-    // Empty block to satisfy coder.
-  }
-
-}
-
-if (!function_exists('video_embed_media_media_bundle_insert')) {
-
-  /**
-   * Dummy function.
-   */
-  function video_embed_media_media_bundle_insert() {
     // Empty block to satisfy coder.
   }
 

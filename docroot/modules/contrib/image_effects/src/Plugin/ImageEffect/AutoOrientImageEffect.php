@@ -148,8 +148,8 @@ class AutoOrientImageEffect extends ConfigurableImageEffectBase implements Conta
       // Both dimensions in input, and effect is configured to check the
       // the input file. Read EXIF data, and determine image orientation.
       $file = $this->fileMetadataManager->uri($uri);
-      $orientation = $file->getMetadata('exif', 'Orientation')['value'];
-      if (in_array($orientation, [5, 6, 7, 8])) {
+      $exif_orientation = $file->getMetadata('exif', 'Orientation');
+      if ($exif_orientation && in_array($exif_orientation['value'], [5, 6, 7, 8])) {
         $tmp = $dimensions['width'];
         $dimensions['width'] = $dimensions['height'];
         $dimensions['height'] = $tmp;

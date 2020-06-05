@@ -179,7 +179,9 @@ class DrupalUserProcessor implements LdapUserAttributesInterface {
       $this->updateExistingAccountByPersistentUid($ldapUser, $accountFromPuid);
     }
     else {
-      $this->createDrupalUser($ldapUser);
+      if (!$this->createDrupalUser($ldapUser)) {
+        return FALSE;
+      }
     }
     return TRUE;
   }
@@ -677,6 +679,7 @@ class DrupalUserProcessor implements LdapUserAttributesInterface {
     }
     else {
       ExternalAuthenticationHelper::setUserIdentifier($this->account, $this->account->getAccountName());
+      return TRUE;
     }
   }
 

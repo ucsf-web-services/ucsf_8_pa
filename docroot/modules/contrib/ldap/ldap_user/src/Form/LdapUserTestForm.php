@@ -2,7 +2,7 @@
 
 namespace Drupal\ldap_user\Form;
 
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Url;
@@ -36,7 +36,7 @@ class LdapUserTestForm extends FormBase implements LdapUserAttributesInterface {
   /**
    * {@inheritdoc}
    */
-  public function __construct(RequestStack $request_stack, ServerFactory $server_factory, EntityTypeManager $entity_type_manager) {
+  public function __construct(RequestStack $request_stack, ServerFactory $server_factory, EntityTypeManagerInterface $entity_type_manager) {
     $this->request = $request_stack->getCurrentRequest();
     $this->serverFactory = $server_factory;
     $this->entityTypeManager = $entity_type_manager;

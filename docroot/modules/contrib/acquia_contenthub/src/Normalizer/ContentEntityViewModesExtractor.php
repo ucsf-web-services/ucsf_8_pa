@@ -238,8 +238,7 @@ class ContentEntityViewModesExtractor implements ContentEntityViewModesExtractor
       ])->getInternalPath();
 
       $url = '/' . $url;
-      $master_request = $this->requestStack->getCurrentRequest();
-      $request = Request::create($url, 'GET', [], $master_request->cookies->all(), [], $master_request->server->all());
+      $request = Request::create($url, 'GET');
       $request = $this->contentHubSubscription->setHmacAuthorization($request, TRUE);
 
       /** @var \Drupal\Core\Render\HtmlResponse $response */

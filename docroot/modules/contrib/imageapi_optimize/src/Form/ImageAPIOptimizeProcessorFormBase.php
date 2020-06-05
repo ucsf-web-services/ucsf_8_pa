@@ -92,7 +92,7 @@ abstract class ImageAPIOptimizeProcessorFormBase extends FormBase {
     $form['actions']['cancel'] = [
       '#type' => 'link',
       '#title' => $this->t('Cancel'),
-      '#url' => $this->imageAPIOptimizePipeline->urlInfo('edit-form'),
+      '#url' => $this->imageAPIOptimizePipeline->toUrl('edit-form'),
       '#attributes' => ['class' => ['button']],
     ];
     return $form;
@@ -123,8 +123,8 @@ abstract class ImageAPIOptimizeProcessorFormBase extends FormBase {
     }
     $this->imageAPIOptimizePipeline->save();
 
-    drupal_set_message($this->t('The Image Optimize processor was successfully applied.'));
-    $form_state->setRedirectUrl($this->imageAPIOptimizePipeline->urlInfo('edit-form'));
+    $this->messenger()->addMessage($this->t('The Image Optimize processor was successfully applied.'));
+    $form_state->setRedirectUrl($this->imageAPIOptimizePipeline->toUrl('edit-form'));
   }
 
   /**

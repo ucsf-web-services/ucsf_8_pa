@@ -18,8 +18,10 @@ class ShareMessageOGHeadersTest extends ShareMessageTestBase {
   public function testOGHeadersFormSave() {
     // Create Share Message with OG headers as plugin.
     $this->drupalGet('admin/config/services/sharemessage/add');
-    file_put_contents('public://file.png', str_repeat('t', 8000000));
-    $file = File::create(['uri' => 'public://file.png']);
+    $files[] = $this->getTestFiles('image');
+    $uri = 'public://file.png';
+    \Drupal::service('file_system')->copy($files[0][0]->uri, $uri);
+    $file = File::create(['uri' => $uri]);
     $file->save();
     $this->drupalPostAjaxForm(NULL, ['plugin' => 'ogheaders'], 'plugin');
     $this->assertText('Open graph headers are used when users want to use it as a framework or a background tool only.');
@@ -40,11 +42,17 @@ class ShareMessageOGHeadersTest extends ShareMessageTestBase {
     $this->drupalGet('sharemessage-test/sharemessage_test_og_label');
     $url = file_create_url($file->getFileUri());
 
+    $image = \Drupal::service('image.factory')->get($file->getFileUri());
+    $image_width = $image->getWidth();
+    $image_height = $image->getHeight();
+
     // Check for OG headers in meta tags.
     $this->assertOGTags('og:title', 'OG headers name');
     $this->assertOGTags('og:url', $this->url);
     $this->assertOGTags('og:description', 'OG headers long description');
     $this->assertOGTags('og:image', $url);
+    $this->assertOGTags('og:image:width', $image_width);
+    $this->assertOGTags('og:image:height', $image_height);
 
     // Test special characters in OG tags.
     $this->drupalGet('admin/config/services/sharemessage/add');

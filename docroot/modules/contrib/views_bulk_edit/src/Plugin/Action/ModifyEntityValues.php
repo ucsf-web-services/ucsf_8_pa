@@ -98,6 +98,9 @@ class ModifyEntityValues extends ViewsBulkOperationsActionBase implements Contai
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
 
+    // Disable cache to avoid errors with storing files in tempstore
+    $form_state->disableCache();
+
     // Get view bundles.
     $bundle_data = $this->getViewBundles();
 
@@ -339,6 +342,8 @@ class ModifyEntityValues extends ViewsBulkOperationsActionBase implements Contai
         continue;
       }
 
+      // Modify the referenced element a bit so it doesn't
+      // cause errors and returns correct data structure.
       $element['#required'] = FALSE;
       $element['#tree'] = TRUE;
 
@@ -351,6 +356,7 @@ class ModifyEntityValues extends ViewsBulkOperationsActionBase implements Contai
       ];
 
       // Force the original value to be hidden unless the checkbox is enabled.
+
       $form[$key]['#states'] = [
         'visible' => [
           sprintf('[name="%s[%s][_field_selector][%s]"]', $entity_type_id, $bundle, $key) => ['checked' => TRUE],
@@ -370,21 +376,37 @@ class ModifyEntityValues extends ViewsBulkOperationsActionBase implements Contai
    *
    * @param array $form
    *   The form element we're searching.
+   * @param string $title
+   *   The most recent non-empty title from previous form elements
    *
    * @return array|null
    *   The deepest most element if we can find it.
    */
-  protected function &findFormElement(array &$form) {
+  protected function &findFormElement(array &$form, $title = NULL) {
+    $element = NULL;
     foreach (Element::children($form) as $key) {
-      if (isset($form[$key]['#title']) && isset($form[$key]['#type'])) {
-        return $form[$key];
+      // Not all levels have both #title and #type.
+      // Attempt to inherit #title from previous iterations.
+      // Some #titles are empty strings.  Ignore them.
+      if (!empty($form[$key]['#title'])) {
+        $title = $form[$key]['#title'];
+      }
+      elseif (!empty($form[$key]['title']['#value']) && !empty($form[$key]['title']['#type']) && $form[$key]['title']['#type'] === 'html_tag') {
+        $title = $form[$key]['title']['#value'];
+      }
+      if (isset($form[$key]['#type']) && !empty($title)) {
+        // Fix empty or missing #title in $form
+        if (empty($form[$key]['#title'])) {
+          $form[$key]['#title'] = $title;
+        }
+        $element = &$form[$key];
+        break;
       }
       elseif (is_array($form[$key])) {
-        $element = &$this->findFormElement($form[$key]);
-        return $element;
+        $element = &$this->findFormElement($form[$key], $title);
       }
     }
-    return NULL;
+    return $element;
   }
 
   /**

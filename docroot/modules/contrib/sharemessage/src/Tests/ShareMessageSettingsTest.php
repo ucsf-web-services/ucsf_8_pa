@@ -165,9 +165,11 @@ class ShareMessageSettingsTest extends ShareMessageTestBase {
     // Test UrlCurl script for Sharrre.
     // This test requires capability to connect to Google Plus, Stumbleupon,
     // Pinterest platforms.
-    $this->drupalGet('/sharemessage/sharrre/counter', ['query' => ['url' => 'https://www.drupal.org/', 'type' => 'googlePlus']]);
-    $json_content = json_decode($this->getRawContent(), TRUE);
-    $this->assertTrue(isset($json_content['count']), 'googlePlus count found and has a non-zero value: ' . $json_content['count']);
+    // @todo googlePlus test disabled, service does not seem to be working
+    // anymore.
+    // $this->drupalGet('/sharemessage/sharrre/counter', ['query' => ['url' => 'https://www.drupal.org/', 'type' => 'googlePlus']]);
+    // $json_content = json_decode($this->getRawContent(), TRUE);
+    // this->assertTrue(isset($json_content['count']), 'googlePlus count found and has a non-zero value: ' . $json_content['count']);
     $this->drupalGet('/sharemessage/sharrre/counter', ['query' => ['url' => 'https://www.drupal.org/', 'type' => 'stumbleupon']]);
     $json_content = json_decode($this->getRawContent(), TRUE);
     $this->assertTrue(isset($json_content['count']), 'stumbleupon count found and has a non-zero value: ' . $json_content['count']);

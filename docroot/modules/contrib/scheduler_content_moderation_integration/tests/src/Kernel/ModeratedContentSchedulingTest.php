@@ -30,7 +30,8 @@ class ModeratedContentSchedulingTest extends SchedulerContentModerationTestBase 
 
     $this->container->get('cron')->run();
 
-    $node = $this->moderationInfo->getLatestRevision('node', $node->id());
+    $node_storage = \Drupal::service('entity_type.manager')->getStorage('node');
+    $node = $node_storage->loadRevision($node_storage->getLatestRevisionId($node->id()));
 
     // Assert node is now published.
     $this->assertEquals(TRUE, $node->isPublished());
@@ -45,13 +46,13 @@ class ModeratedContentSchedulingTest extends SchedulerContentModerationTestBase 
     $node->publish_state->value = 'published';
     $node->save();
 
-    $node = $this->moderationInfo->getLatestRevision('node', $node->id());
+    $node = $node_storage->loadRevision($node_storage->getLatestRevisionId($node->id()));
     $this->assertEquals('Draft title', $node->getTitle());
     $this->assertEquals('draft', $node->moderation_state->value);
 
     $this->container->get('cron')->run();
 
-    $node = $this->moderationInfo->getLatestRevision('node', $node->id());
+    $node = $node_storage->loadRevision($node_storage->getLatestRevisionId($node->id()));
     $this->assertEquals(TRUE, $node->isPublished());
     $this->assertEquals('published', $node->moderation_state->value);
     $this->assertEquals('Draft title', $node->getTitle());

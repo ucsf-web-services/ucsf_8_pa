@@ -55,5 +55,7 @@ function hook_ldap_user_attrs_list_alter(array &$available_user_attrs, array &$p
  *   Contains ldap_server and provisioning events.
  */
 function hook_ldap_user_edit_user_alter(User &$account, array &$ldap_user, array $context) {
-  $account->set('myfield', $context['ldap_server']->getAttributeValue($ldap_user, 'myfield'));
+  $tokenProcessor = \Drupal::service('ldap.token_processor');
+  $value = $tokenProcessor->tokenReplace($ldap_user['attr'], '[sn]', 'ldap_entry');
+  $account->set('myfield', $value);
 }

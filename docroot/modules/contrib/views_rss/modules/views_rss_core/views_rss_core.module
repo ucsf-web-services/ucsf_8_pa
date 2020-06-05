@@ -110,12 +110,11 @@ function views_rss_core_views_rss_channel_elements() {
   );
   $elements['pubDate'] = array(
     'configurable' => FALSE,
-    'preprocess functions' => array('views_rss_core_preprocess_channel_date'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-pubdate',
   );
   $elements['lastBuildDate'] = array(
     'configurable' => FALSE,
-    'preprocess functions' => array('views_rss_core_preprocess_channel_date'),
+    'preprocess functions' => array('views_rss_core_preprocess_channel_last_build_date'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-lastbuilddate',
   );
   return $elements;
@@ -133,12 +132,6 @@ function views_rss_core_views_rss_item_elements() {
     'description' => t('The URL of the item. Required by RSS specification.'),
     'preprocess functions' => array('views_rss_core_preprocess_item_link'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-link',
-  );
-  $elements['description-image'] = array(
-    'description' => t('The image to include in the description'),
-    'preprocess functions' => array('views_rss_core_preprocess_item_description_image',
-      'views_rss_rewrite_relative_paths'),
-    'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-description',
   );
   $elements['description'] = array(
     'description' => t('The item synopsis. Required by RSS specification.'),
@@ -188,50 +181,30 @@ function views_rss_core_views_rss_item_elements() {
  */
 function views_rss_core_views_rss_date_sources() {
   $sources['node'] = array(
-    'pubDate' => array(
-      'table' => 'node_field_data',
-      'field' => 'created',
-    ),
     'lastBuildDate' => array(
       'table' => 'node_field_data',
       'field' => 'changed',
     ),
   );
   $sources['node_revisions'] = array(
-    'pubDate' => array(
-      'table' => 'node_field_revision',
-      'field' => 'created',
-    ),
     'lastBuildDate' => array(
       'table' => 'node_field_revision',
       'field' => 'changed',
     ),
   );
   $sources['comments'] = array(
-    'pubDate' => array(
-      'table' => 'comment_field_data',
-      'field' => 'created',
-    ),
     'lastBuildDate' => array(
       'table' => 'comment_field_data',
       'field' => 'changed',
     ),
   );
   $sources['files'] = array(
-    'pubDate' => array(
-      'table' => 'file_managed',
-      'field' => 'created',
-    ),
     'lastBuildDate' => array(
       'table' => 'file_managed',
       'field' => 'changed',
     ),
   );
   $sources['users'] = array(
-    'pubDate' => array(
-      'table' => 'users_field_data',
-      'field' => 'created',
-    ),
     'lastBuildDate' => array(
       'table' => 'users_field_data',
       'field' => 'changed',
@@ -253,10 +226,6 @@ function views_rss_core_views_query_alter($view, $query) {
     $date_sources = views_rss_get('date_sources');
     foreach (array_keys($date_sources) as $module) {
       if (isset($date_sources[$module][$base_table])) {
-        // Select the most recent node creation date for <pubDate> element.
-        if (isset($date_sources[$module][$base_table]['pubDate'])) {
-          $query->fields['pubDate'] = $date_sources[$module][$base_table]['pubDate'];
-        }
         // Select the most recent node update date for <lastBuildDate> element.
         if (isset($date_sources[$module][$base_table]['lastBuildDate'])) {
           $query->fields['lastBuildDate'] = $date_sources[$module][$base_table]['lastBuildDate'];
@@ -325,6 +294,28 @@ function views_rss_core_views_rss_options_form_validate($form, $form_state) {
 function views_rss_core_preprocess_views_view_rss(&$variables) {
   $view = $variables['view'];
   $style = $view->style_plugin;
+
+  if (count($view->result) > 0) {
+    $max_pub_date = NULL;
+    foreach ($variables['rows'] as $row) {
+      foreach ($row['#row']->elements as $element) {
+        if ($element['key'] === 'pubDate') {
+          $this_pub_date = (string) $element['value'];
+          if (strtotime($this_pub_date) > strtotime($max_pub_date)) {
+            $max_pub_date = $this_pub_date;
+          }
+          break;
+        }
+      }
+    }
+    if ($max_pub_date !== NULL) {
+      $variables['channel_elements']['pubDate'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'pubDate',
+        '#value' => $max_pub_date,
+      ];
+    }
+  }
 
   // Get Views RSS-configured values for channel 'title', 'description'
   // and 'link' values and re-add them to theme variables, at the same time

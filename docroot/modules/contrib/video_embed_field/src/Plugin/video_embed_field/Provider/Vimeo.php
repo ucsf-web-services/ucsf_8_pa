@@ -18,27 +18,12 @@ class Vimeo extends ProviderPluginBase {
    * {@inheritdoc}
    */
   public function renderEmbedCode($width, $height, $autoplay) {
-    /* 
-    * Modification to allow the ability to add 1 option to the end of a vimeo embed
-    * Get the raw input of what was entered for the url.
-    * Match to get the option after the url
-    * Conmbine it with the videoId string to append it to iframe #url item
-    */
-    $input = $this->getInput();
-    preg_match('/^https?:\/\/(www\.)?vimeo.com\/(channels\/[a-zA-Z0-9]*\/)?(?<id>[0-9]*)(\/[a-zA-Z0-9]+)?(\#t=(\d+)s)?(\?((?<option>[a-zA-Z0-9]*=[a-zA-Z0-9]*)))?$/',$input ,$option );
-    if($option['option']){
-      $url = $this->getVideoId(). "?".$option['option']."&";
-    }
-    else {
-      $url = $this->getVideoId();
-    }
-    
     $iframe = [
       '#type' => 'video_embed_iframe',
       '#provider' => 'vimeo',
-      '#url' => sprintf('https://player.vimeo.com/video/%s', $url),
+      '#url' => sprintf('https://player.vimeo.com/video/%s', $this->getVideoId()),
       '#query' => [
-        'autoplay' => $autoplay, 
+        'autoplay' => $autoplay,
       ],
       '#attributes' => [
         'width' => $width,
@@ -47,7 +32,6 @@ class Vimeo extends ProviderPluginBase {
         'allowfullscreen' => 'allowfullscreen',
       ],
     ];
-
     if ($time_index = $this->getTimeIndex()) {
       $iframe['#fragment'] = sprintf('t=%s', $time_index);
     }
@@ -75,7 +59,7 @@ class Vimeo extends ProviderPluginBase {
    * {@inheritdoc}
    */
   public static function getIdFromInput($input) {
-    preg_match('/^https?:\/\/(www\.)?vimeo.com\/(channels\/[a-zA-Z0-9]*\/)?(?<id>[0-9]*)(\/[a-zA-Z0-9]+)?(\#t=(\d+)s)?(\?background=(?<option>[a-zA-Z0-9]*))?$/', $input, $matches);
+    preg_match('/^https?:\/\/(www\.)?vimeo.com\/(channels\/[a-zA-Z0-9]*\/)?(?<id>[0-9]*)(\/[a-zA-Z0-9]+)?(\#t=(\d+)s)?$/', $input, $matches);
     return isset($matches['id']) ? $matches['id'] : FALSE;
   }
 

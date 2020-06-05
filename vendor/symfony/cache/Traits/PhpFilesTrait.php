@@ -136,8 +136,8 @@ trait PhpFilesTrait
                 if ('N;' === $value || (isset($value[2]) && ':' === $value[1])) {
                     $value = serialize($value);
                 }
-            } elseif (!\is_scalar($value)) {
-                throw new InvalidArgumentException(sprintf('Cache key "%s" has non-serializable %s value.', $key, \gettype($value)));
+            } elseif (!is_scalar($value)) {
+                throw new InvalidArgumentException(sprintf('Cache key "%s" has non-serializable "%s" value.', $key, \gettype($value)));
             }
 
             $data[1] = $value;
@@ -150,7 +150,7 @@ trait PhpFilesTrait
         }
 
         if (!$ok && !is_writable($this->directory)) {
-            throw new CacheException(sprintf('Cache directory is not writable (%s)', $this->directory));
+            throw new CacheException(sprintf('Cache directory is not writable (%s).', $this->directory));
         }
 
         return $ok;

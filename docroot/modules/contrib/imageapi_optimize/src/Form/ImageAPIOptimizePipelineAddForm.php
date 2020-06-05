@@ -14,7 +14,7 @@ class ImageAPIOptimizePipelineAddForm extends ImageAPIOptimizePipelineFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
-    drupal_set_message($this->t('Pipeline %name was created.', ['%name' => $this->entity->label()]));
+    $this->messenger()->addMessage($this->t('Pipeline %name was created.', ['%name' => $this->entity->label()]));
   }
 
   /**

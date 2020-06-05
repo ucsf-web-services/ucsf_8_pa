@@ -12,7 +12,6 @@ use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\search_api\Entity\Index;
 use Drupal\search_api\Utility\Utility;
 use Drupal\views\Entity\View;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Tests the Views integration of the Search API.
@@ -34,6 +33,11 @@ class ViewsTest extends SearchApiBrowserTestBase {
     'search_api_test_views',
     'views_ui',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected static $additionalBundles = TRUE;
 
   /**
    * {@inheritdoc}
@@ -61,7 +65,7 @@ class ViewsTest extends SearchApiBrowserTestBase {
   /**
    * Tests a view with exposed filters.
    */
-  public function testView() {
+  public function testSearchView() {
     $this->checkResults([], array_keys($this->entities), 'Unfiltered search');
 
     $this->checkResults(
@@ -317,7 +321,8 @@ class ViewsTest extends SearchApiBrowserTestBase {
     $this->assertArrayHasKey('views_rest:search_api_test_view__rest_export_1', $displays, 'A display plugin was created for the test view block display.');
     $this->assertEquals('/search-api-test', $displays[$display_id]->getPath(), 'Display returns the correct path.');
     $view_url = Url::fromUserInput('/search-api-test')->toString();
-    $this->assertEquals($view_url, $displays[$display_id]->getUrl()->toString(), 'Display returns the correct URL.');
+    $display_url = Url::fromUserInput($displays[$display_id]->getPath())->toString();
+    $this->assertEquals($view_url, $display_url, 'Display returns the correct URL.');
     $this->assertNull($displays['views_block:search_api_test_view__block_1']->getPath(), 'Block display returns the correct path.');
     $this->assertEquals('/search-api-rest-test', $displays['views_rest:search_api_test_view__rest_export_1']->getPath(), 'REST display returns the correct path.');
 
@@ -331,7 +336,7 @@ class ViewsTest extends SearchApiBrowserTestBase {
     $this->drupalLogin($admin_user);
 
     // Delete the page display for the view.
-    $this->drupalGet('admin/structure/views/view/search_api_test_view');
+    $this->drupalGet('admin/structure/views/view/search_api_test_view/edit/page_1');
     $this->submitForm([], 'Delete Page');
     $this->submitForm([], 'Save');
 
@@ -346,10 +351,28 @@ class ViewsTest extends SearchApiBrowserTestBase {
   }
 
   /**
+   * Tests a view with operations column.
+   */
+  public function testViewWithOperations() {
+    $this->drupalGet('search-api-test-operations/', ['query' => []]);
+
+    // Checking first and last item in result.
+    $this->assertSession()->linkByHrefExists('/entity_test_mulrev_changed/manage/1/edit');
+    $this->assertSession()->linkByHrefExists('/entity_test/delete/entity_test_mulrev_changed/1');
+    $this->assertSession()->linkByHrefExists('/entity_test_mulrev_changed/manage/5/edit');
+    $this->assertSession()->linkByHrefExists('/entity_test/delete/entity_test_mulrev_changed/5');
+
+    // Checking item without operations.
+    $this->assertSession()->linkByHrefNotExists('/entity_test_mulrev_changed/manage/2/edit');
+    $this->assertSession()->linkByHrefNotExists('/entity_test/delete/entity_test_mulrev_changed/2');
+  }
+
+  /**
    * Contains regression tests for previous, fixed bugs.
    */
   protected function regressionTests() {
     $this->regressionTest2869121();
+    $this->regressionTest3031991();
   }
 
   /**
@@ -395,7 +418,7 @@ class ViewsTest extends SearchApiBrowserTestBase {
 
     Block::create([
       'id' => 'search_api_test_view',
-      'theme' => 'classy',
+      'theme' => $this->defaultTheme,
       'weight' => -20,
       'plugin' => 'views_exposed_filter_block:search_api_test_view-page_1',
       'region' => 'content',
@@ -418,6 +441,21 @@ class ViewsTest extends SearchApiBrowserTestBase {
       $this->assertSession()
         ->responseHeaderEquals('X-Drupal-Dynamic-Cache', 'MISS');
     }
+  }
+
+  /**
+   * Tests the interaction of multiple fulltext filters.
+   *
+   * @see https://www.drupal.org/node/3031991
+   */
+  protected function regressionTest3031991() {
+    $query = [
+      'search_api_fulltext' => 'foo blabla',
+      'search_api_fulltext_op' => 'or',
+      'search_api_fulltext_2' => 'bar',
+      'search_api_fulltext_2_op' => 'not',
+    ];
+    $this->checkResults($query, [4], 'Search with multiple fulltext filters');
   }
 
   /**
@@ -522,7 +560,12 @@ class ViewsTest extends SearchApiBrowserTestBase {
         'property_path' => 'rendered_item',
         'configuration' => [
           'roles' => [AccountInterface::ANONYMOUS_ROLE],
-          'view_mode' => [],
+          'view_mode' => [
+            $datasource_id => [
+              'article' => 'full',
+              'item' => 'full',
+            ],
+          ],
         ],
       ]);
     $index->addField($field);
@@ -554,7 +597,7 @@ class ViewsTest extends SearchApiBrowserTestBase {
     $admin_user = $this->drupalCreateUser($permissions);
     $this->drupalLogin($admin_user);
 
-    $this->drupalGet('admin/structure/views/view/search_api_test_view');
+    $this->drupalGet('admin/structure/views/view/search_api_test_view/edit/page_1');
     $this->assertSession()->statusCodeEquals(200);
 
     // Set the user IDs associated with our test entities.
@@ -616,6 +659,7 @@ class ViewsTest extends SearchApiBrowserTestBase {
       'search_api_index_database_search_index.author',
       'search_api_entity_user.roles',
       'search_api_index_database_search_index.rendered_item',
+      'search_api_index_database_search_index.search_api_rendered_item',
     ];
     $edit = [];
     foreach ($fields as $field) {
@@ -687,17 +731,20 @@ class ViewsTest extends SearchApiBrowserTestBase {
     $this->drupalGet('search-api-test');
     $this->assertSession()->statusCodeEquals(200);
 
+    $fields = [
+      'search_api_datasource',
+      'id',
+      'body',
+      'category',
+      'keywords',
+      'user_id',
+      'user_id:name',
+      'user_id:roles',
+      'rendered_item',
+      'search_api_rendered_item',
+    ];
+    $rendered_item_fields = ['rendered_item', 'search_api_rendered_item'];
     foreach ($this->entities as $id => $entity) {
-      $fields = [
-        'search_api_datasource',
-        'id',
-        'body',
-        'category',
-        'keywords',
-        'user_id',
-        'user_id:name',
-        'user_id:roles',
-      ];
       foreach ($fields as $field) {
         $field_entity = $entity;
         while (strpos($field, ':')) {
@@ -714,16 +761,20 @@ class ViewsTest extends SearchApiBrowserTestBase {
           $entities[] = $field_entity->getTranslation('nl');
         }
         foreach ($entities as $i => $field_entity) {
-          if ($field != 'search_api_datasource') {
+          if ($field === 'search_api_datasource') {
+            $data = [$datasource_id];
+          }
+          elseif (in_array($field, $rendered_item_fields)) {
+            $view_mode = $field === 'rendered_item' ? 'full' : 'teaser';
+            $data = [$view_mode];
+          }
+          else {
             $data = \Drupal::getContainer()
               ->get('search_api.fields_helper')
               ->extractFieldValues($field_entity->get($field));
             if (!$data) {
               $data = ['[EMPTY]'];
             }
-          }
-          else {
-            $data = [$datasource_id];
           }
           $row_num = 2 * $id + $i - 1;
           $prefix = "#$row_num [$field] ";
@@ -826,7 +877,16 @@ class ViewsTest extends SearchApiBrowserTestBase {
       return NULL;
     }
 
-    $edit['options[fallback_options][multi_separator]'] = '|';
+    $non_entity_fields = [
+      'search_api_datasource',
+      'rendered_item',
+      'search_api_rendered_item',
+    ];
+    // The "Fallback options" are only available for fields based on the Field
+    // API.
+    if (!in_array($field, $non_entity_fields, TRUE)) {
+      $edit['options[fallback_options][multi_separator]'] = '|';
+    }
     $edit['options[alter][alter_text]'] = TRUE;
     $edit['options[alter][text]'] = "#{{counter}} [$field] {{ $field }}";
     $edit['options[empty]'] = "#{{counter}} [$field] [EMPTY]";
@@ -843,7 +903,6 @@ class ViewsTest extends SearchApiBrowserTestBase {
         break;
 
       case 'search_api_datasource':
-        unset($edit['options[fallback_options][multi_separator]']);
         break;
 
       case 'body':
@@ -870,9 +929,11 @@ class ViewsTest extends SearchApiBrowserTestBase {
         break;
 
       case 'rendered_item':
-        // "Rendered item" isn't based on a Field API field, so there is no
-        // "Fallback options" form (added otherwise by SearchApiEntityField).
-        unset($edit['options[fallback_options][multi_separator]']);
+        break;
+
+      case 'search_api_rendered_item':
+        $edit['options[view_modes][entity:entity_test_mulrev_changed][article]'] = 'teaser';
+        $edit['options[view_modes][entity:entity_test_mulrev_changed][item]'] = 'teaser';
         break;
     }
 
@@ -928,7 +989,7 @@ class ViewsTest extends SearchApiBrowserTestBase {
   public function testHighlighting() {
     // Add the Highlight processor to the search index.
     $index = Index::load('database_search_index');
-    $processor = $this->container
+    $processor = \Drupal::getContainer()
       ->get('search_api.plugin_helper')
       ->createProcessorPlugin($index, 'highlight');
     $index->addProcessor($processor);
@@ -941,25 +1002,42 @@ class ViewsTest extends SearchApiBrowserTestBase {
     $options['query']['search_api_fulltext'] = 'foo';
     $this->drupalGet($path, $options);
     $this->assertSession()->responseContains('<strong>foo</strong> bar baz');
+
+    $options['query']['search_api_fulltext'] = 'bar';
+    $this->drupalGet($path, $options);
+    $this->assertSession()->responseContains('foo <strong>bar</strong> baz');
   }
 
   /**
-   * {@inheritdoc}
+   * Verifies that our row plugin is available without clearing cache.
    */
-  protected function initConfig(ContainerInterface $container) {
-    parent::initConfig($container);
+  public function testCreatingIndexClearsRowPluginCache() {
+    $this->drupalLogin($this->drupalCreateUser([
+      'administer search_api',
+      'access administration pages',
+      'administer views',
+    ]));
 
-    // This will just set the Drupal state to include the necessary bundles for
-    // our test entity type. Otherwise, fields from those bundles won't be found
-    // and thus removed from the test index. (We can't do it in setUp(), before
-    // calling the parent method, since the container isn't set up at that
-    // point.)
-    $bundles = [
-      'entity_test_mulrev_changed' => ['label' => 'Entity Test Bundle'],
-      'item' => ['label' => 'item'],
-      'article' => ['label' => 'article'],
-    ];
-    \Drupal::state()->set('entity_test_mulrev_changed.bundles', $bundles);
+    $index_id = 'my_custom_index';
+    Index::create([
+      'name' => 'My custom index',
+      'id' => $index_id,
+      'status' => TRUE,
+      'datasource_settings' => [
+        'entity:node' => [],
+        'entity:user' => [],
+      ],
+    ])->save();
+
+    $this->drupalGet('/admin/structure/views/add');
+    $this->submitForm([
+      'label' => 'Test view',
+      'id' => 'test',
+      'show[wizard_key]' => "standard:search_api_index_$index_id",
+    ], 'Save and edit');
+
+    $this->drupalGet('/admin/structure/views/nojs/display/test/default/row');
+    $this->assertSession()->elementExists('css', '#edit-row-type [value="search_api"]');
   }
 
 }

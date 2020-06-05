@@ -117,13 +117,13 @@ class VariablesController extends ControllerBase {
   /**
    * Get all system variables.
    *
-   * @return array
+   * @return string
    *   Variables values keyed by the variable name.
    */
   public function getVariablesData() {
     // Send SPI definition timestamp to see if the site needs updates.
     $data = [
-      'acquia_spi_def_timestamp' => \Drupal::config('acquia_connector.settings')->get('spi.def_timestamp'),
+      'acquia_spi_def_timestamp' => $this->state()->get('acquia_spi_data.def_timestamp', 0),
     ];
     $variables = [
       'acquia_spi_send_node_user',
@@ -167,8 +167,8 @@ class VariablesController extends ControllerBase {
       'http_response_debug_cacheability_headers',
     ];
 
-    $spi_def_vars = \Drupal::config('acquia_connector.settings')->get('spi.def_vars');
-    $waived_spi_def_vars = \Drupal::config('acquia_connector.settings')->get('spi.def_waived_vars');
+    $spi_def_vars = $this->state()->get('acquia_spi_data.def_vars', []);
+    $waived_spi_def_vars = $this->state()->get('acquia_spi_data.def_waived_vars', []);
     // Merge hard coded $variables with vars from SPI definition.
     foreach ($spi_def_vars as $var_name => $var) {
       if (!in_array($var_name, $waived_spi_def_vars) && !in_array($var_name, $variables)) {

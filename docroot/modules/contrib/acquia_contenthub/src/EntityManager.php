@@ -2,6 +2,7 @@
 
 namespace Drupal\acquia_contenthub;
 
+use Drupal\acquia_contenthub\Session\ContentHubUserSession;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\file\FileInterface;
@@ -520,6 +521,15 @@ class EntityManager {
     // exported. Only content entities can be exported to Content Hub.
     if ($entity instanceof ConfigEntityInterface) {
       return FALSE;
+    }
+
+    // If access to the entity is not allowed, then it is not eligible for export.
+    if ($entity instanceof FileInterface) {
+      $account = new ContentHubUserSession(\Drupal::config('acquia_contenthub.entity_config')->get('user_role'));
+      $entity_access = $entity->access('view', $account, TRUE);
+      if (!$entity_access->isAllowed()) {
+        return FALSE;
+      }
     }
 
     $entity_type_id = $entity->getEntityTypeId();

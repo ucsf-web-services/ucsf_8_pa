@@ -4,23 +4,28 @@
  * Default theme implementation to each level of menu.
  */
 #}
+{% import _self as menu %}
 
-<ul class="menu menu-level-{{ items|first.menu_level }}">
-{% for key, item in items if key|first != '#' %}
-  {% set menu_item_classes = [
-    'menu-item',
-    item.is_expanded ? 'menu-item--expanded',
-    item.is_collapsed ? 'menu-item--collapsed',
-    item.in_active_trail ? 'menu-item--active-trail',
-  ] %}
+{{ menu.menu_links(items, attributes, 0) }}
 
-  <li{{ item.attributes.addClass(menu_item_classes) }}>
-    {{ link(item.title, item.url) }}
+{% macro menu_links(items, attributes, menu_level) %}
+  {% import _self as menu_links %}
+  <ul class="menu menu-level-{{ items|first.menu_level }}">
+  {% for key, item in items if key|first != '#' %}
+    {% set menu_item_classes = [
+      'menu-item',
+      item.is_expanded ? 'menu-item--expanded',
+      item.is_collapsed ? 'menu-item--collapsed',
+      item.in_active_trail ? 'menu-item--active-trail',
+    ] %}
 
-    {% set rendered_content = item.content|without('') %}
-    {% if rendered_content|render %}
-      {{ rendered_content }}
-    {% endif %}
-  </li>
-{% endfor %}
-</ul>
+    <li{{ item.attributes.addClass(menu_item_classes) }}>
+      {{ link(item.title, item.url) }}
+      {% set rendered_content = item.content|without('') %}
+      {% if rendered_content|render %}
+        {{ rendered_content }}
+      {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+{% endmacro %}

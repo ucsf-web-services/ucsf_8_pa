@@ -347,39 +347,6 @@ class IntegrationTest extends WebTestBase {
   }
 
   /**
-   * Enables a view mode to be rendered in CDF.
-   *
-   * @param string $entity_type
-   *   The entity type.
-   * @param string $bundle
-   *   The bundle.
-   * @param string|array $view_mode
-   *   The view mode(s) to enable.
-   */
-  public function enableViewModeFor($entity_type, $bundle, $view_mode) {
-    $this->drupalGet('admin/config/services/acquia-contenthub/configuration');
-    $this->assertResponse(200);
-
-    $edit = [
-      'entities[' . $entity_type . '][' . $bundle . '][enable_viewmodes]' => TRUE,
-    ];
-    if (is_array($view_mode)) {
-      foreach ($view_mode as $value) {
-        $edit['entities[' . $entity_type . '][' . $bundle . '][rendering][]'][$value] = $value;
-      }
-    }
-    else {
-      $edit['entities[' . $entity_type . '][' . $bundle . '][rendering][]'] = [$view_mode];
-    }
-
-    $this->drupalPostForm(NULL, $edit, $this->t('Save configuration'));
-    $this->assertResponse(200);
-
-    $this->drupalGet('admin/config/services/acquia-contenthub/configuration');
-    $this->assertResponse(200);
-  }
-
-  /**
    * Configure and use content hub preview image style.
    */
   public function configureAndUsePreviewImageStyle() {

@@ -3,8 +3,10 @@
 namespace Drupal\menu_position\Plugin\Derivative;
 
 use Drupal\Component\Plugin\Derivative\DeriverBase;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -14,6 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class MenuPositionLink extends DeriverBase implements ContainerDeriverInterface {
 
+  use StringTranslationTrait;
+
   /**
    * The menu_position_rule storage.
    *
@@ -22,13 +26,26 @@ class MenuPositionLink extends DeriverBase implements ContainerDeriverInterface 
   protected $storage;
 
   /**
-   * {@inheritdoc}
+   * The config factory service.
    *
-   * @param \Drupal\Core\Entity\EntityStorageInterface $menu_position_rule_storage
-   *   The menu_position_rule storage.
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
-  public function __construct(EntityStorageInterface $menu_position_rule_storage) {
-    $this->storage = $menu_position_rule_storage;
+  protected $config_factory;
+
+  /**
+   * Menu position link constructor.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $menu_position_rule_storage
+   *   The menu_position_rule storage.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory service.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  public function __construct(EntityTypeManagerInterface $menu_position_rule_storage, ConfigFactoryInterface $config_factory) {
+    $this->storage = $menu_position_rule_storage->getStorage('menu_position_rule');
+    $this->config_factory = $config_factory;
   }
 
   /**
@@ -36,7 +53,8 @@ class MenuPositionLink extends DeriverBase implements ContainerDeriverInterface 
    */
   public static function create(ContainerInterface $container, $base_plugin_id) {
     return new static(
-      $container->get('entity.manager')->getStorage('menu_position_rule')
+      $container->get('entity_type.manager'),
+      $container->get('config.factory')
     );
   }
 
@@ -57,7 +75,7 @@ class MenuPositionLink extends DeriverBase implements ContainerDeriverInterface 
         // Provide defaults, they will be updated by the rule.
         $definition = [
           'id' => $base_plugin_definition['id'] . ':' . $menu_position_rule->id(),
-          'title' => t('@label (menu position rule)', [
+          'title' => $this->t('@label (menu position rule)', [
             '@label' => $menu_position_rule->getLabel(),
           ]),
           'menu_name' => $menu_position_rule->getMenuName(),
@@ -66,8 +84,9 @@ class MenuPositionLink extends DeriverBase implements ContainerDeriverInterface 
           'metadata' => [
             'entity_id' => $menu_position_rule->id(),
           ],
-          // Links are enabled (i.e. visible) depending on the modules' settings.
-          'enabled' => \Drupal::config('menu_position.settings')->get('link_display') === 'child',
+          // Links are enabled (i.e. visible) depending on the modules'
+          // settings.
+          'enabled' => $this->config_factory->get('menu_position.settings')->get('link_display') === 'child',
         ];
       }
       $this->derivatives[$menu_position_rule->id()] = $definition + $base_plugin_definition;

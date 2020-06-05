@@ -9,7 +9,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\blazy\BlazyManagerInterface;
 use Drupal\blazy\Dejavu\BlazyVideoTrait;
 use Drupal\blazy\Dejavu\BlazyEntityReferenceBase;
-use Drupal\blazy\Dejavu\BlazyDefault;
+use Drupal\blazy\BlazyDefault;
 use Drupal\blazy\Plugin\Field\FieldFormatter\BlazyFormatterBaseTrait;
 use Drupal\blazy_test\BlazyFormatterTestInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -136,8 +136,6 @@ class BlazyTestEntityReferenceFormatterTest extends BlazyEntityReferenceBase imp
    */
   public function getScopedFormElements() {
     $admin       = $this->admin();
-    $field       = $this->fieldDefinition;
-    $entity_type = $field->getTargetEntityTypeId();
     $target_type = $this->getFieldSetting('target_type');
     $views_ui    = $this->getFieldSetting('handler') == 'default';
     $bundles     = $views_ui ? [] : $this->getFieldSetting('handler_settings')['target_bundles'];

@@ -41,7 +41,7 @@ abstract class ImageAPIOptimizePipelineFormBase extends EntityForm {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity.manager')->getStorage('imageapi_optimize_pipeline')
+      $container->get('entity_type.manager')->getStorage('imageapi_optimize_pipeline')
     );
   }
 
@@ -73,7 +73,7 @@ abstract class ImageAPIOptimizePipelineFormBase extends EntityForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     parent::save($form, $form_state);
-    $form_state->setRedirectUrl($this->entity->urlInfo('edit-form'));
+    $form_state->setRedirectUrl($this->entity->toUrl('edit-form'));
   }
 
 }

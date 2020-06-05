@@ -33,7 +33,7 @@ class BlazyManagerBaseUnitTest extends UnitTestCase {
    * @covers ::__construct
    */
   public function testBlazyManagerCreate() {
-    $container = $this->getMock(ContainerInterface::class);
+    $container = $this->createMock(ContainerInterface::class);
     $exception = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
 
     $map = [

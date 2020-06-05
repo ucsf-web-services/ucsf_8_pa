@@ -6,7 +6,6 @@
  */
 
 use Drupal\Component\Utility\Html;
-use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Config\ConfigValueException;
 use Drupal\image\ConfigurableImageEffectBase;
 use Drupal\image_effects\Component\ColorUtility;
@@ -138,17 +137,17 @@ function image_effects_image_effects_text_overlay_text_alter(&$text, Configurabl
   // Convert case, if requested.
   if ($effect_data['text']['case_format']) {
     $method_map = [
-      'upper' => 'strtoupper',
-      'lower' => 'strtolower',
-      'ucwords' => 'ucwords',
-      'ucfirst' => 'ucfirst',
+      'upper' => 'mb_strtoupper',
+      'lower' => 'mb_strtolower',
+      'ucwords' => 'Unicode::ucwords',
+      'ucfirst' => 'Unicode::ucfirst',
     ];
-    $text = Unicode::{$method_map[$effect_data['text']['case_format']]}($text);
+    $text = $method_map[$effect_data['text']['case_format']]($text);
   }
 
   // Limit the maximum number of characters.
-  if ($effect_data['text']['maximum_chars'] > 0 && Unicode::strlen($text) > $effect_data['text']['maximum_chars']) {
-    $text = Unicode::substr($text, 0, $effect_data['text']['maximum_chars']) . $effect_data['text']['excess_chars_text'];
+  if ($effect_data['text']['maximum_chars'] > 0 && mb_strlen($text) > $effect_data['text']['maximum_chars']) {
+    $text = mb_substr($text, 0, $effect_data['text']['maximum_chars']) . $effect_data['text']['excess_chars_text'];
   }
 }
 
@@ -165,11 +164,11 @@ function image_effects_preprocess_image_effects_color_detail(&$variables) {
         $variables['border_color'] = ColorUtility::matchLuma($variables['color']);
       }
       else {
-        $variables['border_color'] = Unicode::substr($variables['border_color'], 0, 7);
+        $variables['border_color'] = mb_substr($variables['border_color'], 0, 7);
       }
     }
     $variables['color_opacity'] = ColorUtility::rgbaToOpacity($variables['color']);
-    $variables['color'] = Unicode::substr($variables['color'], 0, 7);
+    $variables['color'] = mb_substr($variables['color'], 0, 7);
   }
 }
 
