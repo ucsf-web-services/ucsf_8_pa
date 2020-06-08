@@ -30,6 +30,6 @@ fi
 echo "Clearing Cache"
 drush @$drush_alias cr
 
-# Update database.testing
+# Update database.
 echo "Updating Database"
 drush @$drush_alias updb -y
