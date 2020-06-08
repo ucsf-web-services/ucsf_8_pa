@@ -29,3 +29,7 @@ fi
 # Clear the cache.
 echo "Clearing Cache"
 drush @$drush_alias cr
+
+# Clear the cache.
+echo "Updating Database"
+drush @$drush_alias updb
