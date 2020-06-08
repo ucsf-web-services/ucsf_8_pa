@@ -12,7 +12,6 @@ $image-frame: 40px;
   h1 {
     @include fs-article-medium-h1;
 
-    // font is too large and is stretching grid row
     @include breakpoint($new-large) {
       font-size: 50px;
     }
@@ -40,12 +39,10 @@ $image-frame: 40px;
 }
 
 .news-package-banner-image {
-  img {
-    margin: 0 0 0 auto;
-  }
+  position: relative;
 
   @include breakpoint(700px) {
-    position: relative;
+
     &::before {
       content: "";
       position: absolute;
@@ -54,27 +51,31 @@ $image-frame: 40px;
       height: 0;
       padding-bottom: calc(100% / (2 / 1));
     }
+  }
 
-    @include breakpoint($new-large) {
-      grid-column: 7 / -2;
-      grid-row: 1 / 2;
-      background-image:
-      // If title is too long it stretches the grid row height
-      // causing .news-package-banner-image-bk to bleed through
-      // gradient is applied to the image container to hide that gap.
-      linear-gradient(
-        to right,
-        $white 86%,
-        transparent 14%,
-      );
-    }
+  @include breakpoint($new-large) {
+    grid-column: 7 / -2;
+    grid-row: 1 / 2;
+    background-image:
+    // If title is too long it stretches the grid row height
+    // causing .news-package-banner-image-bk to bleed through
+    // gradient is applied to the image container to hide that gap.
+    linear-gradient(
+      to right,
+      $white 86%,
+      transparent 14%,
+    );
+  }
 
-    @include breakpoint($new-xl) {
-      grid-column: 8 / -2;
-      margin-left: -$image-frame;
-    }
+  @include breakpoint($new-xl) {
+    grid-column: 8 / -2;
+    margin-left: -$image-frame;
+  }
 
-    img {
+  img {
+    margin: 0 0 0 auto;
+
+    @include breakpoint(700px) {
       margin: 0;
       padding: 0;
       min-width: 100%;
