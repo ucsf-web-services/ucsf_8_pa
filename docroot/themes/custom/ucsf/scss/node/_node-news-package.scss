@@ -45,6 +45,15 @@
   @include breakpoint($new-large) {
     grid-column: 6 / -2;
     grid-row: 1 / 3;
+    background-image:
+    // If title is too long it stretches the grid row height
+    // causing .news-package-banner-image-bk to bleed through
+    // gradient is applied to the image container to hide that gap.
+    linear-gradient(
+      to right,
+      $white 86%,
+      transparent 14%,
+    );
 
     img {
       float: right;
