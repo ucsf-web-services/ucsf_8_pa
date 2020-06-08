@@ -32,4 +32,4 @@ drush @$drush_alias cr
 
 # Update database.testing
 echo "Updating Database"
-drush @$drush_alias updb
+drush @$drush_alias updb -y
