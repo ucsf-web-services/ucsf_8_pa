@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\forum\Functional;
 
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Entity\EntityInterface;
@@ -25,7 +26,20 @@ class ForumTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['taxonomy', 'comment', 'forum', 'node', 'block', 'menu_ui', 'help'];
+  public static $modules = [
+    'taxonomy',
+    'comment',
+    'forum',
+    'node',
+    'block',
+    'menu_ui',
+    'help',
+  ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'classy';
 
   /**
    * A user with various administrative privileges.
@@ -232,12 +246,12 @@ class ForumTest extends BrowserTestBase {
     // Test the root forum page title change.
     $this->drupalGet('forum');
     $this->assertCacheTag('config:taxonomy.vocabulary.' . $this->forum['vid']);
-    $this->assertTitle(t('Forums | Drupal'));
+    $this->assertTitle('Forums | Drupal');
     $vocabulary = Vocabulary::load($this->forum['vid']);
     $vocabulary->set('name', 'Discussions');
     $vocabulary->save();
     $this->drupalGet('forum');
-    $this->assertTitle(t('Discussions | Drupal'));
+    $this->assertTitle('Discussions | Drupal');
 
     // Test anonymous action link.
     $this->drupalLogout();
@@ -257,7 +271,9 @@ class ForumTest extends BrowserTestBase {
     $tids = \Drupal::entityQuery('taxonomy_term')
       ->condition('vid', $vid)
       ->execute();
-    entity_delete_multiple('taxonomy_term', $tids);
+    $term_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+    $terms = $term_storage->loadMultiple($tids);
+    $term_storage->delete($terms);
 
     // Create an orphan forum item.
     $edit = [];
@@ -425,7 +441,7 @@ class ForumTest extends BrowserTestBase {
         'Created new @type @term.',
         ['@term' => $name, '@type' => t($type)]
       ),
-      format_string('@type was created', ['@type' => ucfirst($type)])
+      new FormattableMarkup('@type was created', ['@type' => ucfirst($type)])
     );
 
     // Verify that the creation message contains a link to a term.
@@ -576,7 +592,7 @@ class ForumTest extends BrowserTestBase {
 
     // Retrieve node object, ensure that the topic was created and in the proper forum.
     $node = $this->drupalGetNodeByTitle($title);
-    $this->assertTrue($node != NULL, format_string('Node @title was loaded', ['@title' => $title]));
+    $this->assertTrue($node != NULL, new FormattableMarkup('Node @title was loaded', ['@title' => $title]));
     $this->assertEqual($node->taxonomy_forums->target_id, $tid, 'Saved forum topic was in the expected forum');
 
     // View forum topic.
@@ -604,7 +620,7 @@ class ForumTest extends BrowserTestBase {
     $this->drupalGet('admin/help/forum');
     $this->assertResponse($response2);
     if ($response2 == 200) {
-      $this->assertTitle(t('Forum | Drupal'), 'Forum help title was displayed');
+      $this->assertTitle('Forum | Drupal');
       $this->assertText(t('Forum'), 'Forum help node was displayed');
     }
 
@@ -618,7 +634,7 @@ class ForumTest extends BrowserTestBase {
     // View forum node.
     $this->drupalGet('node/' . $node->id());
     $this->assertResponse(200);
-    $this->assertTitle($node->label() . ' | Drupal', 'Forum node was displayed');
+    $this->assertTitle($node->label() . ' | Drupal');
     $breadcrumb_build = [
       Link::createFromRoute(t('Home'), '<front>'),
       Link::createFromRoute(t('Forums'), 'forum.index'),
@@ -635,7 +651,7 @@ class ForumTest extends BrowserTestBase {
     $this->drupalGet('node/' . $node->id() . '/edit');
     $this->assertResponse($response);
     if ($response == 200) {
-      $this->assertTitle('Edit Forum topic ' . $node->label() . ' | Drupal', 'Forum edit node was displayed');
+      $this->assertTitle('Edit Forum topic ' . $node->label() . ' | Drupal');
     }
 
     if ($response == 200) {

@@ -155,26 +155,15 @@ a {
 .link--cta a,
 .full-width-page-banner__header a.link--cta,
 .promo-list__card-two .link--cta {
+  @include link-bg-image('cta-arrow.svg');
+  @include link-bg-image-hover();
+  @include transition;
   display: inline-block;
-  background-image: url("../images/cta-arrow.svg");
-  background-repeat: no-repeat;
-  background-color: transparent;
   padding-right: $space-three;
-  background-position: 99% center;
   background-size: 14px 10px;
-  // BUG ALERT: in Chrome, makes parent container with colored bg noticeably shift
-  // use @include link-bg-image-hover()
-  padding-right: $space-three;
   text-decoration: none;
   font-family: $font-helvetica-neue-medium;
   border-bottom: none;
-  @include transition;
-
-  &:hover {
-    // for non white bg use @include link-bg-image-hover()
-    // on hover add padding-right: $space-three;
-    padding-right: $space-four;
-  }
 }
 
 .promo-list__card {

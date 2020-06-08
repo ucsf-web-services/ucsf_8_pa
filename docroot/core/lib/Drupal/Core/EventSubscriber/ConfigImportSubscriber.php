@@ -7,7 +7,9 @@ use Drupal\Core\Config\ConfigImporter;
 use Drupal\Core\Config\ConfigImporterEvent;
 use Drupal\Core\Config\ConfigImportValidateEventSubscriberBase;
 use Drupal\Core\Config\ConfigNameException;
+use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Extension\ThemeHandlerInterface;
+use Drupal\Core\Installer\InstallerKernel;
 
 /**
  * Config import subscriber for config import events.
@@ -22,11 +24,11 @@ class ConfigImportSubscriber extends ConfigImportValidateEventSubscriberBase {
   protected $themeData;
 
   /**
-   * Module data.
+   * Module extension list.
    *
-   * @var \Drupal\Core\Extension\Extension[]
+   * @var \Drupal\Core\Extension\ModuleExtensionList
    */
-  protected $moduleData;
+  protected $moduleExtensionList;
 
   /**
    * The theme handler.
@@ -40,9 +42,12 @@ class ConfigImportSubscriber extends ConfigImportValidateEventSubscriberBase {
    *
    * @param \Drupal\Core\Extension\ThemeHandlerInterface $theme_handler
    *   The theme handler.
+   * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list_module
+   *   The module extension list.
    */
-  public function __construct(ThemeHandlerInterface $theme_handler) {
+  public function __construct(ThemeHandlerInterface $theme_handler, ModuleExtensionList $extension_list_module) {
     $this->themeHandler = $theme_handler;
+    $this->moduleExtensionList = $extension_list_module;
   }
 
   /**
@@ -91,7 +96,7 @@ class ConfigImportSubscriber extends ConfigImportValidateEventSubscriberBase {
 
     // Ensure the profile is not changing.
     if ($install_profile !== $core_extension['profile']) {
-      if (drupal_installation_attempted()) {
+      if (InstallerKernel::installationAttempted()) {
         $config_importer->logError($this->t('The selected installation profile %install_profile does not match the profile stored in configuration %config_profile.', [
           '%install_profile' => $install_profile,
           '%config_profile' => $core_extension['profile'],
@@ -108,24 +113,18 @@ class ConfigImportSubscriber extends ConfigImportValidateEventSubscriberBase {
     }
 
     // Get a list of modules with dependency weights as values.
-    $module_data = $this->getModuleData();
+    $module_data = $this->moduleExtensionList->getList();
     $nonexistent_modules = array_keys(array_diff_key($core_extension['module'], $module_data));
     foreach ($nonexistent_modules as $module) {
       $config_importer->logError($this->t('Unable to install the %module module since it does not exist.', ['%module' => $module]));
     }
-
-    // Get a list of parent profiles and the main profile.
-    /* @var $profiles \Drupal\Core\Extension\Extension[] */
-    $profiles = \Drupal::service('extension.list.profile')->getAncestors();
-    /* @var $main_profile \Drupal\Core\Extension\Extension */
-    $main_profile = end($profiles);
 
     // Ensure that all modules being installed have their dependencies met.
     $installs = $config_importer->getExtensionChangelist('module', 'install');
     foreach ($installs as $module) {
       $missing_dependencies = [];
       foreach (array_keys($module_data[$module]->requires) as $required_module) {
-        if (!isset($core_extension['module'][$required_module]) && !array_key_exists($module, $profiles)) {
+        if (!isset($core_extension['module'][$required_module])) {
           $missing_dependencies[] = $module_data[$required_module]->info['name'];
         }
       }
@@ -145,44 +144,18 @@ class ConfigImportSubscriber extends ConfigImportValidateEventSubscriberBase {
     $uninstalls = $config_importer->getExtensionChangelist('module', 'uninstall');
     foreach ($uninstalls as $module) {
       foreach (array_keys($module_data[$module]->required_by) as $dependent_module) {
-        if ($module_data[$dependent_module]->status && !in_array($dependent_module, $uninstalls, TRUE)) {
-          if (!array_key_exists($dependent_module, $profiles)) {
-            $module_name = $module_data[$module]->info['name'];
-            $dependent_module_name = $module_data[$dependent_module]->info['name'];
-            $config_importer->logError($this->t('Unable to uninstall the %module module since the %dependent_module module is installed.', [
-              '%module' => $module_name,
-              '%dependent_module' => $dependent_module_name
-            ]));
-          }
+        if ($module_data[$dependent_module]->status && !in_array($dependent_module, $uninstalls, TRUE) && $dependent_module !== $install_profile) {
+          $module_name = $module_data[$module]->info['name'];
+          $dependent_module_name = $module_data[$dependent_module]->info['name'];
+          $config_importer->logError($this->t('Unable to uninstall the %module module since the %dependent_module module is installed.', ['%module' => $module_name, '%dependent_module' => $dependent_module_name]));
         }
       }
     }
 
-    // Don't allow profiles to be uninstalled. It's possible for no profile to
-    // be set yet if the config is being imported during initial site install.
-    if ($main_profile instanceof \Drupal\Core\Extension\Extension) {
-      if (in_array($main_profile->getName(), $uninstalls, TRUE)) {
-        // Ensure that the active profile is not being uninstalled.
-        $profile_name = $main_profile->info['name'];
-        $config_importer->logError($this->t('Unable to uninstall the %profile profile since it is the main install profile.', ['%profile' => $profile_name]));
-      }
-      if ($profile_uninstalls = array_intersect_key($profiles, array_flip($uninstalls))) {
-        // Ensure that none of the parent profiles are being uninstalled.
-        $profile_names = [];
-        foreach ($profile_uninstalls as $profile) {
-          if ($profile->getName() !== $main_profile->getName()) {
-            $profile_names[] = $module_data[$profile->getName()]->info['name'];
-          }
-        }
-        if (!empty($profile_names)) {
-          $message = $this->formatPlural(count($profile_names),
-            'Unable to uninstall the :profile profile since it is a parent of another installed profile.',
-            'Unable to uninstall the :profile profiles since they are parents of another installed profile.',
-            [':profile' => implode(', ', $profile_names)]
-          );
-          $config_importer->logError($message);
-        }
-      }
+    // Ensure that the install profile is not being uninstalled.
+    if (in_array($install_profile, $uninstalls, TRUE)) {
+      $profile_name = $module_data[$install_profile]->info['name'];
+      $config_importer->logError($this->t('Unable to uninstall the %profile profile since it is the install profile.', ['%profile' => $profile_name]));
     }
   }
 
@@ -246,7 +219,7 @@ class ConfigImportSubscriber extends ConfigImportValidateEventSubscriberBase {
     ];
 
     $theme_data = $this->getThemeData();
-    $module_data = $this->getModuleData();
+    $module_data = $this->moduleExtensionList->getList();
 
     // Validate the dependencies of all the configuration. We have to validate
     // the entire tree because existing configuration might depend on
@@ -340,18 +313,6 @@ class ConfigImportSubscriber extends ConfigImportValidateEventSubscriberBase {
       $this->themeData = $this->themeHandler->rebuildThemeData();
     }
     return $this->themeData;
-  }
-
-  /**
-   * Gets module data.
-   *
-   * @return \Drupal\Core\Extension\Extension[]
-   */
-  protected function getModuleData() {
-    if (!isset($this->moduleData)) {
-      $this->moduleData = system_rebuild_module_data();
-    }
-    return $this->moduleData;
   }
 
   /**

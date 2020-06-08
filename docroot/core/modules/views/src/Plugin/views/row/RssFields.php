@@ -2,6 +2,7 @@
 
 namespace Drupal\views\Plugin\views\row;
 
+use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
@@ -55,7 +56,7 @@ class RssFields extends RowPluginBase {
     $form['link_field'] = [
       '#type' => 'select',
       '#title' => $this->t('Link field'),
-      '#description' => $this->t('The field that is going to be used as the RSS item link for each row.'),
+      '#description' => $this->t('The field that is going to be used as the RSS item link for each row. This must either be an internal unprocessed path like "node/123" or a processed, root-relative URL as produced by fields like "Link to content".'),
       '#options' => $view_fields_labels,
       '#default_value' => $this->options['link_field'],
       '#required' => TRUE,
@@ -139,7 +140,14 @@ class RssFields extends RowPluginBase {
     // Create the RSS item object.
     $item = new \stdClass();
     $item->title = $this->getField($row_index, $this->options['title_field']);
-    $item->link = Url::fromUri($this->getField($row_index, $this->options['link_field']))->setAbsolute()->toString();
+
+    // If internal link, get absolute URL from URI.
+    if (!UrlHelper::isExternal($this->getField($row_index, $this->options['link_field']))) {
+      $item->link = $this->getAbsoluteUrl($this->getField($row_index, $this->options['link_field']));
+    }
+    else {
+      $item->link = Url::fromUri($this->getField($row_index, $this->options['link_field']))->setAbsolute()->toString();
+    }
 
     $field = $this->getField($row_index, $this->options['description_field']);
     $item->description = is_array($field) ? $field : ['#markup' => $field];
@@ -156,9 +164,14 @@ class RssFields extends RowPluginBase {
     $item_guid = $this->getField($row_index, $this->options['guid_field_options']['guid_field']);
     if ($this->options['guid_field_options']['guid_field_is_permalink']) {
       $guid_is_permalink_string = 'true';
-      // @todo Enforce GUIDs as system-generated rather than user input? See
-      //   https://www.drupal.org/node/2430589.
-      $item_guid = Url::fromUserInput('/' . $item_guid)->setAbsolute()->toString();
+
+      // If guid is internal link, get absolute URL from URI
+      if (!UrlHelper::isExternal($item_guid)) {
+        $item_guid = $this->getAbsoluteUrl($item_guid);
+      }
+      else {
+        $item_guid = Url::fromUri($item_guid);
+      }
     }
     $item->elements[] = [
       'key' => 'guid',
@@ -203,6 +216,32 @@ class RssFields extends RowPluginBase {
       return '';
     }
     return $this->view->style_plugin->getField($index, $field_id);
+  }
+
+  /**
+   * Convert a rendered URL string to an absolute URL.
+   *
+   * @param string $url_string
+   *   The rendered field value ready for display in a normal view.
+   *
+   * @return string
+   *   A string with an absolute URL.
+   */
+  protected function getAbsoluteUrl($url_string) {
+    // If the given URL already starts with a leading slash, it's been processed
+    // and we need to simply make it an absolute path by prepending the host.
+    if (strpos($url_string, '/') === 0) {
+      $host = \Drupal::request()->getSchemeAndHttpHost();
+      // @todo Views should expect and store a leading /.
+      // @see https://www.drupal.org/node/2423913
+      return $host . $url_string;
+    }
+    // Otherwise, this is an unprocessed path (e.g. node/123) and we need to run
+    // it through a Url object to allow outbound path processors to run (path
+    // aliases, language prefixes, etc).
+    else {
+      return Url::fromUserInput('/' . $url_string)->setAbsolute()->toString();
+    }
   }
 
 }

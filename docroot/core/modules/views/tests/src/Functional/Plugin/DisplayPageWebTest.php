@@ -32,6 +32,11 @@ class DisplayPageWebTest extends ViewTestBase {
   /**
    * {@inheritdoc}
    */
+  protected $defaultTheme = 'classy';
+
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp($import_test_views = TRUE) {
     parent::setUp($import_test_views);
 
@@ -94,7 +99,7 @@ class DisplayPageWebTest extends ViewTestBase {
       ':a_class' => 'is-active',
     ]);
     $this->assertEqual($element[0]->getText(), t('Test default tab'));
-    $this->assertTitle(t('Test default page | Drupal'));
+    $this->assertTitle('Test default page | Drupal');
 
     $this->drupalGet('test_page_display_menu/default');
     $this->assertResponse(404);
@@ -106,7 +111,7 @@ class DisplayPageWebTest extends ViewTestBase {
       ':a_class' => 'is-active',
     ]);
     $this->assertEqual($element[0]->getText(), t('Test local tab'));
-    $this->assertTitle(t('Test local page | Drupal'));
+    $this->assertTitle('Test local page | Drupal');
 
     // Check an ordinary menu link.
     $admin_user = $this->drupalCreateUser(['administer menu']);
@@ -135,7 +140,7 @@ class DisplayPageWebTest extends ViewTestBase {
 
     $view = Views::getView('test_page_display');
     $xpath = $this->cssSelect('div.view:contains("' . $view->getTitle() . '")');
-    $this->assertFalse($xpath, 'The view title was not displayed in the view markup.');
+    $this->assertEmpty($xpath, 'The view title was not displayed in the view markup.');
   }
 
   /**

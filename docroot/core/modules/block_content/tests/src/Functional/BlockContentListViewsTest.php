@@ -18,7 +18,17 @@ class BlockContentListViewsTest extends BlockContentTestBase {
    *
    * @var array
    */
-  public static $modules = ['block', 'block_content', 'config_translation', 'views'];
+  public static $modules = [
+    'block',
+    'block_content',
+    'config_translation',
+    'views',
+  ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
 
   /**
    * Tests the custom block listing page.
@@ -28,7 +38,7 @@ class BlockContentListViewsTest extends BlockContentTestBase {
     $this->drupalGet('admin/structure/block/block-content');
 
     // Test for the page title.
-    $this->assertTitle(t('Custom block library') . ' | Drupal');
+    $this->assertTitle('Custom block library | Drupal');
 
     // Test for the exposed filters.
     $this->assertFieldByName('info');
@@ -36,7 +46,7 @@ class BlockContentListViewsTest extends BlockContentTestBase {
 
     // Test for the table.
     $element = $this->xpath('//div[@class="layout-content"]//table');
-    $this->assertTrue($element, 'Views table found.');
+    $this->assertNotEmpty($element, 'Views table found.');
 
     // Test the table header.
     $elements = $this->xpath('//div[@class="layout-content"]//table/thead/tr/th');
@@ -79,7 +89,7 @@ class BlockContentListViewsTest extends BlockContentTestBase {
 
     // Edit the entity using the operations link.
     $blocks = $this->container
-      ->get('entity.manager')
+      ->get('entity_type.manager')
       ->getStorage('block_content')
       ->loadByProperties(['info' => $label]);
     $block = reset($blocks);
@@ -87,7 +97,7 @@ class BlockContentListViewsTest extends BlockContentTestBase {
       $this->assertLinkByHref('block/' . $block->id());
       $this->clickLink(t('Edit'));
       $this->assertResponse(200);
-      $this->assertTitle(strip_tags(t('Edit custom block %label', ['%label' => $label]) . ' | Drupal'));
+      $this->assertTitle("Edit custom block $label | Drupal");
       $edit = ['info[0][value]' => $new_label];
       $this->drupalPostForm(NULL, $edit, t('Save'));
     }
@@ -104,7 +114,7 @@ class BlockContentListViewsTest extends BlockContentTestBase {
     $delete_text = t('Delete');
     $this->clickLink($delete_text);
     $this->assertResponse(200);
-    $this->assertTitle(strip_tags(t('Are you sure you want to delete the custom block %label?', ['%label' => $new_label]) . ' | Drupal'));
+    $this->assertTitle("Are you sure you want to delete the custom block $new_label? | Drupal");
     $this->drupalPostForm(NULL, [], $delete_text);
 
     // Verify that the text of the label and machine name does not appear in
