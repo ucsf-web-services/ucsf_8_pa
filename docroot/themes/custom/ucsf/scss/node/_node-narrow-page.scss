@@ -22,9 +22,8 @@
 .narrow-page-header {
   margin-top: $space-five;
 
-  h1 {
+  &__title {
     @include fs-display;
-
     background: $white;
     margin-top: 0;
     padding: $space-decuple 11%;
@@ -36,6 +35,15 @@
       background-size: 32px;
       padding: 32px 20px;
       padding-bottom: 0;
+    }
+
+    // Modifiers
+    &--small {
+      @include fs-heading-two-sm;
+
+      @include breakpoint ($font-large) {
+        @include fs-heading-two-md;
+      }
     }
   }
 
