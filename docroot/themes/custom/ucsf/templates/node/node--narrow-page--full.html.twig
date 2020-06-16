@@ -1,7 +1,7 @@
 {{ content.field_breadcrumbs }}
 
 {% set body_classes = not node.isPublished() ? "node--unpublished" %}
-
+{% set title_classes = 'page-header__title' %}
 <main class="main {{ body_classes }}" {{ attributes.addClass(classes) }}>
   <a id="main-content" tabindex="-1"></a>
 
@@ -12,9 +12,15 @@
       {{ content.field_banner_image }}
     </div>
   {% endif %}
+
+  {# Small Title checkbox #}
+  {% if '1' in content.field_small_title[0] %}
+    {% set title_class = 'narrow-page-header__title--small' %}
+  {% endif %}
+
   <div class="main-content narrow-page">
     <header class="narrow-page-header {{ banner_image }}">
-      <h1>{{ label }}</h1>
+      <h1 class='narrow-page-header__title {{title_class}}'>{{ label }}</h1>
       <div class="narrow-page-header__subheading">{{ content.body }}</div>
     </header>
     {{ content.field_content_panel }}
@@ -28,7 +34,7 @@
 {% endif %}
 
 {% if content.field_ankle_cta|render|striptags != ''  %}
-<div class="footer-ctas-wrapper">
+<div class="footer-ctas-wrapper" role="complementary">
   {{ content.field_ankle_cta }}
 </div>
 {% endif %}
