@@ -265,8 +265,7 @@ a {
 .narrow-page a.link--cta,
 .full-width-page-wrapper a.link--cta,
 .link--cta a,
-.full-width-page-banner__header a.link--cta,
-.promo-list__card-two .link--cta {
+.full-width-page-banner__header a.link--cta {
   background-image: url("../images/cta-arrow.svg");
   background-repeat: no-repeat;
   background-color: transparent;
@@ -287,23 +286,8 @@ a {
   .narrow-page a.link--cta:hover,
   .full-width-page-wrapper a.link--cta:hover,
   .link--cta a:hover,
-  .full-width-page-banner__header a.link--cta:hover,
-  .promo-list__card-two .link--cta:hover {
+  .full-width-page-banner__header a.link--cta:hover {
     background-position: 100% center; }
-
-.promo-list__card a {
-  border-bottom: none; }
-  .promo-list__card a:hover {
-    border-bottom: 0;
-    background: transparent; }
-
-.promo-list__card-two:hover .link--cta {
-  -webkit-transition: .2s ease-out all;
-  transition: .2s ease-out all;
-  background: url("../images/cta-arrow.svg") right center no-repeat transparent;
-  background-size: 14px 10px;
-  padding-right: 32px;
-  text-decoration: underline; }
 
 span.ext {
   background: url("/themes/custom/ucsf/assets/images/external-link.svg") no-repeat right center transparent;
@@ -8720,6 +8704,11 @@ a[href*="http"] .article-header__date {
     height: 32px; }
   .homepage .promo-list__card::after {
     background: transparent; }
+  .promo-list__card a {
+    border-bottom: none; }
+    .promo-list__card a:hover {
+      border-bottom: 0;
+      background: transparent; }
   .promo-list__card a.promo-list__card-link {
     color: #fff;
     text-decoration: none;
@@ -8728,14 +8717,14 @@ a[href*="http"] .article-header__date {
     .promo-list__card a.promo-list__card-link:hover .link--cta {
       text-decoration: underline;
       padding-right: 32px;
-      background-position: 100% 60%; }
+      background-position: 100% center; }
   .promo-list__card .link--cta {
     background-image: url("../images/cta-arrow-white.svg");
     background-repeat: no-repeat;
     background-color: transparent;
     background-size: 14px 14px;
     padding-right: 24px;
-    background-position: 96% 60%;
+    background-position: 96% center;
     background-size: 14px 10px;
     color: #fff;
     padding-right: 32px;
@@ -8879,6 +8868,20 @@ a[href*="http"] .article-header__date {
 .homepage .promo-list__card.promo-list__card-two a {
   -ms-flex-item-align: end;
       align-self: flex-end; }
+
+.promo-list__card-two:hover .link--cta {
+  background-position: 100% center;
+  text-decoration: underline; }
+
+.home-talking-about .promo-list__card-two {
+  background-size: 100%;
+  -webkit-transition: 0.2s ease-out background-size;
+  transition: 0.2s ease-out background-size; }
+  .home-talking-about .promo-list__card-two:hover {
+    background-size: 110%; }
+    .home-talking-about .promo-list__card-two:hover .promo-list__card-two-content {
+      margin-top: 0;
+      padding: 24px; }
 
 .alert-wrapper {
   padding-top: 40px;

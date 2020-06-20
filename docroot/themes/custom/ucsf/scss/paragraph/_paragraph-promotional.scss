@@ -16,6 +16,16 @@
     background: transparent;
   }
 
+
+  a {
+    border-bottom: none;
+
+    &:hover {
+      border-bottom: 0;
+      background: transparent;
+    }
+  }
+
   a.promo-list__card-link {
     color: $white;
     text-decoration: none;
@@ -25,13 +35,13 @@
     &:hover .link--cta {
       text-decoration: underline;
       padding-right: $space-four;
-      background-position: 100% 60%;
+      background-position: 100% center;
     }
   }
 
   .link--cta {
     @include link-bg-image('cta-arrow-white.svg');
-    background-position: 96% 60%;
+    background-position: 96% center;
     background-size: 14px 10px;
     color: $white;
     padding-right: $space-four;
@@ -106,4 +116,3 @@
     }
   }
 }
-

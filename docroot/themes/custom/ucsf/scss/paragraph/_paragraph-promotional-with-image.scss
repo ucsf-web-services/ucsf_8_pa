@@ -53,3 +53,30 @@
 .homepage .promo-list__card.promo-list__card-two a {
   align-self: flex-end;
 }
+
+// TODO refactor classes or twig so that cards that should look different
+//  don't share the same classes.
+// 1 .home-talking-about on https://www.ucsf.edu
+// 2 .field-footer-tabs-events-columne on https://www.ucsf.edu/about
+
+.promo-list__card-two {
+  &:hover .link--cta {
+    background-position: 100% center;
+    text-decoration: underline;
+  }
+}
+
+.home-talking-about {
+  .promo-list__card-two {
+    background-size: 100%;
+    transition: 0.2s ease-out background-size;
+
+    &:hover {
+      background-size: 110%;
+      .promo-list__card-two-content {
+        margin-top: 0;
+        padding: $space-three;
+      }
+    }
+  }
+}
