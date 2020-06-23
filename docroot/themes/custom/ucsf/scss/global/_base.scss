@@ -111,18 +111,20 @@ a {
 .full-width-page-wrapper,
 .full-width-page-banner {
   a {
-  color: $c-blue-link;
-  background-color: transparent;
-  text-decoration: none;
-  transition: background-color 0.15s cubic-bezier(0.33,0.66,0.66,1);
-  border-bottom: 1px solid $c-blue-link;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  word-wrap: break-word;
+    color: $c-blue-link;
+    background-color: transparent;
+    text-decoration: none;
+    transition: background-color 0.15s cubic-bezier(0.33,0.66,0.66,1);
+    border-bottom: 1px solid $c-blue-link;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    word-wrap: break-word;
+
     &:hover {
       background-color: $c-blue-link-rollover;
       border-bottom: 1px solid $c-blue-link-rollover;
     }
+
   }
 }
 
@@ -230,6 +232,11 @@ a.button-reverse:visited,
 
   color: $white;
   border-color: $white;
+}
+
+// .narrow-page a:hover was overwriting border bottom of the button
+.narrow-page a.button:hover {
+  border: 2px solid $c-blue-link;
 }
 
 .cta--list,
