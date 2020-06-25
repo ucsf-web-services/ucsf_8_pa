@@ -1,0 +1,219 @@
+/*------------------------------------*\
+  # Aligned Image / Video Embeds
+\*------------------------------------*/
+// #1 HALF IMAGE
+// #2 HALF IMAGE CAPTION
+// #3 HALF IMAGE FULL
+// #4 HALF IMAGE FULL CAPTION
+
+// $option - should be either "left" or "right".
+//
+// half-image-#{$option} - could be image or video. Indicates the width of element not the type.
+//
+// .embedded-entity - wrapping HTML can change from <figure> to <article>, it might be a bug in 'entity-embed-container.html.twig'
+// use this class to target embeds.
+//
+// .caption-drupal-entity - class that is added when image/video has caption.
+
+// !DO NOT add other options as it will break css.
+$align-options: 'left', 'right';
+
+// Styles common for aligned entity embeds
+%embedded-element-small-screen {
+  margin-left: -#{$article-gutter};
+  margin-right: -#{$article-gutter};
+  margin-bottom: $space-quadruple;
+  float: left;
+  display: table;
+  width: calc(100% + (#{$article-gutter} * 2));
+}
+
+// Make images full screen then reset back to default
+%full-width-image-small-screen {
+  width: 100vw;
+
+  @include breakpoint($new-small) {
+    max-width: 100%;
+  }
+}
+
+/**
+  * #1 HALF IMAGE
+  * #2 HALF IMAGE CAPTION
+  */
+@each $option in $align-options {
+  // HALF IMAGE
+  .embedded-entity.half-image-#{$option},
+  .caption-drupal-entity.half-image-#{$option} {
+    @extend %embedded-element-small-screen;
+    // width: calc(100% + (#{$article-gutter} * 2));
+
+    @include breakpoint($new-small) {
+      display:table;
+      max-width: 50%;
+      margin-top: 0;
+      margin-bottom: $space-quadruple;
+      // Default alignment
+      float: left;
+      margin-right: $space-decuple;
+      margin-left: -#{$article-gutter-bp-new-small};
+
+      // Overwriting the Default alignment for right aligned elements
+      @if $option == right {
+        float: right;
+        margin-right: -#{$article-gutter-bp-new-small};
+        margin-left: $space-decuple;
+      }
+    }
+
+    // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
+    @include breakpoint($new-large) {
+      margin-#{$option}: -20%;
+      max-width: 55%; // !!! will affect images AND videos.
+    }
+
+    @include breakpoint($new-xl) {
+      margin-#{$option}: -25%;
+      max-width: 480px; // !!! will affect images AND videos.
+    }
+
+    & + * {
+      clear: both;
+
+      @include breakpoint($new-small) {
+        clear: none;
+      }
+    }
+
+    img {
+      @extend %full-width-image-small-screen;
+    }
+
+  }
+
+  // HALF IMAGE CAPTION
+  .caption-drupal-entity.half-image-#{$option} figcaption {
+    padding-top: $space-double;
+    padding-right: $article-gutter;
+    width: auto;
+    // Default alignment
+    float: left;
+    padding-left: $article-gutter;
+
+    @include breakpoint($new-small) {
+      float: right;
+      padding-right: 0;
+      padding-#{$option}: 29%;
+
+      // Overwriting the Default alignment for right aligned elements
+      @if $option == right {
+        @include breakpoint($new-small) {
+          float: left;
+          padding-left: 0;
+        }
+      }
+    }
+
+    // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
+    @include breakpoint($new-large) {
+      padding-#{$option}: 37%;
+    }
+
+    @include breakpoint($new-xl) {
+      padding-#{$option}: 42.5%;
+    }
+  }
+}
+
+
+/**
+  * #3 HALF IMAGE FULL
+  * #4 HALF IMAGE FULL CAPTION
+  */
+@each $option in $align-options {
+
+  // HALF IMAGE FULL
+  .half-image-#{$option}-full,
+  .caption-drupal-entity.half-image-#{$option}-full {
+
+    @extend %embedded-element-small-screen;
+    // width: calc(100% + (#{$article-gutter} * 2));
+
+    @include breakpoint($new-small) {
+      float: left;
+      margin-left: -#{$article-gutter-bp-new-small};
+      margin-top: 0;
+      margin-right: $space-decuple;
+      margin-bottom: $space-quadruple;
+      width: 100%;
+      max-width: 55%;
+
+      @if $option == right {
+        float: right;
+        margin-right: -#{$article-gutter-bp-new-small};
+        margin-left: $space-decuple;
+      }
+    }
+
+    // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
+    @include breakpoint($new-small) {
+      margin-#{$option}: -#{$article-gutter-bp-new-small};
+      max-width: 55%;
+    }
+
+    @include breakpoint($new-large) {
+      margin-#{$option}: -24%;
+      max-width: 75%; // This value determines the size of images and videos
+    }
+
+    @include breakpoint($new-xl) {
+      margin-#{$option}: -37%;
+      max-width: 680px; // This value determines the size of images and videos
+    }
+
+    & + * {
+      clear: both;
+
+      @include breakpoint($new-small) {
+        clear: none;
+      }
+    }
+
+    img {
+      @extend %full-width-image-small-screen;
+    }
+  }
+
+  // HALF IMAGE FULL CAPTION
+  .caption-drupal-entity.half-image-#{$option}-full figcaption {
+    float: left;
+    padding-left: $article-gutter;
+    padding-right: $article-gutter;
+
+    @include breakpoint($new-small) {
+      float: right;
+      padding-right: 0;
+    }
+
+    // Overwriting the default for right aligned elements
+    @if $option == right {
+      @include breakpoint($new-small) {
+        float: left;
+        padding-left: 0;
+      }
+    }
+
+    // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
+    @include breakpoint($new-small) {
+      padding-#{$option}: 26%;
+    }
+
+    @include breakpoint($new-large) {
+      padding-#{$option}: 32%;
+    }
+
+    @include breakpoint($new-xl) {
+      padding-#{$option}: 44%;
+    }
+  }
+}
