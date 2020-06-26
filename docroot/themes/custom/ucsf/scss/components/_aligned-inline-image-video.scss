@@ -1,0 +1,432 @@
+/*------------------------------------*\
+  # Aligned Image / Video Embeds
+\*------------------------------------*/
+// Moved the logic for aligning images here from _node-article.scss
+
+// HALF IMAGE
+// HALF IMAGE CAPTION
+// HALF IMAGE FULL
+// HALF IMAGE FULL CAPTION
+// ALIGN-LEFT, ALIGN-RIGHT
+// LEGACY ALIGNMENT (.ckgreybox, .ckimagebox, image-2014_inline_5-col, .image-2014_inline_5-col)
+// LEGACY FULL WIDTH
+
+// !DO NOT add other options as it will break css.
+// $option - should be either "left" or "right",  they are used to create selectors and css declarations.
+$align-options: 'left', 'right';
+
+// Code for wrapper of image or video
+// Span full width of the screen
+%wrapper-full-width-small-screen {
+  margin-top: 0;
+  margin-left: -#{$article-gutter};
+  margin-right: -#{$article-gutter};
+  margin-bottom: $space-quadruple;
+  float: left;
+  display: table;
+  width: calc(100% + (#{$article-gutter} * 2));
+}
+
+// Code for wrapper of image or video
+// Span the width of article container
+%wrapper-content-width-small-screen {
+  margin-top: 0;
+  margin-bottom: $space-quadruple;
+  float: left;
+  display: table;
+  width: 100%;
+}
+
+// Code for <img> element
+// scale up or down in order to take up full width
+%inline-element-full-width-small-screen {
+  width: 100vw;
+
+  // do not scale larger then the wrapper
+  @include breakpoint($new-small) {
+    max-width: 100%;
+  }
+}
+
+// Code for <img> element
+// Span the width of article wrapper.
+%inline-element-content-width-small-screen {
+  width: 100%;
+
+  // do not scale larger then the wrapper
+  @include breakpoint($new-small) {
+    max-width: 100%;
+  }
+}
+
+// <img> element that already has inline width/height
+// force to scale up or down.
+%inline-element-content-width-overwrite-initial-values-small-screen {
+  width: 100% !important;
+  height: auto !important;
+}
+
+
+/*---------------In this section---------------------*\
+  HALF IMAGE
+  HALF IMAGE CAPTION
+\*---------------------------------------------------*/
+
+// half-image-#{$option}, could be image or video. Indicates the width of element not the type.
+//
+// .embedded-entity - wrapping HTML can change from <figure> to <article>,
+// it might be a bug in 'entity-embed-container.html.twig'
+// use this class to target embeds.
+//
+// .caption-drupal-entity - class that is added when image/video has caption.
+//
+// #{$option} is uses to create code for "left" and "right" variants,
+// use left as default overwrite inside '@if $option == right' statement.
+
+@each $option in $align-options {
+  // HALF IMAGE
+  .embedded-entity.half-image-#{$option},
+  .caption-drupal-entity.half-image-#{$option} {
+    @extend %wrapper-full-width-small-screen;
+
+    @include breakpoint($new-small) {
+      display:table;
+      max-width: 50%;
+      width: 100%;
+      margin-bottom: $space-quadruple;
+      float: #{$option};
+      // Default alignment
+      margin-right: $space-decuple;
+      margin-left: -#{$article-gutter-bp-new-small};
+
+      // Overwriting the Default alignment for right aligned elements
+      @if $option == right {
+        margin-#{$option}: -#{$article-gutter-bp-new-small};
+        margin-left: $space-decuple;
+      }
+    }
+
+    // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
+    @include breakpoint($new-large) {
+      margin-#{$option}: -20%;
+      max-width: 55%; // !!! will affect images AND videos.
+    }
+
+    @include breakpoint($new-xl) {
+      margin-#{$option}: -25%;
+      max-width: 480px; // !!! will affect images AND videos.
+    }
+
+    & + * {
+      clear: both;
+
+      @include breakpoint($new-small) {
+        clear: none;
+      }
+    }
+
+    img {
+      @extend %inline-element-full-width-small-screen;
+    }
+
+  }
+
+  // HALF IMAGE CAPTION
+  .caption-drupal-entity.half-image-#{$option} figcaption {
+    padding-top: $space-double;
+    padding-right: $article-gutter;
+    width: auto;
+    // Default alignment
+    float: left;
+    padding-left: $article-gutter;
+
+    @include breakpoint($new-small) {
+      float: right;
+      padding-right: 0;
+      padding-#{$option}: 29%;
+
+      // Overwriting the Default alignment for right aligned elements
+      @if $option == right {
+        @include breakpoint($new-small) {
+          float: left;
+          padding-left: 0;
+        }
+      }
+    }
+
+    // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
+    @include breakpoint($new-large) {
+      padding-#{$option}: 37%;
+    }
+
+    @include breakpoint($new-xl) {
+      padding-#{$option}: 42.5%;
+    }
+  }
+}
+
+
+/*---------------In this section---------------------*\
+  HALF IMAGE FULL
+  HALF IMAGE FULL CAPTION
+\*---------------------------------------------------*/
+// Read comments for IMAGE FULL section
+// half-image-#{$option}-full, could be image or video. Indicates the width of element not the type.
+@each $option in $align-options {
+
+  // HALF IMAGE FULL
+  .embedded-entity.half-image-#{$option}-full,
+  .caption-drupal-entity.half-image-#{$option}-full {
+    @extend %wrapper-full-width-small-screen;
+
+    @include breakpoint($new-small) {
+      float: left;
+      margin-left: -#{$article-gutter-bp-new-small};
+      margin-right: $space-decuple;
+      margin-bottom: $space-quadruple;
+      width: 100%;
+      max-width: 55%;
+
+      @if $option == right {
+        float: right;
+        margin-right: -#{$article-gutter-bp-new-small};
+        margin-left: $space-decuple;
+      }
+    }
+
+    // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
+    @include breakpoint($new-small) {
+      margin-#{$option}: -#{$article-gutter-bp-new-small};
+      max-width: 55%;
+    }
+
+    @include breakpoint($new-large) {
+      margin-#{$option}: -24%;
+      max-width: 75%; // This value determines the size of images and videos
+    }
+
+    @include breakpoint($new-xl) {
+      margin-#{$option}: -37%;
+      max-width: 680px; // This value determines the size of images and videos
+    }
+
+    & + * {
+      clear: both;
+
+      @include breakpoint($new-small) {
+        clear: none;
+      }
+    }
+
+    img {
+      @extend %inline-element-full-width-small-screen;
+    }
+  }
+
+  // HALF IMAGE FULL CAPTION
+  .caption-drupal-entity.half-image-#{$option}-full figcaption {
+    float: left;
+    padding-left: $article-gutter;
+    padding-right: $article-gutter;
+
+    @include breakpoint($new-small) {
+      float: right;
+      padding-right: 0;
+    }
+
+    // Overwriting the default for right aligned elements
+    @if $option == right {
+      @include breakpoint($new-small) {
+        float: left;
+        padding-left: 0;
+      }
+    }
+
+    // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
+    @include breakpoint($new-small) {
+      padding-#{$option}: 26%;
+    }
+
+    @include breakpoint($new-large) {
+      padding-#{$option}: 32%;
+    }
+
+    @include breakpoint($new-xl) {
+      padding-#{$option}: 44%;
+    }
+  }
+}
+
+
+/*---------------In this section---------------------*\
+  ALIGN-LEFT, ALIGN-RIGHT
+\*---------------------------------------------------*/
+// Used in mostly for portraits:
+
+@each $option in $align-options {
+  // ALIGN-LEFT, ALIGN-RIGHT
+  .embedded-entity.align-#{$option},
+  .caption-drupal-entity.align-#{$option} {
+    @extend %wrapper-content-width-small-screen;
+
+    @include breakpoint($new-small) {
+      display: table;
+      width: initial;
+      margin-right: $space-five;
+
+      // Overwriting the default for right aligned elements
+      @if $option == right {
+        float: #{$option};
+        margin-right: 0;
+        margin-left: $space-five;
+      }
+    }
+
+    figcaption {
+      display:table-caption;
+      caption-side:bottom;
+    }
+
+    img {
+      @extend %inline-element-content-width-small-screen;
+    }
+  }
+}
+
+
+/*---------------In this section---------------------*\
+  LEGACY ALIGNMENT
+\*---------------------------------------------------*/
+
+//  @param $gutter - space between aligned element and article content
+@mixin aligned-element-gutter ($gutter) {
+  // create selectors for alignment on desktop
+  @each $option in $align-options {
+    &[style~="float:#{$option}"],
+    &[style~="#{$option};"],
+    &[style~="float:#{$option};"] {
+
+      @include breakpoint($new-small) {
+        float: #{$option};
+        margin-right: $gutter;
+        margin-#{$option}: 0;
+
+        // Overwriting the default for right aligned elements
+        @if $option == right {
+          margin-left: $gutter;
+        }
+      }
+    }
+  }
+}
+
+// make wrapper span the width of article in mobile
+// 470px appears to be the max width of images,
+// at this point min-width: is needed to force scaling up from original width;
+%element-align-legacy {
+  @extend %wrapper-content-width-small-screen;
+  float: none;
+  // need this so the images scale down from actual width
+  max-width: 100%;
+
+
+  @include breakpoint(470px) {
+    min-width: 100%;
+  }
+}
+
+
+// .ckimagebox - container with aligned elements inside
+//  .ckgreybox  - container with aligned elements inside
+//  style one or another but not both, to avoid problems when .ckimagebox becomes the child element.
+:not(.ckgreybox) > .ckimagebox,
+.ckgreybox {
+  @extend %element-align-legacy;
+  @include aligned-element-gutter($space-ten);
+
+  @include breakpoint($new-small) {
+    min-width: auto;
+    max-width: 55%;
+  }
+
+  img {
+    @extend %inline-element-content-width-overwrite-initial-values-small-screen;
+  }
+}
+
+.ckgreybox {
+  .ckimagebox {
+    margin: 0;
+  }
+}
+
+
+
+// Reduced $gutter
+.image-2014_inline_5-col {
+  @extend %element-align-legacy;
+  @include aligned-element-gutter($space-five);
+
+  @include breakpoint($new-small) {
+    min-width: auto;
+    max-width: 55%;
+  }
+}
+
+// Reduced width
+// Reduced $gutter
+.image-2014_inline_4-col {
+  @extend %element-align-legacy;
+  @include aligned-element-gutter($space-five);
+
+  @include breakpoint($new-small) {
+    min-width: auto;
+    max-width: 50%;
+  }
+}
+
+// Reduced width
+// Reduced $gutter
+.image-2014_inline_2-col {
+  @extend %element-align-legacy;
+  @include aligned-element-gutter($space-five);
+
+  @include breakpoint($new-small) {
+    min-width: auto;
+    max-width: 40%;
+  }
+}
+
+// Inline width
+// Reduced $gutter
+figure[class="image"] {
+  @include aligned-element-gutter($space-five);
+  display: table;
+
+  figcaption {
+      display:table-caption;
+      caption-side:bottom;
+  }
+}
+
+/*---------------In this section---------------------*\
+  FULL WIDTH ELEMENTS
+\*---------------------------------------------------*/
+figure.align-center {
+  margin-left: 0;
+  display:table;
+
+  figcaption {
+    display:table-caption;
+    caption-side:bottom;
+  }
+}
+
+.wysiwyg-full {
+  @extend %wrapper-content-width-small-screen;
+  min-width: 100% !important; // if inline style is applied overwrite it.
+}
+
+.image-2014_wysiwyg_full {
+  @extend %inline-element-content-width-overwrite-initial-values-small-screen;
+}
