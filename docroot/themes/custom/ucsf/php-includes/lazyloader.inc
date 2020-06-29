@@ -4,9 +4,9 @@
  * Implements template_preprocess_image().
  */
 function ucsf_preprocess_image(&$variables) {
-  // If alt is missing from array,
+  // If alt is missing from array or it is null,
   // create an alt key with empty string as a value.
-  if (!array_key_exists('alt', $variables['attributes'])) {
+  if (empty($variables['attributes']['alt'])) {
     $variables['attributes']['alt'] = '';
   };
 
