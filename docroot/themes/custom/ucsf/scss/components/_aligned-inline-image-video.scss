@@ -3,20 +3,18 @@
 \*------------------------------------*/
 // Moved the logic for aligning images here from _node-article.scss
 
-// HALF IMAGE
-// HALF IMAGE CAPTION
-// HALF IMAGE FULL
-// HALF IMAGE FULL CAPTION
+// HALF IMAGE, HALF IMAGE CAPTION
+// HALF IMAGE FULL, HALF IMAGE FULL CAPTION
 // ALIGN-LEFT, ALIGN-RIGHT
 // LEGACY ALIGNMENT (.ckgreybox, .ckimagebox, image-2014_inline_5-col, .image-2014_inline_5-col)
-// LEGACY FULL WIDTH
+// FULL WIDTH ELEMENTS
 
-// !DO NOT add other options as it will break css.
+// !DO NOT add other options it will break css.
 // $option - should be either "left" or "right",  they are used to create selectors and css declarations.
 $align-options: 'left', 'right';
 
-// Code for wrapper of image or video
-// Span full width of the screen
+// Code for wrapper of image or video.
+// Span element full width of the screen
 %wrapper-full-width-small-screen {
   margin-top: 0;
   margin-left: -#{$article-gutter};
@@ -28,7 +26,7 @@ $align-options: 'left', 'right';
 }
 
 // Code for wrapper of image or video
-// Span the width of article container
+// Span element the width of article container
 %wrapper-content-width-small-screen {
   margin-top: 0;
   margin-bottom: $space-quadruple;
@@ -68,8 +66,7 @@ $align-options: 'left', 'right';
 
 
 /*---------------In this section---------------------*\
-  HALF IMAGE
-  HALF IMAGE CAPTION
+  HALF IMAGE, HALF IMAGE CAPTION
 \*---------------------------------------------------*/
 
 // half-image-#{$option}, could be image or video. Indicates the width of element not the type.
@@ -129,46 +126,44 @@ $align-options: 'left', 'right';
       @extend %inline-element-full-width-small-screen;
     }
 
-  }
+    // HALF IMAGE CAPTION
+    & figcaption {
+      padding-top: $space-double;
+      padding-right: $article-gutter;
+      width: auto;
+      // Default alignment
+      float: left;
+      padding-left: $article-gutter;
 
-  // HALF IMAGE CAPTION
-  .caption-drupal-entity.half-image-#{$option} figcaption {
-    padding-top: $space-double;
-    padding-right: $article-gutter;
-    width: auto;
-    // Default alignment
-    float: left;
-    padding-left: $article-gutter;
+      @include breakpoint($new-small) {
+        float: right;
+        padding-right: 0;
+        padding-#{$option}: 29%;
 
-    @include breakpoint($new-small) {
-      float: right;
-      padding-right: 0;
-      padding-#{$option}: 29%;
-
-      // Overwriting the Default alignment for right aligned elements
-      @if $option == right {
-        @include breakpoint($new-small) {
-          float: left;
-          padding-left: 0;
+        // Overwriting the Default alignment for right aligned elements
+        @if $option == right {
+          @include breakpoint($new-small) {
+            float: left;
+            padding-left: 0;
+          }
         }
       }
-    }
 
-    // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
-    @include breakpoint($new-large) {
-      padding-#{$option}: 37%;
-    }
+      // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
+      @include breakpoint($new-large) {
+        padding-#{$option}: 37%;
+      }
 
-    @include breakpoint($new-xl) {
-      padding-#{$option}: 42.5%;
+      @include breakpoint($new-xl) {
+        padding-#{$option}: 42.5%;
+      }
     }
   }
 }
 
 
 /*---------------In this section---------------------*\
-  HALF IMAGE FULL
-  HALF IMAGE FULL CAPTION
+  HALF IMAGE FULL, HALF IMAGE FULL CAPTION
 \*---------------------------------------------------*/
 // Read comments for IMAGE FULL section
 // half-image-#{$option}-full, could be image or video. Indicates the width of element not the type.
@@ -221,38 +216,39 @@ $align-options: 'left', 'right';
     img {
       @extend %inline-element-full-width-small-screen;
     }
-  }
 
-  // HALF IMAGE FULL CAPTION
-  .caption-drupal-entity.half-image-#{$option}-full figcaption {
-    float: left;
-    padding-left: $article-gutter;
-    padding-right: $article-gutter;
 
-    @include breakpoint($new-small) {
-      float: right;
-      padding-right: 0;
-    }
+    // HALF IMAGE FULL CAPTION
+    & figcaption {
+      float: left;
+      padding-left: $article-gutter;
+      padding-right: $article-gutter;
 
-    // Overwriting the default for right aligned elements
-    @if $option == right {
       @include breakpoint($new-small) {
-        float: left;
-        padding-left: 0;
+        float: right;
+        padding-right: 0;
       }
-    }
 
-    // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
-    @include breakpoint($new-small) {
-      padding-#{$option}: 26%;
-    }
+      // Overwriting the default for right aligned elements
+      @if $option == right {
+        @include breakpoint($new-small) {
+          float: left;
+          padding-left: 0;
+        }
+      }
 
-    @include breakpoint($new-large) {
-      padding-#{$option}: 32%;
-    }
+      // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
+      @include breakpoint($new-small) {
+        padding-#{$option}: 26%;
+      }
 
-    @include breakpoint($new-xl) {
-      padding-#{$option}: 44%;
+      @include breakpoint($new-large) {
+        padding-#{$option}: 32%;
+      }
+
+      @include breakpoint($new-xl) {
+        padding-#{$option}: 44%;
+      }
     }
   }
 }
