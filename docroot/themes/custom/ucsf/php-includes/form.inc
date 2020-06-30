@@ -104,6 +104,15 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     unset($form['field_date_and_time_value_1']);
     unset($form['field_date_and_time_value_2']);
     unset($form['actions']);
+
+    //execute remove_all_quotes function submit in first step on $form['#submit'] array
+    array_unshift($form['#submit'], 'remove_all_form_quotes');
   }
 }
 
+// Remove all quotes from the filter string.
+function remove_all_form_quotes($form, FormStateInterface $form_state) {
+  $value = $form_state->getValue('combine');
+  $value = str_replace(["‘", "’", "“", "”", "`","\"", "'", "b&quot;", "&quot;", "b&#039;", "&#039;"], "", $value);
+  $form_state->setValue('combine', $value);
+}
