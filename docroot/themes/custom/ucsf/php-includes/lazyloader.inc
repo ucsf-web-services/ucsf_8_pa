@@ -4,13 +4,13 @@
  * Implements template_preprocess_image().
  */
 function ucsf_preprocess_image(&$variables) {
-  // If alt is missing from array,
+  // If alt is missing from array or it is null,
   // create an alt key with empty string as a value.
-  if (!array_key_exists('alt', $variables['attributes'])) {
+  if (empty($variables['attributes']['alt'])) {
     $variables['attributes']['alt'] = '';
   };
 
-  // Checks for an attribute that indicates that lazyloading needs to be disabled
+  // Checks for an attribute that indicates that lazyloading needs to be disabled.
   if (array_key_exists('data-no-lazyload', $variables['attributes'])) {
     // Checks if element has 'lazyload' class
     $key = array_search('lazyload',  $variables['attributes']['class']);
