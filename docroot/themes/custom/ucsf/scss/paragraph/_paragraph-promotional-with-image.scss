@@ -1,41 +1,78 @@
-.promo-list__card-two{
+/*------------------------------------*\
+  // Promo List Card Homepage
+\*------------------------------------*/
+%card-bg-image {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-}
-
-.promo-list__card-two,
-.homepage .promo-list__card-two,
-.promo-list__card-two a,
-.homepage .promo-list__card-two a {
   display: flex;
-  //height: 311px;
-  padding: 0;
-  color: $white;
-  text-decoration: none;
-  width: 100%;
+}
 
-  &::after {
-    display: none;
+.homepage {
+  .promo-list__card {
+    @extend %card-bg-image;
+    margin-bottom: $space-nine;
+
+    &::after {
+      background: transparent;
+    }
+
+    &-more {
+      margin-bottom: 0;
+      margin-top: 12px;
+    }
+
+    &-link {
+      padding: $space-eight $space-five;
+      align-self: center;
+    }
   }
 }
 
-.promo-list__card-two-content,
-.promo-list__card-two-content:last-child,
-.promo-list__card-two-content:first-child {
-  align-content: flex-end;
-  margin-top: auto;
-  padding: $space-three;
-  width: 100%;
-  margin-top: 100%;
-  @include transition;
+/*------------------------------------*\
+  Promo List Card Featured
+  used on ucsf.edu/about page
+\*------------------------------------*/
+// Featured card
+.promo-list__card--featured {
+  @extend %card-bg-image;
 
-  .promo-list__card-content .field-promo-text {
-    margin: 0;
+  &:hover {
+    .promo-list__card-content-wrapper {
+      margin-top: 90%;
+      padding-bottom: 10%;
+    }
+
+    .link--cta {
+      background-position: 100% center;
+      text-decoration: underline;
+    }
   }
 
-  p {
-    margin: 0;
+  a {
+    display: flex;
+    color: $white;
+    text-decoration: none;
+    width: 100%;
+  }
+
+  .promo-list__card-content-wrapper {
+    align-content: flex-end;
+    margin-top: 100%;
+    padding: $space-three;
+    width: 100%;
+    margin-top: 100%;
+    @include transition;
+  }
+
+
+  // Overwrites of default card styles
+  &.promo-list__card::after {
+    background: transparent;
+  }
+
+  .field-promo-text {
+    margin-top: 0;
   }
 
   .promo-list__card-more,
@@ -45,39 +82,86 @@
   }
 }
 
-.promo-list__card-two:hover .promo-list__card-two-content {
-  margin-top: 90%;
-  padding-bottom: 10%;
-}
+/*------------------------------------*\
+  Promo List Card Alternative
+  used for promo cards on homepage
+\*------------------------------------*/
 
-.homepage .promo-list__card.promo-list__card-two a {
-  align-self: flex-end;
-}
+.promo-list__card--alt {
+  .promo-list__card-link {
+    padding: 0;
+    color: $white;
+    text-decoration: none;
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
 
-// TODO refactor classes or twig so that cards that should look different
-//  don't share the same classes.
-// 1 .home-talking-about on https://www.ucsf.edu
-// 2 .field-footer-tabs-events-columne on https://www.ucsf.edu/about
+    &:hover {
+      .promo-list__card-image {
+        background-size: 110%;
+      }
+    }
+  }
 
-.promo-list__card-two {
-  &:hover .link--cta {
-    background-position: 100% center;
-    text-decoration: underline;
+  .promo-list__card-content {
+    margin-top: 0;
+    padding: $space-three;
+    width: 100%;
+  }
+
+  .promo-list__card-image {
+    display: block;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 100%;
+    transition: 0.2s ease-out background-size;
+    width: 100%;
+    padding-top: 56%;
+
+    @include breakpoint($bp-medium) {
+      padding-top: 40%;
+    }
+  }
+
+  // Overwrites
+  // remove background image from li
+  .homepage &.promo-list__card {
+    background-image: none;
+  }
+
+  .field-promo-text {
+    margin-top: 0;
   }
 }
 
-.home-talking-about {
-  .promo-list__card-two {
-    background-size: 100%;
-    background-position: top;
-    transition: 0.2s ease-out background-size;
+// Background Overlay colors
+@each $name, $color in $color-map {
+
+  // create a class name based on the color name
+  .promo-list__card--featured .overlay-#{$name},
+  .promo-list__card--alt .overlay-#{$name} {
+    // convert hex value into rgba box-shadow
+    box-shadow: inset 0 0 0 1000px rgba($color, 1);
 
     &:hover {
-      background-size: 110%;
-      .promo-list__card-two-content {
-        margin-top: 0;
-        padding: $space-three;
+      box-shadow: inset 0 0 0 1000px rgba($color, 0.95);
+    }
+
+    @if ($name == yellow) {
+      .field-promo-text {
+        color: $c-navy;
+      }
+
+      .promo-list__card-more .link--cta {
+        color: $c-navy;
+        background-image: url("../images/cta-arrow-navy.svg");
       }
     }
+  }
+
+  // No background color fade on hover for Homepage Promo Alt
+  .promo-list__card--alt .overlay-#{$name}:hover {
+    box-shadow: inset 0 0 0 1000px rgba($color, 1);
   }
 }
