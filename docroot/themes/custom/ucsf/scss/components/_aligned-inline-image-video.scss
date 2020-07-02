@@ -91,10 +91,11 @@ $align-options: 'left', 'right';
       max-width: 50%;
       width: 100%;
       margin-bottom: $space-quadruple;
-      float: #{$option};
       // Default alignment
       margin-right: $space-decuple;
       margin-left: -#{$article-gutter-bp-new-small};
+      float: #{$option};
+      clear: #{$option};
 
       // Overwriting the Default alignment for right aligned elements
       @if $option == right {
@@ -175,15 +176,15 @@ $align-options: 'left', 'right';
     @extend %wrapper-full-width-small-screen;
 
     @include breakpoint($new-small) {
-      float: left;
       margin-left: -#{$article-gutter-bp-new-small};
       margin-right: $space-decuple;
       margin-bottom: $space-quadruple;
       width: 100%;
       max-width: 55%;
+      float: #{$option};
+      clear: #{$option};
 
       @if $option == right {
-        float: right;
         margin-right: -#{$article-gutter-bp-new-small};
         margin-left: $space-decuple;
       }
