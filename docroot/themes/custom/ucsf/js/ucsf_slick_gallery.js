@@ -6,6 +6,7 @@
                 {
                     slidesToShow: 1,
                     slidesToScroll: 1,
+                    lazyLoad: 'ondemand',
                     infinite: true,
                     centerPadding: '0',
                     centerMode: true,

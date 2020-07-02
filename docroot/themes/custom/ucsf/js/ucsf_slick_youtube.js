@@ -6,6 +6,7 @@
       $('.youtube-list__videos').not('.slick-initialized').slick({
         slidesToShow: 4,
         slidesToScroll: 1,
+        lazyLoad: 'ondemand',
         infinite: false,
         variableWidth: true,
         responsive: [

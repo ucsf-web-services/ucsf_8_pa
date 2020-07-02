@@ -7,6 +7,7 @@
             $('.gallery-container > .field-gallery-items').not('.slick-initialized').slick({
                 slidesToShow: 1,
                 slidesToScroll: 1,
+                lazyLoad: 'ondemand',
                 infinite: true,
                 centerPadding: '0',
                 centerMode: true,

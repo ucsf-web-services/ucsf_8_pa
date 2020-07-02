@@ -9,7 +9,7 @@
       $('.topics-list__topics').not('.slick-initialized').slick({
         slidesToShow: 4,
         slidesToScroll: 1,
-        lazyLoad: 'progressive',
+        lazyLoad: 'ondemand',
         autoplay: true,
         autoplaySpeed: 2000,
         pauseOnHover: false,
