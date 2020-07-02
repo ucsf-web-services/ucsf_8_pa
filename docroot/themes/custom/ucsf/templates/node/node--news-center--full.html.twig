@@ -5,6 +5,7 @@
   <h1>{{ label }}</h1>
 
   <div class="news-center-banner">
+    <a href="#latestnews" class="link--cta link--cta-right">View all latest news</a>
     <div class="news-center-banner__featured">
       {{ content.field_feature_article }}
     </div>
@@ -36,7 +37,7 @@
   </div>
   {{ drupal_view('topic_tag_featured_carousel', 'block_2') }}
   <div class="news-list">
-    <h2 class="news-list__title">{{ "The Latest"|t }}</h2>
+    <h2 id="latestnews" class="news-list__title">{{ "The Latest"|t }}</h2>
     {{ drupal_view('articles_for_news_center', 'block_1') }}
   </div>
   {% include '@theme/misc/video.twig' %}
