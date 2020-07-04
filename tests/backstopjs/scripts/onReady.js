@@ -51,6 +51,14 @@ module.exports = async (page, scenario, vp) => {
       }`,
   });
 
+  // Pause any carousels.
+  await page.evaluate(async function () {
+    const $slick = jQuery('.slick-slider')
+    if ($slick.length) {
+      $slick.slick('slickPause')
+    }
+  });
+
   await page.evaluate(async function () {
     // Disable jQuery animation for any future calls.
     jQuery.fx.off = true;
