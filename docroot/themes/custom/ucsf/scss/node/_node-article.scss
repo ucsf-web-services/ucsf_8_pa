@@ -2,7 +2,8 @@
 .page-node-type-narrow-page .paragraph-text-block, //PL: .page_narrow
 .page-node-type-article .paragraph-text-block,
 .page-node-type-magazine-article .paragraph-text-block { //PL: .page_narrow
-  padding: 0 $article-gutter;
+  padding-left: $article-gutter;
+  padding-right: $article-gutter;
   padding-bottom: 1px;
   position: relative;
   clear: both;
@@ -13,8 +14,8 @@
   }
 
   @include breakpoint($new-small) {
-    padding: 0 11%;
-    padding-bottom: 1px;
+    padding-left: 11%;
+    padding-right: 11%;
   }
 
   @include breakpoint($new-large) {
@@ -56,6 +57,14 @@
     }
   }
 }
+
+// .page-node-type-narrow-page,
+// .page-node-type-article,
+// .page-node-type-magazine-article {
+//   .blockquote-full-width + .paragraph-text-block {
+//     padding-top: $space;
+//   }
+// }
 
 .page-node-type-article,
 .page-node-type-magazine-article,
