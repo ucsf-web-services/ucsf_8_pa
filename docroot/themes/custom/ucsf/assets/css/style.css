@@ -2928,16 +2928,13 @@ dom-twocolumn-layout img.element-fade, dom-threecolumn-layout img.element-fade {
       padding-left: calc(1.45rem + 1rem);
       margin-right: -.5rem; }
 
-.embedded-entity.half-image-left,
-.caption-drupal-entity.half-image-left, .embedded-entity.half-image-right,
-.caption-drupal-entity.half-image-right, .embedded-entity.half-image-left-full,
+.embedded-entity.half-image-left-full,
 .caption-drupal-entity.half-image-left-full, .embedded-entity.half-image-right-full,
 .caption-drupal-entity.half-image-right-full {
   margin-top: 0;
   margin-left: -20px;
   margin-right: -20px;
   margin-bottom: 32px;
-  float: left;
   display: table;
   width: calc(100% + (20px * 2)); }
 
@@ -2951,19 +2948,10 @@ dom-twocolumn-layout img.element-fade, dom-threecolumn-layout img.element-fade {
   display: table;
   width: 100%; }
 
-.embedded-entity.half-image-left img,
-.caption-drupal-entity.half-image-left img, .embedded-entity.half-image-right img,
-.caption-drupal-entity.half-image-right img, .embedded-entity.half-image-left-full img,
+.embedded-entity.half-image-left-full img,
 .caption-drupal-entity.half-image-left-full img, .embedded-entity.half-image-right-full img,
 .caption-drupal-entity.half-image-right-full img {
   width: 100vw; }
-  @media (min-width: 769px) {
-    .embedded-entity.half-image-left img,
-    .caption-drupal-entity.half-image-left img, .embedded-entity.half-image-right img,
-    .caption-drupal-entity.half-image-right img, .embedded-entity.half-image-left-full img,
-    .caption-drupal-entity.half-image-left-full img, .embedded-entity.half-image-right-full img,
-    .caption-drupal-entity.half-image-right-full img {
-      max-width: 100%; } }
 
 .embedded-entity.align-left img,
 .caption-drupal-entity.align-left img, .embedded-entity.align-right img,
@@ -2980,120 +2968,88 @@ dom-twocolumn-layout img.element-fade, dom-threecolumn-layout img.element-fade {
   width: 100% !important;
   height: auto !important; }
 
-@media (min-width: 769px) {
-  .embedded-entity.half-image-left,
-  .caption-drupal-entity.half-image-left {
-    display: table;
-    max-width: 50%;
-    width: 100%;
-    margin-bottom: 32px;
-    margin-right: 80px;
-    margin-left: -14.1%;
-    float: left;
-    clear: left; } }
-
-@media (min-width: 1050px) {
-  .embedded-entity.half-image-left,
-  .caption-drupal-entity.half-image-left {
-    margin-left: -20%;
-    max-width: 55%; } }
-
-@media (min-width: 1280px) {
-  .embedded-entity.half-image-left,
-  .caption-drupal-entity.half-image-left {
-    margin-left: -25%;
-    max-width: 480px; } }
-
-.embedded-entity.half-image-left + *,
-.caption-drupal-entity.half-image-left + * {
+.half-image-left {
+  margin-top: 0;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-bottom: 32px;
+  display: table;
+  width: calc(100% + ($article-gutter * 2));
   clear: both; }
   @media (min-width: 769px) {
-    .embedded-entity.half-image-left + *,
-    .caption-drupal-entity.half-image-left + * {
-      clear: none; } }
-
-.embedded-entity.half-image-left figcaption,
-.caption-drupal-entity.half-image-left figcaption {
-  padding-top: 16px;
-  padding-right: 20px;
-  width: auto;
-  float: left;
-  padding-left: 20px; }
-  @media (min-width: 769px) {
-    .embedded-entity.half-image-left figcaption,
-    .caption-drupal-entity.half-image-left figcaption {
-      float: right;
-      padding-right: 0;
-      padding-left: 29%; } }
-  @media (min-width: 1050px) {
-    .embedded-entity.half-image-left figcaption,
-    .caption-drupal-entity.half-image-left figcaption {
-      padding-left: 37%; } }
-  @media (min-width: 1280px) {
-    .embedded-entity.half-image-left figcaption,
-    .caption-drupal-entity.half-image-left figcaption {
-      padding-left: 42.5%; } }
-
-@media (min-width: 769px) {
-  .embedded-entity.half-image-right,
-  .caption-drupal-entity.half-image-right {
-    display: table;
-    max-width: 50%;
-    width: 100%;
-    margin-bottom: 32px;
-    margin-right: 80px;
-    margin-left: -14.1%;
-    float: right;
-    clear: right;
-    margin-right: -14.1%;
-    margin-left: 80px; } }
-
-@media (min-width: 1050px) {
-  .embedded-entity.half-image-right,
-  .caption-drupal-entity.half-image-right {
-    margin-right: -20%;
-    max-width: 55%; } }
-
-@media (min-width: 1280px) {
-  .embedded-entity.half-image-right,
-  .caption-drupal-entity.half-image-right {
-    margin-right: -25%;
-    max-width: 480px; } }
-
-.embedded-entity.half-image-right + *,
-.caption-drupal-entity.half-image-right + * {
-  clear: both; }
-  @media (min-width: 769px) {
-    .embedded-entity.half-image-right + *,
-    .caption-drupal-entity.half-image-right + * {
-      clear: none; } }
-
-.embedded-entity.half-image-right figcaption,
-.caption-drupal-entity.half-image-right figcaption {
-  padding-top: 16px;
-  padding-right: 20px;
-  width: auto;
-  float: left;
-  padding-left: 20px; }
-  @media (min-width: 769px) {
-    .embedded-entity.half-image-right figcaption,
-    .caption-drupal-entity.half-image-right figcaption {
-      float: right;
-      padding-right: 0;
-      padding-right: 29%; } }
-  @media (min-width: 769px) and (min-width: 769px) {
-    .embedded-entity.half-image-right figcaption,
-    .caption-drupal-entity.half-image-right figcaption {
+    .half-image-left {
+      max-width: 50%;
+      width: 100%;
       float: left;
-      padding-left: 0; } }
+      clear: left;
+      margin-right: 80px;
+      margin-left: -14.1%; } }
   @media (min-width: 1050px) {
-    .embedded-entity.half-image-right figcaption,
-    .caption-drupal-entity.half-image-right figcaption {
-      padding-right: 37%; } }
+    .half-image-left {
+      max-width: 55%;
+      margin-left: -20%; } }
   @media (min-width: 1280px) {
-    .embedded-entity.half-image-right figcaption,
-    .caption-drupal-entity.half-image-right figcaption {
-      padding-right: 42.5%; } }
+    .half-image-left {
+      max-width: 480px;
+      margin-left: -25%; } }
+  .half-image-left img {
+    width: 100vw; }
+  .half-image-left figcaption {
+    padding-top: 16px;
+    padding-right: 20px;
+    padding-left: 20px; }
+    @media (min-width: 769px) {
+      .half-image-left figcaption {
+        padding-right: 0;
+        padding-left: 29%;
+        text-align: right; } }
+    @media (min-width: 1050px) {
+      .half-image-left figcaption {
+        padding-left: 37%; } }
+    @media (min-width: 1280px) {
+      .half-image-left figcaption {
+        padding-left: 42.5%; } }
+
+.half-image-right {
+  margin-top: 0;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-bottom: 32px;
+  display: table;
+  width: calc(100% + ($article-gutter * 2));
+  clear: both; }
+  @media (min-width: 769px) {
+    .half-image-right {
+      max-width: 50%;
+      width: 100%;
+      float: right;
+      clear: right;
+      margin-right: -14.1%;
+      margin-left: 80px; } }
+  @media (min-width: 1050px) {
+    .half-image-right {
+      max-width: 55%;
+      margin-right: -20%; } }
+  @media (min-width: 1280px) {
+    .half-image-right {
+      max-width: 480px;
+      margin-right: -25%; } }
+  .half-image-right img {
+    width: 100vw; }
+  .half-image-right figcaption {
+    padding-top: 16px;
+    padding-right: 20px;
+    padding-left: 20px; }
+    @media (min-width: 769px) {
+      .half-image-right figcaption {
+        padding-right: 29%;
+        padding-left: 0; } }
+    @media (min-width: 1050px) {
+      .half-image-right figcaption {
+        padding-right: 37%; } }
+    @media (min-width: 1280px) {
+      .half-image-right figcaption {
+        padding-right: 42.5%; } }
 
 @media (min-width: 769px) {
   .embedded-entity.half-image-left-full,

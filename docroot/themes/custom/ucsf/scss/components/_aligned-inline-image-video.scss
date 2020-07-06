@@ -11,7 +11,7 @@
 
 // !DO NOT add other options it will break css.
 // $option - should be either "left" or "right",  they are used to create selectors and css declarations.
-$align-options: 'left', 'right';
+$align-options: left, right;
 
 // Code for wrapper of image or video.
 // Span element full width of the screen
@@ -20,7 +20,7 @@ $align-options: 'left', 'right';
   margin-left: -#{$article-gutter};
   margin-right: -#{$article-gutter};
   margin-bottom: $space-quadruple;
-  float: left;
+  // float: left;
   display: table;
   width: calc(100% + (#{$article-gutter} * 2));
 }
@@ -39,11 +39,6 @@ $align-options: 'left', 'right';
 // scale up or down in order to take up full width
 %inline-element-full-width-small-screen {
   width: 100vw;
-
-  // do not scale larger then the wrapper
-  @include breakpoint($new-small) {
-    max-width: 100%;
-  }
 }
 
 // Code for <img> element
@@ -66,102 +61,77 @@ $align-options: 'left', 'right';
 
 
 /*---------------In this section---------------------*\
-  HALF IMAGE, HALF IMAGE CAPTION
+  HALF IMAGE, HALF IMAGE with CAPTION
 \*---------------------------------------------------*/
+// These can technically have video as well as images.
+@each $direction in $align-options {
+  .half-image-#{$direction} {
+    // @extend %wrapper-full-width-small-screen;
+    margin-top: 0;
+    margin-left: -#{$article-gutter};
+    margin-right: -#{$article-gutter};
+    margin-bottom: $space-quadruple;
+    display: table;
+    width: calc(100% + ($article-gutter * 2));
 
-// half-image-#{$option}, could be image or video. Indicates the width of element not the type.
-//
-// .embedded-entity - wrapping HTML can change from <figure> to <article>,
-// it might be a bug in 'entity-embed-container.html.twig'
-// use this class to target embeds.
-//
-// .caption-drupal-entity - class that is added when image/video has caption.
-//
-// #{$option} is uses to create code for "left" and "right" variants,
-// use left as default overwrite inside '@if $option == right' statement.
-
-@each $option in $align-options {
-  // HALF IMAGE
-  .embedded-entity.half-image-#{$option},
-  .caption-drupal-entity.half-image-#{$option} {
-    @extend %wrapper-full-width-small-screen;
+    clear: both;
 
     @include breakpoint($new-small) {
-      display:table;
       max-width: 50%;
       width: 100%;
-      margin-bottom: $space-quadruple;
-      // Default alignment
-      margin-right: $space-decuple;
-      margin-left: -#{$article-gutter-bp-new-small};
-      float: #{$option};
-      clear: #{$option};
+      float: $direction;
+      clear: $direction;
 
-      // Overwriting the Default alignment for right aligned elements
-      @if $option == right {
-        margin-#{$option}: -#{$article-gutter-bp-new-small};
+      @if $direction == left {
+        margin-right: $space-decuple;
+        margin-left: -#{$article-gutter-bp-new-small};
+      } @else {
+        margin-right: -#{$article-gutter-bp-new-small};
         margin-left: $space-decuple;
       }
     }
 
-    // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
     @include breakpoint($new-large) {
-      margin-#{$option}: -20%;
-      max-width: 55%; // !!! will affect images AND videos.
+      max-width: 55%;
+      margin-#{$direction}: -20%;
     }
 
     @include breakpoint($new-xl) {
-      margin-#{$option}: -25%;
-      max-width: 480px; // !!! will affect images AND videos.
-    }
-
-    & + * {
-      clear: both;
-
-      @include breakpoint($new-small) {
-        clear: none;
-      }
+      max-width: 480px;
+      margin-#{$direction}: -25%;
     }
 
     img {
-      @extend %inline-element-full-width-small-screen;
+      // Force the image to fill the screen width in mobile.
+      width: 100vw;
     }
 
-    // HALF IMAGE CAPTION
-    & figcaption {
+    figcaption {
       padding-top: $space-double;
       padding-right: $article-gutter;
-      width: auto;
-      // Default alignment
-      float: left;
       padding-left: $article-gutter;
 
       @include breakpoint($new-small) {
-        float: right;
-        padding-right: 0;
-        padding-#{$option}: 29%;
-
-        // Overwriting the Default alignment for right aligned elements
-        @if $option == right {
-          @include breakpoint($new-small) {
-            float: left;
-            padding-left: 0;
-          }
+        @if $direction == left {
+          padding-right: 0;
+          padding-left: 29%;
+          text-align: right;
+        } @else {
+          padding-right: 29%;
+          padding-left: 0;
         }
       }
 
-      // $option is passed to the css declaration to keep code DRY for 'left' and 'right' variant.
       @include breakpoint($new-large) {
-        padding-#{$option}: 37%;
+        padding-#{$direction}: 37%;
       }
 
       @include breakpoint($new-xl) {
-        padding-#{$option}: 42.5%;
+        padding-#{$direction}: 42.5%;
       }
     }
   }
 }
-
 
 /*---------------In this section---------------------*\
   HALF IMAGE FULL, HALF IMAGE FULL CAPTION
