@@ -48,6 +48,9 @@ module.exports = async (page, scenario, vp) => {
       // Hide Twitter feed
       `.timeline-Viewport {
         visibility: hidden;
+      }` +
+      `.twitter__tweets {
+        visibility: hidden;
       }`,
   });
 
