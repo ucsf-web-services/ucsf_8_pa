@@ -15,12 +15,11 @@ $align-options: left, right;
 
 // Code for wrapper of image or video.
 // Span element full width of the screen
-%wrapper-full-width-small-screen {
+@mixin wrapper-full-width-small-screen() {
   margin-top: 0;
   margin-left: -#{$article-gutter};
   margin-right: -#{$article-gutter};
   margin-bottom: $space-quadruple;
-  // float: left;
   display: table;
   width: calc(100% + (#{$article-gutter} * 2));
 }
@@ -31,14 +30,7 @@ $align-options: left, right;
 // These can technically have video as well as images.
 @each $direction in $align-options {
   .half-image-#{$direction} {
-    // @extend %wrapper-full-width-small-screen;
-    margin-top: 0;
-    margin-left: -#{$article-gutter};
-    margin-right: -#{$article-gutter};
-    margin-bottom: $space-quadruple;
-    display: table;
-    width: calc(100% + ($article-gutter * 2));
-
+    @include wrapper-full-width-small-screen();
     clear: both;
 
     @include breakpoint($new-small) {
@@ -108,7 +100,7 @@ $align-options: left, right;
   // HALF IMAGE FULL
   .embedded-entity.half-image-#{$option}-full,
   .caption-drupal-entity.half-image-#{$option}-full {
-    @extend %wrapper-full-width-small-screen;
+    @include wrapper-full-width-small-screen();
 
     @include breakpoint($new-small) {
       margin-left: -#{$article-gutter-bp-new-small};
