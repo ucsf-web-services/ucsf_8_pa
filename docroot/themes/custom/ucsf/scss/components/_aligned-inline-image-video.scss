@@ -25,41 +25,6 @@ $align-options: left, right;
   width: calc(100% + (#{$article-gutter} * 2));
 }
 
-// Code for wrapper of image or video
-// Span element the width of article container
-%wrapper-content-width-small-screen {
-  margin-top: 0;
-  margin-bottom: $space-quadruple;
-  float: left;
-  display: table;
-  width: 100%;
-}
-
-// Code for <img> element
-// scale up or down in order to take up full width
-%inline-element-full-width-small-screen {
-  width: 100vw;
-}
-
-// Code for <img> element
-// Span the width of article wrapper.
-%inline-element-content-width-small-screen {
-  width: 100%;
-
-  // do not scale larger then the wrapper
-  @include breakpoint($new-small) {
-    max-width: 100%;
-  }
-}
-
-// <img> element that already has inline width/height
-// force to scale up or down.
-%inline-element-content-width-overwrite-initial-values-small-screen {
-  width: 100% !important;
-  height: auto !important;
-}
-
-
 /*---------------In this section---------------------*\
   HALF IMAGE, HALF IMAGE with CAPTION
 \*---------------------------------------------------*/
@@ -185,7 +150,8 @@ $align-options: left, right;
     }
 
     img {
-      @extend %inline-element-full-width-small-screen;
+      // Force the image to fill the screen width in mobile.
+      width: 100vw;
     }
 
 
@@ -234,7 +200,11 @@ $align-options: left, right;
   // ALIGN-LEFT, ALIGN-RIGHT
   .embedded-entity.align-#{$option},
   .caption-drupal-entity.align-#{$option} {
-    @extend %wrapper-content-width-small-screen;
+    margin-top: 0;
+    margin-bottom: $space-quadruple;
+    float: left;
+    display: table;
+    width: 100%;
 
     @include breakpoint($new-small) {
       display: table;
@@ -255,156 +225,7 @@ $align-options: left, right;
     }
 
     img {
-      @extend %inline-element-content-width-small-screen;
+      width: 100%;
     }
   }
-}
-
-
-/*---------------In this section---------------------*\
-  LEGACY ALIGNMENT
-\*---------------------------------------------------*/
-
-//  @param $gutter - space between aligned element and article content
-@mixin aligned-element-gutter ($gutter) {
-  // create selectors for alignment on desktop
-  @each $option in $align-options {
-    &[style~="float:#{$option}"],
-    &[style~="#{$option};"],
-    &[style~="float:#{$option};"] {
-
-      @include breakpoint($new-small) {
-        float: #{$option};
-        margin-right: $gutter;
-        margin-#{$option}: 0;
-
-        // Overwriting the default for right aligned elements
-        @if $option == right {
-          margin-left: $gutter;
-        }
-      }
-    }
-  }
-}
-
-// make wrapper span the width of article in mobile
-// 470px appears to be the max width of images,
-// at this point min-width: is needed to force scaling up from original width;
-%element-align-legacy {
-  @extend %wrapper-content-width-small-screen;
-  float: none;
-  // need this so the images scale down from actual width
-  max-width: 100%;
-
-
-  @include breakpoint(470px) {
-    min-width: 100%;
-  }
-}
-
-
-// .ckimagebox - container with aligned elements inside
-//  .ckgreybox  - container with aligned elements inside
-//  style one or another but not both, to avoid problems when .ckimagebox becomes the child element.
-:not(.ckgreybox) > .ckimagebox,
-.ckgreybox {
-  @extend %element-align-legacy;
-  @include aligned-element-gutter($space-ten);
-
-  @include breakpoint($new-small) {
-    min-width: auto;
-    max-width: 55%;
-  }
-
-  img {
-    @extend %inline-element-content-width-overwrite-initial-values-small-screen;
-  }
-}
-
-.ckgreybox {
-  .ckimagebox {
-    margin: 0;
-  }
-}
-
-
-
-// Reduced $gutter
-.image-2014_inline_5-col {
-  @extend %element-align-legacy;
-  @include aligned-element-gutter($space-five);
-
-  @include breakpoint($new-small) {
-    min-width: auto;
-    max-width: 55%;
-  }
-
-  img {
-    @extend %inline-element-content-width-overwrite-initial-values-small-screen;
-  }
-}
-
-// Reduced width
-// Reduced $gutter
-.image-2014_inline_4-col {
-  @extend %element-align-legacy;
-  @include aligned-element-gutter($space-five);
-
-  @include breakpoint($new-small) {
-    min-width: auto;
-    max-width: 50%;
-  }
-
-  img {
-    @extend %inline-element-content-width-overwrite-initial-values-small-screen;
-  }
-}
-
-// Reduced width
-// Reduced $gutter
-.image-2014_inline_2-col {
-  @extend %element-align-legacy;
-  @include aligned-element-gutter($space-five);
-
-  @include breakpoint($new-small) {
-    min-width: auto;
-    max-width: 40%;
-  }
-
-  img {
-    @extend %inline-element-content-width-overwrite-initial-values-small-screen;
-  }
-}
-
-// Inline width
-// Reduced $gutter
-figure[class="image"] {
-  @include aligned-element-gutter($space-five);
-  display: table;
-
-  figcaption {
-      display:table-caption;
-      caption-side:bottom;
-  }
-}
-
-/*---------------In this section---------------------*\
-  FULL WIDTH ELEMENTS
-\*---------------------------------------------------*/
-figure.align-center {
-  display:table;
-
-  figcaption {
-    display:table-caption;
-    caption-side:bottom;
-  }
-}
-
-.wysiwyg-full {
-  @extend %wrapper-content-width-small-screen;
-  min-width: 100% !important; // if inline style is applied overwrite it.
-}
-
-.image-2014_wysiwyg_full {
-  @extend %inline-element-content-width-overwrite-initial-values-small-screen;
 }

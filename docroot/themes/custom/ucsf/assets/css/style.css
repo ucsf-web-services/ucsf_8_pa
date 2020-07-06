@@ -2938,36 +2938,6 @@ dom-twocolumn-layout img.element-fade, dom-threecolumn-layout img.element-fade {
   display: table;
   width: calc(100% + (20px * 2)); }
 
-.embedded-entity.align-left,
-.caption-drupal-entity.align-left, .embedded-entity.align-right,
-.caption-drupal-entity.align-right, :not(.ckgreybox) > .ckimagebox,
-.ckgreybox, .image-2014_inline_5-col, .image-2014_inline_4-col, .image-2014_inline_2-col, .wysiwyg-full {
-  margin-top: 0;
-  margin-bottom: 32px;
-  float: left;
-  display: table;
-  width: 100%; }
-
-.embedded-entity.half-image-left-full img,
-.caption-drupal-entity.half-image-left-full img, .embedded-entity.half-image-right-full img,
-.caption-drupal-entity.half-image-right-full img {
-  width: 100vw; }
-
-.embedded-entity.align-left img,
-.caption-drupal-entity.align-left img, .embedded-entity.align-right img,
-.caption-drupal-entity.align-right img {
-  width: 100%; }
-  @media (min-width: 769px) {
-    .embedded-entity.align-left img,
-    .caption-drupal-entity.align-left img, .embedded-entity.align-right img,
-    .caption-drupal-entity.align-right img {
-      max-width: 100%; } }
-
-:not(.ckgreybox) > .ckimagebox img,
-.ckgreybox img, .image-2014_inline_5-col img, .image-2014_inline_4-col img, .image-2014_inline_2-col img, .image-2014_wysiwyg_full {
-  width: 100% !important;
-  height: auto !important; }
-
 .half-image-left {
   margin-top: 0;
   margin-left: -20px;
@@ -3088,6 +3058,10 @@ dom-twocolumn-layout img.element-fade, dom-threecolumn-layout img.element-fade {
     .caption-drupal-entity.half-image-left-full + * {
       clear: none; } }
 
+.embedded-entity.half-image-left-full img,
+.caption-drupal-entity.half-image-left-full img {
+  width: 100vw; }
+
 .embedded-entity.half-image-left-full figcaption,
 .caption-drupal-entity.half-image-left-full figcaption {
   float: left;
@@ -3150,6 +3124,10 @@ dom-twocolumn-layout img.element-fade, dom-threecolumn-layout img.element-fade {
     .caption-drupal-entity.half-image-right-full + * {
       clear: none; } }
 
+.embedded-entity.half-image-right-full img,
+.caption-drupal-entity.half-image-right-full img {
+  width: 100vw; }
+
 .embedded-entity.half-image-right-full figcaption,
 .caption-drupal-entity.half-image-right-full figcaption {
   float: left;
@@ -3178,32 +3156,58 @@ dom-twocolumn-layout img.element-fade, dom-threecolumn-layout img.element-fade {
     .caption-drupal-entity.half-image-right-full figcaption {
       padding-right: 44%; } }
 
-@media (min-width: 769px) {
-  .embedded-entity.align-left,
-  .caption-drupal-entity.align-left {
-    display: table;
-    width: initial;
-    margin-right: 40px; } }
+.embedded-entity.align-left,
+.caption-drupal-entity.align-left {
+  margin-top: 0;
+  margin-bottom: 32px;
+  float: left;
+  display: table;
+  width: 100%; }
+  @media (min-width: 769px) {
+    .embedded-entity.align-left,
+    .caption-drupal-entity.align-left {
+      display: table;
+      width: initial;
+      margin-right: 40px; } }
+  .embedded-entity.align-left figcaption,
+  .caption-drupal-entity.align-left figcaption {
+    display: table-caption;
+    caption-side: bottom; }
+  .embedded-entity.align-left img,
+  .caption-drupal-entity.align-left img {
+    width: 100%; }
 
-.embedded-entity.align-left figcaption,
-.caption-drupal-entity.align-left figcaption {
-  display: table-caption;
-  caption-side: bottom; }
+.embedded-entity.align-right,
+.caption-drupal-entity.align-right {
+  margin-top: 0;
+  margin-bottom: 32px;
+  float: left;
+  display: table;
+  width: 100%; }
+  @media (min-width: 769px) {
+    .embedded-entity.align-right,
+    .caption-drupal-entity.align-right {
+      display: table;
+      width: initial;
+      margin-right: 40px;
+      float: right;
+      margin-right: 0;
+      margin-left: 40px; } }
+  .embedded-entity.align-right figcaption,
+  .caption-drupal-entity.align-right figcaption {
+    display: table-caption;
+    caption-side: bottom; }
+  .embedded-entity.align-right img,
+  .caption-drupal-entity.align-right img {
+    width: 100%; }
 
-@media (min-width: 769px) {
-  .embedded-entity.align-right,
-  .caption-drupal-entity.align-right {
-    display: table;
-    width: initial;
-    margin-right: 40px;
-    float: right;
-    margin-right: 0;
-    margin-left: 40px; } }
-
-.embedded-entity.align-right figcaption,
-.caption-drupal-entity.align-right figcaption {
-  display: table-caption;
-  caption-side: bottom; }
+:not(.ckgreybox) > .ckimagebox,
+.ckgreybox, .image-2014_inline_5-col, .image-2014_inline_4-col, .image-2014_inline_2-col, .wysiwyg-full {
+  margin-top: 0;
+  margin-bottom: 32px;
+  float: left;
+  display: table;
+  width: 100%; }
 
 :not(.ckgreybox) > .ckimagebox,
 .ckgreybox, .image-2014_inline_5-col, .image-2014_inline_4-col, .image-2014_inline_2-col {
@@ -3213,6 +3217,11 @@ dom-twocolumn-layout img.element-fade, dom-threecolumn-layout img.element-fade {
     :not(.ckgreybox) > .ckimagebox,
     .ckgreybox, .image-2014_inline_5-col, .image-2014_inline_4-col, .image-2014_inline_2-col {
       min-width: 100%; } }
+
+:not(.ckgreybox) > .ckimagebox img,
+.ckgreybox img, .image-2014_inline_5-col img, .image-2014_inline_4-col img, .image-2014_inline_2-col img, .image-2014_wysiwyg_full {
+  width: 100% !important;
+  height: auto !important; }
 
 @media (min-width: 769px) {
   :not(.ckgreybox) > .ckimagebox[style~="float:left"], :not(.ckgreybox) > .ckimagebox[style~="left;"], :not(.ckgreybox) > .ckimagebox[style~="float:left;"],
