@@ -192,3 +192,28 @@ $align-directions: left, right;
     }
   }
 }
+
+/*---------------In this section---------------------*\
+  FULL WIDTH ELEMENTS
+\*---------------------------------------------------*/
+.align-center {
+  display: table;
+  width: 100%;
+  margin-top: $space-seven;
+  margin-bottom: $space-seven;
+
+  @include breakpoint($new-small) {
+    margin-top: $space-ten;
+    margin-bottom: $space-ten;
+  }
+
+  img,
+  figcaption {
+    margin: 0 auto;
+  }
+
+  figcaption {
+    display: table-caption;
+    caption-side: bottom;
+  }
+}
