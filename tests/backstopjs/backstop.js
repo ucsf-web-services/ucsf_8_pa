@@ -1,5 +1,19 @@
 let {urls, advanced} = require('./scenarios.json')
 
+// Load optional local scenarios.
+try {
+  let localScenarios = require('./scenarios.local.json')
+
+  if (localScenarios.url !== undefined) {
+    urls = [...urls, ...localScenarios.url]
+  }
+  if (localScenarios.advanced !== undefined) {
+    advanced = [...advanced, ...localScenarios.advanced]
+  }
+} catch (ex) {
+  console.log('You may create a scenarios.local.json file for tests specific to your computer.')
+}
+
 const baseUrl = 'http://appserver.ucsf.internal'
 
 urls = urls.map(url => {
