@@ -9,7 +9,7 @@
 
 // !DO NOT add other options it will break css.
 // $direction - should be either "left" or "right",  they are used to create selectors and css declarations.
-$align-options: left, right;
+$align-directions: left, right;
 
 // Code for wrapper of image or video.
 // Span element full width of the screen
@@ -26,7 +26,7 @@ $align-options: left, right;
   HALF IMAGE, HALF IMAGE with CAPTION
 \*---------------------------------------------------*/
 // These can technically have video as well as images.
-@each $direction in $align-options {
+@each $direction in $align-directions {
   .half-image-#{$direction} {
     @include wrapper-full-width-small-screen();
     clear: both;
@@ -92,7 +92,7 @@ $align-options: left, right;
   HALF IMAGE FULL, HALF IMAGE FULL with CAPTION
 \*---------------------------------------------------*/
 // These can technically have video as well as images.
-@each $direction in $align-options {
+@each $direction in $align-directions {
   .half-image-#{$direction}-full {
     @include wrapper-full-width-small-screen();
 
@@ -163,7 +163,7 @@ $align-options: left, right;
 \*---------------------------------------------------*/
 // Used in mostly for portraits:
 
-@each $direction in $align-options {
+@each $direction in $align-directions {
   .align-#{$direction} {
     display: table;
     float: $direction;
