@@ -91,12 +91,10 @@ $align-options: left, right;
 }
 
 /*---------------In this section---------------------*\
-  HALF IMAGE FULL, HALF IMAGE FULL CAPTION
+  HALF IMAGE FULL, HALF IMAGE FULL with CAPTION
 \*---------------------------------------------------*/
 // These can technically have video as well as images.
 @each $direction in $align-options {
-
-  // HALF IMAGE FULL
   .half-image-#{$direction}-full {
     @include wrapper-full-width-small-screen();
 
@@ -167,36 +165,32 @@ $align-options: left, right;
 \*---------------------------------------------------*/
 // Used in mostly for portraits:
 
-@each $option in $align-options {
-  // ALIGN-LEFT, ALIGN-RIGHT
-  .embedded-entity.align-#{$option},
-  .caption-drupal-entity.align-#{$option} {
-    margin-top: 0;
-    margin-bottom: $space-quadruple;
-    float: left;
+@each $direction in $align-options {
+  .align-#{$direction} {
     display: table;
+    float: $direction;
     width: 100%;
+    margin-bottom: $space-quadruple;
 
     @include breakpoint($new-small) {
-      display: table;
       width: initial;
-      margin-right: $space-five;
 
-      // Overwriting the default for right aligned elements
-      @if $option == right {
-        float: #{$option};
-        margin-right: 0;
+      @if $direction == left {
+        margin-right: $space-five;
+      } @else {
         margin-left: $space-five;
       }
     }
 
-    figcaption {
-      display:table-caption;
-      caption-side:bottom;
+    img {
+      @include breakpoint($new-small-max) {
+        width: 100%;
+      }
     }
 
-    img {
-      width: 100%;
+    figcaption {
+      display: table-caption;
+      caption-side: bottom;
     }
   }
 }
