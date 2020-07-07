@@ -50,7 +50,7 @@ module.exports = async (page, scenario, vp) => {
         visibility: hidden;
       }` +
       `.twitter__tweets {
-        visibility: hidden;
+        display: none;
       }`,
   });
 
