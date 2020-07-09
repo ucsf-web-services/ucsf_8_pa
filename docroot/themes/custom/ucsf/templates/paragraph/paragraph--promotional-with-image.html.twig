@@ -1,6 +1,6 @@
 {% set classes = [
   'promo-list__card',
-  'promo-list__card-two',
+  'promo-list__card--featured',
 
 ] %}
 {% set image_value = paragraph.field_image_media.entity.field_media_image.entity.uri.value %}
@@ -11,7 +11,7 @@
   {% endif %}
 >
   <a href="{{ paragraph.field_promo_cta.0.url }}">
-    <div class="promo-list__card-two-content overlay-{{ paragraph.field_textbox_background_color.entity.label|clean_class }}">
+    <div class="promo-list__card-content-wrapper overlay-{{ paragraph.field_textbox_background_color.entity.label|clean_class }}">
       <div class="promo-list__card-content">{{ content.field_promo_text }}</div>
       <p class="promo-list__card-more"><span href="{{ paragraph.field_promo_cta.0.url }}" class="link link--cta">{{ paragraph.field_promo_cta.value.0.title }}</span></p>
     </div>

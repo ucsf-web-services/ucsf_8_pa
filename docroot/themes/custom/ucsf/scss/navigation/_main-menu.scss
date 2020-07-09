@@ -4,13 +4,22 @@ $search-icon: 28px;
 $search-icon-sticky: 24px;
 $hover-border-size: 4px;
 
-.combined-header-region {
-
+header .menu--main {
+  @include breakpoint($bp-until-large) {
+    display: none;
+  }
 }
 
-header .menu--main {
-
+// Hide the desktop menu in mobile
+#block-ucsf-main-menu-desktop {
   @include breakpoint($bp-until-large) {
+    display: none;
+  }
+}
+
+// Hide the mobile menu in desktop
+#block-ucsf-main-menu {
+  @include breakpoint($new-medium) {
     display: none;
   }
 }

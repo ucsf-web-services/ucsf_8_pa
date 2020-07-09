@@ -6,8 +6,11 @@
 (function ($, Drupal, drupalSettings, window) {
 
   // Use minimized header nav whenever this file is used
-  var header = document.querySelector('.combined-header-region')
+  var header = document.querySelector('.combined-header-region');
   header.classList.add('fixed-nav', 'fixed-nav--visible');
+
+  // Valid id for skip to main link
+  document.querySelector('.skip-link').href='#locations-list';
 
   Drupal.behaviors.map = {
     attach: function (context, settings) {

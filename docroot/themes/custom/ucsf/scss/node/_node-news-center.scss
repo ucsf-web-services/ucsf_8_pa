@@ -33,6 +33,12 @@
 
 .news-center-banner {
   background: $white;
+  position: relative;
+  margin-top: 2.5rem;
+
+  @include breakpoint($new-medium) {
+    margin-top: 0;
+  }
 }
 
 .news-center-banner__featured,
@@ -135,8 +141,28 @@
   }
 }
 
+.news-center-banner .link--cta-right {
+  position: absolute;
+  top: -9.5rem;
+  left: $page-gutter;
+
+  @include breakpoint($new-medium) {
+    display: flex;
+    top: -3rem;
+    left: auto;
+    right: $page-gutter; //needs to line up with .news-center-banner_list
+  }
+
+  @include breakpoint($new-large) {
+    display: flex;
+    top: -3rem;
+    left: auto;
+    right: 4.5%; //needs to line up with .news-center-banner_list
+  }
+}
+
 .news-center-banner_list {
-  margin: $space-five 20px;
+  margin: $space-five $page-gutter;
 
   h2 {
     font-size: $font-size;
