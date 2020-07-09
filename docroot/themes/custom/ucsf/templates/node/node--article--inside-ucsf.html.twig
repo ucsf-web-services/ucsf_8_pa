@@ -1,0 +1,22 @@
+{% set classes = ['news-card campus-news-card inside-ucsf-card'] %}
+
+{% set primary_area = node.field_primary_area.0.entity.label|clean_class %}
+
+{% if node.field_external_url.value.0.uri  %}
+ {% set link = node.field_external_url.value.0.uri %}
+{% else %}
+ {% set link = url %}
+{% endif %}
+
+<article {{ attributes.addClass(classes) }} data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
+  <a href="{{ link }}" class="news-card__link">
+    <header>
+      {% if content.field_short_title|render|striptags != ''  %}
+        <h3 class="campus-news-card__title">{{ content.field_short_title }}</h3>
+      {% else %}
+        <h3 class="campus-news-card__title">{{ label }}</h3>
+      {% endif %}
+      {% include '@theme/article/campus-news-byline.twig' %}
+    </header>
+  </a>
+</article>
