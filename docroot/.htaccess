@@ -122,6 +122,14 @@ AddEncoding gzip svgz
   # uncomment the following line:
   # RewriteBase /
 
+  #Redirect all ucsf.edu traffic to www.ucsf.edu
+  RewriteCond %{HTTP_HOST} ^ucsf\.edu [NC]
+  RewriteRule ^ http%{ENV:protossl}://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Serve different robots.txt for valid stag domain wwwstage.ucsf.edu
+  RewriteCond %{HTTP_HOST} ^wwwstage\.ucsf\.edu$ [NC]
+  RewriteRule ^robots\.txt$ robots_noindex.txt [NC,L]
+
   # Redirect common PHP files to their new locations.
   RewriteCond %{REQUEST_URI} ^(.*)?/(install.php) [OR]
   RewriteCond %{REQUEST_URI} ^(.*)?/(rebuild.php)
