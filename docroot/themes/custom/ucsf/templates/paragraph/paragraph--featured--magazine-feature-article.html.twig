@@ -8,38 +8,39 @@
   {% set link = drupal_url('node/' ~ content.field_news_article.0['#node'].id ) %}
 {% endif %}
 
-  <a href="{{ link }}">
-    <article class="card-row magazine-home-feature">
-      <div class="card-row__image">
-      {% if content.field_image_media|render|striptags != ''%}
-        {# Feature Paragraph - Overwrite Image #}
-        {{ content.field_image_media }}
-      {% else %}
-        {# Feature Paragraph > News Article (News) > Card Image #}
-        {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id) }}
-      {% endif %}
-      </div>
-      <div class="card-row__copy">
-        <header class="news-card ">
-          {% include '@theme/homepage/magazine-byline.twig' %}
-          <h2>
-          {% if content.field_title|render|striptags != '' %}
-              {# Feature Paragraph - Overwrite Title #}
-              {{ content.field_title }}
-            {% else %}
-              {# Feature Paragraph > News Article (News) > Title #}
-              {{ paragraph.field_news_article.entity.label }}
-            {% endif %}
-          </h2>
-        </header>
-        <div class="card-row__body">
-         {{ content.field_text_body }}
-        </div>
-        {% if content.field_banner_cta_text|render|striptags != '' %}
-        <p class="card-row__link link--cta">
-          {{ content.field_banner_cta_text }}
-        </p>
-        {% endif %}
-      </div>
-    </article>
-  </a>
+
+<article class="card-row magazine-home-feature">
+  <div class="card-row__image">
+  {% if content.field_image_media|render|striptags != ''%}
+    {# Feature Paragraph - Overwrite Image #}
+    {{ content.field_image_media }}
+  {% else %}
+    {# Feature Paragraph > News Article (News) > Card Image #}
+    {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id) }}
+  {% endif %}
+  </div>
+  <div class="card-row__copy">
+    <header class="news-card ">
+      {% include '@theme/homepage/magazine-byline.twig' %}
+      <h2>
+        <a href="{{ link }}">
+        {% if content.field_title|render|striptags != '' %}
+            {# Feature Paragraph - Overwrite Title #}
+            {{ content.field_title }}
+          {% else %}
+            {# Feature Paragraph > News Article (News) > Title #}
+            {{ paragraph.field_news_article.entity.label }}
+          {% endif %}
+        </a>
+      </h2>
+    </header>
+    <div class="card-row__body">
+     {{ content.field_text_body }}
+    </div>
+    {% if content.field_banner_cta_text|render|striptags != '' %}
+    <p class="card-row__link link--cta">
+      {{ content.field_banner_cta_text }}
+    </p>
+    {% endif %}
+  </div>
+</article>

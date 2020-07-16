@@ -3997,6 +3997,24 @@ figure figure[class="image"] {
 .recommended-articles__banner:hover .recommended-article__copy h2 a {
   color: #0071ad; }
 
+.magazine-home-feature .card-row__image {
+  overflow: hidden; }
+
+.magazine-home-feature img {
+  -webkit-transition: 0.2s ease-out transform;
+  transition: 0.2s ease-out transform; }
+
+.magazine-home-feature .card-row__copy h2 a {
+  -webkit-transition: 0.3s ease-out color;
+  transition: 0.3s ease-out color; }
+
+.magazine-home-feature:hover img {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1); }
+
+.magazine-home-feature:hover .card-row__copy h2 a {
+  color: #0071ad; }
+
 @-webkit-keyframes fade-and-slide {
   0% {
     -webkit-transform: translateY(-147px);
@@ -4167,6 +4185,23 @@ figure figure[class="image"] {
             transform: scale(1.1); }
   .news-card:hover h2 {
     color: #0071ad; }
+
+.four-card-row {
+  overflow: hidden; }
+  .four-card-row .card-row__image {
+    overflow: hidden;
+    display: block; }
+  .four-card-row .card-row__image img {
+    -webkit-transition: 0.2s ease-out all;
+    transition: 0.2s ease-out all; }
+  .four-card-row h2 {
+    -webkit-transition: 0.3s ease-out all;
+    transition: 0.3s ease-out all; }
+  .four-card-row:hover .card-row__image img {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1); }
+  .four-card-row:hover h2 {
+    color: #0071ad !important; }
 
 .pager {
   list-style: none;
@@ -4949,6 +4984,20 @@ body.loading .quicklinks {
     list-style: none; }
     .layout-columns__4 .field-content-wrapper-content > .layout-column {
       margin-bottom: 2em; }
+  @media (min-width: 600px) {
+    .layout-columns__4 .field-content-wrapper-content {
+      clear: none; }
+      .layout-columns__4 .field-content-wrapper-content > .layout-column {
+        clear: none;
+        float: left;
+        width: 48%;
+        margin-right: 2%;
+        margin-left: 0;
+        margin-top: 0;
+        margin-bottom: 0; }
+        .layout-columns__4 .field-content-wrapper-content > .layout-column:nth-child(even) {
+          margin-right: 0;
+          margin-left: 2%; } }
   @media (min-width: 850px) {
     .layout-columns__4 {
       padding: 40px;
@@ -12327,7 +12376,10 @@ body.page-node-type-magazine-homepage {
       body.page-node-type-magazine-homepage .magazine-homepage-banner {
         padding: 80px; } }
   body.page-node-type-magazine-homepage .magazine-home-feature h2 {
-    margin-bottom: 24px; }
+    margin-bottom: 24px;
+    color: #121a31; }
+    body.page-node-type-magazine-homepage .magazine-home-feature h2 a {
+      color: #121a31; }
   body.page-node-type-magazine-homepage .magazine-home-feature .card-row__copy .magazine-card__byline {
     margin-bottom: 16px; }
   body.page-node-type-magazine-homepage .magazine-home-feature .card-row__body p {
@@ -12364,11 +12416,14 @@ body.page-node-type-magazine-homepage {
     font-size: 32px;
     line-height: 1.25;
     letter-spacing: -0.6px;
-    color: #052049; }
+    color: #052049;
+    color: #121a31; }
     @media (min-width: 600px) {
       body.page-node-type-magazine-homepage .layout__heading {
         font-size: 56px;
         letter-spacing: -1.2px; } }
+  body.page-node-type-magazine-homepage .layout-column .card-row__image img {
+    margin: 0 auto; }
   body.page-node-type-magazine-homepage .layout-column .card-row__copy {
     padding-top: 32px;
     padding-right: 0; }
@@ -12380,19 +12435,30 @@ body.page-node-type-magazine-homepage {
       line-height: 1.2em;
       letter-spacing: -0.3px;
       margin: 0;
-      margin-top: 8px; }
+      margin-top: 8px;
+      color: #121a31; }
       @media (min-width: 600px) {
         body.page-node-type-magazine-homepage .layout-column .card-row__copy h2 {
           letter-spacing: -0.3px; } }
     body.page-node-type-magazine-homepage .layout-column .card-row__copy .card-row__body {
       color: #384559; }
+  body.page-node-type-magazine-homepage .news-card .news-card__copy, body.page-node-type-magazine-homepage .magazine-home-feature .news-card__copy, body.page-node-type-magazine-homepage .magazine-alumni .news-card__copy {
+    padding: 0;
+    padding-top: 32px;
+    margin-top: 0;
+    margin-left: 0; }
+    body.page-node-type-magazine-homepage .news-card .news-card__copy h2, body.page-node-type-magazine-homepage .news-card .news-card__copy h3, body.page-node-type-magazine-homepage .magazine-home-feature .news-card__copy h2, body.page-node-type-magazine-homepage .magazine-home-feature .news-card__copy h3, body.page-node-type-magazine-homepage .magazine-alumni .news-card__copy h2, body.page-node-type-magazine-homepage .magazine-alumni .news-card__copy h3 {
+      color: #121a31; }
+  body.page-node-type-magazine-homepage .news-card:hover h2, body.page-node-type-magazine-homepage .news-card:hover h3, body.page-node-type-magazine-homepage .magazine-home-feature:hover h2, body.page-node-type-magazine-homepage .magazine-home-feature:hover h3, body.page-node-type-magazine-homepage .magazine-alumni:hover h2, body.page-node-type-magazine-homepage .magazine-alumni:hover h3 {
+    color: #0071ad !important; }
   body.page-node-type-magazine-homepage .remove-top-space {
     margin-top: 0; }
   body.page-node-type-magazine-homepage .footer-ctas-wrapper h2 {
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 24px;
     line-height: 1.4;
-    letter-spacing: -0.8px; }
+    letter-spacing: -0.8px;
+    color: #121a31; }
     @media (min-width: 600px) {
       body.page-node-type-magazine-homepage .footer-ctas-wrapper h2 {
         font-size: 36px; } }
@@ -12409,7 +12475,8 @@ body.page-node-type-magazine-homepage {
     line-height: 1.25;
     letter-spacing: -0.6px;
     color: #052049;
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    color: #121a31; }
     @media (min-width: 600px) {
       .magazine-issue-banner .magazine-issue-banner__title {
         font-size: 56px;
@@ -12435,7 +12502,8 @@ body.page-node-type-magazine-homepage {
         font-size: 18px; } }
   .magazine-issue-banner .magazine-issue-banner__about-desc {
     font-size: 14px;
-    line-height: 24px; }
+    line-height: 24px;
+    font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
     .magazine-issue-banner .magazine-issue-banner__about-desc a {
       color: #384559;
       text-decoration: underline; }
@@ -12473,8 +12541,7 @@ body.page-node-type-magazine-homepage {
       .magazine-issue-banner .magazine-issue-banner__content {
         grid-column: 1/2;
         grid-row: 1;
-        -ms-flex-item-align: center;
-            align-self: center; }
+        margin-top: 64px; }
       .magazine-issue-banner .magazine-issue-banner__download {
         float: right; }
       .magazine-issue-banner .magazine-issue-banner__about-desc {
@@ -12493,7 +12560,7 @@ body.page-node-type-magazine-homepage {
   margin: 0 auto; }
 
 .magazine-hub-inside {
-  margin: 40px 20px;
+  padding: 40px 20px;
   margin-bottom: 0;
   padding-bottom: 0;
   clear: both; }
@@ -12507,23 +12574,29 @@ body.page-node-type-magazine-homepage {
     line-height: 1.25;
     letter-spacing: -0.6px;
     color: #052049;
-    margin-left: 0; }
+    margin-left: 0;
+    color: #121a31; }
     @media (min-width: 600px) {
       .magazine-hub-inside .magazine-hub-inside__title {
         font-size: 56px;
         letter-spacing: -1.2px; } }
-  .magazine-hub-inside .magazine-alumni_byline h3 {
-    color: #052049;
-    font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif;
-    font-size: 28px;
-    font-weight: normal;
-    line-height: 1.2em;
-    letter-spacing: -0.3px;
-    margin: 0;
-    margin-top: 8px; }
-    @media (min-width: 600px) {
-      .magazine-hub-inside .magazine-alumni_byline h3 {
-        letter-spacing: -0.3px; } }
+  .magazine-hub-inside .magazine-alumni_byline {
+    padding-top: 24px; }
+    .magazine-hub-inside .magazine-alumni_byline h3 {
+      color: #052049;
+      font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: normal;
+      line-height: 1.2em;
+      letter-spacing: -0.3px;
+      margin: 0;
+      margin-top: 8px;
+      color: #121a31; }
+      @media (min-width: 600px) {
+        .magazine-hub-inside .magazine-alumni_byline h3 {
+          letter-spacing: -0.3px; } }
+  .magazine-hub-inside .magazine-hub-inside__hub .news-card__byline .article-header__date::before {
+    display: none; }
   .magazine-hub-inside .magazine-hub-inside__hub .card-row__body p {
     margin: 16px 0;
     color: #384559; }
@@ -12541,6 +12614,9 @@ body.page-node-type-magazine-homepage {
         display: none; }
     .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf .article-header__byline .article-header__date {
       color: #384559; }
+  @media (max-width: 768px) {
+    .magazine-hub-inside .magazine-hub-inside__inside {
+      padding-top: 40px; } }
   @media (min-width: 769px) {
     .magazine-hub-inside {
       padding: 40px;
@@ -12559,7 +12635,9 @@ body.page-node-type-magazine-homepage {
       margin: 2rem 0;
       float: right; }
     .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf {
-      clear: both; } }
+      clear: both; }
+    .magazine-hub-inside .magazine-hub-inside__inside .campus-news-card .campus-news-card__title {
+      color: #121a31; } }
   @media (min-width: 1050px) {
     .magazine-hub-inside {
       padding: 80px 0;
@@ -12583,11 +12661,17 @@ body.page-node-type-magazine-homepage {
 
 .magazine-feature-support {
   padding-top: 0; }
+  .magazine-feature-support .news-card figure {
+    background: none; }
+    .magazine-feature-support .news-card figure img {
+      margin: 0 auto; }
   .magazine-feature-support .news-card .news-card__copy {
     padding: 0;
     padding-top: 32px;
     margin-top: 0;
     margin-left: 0; }
+    .magazine-feature-support .news-card .news-card__copy h2 {
+      color: #121a31; }
 
 .remove-top-space {
   padding-top: 0 !important; }

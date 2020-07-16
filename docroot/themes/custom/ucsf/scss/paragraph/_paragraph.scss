@@ -364,6 +364,27 @@
     }
   }
 
+  @include breakpoint($new-x-small) {
+    .field-content-wrapper-content {
+      clear: none;
+
+      > .layout-column {
+        clear: none;
+        float: left;
+        width: 48%;
+        margin-right: 2%;
+        margin-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+
+        &:nth-child(even) {
+          margin-right: 0;
+          margin-left: 2%;
+        }
+      }
+    }
+  }
+
   @include breakpoint($new-medium) {
     padding: $space-five;
     padding-bottom: 0;
