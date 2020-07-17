@@ -42,9 +42,17 @@ body.page-node-type-magazine-homepage {
     }
 
     .card-row__body {
+      margin-top: $space-three;
+
       p {
         margin: 0;
         color: $magazine-gray-blue;
+      }
+    }
+
+    &.card-row {
+      .card-row__body {
+        margin-top: 0;
       }
     }
 
@@ -102,6 +110,7 @@ body.page-node-type-magazine-homepage {
     .card-row__image {
       img {
         margin: 0 auto;
+        width: 100%;
       }
     }
 
@@ -261,8 +270,29 @@ body.page-node-type-magazine-homepage {
 }
 
 .four-card-row {
+  .card-row__copy {
+    padding-top: $space-four;
+    padding-right: 0;
+
+    h2 {
+      @include fs-heading-three;
+      margin: 0;
+      margin-top: $space;
+      color: $c-dark-navy;
+    }
+
+    .card-row__body {
+      color: $magazine-gray-blue;
+    }
+  }
+
+  .card-row__body {
+    margin-top: $space-three;
+  }
+
   img {
     margin: 0 auto;
+    width: 100%;
   }
 }
 
@@ -305,7 +335,8 @@ body.page-node-type-magazine-homepage {
     }
   }
 
-  .magazine-hub-inside__inside {
+  .magazine-hub-inside__inside,
+  .magazine-hub-inside__hub {
     .magazine-hub-inside__title {
       margin-bottom: 0;
     }
@@ -336,9 +367,20 @@ body.page-node-type-magazine-homepage {
     }
   }
 
+  .magazine-hub-inside__hub {
+    .magazine-hub-inside__inside-more {
+      margin-bottom: $space-three;
+    }
+  }
+
   @include breakpoint($new-small-max) {
     .magazine-hub-inside__inside {
       padding-top: $space-five;
+      border-top: 1px solid $c-gray-lighter;
+    }
+
+    .magazine-hub-inside__hub {
+      padding-bottom: $space-five;
     }
   }
 
@@ -358,7 +400,8 @@ body.page-node-type-magazine-homepage {
   }
 
   @include breakpoint($new-xl) {
-    .magazine-hub-inside__inside {
+    .magazine-hub-inside__inside,
+    .magazine-hub-inside__hub {
       .magazine-hub-inside__title {
         margin-bottom: 0;
         float: left;
@@ -369,7 +412,7 @@ body.page-node-type-magazine-homepage {
         float: right;
       }
 
-      .field-inside-ucsf {
+      .field-inside-ucsf, .field-alumni-hub {
         clear: both;
       }
 
@@ -396,7 +439,7 @@ body.page-node-type-magazine-homepage {
     }
 
     .magazine-hub-inside__hub {
-      .magazine-hub-inside__title, .card-row__copy {
+      .magazine-hub-inside__title, .card-row__copy, .magazine-hub-inside__inside-more {
         margin-left: $space-eight;
       }
     }
@@ -412,6 +455,7 @@ body.page-node-type-magazine-homepage {
 
       img {
         margin: 0 auto;
+        width: 100%;
       }
     }
 

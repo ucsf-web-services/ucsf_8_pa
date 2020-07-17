@@ -11,13 +11,15 @@
 
 <article class="card-row magazine-home-feature">
   <div class="card-row__image">
-  {% if content.field_image_media|render|striptags != ''%}
-    {# Feature Paragraph - Overwrite Image #}
-    {{ content.field_image_media }}
-  {% else %}
-    {# Feature Paragraph > News Article (News) > Card Image #}
-    {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id) }}
-  {% endif %}
+    <a href="{{ link }}">
+      {% if content.field_image_media|render|striptags != ''%}
+        {# Feature Paragraph - Overwrite Image #}
+        {{ content.field_image_media }}
+      {% else %}
+        {# Feature Paragraph > News Article (News) > Card Image #}
+        {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id) }}
+      {% endif %}
+    </a>
   </div>
   <div class="card-row__copy">
     <header class="news-card ">

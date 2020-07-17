@@ -5012,6 +5012,9 @@ body.loading .quicklinks {
           margin-left: 0;
           margin-top: 0;
           margin-bottom: 0; }
+          .layout-columns__4 .field-content-wrapper-content > .layout-column:nth-child(even) {
+            margin-right: 2%;
+            margin-left: 0; }
           .layout-columns__4 .field-content-wrapper-content > .layout-column:last-child {
             margin-right: 0;
             margin-left: 2%; } }
@@ -5033,7 +5036,7 @@ body.loading .quicklinks {
           width: auto;
           margin-right: 0;
           margin-left: 0; }
-          .layout-columns__4 .field-content-wrapper-content > .layout-column:last-child {
+          .layout-columns__4 .field-content-wrapper-content > .layout-column:last-child, .layout-columns__4 .field-content-wrapper-content > .layout-column:nth-child(even) {
             margin-right: 0;
             margin-left: 0; } }
 
@@ -12382,9 +12385,13 @@ body.page-node-type-magazine-homepage {
       color: #121a31; }
   body.page-node-type-magazine-homepage .magazine-home-feature .card-row__copy .magazine-card__byline {
     margin-bottom: 16px; }
-  body.page-node-type-magazine-homepage .magazine-home-feature .card-row__body p {
-    margin: 0;
-    color: #384559; }
+  body.page-node-type-magazine-homepage .magazine-home-feature .card-row__body {
+    margin-top: 24px; }
+    body.page-node-type-magazine-homepage .magazine-home-feature .card-row__body p {
+      margin: 0;
+      color: #384559; }
+  body.page-node-type-magazine-homepage .magazine-home-feature.card-row .card-row__body {
+    margin-top: 0; }
   @media (max-width: 768px) {
     body.page-node-type-magazine-homepage .magazine-home-feature .card-row__copy {
       margin-top: 0;
@@ -12424,7 +12431,8 @@ body.page-node-type-magazine-homepage {
         font-size: 56px;
         letter-spacing: -1.2px; } }
   body.page-node-type-magazine-homepage .layout-column .card-row__image img {
-    margin: 0 auto; }
+    margin: 0 auto;
+    width: 100%; }
   body.page-node-type-magazine-homepage .layout-column .card-row__copy {
     padding-top: 32px;
     padding-right: 0; }
@@ -12557,8 +12565,31 @@ body.page-node-type-magazine-homepage {
   text-transform: uppercase;
   margin: 8px 0; }
 
+.four-card-row .card-row__copy {
+  padding-top: 32px;
+  padding-right: 0; }
+  .four-card-row .card-row__copy h2 {
+    color: #052049;
+    font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif;
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 1.2em;
+    letter-spacing: -0.3px;
+    margin: 0;
+    margin-top: 8px;
+    color: #121a31; }
+    @media (min-width: 600px) {
+      .four-card-row .card-row__copy h2 {
+        letter-spacing: -0.3px; } }
+  .four-card-row .card-row__copy .card-row__body {
+    color: #384559; }
+
+.four-card-row .card-row__body {
+  margin-top: 24px; }
+
 .four-card-row img {
-  margin: 0 auto; }
+  margin: 0 auto;
+  width: 100%; }
 
 .magazine-hub-inside {
   padding: 40px 20px;
@@ -12601,23 +12632,35 @@ body.page-node-type-magazine-homepage {
   .magazine-hub-inside .magazine-hub-inside__hub .card-row__body p {
     margin: 16px 0;
     color: #384559; }
-  .magazine-hub-inside .magazine-hub-inside__inside .magazine-hub-inside__title {
+  .magazine-hub-inside .magazine-hub-inside__inside .magazine-hub-inside__title,
+  .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__title {
     margin-bottom: 0; }
-  .magazine-hub-inside .magazine-hub-inside__inside .magazine-hub-inside__inside-more {
+  .magazine-hub-inside .magazine-hub-inside__inside .magazine-hub-inside__inside-more,
+  .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__inside-more {
     margin: 0; }
-  .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf {
+  .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf,
+  .magazine-hub-inside .magazine-hub-inside__hub .field-inside-ucsf {
     clear: both; }
-    .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf .campus-news-card__title {
+    .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf .campus-news-card__title,
+    .magazine-hub-inside .magazine-hub-inside__hub .field-inside-ucsf .campus-news-card__title {
       margin-bottom: 8px; }
-    .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf .article-header__byline .article-header__primary-area {
+    .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf .article-header__byline .article-header__primary-area,
+    .magazine-hub-inside .magazine-hub-inside__hub .field-inside-ucsf .article-header__byline .article-header__primary-area {
       color: #384559; }
-      .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf .article-header__byline .article-header__primary-area::before {
+      .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf .article-header__byline .article-header__primary-area::before,
+      .magazine-hub-inside .magazine-hub-inside__hub .field-inside-ucsf .article-header__byline .article-header__primary-area::before {
         display: none; }
-    .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf .article-header__byline .article-header__date {
+    .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf .article-header__byline .article-header__date,
+    .magazine-hub-inside .magazine-hub-inside__hub .field-inside-ucsf .article-header__byline .article-header__date {
       color: #384559; }
+  .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__inside-more {
+    margin-bottom: 24px; }
   @media (max-width: 768px) {
     .magazine-hub-inside .magazine-hub-inside__inside {
-      padding-top: 40px; } }
+      padding-top: 40px;
+      border-top: 1px solid #d1d3d3; }
+    .magazine-hub-inside .magazine-hub-inside__hub {
+      padding-bottom: 40px; } }
   @media (min-width: 769px) {
     .magazine-hub-inside {
       padding: 40px;
@@ -12629,15 +12672,20 @@ body.page-node-type-magazine-homepage {
       .magazine-hub-inside .magazine-hub-inside__inside {
         float: right; } }
   @media (min-width: 1280px) {
-    .magazine-hub-inside .magazine-hub-inside__inside .magazine-hub-inside__title {
+    .magazine-hub-inside .magazine-hub-inside__inside .magazine-hub-inside__title,
+    .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__title {
       margin-bottom: 0;
       float: left; }
-    .magazine-hub-inside .magazine-hub-inside__inside .magazine-hub-inside__inside-more {
+    .magazine-hub-inside .magazine-hub-inside__inside .magazine-hub-inside__inside-more,
+    .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__inside-more {
       margin: 2rem 0;
       float: right; }
-    .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf {
+    .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf, .magazine-hub-inside .magazine-hub-inside__inside .field-alumni-hub,
+    .magazine-hub-inside .magazine-hub-inside__hub .field-inside-ucsf,
+    .magazine-hub-inside .magazine-hub-inside__hub .field-alumni-hub {
       clear: both; }
-    .magazine-hub-inside .magazine-hub-inside__inside .campus-news-card .campus-news-card__title {
+    .magazine-hub-inside .magazine-hub-inside__inside .campus-news-card .campus-news-card__title,
+    .magazine-hub-inside .magazine-hub-inside__hub .campus-news-card .campus-news-card__title {
       color: #121a31; } }
   @media (min-width: 1050px) {
     .magazine-hub-inside {
@@ -12657,7 +12705,7 @@ body.page-node-type-magazine-homepage {
         width: 100%; }
       .magazine-hub-inside .magazine-hub-inside__inside {
         float: none; }
-      .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__title, .magazine-hub-inside .magazine-hub-inside__hub .card-row__copy {
+      .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__title, .magazine-hub-inside .magazine-hub-inside__hub .card-row__copy, .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__inside-more {
         margin-left: 64px; } }
 
 .magazine-feature-support {
@@ -12665,7 +12713,8 @@ body.page-node-type-magazine-homepage {
   .magazine-feature-support .news-card figure {
     background: none; }
     .magazine-feature-support .news-card figure img {
-      margin: 0 auto; }
+      margin: 0 auto;
+      width: 100%; }
   .magazine-feature-support .news-card .news-card__copy {
     padding: 0;
     padding-top: 32px;
