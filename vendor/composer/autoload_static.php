@@ -27,6 +27,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '7e9bd612cc444b3eed788ebbe46263a0' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/autoload.php',
         'a16312f9300fed4a097923eacb0ba814' => __DIR__ . '/..' . '/igorw/get-in/src/get_in.php',
+        'e9b046393eb3376a21bcc1a30bd2fe64' => __DIR__ . '/..' . '/querypath/querypath/src/qp_functions.php',
         '5a12a5271c58108e0aa33355e6ac54ea' => __DIR__ . '/..' . '/drupal/console-core/src/functions.php',
         'c65d09b6820da036953a371c8c73a9b1' => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook/polyfills.php',
         '07d7f1a47144818725fd8d91a907ac57' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/create_uploaded_file.php',
@@ -137,6 +138,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         ),
         'L' => 
         array (
+            'Lullabot\\AMP\\' => 13,
             'Laminas\\ZendFrameworkBridge\\' => 28,
             'Laminas\\Stdlib\\' => 15,
             'Laminas\\Feed\\' => 13,
@@ -163,6 +165,8 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'F' => 
         array (
             'FontLib\\' => 8,
+            'FastImageSize\\tests\\' => 20,
+            'FastImageSize\\' => 14,
             'Facebook\\' => 9,
         ),
         'E' => 
@@ -437,6 +441,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
         ),
+        'Lullabot\\AMP\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/lullabot/amp/src',
+        ),
         'Laminas\\ZendFrameworkBridge\\' => 
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src',
@@ -492,6 +500,14 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'FontLib\\' => 
         array (
             0 => __DIR__ . '/..' . '/phenx/php-font-lib/src/FontLib',
+        ),
+        'FastImageSize\\tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/marc1706/fast-image-size/tests',
+        ),
+        'FastImageSize\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/marc1706/fast-image-size/lib',
         ),
         'Facebook\\' => 
         array (
@@ -677,6 +693,17 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             array (
                 0 => __DIR__ . '/..' . '/solarium/solarium/library',
             ),
+            'Sabberworm\\CSS' => 
+            array (
+                0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib',
+            ),
+        ),
+        'Q' => 
+        array (
+            'QueryPath' => 
+            array (
+                0 => __DIR__ . '/..' . '/querypath/querypath/src',
+            ),
         ),
         'P' => 
         array (
@@ -820,6 +847,33 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
+        'Lullabot\\AMP\\Spec\\AmpLayout' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\AmpLayoutLayout' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\AtRuleSpec' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\AtRuleSpecBlockType' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\AttrList' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\AttrSpec' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\AttrTriggerSpec' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\BlackListedCDataRegex' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\CdataSpec' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\ChildTagSpec' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\CssRuleSpec' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\CssSpec' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\ErrorCategory' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\ErrorCategoryCode' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\ErrorFormat' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\PropertySpec' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\PropertySpecList' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\TagSpec' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\UrlSpec' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\ValidationError' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\ValidationErrorCode' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\ValidationErrorSeverity' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\ValidationResult' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\ValidationResultStatus' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\ValidationRulesFactory' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\ValidatorInfo' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Lullabot\\AMP\\Spec\\ValidatorRules' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
         'PEAR_Exception' => __DIR__ . '/..' . '/pear/pear_exception/PEAR/Exception.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
         'PHPUnit\\Framework\\AssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/AssertionFailedError.php',
