@@ -2,12 +2,14 @@
 
 namespace Drupal\content_lock\ContentLock;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\DependencyInjection\ServiceProviderBase;
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Link;
 use Drupal\Core\Datetime\DateFormatter;
@@ -97,6 +99,13 @@ class ContentLock extends ServiceProviderBase {
   protected $entityTypeManager;
 
   /**
+   * The messenger service.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
    * Constructor.
    *
    * @param \Drupal\Core\Database\Connection $database
@@ -113,8 +122,12 @@ class ContentLock extends ServiceProviderBase {
    *   The request stack service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity_type.manager service.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The messenger service.
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   The time service.
    */
-  public function __construct(Connection $database, ModuleHandler $moduleHandler, DateFormatter $dateFormatter, AccountProxy $currentUser, ConfigFactory $configFactory, RequestStack $requestStack, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(Connection $database, ModuleHandler $moduleHandler, DateFormatter $dateFormatter, AccountProxy $currentUser, ConfigFactory $configFactory, RequestStack $requestStack, EntityTypeManagerInterface $entityTypeManager, MessengerInterface $messenger, TimeInterface $time) {
     $this->database = $database;
     $this->moduleHandler = $moduleHandler;
     $this->dateFormatter = $dateFormatter;
@@ -122,6 +135,8 @@ class ContentLock extends ServiceProviderBase {
     $this->config = $configFactory->get('content_lock.settings');
     $this->currentRequest = $requestStack->getCurrentRequest();
     $this->entityTypeManager = $entityTypeManager;
+    $this->messenger = $messenger;
+    $this->time = $time;
   }
 
   /**
@@ -173,7 +188,7 @@ class ContentLock extends ServiceProviderBase {
    */
   public function displayLockOwner($lock, $translation_lock) {
     $username = $this->entityTypeManager->getStorage('user')->load($lock->uid);
-    $date = $this->dateFormatter->formatInterval(REQUEST_TIME - $lock->timestamp);
+    $date = $this->dateFormatter->formatInterval($this->time->getRequestTime() - $lock->timestamp);
 
     if ($translation_lock) {
       $message = $this->t('This content translation is being edited by the user @name and is therefore locked to prevent other users changes. This lock is in place since @date.', [
@@ -305,7 +320,7 @@ class ContentLock extends ServiceProviderBase {
         'langcode' => $langcode,
         'form_op' => $form_op,
         'uid' => $uid,
-        'timestamp' => REQUEST_TIME,
+        'timestamp' => $this->time->getRequestTime(),
       ])
       ->execute();
 
@@ -405,10 +420,10 @@ class ContentLock extends ServiceProviderBase {
 
       if ($this->verbose() && !$quiet) {
         if ($translation_lock) {
-          drupal_set_message($this->t('This content translation is now locked against simultaneous editing. This content translation will remain locked if you navigate away from this page without saving or unlocking it.'), 'status', FALSE);
+          $this->messenger->addStatus($this->t('This content translation is now locked against simultaneous editing. This content translation will remain locked if you navigate away from this page without saving or unlocking it.'));
         }
         else {
-          drupal_set_message($this->t('This content is now locked against simultaneous editing. This content will remain locked if you navigate away from this page without saving or unlocking it.'), 'status', FALSE);
+          $this->messenger->addStatus($this->t('This content is now locked against simultaneous editing. This content will remain locked if you navigate away from this page without saving or unlocking it.'));
         }
       }
       // Post locking hook.
@@ -428,7 +443,7 @@ class ContentLock extends ServiceProviderBase {
       if ($lock->uid != $uid) {
         // Send message.
         $message = $this->displayLockOwner($lock, $translation_lock);
-        drupal_set_message($message, 'warning');
+        $this->messenger->addWarning($message);
 
         // Higher permission user can unblock.
         if ($this->currentUser->hasPermission('break content lock')) {
@@ -445,7 +460,7 @@ class ContentLock extends ServiceProviderBase {
           )->toString();
 
           // Let user break lock.
-          drupal_set_message($this->t('Click here to @link', ['@link' => $link]), 'warning');
+          $this->messenger->addWarning($this->t('Click here to @link', ['@link' => $link]));
         }
 
         // Return FALSE flag.
@@ -458,10 +473,10 @@ class ContentLock extends ServiceProviderBase {
         // Locked by current user.
         if ($this->verbose() && !$quiet) {
           if ($translation_lock) {
-            drupal_set_message($this->t('This content translation is now locked by you against simultaneous editing. This content translation will remain locked if you navigate away from this page without saving or unlocking it.'), 'status', FALSE);
+            $this->messenger->addStatus($this->t('This content translation is now locked by you against simultaneous editing. This content translation will remain locked if you navigate away from this page without saving or unlocking it.'));
           }
           else {
-            drupal_set_message($this->t('This content is now locked by you against simultaneous editing. This content will remain locked if you navigate away from this page without saving or unlocking it.'), 'status', FALSE);
+            $this->messenger->addStatus($this->t('This content is now locked by you against simultaneous editing. This content will remain locked if you navigate away from this page without saving or unlocking it.'));
           }
         }
 

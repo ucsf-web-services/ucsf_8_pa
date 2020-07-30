@@ -2,7 +2,7 @@
 
 namespace Drupal\Tests\content_lock\Functional;
 
-use Drupal\Tests\taxonomy\Functional\TaxonomyTestTrait;
+use Drupal\Tests\taxonomy\Traits\TaxonomyTestTrait;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -21,6 +21,11 @@ class ContentLockTermTest extends BrowserTestBase {
     'taxonomy',
     'content_lock',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
 
   /**
    * Test simultaneous edit on block.
@@ -66,8 +71,8 @@ class ContentLockTermTest extends BrowserTestBase {
       '@name' => $user1->getDisplayName(),
     ]));
     $assert_session->linkExists(t('Break lock'));
-    $disabled_button = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-submit']);
-    $this->assertTrue($disabled_button, t('The form cannot be submitted.'));
+    $submit = $assert_session->buttonExists('edit-submit');
+    $this->assertTrue($submit->hasAttribute('disabled'));
 
     // We save term1 and unlock it.
     $this->drupalLogin($user1);
@@ -88,8 +93,8 @@ class ContentLockTermTest extends BrowserTestBase {
       '@name' => $user2->getDisplayName(),
     ]));
     $assert_session->linkNotExists(t('Break lock'));
-    $disabled_button = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-submit']);
-    $this->assertTrue($disabled_button, t('The form cannot be submitted.'));
+    $submit = $assert_session->buttonExists('edit-submit');
+    $this->assertTrue($submit->hasAttribute('disabled'));
 
     // We unlock term1 with user2.
     $this->drupalLogin($user2);

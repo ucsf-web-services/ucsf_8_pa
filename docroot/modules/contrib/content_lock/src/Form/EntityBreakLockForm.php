@@ -78,10 +78,10 @@ class EntityBreakLockForm extends FormBase {
 
     $this->lockService->release($entity_id, $langcode, $form_op, NULL, $entity_type);
     if ($form_state->get('translation_lock')) {
-      drupal_set_message($this->t('Lock broken. Anyone can now edit this content translation.'));
+      $this->messenger()->addStatus($this->t('Lock broken. Anyone can now edit this content translation.'));
     }
     else {
-      drupal_set_message($this->t('Lock broken. Anyone can now edit this content.'));
+      $this->messenger()->addStatus($this->t('Lock broken. Anyone can now edit this content.'));
     }
 
     // Redirect URL to the request destination or the canonical entity view.

@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\content_lock\Functional;
 
-use Drupal\entity_test\Entity\EntityTestMul;
 use Drupal\entity_test\Entity\EntityTestMulChanged;
 use Drupal\language\Entity\ConfigurableLanguage;
 

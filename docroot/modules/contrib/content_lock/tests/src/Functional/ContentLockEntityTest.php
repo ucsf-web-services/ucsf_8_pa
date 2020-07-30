@@ -10,6 +10,11 @@ namespace Drupal\Tests\content_lock\Functional;
 class ContentLockEntityTest extends ContentLockTestBase {
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * Test simultaneous edit on test entity.
    */
   public function testContentLockEntity() {
@@ -35,10 +40,10 @@ class ContentLockEntityTest extends ContentLockTestBase {
       '@name' => $this->user1->getDisplayName(),
     ]));
     $assert_session->linkExists(t('Break lock'));
-    $disabled_button = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-submit']);
-    $this->assertTrue($disabled_button, t('The form cannot be submitted.'));
-    $disabled_field = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-field-test-text-0-value']);
-    $this->assertTrue($disabled_field, t('The form cannot be submitted.'));
+    $submit = $assert_session->buttonExists('edit-submit');
+    $this->assertTrue($submit->hasAttribute('disabled'));
+    $input = $this->assertSession()->elementExists('css', 'input#edit-field-test-text-0-value');
+    $this->assertTrue($input->hasAttribute('disabled'));
 
     // We save entity 1 and unlock it.
     $this->drupalLogin($this->user1);
@@ -60,8 +65,8 @@ class ContentLockEntityTest extends ContentLockTestBase {
       '@name' => $this->user2->getDisplayName(),
     ]));
     $assert_session->linkNotExists(t('Break lock'));
-    $disabled_button = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-submit']);
-    $this->assertTrue($disabled_button, t('The form cannot be submitted.'));
+    $submit = $assert_session->buttonExists('edit-submit');
+    $this->assertTrue($submit->hasAttribute('disabled'));
 
     // We unlock entity with user2.
     $this->drupalLogin($this->user2);

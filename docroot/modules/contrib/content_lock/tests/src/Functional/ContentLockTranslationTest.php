@@ -19,6 +19,11 @@ class ContentLockTranslationTest extends ContentLockTestBase {
   ];
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * Test translation integration.
    */
   public function testTranlatedContent() {
@@ -44,7 +49,7 @@ class ContentLockTranslationTest extends ContentLockTestBase {
     $this->drupalGet($this->entity->toUrl('edit-form'));
     $assert_session->pageTextContains(t('This content translation is now locked against simultaneous editing. This content translation will remain locked if you navigate away from this page without saving or unlocking it.'));
     // English form locked, german not.
-    $this->assertTrue($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), NULL, 'entity_test_mul_changed'));
+    $this->assertNotFalse($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), NULL, 'entity_test_mul_changed'));
     $this->assertFalse($lockService->fetchLock($translation->id(), $translation->language()->getId(), NULL, 'entity_test_mul_changed'));
 
     $this->drupalLogin($this->user2);
@@ -59,7 +64,7 @@ class ContentLockTranslationTest extends ContentLockTestBase {
     // Enter translation form.
     $this->drupalGet($translation->toUrl('edit-form'));
     $assert_session->pageTextContains(t('This content translation is now locked against simultaneous editing. This content translation will remain locked if you navigate away from this page without saving or unlocking it.'));
-    $this->assertTrue($lockService->fetchLock($translation->id(), $translation->language()->getId(), NULL, 'entity_test_mul_changed'));
+    $this->assertNotFalse($lockService->fetchLock($translation->id(), $translation->language()->getId(), NULL, 'entity_test_mul_changed'));
     $this->drupalPostForm($translation->toUrl('edit-form'), [], t('Save'));
 
     $this->drupalLogin($this->user1);

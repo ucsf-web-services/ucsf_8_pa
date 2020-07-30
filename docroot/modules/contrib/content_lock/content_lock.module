@@ -189,10 +189,10 @@ function content_lock_entity_predelete(EntityInterface $entity) {
       $message = t('@entity cannot be deleted because it was locked by @user since @time.', [
         '@entity' => $entity->label(),
         '@user' => $lock_user->getDisplayName(),
-        '@time' => \Drupal::service('date.formatter')->formatInterval(REQUEST_TIME - $data->timestamp),
+        '@time' => \Drupal::service('date.formatter')->formatInterval(\Drupal::time()->getRequestTime() - $data->timestamp),
       ]);
 
-      drupal_set_message($message, 'warning');
+      \Drupal::messenger()->addWarning($message);
 
       $url = Url::fromRoute('entity.' . $entity_type . '.canonical', [$entity_type => $entity_id])->toString();
 
