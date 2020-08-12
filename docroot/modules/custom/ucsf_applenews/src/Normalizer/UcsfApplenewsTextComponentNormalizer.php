@@ -57,6 +57,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
    */
   protected $elementBlacklist = [
     'aside',
+    'style'
   ];
 
   /**
@@ -214,10 +215,33 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             _ucsf_applenews_gallery_component_layout());
           $components[] = $component;
           break;
-
+        case 'column_wrapper':
+          foreach ($paragraph->get('field_content_wrapper_content') as $column_ref) {
+            $column_content = $column_ref->entity;
+            foreach ($column_content->get('field_column_content_content') as $ref_column_content_content) {
+              $ref_entity = $ref_column_content_content->entity;
+              $ref_entity_type = $ref_entity->getType();
+              if ($ref_entity_type=='text_block') {
+                foreach ($ref_entity->get('field_text_body') as $item) {
+                 $components = array_merge($components, $this->normalizeMarkup($data, $item->get('value')->getValue()));
+                }
+              }
+            }
+          }
+          break;
+        case 'column_content':
+          foreach ($paragraph->get('field_column_content_content') as $column_ref) {
+            $ref_entity = $column_ref->entity;
+            $ref_entity_type = $ref_entity->getType();
+            if ($ref_entity_type=='text_block') {
+              foreach ($ref_entity->get('field_text_body') as $item) {
+                $components = array_merge($components, $this->normalizeMarkup($data, $item->get('value')->getValue()));
+              }
+            }
+          }
+          break;
         default:
           throw new \Exception('need to handle paragraph type');
-
       }
     }
 

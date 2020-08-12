@@ -25,6 +25,11 @@ class PrefetchCacheTest extends ContentLockJavascriptTestBase {
   /**
    * {@inheritdoc}
    */
+  protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
   public function setUp() {
     parent::setUp();
 
@@ -40,11 +45,11 @@ class PrefetchCacheTest extends ContentLockJavascriptTestBase {
     $assert_session = $this->assertSession();
 
     $this->drupalLogin($this->admin);
-    $edit = [
-      'entity_test_mul_changed[bundles][*]' => 1,
-      'entity_test_mul_changed[settings][js_lock]' => 1,
-    ];
-    $this->drupalPostForm('admin/config/content/content_lock', $edit, t('Save configuration'));
+    $this->drupalGet('admin/config/content/content_lock');
+    $this->click('#edit-entity-types-entity-test-mul-changed');
+    $this->click('#edit-entity-test-mul-changed-settings-js-lock');
+    $page->pressButton('Save configuration');
+
     $lockService = \Drupal::service('content_lock');
 
     $this->drupalLogin($this->user1);
@@ -55,7 +60,7 @@ class PrefetchCacheTest extends ContentLockJavascriptTestBase {
     // On edit page a lock should be there.
     $this->drupalGet($this->entity->toUrl('edit-form'));
     $assert_session->waitForElement('css', 'messages messages--status');
-    $this->assertTrue($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), NULL, 'entity_test_mul_changed'));
+    $this->assertNotFalse($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), NULL, 'entity_test_mul_changed'));
 
     // After saving, the lock should be gone.
     $page->pressButton(t('Save'));
@@ -66,12 +71,13 @@ class PrefetchCacheTest extends ContentLockJavascriptTestBase {
    * Test the prefetch cache integration without JS locking.
    */
   public function testPrefetchCacheNormalLocking() {
+    $page = $this->getSession()->getPage();
+
     $this->drupalLogin($this->admin);
-    $edit = [
-      'entity_test_mul_changed[bundles][*]' => 1,
-      'entity_test_mul_changed[settings][js_lock]' => 0,
-    ];
-    $this->drupalPostForm('admin/config/content/content_lock', $edit, t('Save configuration'));
+    $this->drupalGet('admin/config/content/content_lock');
+    $this->click('#edit-entity-types-entity-test-mul-changed');
+    $page->pressButton('Save configuration');
+
     $lockService = \Drupal::service('content_lock');
 
     $this->drupalLogin($this->user1);
@@ -81,7 +87,7 @@ class PrefetchCacheTest extends ContentLockJavascriptTestBase {
     sleep(3);
 
     // Without JS locking a lock should be created for the entity.
-    $this->assertTrue($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), NULL, 'entity_test_mul_changed'));
+    $this->assertNotFalse($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), NULL, 'entity_test_mul_changed'));
   }
 
 }

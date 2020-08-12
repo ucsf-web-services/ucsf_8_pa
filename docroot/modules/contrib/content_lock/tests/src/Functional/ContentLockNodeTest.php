@@ -14,6 +14,11 @@ class ContentLockNodeTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
+  protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
   public static $modules = [
     'node',
     'content_lock',
@@ -70,10 +75,10 @@ class ContentLockNodeTest extends BrowserTestBase {
       '@name' => $user1->getDisplayName(),
     ]));
     $assert_session->linkExists(t('Break lock'));
-    $disabled_button = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-submit']);
-    $this->assertTrue($disabled_button, t('The form cannot be submitted.'));
-    $disabled_field = $this->xpath('//textarea[@id=:id and @disabled="disabled"]', [':id' => 'edit-body-0-value']);
-    $this->assertTrue($disabled_field, t('The form cannot be submitted.'));
+    $submit = $assert_session->buttonExists('edit-submit');
+    $this->assertTrue($submit->hasAttribute('disabled'));
+    $textarea = $assert_session->elementExists('css', 'textarea#edit-body-0-value');
+    $this->assertTrue($textarea->hasAttribute('disabled'));
 
     // We save article 1 and unlock it.
     $this->drupalLogin($user1);
@@ -94,8 +99,8 @@ class ContentLockNodeTest extends BrowserTestBase {
       '@name' => $user2->getDisplayName(),
     ]));
     $assert_session->linkNotExists(t('Break lock'));
-    $disabled_button = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-submit']);
-    $this->assertTrue($disabled_button, t('The form cannot be submitted.'));
+    $submit = $assert_session->buttonExists('edit-submit');
+    $this->assertTrue($submit->hasAttribute('disabled'));
 
     // We unlock article1 with user2.
     $this->drupalLogin($user2);

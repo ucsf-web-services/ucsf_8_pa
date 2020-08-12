@@ -9,6 +9,7 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -175,7 +176,7 @@ class ContentLockSettingsForm extends ConfigFormBase {
             '#default_value' => FALSE,
             '#description' => $this->t('To allow editing multiple translations concurrently you need to install %module',
               [
-                '%module' => $this->getLinkGenerator()->generate('Conflict', Url::fromUri('https://www.drupal.org/project/conflict')),
+                '%module' => Link::fromTextAndUrl('Conflict', Url::fromUri('https://www.drupal.org/project/conflict'))->toString(),
               ]
             ),
           ] + $form['entities'][$definition->id()]['settings']['translation_lock'];

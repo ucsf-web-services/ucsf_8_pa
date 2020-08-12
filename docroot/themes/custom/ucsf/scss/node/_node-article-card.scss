@@ -294,10 +294,8 @@
 
   h2 {
     @include fs-heading-three;
-
     margin: 0;
     margin-top: $space;
-    line-height: 1.2;
   }
 }
 
@@ -314,99 +312,23 @@
   }
 }
 
-.homepage {
-  .promo-list__card {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    margin-bottom: $space-nine;
-    display: flex;
-
-    a.promo-list__card-link {
-      padding: $space-eight $space-five;
-      align-self: center;
-    }
-
-    &::after {
-      background: transparent;
-    }
-
-    .field-promo-text {
-      p {
-        margin: 0;
-      }
-    }
-
-    .promo-list__card-more {
-      margin-bottom: 0;
-      margin-top: 12px;
-    }
-
-    .promo-list__card-two-content {
-      margin-top: auto;
-    }
-  }
-}
-
-.homepage .promo-list__card.promo-list__card-two a {
-  align-self: flex-end;
-}
-
-.promo-list__card-two .promo-list__card-more {
-  line-height: 1.8em;
-}
-
-.promo-list__card-two,
-.homepage .promo-list__card-two,
-.promo-list__card-two a,
-.homepage .promo-list__card-two a {
-  display: flex;
-  padding: 0;
-  color: $white;
-  text-decoration: none;
-  width: 100%;
-}
-
-.promo-list__card-two-content {
-  align-content: flex-end;
-  margin-top: auto;
-  padding: $space-three;
-  width: 100%;
-
-  p {
-    margin: 0;
-  }
-}
-
-@each $name, $color in $color-map {
-  // create a class name based on the color name
-  .promo-list__card-two .overlay-#{$name} {
-    // convert hex value into rgba box-shadow
-    box-shadow: inset 0 0 0 1000px rgba($color, 1);
-    &:hover {
-      box-shadow: inset 0 0 0 1000px rgba($color, 0.95);
-    }
-
-    @if ($name == yellow) {
-      .promo-list__card-content {
-        color: $c-navy;
-      }
-
-      .promo-list__card-more .link--cta {
-        color: $c-navy;
-        background-image: url("../images/cta-arrow-navy.svg");
-      }
-    }
-  }
-}
-
 // This card is used on ucsf.edu/topic/covid-19
-.news-card--media-coverage {
+.news-card--media-coverage,
+.news-card--magazine-article {
   [data-primary-area] {
     color: $c-purple;
 
     &::before {
       background: $c-purple;
+    }
+  }
+}
+
+.magazine-article-card {
+  &__date {
+    text-transform: capitalize;
+    a {
+      color: $c-gray-blue;
     }
   }
 }

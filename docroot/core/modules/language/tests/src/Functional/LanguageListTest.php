@@ -23,6 +23,11 @@ class LanguageListTest extends BrowserTestBase {
   public static $modules = ['language'];
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * Functional tests for adding, editing and deleting languages.
    */
   public function testLanguageList() {
@@ -88,7 +93,7 @@ class LanguageListTest extends BrowserTestBase {
     // Ensure 'Edit' link works.
     $this->drupalGet('admin/config/regional/language');
     $this->clickLink(t('Edit'));
-    $this->assertTitle(t('Edit language | Drupal'), 'Page title is "Edit language".');
+    $this->assertTitle('Edit language | Drupal');
     // Edit a language.
     $name = $this->randomMachineName(16);
     $edit = [

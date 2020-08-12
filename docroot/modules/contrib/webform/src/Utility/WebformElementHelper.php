@@ -31,37 +31,32 @@ class WebformElementHelper {
     // Properties that will cause unpredictable rendering.
     '#weight' => '#weight',
     // Callbacks are blocked to prevent unwanted code executions.
+    '#access_callback' => '#access_callback',
+    '#ajax' => '#ajax',
     '#after_build' => '#after_build',
     '#element_validate' => '#element_validate',
+    '#lazy_builder' => '#lazy_builder',
     '#post_render' => '#post_render',
     '#pre_render' => '#pre_render',
     '#process' => '#process',
     '#submit' => '#submit',
     '#validate' => '#validate',
     '#value_callback' => '#value_callback',
+    // Element specific callbacks.
+    '#file_value_callbacks' => '#file_value_callbacks',
+    '#date_date_callbacks' => '#date_date_callbacks',
+    '#date_time_callbacks' => '#date_time_callbacks',
+    '#captcha_validate' => '#captcha_validate',
   ];
 
   /**
-   * Ignored element sub properties used by composite elements.
+   * Allowed (whitelist) element properties.
    *
    * @var array
    */
-  public static $ignoredSubProperties = [
-    // Properties that will allow code injection.
-    '#allowed_tags' => '#allowed_tags',
-    // Properties that will break webform data handling.
-    '#tree' => '#tree',
-    '#array_parents' => '#array_parents',
-    '#parents' => '#parents',
-    // Callbacks are blocked to prevent unwanted code executions.
-    '#after_build' => '#after_build',
-    '#element_validate' => '#element_validate',
-    '#post_render' => '#post_render',
-    '#pre_render' => '#pre_render',
-    '#process' => '#process',
-    '#submit' => '#submit',
-    '#validate' => '#validate',
-    '#value_callback' => '#value_callback',
+  public static $allowedProperties = [
+    # webform_validation.module.
+    '#equal_stepwise_validate' => '#equal_stepwise_validate',
   ];
 
   /**
@@ -72,11 +67,18 @@ class WebformElementHelper {
   protected static $ignoredSubPropertiesRegExp;
 
   /**
+   * Regular expression used to determine if sub-element property should be allowed.
+   *
+   * @var string
+   */
+  protected static $allowedSubPropertiesRegExp;
+
+  /**
    * Determine if an element and its key is a renderable array.
    *
    * @param array|mixed $element
    *   An element.
-   * @param string
+   * @param string $key
    *   The element key.
    *
    * @return bool
@@ -152,6 +154,30 @@ class WebformElementHelper {
   }
 
   /**
+   * Get a webform element's admin title.
+   *
+   * @param array $element
+   *   A webform element.
+   *
+   * @return string
+   *   A webform element's admin title.
+   */
+  public static function getAdminTitle(array $element) {
+    if (!empty($element['#admin_title'])) {
+      return $element['#admin_title'];
+    }
+    elseif (!empty($element['#title'])) {
+      return $element['#title'];
+    }
+    elseif (!empty($element['#webform_key'])) {
+      return $element['#webform_key'];
+    }
+    else {
+      return '';
+    }
+  }
+
+  /**
    * Determine if a webform element's title is displayed.
    *
    * @param array $element
@@ -162,6 +188,50 @@ class WebformElementHelper {
    */
   public static function isTitleDisplayed(array $element) {
     return (!empty($element['#title']) && (empty($element['#title_display']) || !in_array($element['#title_display'], ['invisible', 'attribute']))) ? TRUE : FALSE;
+  }
+
+  /**
+   * Determine if element or sub-element has properties.
+   *
+   * @param array $element
+   *   An element.
+   * @param array $properties
+   *   Element properties.
+   *
+   * @return bool
+   *   TRUE if element or sub-element has any property.
+   */
+  public static function hasProperties(array $element, array $properties) {
+    foreach ($element as $key => $value) {
+      // Recurse through sub-elements.
+      if (static::isElement($value, $key)) {
+        if (static::hasProperties($value, $properties)) {
+          return TRUE;
+        }
+      }
+      // Return TRUE if property exists and property value is NULL or equal.
+      elseif (array_key_exists($key, $properties) && ($properties[$key] === NULL || $properties[$key] === $value)) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * Determine if element or sub-element has property and value.
+   *
+   * @param array $elements
+   *   An array of elements.
+   * @param string $property
+   *   An element property.
+   * @param mixed|null $value
+   *   An element value.
+   *
+   * @return bool
+   *   TRUE if element or sub-element has property and value.
+   */
+  public static function hasProperty(array $elements, $property, $value = NULL) {
+    return static::hasProperties($elements, [$property => $value]);
   }
 
   /**
@@ -249,7 +319,23 @@ class WebformElementHelper {
     }
 
     $attributes = [];
+
+    // Set .js-form-wrapper which is targeted by states.js hide/show logic.
     $attributes['class'][] = 'js-form-wrapper';
+
+    // Add .js-webform-states-hidden to hide elements when they are being rendered.
+    $attributes_properties = ['#wrapper_attributes', '#attributes'];
+    foreach ($attributes_properties as $attributes_property) {
+      if (isset($element[$attributes_property]) && isset($element[$attributes_property]['class'])) {
+        $index = array_search('js-webform-states-hidden', $element[$attributes_property]['class']);
+        if ($index !== FALSE) {
+          unset($element[$attributes_property]['class'][$index]);
+          $attributes['class'][] = 'js-webform-states-hidden';
+          break;
+        }
+      }
+    }
+
     $attributes['data-drupal-states'] = Json::encode($element['#states']);
 
     $element += ['#prefix' => '', '#suffix' => ''];
@@ -287,7 +373,12 @@ class WebformElementHelper {
     foreach ($element as $key => $value) {
       if (Element::property($key)) {
         if (self::isIgnoredProperty($key)) {
-          $ignored_properties[$key] = $key;
+          // Computed elements use #ajax as boolean and should not be ignored.
+          // @see \Drupal\webform\Element\WebformComputedBase
+          $is_ajax_computed = ($key === '#ajax' && is_bool($value));
+          if (!$is_ajax_computed) {
+            $ignored_properties[$key] = $key;
+          }
         }
         elseif ($key == '#element' && is_array($value) && isset($element['#type']) && $element['#type'] === 'webform_composite') {
           foreach ($value as $composite_value) {
@@ -325,8 +416,16 @@ class WebformElementHelper {
    */
   public static function removeIgnoredProperties(array $element) {
     foreach ($element as $key => $value) {
-      if (Element::property($key) && self::isIgnoredProperty($key)) {
-        unset($element[$key]);
+      if ($key && is_string($key) && Element::property($key) && self::isIgnoredProperty($key)) {
+        // Computed elements use #ajax as boolean and should not be ignored.
+        // @see \Drupal\webform\Element\WebformComputedBase
+        $is_ajax_computed = ($key === '#ajax' && is_bool($value));
+        if (!$is_ajax_computed) {
+          unset($element[$key]);
+        }
+      }
+      elseif (is_array($value)) {
+        $element[$key] = static::removeIgnoredProperties($value);
       }
     }
     return $element;
@@ -335,7 +434,8 @@ class WebformElementHelper {
   /**
    * Determine if an element's property should be ignored.
    *
-   * Subelement properties are delimited using __.
+   * - Subelement properties are delimited using __.
+   * - All _validation and _callback properties are ignored.
    *
    * @param string $property
    *   A property name.
@@ -349,13 +449,28 @@ class WebformElementHelper {
   protected static function isIgnoredProperty($property) {
     // Build cached ignored sub properties regular expression.
     if (!isset(self::$ignoredSubPropertiesRegExp)) {
-      self::$ignoredSubPropertiesRegExp = '/__(' . implode('|', array_keys(WebformArrayHelper::removePrefix(self::$ignoredSubProperties))) . ')$/';
+      $allowedSubProperties = self::$allowedProperties;
+      $ignoredSubProperties = self::$ignoredProperties;
+      // Allow #weight as sub property. This makes it easier for developer to
+      // sort composite sub-elements
+      unset($ignoredSubProperties['#weight']);
+      self::$ignoredSubPropertiesRegExp = '/__(' . implode('|', array_keys(WebformArrayHelper::removePrefix($ignoredSubProperties))) . ')$/';
+      self::$allowedSubPropertiesRegExp = '/__(' . implode('|', array_keys(WebformArrayHelper::removePrefix($allowedSubProperties))) . ')$/';
     }
 
-    if (isset(self::$ignoredProperties[$property])) {
+    if (isset(self::$allowedProperties[$property])) {
+      return FALSE;
+    }
+    elseif (strpos($property, '__') !== FALSE && preg_match(self::$allowedSubPropertiesRegExp, $property)) {
+      return FALSE;
+    }
+    elseif (isset(self::$ignoredProperties[$property])) {
       return TRUE;
     }
     elseif (strpos($property, '__') !== FALSE && preg_match(self::$ignoredSubPropertiesRegExp, $property)) {
+      return TRUE;
+    }
+    elseif (preg_match('/_(validates?|callbacks?)$/', $property)) {
       return TRUE;
     }
     else {
@@ -448,6 +563,33 @@ class WebformElementHelper {
       $flattened_elements += self::getFlattened($element);
     }
     return $flattened_elements;
+  }
+
+  /**
+   * Get reference to first element by name.
+   *
+   * @param array $elements
+   *   An associative array of elements.
+   * @param string $name
+   *   The element's name.
+   *
+   * @return array|null
+   *   Reference to found element.
+   */
+  public static function &getElement(array &$elements, $name) {
+    foreach (Element::children($elements) as $element_name) {
+      if ($element_name == $name) {
+        return $elements[$element_name];
+      }
+      elseif (is_array($elements[$element_name])) {
+        $child_elements =& $elements[$element_name];
+        if ($element = &static::getElement($child_elements, $name)) {
+          return $element;
+        }
+      }
+    }
+    $element = NULL;
+    return $element;
   }
 
   /**
@@ -612,6 +754,9 @@ class WebformElementHelper {
    *   An associative array containing an element's states.
    */
   public static function &getStates(array &$element) {
+    // Processed elements store the original #states in '#_webform_states'.
+    // @see \Drupal\webform\WebformSubmissionConditionsValidator::buildForm
+    //
     // Composite and multiple elements use a custom states wrapper
     // which will change '#states' to '#_webform_states'.
     // @see \Drupal\webform\Utility\WebformElementHelper::fixStatesWrapper

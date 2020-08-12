@@ -1,0 +1,8 @@
+{% extends 'field.html.twig' %}
+
+
+    {% block single_item_no_label %}
+      {% for item in items %}
+        <span{{ attributes.addClass('article-issue article-affiliation') }}>{{ item.content }}</span>
+      {% endfor %}
+    {% endblock single_item_no_label %}

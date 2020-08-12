@@ -25,7 +25,19 @@ class EntityReferenceAdminTest extends WebDriverTestBase {
    *
    * @var array
    */
-  public static $modules = ['node', 'field_ui', 'path', 'taxonomy', 'block', 'views_ui'];
+  public static $modules = [
+    'node',
+    'field_ui',
+    'path',
+    'taxonomy',
+    'block',
+    'views_ui',
+  ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
 
   /**
    * The name of the content type created for testing purposes.
@@ -84,7 +96,7 @@ class EntityReferenceAdminTest extends WebDriverTestBase {
     $this->assertFieldByName('settings[target_type]', 'node');
 
     // Check that all entity types can be referenced.
-    $this->assertFieldSelectOptions('settings[target_type]', array_keys(\Drupal::entityManager()->getDefinitions()));
+    $this->assertFieldSelectOptions('settings[target_type]', array_keys(\Drupal::entityTypeManager()->getDefinitions()));
 
     // Second step: 'Field settings' form.
     $this->drupalPostForm(NULL, [], t('Save field settings'));

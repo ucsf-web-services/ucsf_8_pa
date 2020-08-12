@@ -6,26 +6,26 @@
   {# link is in html.html.twig #}
   <a id="main-content" tabindex="-1"></a>
   {% if layout == 'feature' %}
-    {% include '@theme/article/article-layout-feature.twig' %}
+    {% include '@theme/article/magazine-article-layout-feature.twig' %}
   {% elseif layout == 'featureoverlaydark' %}
-      {% include '@theme/article/article-layout-feature-overlay.twig' %}
+      {% include '@theme/article/magazine-article-layout-feature-overlay.twig' %}
   {% elseif layout == 'featureoverlaylight' %}
-      {% include '@theme/article/article-layout-feature-overlay.twig' %}
+      {% include '@theme/article/magazine-article-layout-feature-overlay.twig' %}
   {% elseif layout == 'twocolleftlight' %}
-    {% include '@theme/article/article-layout-twocol.twig' %}
+    {% include '@theme/article/magazine-article-layout-twocol.twig' %}
   {% elseif layout == 'twocolrightlight' %}
-    {% include '@theme/article/article-layout-twocol.twig' %}
+    {% include '@theme/article/magazine-article-layout-twocol.twig' %}
   {% elseif layout == 'twocolleftdark' %}
-    {% include '@theme/article/article-layout-twocol.twig' %}
+    {% include '@theme/article/magazine-article-layout-twocol.twig' %}
   {% elseif layout == 'twocolrightdark' %}
-    {% include '@theme/article/article-layout-twocol.twig' %}
+    {% include '@theme/article/magazine-article-layout-twocol.twig' %}
   {% else %}
-    {% include '@theme/article/article-layout-default.twig' %}
+    {% include '@theme/article/magazine-article-layout-default.twig' %}
   {% endif %}
 </main>
 
 {# @todo Wrapper should probably be conditional. #}
-<section class="recommended-articles{{ content.field_recommended_article|render ? ' has-recommended-article' }} ">
+<section class="recommended-articles{{ content.field_recommended_article|render ? ' has-recommended-article' }} " role="complementary">
 
   {% if content.field_topics|render or content.field_tags|render or content.field_primary_area|render %}
     <div class="recommended-articles__banner">

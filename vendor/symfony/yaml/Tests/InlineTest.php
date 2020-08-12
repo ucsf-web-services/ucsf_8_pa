@@ -693,7 +693,7 @@ class InlineTest extends TestCase
     public function testNotSupportedMissingValue()
     {
         $this->expectException('Symfony\Component\Yaml\Exception\ParseException');
-        $this->expectExceptionMessage('Malformed inline YAML string: {this, is not, supported} at line 1.');
+        $this->expectExceptionMessage('Malformed inline YAML string: "{this, is not, supported}" at line 1.');
         Inline::parse('{this, is not, supported}');
     }
 
@@ -841,5 +841,15 @@ class InlineTest extends TestCase
             [['' => 'foo'], '{!php/const : foo}'],
             [['' => 'foo', 'bar' => 'ccc'], '{!php/const  : foo, bar: ccc}'],
         ];
+    }
+
+    public function testParsePositiveOctalNumberContainingInvalidDigits()
+    {
+        self::assertSame(342391, Inline::parse('0123456789'));
+    }
+
+    public function testParseNegativeOctalNumberContainingInvalidDigits()
+    {
+        self::assertSame(-342391, Inline::parse('-0123456789'));
     }
 }

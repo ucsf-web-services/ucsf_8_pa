@@ -19,7 +19,16 @@ class ExperimentalHelpTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['help', 'experimental_module_test', 'help_page_test'];
+  public static $modules = [
+    'help',
+    'experimental_module_test',
+    'help_page_test',
+  ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
 
   /**
    * The admin user.
@@ -29,7 +38,7 @@ class ExperimentalHelpTest extends BrowserTestBase {
   protected $adminUser;
 
   /**
-   * {@inheritoc}
+   * {@inheritdoc}
    */
   protected function setUp() {
     parent::setUp();

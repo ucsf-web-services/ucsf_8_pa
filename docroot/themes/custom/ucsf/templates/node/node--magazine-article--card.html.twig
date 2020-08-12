@@ -1,0 +1,10 @@
+{% extends "node--card.html.twig" %}
+
+{% set attributes = attributes.addClass('news-card--magazine-article magazine-article-card') %}
+{% set source_label = 'UCSF Magazine' %}
+{% block byline %}
+  <ul class="article-header__byline">
+    <li class="article-header__primary-area" data-primary-area="pa-ucsf-magazine">{{ source_label }}</li>
+    <li class="article-header__date magazine-article-card__date">{{ content.field_magazine_issue }}</li>
+  </ul>
+{% endblock %}

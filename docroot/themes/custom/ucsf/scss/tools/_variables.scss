@@ -3,11 +3,14 @@
 //------------------------------------------------------------------------------
 
 $new-x-small: 600px;
+$magazine-small: 650px;
 $new-x-small-max: max-width 599px;
 $new-small: 769px;
 $new-small-max: max-width 768px;
 $new-medium: 850px;
+$new-medium-max: max-width 849px;
 $new-large: 1050px;
+$new-large-max: max-width 1049px;
 $new-xl: 1280px;
 $full-width-elements: $new-xl + 40px;
 $font-large: 600px;
@@ -77,6 +80,9 @@ $facebook-color: #3b5998;
 $twitter-color: #1da1f2;
 $reddit-color: #ff4500;
 
+//Magazine
+$magazine-gray-blue: #384559;
+
 // @todo Get all these values.
 $areas: (
   ("about", $c-purple, $c-purple),
@@ -88,6 +94,7 @@ $areas: (
   ("news--media", $c-purple, $c-purple),
   ("patient-care", $c-blue, $c-print-blue),
   ("research", $c-teal, $c-print-teal),
+  ("ucsf-magazine", $c-purple, $c-purple),
 );
 
 $color-map: (
@@ -109,6 +116,8 @@ $font-helvetica-neue-medium: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "He
 $font-helvetica-neue-bold: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
 $font-granjon: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif;
 $font-helvetica-neue-regular: $font-helvetica-neue-roman;
+$font-ivar: "Ivar-Regular", "Georgia", "Times New Roman", serif;
+$font-ivar-italic: "Ivar-Italic", "Georgia", "Times New Roman", serif;
 
 // Font Weights
 //------------------------------------------------------------------------------
@@ -179,7 +188,14 @@ $z-news-search-filter: 1100;
 
 // Animation transitions
 //------------------------------------------------------------------------------
-
+$transition-type: cubic-bezier(0.33,0.66,0.66,1);
 $transition-time: .3s;
 $transition-time-short: .2s;
 $transition-time-long: .5s;
+
+// Article container values. Used to align images/videos to the edges
+//------------------------------------------------------------------------------
+$article-gutter: 20px; // narrow page padding small screen
+// This number is based on page narrow padding at 769px screen size.
+$article-gutter-bp-new-small: 14.1%;
+$page-gutter: $article-gutter;

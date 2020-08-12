@@ -18,7 +18,14 @@ class ViewsConfigDependenciesIntegrationTest extends ViewsKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['field', 'file', 'image', 'entity_test', 'user', 'text'];
+  public static $modules = [
+    'field',
+    'file',
+    'image',
+    'entity_test',
+    'user',
+    'text',
+  ];
 
   /**
    * {@inheritdoc}
@@ -148,7 +155,7 @@ class ViewsConfigDependenciesIntegrationTest extends ViewsKernelTestBase {
     foreach ($entities as $entity_type_id => $definition) {
       if ($definition->getProvider() == 'entity_test') {
         $this->installEntitySchema($entity_type_id);
-      };
+      }
     }
 
     // Check that removing the module that provides the base table for a View,

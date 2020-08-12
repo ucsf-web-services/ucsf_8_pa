@@ -12,22 +12,32 @@
     height: 32px;
   }
 
-  .homepage &::after {
-    background: transparent;
-  }
-
-  a.promo-list__card-link {
-    color: $white;
+  &-link {
     text-decoration: none;
     display: block;
     padding: $space-ten $space-four;
+    border-bottom: none;
 
     &:hover {
+      border-bottom: 0;
+      background: transparent;
+
       .link--cta {
+        @include link-bg-image-hover;
         text-decoration: underline;
-        padding-right: 32px !important;
+        padding-right: $space-four;
+        background-position: 100% center;
       }
     }
+  }
+
+  .link--cta {
+    @include link-bg-image('cta-arrow-white.svg');
+    background-position: 96% center;
+    background-size: 14px 10px;
+    color: $white;
+    padding-right: $space-four;
+    transition: 0.15s $transition-type background-position;
   }
 
   .field-promo-text { // PL: .promo-list__card-content
@@ -36,10 +46,14 @@
     margin: 1em 0;
   }
 
-  .promo-list__card-more {
+  .field-promo-text p {
+    margin: 0;
+  }
+
+  &-more {
     font-family: $font-helvetica-neue-medium;
     margin: 1em 0;
-    line-height: 1;
+    line-height: 1em;
     margin-bottom: $space-three;
 
     a {
@@ -51,10 +65,12 @@
       }
     }
 
-    .link--cta {
-      @include background-image('cta-arrow-white.svg', right center, transparent);
+    a.link--cta {
+      @include link-bg-image('cta-arrow-white.svg');
+      @include link-bg-image-hover(96%, 98%);
       background-size: 14px 10px;
       color: $white;
+      padding-right: $space-four;
     }
   }
 
@@ -70,14 +86,17 @@
     }
   }
 
+  // overwrite for link color
+  a.promo-list__card-link {
+    color: $white;
+  }
+
   &.overlay-yellow {
     .promo-list__card-link {
       color: $c-navy;
     }
 
     .promo-list__card-title {
-      @include eyebrow;
-      display: inline-block;
       color: $c-navy;
 
       &::after {
@@ -92,4 +111,3 @@
     }
   }
 }
-

@@ -58,7 +58,7 @@ class TagTest extends ViewsKernelTestBase {
     $matches = (array) json_decode($result->getContent(), TRUE);
     $this->assertEqual(count($matches), 8, 'Make sure that only a subset is returned.');
     foreach ($matches as $tag) {
-      $this->assertTrue(array_search($tag['value'], $tags) !== FALSE, format_string('Make sure the returned tag @tag actually exists.', ['@tag' => $tag['value']]));
+      $this->assertContains($tag['value'], $tags);
     }
 
     // Make sure an invalid result doesn't return anything.

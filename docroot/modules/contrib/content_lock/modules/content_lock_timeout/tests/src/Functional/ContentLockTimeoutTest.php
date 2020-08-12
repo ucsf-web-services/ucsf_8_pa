@@ -3,10 +3,10 @@
 namespace Drupal\Tests\content_lock_timeout\Functional;
 
 use Drupal\Component\FileCache\FileCacheFactory;
-use Drupal\Core\Entity\Entity;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\Tests\BrowserTestBase;
-use Drupal\Tests\taxonomy\Functional\TaxonomyTestTrait;
+use Drupal\Tests\taxonomy\Traits\TaxonomyTestTrait;
 use Drupal\Tests\Traits\Core\CronRunTrait;
 
 /**
@@ -38,6 +38,11 @@ class ContentLockTimeoutTest extends BrowserTestBase {
     'content_lock_timeout',
     'content_lock_timeout_test',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
 
   /**
    * Array standard permissions for normal user.
@@ -230,12 +235,12 @@ class ContentLockTimeoutTest extends BrowserTestBase {
   /**
    * Run the same tests for node, block and term.
    *
-   * @param \Drupal\Core\Entity\Entity $entity
+   * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity to tests.
    *
    * @throws \Drupal\Core\Entity\EntityMalformedException
    */
-  protected function doTestForEntity(Entity $entity) {
+  protected function doTestForEntity(EntityInterface $entity) {
     // We lock article1.
     $this->drupalLogin($this->user2);
 
@@ -285,10 +290,10 @@ class ContentLockTimeoutTest extends BrowserTestBase {
    * As logout is removing locks, it is only possible to set a lock from another
    * user with the lock service.
    *
-   * @param \Drupal\Core\Entity\Entity $entity
+   * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity which should be locked.
    */
-  protected function lockContentByUser1(Entity $entity) {
+  protected function lockContentByUser1(EntityInterface $entity) {
     $this->lockService->releaseAllUserLocks($this->user2->id());
     $this->lockService->locking($entity->id(), $entity->language()->getId(), 'edit', $this->user1->id(), $entity->getEntityTypeId());
     $lock = $this->lockService->fetchLock($entity->id(), $entity->language()->getId(), 'edit', $entity->getEntityTypeId());
@@ -299,10 +304,10 @@ class ContentLockTimeoutTest extends BrowserTestBase {
   /**
    * Assert if no lock is present for content.
    *
-   * @param \Drupal\Core\Entity\Entity $entity
+   * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity which should not have a lock.
    */
-  protected function assertNoLockOnContent(Entity $entity) {
+  protected function assertNoLockOnContent(EntityInterface $entity) {
     $lock = $this->lockService->fetchLock($entity->id(), $entity->language()->getId(), 'edit', $entity->getEntityTypeId());
     $this->assertFalse($lock, 'No lock present.');
   }

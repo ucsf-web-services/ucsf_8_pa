@@ -12,6 +12,11 @@ class ContentLockModesTest extends ContentLockTestBase {
   /**
    * {@inheritdoc}
    */
+  protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
   public static $modules = [
     'entity_test',
     'content_lock',
@@ -36,7 +41,7 @@ class ContentLockModesTest extends ContentLockTestBase {
     // Create lock on default form.
     $this->drupalGet($this->entity->toUrl('edit-form'));
     $this->assertSession()->pageTextContains('This content is now locked against simultaneous editing');
-    $this->assertTrue($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), 'default', 'entity_test_mul_changed'));
+    $this->assertNotFalse($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), 'default', 'entity_test_mul_changed'));
 
     // Enter compact form mode without creating lock.
     $this->drupalGet($this->entity->toUrl('compact'));
@@ -47,16 +52,16 @@ class ContentLockModesTest extends ContentLockTestBase {
     $this->drupalGet($this->entity->toUrl('edit-form'));
     $this->assertSession()->pageTextContains('This content is being edited by the user');
     // Fields are disabled.
-    $disabled_field = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-field-test-text-0-value']);
-    $this->assertTrue($disabled_field, t('The form cannot be submitted.'));
+    $input = $this->assertSession()->elementExists('css', 'input#edit-field-test-text-0-value');
+    $this->assertTrue($input->hasAttribute('disabled'));
 
     // Enter compact form mode without creating lock.
     $this->drupalGet($this->entity->toUrl('compact'));
     $this->assertSession()->pageTextNotContains('This content is now locked against simultaneous editing');
     $this->assertFalse($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), 'compact', 'entity_test_mul_changed'));
     // Fields are open.
-    $disabled_field = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-field-test-text-0-value']);
-    $this->assertFalse($disabled_field, t('The form can be submitted.'));
+    $input = $this->assertSession()->elementExists('css', 'input#edit-field-test-text-0-value');
+    $this->assertFalse($input->hasAttribute('disabled'));
 
   }
 
@@ -83,22 +88,22 @@ class ContentLockModesTest extends ContentLockTestBase {
     // Create lock on compact form.
     $this->drupalGet($this->entity->toUrl('compact'));
     $this->assertSession()->pageTextContains('This content is now locked against simultaneous editing');
-    $this->assertTrue($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), 'compact', 'entity_test_mul_changed'));
+    $this->assertNotFalse($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), 'compact', 'entity_test_mul_changed'));
 
     $this->drupalLogin($this->user2);
     $this->drupalGet($this->entity->toUrl('edit-form'));
     $this->assertSession()->pageTextNotContains('This content is being edited by the user');
     // Fields are open.
-    $disabled_field = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-field-test-text-0-value']);
-    $this->assertFalse($disabled_field, t('The form cannot be submitted.'));
+    $input = $this->assertSession()->elementExists('css', 'input#edit-field-test-text-0-value');
+    $this->assertFalse($input->hasAttribute('disabled'));
 
     // Enter compact and it's blocked.
     $this->drupalGet($this->entity->toUrl('compact'));
     $this->assertSession()->pageTextContains('This content is being edited by the user');
-    $this->assertTrue($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), 'compact', 'entity_test_mul_changed'));
+    $this->assertNotFalse($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), 'compact', 'entity_test_mul_changed'));
     // Fields are disabled.
-    $disabled_field = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-field-test-text-0-value']);
-    $this->assertTrue($disabled_field, t('The form can be submitted.'));
+    $input = $this->assertSession()->elementExists('css', 'input#edit-field-test-text-0-value');
+    $this->assertTrue($input->hasAttribute('disabled'));
   }
 
   /**
@@ -117,23 +122,23 @@ class ContentLockModesTest extends ContentLockTestBase {
     // Enter default form mode and create lock.
     $this->drupalGet($this->entity->toUrl('edit-form'));
     $this->assertSession()->pageTextContains('This content is now locked against simultaneous editing');
-    $this->assertTrue($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), NULL, 'entity_test_mul_changed'));
+    $this->assertNotFalse($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), NULL, 'entity_test_mul_changed'));
 
     $this->drupalGet($this->entity->toUrl('compact'));
     $this->assertSession()->pageTextContains('This content is now locked by you against simultaneous editing');
-    $this->assertTrue($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), NULL, 'entity_test_mul_changed'));
+    $this->assertNotFalse($lockService->fetchLock($this->entity->id(), $this->entity->language()->getId(), NULL, 'entity_test_mul_changed'));
 
     // Login as user 2. Shouldn't be able to edit forms.
     $this->drupalLogin($this->user2);
     $this->drupalGet($this->entity->toUrl('edit-form'));
     $this->assertSession()->pageTextContains('This content is being edited by the user');
-    $disabled_field = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-field-test-text-0-value']);
-    $this->assertTrue($disabled_field, t('The form can be submitted.'));
+    $input = $this->assertSession()->elementExists('css', 'input#edit-field-test-text-0-value');
+    $this->assertTrue($input->hasAttribute('disabled'));
 
     $this->drupalGet($this->entity->toUrl('compact'));
     $this->assertSession()->pageTextContains('This content is being edited by the user');
-    $disabled_field = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-field-test-text-0-value']);
-    $this->assertTrue($disabled_field, t('The form can be submitted.'));
+    $input = $this->assertSession()->elementExists('css', 'input#edit-field-test-text-0-value');
+    $this->assertTrue($input->hasAttribute('disabled'));
   }
 
 }
