@@ -9,10 +9,10 @@
       return;
     }
 
-    // Exit if page has sticky searchbar at the top
+    // Exit if it's a news filter page
+    // advanced filter page
     const pathname = window.location.pathname;
-    const advancedSearch = /search(.*)/;
-    if (pathname === '/news/filter' || advancedSearch.test(pathname) === true) {
+    if (pathname === '/news/filter') {
       return;
     }
 

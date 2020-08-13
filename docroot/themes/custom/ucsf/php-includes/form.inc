@@ -89,8 +89,25 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     $form['dropdown']['pub_year']['#type'] = 'fieldset';
     $form['dropdown']['pub_year']['#title'] = t('Date of Publication');
     $form['dropdown']['pub_year']['#attributes'] = ['class' => ['fieldgroup']];
+
+    // PUBLICATION YEAR RANGE START
+    $form['dropdown']['pub_year']['range'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'id' => 'slider', // used by jQuery.ui.slider
+        'class' => [
+          'publication-range',
+        ],
+        'data-testid' =>'range-multiple', // for cypress testing
+      ]
+    ];
+    // PUBLICATION YEAR RANGE END
+
+    // PUBLICATION YEAR MIN/MAX DROPDOWNS START
     $form['dropdown']['pub_year']['field_date_and_time_value_1'] = $field_date_and_time_value_1;
     $form['dropdown']['pub_year']['field_date_and_time_value_2'] = $field_date_and_time_value_2;
+    // PUBLICATION YEAR MIN/MAX DROPDOWNS END
+
     $form['dropdown']['tid_1'] = $tid_1; // Health and Science
     $form['dropdown']['field_topics_target_id'] = $field_topics_target_id; //Campus Topics
     $form['dropdown']['actions'] = $actions;

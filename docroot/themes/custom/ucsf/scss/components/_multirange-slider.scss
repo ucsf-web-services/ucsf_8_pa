@@ -1,0 +1,59 @@
+$publication-track-height: .1rem;
+$handle-size: .5em;
+$font-size: 14px;
+$font-family-label: $font-helvetica-neue-bold;
+
+// Publication Date Slider (used on /news/filter)
+.publication-range {
+  display: none;
+  @include breakpoint(1027px) {
+    display: block;
+
+    &.ui-slider {
+      @include multirange-track($publication-track-height, rgba($c-navy, .5));
+      margin: 3rem 0 0 0;
+      cursor: grab;
+    }
+
+    .ui-slider {
+      &-range {
+        @include multirange-track(); // selected range
+        top: -$publication-track-height;
+      }
+
+      &-handle {
+        @include multirange-handle();
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        cursor: grab;
+
+        &--min {
+          margin-left: 0;
+        }
+
+        // Snap label and handle to the right edge
+        &--max {
+          justify-content: end;
+        }
+
+        &.ui-state-active {
+          cursor: grabbing;
+        }
+
+      }
+
+      &__handle-label {
+        position: absolute;
+        top: -2rem;
+        font-family: $font-family-label;
+        font-size: $font-size;
+
+        // Moving min limit label below the track
+        &.min-limit {
+          top: .8rem;
+        }
+      }
+    }
+  }
+}
