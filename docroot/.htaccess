@@ -124,12 +124,14 @@ AddEncoding gzip svgz
 
   # exclude Acquia domains
   RewriteCond %{HTTP_HOST} !\.acquia-sites\.com [NC]
-  # exclude staging domain
+  # exclude Staging domain
   RewriteCond %{HTTP_HOST} !^wwwstage\.ucsf\.edu [NC]
   # ensure www.
-  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteCond %{HTTP_HOST} ^ucsf\.edu$ [NC]
+  RewriteCond %{ENV:AH_SITE_ENVIRONMENT} prod [NC]
   RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
   # ensure https
+  RewriteCond %{ENV:AH_SITE_ENVIRONMENT} prod [NC]
   RewriteCond %{HTTP:X-Forwarded-Proto} !https
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
