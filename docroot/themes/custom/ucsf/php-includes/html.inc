@@ -23,28 +23,6 @@ function ucsf_preprocess_html(&$variables) {
 }
 
 function ucsf_page_attachments_alter(array &$page) {
-  //dpm('page attachments alter -- ucsf/php-includes/html.inc');
-
-  /**
-   * @note - while this works, there doesn't appear to be a way to
-   * weight the link below the js includes for polymer, which is what is
-   * needed here.  Put the <link> into the template html.html.twig
-   *
-  $link = [
-    '#type'=> 'html_tag',
-    '#tag' => 'link',
-    '#attributes' => [
-      'name' => 'polymer_platform',
-      'href' => '/'. drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/elements/elements.html',
-      'rel' => 'import'
-    ],
-    '#weight' => '200'
-  ];
-
-  $page['#attached']['html_head'][] = [$link, 'polymer_platform'];
-  */
-
-
 
   if (!isset($page['#attached']['html_head_link'])) {
     return;
@@ -93,6 +71,18 @@ function ucsf_page_attachments_alter(array &$page) {
       'as' => 'font',
       'crossorigin'=>true
     ],
+    [
+      'rel' => 'preload',
+      'href' => '/themes/custom/ucsf/fonts/fontawesome/webfonts/fa-brands-400.woff2',
+      'as' => 'font',
+      'crossorigin'=>true
+    ],
+    [
+      'rel' => 'preload',
+      'href' => '/themes/custom/ucsf/fonts/fontawesome/webfonts/fa-solid-900.woff2',
+      'as' => 'font',
+      'crossorigin'=>true
+    ]
   ];
 
   foreach ($preload as $index => $file) {
