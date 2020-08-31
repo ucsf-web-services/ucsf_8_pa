@@ -4,7 +4,7 @@
     attach: function (context) {
 
       // Toggle Advanced Filter by Advanced Filter Icon.
-      $(".search-filter__advanced", context).click(function() {
+      $(".search-filter__advanced", context).one().click(function() {
         openAdvancedFilter();
       });
 
@@ -21,7 +21,7 @@
       });
 
       // Toggle Advanced Filter and Focus on Date input by Date Change link.
-      $(".search-filter__advanced-date", context).click(function() {
+      $(".search-filter__advanced-date", context).click(function () {
         openAdvancedFilter(true);
       });
 
@@ -55,13 +55,11 @@
 
         // Hide label if there are no active filters.
         if (filter_item.length > 0) {
-          console.log(filter_item);
+          // console.log(filter_item);
           $('.search-filter__indicator-list label').removeClass('visually-hidden')
         }
       }
-
       removeFilter();
-
     }
   };
 

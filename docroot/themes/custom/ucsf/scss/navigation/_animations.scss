@@ -89,6 +89,30 @@
   }
 }
 
+.magazine-home-feature {
+  .card-row__image {
+    overflow: hidden;
+  }
+
+  img {
+    transition: $transition-time-short ease-out transform;
+  }
+
+  .card-row__copy h2 a {
+    transition: $transition-time ease-out color;
+  }
+
+  &:hover {
+    img {
+      transform: scale(1.1);
+    }
+
+    .card-row__copy h2 a {
+      color: $c-blue-link;
+    }
+  }
+}
+
 /**
  * ----------------------------------------
  * animation menu
@@ -207,6 +231,28 @@
       color: $c-blue-link;
     }
   }
+}
 
+.four-card-row {
+  overflow: hidden;
 
+  .card-row__image {
+    overflow: hidden;
+    display: block;
+  }
+
+  .card-row__image img {
+    transition: $transition-time-short ease-out all;
+  }
+  h2 {
+    transition: $transition-time ease-out all;
+  }
+  &:hover {
+    .card-row__image img {
+      transform: scale(1.1);
+    }
+    h2 {
+      color: $c-blue-link !important;
+    }
+  }
 }

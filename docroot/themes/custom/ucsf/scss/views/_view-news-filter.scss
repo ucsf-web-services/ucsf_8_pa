@@ -331,8 +331,12 @@
 
   [data-drupal-selector="edit-tid-1"] { // Health and Science Topics.
     @include breakpoint($bp-medium) {
-      columns: 3 12em;
       grid-column: 1/4;
+
+      //had to move this to here to fix Chrome
+      #edit-tid-1--2 {
+        columns: 3 12em;
+      }
     }
   }
 
@@ -539,6 +543,22 @@
 
   form {
     padding: 0;
+  }
+}
+
+// Publication min/max date labels
+label[for=edit-field-date-and-time-value-1],
+label[for=edit-field-date-and-time-value-2] {
+  @include breakpoint(1027px) {
+    @include visually-hidden;
+  }
+}
+
+// Publication min/max date inputs
+.form-item-field-date-and-time-value-1,
+.form-item-field-date-and-time-value-2 {
+  @include breakpoint(1027px) {
+    @include visually-hidden;
   }
 }
 

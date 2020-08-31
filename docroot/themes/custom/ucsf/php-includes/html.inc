@@ -24,23 +24,70 @@ function ucsf_preprocess_html(&$variables) {
 
 function ucsf_page_attachments_alter(array &$page) {
 
-  /**
-   * @note - while this works, there doesn't appear to be a way to
-   * weight the link below the js includes for polymer, which is what is
-   * needed here.  Put the <link> into the template html.html.twig
-   *
-  $link = [
-    '#type'=> 'html_tag',
-    '#tag' => 'link',
-    '#attributes' => [
-      'name' => 'polymer_platform',
-      'href' => '/'. drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/elements/elements.html',
-      'rel' => 'import'
+  if (!isset($page['#attached']['html_head_link'])) {
+    return;
+  }
+
+  $preload = [
+    [
+      'rel' => 'preload',
+      'href' => '/themes/custom/ucsf/fonts/GranjonLTW01-Roman.woff2',
+      'as' => 'font',
+      'crossorigin'=>true
     ],
-    '#weight' => '200'
+    [
+      'rel' => 'preload',
+      'href' => '/themes/custom/ucsf/fonts/HelveticaNeueLTW04-45Light.woff2',
+      'as' => 'font',
+      'crossorigin'=>true
+    ],
+    [
+      'rel' => 'preload',
+      'href' => '/themes/custom/ucsf/fonts/HelveticaNeueLTW04-55Roman.woff2',
+      'as' => 'font',
+      'crossorigin'=>true
+    ],
+    [
+      'rel' => 'preload',
+      'href' => '/themes/custom/ucsf/fonts/HelveticaNeueLTW04-56Italic.woff2',
+      'as' => 'font',
+      'crossorigin'=>true
+    ],
+    [
+      'rel' => 'preload',
+      'href' => '/themes/custom/ucsf/fonts/HelveticaNeueLTW04-65Medium.woff2',
+      'as' => 'font',
+      'crossorigin'=>true
+    ],
+    [
+      'rel' => 'preload',
+      'href' => '/themes/custom/ucsf/fonts/HelveticaNeueLTW06-75Bold.woff2',
+      'as' => 'font',
+      'crossorigin'=>true
+    ],
+    [
+      'rel' => 'preload',
+      'href' => '/themes/custom/ucsf/fonts/HelveticaNeueLTW04-65Medium.woff2',
+      'as' => 'font',
+      'crossorigin'=>true
+    ],
+    [
+      'rel' => 'preload',
+      'href' => '/themes/custom/ucsf/fonts/fontawesome/webfonts/fa-brands-400.woff2',
+      'as' => 'font',
+      'crossorigin'=>true
+    ],
+    [
+      'rel' => 'preload',
+      'href' => '/themes/custom/ucsf/fonts/fontawesome/webfonts/fa-solid-900.woff2',
+      'as' => 'font',
+      'crossorigin'=>true
+    ]
   ];
 
-  $page['#attached']['html_head'][] = [$link, 'polymer_platform'];
-  */
+  foreach ($preload as $index => $file) {
+    $page['#attached']['html_head_link'][][] = $file;
+  }
+
 }
 

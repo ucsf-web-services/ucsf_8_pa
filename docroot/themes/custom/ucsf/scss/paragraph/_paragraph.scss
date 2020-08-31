@@ -285,10 +285,10 @@
     margin-bottom: $space-four;
   }
 
-  .field-content-wrapper-content { // PL: .layout-columns__three
+  .field-content-wrapper-content, .field-supporting-mag-articlesl { // PL: .layout-columns__three
     list-style: none;
 
-    > .layout-column {
+    > .layout-column, > .field__item {
       margin-bottom: 2em;
     }
   }
@@ -297,10 +297,10 @@
     padding: $space-five;
     padding-bottom: 0;
 
-    .field-content-wrapper-content {
+    .field-content-wrapper-content, .field-supporting-mag-articlesl {
       clear: none;
 
-      > .layout-column {
+      > .layout-column, > .field__item {
         clear: none;
         float: left;
         width: 31%;
@@ -323,7 +323,7 @@
     float: none;
     width: auto;
 
-    .field-content-wrapper-content { // PL: .layout-columns__three
+    .field-content-wrapper-content, .field-supporting-mag-articlesl { // PL: .layout-columns__three
       grid-column: 1/-1;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -331,7 +331,7 @@
       grid-gap: 5%;
       grid-row-gap: 0;
 
-      > .layout-column {
+      > .layout-column, > .field__item {
         float: none;
         width: auto;
         margin-right: 0;
@@ -364,6 +364,27 @@
     }
   }
 
+  @include breakpoint($new-x-small) {
+    .field-content-wrapper-content {
+      clear: none;
+
+      > .layout-column {
+        clear: none;
+        float: left;
+        width: 48%;
+        margin-right: 2%;
+        margin-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+
+        &:nth-child(even) {
+          margin-right: 0;
+          margin-left: 2%;
+        }
+      }
+    }
+  }
+
   @include breakpoint($new-medium) {
     padding: $space-five;
     padding-bottom: 0;
@@ -379,6 +400,11 @@
         margin-left: 0;
         margin-top: 0;
         margin-bottom: 0;
+
+        &:nth-child(even) {
+          margin-right: 2%;
+          margin-left: 0;
+        }
 
         &:last-child {
           margin-right: 0;
@@ -408,7 +434,7 @@
         margin-right: 0;
         margin-left: 0;
 
-        &:last-child {
+        &:last-child, &:nth-child(even) {
           margin-right: 0;
           margin-left: 0;
         }

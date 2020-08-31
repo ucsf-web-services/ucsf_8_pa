@@ -122,13 +122,18 @@ AddEncoding gzip svgz
   # uncomment the following line:
   # RewriteBase /
 
-  #Redirect all ucsf.edu traffic to www.ucsf.edu
-  RewriteCond %{HTTP_HOST} ^ucsf\.edu [NC]
-  RewriteRule ^ http%{ENV:protossl}://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-  # Serve different robots.txt for valid stag domain wwwstage.ucsf.edu
-  RewriteCond %{HTTP_HOST} ^wwwstage\.ucsf\.edu$ [NC]
-  RewriteRule ^robots\.txt$ robots_noindex.txt [NC,L]
+  # exclude Acquia domains
+  RewriteCond %{HTTP_HOST} !\.acquia-sites\.com [NC]
+  # exclude Staging domain
+  RewriteCond %{HTTP_HOST} !^wwwstage\.ucsf\.edu [NC]
+  # ensure www.
+  RewriteCond %{HTTP_HOST} ^ucsf\.edu$ [NC]
+  RewriteCond %{ENV:AH_SITE_ENVIRONMENT} prod [NC]
+  RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # ensure https
+  RewriteCond %{ENV:AH_SITE_ENVIRONMENT} prod [NC]
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
   # Redirect common PHP files to their new locations.
   RewriteCond %{REQUEST_URI} ^(.*)?/(install.php) [OR]

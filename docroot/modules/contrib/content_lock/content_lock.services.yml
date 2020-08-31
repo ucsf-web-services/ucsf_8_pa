@@ -1,7 +1,7 @@
 services:
   content_lock:
     class: Drupal\content_lock\ContentLock\ContentLock
-    arguments: ['@database', '@module_handler', '@date.formatter', '@current_user', '@config.factory', '@request_stack', '@entity_type.manager']
+    arguments: ['@database', '@module_handler', '@date.formatter', '@current_user', '@config.factory', '@request_stack', '@entity_type.manager', '@messenger', '@datetime.time']
 
   settings_save_event_subscriber:
     class: '\Drupal\content_lock\EventSubscriber\SettingsSaveEventSubscriber'

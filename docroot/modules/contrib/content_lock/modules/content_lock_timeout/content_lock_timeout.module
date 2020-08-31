@@ -87,9 +87,9 @@ function content_lock_timeout_entity_prepare_form(EntityInterface $entity, $oper
 
       if ($lock_service->verbose()) {
         $username = User::load($lock->uid)->getDisplayName();
-        $date = \Drupal::service('date.formatter')->formatInterval(REQUEST_TIME - $lock->timestamp);
+        $date = \Drupal::service('date.formatter')->formatInterval(\Drupal::time()->getRequestTime() - $lock->timestamp);
         $stale_time = \Drupal::service('date.formatter')->formatInterval($last_valid_time - $lock->timestamp);
-        drupal_set_message(t('Breaking existing lock by @name so that you may edit this node. (This lock was set @date ago and was stale since @stale_time.)',
+        \Drupal::messenger()->addStatus(t('Breaking existing lock by @name so that you may edit this node. (This lock was set @date ago and was stale since @stale_time.)',
           [
             '@name' => $username,
             '@date' => $date,

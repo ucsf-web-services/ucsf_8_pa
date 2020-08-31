@@ -10,17 +10,21 @@ namespace Drupal\Tests\content_lock\FunctionalJavascript;
 class ContentLockEntityTest extends ContentLockJavascriptTestBase {
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * Test JS locking.
    */
   public function testJsLocking() {
+    $page = $this->getSession()->getPage();
 
     $this->drupalLogin($this->admin);
-    $edit = [
-      'entity_test_mul_changed[bundles][*]' => 1,
-      'entity_test_mul_changed[settings][js_lock]' => 1,
-    ];
-    $this->drupalPostForm('admin/config/content/content_lock', $edit, t('Save configuration'));
-    $page = $this->getSession()->getPage();
+    $this->drupalGet('admin/config/content/content_lock');
+    $this->click('#edit-entity-types-entity-test-mul-changed');
+    $this->click('#edit-entity-test-mul-changed-settings-js-lock');
+    $page->pressButton('Save configuration');
 
     // We lock entity.
     $this->drupalLogin($this->user1);
@@ -37,11 +41,12 @@ class ContentLockEntityTest extends ContentLockJavascriptTestBase {
     $assert_session->pageTextContains(t('This content is being edited by the user @name and is therefore locked to prevent other users changes.', [
       '@name' => $this->user1->getDisplayName(),
     ]));
+    $this->htmlOutput();
     $assert_session->linkExists(t('Break lock'));
-    $disabled_button = $assert_session->elementExists('css', 'input[disabled][data-drupal-selector="edit-submit"]');
-    $this->assertTrue($disabled_button, t('The form cannot be submitted.'));
-    $disabled_field = $this->xpath('//input[@id=:id and @disabled]', [':id' => 'edit-field-test-text-0-value']);
-    $this->assertTrue($disabled_field, t('The form cannot be submitted.'));
+    $assert_session->elementExists('css', 'input[disabled][data-drupal-selector="edit-submit"]');
+    // Fields are disabled.
+    $input = $this->assertSession()->elementExists('css', 'input#edit-field-test-text-0-value');
+    $this->assertTrue($input->hasAttribute('disabled'));
 
     // We save entity 1 and unlock it.
     $this->drupalLogin($this->user1);
@@ -65,8 +70,8 @@ class ContentLockEntityTest extends ContentLockJavascriptTestBase {
       '@name' => $this->user2->getDisplayName(),
     ]));
     $assert_session->linkNotExists(t('Break lock'));
-    $disabled_button = $assert_session->elementExists('css', 'input[disabled][data-drupal-selector="edit-submit"]');
-    $this->assertTrue($disabled_button, t('The form cannot be submitted.'));
+    // Ensure the input is disabled.
+    $assert_session->elementExists('css', 'input[disabled][data-drupal-selector="edit-submit"]');
 
     // We unlock entity with user2.
     $this->drupalLogin($this->user2);

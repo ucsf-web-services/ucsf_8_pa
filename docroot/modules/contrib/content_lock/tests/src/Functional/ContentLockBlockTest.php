@@ -23,6 +23,11 @@ class ContentLockBlockTest extends BrowserTestBase {
   ];
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * Creates a custom block.
    *
    * @param bool|string $title
@@ -117,8 +122,8 @@ class ContentLockBlockTest extends BrowserTestBase {
       '@name' => $user1->getDisplayName(),
     ]));
     $assert_session->linkExists(t('Break lock'));
-    $disabled_button = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-submit']);
-    $this->assertTrue($disabled_button, t('The form cannot be submitted.'));
+    $submit = $assert_session->buttonExists('edit-submit');
+    $this->assertTrue($submit->hasAttribute('disabled'));
 
     // We save block1 and unlock it.
     $this->drupalLogin($user1);
@@ -139,8 +144,8 @@ class ContentLockBlockTest extends BrowserTestBase {
       '@name' => $user2->getDisplayName(),
     ]));
     $assert_session->linkNotExists(t('Break lock'));
-    $disabled_button = $this->xpath('//input[@id=:id and @disabled="disabled"]', [':id' => 'edit-submit']);
-    $this->assertTrue($disabled_button, t('The form cannot be submitted.'));
+    $submit = $assert_session->buttonExists('edit-submit');
+    $this->assertTrue($submit->hasAttribute('disabled'));
 
     // We unlock block1 with user2.
     $this->drupalLogin($user2);
