@@ -22,9 +22,10 @@ module.exports = {
         grid: false
         //strict: "grid"
       },
-      removeSourceComments: true,
+      removeSourceComments: false,
       flattenDest: true,
       lint: false,
+      sourcemaps: true
     },
     js: {
       enabled: true,
@@ -71,7 +72,7 @@ module.exports = {
     enabled: false,
     baseDir: './',
     startPath: '',
-    domain: 'http://local.ucsf8.edu',
+    domain: 'http://local.ucsf.edu',
     startupBehavior: false,
     ui: false,
   }
