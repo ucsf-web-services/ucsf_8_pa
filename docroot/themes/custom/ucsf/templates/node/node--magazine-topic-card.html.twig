@@ -1,0 +1,9 @@
+{% extends "node--card.html.twig" %}
+
+{% set attributes = attributes.addClass('news-card--magazine-article magazine-article-card') %}
+{% block byline %}
+  <ul class="news-card__byline">
+    <li class="magazine-card__byline">{{ content.field_magazine_topic_area }}</li>
+    <li class="article-header__date magazine-article-card__date">{{ content.field_magazine_issue }}</li>
+  </ul>
+{% endblock %}

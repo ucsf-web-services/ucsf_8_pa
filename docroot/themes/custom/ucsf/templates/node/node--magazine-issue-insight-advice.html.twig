@@ -1,0 +1,70 @@
+{# @todo
+  Originally themed for News and News Center.
+  May need to extend or refactor for other Content Types.
+#}
+
+{% set primary_area = node.field_primary_area.0.entity.label|clean_class %}
+
+{% set campus_news_subs = ['announcements', 'happenings', 'honors--awards', 'spotlight'] %}
+{% if primary_area in campus_news_subs %}
+  {% set primary_area = 'campus-news' %}
+  {% set primary_area_field = 'Campus News'|t %}
+{% endif %}
+
+{% set article_type = node.field_article_type.0.entity.label|clean_class %}
+
+{%
+  set classes = [
+  'node--type-' ~ node.bundle|clean_class,
+  view_mode ? 'node--type-' ~ node.bundle|clean_class ~ '--' ~ view_mode|clean_class,
+  not node.isPublished() ? 'node--unpublished',
+  view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  'search-result',
+  'clearfix'
+]
+%}
+
+{% if node.field_external_url.uri|render|striptags != ''  %}
+  {% set article_url = node.field_external_url.uri|render|striptags %}
+{% else %}
+  {% set article_url =  url %}
+{% endif %}
+
+<article {{ attributes.addClass(classes) }}">
+
+  <header class="search-result__copy">
+    {% if article_type == 'media-coverage' %}
+      {% include '@theme/article/byline-media.twig' %}
+    {% else %}
+      {% include '@theme/article/magazine-byline.twig' %}
+    {% endif %}
+    {% if content.field_short_title|render|striptags != ''  %}
+      <h2><a href="{{ article_url }}">{{ content.field_short_title }}</a></h2>
+    {% else %}
+      <h2><a href="{{ article_url }}">{{ label }}</a></h2>
+    {% endif %}
+
+    {% if content.body['#items'][0].summary|render|striptags != ''  %}
+    <p class="search-result__body">{{ content.body['#items'][0].summary }}</p>
+    {% else %}
+    {% set text = content.body|render|striptags|trim %}
+    <p class="search-result__body">{{ (text|length > 200 ? text|slice(0, 201)|split(' ')|slice(0, -1)|join(' ') ~ '&hellip;' : text)|raw }}</p>
+    {% endif %}
+  </header>
+
+  {% if article_type != 'media-coverage' %}
+  <div class="search-result__image">
+    {% if content.field_card_image['#items'] is not empty %}
+      {{ content.field_card_image }}
+    {% else %}
+      <div data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
+        <figure class="search-index__image-placeholder">
+          <picture>
+            <img src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image">
+          </picture>
+        </figure>
+      </div>
+    {% endif %}
+  </div>
+  {% endif %}
+</article>
