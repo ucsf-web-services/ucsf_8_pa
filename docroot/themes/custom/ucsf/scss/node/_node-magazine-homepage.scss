@@ -1,4 +1,5 @@
-body.page-node-type-magazine-homepage {
+body.page-node-type-magazine-homepage,
+.magazine-topic-issue-page {
   color: $c-dark-navy;
 
   h1 {
@@ -471,4 +472,126 @@ body.page-node-type-magazine-homepage {
       }
     }
   }
+}
+
+.magazine-topic-issue-page {
+  background: $c-white;
+
+  .magazine-home-feature {
+      margin-bottom: 20px;
+
+    @include breakpoint($new-small) {
+      margin-bottom: 40px;
+    }
+
+    @include breakpoint($new-large) {
+      margin-bottom: $space-fourteen;
+    }
+
+  }
+
+  .magazine-feature-support {
+      margin-bottom: 0;
+
+    @include breakpoint($new-small) {
+      margin-bottom: 20px;
+    }
+
+    @include breakpoint($new-large) {
+      margin-bottom: $space-five;
+    }
+
+  }
+
+  .magazine-topic-page__header {
+    background: $c-background-gray;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    .magazine-topic-page__header-subtitle {
+      @include fs-heading;
+
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
+
+    @include breakpoint($new-small) {
+      padding: 40px;
+      margin-bottom: 40px;
+    }
+
+    @include breakpoint($new-large) {
+      padding: $space-six $space-ten;
+      margin-bottom: $space-ten;
+
+      .magazine-topic-page__header-subtitle {
+        margin-top: $space-three;
+        margin-bottom: $space-four;
+      }
+    }
+  }
+
+  .magazine-topics-latest {
+    padding: 20px;
+    padding-top: 0;
+    padding-bottom: 1px;
+    clear: both;
+
+    .magazine-topics-latest__title {
+      @include fs-heading;
+    }
+
+    .news-list {
+      padding: 0;
+    }
+
+    .magazine-topic-list > ul > li {
+      .news-card__copy {
+        padding: 20px;
+      }
+    }
+
+    @include breakpoint($new-x-small) {
+      .magazine-topic-list > ul > li {
+        width: 48%;
+      }
+    }
+
+    @include breakpoint($new-medium) {
+      padding: 40px;
+      padding-bottom: 1px;
+      padding-top: 0;
+
+      .news-card__copy {
+        padding: 20px 40px;
+      }
+    }
+
+    @include breakpoint($new-large) {
+      padding: $space-ten;
+      padding-bottom: 1px;
+      padding-top: 0;
+
+      .magazine-topic-list > ul > li {
+        width: 100%;
+
+        .news-card__copy {
+          padding: 20px 40px;
+        }
+      }
+    }
+  }
+}
+
+.magazine-inside-hub {
+  padding-bottom: 80px;
+}
+
+.magazine-issue-feature__title {
+  @include fs-heading;
+}
+
+.magazine-topic-footer-ctas-wrapper {
+  margin-top: 0;
 }
