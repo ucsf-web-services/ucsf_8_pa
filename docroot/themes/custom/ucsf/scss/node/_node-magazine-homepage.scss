@@ -165,6 +165,7 @@ body.page-node-type-magazine-homepage,
     @include breakpoint($new-large) {
       @include grid-two;
       padding: 0 $space-ten;
+      margin-bottom: $space-fourteen;
     }
 
     &__big-picture {
@@ -176,9 +177,21 @@ body.page-node-type-magazine-homepage,
     &__subscribe {
       background-color: $background-gray;
       padding: $article-gutter;
+      margin: $space-ten 0;
+
+
+      @include breakpoint($new-small) {
+        padding: $space-five $space-ten;
+      }
 
       @include breakpoint($new-large) {
-        padding: $space-ten 22% 0;
+        padding: $space-six 10%;
+        margin: 0;
+      }
+
+      @include breakpoint(1200px) {
+        padding: $space-ten 22%;
+        margin: 0;
       }
 
       h2 {
@@ -213,8 +226,7 @@ body.page-node-type-magazine-homepage,
 
   .magazine-supporting-feature-list {
     @include breakpoint($new-large) {
-      margin-top: $space-ten;
-      margin-bottom: $space-ten;
+      margin-bottom: $space-fourteen;
     }
   }
 
@@ -223,9 +235,15 @@ body.page-node-type-magazine-homepage,
     padding: 1.5rem $article-gutter;
     margin: 0 auto;
 
-    @include breakpoint($bp-medium) {
+    @include breakpoint($new-small) {
+      padding: 1rem 0;
+      margin: 0 $space-ten;
+    }
+
+    @include breakpoint($bp-large) {
       width: 60%;
       padding: 1rem 0;
+      margin: 0 auto;
     }
 
     p {
@@ -273,6 +291,7 @@ body.page-node-type-magazine-homepage,
   .magazine-insight-advice {
     background-color: $c-grey-pale;
     padding: $space-ten 0;
+    margin: $space-ten 0;
 
     .news-list {
       background-color: $c-grey-pale;
@@ -281,8 +300,15 @@ body.page-node-type-magazine-homepage,
 
     h2:nth-child(1) {
       color: $c-dark-navy;
-      width: 60%;
-      margin: 0 auto 1rem auto;
+      padding: 0 $article-gutter;
+
+      @include breakpoint($new-small) {
+      }
+
+      @include breakpoint($bp-large) {
+        margin: 0 auto 1rem auto;
+        width: 60%;
+      }
     }
   }
 }
@@ -624,7 +650,7 @@ body.page-node-type-magazine-homepage,
     }
 
     @include breakpoint($new-large) {
-      margin-bottom: $space-five;
+      margin-bottom: $space-six;
     }
 
   }
