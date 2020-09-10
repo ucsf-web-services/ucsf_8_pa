@@ -160,6 +160,121 @@ body.page-node-type-magazine-homepage,
       color: $c-dark-navy;
     }
   }
+
+  .magazine-big-picture-subscribe {
+    @include grid-two;
+    padding-left: $space-ten;
+    padding-right: $space-ten;
+
+    &__big-picture {
+      h3 {
+        @include fs-heading-three;
+      }
+    }
+
+    &__subscribe {
+      @include breakpoint($new-large) {
+        background-color: $background-gray;
+        padding: $space-ten 22% 0;
+      }
+
+      h2 {
+        @include breakpoint($new-large) {
+          margin-bottom: $space-five;
+        }
+      }
+
+    }
+
+  }
+
+  .magazine-alumni {
+    &.four-card-row {
+      margin-bottom: 0;
+
+      .card-row__body,
+      .magazine-alumni__date {
+        display: none;
+      }
+    }
+
+    &__topic {
+      margin-bottom: $space;
+    }
+  }
+
+  .magazine-supporting-feature-list {
+    margin-top: $space-ten;
+    margin-bottom: $space-ten;
+  }
+
+  .node--view-mode-magazine-issue-insight-advice {
+    border-bottom: 1px solid $c-border-grey-blue;
+    padding: 1.5rem 0;
+    width: 60%;
+    margin: 0 auto;
+
+    @include breakpoint($bp-medium) {
+      padding: 1rem 0;
+    }
+
+    p {
+      margin: 0;
+
+      &::before {
+        display: none;
+      }
+    }
+
+    .search-result__copy {
+      @include breakpoint($bp-medium) {
+        float: left;
+        width: calc(100% - 340px);
+      }
+    }
+
+    h2 {
+      @include fs-heading-three;
+      margin-bottom: .5rem;
+
+      a {
+        @include link-colors($c-navy, $c-blue-link);
+      }
+    }
+
+    .search-result__image {
+      display: none;
+
+      @include breakpoint($bp-medium) {
+        display: block;
+        float: right;
+        width: 263px;
+      }
+    }
+
+    .field-sub-title,
+    .search-result__body {
+      @include fs-small-body;
+      color: $c-dark-navy;
+    }
+
+  }
+
+  .magazine-insight-advice {
+    background-color: $c-grey-pale;
+    padding: $space-ten 0;
+
+    .news-list {
+      background-color: $c-grey-pale;
+      padding: 0;
+    }
+
+    h2:nth-child(1) {
+      color: $c-dark-navy;
+      width: 60%;
+      margin: 0 auto 1rem auto;
+    }
+  }
 }
 
 .magazine-issue-banner {
@@ -264,7 +379,8 @@ body.page-node-type-magazine-homepage,
   }
 }
 
-.magazine-card__byline, .magazine-alumni__topic {
+.magazine-card__byline, .magazine-alumni__topic,
+.node--view-mode-magazine-issue-insight-advice .article-header__byline {
   @include magazine-eyebrow;
 
   margin: $space 0;
