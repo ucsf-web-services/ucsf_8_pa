@@ -206,8 +206,12 @@ body.page-node-type-magazine-homepage,
 
   .magazine-alumni {
     .card-row__copy {
-      padding-right: $article-gutter;
-      padding-left: $article-gutter;
+
+      @include breakpoint($new-large) {
+        padding-right: 0;
+        padding-left: 0;
+
+      }
     }
 
     &.four-card-row {
