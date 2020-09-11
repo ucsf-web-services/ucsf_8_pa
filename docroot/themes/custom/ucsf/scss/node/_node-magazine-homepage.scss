@@ -687,15 +687,12 @@ body.page-node-type-magazine-homepage,
   }
 
   .magazine-topics-latest {
-    padding: 20px;
-    padding-top: 0;
-    padding-bottom: 1px;
+    padding: $space-five 1.25rem 1px 1.25rem;
     clear: both;
     border-top: 1px solid $c-gray-lighter;
-    padding-top: $space-five;
 
     @include breakpoint($new-medium) {
-      padding-top: $space-ten;
+      padding: $space-ten $space-five 1px $space-five;
     }
 
     .magazine-topics-latest__title {
@@ -707,36 +704,18 @@ body.page-node-type-magazine-homepage,
     }
 
     .magazine-topic-list > ul > li {
-      .news-card__copy {
-        padding: 20px;
-      }
-    }
-
-    @include breakpoint($new-x-small) {
-      .magazine-topic-list > ul > li {
+      @include breakpoint($new-x-small) {
         width: 48%;
       }
-    }
 
-    @include breakpoint($new-medium) {
-      padding: 40px;
-      padding-bottom: 1px;
-      padding-top: 0;
+      @include breakpoint($new-large) {
+        width: 100%;
+      }
 
       .news-card__copy {
-        padding: 20px 40px;
-      }
-    }
+        padding: 20px;
 
-    @include breakpoint($new-large) {
-      padding: $space-ten;
-      padding-bottom: 1px;
-      padding-top: 0;
-
-      .magazine-topic-list > ul > li {
-        width: 100%;
-
-        .news-card__copy {
+        @include breakpoint($new-medium) {
           padding: 20px 40px;
         }
       }
