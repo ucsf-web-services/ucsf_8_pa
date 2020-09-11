@@ -751,8 +751,12 @@ body.page-node-type-magazine-homepage,
 
 .magazine-card__body {
   margin: 0 0 2rem 0;
-  padding-left: $space-five;
+  padding-left: $article-gutter;
   color: $magazine-gray-blue;
+
+  @include breakpoint($new-large) {
+    padding-left: $space-five;
+  }
 
   .magazine-feature-support & {
     margin: 1rem 0 0;
