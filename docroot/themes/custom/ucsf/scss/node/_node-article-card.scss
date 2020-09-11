@@ -31,11 +31,22 @@
   margin-bottom: $space-ten;
   float: left;
 
-  .card-row__image {
+  &__image {
     display: block;
     position: relative;
-    float: left;
-    width: 50%;
+    float: none;
+    width: auto;
+
+    @include breakpoint($new-medium) {
+      float: left;
+      width: 50%;
+    }
+
+    @include breakpoint($new-large) {
+      grid-column: 1 / 2;
+      float: none;
+      width: auto;
+    }
 
     &::after {
       content: ' ';
@@ -45,21 +56,38 @@
       background: white;
       width: $space-five;
       height: $space-five;
+
+      @include breakpoint($new-small-max) {
+        display: none;
+      }
+    }
+
+    img {
+      margin: 0 0 0 auto;
+      width: 100%;
+
+      @include breakpoint($new-large) {
+        max-height: 275px;
+      }
+
+      @include breakpoint($new-large) {
+        max-height: 275px;
+      }
     }
   }
 
-  .card-row__copy {
+  &__copy {
     float: right;
     width: 50%;
     padding-left: 5%;
 
     .article-header__subheading,
-    .card-row__body {
+    &__body {
       color: $c-navy;
     }
   }
 
-  .card-row__body {
+  &__body {
     margin-bottom: 1rem;
     margin-top: 0;
   }
@@ -70,20 +98,6 @@
 
     li::before {
       display: none;
-    }
-
-    .card-row__image {
-      float: none;
-      width: auto;
-
-      img {
-        margin: 0 0 0 auto;
-        width: 100%;
-      }
-
-      &::after {
-        display: none;
-      }
     }
 
     .card-row__copy {
@@ -109,16 +123,6 @@
     float: none;
 
     grid-template-columns: repeat(2, 1fr);
-
-    .card-row__image {
-      grid-column: 1 / 2;
-      float: none;
-      width: auto;
-
-      img {
-        max-height: 275px;
-      }
-    }
 
     .card-row__copy {
       grid-column: 2 / 3;

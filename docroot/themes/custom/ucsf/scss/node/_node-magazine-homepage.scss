@@ -641,7 +641,36 @@ body.page-node-type-magazine-homepage,
     @include breakpoint($new-large) {
       margin-bottom: $space-fourteen;
     }
+  }
 
+  .magazine-home-feature .card-row__image {
+    @include breakpoint($new-medium) {
+      float: left;
+      width: 50%;
+    }
+
+    @include breakpoint($new-large) {
+      float: none;
+      width: auto;
+      grid-column: 1/8;
+    }
+  }
+
+  .magazine-home-feature .card-row__copy {
+    @include breakpoint($new-small) {
+      float: none;
+      width: auto;
+    }
+
+    @include breakpoint($new-medium) {
+      float: right;
+      width: 50%;
+    }
+
+    @include breakpoint($new-large) {
+      float: none;
+      width: auto;
+    }
   }
 
   .magazine-feature-support {
@@ -654,7 +683,6 @@ body.page-node-type-magazine-homepage,
     @include breakpoint($new-large) {
       margin-bottom: $space-six;
     }
-
   }
 
   .magazine-topic-page__header {
