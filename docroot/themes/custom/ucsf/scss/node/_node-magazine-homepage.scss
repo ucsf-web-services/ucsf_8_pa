@@ -39,6 +39,11 @@ body.page-node-type-magazine-homepage,
     .card-row__copy {
       .magazine-card__byline {
         margin-bottom: $space-two;
+
+        & + h2 {
+          @include fs-heading-two;;
+
+        }
       }
     }
 
@@ -305,9 +310,6 @@ body.page-node-type-magazine-homepage,
     h2:nth-child(1) {
       color: $c-dark-navy;
       padding: 0 $article-gutter;
-
-      @include breakpoint($new-small) {
-      }
 
       @include breakpoint($bp-large) {
         margin: 0 auto 1rem auto;
