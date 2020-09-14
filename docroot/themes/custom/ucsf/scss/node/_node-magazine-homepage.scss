@@ -813,7 +813,6 @@ body.page-node-type-magazine-homepage,
     border-top: 1px solid $c-gray-lighter;
   }
 
-
   &__heading {
     display: flex;
     flex-direction: column;
@@ -821,8 +820,9 @@ body.page-node-type-magazine-homepage,
     @include breakpoint($new-small) {
       flex-direction: row;
       align-items: center;
+      justify-content: space-between;
       width: $magazine-issue-narrow-row-width;
-      margin: 0 auto;
+      margin: 0 auto 1rem auto;
     }
 
     &-more {
@@ -830,7 +830,7 @@ body.page-node-type-magazine-homepage,
 
       @include breakpoint($new-small) {
         margin-bottom: 0;
-        margin-left: auto;
+        margin-right: -1rem; // moving link so that it is lined up with image below
       }
     }
   }
