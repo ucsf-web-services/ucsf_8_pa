@@ -222,7 +222,7 @@ body.page-node-type-magazine-homepage,
     &.four-card-row {
       margin-bottom: 0;
 
-      .card-row__body,
+
       .magazine-alumni__date {
         display: none;
       }
@@ -459,10 +459,10 @@ body.page-node-type-magazine-homepage,
 }
 
 .magazine-hub-inside {
+  @include clearfix;
   padding: 40px 20px;
-  margin-bottom: 0;
+  margin-bottom: $space-five;
   padding-bottom: 0;
-  clear: both;
 
   .magazine-hub-inside__title {
     @include fs-heading;
@@ -548,7 +548,7 @@ body.page-node-type-magazine-homepage,
 
   @include breakpoint($new-small) {
     padding: $space-five;
-    margin-bottom: 0;
+    margin-bottom: $space-ten;
     padding-bottom: 0;
 
     .magazine-hub-inside__hub, .magazine-hub-inside__inside {
@@ -586,7 +586,6 @@ body.page-node-type-magazine-homepage,
 
   @include breakpoint($new-large) {
     padding: $space-ten 0;
-    margin-bottom: 0;
     padding-bottom: 0;
 
     @include grid-two;
@@ -745,7 +744,40 @@ body.page-node-type-magazine-homepage,
 }
 
 .magazine-inside-hub {
-  padding-bottom: 80px;
+  padding: $space-five 20px $space-ten;
+
+
+  @include breakpoint($new-small) {
+    margin-top: $space-ten;
+  }
+
+  [data-primary-area^="pa"] {
+    color: $magazine-gray-blue;
+
+    ::before {
+      display: none;
+    }
+  }
+
+  &__heading {
+    display: flex;
+    flex-direction: column;
+
+    @include breakpoint($new-small) {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    &-more {
+      margin-top: 0;
+
+      @include breakpoint($new-small) {
+        margin-bottom: 0;
+        margin-left: auto;
+      }
+    }
+
+  }
 }
 
 .magazine-issue-feature__title {
@@ -758,4 +790,61 @@ body.page-node-type-magazine-homepage,
 
 .magazine-topic-footer-ctas-wrapper {
   margin-top: 0;
+}
+
+.magazine-hub-recommended {
+  display: flex;
+  align-items: center;
+  clear: both;
+  border-bottom: 1px solid $c-gray-lighter;
+  padding-bottom: 2rem;
+
+  & + & {
+    margin-top: 2rem;
+  }
+
+  &__icon {
+    margin-right: 2rem;
+
+    img {
+      width: 300px;
+      max-width: 5.2rem;
+    }
+  }
+
+  &-label {
+    @include magazine-eyebrow;
+    margin: 0 0 1rem 0;
+  }
+}
+
+.magazine-hub-inside__inside {
+  .news-card__link {
+    color: $c-dark-navy;
+  }
+
+  .article-header__byline {
+    display: none;
+  }
+
+  .campus-news-card__title {
+    margin-top: 0;
+    font-family: $font-helvetica-neue-light;
+    color: $magazine-gray-blue;
+    font-size: 1rem;
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  .search-result__body {
+    margin-top: 1rem;
+    margin-bottom: 0;
+    color: $magazine-gray-blue;
+  }
+
+  .campus-news-card {
+    margin: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
 }
