@@ -49,6 +49,7 @@ return array(
     'Lullabot\\AMP\\Spec\\ValidationRulesFactory' => $vendorDir . '/lullabot/amp/src/Spec/validator-generated.php',
     'Lullabot\\AMP\\Spec\\ValidatorInfo' => $vendorDir . '/lullabot/amp/src/Spec/validator-generated.php',
     'Lullabot\\AMP\\Spec\\ValidatorRules' => $vendorDir . '/lullabot/amp/src/Spec/validator-generated.php',
+    'Normalizer' => $vendorDir . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
     'PEAR_Exception' => $vendorDir . '/pear/pear_exception/PEAR/Exception.php',
     'PHPUnit\\Framework\\Assert' => $vendorDir . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
     'PHPUnit\\Framework\\AssertionFailedError' => $vendorDir . '/phpunit/phpunit/src/ForwardCompatibility/AssertionFailedError.php',

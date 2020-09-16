@@ -14,6 +14,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '32dcc8afd4335739640db7d200c1971d' => __DIR__ . '/..' . '/symfony/polyfill-apcu/bootstrap.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
+        'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -65,6 +66,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             'cweagans\\Composer\\' => 18,
         ),
+        'Z' => 
+        array (
+            'Zend\\Feed\\' => 10,
+        ),
         'X' => 
         array (
             'XdgBaseDir\\' => 11,
@@ -88,6 +93,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'Symfony\\Polyfill\\Php70\\' => 23,
             'Symfony\\Polyfill\\Php56\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Polyfill\\Intl\\Normalizer\\' => 33,
             'Symfony\\Polyfill\\Intl\\Idn\\' => 26,
             'Symfony\\Polyfill\\Iconv\\' => 23,
             'Symfony\\Polyfill\\Ctype\\' => 23,
@@ -141,7 +147,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'Lullabot\\AMP\\' => 13,
             'Laminas\\ZendFrameworkBridge\\' => 28,
             'Laminas\\Stdlib\\' => 15,
-            'Laminas\\Feed\\' => 13,
             'Laminas\\Escaper\\' => 16,
             'Laminas\\Diactoros\\' => 18,
         ),
@@ -241,6 +246,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/cweagans/composer-patches/src',
         ),
+        'Zend\\Feed\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-feed/src',
+        ),
         'XdgBaseDir\\' => 
         array (
             0 => __DIR__ . '/..' . '/dnoegel/php-xdg-base-dir/src',
@@ -288,6 +297,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Polyfill\\Intl\\Normalizer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer',
         ),
         'Symfony\\Polyfill\\Intl\\Idn\\' => 
         array (
@@ -453,10 +466,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-stdlib/src',
         ),
-        'Laminas\\Feed\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-feed/src',
-        ),
         'Laminas\\Escaper\\' => 
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-escaper/src',
@@ -523,7 +532,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         ),
         'Egulias\\EmailValidator\\' => 
         array (
-            0 => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator',
+            0 => __DIR__ . '/..' . '/egulias/email-validator/src',
         ),
         'Drupal\\Driver\\' => 
         array (
@@ -874,6 +883,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'Lullabot\\AMP\\Spec\\ValidationRulesFactory' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
         'Lullabot\\AMP\\Spec\\ValidatorInfo' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
         'Lullabot\\AMP\\Spec\\ValidatorRules' => __DIR__ . '/..' . '/lullabot/amp/src/Spec/validator-generated.php',
+        'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
         'PEAR_Exception' => __DIR__ . '/..' . '/pear/pear_exception/PEAR/Exception.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
         'PHPUnit\\Framework\\AssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/AssertionFailedError.php',
