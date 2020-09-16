@@ -44,8 +44,8 @@ body.page-node-type-magazine-homepage,
         margin-bottom: $space-two;
 
         & + h2 {
-          @include fs-heading-two;;
-
+          @include fs-heading-two;
+          color: $c-dark-navy;
         }
       }
     }
@@ -180,6 +180,7 @@ body.page-node-type-magazine-homepage,
     &__big-picture {
       h3 {
         @include fs-heading-three;
+        color: $c-dark-navy;
       }
     }
 
@@ -204,6 +205,8 @@ body.page-node-type-magazine-homepage,
       }
 
       h2 {
+        color: $c-dark-navy;
+
         @include breakpoint($new-large) {
           margin-bottom: $space-five;
         }
@@ -214,18 +217,41 @@ body.page-node-type-magazine-homepage,
   }
 
   .magazine-alumni {
+    &__byline {
+
+      h3 {
+        @include fs-heading-three;
+
+        margin: 0;
+        margin-top: $space;
+        color: $c-dark-navy;
+      }
+    }
+
     .card-row__copy {
       padding-right: $article-gutter;
       padding-left: $article-gutter;
+      float: none;
+      width: 100%;
+
+      @include breakpoint($new-small) {
+        padding-right: 0;
+        padding-left: 0;
+      }
     }
 
     &.four-card-row {
       margin-bottom: 0;
 
       .card-row__body,
-      .magazine-alumni__date {
+      .magazine-alumni__date,
+      .card-row__image::after {
         display: none;
       }
+    }
+
+    .card-row__image img {
+      max-height: none;
     }
 
     &__topic {
@@ -245,22 +271,21 @@ body.page-node-type-magazine-homepage,
     margin: 0 auto;
 
     @include breakpoint($new-small) {
-      padding: 1rem 0;
+      padding: 1.5rem 0;
       margin: 0 $space-ten;
     }
 
     @include breakpoint($bp-large) {
       width: $magazine-issue-narrow-row-width;
-      padding: 1rem 0;
       margin: 0 auto;
     }
 
-    p {
-      margin: 0;
+    .article-header__mag-topic-area::before {
+      display: none;
+    }
 
-      &::before {
-        display: none;
-      }
+    .search-result__body {
+      margin: 0;
     }
 
     .search-result__copy {
@@ -272,10 +297,11 @@ body.page-node-type-magazine-homepage,
 
     h2 {
       @include fs-heading-three;
+      color: $c-dark-navy;
       margin-bottom: .5rem;
 
       a {
-        @include link-colors($c-navy, $c-blue-link);
+        @include link-colors($c-dark-navy, $c-blue-link);
       }
     }
 
@@ -292,7 +318,7 @@ body.page-node-type-magazine-homepage,
     .field-sub-title,
     .search-result__body {
       @include fs-small-body;
-      color: $c-dark-navy;
+      color: $magazine-gray-blue;
     }
 
   }
@@ -424,9 +450,8 @@ body.page-node-type-magazine-homepage,
 }
 
 .magazine-card__byline, .magazine-alumni__topic,
-.node--view-mode-magazine-issue-insight-advice .article-header__byline {
+.node--view-mode-magazine-issue-insight-advice .article-header__mag-topic-area {
   @include magazine-eyebrow;
-
   margin: $space 0;
 }
 
@@ -469,18 +494,6 @@ body.page-node-type-magazine-homepage,
 
     margin-left: 0;
     color: $c-dark-navy;
-  }
-
-  .magazine-alumni_byline {
-    padding-top: $space-three;
-
-    h3 {
-      @include fs-heading-three;
-
-      margin: 0;
-      margin-top: $space;
-      color: $c-dark-navy;
-    }
   }
 
   .magazine-hub-inside__hub {
@@ -659,6 +672,15 @@ body.page-node-type-magazine-homepage,
     }
   }
 
+  .magazine-issue-feature__title {
+    @include fs-heading;
+    color: $c-dark-navy;
+
+    @include breakpoint($new-small) {
+      padding-left: $space-ten;
+    }
+  }
+
   .magazine-home-feature .card-row__image {
     @include breakpoint($new-medium) {
       float: left;
@@ -712,7 +734,7 @@ body.page-node-type-magazine-homepage,
     }
 
     @include breakpoint($new-large) {
-      padding: $space-six $space-ten;
+      padding: $space-ten $space-ten $space-six;
       margin-bottom: $space-ten;
     }
 
@@ -823,26 +845,25 @@ body.page-node-type-magazine-homepage,
     display: none;
   }
 
-  .campus-news-card__title {
-    margin-top: 0;
-    font-family: $font-helvetica-neue-light;
-    color: $magazine-gray-blue;
-    font-size: 0.875rem;
-    font-weight: bold;
-    font-style: italic;
-  }
-
-  .search-result__body {
-    margin-top: 1rem;
-    margin-bottom: 0;
-    color: $magazine-gray-blue;
-    font-size: 0.875rem;
-  }
-
   .campus-news-card {
     margin: 0;
     padding-bottom: 0;
     border-bottom: 0;
+
+    &__title {
+      @include fs-small-body;
+      font-family: $font-helvetica-neue-medium;
+      font-style: italic;
+      margin-top: 0;
+    }
+  }
+
+
+  .search-result__body {
+    @include fs-small-body;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    color: $magazine-gray-blue;
   }
 }
 
@@ -856,6 +877,7 @@ body.page-node-type-magazine-homepage,
     border-top: 1px solid $c-gray-lighter;
   }
 
+  // Main title area
   &__heading {
     display: flex;
     flex-direction: column;
@@ -868,6 +890,17 @@ body.page-node-type-magazine-homepage,
       margin: 0 auto 1rem auto;
     }
 
+    h2 {
+      @include fs-heading;
+      color: $c-dark-navy;
+      padding: 0 $article-gutter;
+
+      @include breakpoint($bp-large) {
+        padding: 0;
+        width: $magazine-issue-narrow-row-width;
+      }
+    }
+
     &-more {
       margin-top: 0;
 
@@ -878,11 +911,30 @@ body.page-node-type-magazine-homepage,
     }
   }
 
+  // results titles
+  :not(.magazine-inside-hub__heading) h2 {
+    @include fs-heading-three;
+    color: $c-dark-navy;
+    margin-bottom: .5rem;
+
+    a {
+      @include link-colors($c-dark-navy, $c-blue-link);
+    }
+  }
+
   [data-primary-area^="pa"] {
-    color: $magazine-gray-blue;
+    color: $c-dark-navy;
 
     &::before {
       display: none;
+    }
+  }
+
+  .article-header__date {
+    color: $magazine-gray-blue;
+
+    &::before {
+      background: $magazine-gray-blue;
     }
   }
 
@@ -892,7 +944,7 @@ body.page-node-type-magazine-homepage,
 
     @include breakpoint($new-small) {
       width: $magazine-issue-narrow-row-width;
-      padding: 1rem 0;
+      padding: 1.5rem 0;
       margin: 0 auto;
     }
   }
@@ -911,10 +963,6 @@ body.page-node-type-magazine-homepage,
       max-width: 13.25rem;
     }
   }
-}
-
-.magazine-issue-feature__title {
-  @include fs-heading;
 }
 
 .magazine-feature-three-support {
