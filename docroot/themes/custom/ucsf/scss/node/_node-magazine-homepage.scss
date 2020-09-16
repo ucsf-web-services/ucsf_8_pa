@@ -234,7 +234,16 @@ body.page-node-type-magazine-homepage,
       float: none;
       width: 100%;
 
-      @include breakpoint($new-small) {
+      @include breakpoint($new-medium) {
+        float: right;
+        width: 50%;
+        padding-right: 0;
+        padding-left: $article-gutter;
+      }
+
+      @include breakpoint($new-large) {
+        float: none;
+        width: 100%;
         padding-right: 0;
         padding-left: 0;
       }
@@ -338,10 +347,14 @@ body.page-node-type-magazine-homepage,
       color: $c-dark-navy;
       padding: 0 $article-gutter;
 
-      @include breakpoint($bp-large) {
-        margin: 0 auto 1rem auto;
+      @include breakpoint($bp-medium) {
         padding: 0;
+        margin: 0 $space-ten 1rem;
+      }
+
+      @include breakpoint($bp-large) {
         width: $magazine-issue-narrow-row-width;
+        margin: 0 auto 1rem auto;
       }
     }
   }
@@ -614,6 +627,7 @@ body.page-node-type-magazine-homepage,
 
     .magazine-hub-inside__inside {
       float: none;
+      padding-right: 20px;
     }
 
     .magazine-hub-inside__hub {
@@ -621,6 +635,11 @@ body.page-node-type-magazine-homepage,
         margin-left: $space-eight;
       }
     }
+  }
+
+  .magazine-hub-inside__inside {
+    float: none;
+    padding-right: 20px;
   }
 }
 
@@ -870,30 +889,40 @@ body.page-node-type-magazine-homepage,
 // Inside UCSF
 .magazine-inside-hub {
   padding: $space-five 20px $space-ten;
+  margin: 0 auto;
 
   @include breakpoint($new-small) {
-    margin-top: $space-ten;
-    padding: $space-ten 0;
     border-top: 1px solid $c-gray-lighter;
-  }
+    padding: $space-ten 0;
+    margin-top: $space-ten;
+   }
+
+    @include breakpoint($bp-medium) {
+      padding: 1.5rem 0;
+      margin: 0 $space-ten;
+    }
+
+    @include breakpoint($bp-large) {
+      width: $magazine-issue-narrow-row-width;
+      margin: 0 auto;
+    }
 
   // Main title area
   &__heading {
     display: flex;
     flex-direction: column;
+    margin-bottom: 1.5rem;
 
-    @include breakpoint($new-small) {
+    @include breakpoint(930px) {
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      width: $magazine-issue-narrow-row-width;
       margin: 0 auto 1rem auto;
     }
 
     h2 {
       @include fs-heading;
       color: $c-dark-navy;
-      padding: 0 $article-gutter;
 
       @include breakpoint($bp-large) {
         padding: 0;
@@ -906,7 +935,6 @@ body.page-node-type-magazine-homepage,
 
       @include breakpoint($new-small) {
         margin-bottom: 0;
-        margin-right: 1rem; // moving link so that it is lined up with image below
       }
     }
   }
@@ -935,17 +963,6 @@ body.page-node-type-magazine-homepage,
 
     &::before {
       background: $magazine-gray-blue;
-    }
-  }
-
-  // Inside UCSF view
-  .search-result {
-    margin: 0;
-
-    @include breakpoint($new-small) {
-      width: $magazine-issue-narrow-row-width;
-      padding: 1.5rem 0;
-      margin: 0 auto;
     }
   }
 
