@@ -694,14 +694,6 @@ body.page-node-type-magazine-homepage,
     padding: 20px;
     margin-bottom: 20px;
 
-    .magazine-topic-page__header-subtitle {
-      @include fs-heading;
-
-      display: block;
-      margin-top: 20px;
-      margin-bottom: 0;
-    }
-
     @include breakpoint($new-small) {
       padding: 40px;
       margin-bottom: 40px;
@@ -710,8 +702,17 @@ body.page-node-type-magazine-homepage,
     @include breakpoint($new-large) {
       padding: $space-six $space-ten;
       margin-bottom: $space-ten;
+    }
 
-      .magazine-topic-page__header-subtitle {
+    &-subtitle {
+      @include fs-heading;
+
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 0;
+      color: $c-dark-navy;
+
+      @include breakpoint($new-large) {
         margin-top: $space-three;
         margin-bottom: $space-four;
       }
@@ -788,4 +789,8 @@ body.page-node-type-magazine-homepage,
 
 .magazine-topic-footer-ctas-wrapper {
   margin-top: 0;
+
+  h2 {
+    color: $c-dark-navy;
+  }
 }
