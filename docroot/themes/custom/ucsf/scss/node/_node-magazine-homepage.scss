@@ -284,7 +284,7 @@ body.page-node-type-magazine-homepage,
       margin: 0 $space-ten;
     }
 
-    @include breakpoint($bp-large) {
+    @include breakpoint($new-large) {
       width: $magazine-issue-narrow-row-width;
       margin: 0 auto;
     }
@@ -352,7 +352,7 @@ body.page-node-type-magazine-homepage,
         margin: 0 $space-ten 1rem;
       }
 
-      @include breakpoint($bp-large) {
+      @include breakpoint($new-large) {
         width: $magazine-issue-narrow-row-width;
         margin: 0 auto 1rem auto;
       }
@@ -570,21 +570,25 @@ body.page-node-type-magazine-homepage,
   .magazine-hub-inside__inside {
     float: right;
     padding-top: $space-five;
-    border-top: 1px solid $c-gray-lighter;
-  }
 
-  @include breakpoint($new-small) {
-    padding: $space-five;
-    margin-bottom: $space-ten;
-    padding-bottom: 0;
-
-    .magazine-hub-inside__hub, .magazine-hub-inside__inside {
-      float: left;
+    @include breakpoint($new-small) {
+      float: right;
       width: 45%;
     }
 
-    .magazine-hub-inside__inside {
-      float: right;
+    @include breakpoint(930px) {
+      padding-right: 0;
+    }
+  }
+
+  @include breakpoint($new-small) {
+    padding: $space-five 0 $space-ten;
+    margin: 0 $space-five 0;
+    border-bottom: 1px solid $c-gray-lighter;
+
+    .magazine-hub-inside__hub {
+      float: left;
+      width: 45%;
     }
   }
 
@@ -613,7 +617,7 @@ body.page-node-type-magazine-homepage,
 
   @include breakpoint($new-large) {
     padding: $space-ten 0;
-    padding-bottom: 0;
+    margin: 0;
 
     @include grid-two;
 
@@ -624,7 +628,7 @@ body.page-node-type-magazine-homepage,
 
     .magazine-hub-inside__inside {
       float: none;
-      padding-right: 20px;
+      padding-right: 0;
     }
 
     .magazine-hub-inside__hub {
@@ -883,15 +887,14 @@ body.page-node-type-magazine-homepage,
   padding: $space-five 20px $space-ten;
 
   @include breakpoint($new-small) {
-    border-top: 1px solid $c-gray-lighter;
     padding: $space-ten 0;
     margin: 0 $space-ten;
-   }
+  }
 
-    @include breakpoint($bp-large) {
-      width: $magazine-issue-narrow-row-width;
-      margin: 0 auto;
-    }
+  @include breakpoint($new-large) {
+    width: $magazine-issue-narrow-row-width;
+    margin: 0 auto;
+  }
 
   // Main title area
   &__heading {
@@ -910,7 +913,7 @@ body.page-node-type-magazine-homepage,
       @include fs-heading;
       color: $c-dark-navy;
 
-      @include breakpoint($bp-large) {
+      @include breakpoint($new-large) {
         padding: 0;
         width: $magazine-issue-narrow-row-width;
       }
@@ -927,6 +930,7 @@ body.page-node-type-magazine-homepage,
 
   .node--view-mode-search-index {
     padding: 1.5rem 0;
+    margin-bottom: 0;
   }
 
   // results titles
