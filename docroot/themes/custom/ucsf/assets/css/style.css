@@ -12877,7 +12877,7 @@ body.page-node-type-magazine-homepage,
         .magazine-topic-issue-page .magazine-insight-advice h2:nth-child(1) {
           font-size: 56px;
           letter-spacing: -1.2px; } }
-      @media (min-width: 600px) {
+      @media (min-width: 769px) {
         body.page-node-type-magazine-homepage .magazine-insight-advice h2:nth-child(1),
         .magazine-topic-issue-page .magazine-insight-advice h2:nth-child(1) {
           padding: 0;
@@ -13010,7 +13010,7 @@ body.page-node-type-magazine-homepage,
   width: 100%; }
 
 .magazine-hub-inside {
-  padding: 40px 20px;
+  padding: 0 20px;
   margin-bottom: 40px;
   padding-bottom: 0; }
   .magazine-hub-inside::after {
@@ -13041,9 +13041,6 @@ body.page-node-type-magazine-homepage,
   .magazine-hub-inside .magazine-hub-inside__inside .magazine-hub-inside__title,
   .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__title {
     margin-bottom: 0; }
-  .magazine-hub-inside .magazine-hub-inside__inside .magazine-hub-inside__inside-more,
-  .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__inside-more {
-    margin: 0; }
   .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf,
   .magazine-hub-inside .magazine-hub-inside__hub .field-inside-ucsf {
     clear: both; }
@@ -13063,22 +13060,30 @@ body.page-node-type-magazine-homepage,
       .magazine-hub-inside .magazine-hub-inside__hub .field-inside-ucsf .article-header__byline .article-header__date::before {
         color: #384559; }
   .magazine-hub-inside .magazine-hub-inside__hub {
-    padding-top: 40px; }
-    .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__inside-more {
-      margin-bottom: 24px; }
+    padding-top: 0; }
   .magazine-hub-inside .magazine-hub-inside__inside {
     float: right;
     padding-top: 40px; }
     @media (min-width: 769px) {
       .magazine-hub-inside .magazine-hub-inside__inside {
         float: right;
-        width: 45%; } }
+        width: 45%;
+        padding-top: 0; } }
     @media (min-width: 930px) {
       .magazine-hub-inside .magazine-hub-inside__inside {
         padding-right: 0; } }
+  .magazine-hub-inside .magazine-hub-inside__inside-more {
+    margin: 0.5rem 0 32px; }
+    @media (min-width: 1280px) {
+      .magazine-hub-inside .magazine-hub-inside__inside-more {
+        float: right;
+        margin-top: 2.25rem; } }
+  @media (min-width: 1050px) {
+    .magazine-hub-inside__hub .magazine-hub-inside__inside-more {
+      margin-left: 64px; } }
   @media (min-width: 769px) {
     .magazine-hub-inside {
-      padding: 40px 0 80px;
+      padding: 0 0 80px;
       margin: 0 40px 0;
       border-bottom: 1px solid #d1d3d3; }
       .magazine-hub-inside .magazine-hub-inside__hub {
@@ -13089,10 +13094,6 @@ body.page-node-type-magazine-homepage,
     .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__title {
       margin-bottom: 0;
       float: left; }
-    .magazine-hub-inside .magazine-hub-inside__inside .magazine-hub-inside__inside-more,
-    .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__inside-more {
-      margin: 2rem 0;
-      float: right; }
     .magazine-hub-inside .magazine-hub-inside__inside .field-inside-ucsf, .magazine-hub-inside .magazine-hub-inside__inside .field-alumni-hub,
     .magazine-hub-inside .magazine-hub-inside__hub .field-inside-ucsf,
     .magazine-hub-inside .magazine-hub-inside__hub .field-alumni-hub {
@@ -13102,7 +13103,7 @@ body.page-node-type-magazine-homepage,
       color: #121a31; } }
   @media (min-width: 1050px) {
     .magazine-hub-inside {
-      padding: 80px 0;
+      padding: 0 0 80px 0;
       margin: 0;
       display: grid;
       grid-template-columns: repeat(1, 1fr);
@@ -13118,7 +13119,7 @@ body.page-node-type-magazine-homepage,
       .magazine-hub-inside .magazine-hub-inside__inside {
         float: none;
         padding-right: 0; }
-      .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__title, .magazine-hub-inside .magazine-hub-inside__hub .card-row__copy, .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__inside-more {
+      .magazine-hub-inside .magazine-hub-inside__hub .magazine-hub-inside__title, .magazine-hub-inside .magazine-hub-inside__hub .card-row__copy {
         margin-left: 64px; } }
 
 .magazine-feature-support {
@@ -13169,6 +13170,9 @@ body.page-node-type-magazine-homepage,
       .magazine-topic-issue-page .magazine-issue-feature__title {
         margin-bottom: 48px; } }
     @media (min-width: 850px) {
+      .magazine-topic-issue-page .magazine-issue-feature__title {
+        padding-left: 40px; } }
+    @media (min-width: 1050px) {
       .magazine-topic-issue-page .magazine-issue-feature__title {
         padding-left: 80px; } }
   @media (min-width: 850px) {
@@ -13267,22 +13271,31 @@ body.page-node-type-magazine-homepage,
     margin-bottom: 24px; }
 
 .magazine-hub-recommended {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   clear: both;
   border-bottom: 1px solid #d1d3d3;
   padding-bottom: 2rem; }
+  @media (min-width: 769px) {
+    .magazine-hub-recommended {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; } }
   .magazine-hub-recommended + .magazine-hub-recommended {
     margin-top: 2rem; }
   .magazine-hub-recommended__icon {
-    margin-right: 2rem; }
+    margin-right: 2rem;
+    margin-bottom: 1rem; }
+    @media (min-width: 769px) {
+      .magazine-hub-recommended__icon {
+        margin-bottom: 0; } }
     .magazine-hub-recommended__icon img {
-      width: 300px;
-      max-width: 5.2rem; }
+      max-width: 3.5rem; }
+      @media (min-width: 769px) {
+        .magazine-hub-recommended__icon img {
+          width: 300px;
+          max-width: 5.2rem; } }
   .magazine-hub-recommended-label {
     font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 12px;
