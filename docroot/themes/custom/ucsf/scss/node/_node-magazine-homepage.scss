@@ -50,6 +50,22 @@ body.page-node-type-magazine-homepage,
       }
     }
 
+    .card-row__copy {
+      @include breakpoint($new-small) {
+        float: right;
+        width: 50%;
+      }
+
+      @include breakpoint($new-medium) {
+        width: 50%;
+      }
+
+      @include breakpoint($new-large) {
+        float: none;
+        width: auto;
+      }
+    }
+
     .card-row__body {
       margin-top: $space-three;
 
@@ -69,6 +85,7 @@ body.page-node-type-magazine-homepage,
       .card-row__copy {
         margin-top: 0;
         margin-right: 0;
+        padding-right: 20px;
       }
 
       .card-row__body {
@@ -211,9 +228,7 @@ body.page-node-type-magazine-homepage,
           margin-bottom: $space-five;
         }
       }
-
     }
-
   }
 
   .magazine-alumni {
@@ -236,8 +251,6 @@ body.page-node-type-magazine-homepage,
 
       @include breakpoint($new-medium) {
         float: right;
-        width: 50%;
-        padding-right: 0;
         padding-left: $article-gutter;
       }
 
@@ -690,8 +703,13 @@ body.page-node-type-magazine-homepage,
   .magazine-issue-feature__title {
     @include fs-heading;
     color: $c-dark-navy;
+    padding-left: $article-gutter;
 
     @include breakpoint($new-small) {
+      margin-bottom: $space-six;
+    }
+
+    @include breakpoint($new-medium) {
       padding-left: $space-ten;
     }
   }
@@ -706,23 +724,6 @@ body.page-node-type-magazine-homepage,
       float: none;
       width: auto;
       grid-column: 1/8;
-    }
-  }
-
-  .magazine-home-feature .card-row__copy {
-    @include breakpoint($new-small) {
-      float: none;
-      width: auto;
-    }
-
-    @include breakpoint($new-medium) {
-      float: right;
-      width: 50%;
-    }
-
-    @include breakpoint($new-large) {
-      float: none;
-      width: auto;
     }
   }
 
