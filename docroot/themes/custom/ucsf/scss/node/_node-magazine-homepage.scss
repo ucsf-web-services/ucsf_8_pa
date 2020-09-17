@@ -515,6 +515,22 @@ body.page-node-type-magazine-homepage,
   margin-bottom: $space-five;
   padding-bottom: 0;
 
+  &__header {
+    margin-bottom: $space-six;
+
+    @include breakpoint($new-xl) {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .magazine-hub-inside__hub & {
+      @include breakpoint($new-large) {
+        margin-left: $space-eight;
+      }
+    }
+  }
+
   .magazine-hub-inside__title {
     @include fs-heading;
 
@@ -568,10 +584,6 @@ body.page-node-type-magazine-homepage,
     }
   }
 
-  .magazine-hub-inside__hub {
-    padding-top: 0; //when stacked no padding since this is the top item
-  }
-
   .magazine-hub-inside__inside {
     float: right;
     padding-top: $space-five;
@@ -588,18 +600,7 @@ body.page-node-type-magazine-homepage,
   }
 
   .magazine-hub-inside__inside-more {
-    margin: .5rem 0 $space-four;
-
-    @include breakpoint($new-xl) {
-      float: right;
-      margin-top: 2.25rem;
-    }
-  }
-
-  &__hub &__inside-more {
-    @include breakpoint($new-large) {
-      margin-left: $space-eight;
-    }
+    margin: 0;
   }
 
   @include breakpoint($new-small) {
@@ -648,7 +649,7 @@ body.page-node-type-magazine-homepage,
     }
 
     .magazine-hub-inside__hub {
-      .magazine-hub-inside__title, .card-row__copy {
+      .card-row__copy {
         margin-left: $space-eight;
       }
     }
