@@ -560,20 +560,17 @@ body.page-node-type-magazine-homepage,
   }
 
   .magazine-hub-inside__hub {
+    padding-top: $space-five;
+
     .magazine-hub-inside__inside-more {
       margin-bottom: $space-three;
     }
   }
 
-  @include breakpoint($new-small-max) {
-    .magazine-hub-inside__inside {
-      padding-top: $space-five;
-      border-top: 1px solid $c-gray-lighter;
-    }
-
-    .magazine-hub-inside__hub {
-      padding-top: $space-five;
-    }
+  .magazine-hub-inside__inside {
+    float: right;
+    padding-top: $space-five;
+    border-top: 1px solid $c-gray-lighter;
   }
 
   @include breakpoint($new-small) {
@@ -635,11 +632,6 @@ body.page-node-type-magazine-homepage,
         margin-left: $space-eight;
       }
     }
-  }
-
-  .magazine-hub-inside__inside {
-    float: none;
-    padding-right: 20px;
   }
 }
 
@@ -889,18 +881,12 @@ body.page-node-type-magazine-homepage,
 // Inside UCSF
 .magazine-inside-hub {
   padding: $space-five 20px $space-ten;
-  margin: 0 auto;
 
   @include breakpoint($new-small) {
     border-top: 1px solid $c-gray-lighter;
     padding: $space-ten 0;
-    margin-top: $space-ten;
+    margin: 0 $space-ten;
    }
-
-    @include breakpoint($bp-medium) {
-      padding: 1.5rem 0;
-      margin: 0 $space-ten;
-    }
 
     @include breakpoint($bp-large) {
       width: $magazine-issue-narrow-row-width;
@@ -937,6 +923,10 @@ body.page-node-type-magazine-homepage,
         margin-bottom: 0;
       }
     }
+  }
+
+  .node--view-mode-search-index {
+    padding: 1.5rem 0;
   }
 
   // results titles
@@ -992,4 +982,8 @@ body.page-node-type-magazine-homepage,
   h2 {
     color: $c-dark-navy;
   }
+}
+
+.footer-ctas-wrapper {
+  margin-top: -2rem;
 }
