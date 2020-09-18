@@ -1,3 +1,5 @@
+$magazine-issue-narrow-row-width: 60%;
+
 body.page-node-type-magazine-homepage,
 .magazine-topic-issue-page {
   color: $c-dark-navy;
@@ -28,6 +30,7 @@ body.page-node-type-magazine-homepage,
   .magazine-home-feature {
 
     h2 {
+      @include fs-heading-two;
       margin-bottom: $space-three;
       color: $c-dark-navy;
 
@@ -39,6 +42,27 @@ body.page-node-type-magazine-homepage,
     .card-row__copy {
       .magazine-card__byline {
         margin-bottom: $space-two;
+
+        & + h2 {
+          @include fs-heading-two;
+          color: $c-dark-navy;
+        }
+      }
+    }
+
+    .card-row__copy {
+      @include breakpoint($new-small) {
+        float: right;
+        width: 50%;
+      }
+
+      @include breakpoint($new-medium) {
+        width: 50%;
+      }
+
+      @include breakpoint($new-large) {
+        float: none;
+        width: auto;
       }
     }
 
@@ -61,6 +85,7 @@ body.page-node-type-magazine-homepage,
       .card-row__copy {
         margin-top: 0;
         margin-right: 0;
+        padding-right: 20px;
       }
 
       .card-row__body {
@@ -132,6 +157,7 @@ body.page-node-type-magazine-homepage,
     }
   }
 
+
   .news-card, .magazine-home-feature, .magazine-alumni {
     .news-card__copy {
       padding: 0;
@@ -158,6 +184,191 @@ body.page-node-type-magazine-homepage,
     h2 {
       @include fs-articles-title;
       color: $c-dark-navy;
+    }
+  }
+
+  .magazine-big-picture-subscribe {
+    @include breakpoint($new-large) {
+      @include grid-two;
+      padding: 0 $space-ten;
+      margin-bottom: $space-fourteen;
+    }
+
+    &__big-picture {
+      h3 {
+        @include fs-heading-three;
+        color: $c-dark-navy;
+      }
+    }
+
+    &__subscribe {
+      background-color: $background-gray;
+      padding: $article-gutter;
+      margin: $space-ten 0;
+
+
+      @include breakpoint($new-small) {
+        padding: $space-five $space-ten;
+      }
+
+      @include breakpoint($new-large) {
+        padding: $space-six 10%;
+        margin: 0;
+      }
+
+      @include breakpoint(1200px) {
+        padding: $space-ten 22%;
+        margin: 0;
+      }
+
+      h2 {
+        color: $c-dark-navy;
+
+        @include breakpoint($new-large) {
+          margin-bottom: $space-five;
+        }
+      }
+    }
+  }
+
+  .magazine-alumni {
+    &__byline {
+
+      h3 {
+        @include fs-heading-three;
+
+        margin: 0;
+        margin-top: $space;
+        color: $c-dark-navy;
+      }
+    }
+
+    .card-row__copy {
+      padding-right: $article-gutter;
+      padding-left: $article-gutter;
+      float: none;
+      width: 100%;
+
+      @include breakpoint($new-medium) {
+        float: right;
+        padding-left: $article-gutter;
+      }
+
+      @include breakpoint($new-large) {
+        float: none;
+        width: 100%;
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
+
+    &.four-card-row {
+      margin-bottom: 0;
+
+      .card-row__body,
+      .magazine-alumni__date,
+      .card-row__image::after {
+        display: none;
+      }
+    }
+
+    .card-row__image img {
+      max-height: none;
+    }
+
+    &__topic {
+      margin-bottom: $space;
+    }
+  }
+
+  .magazine-supporting-feature-list {
+    @include breakpoint($new-large) {
+      margin-bottom: $space-fourteen;
+    }
+  }
+
+  .node--view-mode-magazine-issue-insight-advice {
+    border-bottom: 1px solid $c-border-grey-blue;
+    padding: 1.5rem $article-gutter;
+    margin: 0 auto;
+
+    @include breakpoint($new-small) {
+      padding: 1.5rem 0;
+      margin: 0 $space-ten;
+    }
+
+    @include breakpoint($new-large) {
+      width: $magazine-issue-narrow-row-width;
+      margin: 0 auto;
+    }
+
+    .article-header__mag-topic-area::before {
+      display: none;
+    }
+
+    .search-result__body {
+      margin: 0;
+    }
+
+    .search-result__copy {
+      @include breakpoint($bp-medium) {
+        float: left;
+        width: calc(100% - 340px);
+      }
+    }
+
+    h2 {
+      @include fs-heading-three;
+      color: $c-dark-navy;
+      margin-bottom: .5rem;
+
+      a {
+        @include link-colors($c-dark-navy, $c-blue-link);
+      }
+    }
+
+    .search-result__image {
+      display: none;
+
+      @include breakpoint($bp-medium) {
+        display: block;
+        float: right;
+        width: 263px;
+      }
+    }
+
+    .field-sub-title,
+    .search-result__body {
+      @include fs-small-body;
+      color: $magazine-gray-blue;
+    }
+
+  }
+
+  .magazine-insight-advice {
+    background-color: $c-grey-pale;
+    padding: $space-ten 0;
+    margin: $space-ten 0;
+
+    .news-list {
+      background-color: $c-grey-pale;
+      padding: 0;
+    }
+
+    h2:nth-child(1) {
+      @include fs-heading;
+      color: $c-dark-navy;
+      padding: 0 $article-gutter;
+
+      @include breakpoint($new-small) {
+        padding: 0;
+        margin: 0 $space-ten 1rem;
+      }
+
+      @include breakpoint($new-large) {
+        width: $magazine-issue-narrow-row-width;
+        margin: 0 auto 1rem auto;
+      }
     }
   }
 }
@@ -264,9 +475,9 @@ body.page-node-type-magazine-homepage,
   }
 }
 
-.magazine-card__byline, .magazine-alumni__topic {
+.magazine-card__byline, .magazine-alumni__topic,
+.node--view-mode-magazine-issue-insight-advice .article-header__mag-topic-area {
   @include magazine-eyebrow;
-
   margin: $space 0;
 }
 
@@ -299,28 +510,32 @@ body.page-node-type-magazine-homepage,
 }
 
 .magazine-hub-inside {
-  padding: 40px 20px;
-  margin-bottom: 0;
+  @include clearfix;
+  padding: 0 20px;
+  margin-bottom: $space-five;
   padding-bottom: 0;
-  clear: both;
+
+  &__header {
+    margin-bottom: $space-six;
+
+    @include breakpoint($new-xl) {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .magazine-hub-inside__hub & {
+      @include breakpoint($new-large) {
+        margin-left: $space-eight;
+      }
+    }
+  }
 
   .magazine-hub-inside__title {
     @include fs-heading;
 
     margin-left: 0;
     color: $c-dark-navy;
-  }
-
-  .magazine-alumni_byline {
-    padding-top: $space-three;
-
-    h3 {
-      @include fs-heading-three;
-
-      margin: 0;
-      margin-top: $space;
-      color: $c-dark-navy;
-    }
   }
 
   .magazine-hub-inside__hub {
@@ -343,10 +558,6 @@ body.page-node-type-magazine-homepage,
       margin-bottom: 0;
     }
 
-    .magazine-hub-inside__inside-more {
-      margin: 0;
-    }
-
     .field-inside-ucsf {
       clear: both;
 
@@ -364,40 +575,42 @@ body.page-node-type-magazine-homepage,
 
         .article-header__date {
           color: $magazine-gray-blue;
+
+          &::before {
+            color: $magazine-gray-blue;
+          }
         }
       }
     }
   }
 
-  .magazine-hub-inside__hub {
-    .magazine-hub-inside__inside-more {
-      margin-bottom: $space-three;
+  .magazine-hub-inside__inside {
+    float: right;
+    padding-top: $space-five;
+
+    @include breakpoint($new-small) {
+      float: right;
+      width: 45%;
+      padding-top: 0;
+    }
+
+    @include breakpoint(930px) {
+      padding-right: 0;
     }
   }
 
-  @include breakpoint($new-small-max) {
-    .magazine-hub-inside__inside {
-      padding-top: $space-five;
-      border-top: 1px solid $c-gray-lighter;
-    }
-
-    .magazine-hub-inside__hub {
-      padding-bottom: $space-five;
-    }
+  .magazine-hub-inside__inside-more {
+    margin: 0;
   }
 
   @include breakpoint($new-small) {
-    padding: $space-five;
-    margin-bottom: 0;
-    padding-bottom: 0;
+    padding: 0 0 $space-ten;
+    margin: 0 $space-five 0;
+    border-bottom: 1px solid $c-gray-lighter;
 
-    .magazine-hub-inside__hub, .magazine-hub-inside__inside {
+    .magazine-hub-inside__hub {
       float: left;
       width: 45%;
-    }
-
-    .magazine-hub-inside__inside {
-      float: right;
     }
   }
 
@@ -407,11 +620,6 @@ body.page-node-type-magazine-homepage,
       .magazine-hub-inside__title {
         margin-bottom: 0;
         float: left;
-      }
-
-      .magazine-hub-inside__inside-more {
-        margin: 2rem 0;
-        float: right;
       }
 
       .field-inside-ucsf, .field-alumni-hub {
@@ -425,9 +633,8 @@ body.page-node-type-magazine-homepage,
   }
 
   @include breakpoint($new-large) {
-    padding: $space-ten 0;
-    margin-bottom: 0;
-    padding-bottom: 0;
+    padding: 0 0 $space-ten 0;
+    margin: 0;
 
     @include grid-two;
 
@@ -438,10 +645,11 @@ body.page-node-type-magazine-homepage,
 
     .magazine-hub-inside__inside {
       float: none;
+      padding-right: 0;
     }
 
     .magazine-hub-inside__hub {
-      .magazine-hub-inside__title, .card-row__copy, .magazine-hub-inside__inside-more {
+      .card-row__copy {
         margin-left: $space-eight;
       }
     }
@@ -474,6 +682,13 @@ body.page-node-type-magazine-homepage,
   }
 }
 
+.magazine-issue-page {
+  &__header-subtitle {
+    display: none;
+  }
+}
+
+
 .magazine-topic-issue-page {
   background: $c-white;
 
@@ -487,7 +702,37 @@ body.page-node-type-magazine-homepage,
     @include breakpoint($new-large) {
       margin-bottom: $space-fourteen;
     }
+  }
 
+  .magazine-issue-feature__title {
+    @include fs-heading;
+    color: $c-dark-navy;
+    padding-left: $article-gutter;
+
+    @include breakpoint($new-small) {
+      margin-bottom: $space-six;
+    }
+
+    @include breakpoint($new-medium) {
+      padding-left: $space-five;
+    }
+
+    @include breakpoint($new-large) {
+      padding-left: $space-ten;
+    }
+  }
+
+  .magazine-home-feature .card-row__image {
+    @include breakpoint($new-medium) {
+      float: left;
+      width: 50%;
+    }
+
+    @include breakpoint($new-large) {
+      float: none;
+      width: auto;
+      grid-column: 1/8;
+    }
   }
 
   .magazine-feature-support {
@@ -498,9 +743,8 @@ body.page-node-type-magazine-homepage,
     }
 
     @include breakpoint($new-large) {
-      margin-bottom: $space-five;
+      margin-bottom: $space-six;
     }
-
   }
 
   .magazine-topic-page__header {
@@ -508,24 +752,25 @@ body.page-node-type-magazine-homepage,
     padding: 20px;
     margin-bottom: 20px;
 
-    .magazine-topic-page__header-subtitle {
-      @include fs-heading;
-
-      display: block;
-      margin-top: 20px;
-      margin-bottom: 0;
-    }
-
     @include breakpoint($new-small) {
       padding: 40px;
       margin-bottom: 40px;
     }
 
     @include breakpoint($new-large) {
-      padding: $space-six $space-ten;
+      padding: $space-ten $space-ten $space-six;
       margin-bottom: $space-ten;
+    }
 
-      .magazine-topic-page__header-subtitle {
+    &-subtitle {
+      @include fs-heading;
+
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 0;
+      color: $c-dark-navy;
+
+      @include breakpoint($new-large) {
         margin-top: $space-three;
         margin-bottom: $space-four;
       }
@@ -533,10 +778,13 @@ body.page-node-type-magazine-homepage,
   }
 
   .magazine-topics-latest {
-    padding: 20px;
-    padding-top: 0;
-    padding-bottom: 1px;
+    padding: $space-five 1.25rem 1px 1.25rem;
     clear: both;
+    border-top: 1px solid $c-gray-lighter;
+
+    @include breakpoint($new-medium) {
+      padding: $space-ten $space-five 1px $space-five;
+    }
 
     .magazine-topics-latest__title {
       @include fs-heading;
@@ -547,51 +795,221 @@ body.page-node-type-magazine-homepage,
     }
 
     .magazine-topic-list > ul > li {
-      .news-card__copy {
-        padding: 20px;
-      }
-    }
-
-    @include breakpoint($new-x-small) {
-      .magazine-topic-list > ul > li {
+      @include breakpoint($new-x-small) {
         width: 48%;
       }
-    }
 
-    @include breakpoint($new-medium) {
-      padding: 40px;
-      padding-bottom: 1px;
-      padding-top: 0;
+      @include breakpoint($new-large) {
+        width: 100%;
+      }
 
       .news-card__copy {
-        padding: 20px 40px;
-      }
-    }
+        padding: 20px;
 
-    @include breakpoint($new-large) {
-      padding: $space-ten;
-      padding-bottom: 1px;
-      padding-top: 0;
-
-      .magazine-topic-list > ul > li {
-        width: 100%;
-
-        .news-card__copy {
-          padding: 20px 40px;
+        @include breakpoint($new-medium) {
+          padding: 20px 0;
         }
       }
     }
   }
+
+  .article-affiliation {
+    color: $magazine-gray-blue;
+
+    &::before {
+      color: $magazine-gray-blue;
+    }
+  }
+
+  // Removing extra space from "View More" btn
+  .pager {
+    @include breakpoint($new-large) {
+    padding-top: 0;
+    }
+  }
+
+  .view-more {
+    margin-bottom: $space-three;
+  }
 }
 
+.magazine-hub-recommended {
+  clear: both;
+  border-bottom: 1px solid $c-gray-lighter;
+  padding-bottom: 2rem;
+
+  @include breakpoint($new-small) {
+    display: flex;
+    align-items: center;
+  }
+
+  & + & {
+    margin-top: 2rem;
+  }
+
+  &__icon {
+    margin-right: 2rem;
+    margin-bottom: 1rem;
+
+    @include breakpoint($new-small) {
+      margin-bottom: 0;
+    }
+
+    img {
+      max-width: 3.5rem;
+
+      @include breakpoint($new-small) {
+        width: 300px;
+        max-width: 5.2rem;
+      }
+
+    }
+  }
+
+  &-label {
+    @include magazine-eyebrow;
+    margin: 0 0 1rem 0;
+  }
+}
+
+// Watch, Read, Listen
+.magazine-hub-inside__inside {
+  .news-card__link {
+    color: $c-dark-navy;
+  }
+
+  .article-header__byline {
+    display: none;
+  }
+
+  .campus-news-card {
+    margin: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
+
+    &__title {
+      @include fs-small-body;
+      font-family: $font-helvetica-neue-medium;
+      font-style: italic;
+      margin-top: 0;
+    }
+  }
+
+
+  .search-result__body {
+    @include fs-small-body;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    color: $magazine-gray-blue;
+  }
+}
+
+// Inside UCSF
 .magazine-inside-hub {
-  padding-bottom: 80px;
+  padding: $space-five 20px $space-ten;
+
+  @include breakpoint($new-small) {
+    padding: $space-ten 0;
+    margin: 0 $space-ten;
+  }
+
+  @include breakpoint($new-large) {
+    width: $magazine-issue-narrow-row-width;
+    margin: 0 auto;
+  }
+
+  // Main title area
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+
+    @include breakpoint(930px) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 auto 1rem auto;
+    }
+
+    h2 {
+      @include fs-heading;
+      color: $c-dark-navy;
+
+      @include breakpoint($new-large) {
+        padding: 0;
+        width: $magazine-issue-narrow-row-width;
+      }
+    }
+
+    &-more {
+      margin-top: 0;
+
+      @include breakpoint($new-small) {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .node--view-mode-search-index {
+    padding: 1.5rem 0;
+    margin-bottom: 0;
+  }
+
+  // results titles
+  :not(.magazine-inside-hub__heading) h2 {
+    @include fs-heading-three;
+    color: $c-dark-navy;
+    margin-bottom: .5rem;
+
+    a {
+      @include link-colors($c-dark-navy, $c-blue-link);
+    }
+  }
+
+  [data-primary-area^="pa"] {
+    color: $c-dark-navy;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .article-header__date {
+    color: $magazine-gray-blue;
+
+    &::before {
+      background: $magazine-gray-blue;
+    }
+  }
+
+  .search-result__body {
+    display: none;
+  }
+
+  .search-result__copy {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .search-result__image {
+    @include breakpoint($new-small) {
+      max-width: 13.25rem;
+    }
+  }
 }
 
-.magazine-issue-feature__title {
-  @include fs-heading;
+.magazine-feature-three-support {
+  overflow: hidden;
 }
 
 .magazine-topic-footer-ctas-wrapper {
   margin-top: 0;
+
+  h2 {
+    color: $c-dark-navy;
+  }
+}
+
+.footer-ctas-wrapper {
+  margin-top: -2rem;
 }
