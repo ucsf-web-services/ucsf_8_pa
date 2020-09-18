@@ -1,5 +1,5 @@
 /* eslint-disable */
-(function ($) {
+(function ($, window) {
     'use strict';
 
     Drupal.behaviors.dieToolbardie = {
@@ -405,4 +405,11 @@
         }
     };
 
-})(jQuery);
+    // Due to the header hanging over text, using hashtag anchor links is a
+    // problem. We need to offset the page scroll to compensate.
+    // Known bugs, does not work with css scroll-behavior: smooth;
+    $(window).on('hashchange', () => {
+        window.scrollTo(window.pageXOffset, window.pageYOffset - 120);
+    });
+
+})(jQuery, window);
