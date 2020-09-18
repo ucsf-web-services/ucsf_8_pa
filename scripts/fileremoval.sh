@@ -27,8 +27,9 @@ main() {
 	  echo "Changeing active directory to files directory( $filedir )"
 	  cd "$filedir"
 	  sed 's/https\?:\/\/\(www\.\)\?ucsf\.edu\/sites\/default\/files\///g' "$filelist" > remove.txt
-	  sed 's/%20/ /g' remove.txt
-	  input="remove.txt"
+      sleep 10
+      sed 's/%20/ /g' "remove.txt" > removed.txt
+	  input="removed.txt"
 	  echo "" > removed_list.csv
     while IFS= read -r line
     do
