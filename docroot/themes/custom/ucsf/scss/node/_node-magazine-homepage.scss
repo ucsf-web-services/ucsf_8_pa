@@ -40,17 +40,6 @@ body.page-node-type-magazine-homepage,
     }
 
     .card-row__copy {
-      .magazine-card__byline {
-        margin-bottom: $space-two;
-
-        & + h2 {
-          @include fs-heading-two;
-          color: $c-dark-navy;
-        }
-      }
-    }
-
-    .card-row__copy {
       @include breakpoint($new-small) {
         float: right;
         width: 50%;
@@ -264,12 +253,6 @@ body.page-node-type-magazine-homepage,
 
     &.four-card-row {
       margin-bottom: 0;
-
-      .card-row__body,
-      .magazine-alumni__date,
-      .card-row__image::after {
-        display: none;
-      }
     }
 
     .card-row__image img {
@@ -511,6 +494,7 @@ body.page-node-type-magazine-homepage,
 
 .magazine-hub-inside {
   @include clearfix;
+  clear: both;
   padding: 0 20px;
   margin-bottom: $space-five;
   padding-bottom: 0;
@@ -606,7 +590,6 @@ body.page-node-type-magazine-homepage,
   @include breakpoint($new-small) {
     padding: 0 0 $space-ten;
     margin: 0 $space-five 0;
-    border-bottom: 1px solid $c-gray-lighter;
 
     .magazine-hub-inside__hub {
       float: left;
@@ -625,16 +608,13 @@ body.page-node-type-magazine-homepage,
       .field-inside-ucsf, .field-alumni-hub {
         clear: both;
       }
-
-      .campus-news-card .campus-news-card__title {
-        color: $c-dark-navy;
-      }
     }
   }
 
   @include breakpoint($new-large) {
     padding: 0 0 $space-ten 0;
     margin: 0;
+    margin-top: $space-five;
 
     @include grid-two;
 
@@ -878,24 +858,6 @@ body.page-node-type-magazine-homepage,
     color: $c-dark-navy;
   }
 
-  .article-header__byline {
-    display: none;
-  }
-
-  .campus-news-card {
-    margin: 0;
-    padding-bottom: 0;
-    border-bottom: 0;
-
-    &__title {
-      @include fs-small-body;
-      font-family: $font-helvetica-neue-medium;
-      font-style: italic;
-      margin-top: 0;
-    }
-  }
-
-
   .search-result__body {
     @include fs-small-body;
     margin-top: 1rem;
@@ -1000,6 +962,17 @@ body.page-node-type-magazine-homepage,
 
 .magazine-feature-three-support {
   overflow: hidden;
+
+  .magazine-home-feature {
+      .magazine-card__byline {
+        margin-bottom: $space-two;
+
+        & + h2 {
+          @include fs-heading-two;
+          color: $c-dark-navy;
+        }
+      }
+  }
 }
 
 .magazine-topic-footer-ctas-wrapper {
@@ -1012,4 +985,50 @@ body.page-node-type-magazine-homepage,
 
 .footer-ctas-wrapper {
   margin-top: -2rem;
+}
+
+
+// overrides for the magazine topic page.
+.magazine-topic-page {
+  .magazine-hub-inside {
+    @include breakpoint($new-small) {
+      border-bottom: 1px solid $c-gray-lighter;
+    }
+  }
+
+  .magazine-alumni.four-card-row {
+    .card-row__body,
+    .magazine-alumni__date,
+    .card-row__image::after {
+      display: none;
+    }
+  }
+
+  .magazine-hub-inside__inside {
+    .news-card__link {
+      color: $c-dark-navy;
+    }
+
+    .campus-news-card {
+      margin: 0;
+      padding-bottom: 0;
+      border-bottom: 0;
+
+      &__title {
+        @include fs-small-body;
+        color: $c-dark-navy;
+        font-family: $font-helvetica-neue-medium;
+        font-style: italic;
+        margin-top: 0;
+      }
+    }
+
+    .search-result__body {
+      @include fs-small-body;
+      margin-top: 1rem;
+      margin-bottom: 0;
+      color: $magazine-gray-blue;
+    }
+  }
+
 }
