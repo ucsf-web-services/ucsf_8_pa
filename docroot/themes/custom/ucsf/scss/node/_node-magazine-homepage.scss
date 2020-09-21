@@ -609,10 +609,6 @@ body.page-node-type-magazine-homepage,
       .field-inside-ucsf, .field-alumni-hub {
         clear: both;
       }
-
-      .campus-news-card .campus-news-card__title {
-        color: $c-dark-navy;
-      }
     }
   }
 
@@ -863,20 +859,6 @@ body.page-node-type-magazine-homepage,
     color: $c-dark-navy;
   }
 
-  .campus-news-card {
-    margin: 0;
-    padding-bottom: 0;
-    border-bottom: 0;
-
-    &__title {
-      @include fs-small-body;
-      font-family: $font-helvetica-neue-medium;
-      font-style: italic;
-      margin-top: 0;
-    }
-  }
-
-
   .search-result__body {
     @include fs-small-body;
     margin-top: 1rem;
@@ -1015,6 +997,33 @@ body.page-node-type-magazine-homepage,
     .magazine-alumni__date,
     .card-row__image::after {
       display: none;
+    }
+  }
+
+  .magazine-hub-inside__inside {
+    .news-card__link {
+      color: $c-dark-navy;
+    }
+
+    .campus-news-card {
+      margin: 0;
+      padding-bottom: 0;
+      border-bottom: 0;
+
+      &__title {
+        @include fs-small-body;
+        color: $c-dark-navy;
+        font-family: $font-helvetica-neue-medium;
+        font-style: italic;
+        margin-top: 0;
+      }
+    }
+
+    .search-result__body {
+      @include fs-small-body;
+      margin-top: 1rem;
+      margin-bottom: 0;
+      color: $magazine-gray-blue;
     }
   }
 }
