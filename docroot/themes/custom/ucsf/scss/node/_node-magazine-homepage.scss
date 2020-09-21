@@ -590,7 +590,6 @@ body.page-node-type-magazine-homepage,
   @include breakpoint($new-small) {
     padding: 0 0 $space-ten;
     margin: 0 $space-five 0;
-    border-bottom: 1px solid $c-gray-lighter;
 
     .magazine-hub-inside__hub {
       float: left;
@@ -991,6 +990,11 @@ body.page-node-type-magazine-homepage,
 
 // overrides for the magazine topic page.
 .magazine-topic-page {
+  .magazine-hub-inside {
+    @include breakpoint($new-small) {
+      border-bottom: 1px solid $c-gray-lighter;
+    }
+  }
 
   .magazine-alumni.four-card-row {
     .card-row__body,
