@@ -2,10 +2,6 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   @include fs-body;
   margin: 0;
@@ -449,4 +445,16 @@ strong, b {
 
 .underline {
   text-decoration: underline;
+}
+
+// Fix the anchor links offset so that the sticky header does not cover it.
+a[name] {
+  display: block;
+  position: relative;
+  top: -120px;
+  visibility: hidden;
+}
+
+.combined-header-region--has-subnav ~ .region-content .main a[name] {
+  top: -200px;
 }
