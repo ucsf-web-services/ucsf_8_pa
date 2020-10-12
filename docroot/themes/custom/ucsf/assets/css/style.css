@@ -43,9 +43,6 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth; }
-
 body {
   font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   font-size: 18px;
@@ -593,6 +590,15 @@ strong, b {
 
 .underline {
   text-decoration: underline; }
+
+a[name] {
+  display: block;
+  position: relative;
+  top: -120px;
+  visibility: hidden; }
+
+.combined-header-region--has-subnav ~ .region-content .main a[name] {
+  top: -200px; }
 
 .breadcrumb-region {
   -webkit-box-shadow: inset 0 9px 4px -4px rgba(0, 0, 0, 0.035);

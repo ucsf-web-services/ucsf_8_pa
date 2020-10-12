@@ -1,5 +1,5 @@
 /* eslint-disable */
-(function ($) {
+(function ($, window) {
     'use strict';
 
     Drupal.behaviors.dieToolbardie = {
@@ -404,5 +404,4 @@
             });
         }
     };
-
-})(jQuery);
+})(jQuery, window);
