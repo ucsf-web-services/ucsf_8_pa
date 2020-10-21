@@ -5,7 +5,6 @@ CKEDITOR.on('instanceReady', function (ev) {
     });
 CKEDITOR.plugins.add('domcollapsible', {
   requires: 'widget',
-
   icons: 'domcollapsible',
   beforeInit: function (editor) {
 
