@@ -51,8 +51,8 @@ CKEDITOR.plugins.add('blankdiv', {
 
         align.forEach(function (item, index) {
           console.log(item, index);
-          this.element.removeClass( item );
-        });
+          if (this.element.hasClass( item )) this.element.removeClass( item );
+        }, this);
 
         const size = ['full_bleed_half__image', 'full_bleed__image',
           'half__image', 'quarter',  'w',
@@ -60,8 +60,8 @@ CKEDITOR.plugins.add('blankdiv', {
 
         size.forEach(function (item, index) {
           console.log(item, index);
-          this.element.removeClass( item );
-        });
+          if (this.element.hasClass( item )) this.element.removeClass( item );
+        }, this);
 
         // Add new classes
         if ( this.data.align ) this.element.addClass( this.data.align );
