@@ -24,10 +24,17 @@ function ucsf_preprocess_image(&$variables) {
   if (array_key_exists('data-no-lazyload', $variables['attributes'])) {
     // Checks if element has 'loading' attribute
     $key = array_search('loading',  $variables['attributes']);
+    unset($variables['attributes']['class']['loading']);
 
     if ($key !== FALSE) {
       // prompt quicker loading
-      $variables['attributes']['loading'] = 'eager';
+      $variables['attributes']['loading'] = 'auto';
+
+      if ($variables['attributes']['data-src']) {
+        // Saves data-src value to src attribute, removes data-src.
+        $variables['attributes']['src'] = $variables['attributes']['data-src'];
+        unset($variables['attributes']['data-src']);
+      }
     }
   };
 
