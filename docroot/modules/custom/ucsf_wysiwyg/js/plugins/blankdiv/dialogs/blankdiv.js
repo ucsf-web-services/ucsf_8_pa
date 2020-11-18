@@ -15,9 +15,9 @@ CKEDITOR.dialog.add('blankdiv', function( editor ) {
             label: 'Align',
             title: 'Align - set the elements container alignment.',
             items: [
-              [ editor.lang.common.alignCenter, 'center' ],
-              [ editor.lang.common.alignLeft, 'left' ],
-              [ editor.lang.common.alignRight, 'right' ],
+              [ editor.lang.common.alignCenter, 'align-center' ],
+              [ editor.lang.common.alignLeft, 'align-left' ],
+              [ editor.lang.common.alignRight, 'align-right' ],
               ['Half Image Right', 'half-image-right'],
               ['Half Image Left', 'half-image-left'],
               ['Full Bleed Right', 'half-image-right-full'],
@@ -25,7 +25,7 @@ CKEDITOR.dialog.add('blankdiv', function( editor ) {
               ['Full Bleed',  'full-bleed-image' ]
             ],
             setup: function( widget ) {
-              this.setValue( widget.data.align ? widget.data.align : 'right' );
+              this.setValue( widget.data.align ? widget.data.align : 'align-right' );
             },
             commit: function( widget ) {
               widget.setData( 'align', this.getValue() );

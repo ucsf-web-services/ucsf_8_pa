@@ -11,7 +11,7 @@ CKEDITOR.plugins.add('blankdiv', {
     editor.addContentsCss( this.path + 'css/blankdiv.css' );
     editor.widgets.add('blankdiv', {
       allowedContent:
-        'div(!wysiwyg_blankdiv,align--left,align--right,align--center,size--full,size--half,size--twofifth,size--third)',
+        'div(!wysiwyg_blankdiv,align-*,half-image-*, full-bleed-image, callout__image, quarter, half__image, full_bleed_*)',
       requiredContent: 'div(!wysiwyg_blankdiv)',
       template:
         '<div class="wysiwyg_blankdiv">'+
@@ -24,9 +24,9 @@ CKEDITOR.plugins.add('blankdiv', {
       },
       init: function() {
         // align options
-        if ( this.element.hasClass( 'center' ) ) this.setData( 'align', 'center' );
-        if ( this.element.hasClass( 'left' ) ) this.setData( 'align', 'left' );
-        if ( this.element.hasClass( 'right' ) ) this.setData( 'align', 'right' );
+        if ( this.element.hasClass( 'align-center' ) ) this.setData( 'align', 'align-center' );
+        if ( this.element.hasClass( 'align-left' ) ) this.setData( 'align', 'align-left' );
+        if ( this.element.hasClass( 'align-right' ) ) this.setData( 'align', 'align-right' );
         if ( this.element.hasClass( 'half-image-right' ) ) this.setData( 'align', 'half-image-right' );
         if ( this.element.hasClass( 'half-image-left' ) ) this.setData( 'align', 'half-image-left' );
         if ( this.element.hasClass( 'half-image-right-full' ) ) this.setData( 'align', 'half-image-right-full' );
@@ -38,13 +38,13 @@ CKEDITOR.plugins.add('blankdiv', {
         if ( this.element.hasClass( 'half__image' ) ) this.setData( 'size', 'half__image' );
         if ( this.element.hasClass( 'quarter' ) ) this.setData( 'size', 'quarter' );
         if ( this.element.hasClass( 'w' ) ) this.setData( 'size', 'w' );
-        if ( this.element.hasClass( 'wysiwyg_callout_square_150_x_150_' ) ) this.setData( 'size', 'wysiwyg_callout_square_150_x_150_' );
+        if ( this.element.hasClass( 'callout__image' ) ) this.setData( 'size', 'callout__image' );
 
         if ( this.element.getHtml() ) this.setData( 'script', this.element.getHtml() );
       },
       data: function() {
         // Brutally remove all align classes and set a new one if "align" widget data is set.
-        const align = ['center', 'left', 'right',
+        const align = ['align-center', 'align-left', 'align-right',
           'half-image-right', 'half-image-left',
           'half-image-right-full', 'half-image-left-full',
           'full-bleed-image'];
@@ -56,7 +56,7 @@ CKEDITOR.plugins.add('blankdiv', {
 
         const size = ['full_bleed_half__image', 'full_bleed__image',
           'half__image', 'quarter',  'w',
-          'wysiwyg_callout_square_150_x_150_'];
+          'callout__image'];
 
         size.forEach(function (item, index) {
           console.log(item, index);
