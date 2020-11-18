@@ -17,7 +17,7 @@
       {% set card_image_height = paragraph.field_news_article.entity.field_card_image.0.entity.field_media_image.height %}
       <figure>
         <picture>
-          <img src="{{ card_image_uri|image_style('featured_news_card__image') }}" alt="{{card_image_alt}}" width="{{card_image_width}}" height="{{card_image_height}}" loading="eager"/>
+          <img src="{{ card_image_uri|image_style('featured_news_card__image') }}" alt="{{card_image_alt}}" width="{{card_image_width}}" height="{{card_image_height}}" loading="lazy"/>
         </picture>
       </figure>
     {% endblock article_image %}

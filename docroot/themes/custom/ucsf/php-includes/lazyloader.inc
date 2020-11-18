@@ -14,6 +14,12 @@ function ucsf_preprocess_image(&$variables) {
     $variables['attributes']['loading'] = 'lazy';
   };
 
+  if ($variables['attributes']['src']) {
+    // Saves data-src value to src attribute, removes data-src.
+    $variables['attributes']['data-src'] = $variables['attributes']['src'];
+    unset($variables['attributes']['src']);
+  }
+
   // Checks for an attribute that indicates that lazyloading needs to be eager.
   if (array_key_exists('data-no-lazyload', $variables['attributes'])) {
     // Checks if element has 'loading' attribute
