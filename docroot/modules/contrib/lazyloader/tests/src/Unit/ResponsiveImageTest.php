@@ -3,12 +3,13 @@
 namespace Drupal\Tests\lazyloader\Unit;
 
 use Drupal\lazyloader\ResponsiveImage;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \Drupal\lazyloader\ResponsiveImage
  * @group lazyloader
  */
-class ResponsiveImageTest extends \PHPUnit_Framework_TestCase {
+class ResponsiveImageTest extends TestCase {
 
   /**
    * @covers ::count
@@ -25,6 +26,8 @@ class ResponsiveImageTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * Tests the to string of a single image.
+   *
    * @depends testSingleImage
    */
   public function testSingleImageToString(ResponsiveImage $image) {
@@ -48,6 +51,8 @@ class ResponsiveImageTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * Tests single images with density to string.
+   *
    * @depends testSingleImageWithDensity
    */
   public function testSingleImageWithDensityToString(ResponsiveImage $image) {
@@ -56,6 +61,8 @@ class ResponsiveImageTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * Tests multiple images.
+   *
    * @covers ::count
    * @covers ::parse
    */
@@ -82,6 +89,8 @@ class ResponsiveImageTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * Tests the to string function for multiple images.
+   *
    * @depends testMultipleImages
    */
   public function testMultipleImagesToString(ResponsiveImage $image) {
