@@ -16,6 +16,8 @@ use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * Tests Lazyloaders theme integration.
+ *
  * @group lazyloader
  */
 class ThemeTest extends KernelTestBase {
@@ -25,11 +27,30 @@ class ThemeTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['image', 'lazyloader', 'path', 'user', 'node', 'field', 'system', 'file', 'simpletest'];
+  public static $modules = [
+    'image',
+    'lazyloader',
+    'path',
+    'user',
+    'node',
+    'field',
+    'system',
+    'file',
+    'simpletest',
+  ];
 
-  /** @var Node */
+  /**
+   * The node.
+   *
+   * @var \Drupal\node\Entity\Node
+   */
   protected $node;
-  /** @var bool */
+
+  /**
+   * Whether or not test files have been generated.
+   *
+   * @var bool
+   */
   private $testFilesHaveBeenGenerated = FALSE;
 
   /**
@@ -130,10 +151,10 @@ class ThemeTest extends KernelTestBase {
    * is prefixed with one of the above types, it will get returned as well, even
    * on subsequent calls.
    *
-   * @param $type
+   * @param string $type
    *   File type, possible values: 'binary', 'html', 'image', 'javascript',
    *   'php', 'sql', 'text'.
-   * @param $size
+   * @param int $size
    *   (optional) File size in bytes to match. Defaults to NULL, which will not
    *   filter the returned list by size.
    *
@@ -168,7 +189,16 @@ class ThemeTest extends KernelTestBase {
 
     $files = [];
     // Make sure type is valid.
-    if (in_array($type, ['binary', 'html', 'image', 'javascript', 'php', 'sql', 'text'])) {
+    $validTypes = [
+      'binary',
+      'html',
+      'image',
+      'javascript',
+      'php',
+      'sql',
+      'text',
+    ];
+    if (in_array($type, $validTypes, TRUE)) {
       $files = file_scan_directory('public://', '/' . $type . '\-.*/');
 
       // If size is set then remove any files that are not of that size.
@@ -200,6 +230,21 @@ class ThemeTest extends KernelTestBase {
     }
   }
 
+  /**
+   * Generates a file.
+   *
+   * @param string $filename
+   *   The filename.
+   * @param int $width
+   *   The width.
+   * @param int $lines
+   *   The number of lines.
+   * @param string $type
+   *   The type.
+   *
+   * @return string
+   *   The filename of the generated file.
+   */
   protected function generateFile($filename, $width, $lines, $type = 'binary-text') {
     $text = '';
     for ($i = 0; $i < $lines; $i++) {
@@ -209,9 +254,11 @@ class ThemeTest extends KernelTestBase {
           case 'text':
             $text .= chr(rand(32, 126));
             break;
+
           case 'binary':
             $text .= chr(rand(0, 31));
             break;
+
           case 'binary-text':
           default:
             $text .= rand(0, 1);
@@ -259,4 +306,5 @@ class ThemeTest extends KernelTestBase {
     $fallback_image = $images[1];
     $this->assertEquals($path, (string) $fallback_image['src']);
   }
+
 }

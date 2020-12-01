@@ -1,5 +1,8 @@
 <?php
+
 namespace Drupal\lazyloader\Tests;
+
+use Drupal\Core\Render\Element;
 
 /**
  * Tests Lazyloader's exclusion functionality.
@@ -11,7 +14,7 @@ class ExcludeTestCase extends TestBase {
   /**
    * Tests functioning of the content type exclude settings.
    */
-  function testContentTypeExclude() {
+  public function testContentTypeExclude() {
     // Test default rendering of a node.
     $this->drupalGet("node/{$this->node->nid}");
     $this->assertLazyloaderEnabled();
@@ -33,7 +36,7 @@ class ExcludeTestCase extends TestBase {
   /**
    * Test functioning of the path exclude setting.
    */
-  function testPathExclude() {
+  public function testPathExclude() {
     $alias = $this->node->path['alias'];
     $this->drupalGet($alias);
     $this->assertLazyloaderEnabled();
@@ -43,7 +46,7 @@ class ExcludeTestCase extends TestBase {
     $this->drupalGet($alias);
     $this->assertLazyloaderEnabled(FALSE, 'Lazyloader disabled for disabled alias');
 
-    $edit['lazyloader_paths'] = '*' . substr($alias, 2,2) . '*';
+    $edit['lazyloader_paths'] = '*' . substr($alias, 2, 2) . '*';
     $this->drupalPost("admin/config/media/lazyloader/exclude", $edit, t('Save configuration'));
     $this->drupalGet($alias);
     $this->assertLazyloaderEnabled(FALSE, 'Lazyloader disabled for disabled alias with wildcards');
@@ -54,21 +57,22 @@ class ExcludeTestCase extends TestBase {
   /**
    * Test functioning of the filename exclude setting.
    */
-  function testFilenameExclude() {
+  public function testFilenameExclude() {
     $node = node_view($this->node);
 
     \Drupal::configFactory()->getEditable('lazyloader.settings')->set('lazyloader_excluded_filenames', $node['field_images'][0]['#item']['filename'])->save();
     $this->drupalGet("node/{$this->node->nid}");
 
-    foreach (\Drupal\Core\Render\Element::children($node['field_images']) as $image) {
+    foreach (Element::children($node['field_images']) as $image) {
       $image = $node['field_images'][$image]['#item'];
       $pattern = '/data-echo=".*' . preg_quote($image['filename']) . '/';
 
       // @FIXME
-// Could not extract the default value because it is either indeterminate, or
-// not scalar. You'll need to provide a default value in
-// config/install/lazyloader.settings.yml and config/schema/lazyloader.schema.yml.
-if ($image['filename'] !== \Drupal::config('lazyloader.settings')->get('lazyloader_excluded_filenames')) {
+      // Could not extract the default value because it is either indeterminate,
+      // or not scalar. You'll need to provide a default value in
+      // config/install/lazyloader.settings.yml and
+      // config/schema/lazyloader.schema.yml.
+      if ($image['filename'] !== \Drupal::config('lazyloader.settings')->get('lazyloader_excluded_filenames')) {
         $this->assertPattern("{$pattern}");
         $this->assertPattern("{$pattern}", 'Image is lazyloaded when not excluded by filename.');
       }
@@ -81,7 +85,7 @@ if ($image['filename'] !== \Drupal::config('lazyloader.settings')->get('lazyload
   /**
    * Test functioning of the image style exclude setting.
    */
-  function testImageStyleExclude() {
+  public function testImageStyleExclude() {
     // Test default rendering of a node.
     $this->drupalGet("node/{$this->node->nid}");
     $this->assertLazyloaderEnabled();

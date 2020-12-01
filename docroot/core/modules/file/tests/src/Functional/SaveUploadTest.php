@@ -59,17 +59,10 @@ class SaveUploadTest extends FileManagedTestBase {
    */
   protected $imageExtension;
 
-  /**
-   * The user used by the test.
-   *
-   * @var \Drupal\user\Entity\User
-   */
-  protected $account;
-
   protected function setUp() {
     parent::setUp();
-    $this->account = $this->drupalCreateUser(['access site reports']);
-    $this->drupalLogin($this->account);
+    $account = $this->drupalCreateUser(['access site reports']);
+    $this->drupalLogin($account);
 
     $image_files = $this->drupalGetTestFiles('image');
     $this->image = File::create((array) current($image_files));
@@ -173,48 +166,6 @@ class SaveUploadTest extends FileManagedTestBase {
     $max_fid_before_duplicate = $max_fid_after;
     $max_fid_after = (int) \Drupal::entityQueryAggregate('file')->aggregate('fid', 'max')->execute()[0]['fid_max'];
     $this->assertEqual($max_fid_before_duplicate, $max_fid_after, 'A new managed file was not created.');
-  }
-
-  /**
-   * Tests filename transliteration.
-   */
-  public function testTransliteration() {
-    $file = $this->generateFile('TEXT-Ã…â€œ', 64, 5, 'text');
-
-    // Upload a file with a name with uppercase and unicode characters.
-    $edit = [
-      'files[file_test_upload]' => \Drupal::service('file_system')->realpath($file),
-      'extensions' => 'txt',
-      'is_image_file' => FALSE,
-    ];
-    $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
-    $this->assertSession()->statusCodeEquals(200);
-    // Test that the file name has not been transliterated.
-    $this->assertSession()->responseContains('File name is TEXT-Ã…â€œ.txt.');
-
-    // Enable transliteration via the UI.
-    $this->drupalLogin($this->rootUser);
-    $this->drupalPostForm('admin/config/media/file-system', ['filename_transliteration' => TRUE], 'Save configuration');
-    $this->drupalLogin($this->account);
-
-    // Upload a file with a name with uppercase and unicode characters.
-    $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
-    $this->assertSession()->statusCodeEquals(200);
-    // Test that the file name has been transliterated.
-    $this->assertSession()->responseContains('File name is text-a.aeuoe.txt.');
-
-    // Generate another file with a name that will be changed when
-    // transliteration is on.
-    $file = $this->generateFile('S  Pace--Ã°Å¸â„¢Ë†', 64, 5, 'text');
-    $edit = [
-      'files[file_test_upload]' => \Drupal::service('file_system')->realpath($file),
-      'extensions' => 'txt',
-      'is_image_file' => FALSE,
-    ];
-    $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
-    $this->assertSession()->statusCodeEquals(200);
-    // Test that the file name has been transliterated.
-    $this->assertSession()->responseContains('File name is s-pace-adegaace.txt.');
   }
 
   /**
