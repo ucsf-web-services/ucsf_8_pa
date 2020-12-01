@@ -160,26 +160,8 @@ class UncacheableQueryAccessHandlerTest extends EntityKernelTestBase {
   /**
    * @covers ::getConditions
    */
-  public function testUpdateDelete() {
-    foreach (['update', 'delete'] as $operation) {
-      // Any permission.
-      $user = $this->createUser([], ["$operation any entity_test_enhanced_with_owner"]);
-      $conditions = $this->handler->getConditions($operation, $user);
-      $this->assertEquals(0, $conditions->count());
-      $this->assertEquals(['user.permissions'], $conditions->getCacheContexts());
-      $this->assertFalse($conditions->isAlwaysFalse());
-
-      // Own permission.
-      $user = $this->createUser([], ["$operation own entity_test_enhanced_with_owner"]);
-      $conditions = $this->handler->getConditions($operation, $user);
-      $expected_conditions = [
-        new Condition('user_id', $user->id()),
-      ];
-      $this->assertEquals(1, $conditions->count());
-      $this->assertEquals($expected_conditions, $conditions->getConditions());
-      $this->assertEquals(['user', 'user.permissions'], $conditions->getCacheContexts());
-      $this->assertFalse($conditions->isAlwaysFalse());
-
+  public function testUpdateDuplicateDelete() {
+    foreach (['update', 'duplicate', 'delete'] as $operation) {
       // Any permission for the first bundle, own permission for the second.
       $user = $this->createUser([], [
         "$operation any first entity_test_enhanced_with_owner",
