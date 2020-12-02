@@ -1,8 +1,8 @@
 diff --git a/docroot/core/modules/filter/src/Plugin/Filter/FilterCaption.php b/docroot/core/modules/filter/src/Plugin/Filter/FilterCaption.php
-index b5a58563d..5beea123f 100644
+index 817f73b7a..4fbe6196e 100644
 --- a/docroot/core/modules/filter/src/Plugin/Filter/FilterCaption.php
 +++ b/docroot/core/modules/filter/src/Plugin/Filter/FilterCaption.php
-@@ -72,7 +72,7 @@ public function process($text, $langcode) {
+@@ -71,7 +71,7 @@ public function process($text, $langcode) {
        $xpath = new \DOMXPath($dom);
        $html_filter = $this->filterManager->createInstance('filter_html', [
          'settings' => [
@@ -11,7 +11,7 @@ index b5a58563d..5beea123f 100644
            'filter_html_help' => FALSE,
            'filter_html_nofollow' => FALSE,
          ],
-@@ -84,7 +84,7 @@ public function process($text, $langcode) {
+@@ -83,7 +83,7 @@ public function process($text, $langcode) {
  
          // Sanitize caption: decode HTML encoding, limit allowed HTML tags; only
          // allow inline tags that are allowed by default, plus <br>.

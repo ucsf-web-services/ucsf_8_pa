@@ -1,13 +1,22 @@
-diff --git a/core/modules/filter/src/Plugin/Filter/FilterCaption.php b/core/modules/filter/src/Plugin/Filter/FilterCaption.php
-index a03c95f5c8..909e5713ba 100644
---- a/core/modules/filter/src/Plugin/Filter/FilterCaption.php
-+++ b/core/modules/filter/src/Plugin/Filter/FilterCaption.php
-@@ -38,7 +38,7 @@ public function process($text, $langcode) {
+diff --git a/docroot/core/modules/filter/src/Plugin/Filter/FilterCaption.php b/docroot/core/modules/filter/src/Plugin/Filter/FilterCaption.php
+index b5a58563d..5beea123f 100644
+--- a/docroot/core/modules/filter/src/Plugin/Filter/FilterCaption.php
++++ b/docroot/core/modules/filter/src/Plugin/Filter/FilterCaption.php
+@@ -72,7 +72,7 @@ public function process($text, $langcode) {
+       $xpath = new \DOMXPath($dom);
+       $html_filter = $this->filterManager->createInstance('filter_html', [
+         'settings' => [
+-          'allowed_html' => '<a href hreflang target rel> <em> <strong> <cite> <code> <br>',
++          'allowed_html' => '<a href hreflang target rel> <em> <strong> <cite> <code> <br> <p>',
+           'filter_html_help' => FALSE,
+           'filter_html_nofollow' => FALSE,
+         ],
+@@ -84,7 +84,7 @@ public function process($text, $langcode) {
  
          // Sanitize caption: decode HTML encoding, limit allowed HTML tags; only
          // allow inline tags that are allowed by default, plus <br>.
 -        $caption = Html::decodeEntities($caption);
 +        $caption = Html::decodeEntities(Html::decodeEntities($caption));
-         $caption = FilteredMarkup::create(Xss::filter($caption, ['a', 'em', 'strong', 'cite', 'code', 'br']));
- 
-         // The caption must be non-empty.
+         $raw_caption = $caption;
+         $filtered_caption = $html_filter->process($caption, $langcode);
+         $result->addCacheableDependency($filtered_caption);
