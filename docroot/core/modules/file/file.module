@@ -1083,26 +1083,10 @@ function _file_save_upload_single(\SplFileInfo $file_info, $form_field_name, $va
   if (substr($destination, -1) != '/') {
     $destination .= '/';
   }
-
-  $filename = $file->getFilename();
-  // If the transliteration option is enabled, transliterate the filename.
-  if ($system_file_config->get('filename_transliteration')) {
-    // Transliterate and sanitize the destination filename.
-    $filename = \Drupal::transliteration()->transliterate($filename, $file->language()->getId(), '');
-    // Replace whitespace.
-    $filename = str_replace(' ', '-', $filename);
-    // Remove remaining unsafe characters.
-    $filename = preg_replace('![^0-9A-Za-z_.-]!', '', $filename);
-    // Remove multiple consecutive non-alphabetical characters.
-    $filename = preg_replace('/(_)_+|(\.)\.+|(-)-+/', '\\1\\2\\3', $filename);
-    // Force lowercase to prevent issues on case-insensitive file systems.
-    $filename = mb_strtolower($filename);
-  }
-
   /** @var \Drupal\Core\File\FileSystemInterface $file_system */
   $file_system = \Drupal::service('file_system');
   try {
-    $file->destination = $file_system->getDestinationFilename($destination . $filename, $replace);
+    $file->destination = $file_system->getDestinationFilename($destination . $file->getFilename(), $replace);
   }
   catch (FileException $e) {
     \Drupal::messenger()->addError(t('The file %filename could not be uploaded because the name is invalid.', ['%filename' => $file->getFilename()]));
@@ -1145,10 +1129,6 @@ function _file_save_upload_single(\SplFileInfo $file_info, $form_field_name, $va
     \Drupal::logger('file')->notice('Upload error. Could not move uploaded file %file to destination %destination.', ['%file' => $file->getFilename(), '%destination' => $file->getFileUri()]);
     return FALSE;
   }
-
-  // Update the filename with any changes as a result of transliteration or
-  // renaming due to an existing file.
-  $file->setFilename(\Drupal::service('file_system')->basename($file->destination));
 
   // Set the permissions on the new file.
   $file_system->chmod($file->getFileUri());

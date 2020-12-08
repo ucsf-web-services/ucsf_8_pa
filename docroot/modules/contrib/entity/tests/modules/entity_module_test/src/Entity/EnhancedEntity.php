@@ -27,8 +27,9 @@ use Drupal\entity\Revision\RevisionableContentEntityBase;
  *     "query_access" = "\Drupal\entity\QueryAccess\QueryAccessHandler",
  *     "permission_provider" = "\Drupal\entity\EntityPermissionProvider",
  *     "form" = {
- *       "add" = "\Drupal\entity\Form\RevisionableContentEntityForm",
- *       "edit" = "\Drupal\entity\Form\RevisionableContentEntityForm",
+ *       "add" = "\Drupal\entity_module_test\Form\EnhancedEntityForm",
+ *       "edit" = "\Drupal\entity_module_test\Form\EnhancedEntityForm",
+ *       "duplicate" = "\Drupal\entity_module_test\Form\EnhancedEntityForm",
  *       "delete" = "\Drupal\Core\Entity\EntityDeleteForm",
  *     },
  *     "route_provider" = {
@@ -39,8 +40,11 @@ use Drupal\entity\Revision\RevisionableContentEntityBase;
  *     "local_action_provider" = {
  *       "collection" = "\Drupal\entity\Menu\EntityCollectionLocalActionProvider",
  *     },
+ *     "local_task_provider" = {
+ *       "default" = "\Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
+ *     },
  *     "list_builder" = "\Drupal\Core\Entity\EntityListBuilder",
- *     "views_data" = "\Drupal\views\EntityViewsData",
+ *     "views_data" = "\Drupal\entity\EntityViewsData",
  *   },
  *   base_table = "entity_test_enhanced",
  *   data_table = "entity_test_enhanced_field_data",
@@ -58,12 +62,19 @@ use Drupal\entity\Revision\RevisionableContentEntityBase;
  *     "label" = "name",
  *     "published" = "status",
  *   },
+ *   revision_metadata_keys = {
+ *     "revision_user" = "revision_user",
+ *     "revision_created" = "revision_created",
+ *     "revision_log_message" = "revision_log_message"
+ *   },
  *   links = {
  *     "add-page" = "/entity_test_enhanced/add",
  *     "add-form" = "/entity_test_enhanced/add/{type}",
  *     "edit-form" = "/entity_test_enhanced/{entity_test_enhanced}/edit",
+ *     "duplicate-form" = "/entity_test_enhanced/{entity_test_enhanced}/duplicate",
  *     "canonical" = "/entity_test_enhanced/{entity_test_enhanced}",
  *     "collection" = "/entity_test_enhanced",
+ *     "delete-form" = "/entity_test_enhanced/{entity_test_enhanced}/delete",
  *     "delete-multiple-form" = "/entity_test_enhanced/delete",
  *     "revision" = "/entity_test_enhanced/{entity_test_enhanced}/revisions/{entity_test_enhanced_revision}/view",
  *     "revision-revert-form" = "/entity_test_enhanced/{entity_test_enhanced}/revisions/{entity_test_enhanced_revision}/revert",
@@ -85,6 +96,10 @@ class EnhancedEntity extends RevisionableContentEntityBase implements EntityPubl
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel('Name')
       ->setRevisionable(TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => 0,
+      ])
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'string',

@@ -2,9 +2,14 @@
 
 namespace Drupal\lazyloader;
 
+/**
+ * Class ResponsiveImage.
+ */
 class ResponsiveImage implements \Countable, \IteratorAggregate {
 
   /**
+   * The images.
+   *
    * @var \stdClass[]
    */
   protected $images = [];
@@ -47,7 +52,7 @@ class ResponsiveImage implements \Countable, \IteratorAggregate {
    */
   public static function parse($string) {
     $strings = array_map('trim', explode(',', $string));
-    $images = array_map(function($string) {
+    $images = array_map(function ($string) {
       $elements = explode(' ', $string);
       $object = new \stdClass();
       $object->uri = $elements[0];
@@ -56,10 +61,10 @@ class ResponsiveImage implements \Countable, \IteratorAggregate {
 
       unset($elements[0]);
       foreach ($elements as $element) {
-        if ($element[strlen($element) -1] === 'w') {
+        if ($element[strlen($element) - 1] === 'w') {
           $object->width = substr($element, 0, -1);
         }
-        if ($element[strlen($element) -1] === 'x') {
+        if ($element[strlen($element) - 1] === 'x') {
           $object->density = substr($element, 0, -1);
         }
       }

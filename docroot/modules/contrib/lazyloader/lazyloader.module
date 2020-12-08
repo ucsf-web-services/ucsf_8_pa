@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @file
- * Lazyloader Module
+ * Lazyloader Module.
  *
  * Note: Obviously, this will not work unless javascript is enabled.
  */
@@ -9,6 +10,32 @@
 use Drupal\Core\Template\Attribute;
 use Drupal\lazyloader\Hooks\ThemeRegistryAlter;
 use Drupal\lazyloader\ResponsiveImage;
+
+/**
+ * Allow modules to modify assets prior to modification or skip it altogether.
+ *
+ * @param array $vars
+ *   The preprocess_[responsive_]image() arguments.
+ *
+ * @return bool
+ *   Should lazyloader ignore this asset ?
+ */
+function _lazyloader_alter(array &$vars) {
+  // Allow alter for modules.
+  \Drupal::moduleHandler()->alter('lazyloader', $vars);
+  if (!empty($vars['lazyloader_ignore'])) {
+    return TRUE;
+  }
+
+  // Allow alter for themes.
+  \Drupal::theme()->alter('lazyloader', $vars);
+  if (!empty($vars['lazyloader_ignore'])) {
+    return TRUE;
+  }
+
+  unset($vars['lazyloader_ignore']);
+  return FALSE;
+}
 
 /**
  * Implements hook_theme_registry_alter().
@@ -22,6 +49,10 @@ function lazyloader_theme_registry_alter(&$theme_registry) {
  * Implements hook_preprocess_image().
  */
 function lazyloader_preprocess_image(&$vars) {
+  if (_lazyloader_alter($vars)) {
+    return;
+  }
+
   /** @var \Drupal\lazyloader\ThemePreprocess $preprocess */
   $preprocess = \Drupal::service('lazyloader.preprocess');
   $vars = $preprocess->addCacheTags($vars);
@@ -33,7 +64,6 @@ function lazyloader_preprocess_image(&$vars) {
 
   // Add support for responsive images.
   // @todo Ensure that this logic is enough.
-
   if (!empty($vars['attributes']['srcset'])) {
     $responsive_image = ResponsiveImage::parse($vars['attributes']['srcset']);
     $uri = $responsive_image->get(0)->uri;
@@ -43,7 +73,7 @@ function lazyloader_preprocess_image(&$vars) {
   }
   unset($vars['attributes']['srcset']);
 
-  if($vars['theme_hook_original'] !== 'lazyloader_image'){
+  if ($vars['theme_hook_original'] !== 'lazyloader_image') {
     /** @var \Drupal\lazyloader\VisibilityChecker $checker */
     $checker = \Drupal::service('lazyloader.visibility_checker');
     if (!$checker->isEnabled() || !$checker->isValidFilename($uri)
@@ -81,6 +111,9 @@ function lazyloader_preprocess_image(&$vars) {
  * Implements hook_preprocess_responsive_image().
  */
 function lazyloader_preprocess_responsive_image(&$vars) {
+  if (_lazyloader_alter($vars)) {
+    return;
+  }
   /** @var \Drupal\lazyloader\ThemePreprocess $preprocess */
   $preprocess = \Drupal::service('lazyloader.preprocess');
   $vars = $preprocess->attachLibrary($vars);
@@ -107,12 +140,11 @@ function lazyloader_preprocess_responsive_image(&$vars) {
   }
 }
 
-
 /**
  * Implements hook_libraries_info().
  */
 function lazyloader_libraries_info() {
-  $libraries ['lazysizes'] = [
+  $libraries['lazysizes'] = [
     'name' => 'Lazysizes',
     'vendor url' => 'https://afarkas.github.io/lazysizes',
     'download url' => 'https://github.com/aFarkas/lazysizes/archive/master.zip',

@@ -3,7 +3,6 @@
 namespace Drupal\filter\Plugin\Filter;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Component\Utility\Xss;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\filter\FilterPluginManager;
 use Drupal\filter\FilterProcessResult;
@@ -72,7 +71,7 @@ class FilterCaption extends FilterBase implements ContainerFactoryPluginInterfac
       $xpath = new \DOMXPath($dom);
       $html_filter = $this->filterManager->createInstance('filter_html', [
         'settings' => [
-          'allowed_html' => '<a href hreflang target rel> <em> <strong> <cite> <code> <p> <br>',
+          'allowed_html' => '<a href hreflang target rel> <em> <strong> <cite> <code> <br> <p>',
           'filter_html_help' => FALSE,
           'filter_html_nofollow' => FALSE,
         ],
