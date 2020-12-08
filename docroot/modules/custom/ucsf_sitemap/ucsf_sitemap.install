@@ -42,3 +42,71 @@ function ucsf_sitemap_update_8001(&$sandbox) {
 
   return t('Simple XML Sitemap setting for the existing articles of type "Media Coverage" is set to "no-index"');
 }
+
+/**
+ * Simple XML Sitemap setting for the existing articles with an "External Url" field filled out is set to "no-index"
+ */
+function ucsf_sitemap_update_8002(&$sandbox) {
+  if (!isset($sandbox['nids'])) {
+    // Get the node IDs for each article that has an external url field filled out.
+    $nids = \Drupal::entityQuery('node')
+      ->condition('type', 'article')
+      ->exists('field_external_url')
+      ->execute();
+
+    // Set the values persisting between Batches.
+    $sandbox['nids'] = array_values($nids);
+    $sandbox['total'] = count($nids);
+    $sandbox['current'] = 0;
+
+    // Exit if there are no matching nids.
+    if (empty($sandbox['nids'])) {
+      $sandbox['#finished'] = 1;
+      return t('No articles to process');
+    }
+  }
+
+  // Get the current batch of 250 nids.
+  $batch_nids = array_slice($sandbox['nids'], $sandbox['current'], 250);
+
+  $inclusion_settings = 'a:4:{s:5:""index"";b:0;s:8:""priority"";s:3:""1.0"";s:10:""changefreq"";s:5:""daily"";s:14:""include_images"";b:1;}';
+
+  // Update or Insert the rows into the table where simple_sitemap stores the data.
+  $database = \Drupal::database();
+
+  foreach ($batch_nids as $nid) {
+    $database->merge('simple_sitemap_entity_overrides')
+      ->key('entity_id', $nid)
+      ->insertFields([
+        'entity_type' => 'node',
+        'entity_id' => $nid,
+        'inclusion_settings' => $inclusion_settings,
+        'type' => 'default',
+      ])
+      ->updateFields([
+        'inclusion_settings' => $inclusion_settings,
+      ])
+      ->execute();
+
+    $sandbox['current']++;
+  }
+
+  // Add a status messages for drush and UI.
+  $message = $sandbox['current'] . ' of ' . $sandbox['total'] . ' articles processed.';
+
+  if (function_exists('drush_print')) {
+    drush_print($message);
+  }
+  else {
+    \Drupal::messenger()->addMessage($message);
+  }
+
+  // Determine if the batch is finished or how far along it is.
+  if ($sandbox['current'] >= $sandbox['total']) {
+    $sandbox['#finished'] = 1;
+    return;
+  }
+  else {
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+  }
+}
