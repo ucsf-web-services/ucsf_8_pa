@@ -1,7 +1,7 @@
 {% extends 'region.html.twig' %}
 {% block content %}
-  {# need both headers wrapped together for CSS Animations #}
-  <header class="combined-header-region">
+  {# var is_minimized_sticky_menu is created through php-includes\region.inc #}
+  <header class="combined-header-region {% if is_minimized_sticky_menu %} is-minimized-sticky-menu fixed-nav fixed-nav--visible{% endif %}">
     <section class="universal-header-region">
       <div class="universal-header">
         <p id="site-name" class="universal-header__title">University of California San Francisco</p>
