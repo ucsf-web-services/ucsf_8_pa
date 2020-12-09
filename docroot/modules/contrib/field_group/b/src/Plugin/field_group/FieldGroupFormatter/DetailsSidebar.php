@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * /**
+ * @file
+ * Contains \Drupal\field_group\Plugin\field_group\FieldGroupFormatter\Details.
+ */
+
 namespace Drupal\field_group\Plugin\field_group\FieldGroupFormatter;
 
 /**
@@ -24,10 +30,6 @@ class DetailsSidebar extends Details {
     parent::process($element, $processed_object);
 
     $element['#group'] = 'advanced';
-
-    if ($this->getSetting('weight')) {
-      $element['#weight'] = $this->getSetting('weight');
-    }
   }
 
   /**
@@ -35,13 +37,6 @@ class DetailsSidebar extends Details {
    */
   public function settingsForm() {
     $form = parent::settingsForm();
-
-    $form['weight'] = [
-      '#type' => 'number',
-      '#title' => $this->t('Weight'),
-      '#default_value' => $this->getSetting('weight'),
-    ];
-
     return $form;
   }
 
@@ -50,13 +45,6 @@ class DetailsSidebar extends Details {
    */
   public function settingsSummary() {
     $summary = parent::settingsSummary();
-
-    if ($this->getSetting('weight')) {
-      $summary[] = $this->t('Weight: @weight',
-        ['@weight' => $this->getSetting('weight')]
-      );
-    }
-
     return $summary;
   }
 
@@ -65,8 +53,6 @@ class DetailsSidebar extends Details {
    */
   public static function defaultContextSettings($context) {
     $defaults = parent::defaultContextSettings($context);
-    $defaults['weight'] = 0;
-
     return $defaults;
   }
 
