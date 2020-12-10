@@ -1,7 +1,17 @@
 .card-with-offset-color {
   .card__title {
-    font-family: $font-granjon;
-    color: $navy;
+    @include fs-heading-three;
+    transition: $transition-time ease-out all;
+  }
+
+  a:hover {
+    .card__title {
+      color: $c-blue-link;
+    }
+
+    img {
+      transform: scale(1.1);
+    }
   }
 }
 
@@ -11,7 +21,12 @@
   margin-left: $offset-margin;
   margin-bottom: calc(#{$offset-margin} + 1rem);
 
-  img {
+  .field-image-media {
     transform: translate(-$offset-margin, $offset-margin);
+    overflow: hidden;
+  }
+
+  img {
+    transition: $transition-time-short ease-out all;
   }
 }
