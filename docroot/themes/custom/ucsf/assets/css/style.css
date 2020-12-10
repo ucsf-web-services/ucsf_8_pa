@@ -6587,8 +6587,9 @@ body.loading .quicklinks {
           transform: scale(1.1); }
 
 .offset-frame {
-  margin-left: 2rem;
-  margin-bottom: calc(2rem + 1rem); }
+  margin-left: -10px;
+  margin-right: -20px;
+  margin-bottom: calc(10px + 1rem); }
   .offset-frame.background-blue {
     background-color: #007cbe; }
   .offset-frame.background-gray {
@@ -6603,10 +6604,19 @@ body.loading .quicklinks {
     background-color: #716fb2; }
   .offset-frame.background-yellow {
     background-color: #fd0; }
+  @media (min-width: 769px) {
+    .offset-frame {
+      margin-left: 1.1rem;
+      margin-right: 0;
+      margin-bottom: calc(1.1rem + 1rem); } }
   .offset-frame .field-image-media {
-    -webkit-transform: translate(-2rem, 2rem);
-            transform: translate(-2rem, 2rem);
+    -webkit-transform: translate(-10px, 10px);
+            transform: translate(-10px, 10px);
     overflow: hidden; }
+    @media (min-width: 769px) {
+      .offset-frame .field-image-media {
+        -webkit-transform: translate(-1.1rem, 1.1rem);
+                transform: translate(-1.1rem, 1.1rem); } }
   .offset-frame img {
     -webkit-transition: 0.2s ease-out all;
     transition: 0.2s ease-out all; }

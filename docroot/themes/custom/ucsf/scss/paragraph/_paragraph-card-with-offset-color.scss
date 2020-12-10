@@ -16,14 +16,28 @@
 }
 
 .offset-frame {
+  $offset-frame: 10px; // calc($page-gutter / 2)
+  $offset-frame-desktop: 1.1rem;
   @include colored('background');
-  $offset-margin: 2rem;
-  margin-left: $offset-margin;
-  margin-bottom: calc(#{$offset-margin} + 1rem);
+  margin-left: -$offset-frame;
+  margin-right: -$page-gutter;
+  margin-bottom: calc(#{$offset-frame} + 1rem);
+
+  @include breakpoint($new-small) {
+    margin-left: $offset-frame-desktop;
+    margin-right: 0;
+    margin-bottom: calc(#{$offset-frame-desktop} + 1rem);
+  }
 
   .field-image-media {
-    transform: translate(-$offset-margin, $offset-margin);
+    transform: translate(-$offset-frame, $offset-frame);
     overflow: hidden;
+
+    @include breakpoint($new-small) {
+      $offset-frame: 1rem;
+      transform: translate(-$offset-frame-desktop, $offset-frame-desktop);
+    }
+
   }
 
   img {
