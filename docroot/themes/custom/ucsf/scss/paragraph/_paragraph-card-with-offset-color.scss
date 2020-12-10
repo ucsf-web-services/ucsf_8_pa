@@ -2,9 +2,17 @@
   .card__title {
     @include fs-heading-three;
     margin-top: 1rem;
-  }
-  .card__title {
     transition: $transition-time ease-out all;
+  }
+
+  .card__image {
+    margin-left: -$page-gutter;
+    margin-right: -$page-gutter;
+
+    @include breakpoint($new-medium) {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 
   img {
@@ -26,24 +34,24 @@
   }
 }
 
-.offset-frame {
+.card-with-offset-color {
   $offset-frame: 10px; // calc($page-gutter / 2)
   $offset-frame-desktop: 1.1rem;
-  @include colored('background');
-  margin-left: -$offset-frame;
-  margin-right: -$page-gutter;
-  margin-bottom: calc(#{$offset-frame} + 1rem);
 
-  @include breakpoint($new-small) {
-    margin-left: $offset-frame-desktop;
-    margin-right: 0;
-    margin-bottom: calc(#{$offset-frame-desktop} + 1rem);
+  .offset-frame {
+    @include colored('background');
+    margin-bottom: calc(#{$offset-frame} + 1rem);
+
+    @include breakpoint($new-medium) {
+      margin-left: $offset-frame-desktop;
+      margin-bottom: calc(#{$offset-frame-desktop} + 1rem);
+    }
   }
 
   .field-image-media {
     transform: translate(-$offset-frame, $offset-frame);
 
-    @include breakpoint($new-small) {
+    @include breakpoint($new-medium) {
       transform: translate(-$offset-frame-desktop, $offset-frame-desktop);
     }
   }
