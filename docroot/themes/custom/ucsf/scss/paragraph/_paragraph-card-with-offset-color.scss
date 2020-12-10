@@ -1,7 +1,18 @@
-.card-with-offset-color {
+.news-package-card {
   .card__title {
     @include fs-heading-three;
+    margin-top: 1rem;
+  }
+  .card__title {
     transition: $transition-time ease-out all;
+  }
+
+  img {
+    transition: $transition-time-short ease-out all;
+  }
+
+  .field-image-media {
+    overflow: hidden;
   }
 
   a:hover {
@@ -31,15 +42,9 @@
 
   .field-image-media {
     transform: translate(-$offset-frame, $offset-frame);
-    overflow: hidden;
 
     @include breakpoint($new-small) {
       transform: translate(-$offset-frame-desktop, $offset-frame-desktop);
     }
-
-  }
-
-  img {
-    transition: $transition-time-short ease-out all;
   }
 }

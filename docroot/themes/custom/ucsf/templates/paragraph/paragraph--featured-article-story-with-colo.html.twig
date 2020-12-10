@@ -7,11 +7,39 @@
 {% endif %}
 
 {% set color_class = paragraph.field_textbox_background_color.entity.name.value|clean_class %}
-<article class='card-with-offset-color'>
+
+<article class='news-package-card {% if paragraph.field_textbox_background_color.entity.name.value|render|striptags != '' %} card-with-offset-color {% endif %}'>
   <a href={{ link }}>
-    <div class='offset-frame {{'background-' ~ color_class }}'>
-      {{ content|without('field_textbox_background_color', 'field_title', 'field_news_article', 'field_link') }}
+
+    {# Card image #}
+    {% if paragraph.field_textbox_background_color.entity.name.value|render|striptags != '' %}
+      {# card has background color value #}
+      <div class='offset-frame {{'background-' ~ color_class }}'>
+      {% else %}
+      {# card has no background value #}
+      <div class='card__image'>
+    {% endif %}
+      {% if content.field_image_media|render|striptags != ''%}
+        {# Feature Paragraph - Overwrite Image #}
+        {{ content.field_image_media }}
+      {% else %}
+        {% block article_image %}
+          {# Feature Paragraph > News Article (News) > Card Image #}
+          {% if drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id, 'card')|render %}
+            {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id, 'card') }}
+          {% else %}
+            {# Fall back when no image is provided in the article or card overwrite field #}
+            <figure>
+              <picture>
+                <img class="element-fade" src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image">
+              </picture>
+            </figure>
+          {% endif %}
+        {% endblock article_image %}
+      {% endif %}
     </div>
+
+    {# Card Title #}
     <h2 class='card__title'>
       {% if content.field_title|render|striptags != '' %}
         {# Feature Paragraph - Overwrite Title #}
@@ -22,4 +50,5 @@
       {% endif %}
     </h2>
   </a>
+  {{ content|without('field_textbox_background_color', 'field_image_media', 'field_title', 'field_news_article', 'field_link') }}
 </article>
