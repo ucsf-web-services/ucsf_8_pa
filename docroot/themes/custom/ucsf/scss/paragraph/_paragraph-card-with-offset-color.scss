@@ -1,0 +1,17 @@
+.card-with-offset-color {
+  .card__title {
+    font-family: $font-granjon;
+    color: $navy;
+  }
+}
+
+.offset-frame {
+  @include colored('background');
+  $offset-margin: 2rem;
+  margin-left: $offset-margin;
+  margin-bottom: calc(#{$offset-margin} + 1rem);
+
+  img {
+    transform: translate(-$offset-margin, $offset-margin);
+  }
+}
