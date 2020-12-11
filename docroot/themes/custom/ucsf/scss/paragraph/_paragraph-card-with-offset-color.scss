@@ -19,7 +19,8 @@
     transition: $transition-time-short ease-out all;
   }
 
-  .field-image-media {
+  .card__image-wrapper {
+    display: block;
     overflow: hidden;
   }
 
@@ -41,6 +42,7 @@
   .offset-frame {
     @include colored('background');
     margin-bottom: calc(#{$offset-frame} + 1rem);
+    margin-left: -$offset-frame;
 
     @include breakpoint($new-medium) {
       margin-left: $offset-frame-desktop;
@@ -48,7 +50,7 @@
     }
   }
 
-  .field-image-media {
+  .card__image-wrapper {
     transform: translate(-$offset-frame, $offset-frame);
 
     @include breakpoint($new-medium) {

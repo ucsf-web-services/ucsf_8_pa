@@ -1,3 +1,5 @@
+{% set color_class = paragraph.field_textbox_background_color.entity.name.value|clean_class %}
+
 {% if content.field_link|render|striptags != '' %}
   {# Feature Paragraph > Overwrite Link #}
   {% set link = paragraph.field_link.value.0.uri %}
@@ -6,36 +8,27 @@
   {% set link = content.field_news_article[0]['#url'] %}
 {% endif %}
 
-{% set color_class = paragraph.field_textbox_background_color.entity.name.value|clean_class %}
-<article class='news-package-card {% if paragraph.field_textbox_background_color.entity.name.value|render|striptags != '' %} card-with-offset-color {% endif %}'>
+
+<article class="news-package-card {% if color_class %}card-with-offset-color{% endif %}">
   <a href={{ link }}>
 
     {# Card image #}
-    {% if paragraph.field_textbox_background_color.entity.name.value|render|striptags != '' %}
-      {# card has background color value #}
-      <div class='card__image offset-frame {{'background-' ~ color_class }}'>
-      {% else %}
-      {# card has no background value #}
-      <div class='card__image'>
-    {% endif %}
-      {% if content.field_image_media|render|striptags != ''%}
-        {# Feature Paragraph - Overwrite Image #}
-        {{ content.field_image_media }}
-      {% else %}
-        {% block article_image %}
+    <div class="card__image {% if color_class %}offset-frame background-{{color_class}}{% endif %}">
+      <picture class="card__image-wrapper">
+        {% if content.field_image_media|render|striptags != ''%}
+          {# Feature Paragraph - Overwrite Image #}
+          {{ content.field_image_media.0 }}
+        {% else %}
           {# Feature Paragraph > News Article (News) > Card Image #}
-          {% if drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id, 'card')|render %}
-            {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id, 'card') }}
+          {% set fid = paragraph.field_news_article.entity.field_card_image.entity.field_media_image.entity.fid.value %}
+          {% if fid %}
+            {{ drupal_image(fid, 'full_width_news_package_square_card', responsive=true) }}
           {% else %}
             {# Fall back when no image is provided in the article or card overwrite field #}
-            <figure>
-              <picture>
-                <img class="element-fade" src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image">
-              </picture>
-            </figure>
+            <img class="element-fade" src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image">
           {% endif %}
-        {% endblock article_image %}
-      {% endif %}
+        {% endif %}
+      </picture>
     </div>
 
     {# Card Title #}
@@ -51,4 +44,3 @@
   </a>
   {{ content|without('field_textbox_background_color', 'field_image_media', 'field_title', 'field_news_article', 'field_link') }}
 </article>
-
