@@ -1,0 +1,8 @@
+{% extends 'field.html.twig' %}
+{% block multiple_item_no_label %}
+  <ul class="full-width-news-package-banner__supporting-links">
+  {% for item in items %}
+    <li{{ item.attributes.addClass('full-width-news-package-banner__supporting-link') }}>{{ item.content }}</li>
+  {% endfor %}
+  </ul>
+{% endblock multiple_item_no_label %}
