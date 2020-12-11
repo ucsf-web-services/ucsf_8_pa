@@ -21,41 +21,27 @@
       return;
     }
 
-    const root = document.documentElement;
-    const headerNav = document.querySelector('.header');
-    // Get the bottom Y coordinate of the Header.
-    let headerBottomY = '';
-    let headerFixedBottomY = '';
-    let headerTop = '';
-    let headerNavY = '';
+    const headerNav = document.querySelector('.header-region');
+    const headerTop = document.querySelector('.universal-header-region');
     let hasUniversalHeader = true;
+    let headerNavY = headerTop.offsetHeight;
+    // Get the bottom Y coordinate of the Header.
+    let headerBottomY = headerNav.offsetHeight + headerNavY;
+    let headerFixedBottomY = 60 + headerNavY;
 
-
+    if (minimizedMenuSelected) {
+      hasUniversalHeader = false;
+      headerNavY = headerNav.offsetHeight;
+      headerBottomY = headerNav.offsetHeight;
+      headerFixedBottomY = 50;
+    }
 
     // Calculate the Nav Height and set a CSS variable.
     const setNavHeight = () => {
-      if (minimizedMenuSelected) {
-        headerTop = document.querySelector('.header-region');
-        headerNavY = headerTop.offsetHeight;
-        headerBottomY = headerNav.offsetHeight;
-        headerFixedBottomY = 60;
-        hasUniversalHeader = false;
-      } else {
-        // Exists.
-        headerTop = document.querySelector('.universal-header-region');
-        headerNavY = headerTop.offsetHeight;
-        headerBottomY = headerNav.offsetHeight + headerNavY;
-        headerFixedBottomY = 60 + headerNavY; // 60 is the height of the fixed-nav
-        // Get element height
-        let headerNavHeight = headerNav.offsetHeight;
-        // Set root variable of nav-height
-        root.style.setProperty('--nav-height', headerNavHeight + "px");
-      }
-
       // Get element height
-      let headerNavHeight = headerNav.offsetHeight;
-      // Set root variable of nav-height
-      root.style.setProperty('--nav-height', headerNavHeight + "px");
+      const headerNavHeight = headerNav.offsetHeight;
+      // Set variable of nav-height
+      header.style.setProperty('--nav-height', headerNavHeight + "px");
     }
 
     // Set the initial nav height.
