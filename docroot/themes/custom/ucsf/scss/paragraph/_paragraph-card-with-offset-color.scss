@@ -1,3 +1,4 @@
+// General styles, so that editor can forget to provide color and images still look normal.
 .news-package-card {
   .card__title {
     @include fs-heading-three;
@@ -15,13 +16,14 @@
     }
   }
 
-  img {
-    transition: $transition-time-short ease-out all;
-  }
-
   .card__image-wrapper {
     display: block;
     overflow: hidden;
+  }
+
+  img {
+    transition: $transition-time-short ease-out all;
+    width: 100%;
   }
 
   a:hover {
@@ -35,6 +37,7 @@
   }
 }
 
+// styles that kick in when color is selected for the offset frame
 .card-with-offset-color {
   $offset-frame: 10px; // calc($page-gutter / 2)
   $offset-frame-desktop: 1.1rem;
@@ -55,10 +58,6 @@
 
     @include breakpoint($new-medium) {
       transform: translate(-$offset-frame-desktop, $offset-frame-desktop);
-    }
-
-    img {
-      width: 100%;
     }
   }
 }
