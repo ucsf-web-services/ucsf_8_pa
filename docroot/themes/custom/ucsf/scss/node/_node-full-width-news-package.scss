@@ -263,7 +263,7 @@
   padding: 0;
   margin: 0;
   margin-top: $space-four;
-  line-height: 2em;
+  line-height: 1.7em;
 
   &:after {
     display: none;
@@ -278,15 +278,25 @@
 
   .full-width-news-package-banner__supporting-link {
     display: inline-block;
-    padding-right: 10px;
-    margin-right: 10px;
-    border-right: 1px solid $c-white;
-    line-height: 1.4em;
+    //padding-right: 10px;
+    //margin-right: 10px;
+    //border-right: 1px solid $c-white;
+
+    &:after {
+      content: '|';
+      display: inline-block;
+      padding: 0 10px;
+    }
 
     &:last-child {
       margin-right: 0;
       padding-right: 0;
       border-right: none;
+
+      &:after {
+        content: '';
+        display: none;
+      }
     }
 
     a {
