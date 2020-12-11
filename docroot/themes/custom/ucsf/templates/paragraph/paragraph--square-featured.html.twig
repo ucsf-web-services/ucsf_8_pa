@@ -13,8 +13,7 @@
 
     {# Card image #}
     <div class="card__image {% if color_class %}offset-frame background-{{color_class}}{% endif %}">
-      {# TODO: replace the styles below with a legit class. #}
-      <picture class="field-image-media" style="display: block">
+      <picture class="card__image-wrapper">
         {% if content.field_image_media|render|striptags != ''%}
           {# Feature Paragraph - Overwrite Image #}
           {{ content.field_image_media.0 }}
@@ -44,4 +43,3 @@
   </a>
   {{ content|without('field_textbox_background_color', 'field_image_media', 'field_title', 'field_news_article', 'field_link') }}
 </article>
-
