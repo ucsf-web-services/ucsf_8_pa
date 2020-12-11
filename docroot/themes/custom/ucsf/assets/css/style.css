@@ -12354,14 +12354,17 @@ a[href*="http"] .article-header__date {
   .fixed-nav .logo__img {
     height: 30px; }
 
-.is-minimized-sticky-menu .universal-header-region {
-  display: none; }
-
-.is-minimized-sticky-menu .slicknav_nav {
-  top: 50px; }
-
-.is-minimized-sticky-menu .header--search.header--search-active + .slicknav-placeholder .slicknav_nav {
-  top: 210px; }
+.is-minimized-sticky-menu {
+  --nav-height: 50px; }
+  @media (min-width: 850px) {
+    .is-minimized-sticky-menu {
+      --nav-height: 65px; } }
+  .is-minimized-sticky-menu .universal-header-region {
+    display: none; }
+  .is-minimized-sticky-menu .slicknav_nav {
+    top: 50px; }
+  .is-minimized-sticky-menu .header--search.header--search-active + .slicknav-placeholder .slicknav_nav {
+    top: 210px; }
 
 .fixed-nav--visible .header-region {
   -webkit-animation: 0.3s cubic-bezier(0.77, 0, 0.175, 1) slide-in;
