@@ -23,39 +23,27 @@
       return;
     }
 
-    var root = document.documentElement;
-    var headerNav = document.querySelector('.header');
-    // Get the bottom Y coordinate of the Header.
-    var headerBottomY = '';
-    var headerFixedBottomY = '';
-    var headerTop = '';
-    var headerNavY = '';
+    var headerNav = document.querySelector('.header-region');
+    var headerTop = document.querySelector('.universal-header-region');
     var hasUniversalHeader = true;
+    var headerNavY = headerTop.offsetHeight;
+    // Get the bottom Y coordinate of the Header.
+    var headerBottomY = headerNav.offsetHeight + headerNavY;
+    var headerFixedBottomY = 60 + headerNavY;
+
+    if (minimizedMenuSelected) {
+      hasUniversalHeader = false;
+      headerNavY = headerNav.offsetHeight;
+      headerBottomY = headerNav.offsetHeight;
+      headerFixedBottomY = 50;
+    }
 
     // Calculate the Nav Height and set a CSS variable.
     var setNavHeight = function setNavHeight() {
-      if (minimizedMenuSelected) {
-        headerTop = document.querySelector('.header-region');
-        headerNavY = headerTop.offsetHeight;
-        headerBottomY = headerNav.offsetHeight;
-        headerFixedBottomY = 60;
-        hasUniversalHeader = false;
-      } else {
-        // Exists.
-        headerTop = document.querySelector('.universal-header-region');
-        headerNavY = headerTop.offsetHeight;
-        headerBottomY = headerNav.offsetHeight + headerNavY;
-        headerFixedBottomY = 60 + headerNavY; // 60 is the height of the fixed-nav
-        // Get element height
-        var _headerNavHeight = headerNav.offsetHeight;
-        // Set root variable of nav-height
-        root.style.setProperty('--nav-height', _headerNavHeight + "px");
-      }
-
       // Get element height
       var headerNavHeight = headerNav.offsetHeight;
-      // Set root variable of nav-height
-      root.style.setProperty('--nav-height', headerNavHeight + "px");
+      // Set variable of nav-height
+      header.style.setProperty('--nav-height', headerNavHeight + "px");
     };
 
     // Set the initial nav height.
