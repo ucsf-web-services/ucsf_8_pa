@@ -189,35 +189,6 @@ body.page-node-type-magazine-homepage,
         color: $c-dark-navy;
       }
     }
-
-    &__subscribe {
-      background-color: $background-gray;
-      padding: $article-gutter;
-      margin: $space-ten 0;
-
-
-      @include breakpoint($new-small) {
-        padding: $space-five $space-ten;
-      }
-
-      @include breakpoint($new-large) {
-        padding: $space-six 10%;
-        margin: 0;
-      }
-
-      @include breakpoint(1200px) {
-        padding: $space-ten 22%;
-        margin: 0;
-      }
-
-      h2 {
-        color: $c-dark-navy;
-
-        @include breakpoint($new-large) {
-          margin-bottom: $space-five;
-        }
-      }
-    }
   }
 
   .magazine-alumni {
@@ -570,7 +541,6 @@ body.page-node-type-magazine-homepage,
   }
 
   .magazine-hub-inside__inside {
-    float: right;
     padding-top: $space-five;
 
     @include breakpoint($new-small) {
@@ -580,6 +550,8 @@ body.page-node-type-magazine-homepage,
     }
 
     @include breakpoint(930px) {
+      display: grid;
+      grid-template-rows: auto 1fr;
       padding-right: 0;
     }
   }
@@ -853,7 +825,7 @@ body.page-node-type-magazine-homepage,
   }
 }
 
-// Watch, Read, Listen
+// "Watch, Read, Listen"
 .magazine-hub-inside__inside {
   .news-card__link {
     color: $c-dark-navy;
@@ -864,6 +836,34 @@ body.page-node-type-magazine-homepage,
     margin-top: 1rem;
     margin-bottom: 0;
     color: $magazine-gray-blue;
+  }
+
+  &-form {
+    margin-top: $space-ten;
+    margin-bottom: 0;
+    margin-left: -$page-gutter;
+    margin-right: -$page-gutter;
+
+    @include breakpoint($new-small) {
+      padding: $space-five $space-four;
+      margin: 0;
+    }
+
+    @include breakpoint(1050px) {
+      padding: $space-five $space-four;
+      margin: 0 $space-five 0 0;
+    }
+
+    @include breakpoint(1500px) {
+      margin-right: 0;
+    }
+
+    h2 {
+      @include breakpoint($new-small) {
+        font-size: 28px;
+      }
+    }
+
   }
 }
 
@@ -988,7 +988,6 @@ body.page-node-type-magazine-homepage,
   margin-top: -2rem;
 }
 
-
 // overrides for the magazine topic page.
 .magazine-topic-page {
   .magazine-hub-inside {
@@ -1031,5 +1030,4 @@ body.page-node-type-magazine-homepage,
       color: $magazine-gray-blue;
     }
   }
-
 }
