@@ -36,6 +36,7 @@
 				</div>
 			</header>
 
+      {# Features area #}
 			<h2 class="magazine-issue-feature__title">Features</h2>
 			{% if layout == 'featuretwosupport' %}
 				{% include '@theme/banner/magazine-feature-two-support.twig' %}
@@ -135,24 +136,10 @@
 		</div>
 	</main>
 
-{# Magazine signup #}
-  <aside class="footer-ctas-wrapper">
-    <div class="field field-ankle-cta">
-      <div class="field__item">
-        <div class="field--type-text-with-summary">
-          <h2>Get <em>UCSF Magazine</em> in your inbox</h2>
-        </div>
-      </div>
-      <div class="field__item">
-        <div class="field--type-text-with-summary">
-          <form action="/subscribe-magazine" class="form--subscribe-mag" method="GET">
-            <label class="visually-hidden" for="email2">E-mail</label>
-            <input id="email2" name="email" onblur="this.placeholder='Enter your email'" onfocus="this.placeholder=''" placeholder="Enter your email" type="text" value="">
-            <button>Subscribe</button>
-          </form>
-        </div>
-      </div>
+  {% if content.field_ankle_cta.0 %}
+    {# Magazine signup #}
+    <div class="footer-ctas-wrapper magazine-issue-footer-ctas-wrapper" role="complementary">
+      {{ content.field_ankle_cta }}
     </div>
-  </aside>
-
+  {% endif %}
 </div>
