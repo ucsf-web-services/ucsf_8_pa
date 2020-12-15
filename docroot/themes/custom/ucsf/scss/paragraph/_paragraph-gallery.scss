@@ -1,5 +1,26 @@
 // This is a hack so we don't have to worry about the gallery resizing the background color white for the section.
 // which it should not be part of anyhow, should be its own grid area.
+
+.gallery-title-description {
+  padding: 20px;
+  padding-bottom: 0;
+  clear: both;
+
+  @include breakpoint($new-medium) {
+    padding: $space-five;
+    padding-bottom: 0;
+  }
+
+  @include breakpoint($new-large) {
+    padding: $space-ten;
+    padding-bottom: 0;
+  }
+
+  .field-description {
+    max-width: 900px;
+  }
+}
+
 .gallery-background-fill {
   height: 800px;
   background-color: #fff;
