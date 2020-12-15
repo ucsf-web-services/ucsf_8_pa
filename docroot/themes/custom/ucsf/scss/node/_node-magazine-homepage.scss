@@ -598,13 +598,19 @@ body.page-node-type-magazine-homepage,
 
     .magazine-hub-inside__inside {
       float: none;
-      padding-right: 0;
+      padding-right: $space-five;
     }
 
     .magazine-hub-inside__hub {
       .card-row__copy {
         margin-left: $space-eight;
       }
+    }
+  }
+
+  @include breakpoint($bp-full) {
+    .magazine-hub-inside__inside {
+      padding-right: 0;
     }
   }
 }
@@ -732,15 +738,16 @@ body.page-node-type-magazine-homepage,
 
   .magazine-topics-latest {
     padding: $space-five 1.25rem 1px 1.25rem;
+    padding-top: 0;
     clear: both;
-    border-top: 1px solid $c-gray-lighter;
 
     @include breakpoint($new-medium) {
       padding: $space-ten $space-five 1px $space-five;
+      padding-top: 0;
     }
 
     .magazine-topics-latest__title {
-      @include fs-heading;
+      @include fs-heading-latest-topic;
     }
 
     .news-list {
@@ -783,6 +790,10 @@ body.page-node-type-magazine-homepage,
 
   .view-more {
     margin-bottom: $space-three;
+  }
+
+  .field-ankle-cta {
+    padding-top: 0;
   }
 }
 
@@ -976,7 +987,8 @@ body.page-node-type-magazine-homepage,
   }
 }
 
-.magazine-topic-footer-ctas-wrapper {
+.magazine-topic-footer-ctas-wrapper,
+.magazine-topic-issue-ctas-wrapper {
   margin-top: 0;
 
   h2 {
