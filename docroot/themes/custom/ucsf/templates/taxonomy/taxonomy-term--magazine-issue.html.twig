@@ -44,26 +44,29 @@
 				{% include '@theme/banner/magazine-feature-three-support.twig' %}
 			{% endif %}
 
-			<div class="magazine-big-picture-subscribe">
-				<div class="magazine-big-picture-subscribe__big-picture">
-					{{ content.field_big_picture }}
-				</div>
-
-        {# Movable Subscribe Form, checking if not used in "Reccommended" area #}
-        {% if '2' in content.field_subscribe_in_recommended[0] %}
-          <div class="magazine__subscribe-movable">
-            {% block form_subscribe_mag %}
-              <h2>Stay up to date on the latest from
-                <em>UCSF Magazine</em>
-              </h2>
-              <form action="/subscribe-magazine" class="form--subscribe-mag" method="GET">
-                <label class="visually-hidden" for="email">E-mail</label>
-                <input id="email" name="email" onblur="this.placeholder='Enter your email'" onfocus="this.placeholder=''" placeholder="Enter your email" type="text" value=""><button>Subscribe</button>
-              </form>
-            {% endblock %}
+      {# Features area, Big Picture and Subscribe #}
+      {% if term.field_big_picture.entity.field_news_article.0 %}
+        <div class="magazine-big-picture-subscribe">
+          <div class="magazine-big-picture-subscribe__big-picture">
+            {{ content.field_big_picture }}
           </div>
-        {% endif %}
-			</div>
+
+          {# Movable Subscribe Form, checking if not used in "Reccommended" area #}
+          {% if '2' in content.field_subscribe_in_recommended[0] %}
+            <div class="magazine__subscribe-movable">
+              {% block form_subscribe_mag %}
+                <h2>Stay up to date on the latest from
+                  <em>UCSF Magazine</em>
+                </h2>
+                <form action="/subscribe-magazine" class="form--subscribe-mag" method="GET">
+                  <label class="visually-hidden" for="email">E-mail</label>
+                  <input id="email" name="email" onblur="this.placeholder='Enter your email'" onfocus="this.placeholder=''" placeholder="Enter your email" type="text" value=""><button>Subscribe</button>
+                </form>
+              {% endblock %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
 
 			<div class="magazine-supporting-feature-list">
 				{{ content.field_feature_article_list }}
