@@ -37,14 +37,20 @@
 			</header>
 
       {# Features area #}
-			<h2 class="magazine-issue-feature__title">Features</h2>
-			{% if layout == 'featuretwosupport' %}
-				{% include '@theme/banner/magazine-feature-two-support.twig' %}
-			{% else %}
-				{% include '@theme/banner/magazine-feature-three-support.twig' %}
-			{% endif %}
+      {% if term.field_feature_article.entity.field_news_article.0 or term.field_big_picture.entity.field_news_article.0 %}
+			  <h2 class="magazine-issue-feature__title">Features</h2>
+      {% endif %}
 
-      {# Features area, Big Picture and Subscribe #}
+      {# Features area, Featured Article section #}
+      {% if term.field_feature_article.entity.field_news_article.0 %}
+        {% if layout == 'featuretwosupport' %}
+          {% include '@theme/banner/magazine-feature-two-support.twig' %}
+        {% else %}
+          {% include '@theme/banner/magazine-feature-three-support.twig' %}
+        {% endif %}
+      {% endif %}
+
+      {# Features area, Big Picture and Subscribe section #}
       {% if term.field_big_picture.entity.field_news_article.0 %}
         <div class="magazine-big-picture-subscribe">
           <div class="magazine-big-picture-subscribe__big-picture">
