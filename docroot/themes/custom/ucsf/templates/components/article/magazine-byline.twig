@@ -1,8 +1,7 @@
 {% set topic_area = node.field_magazine_topic_area.0.entity.label|clean_class %}
 
-
 {% if topic_area %}
-<div class="article-header__byline">
-  <p class="article-header__primary-area article-header__mag-topic-area" data-primary-area="{{ topic_area ? 'pa-' ~ topic_area}}">{{ topic_area_field ? topic_area_field : content.field_magazine_topic_area }}</p>
-</div>
+  <div class="article-header__byline">
+    <p class="article-header__primary-area article-header__mag-topic-area" data-primary-area="{{ topic_area ? 'pa-' ~ topic_area}}">{{ topic_area_field ? topic_area_field : content.field_magazine_topic_area }}</p>
+  </div>
 {% endif %}
