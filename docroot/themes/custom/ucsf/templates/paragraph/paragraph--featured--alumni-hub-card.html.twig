@@ -7,6 +7,7 @@
   {# Feature Paragraph > News Article (News) > External URL #}
   {% set external_link = drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id) %}
   {% set link = external_link.0['#url'].uri %}
+  {% set link_class = "icon-link--external" %}
 {% else %}
   {# Feature Paragraph > News Article (News) > ID #}
   {% set link = drupal_url('node/' ~ content.field_news_article.0['#node'].id ) %}
@@ -24,7 +25,7 @@
       {% endif %}
       </div>
       <div class="card-row__copy">
-        <header class="news-card magazine-alumni__byline">
+        <header class="news-card magazine-alumni__byline {{ link_class }}">
           {% include '@theme/homepage/magazine-date-byline.twig' %}
           <h3>
           {% if content.field_title|render|striptags != '' %}
