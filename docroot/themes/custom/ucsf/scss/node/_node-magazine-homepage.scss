@@ -846,50 +846,6 @@ body.page-node-type-magazine-homepage,
     margin-bottom: 0;
     color: $magazine-gray-blue;
   }
-
-  // Subscribe form box, appears on Magazine Issue pages
-  &-form {
-    margin-top: $space-ten;
-    margin-bottom: 0;
-    margin-left: -$page-gutter;
-    margin-right: -$page-gutter;
-
-    @include breakpoint($new-small) {
-      padding: $space-five $space-four;
-      margin: 0;
-    }
-
-    @include breakpoint(1050px) {
-      margin-top: 9.5rem; // aligning with the top of the image in alumni hub
-    }
-
-    @include breakpoint(1100px) {
-      width: 508px;
-      padding: 60px 15%;
-      margin: 9.5rem $space-five 0 0;
-    }
-
-    @include breakpoint(1280px) {
-      margin-top: 7.4rem;
-    }
-
-    @include breakpoint(1400px) {
-      width: 608px;
-      padding: 80px 133px;
-      margin-right: 0;
-    }
-
-    h2 {
-      @include breakpoint($new-small) {
-        font-size: 28px;
-      }
-
-      @include breakpoint(1400px) {
-        font-size: 36px;
-      }
-    }
-
-  }
 }
 
 // Inside UCSF
@@ -1054,6 +1010,76 @@ body.page-node-type-magazine-homepage,
       margin-top: 1rem;
       margin-bottom: 0;
       color: $magazine-gray-blue;
+    }
+  }
+}
+
+// Overwrites for subscribe form inside "Recommended" area.
+ // it appears on Magazine Issue pages when checkbox is checked.
+ .magazine-hub-inside {
+  &--has-form {
+    @include breakpoint(769px) {
+      margin:0;
+      padding: 0;
+    }
+
+    @include breakpoint(1050px) {
+      margin: 0;
+      padding-bottom: $space-ten;
+    }
+
+    .magazine-hub-inside__header {
+      @include breakpoint(769px) {
+        margin-left: 40px;
+      }
+
+      @include breakpoint(1050px) {
+        margin-left: 64px;
+      }
+    }
+
+    .magazine-alumni__byline {
+      @include breakpoint(769px) {
+        margin-left: 40px;
+      }
+
+      @include breakpoint(1050px) {
+        margin: 0;
+      }
+    }
+
+    .magazine-hub-inside__hub,
+    .magazine-hub-inside__inside {
+      @include breakpoint(769px) {
+        float:none;
+        width: auto;
+      }
+    }
+
+    .magazine-hub-inside__inside {
+
+      @include breakpoint(1050px) {
+        background-color: #f2f4f6;
+        margin-top: 5.39rem;
+        padding-right: 0;
+        margin-right: 40px;
+      }
+
+      @include breakpoint(1280px) {
+        margin-top: 3.41rem;
+      }
+    }
+  }
+
+  &__form {
+    h2 {
+      @include breakpoint($new-small) {
+        font-size: 28px;
+      }
+
+      @include breakpoint(1400px) {
+        font-size: 36px;
+      }
     }
   }
 }

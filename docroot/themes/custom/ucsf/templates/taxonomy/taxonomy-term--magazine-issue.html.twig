@@ -1,6 +1,11 @@
 {% set classes = ['main'] %}
 {% set layout = term.field_banner_layout.value %}
 
+{% if '1' in content.field_subscribe_in_recommended[0] %}
+ {% set has_mag_subscribe = "magazine-hub-inside--has-form" %}
+ {% set mag_subscribe_form = "magazine-hub-inside__form" %}
+{% endif %}
+
 <div class="magazine-topic-issue-page magazine-issue-page">
 	<main {{ attributes.addClass(classes) }}>
 		<a id="main-content" tabindex="-1"></a>
@@ -88,7 +93,7 @@
 				</div>
 			</div>
 
-			<div class="magazine-hub-inside">
+			<div class="magazine-hub-inside {{ has_mag_subscribe }}">
 				<div class="magazine-hub-inside__hub">
           <div class="magazine-hub-inside__header">
             <h2 class="magazine-hub-inside__title">Alumni Hub</h2>
@@ -101,7 +106,7 @@
 				<div class="magazine-hub-inside__inside">
           {# Movable Subscribe Form, replaces "Read, Watch, Listen" #}
           {% if '1' in content.field_subscribe_in_recommended[0] %}
-          <div class="magazine__subscribe-movable magazine-hub-inside__inside-form">
+          <div class="magazine__subscribe-movable {{ mag_subscribe_form }}">
             {{block('form_subscribe_mag')}}
           </div>
           {% else %}
