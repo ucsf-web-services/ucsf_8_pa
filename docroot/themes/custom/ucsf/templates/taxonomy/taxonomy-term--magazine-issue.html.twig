@@ -99,13 +99,6 @@
 					{{ content.field_alumni_hub }}
 				</div>
 				<div class="magazine-hub-inside__inside">
-          <div class="magazine-hub-inside__header">
-            <h2 class="magazine-hub-inside__title">Recommended</h2>
-            <p class="magazine-hub-inside__inside-more">
-              <a href="/magazine/feature" class="link--cta">Find more</a>
-            </p>
-          </div>
-
           {# Movable Subscribe Form, replaces "Read, Watch, Listen" #}
           {% if '1' in content.field_subscribe_in_recommended[0] %}
           <div class="magazine__subscribe-movable magazine-hub-inside__inside-form">
@@ -113,6 +106,13 @@
           </div>
           {% else %}
             {# "Read, Watch, Listen" Section #}
+            <div class="magazine-hub-inside__header">
+              <h2 class="magazine-hub-inside__title">Recommended</h2>
+              <p class="magazine-hub-inside__inside-more">
+                <a href="/magazine/feature" class="link--cta">Find more</a>
+              </p>
+            </div>
+
             <div class="magazine-hub-recommended">
               <figure class="magazine-hub-recommended__icon">
                 <img src="/themes/custom/ucsf/assets/images/read-icon.svg" alt="">
