@@ -71,7 +71,7 @@ class FilterCaption extends FilterBase implements ContainerFactoryPluginInterfac
       $xpath = new \DOMXPath($dom);
       $html_filter = $this->filterManager->createInstance('filter_html', [
         'settings' => [
-          'allowed_html' => '<a href hreflang target rel> <em> <strong> <cite> <code> <br> <p>',
+          'allowed_html' => '<a href hreflang target rel> <em> <strong> <cite> <code> <br>',
           'filter_html_help' => FALSE,
           'filter_html_nofollow' => FALSE,
         ],
@@ -83,7 +83,7 @@ class FilterCaption extends FilterBase implements ContainerFactoryPluginInterfac
 
         // Sanitize caption: decode HTML encoding, limit allowed HTML tags; only
         // allow inline tags that are allowed by default, plus <br>.
-        $caption = Html::decodeEntities(Html::decodeEntities($caption));
+        $caption = Html::decodeEntities($caption);
         $raw_caption = $caption;
         $filtered_caption = $html_filter->process($caption, $langcode);
         $result->addCacheableDependency($filtered_caption);
