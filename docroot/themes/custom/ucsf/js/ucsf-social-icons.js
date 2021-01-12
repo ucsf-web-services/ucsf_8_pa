@@ -26,7 +26,7 @@
         const  articleDetect = () => {
           if ('IntersectionObserver' in window) {
             // Article content wrapper
-            const hasSocialNav = document.querySelectorAll('#block-ucsf-content');
+            const hasSocialNav = document.querySelectorAll('.block-system-main-block');
 
             const observer = new IntersectionObserver(entries => {
               entries.forEach(entry => {
