@@ -32,6 +32,7 @@ CKEDITOR.plugins.add('blankdiv', {
         if ( this.element.hasClass( 'half-image-right-full' ) ) this.setData( 'align', 'half-image-right-full' );
         if ( this.element.hasClass( 'half-image-left-full' ) ) this.setData( 'align', 'half-image-left-full' );
         if ( this.element.hasClass( 'full-bleed-image' ) ) this.setData( 'align', 'full-bleed-image'  );
+
         // size - style options
         if ( this.element.hasClass( 'full_bleed_half__image' ) ) this.setData( 'size', 'full_bleed_half__image' );
         if ( this.element.hasClass( 'full_bleed__image' ) ) this.setData( 'size', 'full_bleed__image' );
@@ -40,6 +41,7 @@ CKEDITOR.plugins.add('blankdiv', {
         if ( this.element.hasClass( 'w' ) ) this.setData( 'size', 'w' );
         if ( this.element.hasClass( 'callout__image' ) ) this.setData( 'size', 'callout__image' );
 
+        //set the script element
         if ( this.element.getHtml() ) this.setData( 'script', this.element.getHtml() );
       },
       data: function() {
@@ -50,16 +52,15 @@ CKEDITOR.plugins.add('blankdiv', {
           'full-bleed-image'];
 
         align.forEach(function (item, index) {
-          console.log(item, index);
+          //console.log(item, index);
           if (this.element.hasClass( item )) this.element.removeClass( item );
         }, this);
 
         const size = ['full_bleed_half__image', 'full_bleed__image',
-          'half__image', 'quarter',  'w',
-          'callout__image'];
+          'half__image', 'quarter',  'w', 'callout__image'];
 
         size.forEach(function (item, index) {
-          console.log(item, index);
+          //console.log(item, index);
           if (this.element.hasClass( item )) this.element.removeClass( item );
         }, this);
 

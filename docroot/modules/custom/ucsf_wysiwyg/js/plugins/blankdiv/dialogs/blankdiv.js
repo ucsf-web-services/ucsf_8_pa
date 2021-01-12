@@ -3,8 +3,8 @@
 CKEDITOR.dialog.add('blankdiv', function( editor ) {
   return {
     title: 'Edit blankdiv Settings',
-    minWidth: 250,
-    minHeight: 100,
+    minWidth: 400,
+    minHeight: 350,
     contents: [
       {
         id: 'info',
@@ -25,12 +25,13 @@ CKEDITOR.dialog.add('blankdiv', function( editor ) {
               ['Full Bleed',  'full-bleed-image' ]
             ],
             setup: function( widget ) {
-              this.setValue( widget.data.align ? widget.data.align : 'align-right' );
+              this.setValue( widget.data.align ? widget.data.align : 'align-left' );
             },
             commit: function( widget ) {
               widget.setData( 'align', this.getValue() );
             }
           },
+          /*
           {
             id: 'size',
             type: 'select',
@@ -52,10 +53,12 @@ CKEDITOR.dialog.add('blankdiv', function( editor ) {
               widget.setData( 'size', this.getValue() );
             }
           },
+          */
           {
             id: 'script',
             type: 'textarea',
             label: 'Script',
+            rows: 12,
             setup: function( widget ) {
               this.setValue( widget.data.script);
             },
