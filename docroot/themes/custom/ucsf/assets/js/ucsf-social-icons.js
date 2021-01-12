@@ -28,7 +28,7 @@
         var articleDetect = function articleDetect() {
           if ('IntersectionObserver' in window) {
             // Article content wrapper
-            var hasSocialNav = document.querySelectorAll('#block-ucsf-content');
+            var hasSocialNav = document.querySelectorAll('.block-system-main-block');
 
             var observer = new IntersectionObserver(function (entries) {
               entries.forEach(function (entry) {
