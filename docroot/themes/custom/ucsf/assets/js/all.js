@@ -1,7 +1,7 @@
 'use strict';
 
 /* eslint-disable */
-(function ($) {
+(function ($, window) {
     'use strict';
 
     Drupal.behaviors.dieToolbardie = {
@@ -390,5 +390,5 @@
             });
         }
     };
-})(jQuery);
+})(jQuery, window);
 //# sourceMappingURL=all.js.map

@@ -147,13 +147,6 @@ class FileSystemForm extends ConfigFormBase {
       '#description' => t('Temporary files are not referenced, but are in the file system and therefore may show up in administrative lists. <strong>Warning:</strong> If enabled, temporary files will be permanently deleted and may not be recoverable.'),
     ];
 
-    $form['filename_transliteration'] = [
-      '#type' => 'checkbox',
-      '#title' => t('Enable filename transliteration'),
-      '#default_value' => $config->get('filename_transliteration'),
-      '#description' => t('Transliteration ensures that filenames do not contain unicode characters.'),
-    ];
-
     return parent::buildForm($form, $form_state);
   }
 
@@ -162,8 +155,7 @@ class FileSystemForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config('system.file')
-      ->set('temporary_maximum_age', $form_state->getValue('temporary_maximum_age'))
-      ->set('filename_transliteration', (bool) $form_state->getValue('filename_transliteration'));
+      ->set('temporary_maximum_age', $form_state->getValue('temporary_maximum_age'));
 
     if ($form_state->hasValue('file_default_scheme')) {
       $config->set('default_scheme', $form_state->getValue('file_default_scheme'));

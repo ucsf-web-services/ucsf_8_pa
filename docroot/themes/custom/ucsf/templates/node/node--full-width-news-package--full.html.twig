@@ -1,0 +1,25 @@
+{% set body_classes = not node.isPublished() ? "node--unpublished" %}
+
+<header class="full-width-news-package-banner">
+  <div class="full-width-news-package-banner__image">
+    {{ content.field_banner_image }}
+  </div>
+
+  <div class="full-width-news-package-banner_gradient"></div>
+
+  <div class="full-width-news-package-banner__header">
+    <h1 class="full-width-page__header-title">{{ label }}</h1>
+    {{ content.field_subtitle_kicker }}
+
+    {{ content.field_banner_supporting_links }}
+  </div>
+</header>
+
+<div class="full-width-page-wrapper full-width-news-package-wrapper">
+  <main class="main">
+    <a id="main-content" tabindex="-1"></a>
+    <div class="main-content full-width-page">
+      {{ content.field_content_panel }}
+    </div>
+  </main>
+</div>

@@ -189,35 +189,6 @@ body.page-node-type-magazine-homepage,
         color: $c-dark-navy;
       }
     }
-
-    &__subscribe {
-      background-color: $background-gray;
-      padding: $article-gutter;
-      margin: $space-ten 0;
-
-
-      @include breakpoint($new-small) {
-        padding: $space-five $space-ten;
-      }
-
-      @include breakpoint($new-large) {
-        padding: $space-six 10%;
-        margin: 0;
-      }
-
-      @include breakpoint(1200px) {
-        padding: $space-ten 22%;
-        margin: 0;
-      }
-
-      h2 {
-        color: $c-dark-navy;
-
-        @include breakpoint($new-large) {
-          margin-bottom: $space-five;
-        }
-      }
-    }
   }
 
   .magazine-alumni {
@@ -570,7 +541,6 @@ body.page-node-type-magazine-homepage,
   }
 
   .magazine-hub-inside__inside {
-    float: right;
     padding-top: $space-five;
 
     @include breakpoint($new-small) {
@@ -626,13 +596,19 @@ body.page-node-type-magazine-homepage,
 
     .magazine-hub-inside__inside {
       float: none;
-      padding-right: 0;
+      padding-right: $space-five;
     }
 
     .magazine-hub-inside__hub {
       .card-row__copy {
         margin-left: $space-eight;
       }
+    }
+  }
+
+  @include breakpoint($bp-full) {
+    .magazine-hub-inside__inside {
+      padding-right: 0;
     }
   }
 }
@@ -760,15 +736,16 @@ body.page-node-type-magazine-homepage,
 
   .magazine-topics-latest {
     padding: $space-five 1.25rem 1px 1.25rem;
+    padding-top: 0;
     clear: both;
-    border-top: 1px solid $c-gray-lighter;
 
     @include breakpoint($new-medium) {
       padding: $space-ten $space-five 1px $space-five;
+      padding-top: 0;
     }
 
     .magazine-topics-latest__title {
-      @include fs-heading;
+      @include fs-heading-latest-topic;
     }
 
     .news-list {
@@ -812,6 +789,10 @@ body.page-node-type-magazine-homepage,
   .view-more {
     margin-bottom: $space-three;
   }
+
+  .field-ankle-cta {
+    padding-top: 0;
+  }
 }
 
 .magazine-hub-recommended {
@@ -853,7 +834,7 @@ body.page-node-type-magazine-homepage,
   }
 }
 
-// Watch, Read, Listen
+// "Watch, Read, Listen"
 .magazine-hub-inside__inside {
   .news-card__link {
     color: $c-dark-navy;
@@ -976,7 +957,8 @@ body.page-node-type-magazine-homepage,
   }
 }
 
-.magazine-topic-footer-ctas-wrapper {
+.magazine-topic-footer-ctas-wrapper,
+.magazine-topic-issue-ctas-wrapper {
   margin-top: 0;
 
   h2 {
@@ -988,8 +970,7 @@ body.page-node-type-magazine-homepage,
   margin-top: -2rem;
 }
 
-
-// overrides for the magazine topic page.
+// overrides for the magazine topic page
 .magazine-topic-page {
   .magazine-hub-inside {
     @include breakpoint($new-small) {
@@ -998,7 +979,6 @@ body.page-node-type-magazine-homepage,
   }
 
   .magazine-alumni.four-card-row {
-    .card-row__body,
     .magazine-alumni__date,
     .card-row__image::after {
       display: none;
@@ -1031,5 +1011,83 @@ body.page-node-type-magazine-homepage,
       color: $magazine-gray-blue;
     }
   }
+}
 
+// Overwrites for subscribe form inside "Recommended" area.
+ // it appears on Magazine Issue pages when checkbox is checked.
+ .magazine-hub-inside {
+  &--has-form {
+    @include breakpoint(769px) {
+      margin:0;
+      padding: 0;
+    }
+
+    @include breakpoint(1050px) {
+      margin: 0;
+      padding-bottom: $space-ten;
+    }
+
+    .magazine-hub-inside__header {
+      @include breakpoint(769px) {
+        margin-left: 40px;
+      }
+
+      @include breakpoint(1050px) {
+        margin-left: 64px;
+      }
+    }
+
+    .magazine-alumni__byline {
+      @include breakpoint(769px) {
+        margin-left: 40px;
+      }
+
+      @include breakpoint(1050px) {
+        margin: 0;
+      }
+    }
+
+    .magazine-hub-inside__hub,
+    .magazine-hub-inside__inside {
+      @include breakpoint(769px) {
+        float:none;
+        width: auto;
+      }
+    }
+
+    .magazine-hub-inside__inside {
+
+      @include breakpoint(1050px) {
+        background-color: $c-background-gray;
+        margin-top: 5.39rem;
+        padding-right: 0;
+        margin-right: 40px;
+      }
+
+      @include breakpoint(1280px) {
+        margin-top: 3.41rem;
+      }
+    }
+  }
+
+  &__form {
+
+    @include breakpoint(1050px) {
+      padding-top: 4.5rem;
+    }
+
+    @include breakpoint(1280px) {
+      padding-top: 8.7rem;
+    }
+  }
+}
+
+.icon-link--external {
+  .magazine-alumni__topic {
+    padding-right: 30px;
+    background: url(/themes/custom/ucsf/assets/images/ext-link-gray.svg) right center no-repeat transparent;
+    background-size: 20px;
+    display: inline-block;
+    vertical-align: top;
+  }
 }
