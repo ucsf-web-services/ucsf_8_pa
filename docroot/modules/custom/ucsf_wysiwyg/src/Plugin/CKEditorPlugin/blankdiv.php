@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\ucsf_wysiwyg\Plugin\CKEditorPlugin\ucsfquote.
+ * Contains \Drupal\ucsf_wysiwyg\Plugin\CKEditorPlugin\blankdiv.
  */
 
 namespace Drupal\ucsf_wysiwyg\Plugin\CKEditorPlugin;

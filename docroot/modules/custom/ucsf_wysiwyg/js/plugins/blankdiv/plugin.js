@@ -3,15 +3,20 @@ CKEDITOR.plugins.add('blankdiv', {
   requires: 'widget',
   icons: 'blankdiv',
   beforeInit : function (editor) {
-
   },
   init: function(editor) {
-
     CKEDITOR.dialog.add('blankdiv', this.path + 'dialogs/blankdiv.js' );
     editor.addContentsCss( this.path + 'css/blankdiv.css' );
+
+    editor.ui.addButton( 'blankdiv', {
+      label: 'Create a BlankDiv to insert custom code.',
+      command: 'blankdiv',
+      icon: this.path + '/js/plugins/blankdiv/icons/blankdiv.png'
+    });
+
     editor.widgets.add('blankdiv', {
       allowedContent:
-        'div(!wysiwyg_blankdiv,align-*,half-image-*, full-bleed-image, callout__image, quarter, half__image, full_bleed_*)',
+        'div(!wysiwyg_blankdiv,align-*,half-image-*, full-bleed-image, callout__image, quarter, half__image, full_bleed_*, w)',
       requiredContent: 'div(!wysiwyg_blankdiv)',
       template:
         '<div class="wysiwyg_blankdiv">'+
@@ -65,9 +70,9 @@ CKEDITOR.plugins.add('blankdiv', {
         }, this);
 
         // Add new classes
-        if ( this.data.align ) this.element.addClass( this.data.align );
-        if ( this.data.size ) this.element.addClass(  this.data.size );
-        if ( this.data.script ) this.element.setHtml(this.data.script)
+        if ( this.data.align )  this.element.addClass( this.data.align );
+        if ( this.data.size )   this.element.addClass( this.data.size );
+        if ( this.data.script ) this.element.setHtml( this.data.script )
       }
     });
   }

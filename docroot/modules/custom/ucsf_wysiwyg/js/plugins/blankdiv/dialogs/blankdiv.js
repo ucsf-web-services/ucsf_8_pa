@@ -31,29 +31,6 @@ CKEDITOR.dialog.add('blankdiv', function( editor ) {
               widget.setData( 'align', this.getValue() );
             }
           },
-          /*
-          {
-            id: 'size',
-            type: 'select',
-            label: 'Style',
-            title: 'Style - Also known as Size, defines the size of the elements container.',
-            items: [
-                  ['None (original image)', 'none'],
-                  ['WYSIWYG Full Bleed Half Image (680 x Y)', 'full_bleed_half__image'],
-                  ['WYSIWYG Full-Bleed Image (1280 x y)', 'full_bleed__image'],
-                  ['WYSIWYG Half Image (480 x Y)', 'half__image'],
-                  ['Quarter Image (220 x y)', 'quarter'],
-                  ['WYSIWYG Full Image (850 x y)', 'w'],
-                  ['WYSIWYG Callout square (150 x 150)', 'callout__image']
-            ],
-            setup: function( widget ) {
-              this.setValue( widget.data.size ? widget.data.size : 'none' );
-            },
-            commit: function( widget ) {
-              widget.setData( 'size', this.getValue() );
-            }
-          },
-          */
           {
             id: 'script',
             type: 'textarea',
@@ -74,8 +51,33 @@ CKEDITOR.dialog.add('blankdiv', function( editor ) {
 
 
 /*
+ We decided against this second field for now, doesn't seem needed,
+ as the alignment property contains the width attributes in % of canvas.
 
-OLD SETTINGS
+ {
+ id: 'size',
+ type: 'select',
+ label: 'Style',
+ title: 'Style - Also known as Size, defines the size of the elements container.',
+ items: [
+ ['None (original image)', 'none'],
+ ['WYSIWYG Full Bleed Half Image (680 x Y)', 'full_bleed_half__image'],
+ ['WYSIWYG Full-Bleed Image (1280 x y)', 'full_bleed__image'],
+ ['WYSIWYG Half Image (480 x Y)', 'half__image'],
+ ['Quarter Image (220 x y)', 'quarter'],
+ ['WYSIWYG Full Image (850 x y)', 'w'],
+ ['WYSIWYG Callout square (150 x 150)', 'callout__image']
+ ],
+ setup: function( widget ) {
+ this.setValue( widget.data.size ? widget.data.size : 'none' );
+ },
+ commit: function( widget ) {
+ widget.setData( 'size', this.getValue() );
+ }
+ },
+
+
+ OLD SETTINGS
  //[ 'Full Width', 'full' ],
  //[ 'Half Width', 'half' ],
  //[ 'Two Fifth', 'twofifth' ],
@@ -104,3 +106,4 @@ OLD SETTINGS
  WYSIWYG Full Image (850 x y)
  WYSIWYG Callout square (150 x 150)
  */
+
