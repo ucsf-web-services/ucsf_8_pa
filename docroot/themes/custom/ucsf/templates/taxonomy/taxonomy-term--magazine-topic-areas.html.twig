@@ -23,7 +23,13 @@
 
           <div class="news-list">
             {% block article_view %}
-              {{ drupal_view('topics_tags_news_articles', 'block_2') }}
+
+              {% if layout == 'featuretwosupport' or layout == 'featurethreesupport' %}
+                {{ drupal_view('topics_tags_news_articles', 'block_2') }}
+              {% else %}
+                {{ drupal_view('topics_tags_news_articles', 'block_4') }}
+              {% endif %}
+
             {% endblock %}
           </div>
     </div>
