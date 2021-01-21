@@ -1,0 +1,37 @@
+
+.footer {
+  h2 {
+    &::after {
+      display: none;
+    }
+  }
+
+  @include breakpoint($new-small) {
+
+    .logo-follow,
+    #block-magazinefootercol1,
+    #block-magazinefootercol2 {
+      float: left;
+      width: 25%;
+      margin-right: 4%;
+    }
+
+    #block-magazinefootercol2 {
+      float: left;
+      width: 40%;
+      margin-right: 0;
+    }
+  }
+
+  @include breakpoint($new-large) {
+    @include grid-three;
+    float: none;
+
+    .logo-follow,
+    #block-magazinefootercol1,
+    #block-magazinefootercol2 {
+      float: none;
+      width: auto;
+    }
+  }
+}
