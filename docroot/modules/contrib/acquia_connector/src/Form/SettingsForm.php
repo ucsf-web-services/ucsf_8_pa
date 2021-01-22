@@ -107,7 +107,7 @@ class SettingsForm extends ConfigFormBase {
     $subscription = $config->get('subscription_name');
 
     if (empty($identifier) && empty($key)) {
-      return new RedirectResponse((string) $this->getUrlGenerator()->generateFromRoute('acquia_connector.start'));
+      return new RedirectResponse((string) \Drupal::service('url_generator')->generateFromRoute('acquia_connector.start'));
     }
 
     // Check our connection to the Acquia and validate credentials.
@@ -130,7 +130,7 @@ class SettingsForm extends ConfigFormBase {
       $form['subscription'] = [
         '#markup' => $this->t('Subscription: @sub <a href=":url">change</a>', [
           '@sub' => $subscription,
-          ':url' => (string) $this->getUrlGenerator()->generateFromRoute('acquia_connector.setup'),
+          ':url' => (string) \Drupal::service('url_generator')->generateFromRoute('acquia_connector.setup'),
         ]),
       ];
     }

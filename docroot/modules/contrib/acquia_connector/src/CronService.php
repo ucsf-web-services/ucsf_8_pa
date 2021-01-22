@@ -22,7 +22,7 @@ class CronService implements LoggerInterface {
     if (!empty($context['channel']) && ($context['channel'] == 'cron') && ($message == 'Attempting to re-run cron while it is already running.')) {
       // Avoid doing this too frequently.
       $last_update_attempt = \Drupal::state()->get('acquia_subscription_data.timestamp', FALSE);
-      if (!$last_update_attempt || ((REQUEST_TIME - $last_update_attempt) >= 60 * 60)) {
+      if (!$last_update_attempt || ((\Drupal::time()->getRequestTime() - $last_update_attempt) >= 60 * 60)) {
         $subscription = new Subscription();
         $subscription->update();
       }
