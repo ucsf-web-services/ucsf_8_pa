@@ -1,15 +1,20 @@
 <?php
 
-namespace Drupal\views_infinite_scroll\Tests;
+namespace Drupal\Tests\views_infinite_scroll\Functional;
 
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Basic integration smoke test for the pager plugin.
  *
  * @group views_infinite_scroll
  */
-class IntegrationSmokeTest extends WebTestBase {
+class IntegrationSmokeTest extends BrowserTestBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
 
   /**
    * Modules to enable.
@@ -46,8 +51,8 @@ class IntegrationSmokeTest extends WebTestBase {
       'pager_options[views_infinite_scroll][button_text]' => 'More Please',
       'pager_options[views_infinite_scroll][automatically_load_content]' => '',
     ], 'Apply');
-    $this->assertLink('Infinite Scroll');
-    $this->assertText('Automatic infinite scroll, 10 items');
+    $this->assertSession()->linkExists('Infinite Scroll');
+    $this->assertSession()->pageTextContains('Click to load, 10 items');
     $this->drupalPostForm(NULL, [], 'Save');
 
     // Open the permissions to view the page.
@@ -59,7 +64,7 @@ class IntegrationSmokeTest extends WebTestBase {
 
     // Ensure the wrapper div appears on the page.
     $this->drupalGet('test-plugin');
-    $this->assertRaw('data-drupal-views-infinite-scroll-content-wrapper');
+    $this->assertSession()->responseContains('data-drupal-views-infinite-scroll-content-wrapper');
   }
 
 }
