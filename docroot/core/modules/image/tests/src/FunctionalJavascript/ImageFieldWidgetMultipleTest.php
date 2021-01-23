@@ -3,7 +3,6 @@
 namespace Drupal\Tests\image\FunctionalJavascript;
 
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\FunctionalJavascriptTests\DrupalSelenium2Driver;
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\node\Entity\Node;
 use Drupal\Tests\image\Kernel\ImageFieldCreationTrait;
@@ -22,23 +21,20 @@ class ImageFieldWidgetMultipleTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $minkDefaultDriverClass = DrupalSelenium2Driver::class;
+  protected static $modules = ['node', 'field_ui', 'image'];
 
   /**
    * {@inheritdoc}
    */
-  protected static $modules = [
-    'node',
-    'field_ui',
-    'image',
-  ];
+  protected $defaultTheme = 'stark';
 
   /**
    * Tests image widget element support multiple upload correctly.
    */
-  public function testWidgetElementMultipleUploads() {
+  public function testWidgetElementMultipleUploads(): void {
     $image_factory = \Drupal::service('image.factory');
     $file_system = \Drupal::service('file_system');
+    $web_driver = $this->getSession()->getDriver();
 
     $this->drupalCreateContentType(['type' => 'article', 'name' => 'Article']);
     $field_name = 'images';
@@ -59,7 +55,7 @@ class ImageFieldWidgetMultipleTest extends WebDriverTestBase {
 
     $remote_paths = [];
     foreach ($paths as $path) {
-      $remote_paths[] = $this->uploadFileRemotePath($path);
+      $remote_paths[] = $web_driver->uploadFileAndGetRemoteFilePath($path);
     }
 
     $multiple_field = $this->xpath('//input[@multiple]')[0];
@@ -71,33 +67,9 @@ class ImageFieldWidgetMultipleTest extends WebDriverTestBase {
     foreach ($paths as $delta => $path) {
       $node_image = $node->{$field_name}[$delta];
       $original_image = $image_factory->get($path);
-      $this->assertEquals($node_image->width, $original_image->getWidth(), "Correct width of image #$delta");
-      $this->assertEquals($node_image->height, $original_image->getHeight(), "Correct height of image #$delta");
+      $this->assertEquals($original_image->getWidth(), $node_image->width, "Correct width of image #$delta");
+      $this->assertEquals($original_image->getHeight(), $node_image->height, "Correct height of image #$delta");
     }
-  }
-
-  /**
-   * Uploads a file to the Selenium instance for get remote path.
-   *
-   * Copied from \Behat\Mink\Driver\Selenium2Driver::uploadFile().
-   *
-   * @param string $path
-   *   The path to the file to upload.
-   *
-   * @return string
-   *   The remote path.
-   *
-   * @todo: Remove after https://www.drupal.org/project/drupal/issues/2947517.
-   */
-  protected function uploadFileRemotePath($path) {
-    $tempFilename = tempnam('', 'WebDriverZip');
-    $archive = new \ZipArchive();
-    $archive->open($tempFilename, \ZipArchive::CREATE);
-    $archive->addFile($path, basename($path));
-    $archive->close();
-    $remotePath = $this->getSession()->getDriver()->getWebDriverSession()->file(['file' => base64_encode(file_get_contents($tempFilename))]);
-    unlink($tempFilename);
-    return $remotePath;
   }
 
 }
