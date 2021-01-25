@@ -68,7 +68,7 @@ function acquia_connector_help($route_name, RouteMatchInterface $route_match) {
  */
 function acquia_connector_form_system_modules_alter(&$form, FormStateInterface $form_state) {
   if (isset($form['modules']['Acquia']['acquia_search']['description']['#markup'])) {
-    $subscription = \Drupal::config('acquia_connector.settings')->get('subscription_data');
+    $subscription = \Drupal::state()->get('acquia_subscription_data');
 
     if (!\Drupal::moduleHandler()->moduleExists('acquia_search') && empty($subscription['active'])) {
       $form['modules']['Acquia']['acquia_search']['enable']['#disabled'] = TRUE;
@@ -103,7 +103,7 @@ function acquia_connector_cron() {
   }
 
   // Determine if the required interval has passed.
-  if ($config->get('spi.use_cron') && ((REQUEST_TIME - $last) > ($interval * 60))) {
+  if ($config->get('spi.use_cron') && ((\Drupal::time()->getRequestTime() - $last) > ($interval * 60))) {
     \Drupal::service('acquia_connector.spi')->sendFullSpi(ACQUIA_CONNECTOR_ACQUIA_SPI_METHOD_CRON);
   }
 }
@@ -123,7 +123,7 @@ function acquia_connector_toolbar() {
 
   $subscription = new Subscription();
   if ($subscription->isActive()) {
-    $subscription_data = \Drupal::config('acquia_connector.settings')->get('subscription_data');
+    $subscription_data = \Drupal::state()->get('acquia_subscription_data');
     if (is_array($subscription_data['expiration_date']) && isset($subscription_data['active']) && $subscription_data['active'] !== FALSE) {
       $link['#title'] = t('Subscription active (expires @date)', [
         '@date' => \Drupal::service('date.formatter')->format(strtotime($subscription_data['expiration_date']['value']), 'custom', 'Y/n/j'),
@@ -223,7 +223,7 @@ function acquia_connector_load_versions() {
 function acquia_connector_has_update_service() {
   // Include version number information.
   acquia_connector_load_versions();
-  $subscription = Drupal::config('acquia_connector.settings')->get('subscription_data');
+  $subscription = Drupal::state()->get('acquia_subscription_data');
   if (!IS_ACQUIA_DRUPAL || empty($subscription['active']) || (isset($subscription['update_service']) && empty($subscription['update_service']))) {
     // We don't have update service if (1) this is not Acquia Drupal, (2) there
     // is no subscription or (3) the update service was disabled on acquia.com.
