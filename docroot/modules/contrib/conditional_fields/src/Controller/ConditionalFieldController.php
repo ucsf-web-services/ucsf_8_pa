@@ -7,6 +7,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\ContentEntityType;
 use Drupal\Core\Entity\ContentEntityTypeInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
+use Drupal\Core\Entity\EntityFormBuilder;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBuilderInterface;
@@ -22,7 +23,7 @@ class ConditionalFieldController extends ControllerBase {
   /**
    * Form Builder.
    *
-   * @var \Drupal\Core\Form\FormBuilderInterface
+   * @var \Drupal\Core\Form\FormBuilderInterface|EntityFormBuilder
    */
   protected $formBuilder;
 
@@ -197,6 +198,63 @@ class ConditionalFieldController extends ControllerBase {
    */
   public function provideArguments($node_type) {
     return $this->formBuilder->getForm(ConditionalFieldFormTab::class, 'node', $node_type);
+  }
+
+  /**
+   * Provide arguments for ConditionalFieldFormTab.
+   *
+   * @param string $node_type
+   *   Node type.
+   *
+   * @return array
+   *   Form array.
+   */
+  public function getMediaEditFormTab($media_type)
+  {
+    return $this->formBuilder->getForm(ConditionalFieldFormTab::class, 'media', $media_type);
+  }
+
+  /**
+   * Provide arguments for ConditionalFieldFormTab.
+   *
+   * @param string $node_type
+   *   Node type.
+   *
+   * @return array
+   *   Form array.
+   */
+  public function getBlockEditFormTab($block_content_type)
+  {
+    return $this->formBuilder->getForm(ConditionalFieldFormTab::class, 'block_content', $block_content_type);
+  }
+
+  /**
+   * Provide arguments for ConditionalFieldFormTab.
+   *
+   * @param string $node_type
+   *   Node type.
+   *
+   * @return array
+   *   Form array.
+   */
+  public function getCommentEditFormTab($comment_type)
+  {
+    return $this->formBuilder->getForm(ConditionalFieldFormTab::class, 'comment', $comment_type);
+  }
+
+  /**
+   * Provide arguments for ConditionalFieldFormTab.
+   *
+   * @param string $node_type
+   *   Node type.
+   *
+   * @return array
+   *   Form array.
+   */
+  public function getUserEditFormTab()
+  {
+    $user_type = "user";
+    return $this->formBuilder->getForm(ConditionalFieldFormTab::class, 'user', $user_type);
   }
 
 }
