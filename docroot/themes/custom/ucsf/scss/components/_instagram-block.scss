@@ -1,0 +1,48 @@
+// TODO DELETE THIS CODE WHEN WE SWITCH TO SIMPLE INSTAGRAM FEED
+// Start delete--------------------
+.block-socialfeed {
+  margin-top: $space-two;
+
+  @include breakpoint($new-medium) {
+    margin-right: 2.3rem;
+  }
+  .item-list ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: .5rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .post {
+    display: block;
+    height: 0;
+    padding-bottom: 100%; // aspect ratio of 1:1
+    overflow: hidden;
+  }
+}
+// End delete--------------------
+
+.block-simple-instagram-feed {
+  margin-top: $space-two;
+
+  @include breakpoint($new-medium) {
+    margin-right: 2.3rem;
+  }
+  .instagram_gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: .5rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .instagram-image,
+  .instagram-video {
+    display: block;
+    // hack for responsive images, height is controlled by padding-bottom
+    height: 0;
+    padding-bottom: 100%; // aspect ratio of 1:1
+    overflow: hidden;
+  }
+}
