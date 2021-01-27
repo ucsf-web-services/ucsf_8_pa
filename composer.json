@@ -57,7 +57,7 @@
     "oomphinc/composer-installers-extender": "^1.1",
     "wikimedia/composer-merge-plugin": "^1.4.1",
     "cweagans/composer-patches": "^1.6",
-    "drupal/core": "~8.8.12",
+    "drupal/core": "~8.9.12",
     "drupal-composer/drupal-scaffold": "^2.5",
     "ucdavis/sitefarm_seed": "dev-ucsf",
     "drupal/acquia_lift": "~3.0",
@@ -259,12 +259,11 @@
     },
     "patches": {
       "drupal/core": {
-        "2644468 - Multiple image upload breaks image dimensions": "https://www.drupal.org/files/issues/2019-01-31/2644468-100.patch",
         "2061377 - Allow image style to be selected in Text Editor's image dialog" : "https://www.drupal.org/files/issues/2020-01-28/2061377-356.patch",
         "UCSF FilterAlign - remove aggressive removal of classes" : "./patches/core-filteralign.patch",
-        "UCSF FilterCaption - Fix decode entities on FilterCaption" : "./patches/core-filtercaption.patch",
         "2973706 - Styles dropdown configuration permit multiple tags" : "https://www.drupal.org/files/issues/2020-07-14/allow-multiple-elements-2973706-12.patch",
-        "2918784 - Views RSS row plugin incorrectly assumes links are relative" : "https://www.drupal.org/files/issues/2020-06-03/2918784_36.patch"
+        "2918784 - Views RSS row plugin incorrectly assumes links are relative" : "https://www.drupal.org/files/issues/2020-06-03/2918784_36.patch",
+        "UCSF FilterCaption - Fix decode entities on FilterCaption" : "./patches/core-filtercaption.patch"
       },
       "drupal/field_group": {
         "2652642 - Allow to position the group in the advanced sidebar column": "https://www.drupal.org/files/issues/2018-07-26/2652642-57.patch"
@@ -298,6 +297,9 @@
       },
        "drupal/svg_image_field" : {
         "Adds media library pop-up file upload form on the SVG tab" : "./patches/svg_image_field-media-library-3053011.patch"
+      },
+      "drupal/video_embed_field" : {
+        "UCSF Video Embed Patch - Allow background param" : "./patches/video_embed_field__allow_background_param.patch"
       }
     },
     "patchLevel": {

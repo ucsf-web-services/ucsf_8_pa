@@ -79,7 +79,7 @@ function acquia_search_acquia_subscription_status($subscription = FALSE) {
  */
 function acquia_search_get_search_host(array $subscription = []) {
   if (empty($subscription)) {
-    $subscription = \Drupal::config('acquia_connector.settings')->get('subscription_data');
+    $subscription = \Drupal::state()->get('acquia_subscription_data');
   }
 
   $search_host = \Drupal::config('acquia_search.settings')->get('host');
@@ -199,27 +199,31 @@ function acquia_search_should_set_read_only_mode() {
  * Implements hook_search_api_server_load().
  *
  * Flag when a certain server should be enforcing read-only mode.
+ *
+ * @throws \Drupal\search_api\SearchApiException
  */
 function acquia_search_search_api_server_load($entities) {
   $acquia_servers = array_filter($entities, function ($server) {
+    /** @var \Drupal\search_api\Entity\Server $server */
     return acquia_search_is_acquia_server($server->getBackendConfig());
   });
 
   $core_service = acquia_search_get_core_service();
 
+  /** @var \Drupal\search_api\Entity\Server $server */
   foreach ($acquia_servers as $server) {
-    /** @var \Drupal\search_api\Entity\Server $server */
-    $backend_config = $server->getBackendConfig();
-
+    /** @var \Drupal\search_api_solr\Plugin\search_api\backend\SearchApiSolrBackend $backend */
+    $backend = $server->getBackend();
+    $connector_config = $backend->getSolrConnector()->getConfiguration();
     // Set a list of eligible cores.
-    $backend_config['acquia_search_possible_cores'] = $core_service->getListOfPossibleCores();
-    unset($backend_config['overridden_by_acquia_search']);
+    $connector_config['acquia_search_possible_cores'] = $core_service->getListOfPossibleCores();
+    unset($connector_config['overridden_by_acquia_search']);
 
     if (acquia_search_should_set_read_only_mode()) {
-      $backend_config['overridden_by_acquia_search'] = ACQUIA_SEARCH_AUTO_OVERRIDE_READ_ONLY;
+      $connector_config['overridden_by_acquia_search'] = ACQUIA_SEARCH_AUTO_OVERRIDE_READ_ONLY;
     }
 
-    $server->setBackendConfig($backend_config);
+    $backend->getSolrConnector()->setConfiguration($connector_config);
   }
 }
 
@@ -283,7 +287,7 @@ function acquia_search_search_api_index_load($entities) {
       // Set this index to read-only mode.
       $index->set('read_only', TRUE);
       // Flag this index as having been altered by this module.
-      $index->setOption('overridden_by_acquia_search', ACQUIA_SEARCH_AUTO_OVERRIDE_READ_ONLY);
+      \Drupal::state()->set('acquia_search_index.' . $index->id() . '.overridden_by_acquia_search', ACQUIA_SEARCH_AUTO_OVERRIDE_READ_ONLY);
     }
   }
 }
@@ -563,7 +567,7 @@ function acquia_search_get_core_service() {
     $ah_db_name = $options['database'];
   }
 
-  $subscription = \Drupal::config('acquia_connector.settings')->get('subscription_data');
+  $subscription = \Drupal::state()->get('acquia_subscription_data');
 
   $available_cores = [];
   if (!empty($subscription['heartbeat_data']['search_cores'])) {
@@ -585,78 +589,68 @@ function acquia_search_get_core_service() {
  * @see acquia_search_theme_search_api_index()
  */
 function acquia_search_theme_registry_alter(&$theme_registry) {
-  $theme_registry['search_api_index']['function'] = 'acquia_search_theme_search_api_index';
-  $theme_registry['search_api_server']['function'] = 'acquia_search_theme_search_api_server';
+  $module_handler = \Drupal::moduleHandler();
+  $module_path = $module_handler->getModule('acquia_search')->getPath();
+
+  $theme_registry['search_api_index']['variables']['acquia_search_info_box'] = NULL;
+  $theme_registry['search_api_index']['path'] = $module_path . '/templates';
+
+  $theme_registry['search_api_server']['variables']['acquia_search_info_box'] = NULL;
+  $theme_registry['search_api_server']['path'] = $module_path . '/templates';
 }
 
 /**
- * Theme override function for Search API index status page.
+ * Implements hook_preprocess_HOOK().
  *
- * @param array $variables
- *   Variables.
- *
- * @return string
- *   Resulting HTML.
+ * Theme override for Search API index status page.
  *
  * @see acquia_search_theme_registry_alter()
  */
-function acquia_search_theme_search_api_index(array $variables) {
+function acquia_search_preprocess_search_api_index(&$variables) {
   /** @var \Drupal\search_api\Entity\Index $index */
   $index = $variables['index'];
   /** @var \Drupal\search_api\Entity\Server $server */
   $server = Server::load($index->get('server'));
 
-  if (!$server) {
-    return theme_search_api_index($variables);
-  }
-
-  if (!acquia_search_is_acquia_server($server->getBackendConfig())) {
-    return theme_search_api_index($variables);
+  if (!$server || !acquia_search_is_acquia_server($server->getBackendConfig())) {
+    return;
   }
 
   if (acquia_search_should_set_read_only_mode()) {
     acquia_search_server_show_read_only_mode_warning();
   }
 
-  $info_box = [
+  $variables['acquia_search_info_box'] = [
     '#type' => 'fieldset',
     '#title' => t('Acquia Search status for this connection'),
     '#markup' => acquia_search_get_search_status_message($server),
   ];
-
-  return render($info_box) . theme_search_api_index($variables);
 }
 
 /**
- * Theme override function for Search API server status page.
+ * Implements hook_preprocess_HOOK().
  *
- * @param array $variables
- *   Variables.
- *
- * @return string
- *   Resulting HTML.
+ * Theme override for Search API server status page.
  *
  * @see acquia_search_theme_registry_alter()
  */
-function acquia_search_theme_search_api_server(array $variables) {
+function acquia_search_preprocess_search_api_server(array &$variables) {
   /** @var \Drupal\search_api\Entity\Server $server */
   $server = $variables['server'];
 
   if (!acquia_search_is_acquia_server($server->getBackendConfig())) {
-    return theme_search_api_server($variables);
+    return;
   }
 
   if (acquia_search_should_set_read_only_mode()) {
     acquia_search_server_show_read_only_mode_warning();
   }
 
-  $info_box = [
+  $variables['acquia_search_info_box'] = [
     '#type' => 'fieldset',
     '#title' => t('Acquia Search status for this connection'),
     '#markup' => acquia_search_get_search_status_message($server),
   ];
-
-  return render($info_box) . theme_search_api_server($variables);
 }
 
 /**
@@ -706,4 +700,23 @@ function acquia_search_get_v3_cores($acquia_identifier) {
   }
 
   return $search_v3_cores;
+}
+
+/**
+ * Disable Search API Solr Warning/Error messages regarding EOL.
+ * @param $variables
+ */
+function acquia_search_preprocess_status_messages(&$variables) {
+  if (isset($variables['message_list'])) {
+    foreach ($variables['message_list'] as $msg_type => $messages) {
+      foreach ($messages as $message_key => $message) {
+        if (strpos((string)$message, "Search API Solr 8.x-1.x") !== FALSE) {
+          unset($variables['message_list'][$msg_type][$message_key]);
+        }
+        if (empty($variables['message_list'][$msg_type])) {
+          unset($variables['message_list'][$msg_type]);
+        }
+      }
+    }
+  }
 }
