@@ -39,15 +39,15 @@ CKEDITOR.plugins.add('blankdiv', {
         if ( this.element.hasClass( 'full-bleed-image' ) ) this.setData( 'align', 'full-bleed-image'  );
 
         // size - style options
-        if ( this.element.hasClass( 'full_bleed_half__image' ) ) this.setData( 'size', 'full_bleed_half__image' );
-        if ( this.element.hasClass( 'full_bleed__image' ) ) this.setData( 'size', 'full_bleed__image' );
-        if ( this.element.hasClass( 'half__image' ) ) this.setData( 'size', 'half__image' );
-        if ( this.element.hasClass( 'quarter' ) ) this.setData( 'size', 'quarter' );
-        if ( this.element.hasClass( 'w' ) ) this.setData( 'size', 'w' );
-        if ( this.element.hasClass( 'callout__image' ) ) this.setData( 'size', 'callout__image' );
+        // if ( this.element.hasClass( 'full_bleed_half__image' ) ) this.setData( 'size', 'full_bleed_half__image' );
+        // if ( this.element.hasClass( 'full_bleed__image' ) ) this.setData( 'size', 'full_bleed__image' );
+        // if ( this.element.hasClass( 'half__image' ) ) this.setData( 'size', 'half__image' );
+        // if ( this.element.hasClass( 'quarter' ) ) this.setData( 'size', 'quarter' );
+        // if ( this.element.hasClass( 'w' ) ) this.setData( 'size', 'w' );
+        // if ( this.element.hasClass( 'callout__image' ) ) this.setData( 'size', 'callout__image' );
 
         //set the script element
-        if ( this.element.getHtml() ) this.setData( 'script', this.element.getHtml() );
+        if ( this.element.getHtml() ) this.setData( 'blankdiv', this.element.getHtml() );
       },
       data: function() {
         // Brutally remove all align classes and set a new one if "align" widget data is set.
@@ -72,7 +72,7 @@ CKEDITOR.plugins.add('blankdiv', {
         // Add new classes
         if ( this.data.align )  this.element.addClass( this.data.align );
         if ( this.data.size )   this.element.addClass( this.data.size );
-        if ( this.data.script ) this.element.setHtml( this.data.script )
+        if ( this.data.blankdiv ) this.element.setHtml( this.data.blankdiv )
       }
     });
   }
