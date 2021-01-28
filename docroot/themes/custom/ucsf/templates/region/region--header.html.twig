@@ -10,7 +10,9 @@
     </section>
     <section class="header-region">
       <div class="header">
-        {% include '@theme/header/header--logo.twig' %}
+        {% block logo %}
+          {% include '@theme/header/header--logo.twig' %}
+        {% endblock logo %}
         {% include '@theme/header/header--search.twig' %}
         <div class="slicknav-placeholder"></div>
         {{ content }}

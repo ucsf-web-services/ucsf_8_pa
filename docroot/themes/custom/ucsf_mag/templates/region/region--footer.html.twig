@@ -1,37 +1,76 @@
 <footer class="footer-region">
-  <div class="footer">
-    <div class="logo-follow">
-      <figure class="footer-logo">
-        <a class="footer-logo__link" href="/">
-          <div class="footer-logo__image">
-            <img class="footer-logo__img" src="/{{ directory ~ '/images/footer-logo.svg' }}" alt="{{ 'UCSF Footer Logo'|t }}">
-          </div>
+	<div class="footer">
+		<div class="logo-follow">
+			<figure class="footer-logo">
+				<a class="footer-logo__link" href="/">
+					<div class="footer-logo__image">
+						<img class="footer-logo__img" src="/{{ directory ~ '/images/151x98.svg' }}" alt="{{ 'UCSF Footer Logo'|t }}">
+					</div>
         </a>
-      </figure>
+			</figure>
 
-      <div class="follow">
-        <h2>Follow Us:</h2>
-        <ul>
-          <li class="follow-facebook"><a href="https://www.facebook.com/ucsf"><span class="fab fa-facebook-f"></span> <span class="indent-text">Facebook</span></a></li>
-          <li class="follow-twitter"><a href="https://www.twitter.com/ucsf"><span class="fab fa-twitter"></span> <span class="indent-text">Twitter</span></a></li>
-          <li class="follow-youtube"><a href="https://www.youtube.com/ucsf"><span class="fab fa-youtube"></span> <span class="indent-text">YouTube</span></a></li>
-          <li class="follow-instagram"><a href="https://www.instagram.com/ucsf"><span class="fab fa-instagram"></span> <span class="indent-text">Instagram</span></a></li>
-        </ul>
-      </div>
-    </div>
+			<div class="follow">
+				<h2>Follow UCSF:</h2>
+				<ul>
+					<li class="follow-facebook">
+						<a href="https://www.facebook.com/ucsf">
+							<span class="fab fa-facebook-f"></span>
+							<span class="indent-text">Facebook</span>
+						</a>
+					</li>
+					<li class="follow-twitter">
+						<a href="https://www.twitter.com/ucsf">
+							<span class="fab fa-twitter"></span>
+							<span class="indent-text">Twitter</span>
+						</a>
+					</li>
+					<li class="follow-youtube">
+						<a href="https://www.youtube.com/ucsf">
+							<span class="fab fa-youtube"></span>
+							<span class="indent-text">YouTube</span>
+						</a>
+					</li>
+					<li class="follow-instagram">
+						<a href="https://www.instagram.com/ucsf">
+							<span class="fab fa-instagram"></span>
+							<span class="indent-text">Instagram</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
 
-    {{ content }}
-  </div>
+		<div class="subscribe-form">
+			<h2 class="subscribe-form__title">Stay up to date <span>on the latest at <em>UCSF Magazine</em></span></h2>
+			<form action="/subscribe-magazine" class="email-subscribe" method="GET">
+				<label class="visually-hidden" for="email-subscribe">E-mail</label>
+				<input class="email-subscribe__input" id="email-subscribe" name="email-subscribe" onblur="this.placeholder='Enter your email'" onfocus="this.placeholder=''" placeholder="Enter your email" required="required" type="text" value="">
+        <button class="email-subscribe__submit">Subscribe</button>
+			</form>
+		</div>
 
-  <div class="footer-bottom">
-    <p>© {{ "now"|date('Y') }} The Regents of The University of California</p>
+		{{ content }}
+	</div>
 
-    <ul class="text-align: right;">
-      <li><a href="/sitemap.xml" style="left: -9999px; position:absolute;">Sitemap</a></li>
-      <li><a href="/sitemap">Site Map</a></li>
-      <li><a href="/website-terms-use">Terms of Use</a></li>
-      <li><a href="/feedback">Report an issue with UCSF.edu website</a></li>
-    </ul>
+	<div class="footer-bottom">
+		<p>©
+			{{ "now"|date('Y') }}
+			The Regents of The University of California</p>
 
-  </div>
+		<ul class="text-align: right;">
+			<li>
+				<a href="/sitemap.xml" style="left: -9999px; position:absolute;">Sitemap</a>
+			</li>
+			<li>
+				<a href="/sitemap">Site Map</a>
+			</li>
+			<li>
+				<a href="/website-terms-use">Terms of Use</a>
+			</li>
+			<li>
+				<a href="/feedback">Report an issue with UCSF.edu website</a>
+			</li>
+		</ul>
+
+	</div>
 </footer>

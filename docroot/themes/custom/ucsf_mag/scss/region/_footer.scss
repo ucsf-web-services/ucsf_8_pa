@@ -1,37 +1,75 @@
-
 .footer {
+  @include breakpoint($new-medium) {
+    display: grid;
+    column-gap: 2.5%;
+    grid-template-columns: 1fr 1fr 1fr 37%;
+    grid-template-rows: 1fr;
+  }
+
+  @include breakpoint($new-large) {
+    grid-template-columns: 1fr 1fr 1fr 23.5rem;
+  }
+
+  .logo-follow {
+    @include breakpoint($new-medium) {
+      grid-column: 1;
+    }
+
+    a {
+      font-size: 19px;
+    }
+
+    .follow-instagram a {
+      padding-right: 0;
+    }
+  }
+
+  &-logo__image {
+    width: 123px;
+    height: 80px;
+
+    @include breakpoint($new-medium) {
+      width: 151px;
+      height: 98px;
+    }
+  }
+
+  .menu--magazine-footer-col1 {
+    @include breakpoint($new-medium) {
+      grid-column: 2;
+    }
+  }
+
+  .menu--magazine-footer-col2 {
+    @include breakpoint($new-medium) {
+      grid-column: 3;
+    }
+  }
+
   h2 {
     &::after {
       display: none;
     }
   }
 
-  @include breakpoint($new-small) {
-
-    .logo-follow,
-    #block-magazinefootercol1,
-    #block-magazinefootercol2 {
-      float: left;
-      width: 25%;
-      margin-right: 4%;
-    }
-
-    #block-magazinefootercol2 {
-      float: left;
-      width: 40%;
-      margin-right: 0;
+  .logo-follow,
+  .menu--magazine-footer-col1,
+  .menu--magazine-footer-col2 {
+    @include breakpoint($new-medium) {
+      float: none;
+      width: auto;
+      grid-row: 1;
     }
   }
 
-  @include breakpoint($new-large) {
-    @include grid-three;
-    float: none;
+  &-bottom {
+    color: $c-gray-border;
 
-    .logo-follow,
-    #block-magazinefootercol1,
-    #block-magazinefootercol2 {
-      float: none;
-      width: auto;
+    a,
+    a:visited,
+    a:link {
+      color: $c-gray-border;
     }
+
   }
 }
