@@ -1,0 +1,81 @@
+<?php
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function ucsf_mag_page_attachments_alter(array &$attachments) {
+  _replace_metatag_magazine_fallback_image($attachments);
+}
+
+/**
+ * On the magazine domain pages, overwrite metatag fallback images.
+ *
+ * If no "card" or "social" image is provided overwrite matatag's
+ * default fallback image, and image link.
+ *
+ * @param array $attachments
+ * @return void
+ */
+function _replace_metatag_magazine_fallback_image(array &$attachments) {
+  // Exit if the Metatag module is not enabled.
+  $moduleHandler = \Drupal::service('module_handler');
+  if (!$moduleHandler->moduleExists('metatag')) {
+    return;
+  }
+
+  // Exit if there are no default attachments in the head.
+  if (empty($attachments['#attached']['html_head'])) {
+    return;
+  }
+
+  // Exit if this is a Non "/magazine" page.
+  $current_uri = \Drupal::request()->getRequestUri();
+  if (strpos($current_uri, 'magazine') == FALSE) {
+    return;
+  }
+
+  // Don't run if a "Social image" is provided.
+  $entity = _get_current_controller_entity();
+  if ($entity->field_facebook_image->target_id || $entity->field_card_image->target_id) {
+    return;
+  }
+
+  // Fallback image.
+  // TODO: Add the image to the theme and reference it here.
+  $host = \Drupal::request()->getHost();
+  $fallback_image = "https://$host/themes/custom/ucsf_mag/assets/images/ucsf-magazine-social.jpg";
+  // Metatags that need to be overwritten.
+  $tags_to_overwrite = ['twitter_cards_image', 'og_image_secure_url', 'og_image', 'image_src'];
+
+  foreach ($attachments['#attached']['html_head'] as $key => $attachment) {
+    $tag_name = $attachment[1];
+
+    if (!in_array($tag_name, $tags_to_overwrite)) {
+      continue;
+    }
+
+    if ($tag_name == 'image_src') {
+      $attachments['#attached']['html_head'][$key][0]['#attributes']['href'] = $fallback_image;
+    }
+    else {
+      $attachments['#attached']['html_head'][$key][0]['#attributes']['content'] = $fallback_image;
+    }
+  }
+
+}
+
+/**
+ * Helper function to return the currently loaded entity from the URL (controller).
+ * Returns NULL if the currently loaded page is no entity.
+ *
+ * @return \Drupal\Core\Entity\EntityInterface
+ */
+function _get_current_controller_entity() {
+  $currentRouteParameters = \Drupal::routeMatch()->getParameters();
+  foreach ($currentRouteParameters as $param) {
+    if ($param instanceof \Drupal\Core\Entity\EntityInterface) {
+      $entity = $param;
+      return $entity;
+    }
+  }
+  return NULL;
+}
