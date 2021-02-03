@@ -5,8 +5,8 @@
   $(function () {
     var $publicationRange = $('.publication-range');
 
-    var $selectMin = $('#edit-field-date-and-time-value-1');
-    var $selectMax = $('#edit-field-date-and-time-value-2');
+    var $selectMin = $('#edit-field-date-and-time-value-1--2');
+    var $selectMax = $('#edit-field-date-and-time-value-2--2');
 
     // Min and Max year range.
     var minRange = parseInt($selectMin.find('option:nth-child(2)').text());
