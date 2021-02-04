@@ -23,17 +23,17 @@
     {% include '@theme/banner/banner-content.twig' %}
   </header>
   {#{% include "@theme/share/share.twig" %}#}
-    <ul class="article-meta-share">
-      <li><a rel="nofollow" href="http://www.facebook.com/share.php?u={{ url('<current>') }}" target="_blank" title="Facebook"><span class="fab fa-facebook-square"></span> <span class="indent-text">Facebook</span></a></li>
+  <ul class="article-meta-share">
+    <li><a rel="nofollow" href="http://www.facebook.com/share.php?u={{ url('<current>') }}" target="_blank" title="Facebook"><span class="fab fa-facebook-square"></span> <span class="indent-text">Facebook</span></a></li>
 
-      <li><a rel="nofollow" href="http://www.twitter.com/share?text={{node.label}}&url={{ url('<current>') }}" target="_blank" title="Twitter"><span class="fab fa-twitter-square"></span> <span class="indent-text">Twitter</span></a></li>
+    <li><a rel="nofollow" href="http://www.twitter.com/share?text={{node.label}}&url={{ url('<current>') }}" target="_blank" title="Twitter"><span class="fab fa-twitter-square"></span> <span class="indent-text">Twitter</span></a></li>
 
-      <li><a rel="nofollow" href="http://www.reddit.com/submit?url={{ url('<current>') }}&title={{node.label}}" target="_blank" title="Reddit"><span class="fab fa-reddit-square"></span> <span class="indent-text">Reddit</span></a></li>
+    <li><a rel="nofollow" href="http://www.reddit.com/submit?url={{ url('<current>') }}&title={{node.label}}" target="_blank" title="Reddit"><span class="fab fa-reddit-square"></span> <span class="indent-text">Reddit</span></a></li>
 
-      <li><a rel="nofollow" href="mailto:?to=&subject=From UCSF News: {{node.label}}&body={{node.label}}%0D%0A%0D%0A{{ node.body.summary }}%0D%0A%0D%0A{{ url('<current>') }}" title="Email Article"><span class="fas fa-envelope-square"></span> <span class="indent-text">Email</span></a></li>
+    <li><a rel="nofollow" href="mailto:?to=&subject=From UCSF News: {{node.label}}&body={{node.label}}%0D%0A%0D%0A{{ node.body.summary }}%0D%0A%0D%0A{{ url('<current>') }}" title="Email Article"><span class="fas fa-envelope-square"></span> <span class="indent-text">Email</span></a></li>
 
-      <li><a rel="nofollow" onclick="window.print();return false;" href="{{ url('<current>') }}" title="Print Article"><span class="fas fa-print"></span> <span class="indent-text">Print</span></a></li>
-    </ul>
+    <li><a rel="nofollow" onclick="window.print();return false;" href="{{ url('<current>') }}" title="Print Article"><span class="fas fa-print"></span> <span class="indent-text">Print</span></a></li>
+  </ul>
 
   {% include "@theme/article/article-body.twig" %}
 </div>
