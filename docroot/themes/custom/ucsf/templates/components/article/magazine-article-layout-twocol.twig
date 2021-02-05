@@ -1,9 +1,14 @@
 {% set layout = node.field_banner_layout.value %}
 {% set classes = [ 'article-twocol-banner', layout] %}
-
 <div{{ attributes.addClass(classes) }}>
   <figure class="article-twocol-banner-image">
-    {{ content.field_two_column_banner_image }}
+    {% if content.field_video_banner|render %}
+      {{ content.field_video_banner }}
+    {% elseif content.field_banner_image|render %}
+      {{ content.field_banner_image }}
+    {% else %}
+      {{ content.field_two_column_banner_image }}
+    {% endif %}
   </figure>
 
   <header class="article-header article-twocol-header">
