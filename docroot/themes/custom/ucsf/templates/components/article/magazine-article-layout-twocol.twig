@@ -2,10 +2,15 @@
 {% set classes = [ 'article-twocol-banner', layout] %}
 <div{{ attributes.addClass(classes) }}>
   <figure class="article-twocol-banner-image">
+    {# Video Banner #}
     {% if content.field_video_banner|render %}
       {{ content.field_video_banner }}
+
+    {# Image Banner #}
     {% elseif content.field_banner_image|render %}
       {{ content.field_banner_image }}
+
+    {# Two column layout image #}
     {% else %}
       {{ content.field_two_column_banner_image }}
     {% endif %}
