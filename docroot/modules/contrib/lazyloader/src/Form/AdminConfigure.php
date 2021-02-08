@@ -9,6 +9,9 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Theme\Registry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class AdminConfigure.
+ */
 class AdminConfigure extends ConfigFormBase {
 
   /**
@@ -85,7 +88,7 @@ class AdminConfigure extends ConfigFormBase {
     $form['enabled'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enabled'),
-      '#default_value' =>$config->get('enabled'),
+      '#default_value' => $config->get('enabled'),
       '#description' => $this->t('Enable/Disable Lazyloader (Useful for testing)'),
     ];
 

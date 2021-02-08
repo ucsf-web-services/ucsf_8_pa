@@ -8,18 +8,23 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContextAwarePluginInterface;
-use Drupal\Core\Render\Element;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class AdminExclude.
+ */
 class AdminExclude extends ConfigFormBase {
 
   /**
+   * The Lazyloader exclude configuration entity.
+   *
    * @var \Drupal\Core\Config\Config|\Drupal\Core\Config\ImmutableConfig
-   *   $configuration The Lazyloader exclude configuration entity.
    */
   protected $configuration;
 
   /**
+   * The Plugin Manager.
+   *
    * @var \Drupal\Component\Plugin\PluginManagerInterface
    */
   protected $conditionManager;
@@ -94,6 +99,9 @@ class AdminExclude extends ConfigFormBase {
     return ['lazyloader.exclude'];
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form = [];
 
@@ -104,14 +112,17 @@ class AdminExclude extends ConfigFormBase {
 
     $form['filenames'] = [
       '#type' => 'textarea',
-      '#title' => t('Exclude images by filename'),
+      '#title' => $this->t('Exclude images by filename'),
       '#default_value' => $this->configuration->get('filenames'),
-      '#description' => t('Any filenames entered in this field will be excluded from lazyloading. Enter one filename per line.'),
+      '#description' => $this->t('Any filenames entered in this field will be excluded from lazyloading. Enter one filename per line.'),
     ];
 
     return parent::buildForm($form, $form_state);
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
 

@@ -84,7 +84,7 @@ class ImportForm extends FormBase {
 function create_taxonomy($voc_name)
 {   
 	global $base_url;
-	$loc = db_query('SELECT file_managed.uri FROM file_managed ORDER BY file_managed.fid DESC limit 1', array());
+	$loc = db_query('SELECT {file_managed.uri} FROM {file_managed} ORDER BY {file_managed.fid} DESC limit 1', array());
     foreach($loc as $val){
 		$location = $val->uri; // get location of the file
 	}		
@@ -138,6 +138,7 @@ function create_taxonomy($voc_name)
 					$term = Term::create(array(
 					'parent' => array($parent),
 					'name' => $data[0],
+					'description' => $data[2],
 					'vid' => $vid,
 					 ))->save();
 				}
@@ -156,7 +157,7 @@ function create_taxonomy($voc_name)
 			drupal_set_message('File contains no data');
 		}
 	}
-	else if($mimetype == "application/xml"){ //Code for fetch and save xml file
+	else if($mimetype == "text/xml"){ //Code for fetch and save xml file
 		if (file_exists($location)) {
 			$feed = file_get_contents($location);
 			$items = simplexml_load_string($feed);
@@ -176,9 +177,13 @@ function create_taxonomy($voc_name)
 					    if($j == 1)
 					    {
 							$parents = $val;
+						}
+						if($j == 2)
+					    {
+							$description = $val;
 						}						
 						$j++;
-						if($j>=2)
+						if($j>=3)
 							break;
 					}
 					$parent = 0;
@@ -187,7 +192,7 @@ function create_taxonomy($voc_name)
 					if(isset($parents) && !empty($parents))
 					{
 						$data = $parents;
-						$parent_id =db_query('SELECT n.tid FROM {taxonomy_term_field_data} n WHERE n.name  = :uid AND n.vid  = :vid', array(':uid' =>  $data, ':vid' => $vid));
+						$parent_id = db_query('SELECT n.tid FROM {taxonomy_term_field_data} n WHERE n.name  = :uid AND n.vid  = :vid', array(':uid' =>  $data, ':vid' => $vid));
 						foreach($parent_id as $val){
 							if(!empty($val)){
 								$parent = $val->tid; // get tid
@@ -206,6 +211,7 @@ function create_taxonomy($voc_name)
 						$term = Term::create(array(
 						'parent' => array($parent),
 						'name' => $terms,
+						'description' => $description,
 						'vid' => $vid,
 						 ))->save();
 					}

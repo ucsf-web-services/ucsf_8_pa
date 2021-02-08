@@ -8,6 +8,7 @@ use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Messenger\MessengerTrait;
+use Drupal\Core\State\StateInterface;
 use GuzzleHttp\Exception\RequestException;
 
 /**
@@ -49,14 +50,24 @@ class Client {
   protected $config;
 
   /**
+   * The state service.
+   *
+   * @var \Drupal\Core\State\StateInterface
+   */
+  protected $state;
+
+  /**
    * Client constructor.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config
    *   Config Factory Interface.
+   * @param \Drupal\Core\State\StateInterface $state
+   *   The state service.
    */
-  public function __construct(ConfigFactoryInterface $config) {
+  public function __construct(ConfigFactoryInterface $config, StateInterface $state) {
     $this->config = $config->get('acquia_connector.settings');
     $this->server = $this->config->get('spi.server');
+    $this->state = $state;
 
     $this->headers = [
       'Content-Type' => 'application/json',
@@ -86,7 +97,7 @@ class Client {
    */
   public function getSubscriptionCredentials($email, $password) {
     $body = ['email' => $email];
-    $authenticator = $this->buildAuthenticator($email, ['rpc_version' => ACQUIA_CONNECTOR_ACQUIA_SPI_DATA_VERSION]);
+    $authenticator = $this->buildAuthenticator($email, \Drupal::time()->getRequestTime(), ['rpc_version' => ACQUIA_CONNECTOR_ACQUIA_SPI_DATA_VERSION]);
     $data = [
       'body' => $body,
       'authenticator' => $authenticator,
@@ -103,7 +114,7 @@ class Client {
         'pass' => $pass,
         'rpc_version' => ACQUIA_CONNECTOR_ACQUIA_SPI_DATA_VERSION,
       ];
-      $authenticator = $this->buildAuthenticator($pass, ['rpc_version' => ACQUIA_CONNECTOR_ACQUIA_SPI_DATA_VERSION]);
+      $authenticator = $this->buildAuthenticator($pass, \Drupal::time()->getRequestTime(), ['rpc_version' => ACQUIA_CONNECTOR_ACQUIA_SPI_DATA_VERSION]);
       $data = [
         'body' => $body,
         'authenticator' => $authenticator,
@@ -137,7 +148,7 @@ class Client {
     $body['identifier'] = $id;
     // There is an identifier and key, so attempt communication.
     $subscription = [];
-    \Drupal::state()->set('acquia_subscription_data.timestamp', REQUEST_TIME);
+    $this->state->set('acquia_subscription_data.timestamp', \Drupal::time()->getRequestTime());
 
     // Include version number information.
     acquia_connector_load_versions();
@@ -151,9 +162,9 @@ class Client {
     // Include Acquia Search for Search API module version number.
     if (\Drupal::moduleHandler()->moduleExists('acquia_search')) {
       foreach (['acquia_search', 'search_api', 'search_api_solr'] as $name) {
-        $info = system_get_info('module', $name);
+        $info = \Drupal::service('extension.list.module')->getExtensionInfo($name);
         // Send the version, or at least the core compatibility as a fallback.
-        $body['search_version'][$name] = isset($info['version']) ? (string) $info['version'] : (string) $info['core'];
+        $body['search_version'][$name] = isset($info['version']) ? (string) $info['version'] : (string) $info['core_version_requirement'];
       }
     }
 
@@ -162,9 +173,9 @@ class Client {
       if (!empty($response['result']['authenticator']) && $this->validateResponse($key, $response['result'], $response['authenticator'])) {
         $subscription += $response['result']['body'];
         // Subscription activated.
-        if (is_numeric($this->config->get('subscription_data')) && is_array($response['result']['body'])) {
+        if (is_numeric($this->state->get('acquia_subscription_data')) && is_array($response['result']['body'])) {
           \Drupal::moduleHandler()->invokeAll('acquia_subscription_status', [$subscription]);
-          \Drupal::configFactory()->getEditable('acquia_connector.settings')->set('subscription_data', $subscription)->save();
+          $this->state->set('acquia_subscription_data', $subscription);
         }
         return $subscription;
       }
@@ -315,6 +326,8 @@ class Client {
    *
    * @param string $key
    *   Secret key to use for signing the request.
+   * @param int $request_time
+   *   Such as from \Drupal::time()->getRequestTime().
    * @param array $params
    *   Optional parameters to include.
    *   'identifier' - Network Identifier.
@@ -322,7 +335,7 @@ class Client {
    * @return array
    *   Authenticator array.
    */
-  protected function buildAuthenticator($key, array $params = []) {
+  protected function buildAuthenticator($key, int $request_time, array $params = []) {
     $authenticator = [];
     if (isset($params['identifier'])) {
       // Put Subscription ID in authenticator but do not use in hash.
@@ -330,8 +343,8 @@ class Client {
       unset($params['identifier']);
     }
     $nonce = $this->getNonce();
-    $authenticator['time'] = REQUEST_TIME;
-    $authenticator['hash'] = $this->hash($key, REQUEST_TIME, $nonce);
+    $authenticator['time'] = $request_time;
+    $authenticator['hash'] = $this->hash($key, $request_time, $nonce);
     $authenticator['nonce'] = $nonce;
 
     return $authenticator;
@@ -364,7 +377,7 @@ class Client {
    *   Random base 64 encoded string.
    */
   protected function getNonce() {
-    return Crypt::hashBase64(uniqid(mt_rand(), TRUE) . Crypt::randomBytes(55));
+    return Crypt::hashBase64(uniqid(mt_rand(), TRUE) . random_bytes(55));
   }
 
   /**
@@ -393,7 +406,7 @@ class Client {
     $host = \Drupal::request()->server->get('HTTP_HOST', '');
     $ssl = \Drupal::request()->isSecure();
     $data = [
-      'authenticator' => $this->buildAuthenticator($key, $params),
+      'authenticator' => $this->buildAuthenticator($key, \Drupal::time()->getRequestTime(), $params),
       'ip' => $ip,
       'host' => $host,
       'ssl' => $ssl,

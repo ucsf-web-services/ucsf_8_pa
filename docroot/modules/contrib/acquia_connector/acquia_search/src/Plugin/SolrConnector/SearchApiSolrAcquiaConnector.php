@@ -8,6 +8,7 @@ use Drupal\acquia_search\PreferredSearchCoreService;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\search_api_solr\SearchApiSolrException;
 use Drupal\search_api_solr\SolrConnector\SolrConnectorPluginBase;
 use Solarium\Core\Client\Client;
 use Solarium\Core\Client\Endpoint;
@@ -27,13 +28,6 @@ use Solarium\Exception\HttpException;
 class SearchApiSolrAcquiaConnector extends SolrConnectorPluginBase {
 
   /**
-   * Event Dispatcher.
-   *
-   * @var bool|\Symfony\Component\EventDispatcher\EventDispatcherInterface
-   */
-  protected $eventDispatcher = FALSE;
-
-  /**
    * {@inheritdoc}
    */
   protected function handleHttpException(HttpException $e, Endpoint $endpoint) {
@@ -51,7 +45,10 @@ class SearchApiSolrAcquiaConnector extends SolrConnectorPluginBase {
       default:
         $description = $e->getMessage();
     }
-    throw new SearchApiSolrException(strstr('Solr endpoint @endpoint: @description.', ['@endpoint' => $endpoint->getBaseUri(), '@description' => $description]), $response_code, $e);
+    throw new SearchApiSolrException($this->t('Solr endpoint @endpoint: @description.', [
+      '@endpoint' => $endpoint->getBaseUri(),
+      '@description' => $description,
+    ]), $response_code, $e);
   }
 
   /**

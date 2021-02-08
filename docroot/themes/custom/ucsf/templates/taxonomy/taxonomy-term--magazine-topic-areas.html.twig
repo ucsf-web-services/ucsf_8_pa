@@ -1,0 +1,36 @@
+{% set classes = ['main'] %}
+{% set layout = term.field_banner_layout.value %}
+
+<div class="magazine-topic-issue-page magazine-topic-page">
+<main {{ attributes.addClass(classes) }}>
+  <a id="main-content" tabindex="-1"></a>
+  <div class="magazine-topic-page">
+
+      <header class="magazine-topic-page__header">
+        <h1 class="magazine-topic-page__header-title">UCSF Magazine <span class="magazine-topic-page__header-subtitle">{{ name }}</span></h1>
+      </header>
+
+      {% if layout == 'featuretwosupport' %}
+        {% include '@theme/banner/magazine-feature-two-support.twig' %}
+      {% elseif layout == 'featurethreesupport' %}
+        {% include '@theme/banner/magazine-feature-three-support.twig' %}
+      {% else %}
+
+      {% endif %}
+
+    <div class="topic-page-wrapper magazine-topics-latest">
+          <h2 class="magazine-topics-latest__title">The Latest</h2>
+
+          <div class="news-list">
+            {% block article_view %}
+              {{ drupal_view('topics_tags_news_articles', 'block_2') }}
+            {% endblock %}
+          </div>
+    </div>
+  </div>
+</main>
+</div>
+
+<div class="footer-ctas-wrapper magazine-topic-footer-ctas-wrapper" role="complementary">
+  {{ content.field_ankle_cta }}
+</div>

@@ -1,0 +1,26 @@
+{% set classes = ['news-card campus-news-card inside-ucsf-card'] %}
+
+{% if node.field_external_url.value.0.uri  %}
+ {% set link = node.field_external_url.value.0.uri %}
+{% else %}
+ {% set link = url %}
+{% endif %}
+
+<article {{ attributes.addClass(classes) }}>
+  <a href="{{ link }}" class="news-card__link">
+    <header>
+      {% if content.field_short_title|render|striptags != ''  %}
+        <h3 class="campus-news-card__title">{{ label }} {# removed this for now { content.field_short_title }#}</h3>
+      {% else %}
+        <h3 class="campus-news-card__title">{{ label }}</h3>
+      {% endif %}
+
+      {% if content.body['#items'][0].summary|render|striptags != ''  %}
+      <p class="search-result__body">{{ content.body['#items'][0].summary }}</p>
+      {% else %}
+      {% set text = content.body|render|striptags|trim %}
+      <p class="search-result__body">{{ (text|length > 200 ? text|slice(0, 201)|split(' ')|slice(0, -1)|join(' ') ~ '&hellip;' : text)|raw }}</p>
+      {% endif %}
+    </header>
+  </a>
+</article>

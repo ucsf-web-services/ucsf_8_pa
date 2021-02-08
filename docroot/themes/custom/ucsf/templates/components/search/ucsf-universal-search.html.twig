@@ -34,65 +34,67 @@
  */
 #}
 {{ attach_library('ucsf/universalsearch') }}
-<div class="form-search-block-div">
+<main>
+  <a id="main-content" tabindex="-1"></a>
+  <div class="form-search-block-div">
     <div class="search-box-container">
-        <!-- This was the Google search input box, but didn't allow some things to work right -->
-        {% set formvars = {'searchterm': searchterm, 'location' : '', 'placeholder' : 'Search people, places, ideas', 'allchecked' : 'checked=checked'} %}
-        {% include '@theme/search/search-form.html.twig' with formvars %}
-        {# We should style these like Zeplin mockup and have them link to other routes #}
+      <!-- This was the Google search input box, but didn't allow some things to work right -->
+      {% set formvars = {'searchterm': searchterm, 'location' : '', 'placeholder' : 'Search people, places, ideas', 'allchecked' : 'checked=checked'} %}
+      {% include '@theme/search/search-form.html.twig' with formvars %}
+      {# We should style these like Zeplin mockup and have them link to other routes #}
     </div>
     <ul id="universalSearchTabs">
-        <li class="active"><a href="/search?search={{ searchterm }}">All Results</a></li>
-        <li><a href="/search/news?search={{ searchterm }}">News</a></li>
-        <li><a href="/search/people?search={{ searchterm }}">People Directory</a></li>
-        {#<li><a href="/search/websites?search={{ searchterm }}">Websites</a></li> #}
+      <li class="active"><a href="/search?search={{ searchterm }}">All Results</a></li>
+      <li><a href="/search/news?search={{ searchterm }}">News</a></li>
+      <li><a href="/search/people?search={{ searchterm }}">People Directory</a></li>
+      {#<li><a href="/search/websites?search={{ searchterm }}">Websites</a></li> #}
     </ul>
 
     <div class="results-wrapper">
       <div class="results-wrapper__content">
-      <div class="results-wrapper__float">
-        {% if directory is not empty %}
-        <div id="universalDirectory">
-            <h3 class="eyebrow-title">People</h3>
+        <div class="results-wrapper__float">
+          {% if directory is not empty %}
+            <div id="universalDirectory">
+              <h3 class="eyebrow-title">People</h3>
 
-            <div class="results-content">
-              <ul class="search-people">
-              {% for person in directory %}
-              <li>
-                  <strong><a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a></strong> |
-                  {% if person.mail %}{{ person.mail }}, {% endif %}
-                  {% if person.telephonenumber %}{{ person.telephonenumber }}, {% endif %}
-                  {{ person.departmentname|title|replace({'_': " "}) }}
-              </li>
-              {% endfor %}
-              </ul>
-              {% if more.people %}
+              <div class="results-content">
+                <ul class="search-people">
+                  {% for person in directory %}
+                    <li>
+                      <strong><a href="https://directory.ucsf.edu/people/search/id/{{ person.uid }}" target="_blank">{{ person.displayname }}</a></strong> |
+                      {% if person.mail %}{{ person.mail }}, {% endif %}
+                      {% if person.telephonenumber %}{{ person.telephonenumber }}, {% endif %}
+                      {{ person.departmentname|title|replace({'_': " "}) }}
+                    </li>
+                  {% endfor %}
+                </ul>
+                {% if more.people %}
                   <p class="search-more"><a href="https://directory.ucsf.edu/people/search/name/{{ searchterm }}" class="link--cta">View All People Results</a></p>
-              {% endif %}
+                {% endif %}
+              </div>
             </div>
-        </div>
-        {% endif %}
+          {% endif %}
 
-        {% if websites is not empty %}
-        <div id="universalWebsites">
-            <h3 class="eyebrow-title">Websites</h3>
+          {% if websites is not empty %}
+            <div id="universalWebsites">
+              <h3 class="eyebrow-title">Websites</h3>
 
-            <div class="results-content">
-              <ul class="search-websites">
-              {% for website in websites %}
-                  <li>
+              <div class="results-content">
+                <ul class="search-websites">
+                  {% for website in websites %}
+                    <li>
                       <strong>{{ website.title }}</strong> | <a href="{{ website.field_website_url }}" target="_blank">{{ website.field_website_url }}</a>{% if website.field_display_name %}, {{ website.field_display_name|replace({'_': " "}) }}{% endif %}
-                  </li>
-              {% endfor %}
-              </ul>
-              {% if more.web %}
+                    </li>
+                  {% endfor %}
+                </ul>
+                {% if more.web %}
                   <p class="search-more"><a href="https://websites.ucsf.edu/azlist?combine={{ searchterm }}" target="_blank" class="link--cta">View All Websites Results</a></p>
-              {% endif %}
+                {% endif %}
+              </div>
             </div>
-        </div>
-        {% endif %}
+          {% endif %}
 
-        <div id="cse">
+          <div id="cse">
             <h3 class="eyebrow-title">All Results</h3>
             <!-- Google Search Results -->
 
@@ -100,11 +102,12 @@
               <gcse:searchresults-only queryParameterName="search"></gcse:searchresults-only>
 
               {% if searchterm is empty %}
-                  <p>No search term(s) provided, please try again.</p>
+                <p>No search term(s) provided, please try again.</p>
               {% endif %}
             </div>
+          </div>
         </div>
       </div>
-      </div>
     </div>
-</div>
+  </div>
+</main>

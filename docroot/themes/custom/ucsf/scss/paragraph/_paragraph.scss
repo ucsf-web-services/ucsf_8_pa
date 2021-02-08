@@ -285,7 +285,7 @@
     margin-bottom: $space-four;
   }
 
-  .field-content-wrapper-content, .field-supporting-mag-articlesl { // PL: .layout-columns__three
+  .field-content-wrapper-content, .field-supporting-mag-articlesl, .field-supporting-feature-article { // PL: .layout-columns__three
     list-style: none;
 
     > .layout-column, > .field__item {
@@ -297,7 +297,7 @@
     padding: $space-five;
     padding-bottom: 0;
 
-    .field-content-wrapper-content, .field-supporting-mag-articlesl {
+    .field-content-wrapper-content, .field-supporting-mag-articlesl, .field-supporting-feature-article {
       clear: none;
 
       > .layout-column, > .field__item {
@@ -323,7 +323,7 @@
     float: none;
     width: auto;
 
-    .field-content-wrapper-content, .field-supporting-mag-articlesl { // PL: .layout-columns__three
+    .field-content-wrapper-content, .field-supporting-mag-articlesl, .field-supporting-feature-article { // PL: .layout-columns__three
       grid-column: 1/-1;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -447,6 +447,10 @@
   @include breakpoint($new-small-max) {
     padding-top: 32px;
   }
+}
+
+.layout__heading-description {
+  max-width: 900px;
 }
 
 .layout-column {
@@ -703,45 +707,6 @@
   line-height: 1.4;
 }
 
-#block-instagramblock {
-  margin-top: $space-two;
-  .group {
-    display: inline-block;
-    overflow: hidden;
-    max-height: 30%;
-    max-width: 30%;
-    margin-right: 2%;
-    margin-bottom: 2%;
-
-    &:nth-child(3n) {
-      margin-right: 0;
-    }
-  }
-}
-
-.block-socialfeed {
-  margin-top: $space-two;
-
-  @include breakpoint($new-medium) {
-    margin-right: 2.3rem;
-  }
-  .item-list ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: .5rem;
-    list-style: none;
-    padding: 0;
-  }
-
-  .post {
-    display: block;
-    // hack for responsive images, height is controlled by padding-bottom
-    height: 0;
-    padding-bottom: 100%; // aspect ratio of 1:1
-    overflow: hidden;
-  }
-}
-
 // For 1-4 column used in middle of News Articles
 .main-content.narrow-page {
   .layout-columns__1,
@@ -780,11 +745,63 @@
           color: $c-navy;
         }
       }
+
+      a.button-reverse, a.button-reverse:visited {
+        border: 2px solid $c-white;
+
+        &:hover {
+          border: 2px solid $c-white;
+        }
+      }
+
+      .eyebrow-title::after {
+        background: $c-white;
+      }
     }
 
     &.bg-gray {
       margin-top: 0;
     }
+  }
+
+}
+
+.areas-content,
+.full-width-page {
+  .layout-columns__1,
+  .layout-columns__2,
+  .layout-columns__3,
+  .layout-columns__4 {
+
+    &.col-white-text {
+      p, li, h2, h3, h4, h5, a {
+        color: $c-white;
+      }
+
+      a, a:visited {
+        color: $c-white;
+        border-bottom: 1px solid $c-white;
+
+        &:hover {
+          background: $c-white;
+          border-bottom: 1px solid $c-white;
+          color: $c-navy;
+        }
+      }
+
+      a.button-reverse, a.button-reverse:visited {
+        border: 2px solid $c-white;
+
+        &:hover {
+          border: 2px solid $c-white;
+        }
+      }
+
+      .eyebrow-title::after {
+        background: $c-white;
+      }
+    }
+
   }
 
 }

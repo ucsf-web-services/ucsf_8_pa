@@ -1,4 +1,5 @@
-body.page-node-type-magazine-article {
+body.page-node-type-magazine-article,
+.magazine-topic-issue-page {
   background: $c-white;
 
   // Possibly HTML nesting bug .recommended-articles is a sibling of #block-ucsf-content
@@ -26,23 +27,23 @@ body.page-node-type-magazine-article {
       .recommended-articles__banner {
         grid-template-rows: auto;
       }
+    }
 
-      .recommended-articles__title {
-        grid-row: 1;
-        margin-bottom: $space-five;
+    .recommended-articles__title {
+      padding-top: 0;
+
+      @include breakpoint($new-medium) {
+        margin: $space-two 0 $space-five 0;
         color: $c-dark-navy;
       }
     }
   }
 
-  .recommended-articles__title,
-  .recommended-article__image,
   .paragraph-text-block {
     background-color: transparent;
   }
 
-  .news-card__copy,
-  .recommended-article__copy {
+  .news-card__copy {
     //removing notch treatment
     margin-left: 0;
     margin-right: 0;
@@ -67,9 +68,6 @@ body.page-node-type-magazine-article {
     display: none;
   }
 
-  .recommended-article__image {
-    padding-right: 0;
-  }
 
   .link--cta {
     @include link-bg-image-hover();
@@ -94,6 +92,74 @@ body.page-node-type-magazine-article {
       font-family: $font-helvetica-neue-light;
     }
   }
+
+  //magazine two-up support banner
+  .magazine-feature-two-support {
+    margin-bottom: $space-five;
+    border-bottom: 1px solid $c-gray-lighter;
+
+    .magazine-feature-support {
+      .field-supporting-feature-article {
+        & > .field__item {
+          &:nth-of-type(3){
+            display: none;
+          }
+        }
+      }
+    }
+
+    @include breakpoint($new-medium) {
+      margin-bottom: $space-ten;
+
+      .magazine-feature-support {
+        .field-supporting-feature-article {
+          & > .field__item {
+            width: 48%;
+
+            &:nth-of-type(2){
+              margin-right: 0;
+              margin-left: 2%;
+            }
+          }
+        }
+      }
+    }
+
+    @include breakpoint($new-large) {
+      @include grid;
+
+      .field-feature-article {
+        grid-column: 1/9;
+      }
+
+      .magazine-home-feature {
+        display: block;
+
+        .card-row__copy {
+          padding: 32px 80px 0;
+        }
+      }
+
+      .magazine-feature-support {
+        padding: 0;
+        grid-column: 9/-1;
+        padding-right: 15%;
+        margin-bottom: 0;
+
+        .field-supporting-feature-article {
+          display: block;
+
+          & > .field__item {
+            width: 100%;
+          }
+
+          article {
+            margin-bottom: $space-ten;
+          }
+        }
+      }
+    }
+  }
 }
 
 body.page-node-type-magazine-article #block-ucsf-content {
@@ -107,6 +173,18 @@ body.page-node-type-magazine-article #block-ucsf-content {
   em {
     font-family: $font-ivar-italic;
     font-style: normal;
+  }
+
+  .small-text {
+    em, strong {
+      font-family: $font-helvetica-neue-roman;
+    }
+  }
+
+  .small-text {
+    em {
+      font-style: italic;
+    }
   }
 
   //updating font
@@ -298,9 +376,6 @@ body.page-node-type-magazine-article #block-ucsf-content {
     }
   }
 
-
-  .recommended-articles__title,
-  .recommended-article__image,
   .paragraph-text-block {
     background-color: transparent;
   }
@@ -526,5 +601,4 @@ body.page-node-type-magazine-article #block-ucsf-content {
       display: none;
     }
   }
-
 }

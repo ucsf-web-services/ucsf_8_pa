@@ -1,0 +1,51 @@
+{# used on news package node #}
+
+{% if content.field_link|render|striptags != '' %}
+  {# Feature Paragraph > Overwrite Link #}
+  {% set link = paragraph.field_link.value.0.uri %}
+{% else %}
+  {# Feature Paragraph > News Article (News) > ID #}
+  {% set link = drupal_url('node/' ~ content.field_news_article.0['#node'].id ) %}
+{% endif %}
+
+
+<article class="card-row magazine-home-feature">
+  <div class="card-row__image">
+    <a href="{{ link }}">
+      {% if content.field_image_media|render|striptags != ''%}
+        {# Feature Paragraph - Overwrite Image #}
+        {{ content.field_image_media }}
+      {% else %}
+        {# Feature Paragraph > News Article (News) > Card Image #}
+        {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id) }}
+      {% endif %}
+    </a>
+  </div>
+  <div class="card-row__copy">
+    <header class="news-card ">
+      <ul class="news-card__byline">
+        <li class="magazine-card__byline">{{ drupal_field('field_magazine_topic_area', 'node', paragraph.field_news_article.target_id) }}</li>
+        <li class="article-header__date magazine-article-card__date">{{ drupal_field('field_magazine_issue', 'node', paragraph.field_news_article.target_id) }}</li>
+      </ul>
+      <h2>
+        <a href="{{ link }}">
+        {% if content.field_title|render|striptags != '' %}
+            {# Feature Paragraph - Overwrite Title #}
+            {{ content.field_title }}
+          {% else %}
+            {# Feature Paragraph > News Article (News) > Title #}
+            {{ paragraph.field_news_article.entity.label }}
+          {% endif %}
+        </a>
+      </h2>
+    </header>
+    <div class="card-row__body">
+     {{ content.field_text_body }}
+    </div>
+    {% if content.field_banner_cta_text|render|striptags != '' %}
+    <p class="card-row__link link--cta">
+      {{ content.field_banner_cta_text }}
+    </p>
+    {% endif %}
+  </div>
+</article>

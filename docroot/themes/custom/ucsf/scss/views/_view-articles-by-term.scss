@@ -65,18 +65,19 @@
 }
 
 .has-recommended-article .view-articles-by-term { // .recommended-articles_list
-  padding: 0 80px;
+  padding: 20px;
   margin-top: 0;
 
-  .view-content {
-    margin-top: $space-ten;
-    padding-top: 0;
+  @include breakpoint($new-medium) {
+    padding: 0 80px;
   }
 
-  @include breakpoint($new-small-max) {
-      padding: 20px;
-      .view-content {
-        margin-top: 0;
-      }
+  .view-content {
+    padding-top: 0;
+    margin-top: 0;
+
+    @include breakpoint($new-small) {
+      margin-top: $space-ten;
+    }
   }
 }

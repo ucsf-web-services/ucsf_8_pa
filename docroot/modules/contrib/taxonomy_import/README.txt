@@ -19,9 +19,11 @@ REQUIREMENTS
 
 This module requires the following:
 A CSV or XML file of Taxonomy terms to import.
-The .csv file can have two or more columns,eg:- name, parent.
-The first column is taken as Name and second column is taken as Parent of the Taxonomy Term created. The first row will be the headers.
-The .xml file can have two tags, eg:- <name>,<parent>.
+The .csv file can have three columns,eg:- name, parent, description.
+The first column is taken as Name, second column is taken as Parent of 
+the Taxonomy Term created and the third column is taken as Description 
+of the Taxonomy term created. The first row will be the headers.
+The .xml file can have three tags, eg:- <name>, <parent>, <description>.
 Refer the example given in the module folder XML_Test.xml, CSV_Test.csv.
 
 INSTALLATION
@@ -47,17 +49,24 @@ It will redirect you to Taxonomy Import Form, with two
 fields: Vocabulary name and Import file.
 
 For a Taxonomy term, the two main fields are its Name and Relations.
-Before selecting the file, you need to consider that this module create taxonomy terms with a name and a parent. So these data should come first in your file.
+Before selecting the file, you need to consider that this module create 
+taxonomy terms with a name, a parent and a description. So these data 
+should come first in your file.
 
 Give values to the fields. The file Imported should be
-a CSV or XML. 
+a CSV or XML.
 
 Click on Import which redirects you to admin/structure/
-taxonomy/manage/<vocabulary name>/overview page. 
+taxonomy/manage/<vocabulary name>/overview page.
 
-If .csv file contains two colums, the first column value is set as Name and second column value is set as Parent. For creating heirarchy based taxonomy, the values in the second column should come in the first column at the beginning of the file.
+If .csv file contains three colums, the first column value is set as Name, 
+second column value is set as Parent and third column value is set as 
+Description. For creating hierarchy based taxonomy, the values in the 
+second column should come in the first column at the beginning of the file.
 
-Similarly .xml file can have two or more tags with values from which first value will be saved to Name and second value will be saved to Parent fields of taxonomy respectively. 
+Similarly .xml file can have three tags with values from which first 
+value will be saved to Name, second value will be saved to Parent and 
+third value will be saved to Description fields of taxonomy respectively.
 
 You can reuse the Vocabulary name to import taxonomy terms again.
 

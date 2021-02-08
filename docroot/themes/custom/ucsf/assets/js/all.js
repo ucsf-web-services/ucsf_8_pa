@@ -1,7 +1,7 @@
 'use strict';
 
 /* eslint-disable */
-(function ($) {
+(function ($, window) {
     'use strict';
 
     Drupal.behaviors.dieToolbardie = {
@@ -390,5 +390,12 @@
             });
         }
     };
-})(jQuery);
+
+    // Need a class on center aligned videos to fix width issue;
+    $('.align-center').each(function () {
+        if ($(this).find('.media--type-remote-video').length > 0) {
+            $(this).addClass('align-center--video');
+        };
+    });
+})(jQuery, window);
 //# sourceMappingURL=all.js.map

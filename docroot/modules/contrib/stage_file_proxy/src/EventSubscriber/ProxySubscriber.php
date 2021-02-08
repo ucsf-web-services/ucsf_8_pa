@@ -2,16 +2,18 @@
 
 namespace Drupal\stage_file_proxy\EventSubscriber;
 
-use Drupal\Component\Utility\Unicode;
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\StreamWrapper\StreamWrapperManager;
 use Drupal\Core\Url;
-use Psr\Log\LoggerInterface;
 use Drupal\stage_file_proxy\EventDispatcher\AlterExcludedPathsEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\stage_file_proxy\FetchManagerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Stage file proxy subscriber for controller requests.
@@ -40,6 +42,20 @@ class ProxySubscriber implements EventSubscriberInterface {
   protected $eventDispatcher;
 
   /**
+   * The configuration factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
+   * The request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected $requestStack;
+
+  /**
    * Construct the FetchManager.
    *
    * @param \Drupal\stage_file_proxy\FetchManagerInterface $manager
@@ -48,21 +64,28 @@ class ProxySubscriber implements EventSubscriberInterface {
    *   The logger interface.
    * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $event_dispatcher
    *   The event dispatcher.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The request stack.
    */
-  public function __construct(FetchManagerInterface $manager, LoggerInterface $logger, EventDispatcherInterface $event_dispatcher) {
+  public function __construct(FetchManagerInterface $manager, LoggerInterface $logger, EventDispatcherInterface $event_dispatcher, ConfigFactoryInterface $config_factory, RequestStack $request_stack) {
     $this->manager = $manager;
     $this->logger = $logger;
     $this->eventDispatcher = $event_dispatcher;
+    $this->configFactory = $config_factory;
+    $this->requestStack = $request_stack;
   }
 
   /**
-   * Fetch the file according the its origin.
+   * Fetch the file from it's origin.
    *
    * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-   *   The Event to process.
+   *   The event to process.
    */
   public function checkFileOrigin(GetResponseEvent $event) {
-    $config = \Drupal::config('stage_file_proxy.settings');
+    $config = $this->configFactory->get('stage_file_proxy.settings');
+
     // Get the origin server.
     $server = $config->get('origin');
 
@@ -79,9 +102,19 @@ class ProxySubscriber implements EventSubscriberInterface {
     $file_dir = $this->manager->filePublicPath();
     $request_path = $event->getRequest()->getPathInfo();
 
-    $request_path = Unicode::substr($request_path, 1);
+    $request_path = mb_substr($request_path, 1);
 
     if (strpos($request_path, '' . $file_dir) !== 0) {
+      return;
+    }
+
+    // Disallow directory traversal.
+    if (in_array('..', explode('/', $request_path))) {
+      return;
+    }
+
+    // Moving to parent directory is insane here, so prevent that.
+    if (in_array('..', explode('/', $request_path))) {
       return;
     }
 
@@ -104,7 +137,7 @@ class ProxySubscriber implements EventSubscriberInterface {
 
     $request_path = rawurldecode($request_path);
     // Path relative to file directory. Used for hotlinking.
-    $relative_path = Unicode::substr($request_path, Unicode::strlen($file_dir) + 1);
+    $relative_path = mb_substr($request_path, mb_strlen($file_dir) + 1);
     // If file is fetched and use_imagecache_root is set, original is used.
     $fetch_path = $relative_path;
 
@@ -118,15 +151,15 @@ class ProxySubscriber implements EventSubscriberInterface {
       }
       if ($config->get('use_imagecache_root')) {
         // Config says: Fetch the original.
-        $fetch_path = file_uri_target($original_path);
+        $fetch_path = StreamWrapperManager::getTarget($original_path);
       }
     }
 
-    $query = \Drupal::request()->query->all();
+    $query = $this->requestStack->getCurrentRequest()->query->all();
     $query_parameters = UrlHelper::filterQueryParameters($query);
-      $options = [
-        'verify' => \Drupal::config('stage_file_proxy.settings')->get('verify'),
-      ];
+    $options = [
+      'verify' => $config->get('verify'),
+    ];
 
     if ($config->get('hotlink')) {
 
@@ -144,9 +177,6 @@ class ProxySubscriber implements EventSubscriberInterface {
       ])->toString();
       // Avoid redirection caching in upstream proxies.
       header("Cache-Control: must-revalidate, no-cache, post-check=0, pre-check=0, private");
-    }
-    else {
-      $this->logger->error('Stage File Proxy encountered an unknown error by retrieving file @file', ['@file' => $server . '/' . UrlHelper::encodePath($remote_file_dir . '/' . $relative_path)]);
     }
 
     if (isset($location)) {

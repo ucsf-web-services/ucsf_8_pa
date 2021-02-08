@@ -5,9 +5,14 @@
   // Wait for the document to be ready.
   $(function () {
 
-    // Exit if the admin toolbar is present.
     var toolbar = document.querySelector('#toolbar-administration');
+    var header = document.querySelector('.combined-header-region');
+    var minimizedMenuSelected = header.classList.contains('is-minimized-sticky-menu');
+    // Exit if the admin toolbar is present.
     if (toolbar) {
+      if (minimizedMenuSelected) {
+        header.classList.remove('is-minimized-sticky-menu', 'fixed-nav', 'fixed-nav--visible');
+      }
       return;
     }
 
@@ -18,26 +23,31 @@
       return;
     }
 
-    var header = document.querySelector('.combined-header-region');
-    var headerNav = document.querySelector('.header-region .header');
+    var headerNav = document.querySelector('.header-region');
     var headerTop = document.querySelector('.universal-header-region');
+    var hasUniversalHeader = true;
     var headerNavY = headerTop.offsetHeight;
-    var root = document.documentElement;
+    // Get the bottom Y coordinate of the Header.
+    var headerBottomY = headerNav.offsetHeight + headerNavY;
+    var headerFixedBottomY = 60 + headerNavY;
+
+    if (minimizedMenuSelected) {
+      hasUniversalHeader = false;
+      headerNavY = headerNav.offsetHeight;
+      headerBottomY = headerNav.offsetHeight;
+      headerFixedBottomY = 50;
+    }
 
     // Calculate the Nav Height and set a CSS variable.
     var setNavHeight = function setNavHeight() {
       // Get element height
       var headerNavHeight = headerNav.offsetHeight;
-      // Set root variable of nav-height
-      root.style.setProperty('--nav-height', headerNavHeight + "px");
+      // Set variable of nav-height
+      header.style.setProperty('--nav-height', headerNavHeight + "px");
     };
 
     // Set the initial nav height.
     setNavHeight();
-
-    // Get the bottom Y coordinate of the Header.
-    var headerBottomY = headerNav.offsetHeight + headerNavY;
-    var headerFixedBottomY = 60 + headerNavY; // 60 is the height of the fixed-nav
 
     // Recalculate css variable on screen resize for the Nav height
     var mql = matchMedia('(min-width: 850px)');
@@ -59,7 +69,7 @@
 
       // make nav fixed only when user scrolled past navigation.
       // In other words, put the navigation back to its normal spot.
-      if (currentScroll < headerNavY) {
+      if (currentScroll < headerNavY && hasUniversalHeader) {
         header.classList.remove('fixed-nav', 'fixed-nav--visible', 'fixed-nav--hidden', 'fixed-nav--pre-hidden');
         return;
       }
