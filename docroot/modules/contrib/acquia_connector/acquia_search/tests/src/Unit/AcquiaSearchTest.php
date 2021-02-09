@@ -6,10 +6,6 @@ use Drupal\acquia_connector\CryptConnector;
 use Drupal\acquia_search\EventSubscriber\SearchSubscriber;
 use Drupal\Tests\UnitTestCase;
 
-if (!defined('REQUEST_TIME')) {
-  define('REQUEST_TIME', (int) $_SERVER['REQUEST_TIME']);
-}
-
 /**
  * Class AcquiaSearchTest.
  *
@@ -100,7 +96,7 @@ class AcquiaSearchTest extends UnitTestCase {
    */
   public function testCalculateAuthCookie() {
     // Generate the expected hash.
-    $time = REQUEST_TIME;
+    $time = 1577635946;
     $nonce = $this->randomMachineName(32);
     $string = $time . $nonce . $this->randomMachineName();
     $hmac = hash_hmac('sha1', $time . $nonce . $string, $this->derivedKey);
@@ -112,7 +108,7 @@ class AcquiaSearchTest extends UnitTestCase {
       ->method('getDerivedKey')
       ->willReturn($this->derivedKey);
 
-    $authenticator = $calculateAuthCookie->calculateAuthCookie($string, $nonce, $this->derivedKey, $time);
+    $authenticator = $calculateAuthCookie->calculateAuthCookie($string, $nonce, $time, $this->derivedKey, $time);
     preg_match('/acquia_solr_hmac=([a-zA-Z0-9]{40});/', $authenticator, $matches);
     $this->assertEquals($hmac, $matches[1], 'HMAC API function generates the expected hmac hash.');
     preg_match('/acquia_solr_time=([0-9]{10});/', $authenticator, $matches);

@@ -12,6 +12,7 @@
 {% endif %}
 
 {% set article_type = node.field_article_type.0.entity.label|clean_class %}
+{% set node_type =  node.type.entity.label|clean_class %}
 
 {%
   set classes = [
@@ -30,11 +31,12 @@
   {% set article_url =  url %}
 {% endif %}
 
-<article {{ attributes.addClass(classes) }}">
-
+<article {{ attributes.addClass(classes) }}>
   <header class="search-result__copy">
     {% if article_type == 'media-coverage' %}
       {% include '@theme/article/byline-media.twig' %}
+    {% elseif node_type == 'magazine-article'%}
+      {% include '@theme/article/magazine-card-byline.twig' %}
     {% else %}
       {% include '@theme/article/byline.twig' %}
     {% endif %}
@@ -44,11 +46,16 @@
       <h2><a href="{{ article_url }}">{{ label }}</a></h2>
     {% endif %}
 
-    {% if content.body['#items'][0].summary|render|striptags != ''  %}
-    <p class="search-result__body">{{ content.body['#items'][0].summary }}</p>
+
+
+    {% if content.body['#items'][0].summary|render|striptags != '' %}
+      <p class="search-result__body">{{ content.body['#items'][0].summary }}</p>
+    {% elseif content.field_subtitle_kicker['#items'][0].summary|render|striptags != '' %}
+      {# Full Width News Package #}
+      <p class="search-result__body">{{ content.field_subtitle_kicker['#items'][0].summary }}</p>
     {% else %}
-    {% set text = content.body|render|striptags|trim %}
-    <p class="search-result__body">{{ (text|length > 200 ? text|slice(0, 201)|split(' ')|slice(0, -1)|join(' ') ~ '&hellip;' : text)|raw }}</p>
+      {% set text = content.body|render|striptags|trim %}
+      <p class="search-result__body">{{ text|truncate(200, true) }}</p>
     {% endif %}
   </header>
 

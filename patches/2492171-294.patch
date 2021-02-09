@@ -1,0 +1,203 @@
+diff --git a/core/modules/file/file.module b/core/modules/file/file.module
+index d98b0f6fba8..723b30a9e19 100644
+--- a/core/modules/file/file.module
++++ b/core/modules/file/file.module
+@@ -1030,7 +1030,8 @@ function _file_save_upload_single(\SplFileInfo $file_info, $form_field_name, $va
+   // rename filename.php.foo and filename.php to filename.php.foo.txt and
+   // filename.php.txt, respectively). Don't rename if 'allow_insecure_uploads'
+   // evaluates to TRUE.
+-  if (!\Drupal::config('system.file')->get('allow_insecure_uploads') && preg_match(FILE_INSECURE_EXTENSION_REGEX, $file->getFilename()) && (substr($file->getFilename(), -4) != '.txt')) {
++  $system_file_config = \Drupal::config('system.file');
++  if (!$system_file_config->get('allow_insecure_uploads') && preg_match(FILE_INSECURE_EXTENSION_REGEX, $file->getFilename()) && (substr($file->getFilename(), -4) != '.txt')) {
+     $file->setMimeType('text/plain');
+     // The destination filename will also later be used to create the URI.
+     $file->setFilename($file->getFilename() . '.txt');
+@@ -1062,10 +1063,26 @@ function _file_save_upload_single(\SplFileInfo $file_info, $form_field_name, $va
+   if (substr($destination, -1) != '/') {
+     $destination .= '/';
+   }
++
++  $filename = $file->getFilename();
++  // If the transliteration option is enabled, transliterate the filename.
++  if ($system_file_config->get('filename_transliteration')) {
++    // Transliterate and sanitize the destination filename.
++    $filename = \Drupal::transliteration()->transliterate($filename, $file->language()->getId(), '');
++    // Replace whitespace.
++    $filename = str_replace(' ', '-', $filename);
++    // Remove remaining unsafe characters.
++    $filename = preg_replace('![^0-9A-Za-z_.-]!', '', $filename);
++    // Remove multiple consecutive non-alphabetical characters.
++    $filename = preg_replace('/(_)_+|(\.)\.+|(-)-+/', '\\1\\2\\3', $filename);
++    // Force lowercase to prevent issues on case-insensitive file systems.
++    $filename = mb_strtolower($filename);
++  }
++
+   /** @var \Drupal\Core\File\FileSystemInterface $file_system */
+   $file_system = \Drupal::service('file_system');
+   try {
+-    $file->destination = $file_system->getDestinationFilename($destination . $file->getFilename(), $replace);
++    $file->destination = $file_system->getDestinationFilename($destination . $filename, $replace);
+   }
+   catch (FileException $e) {
+     \Drupal::messenger()->addError(t('The file %filename could not be uploaded because the name is invalid.', ['%filename' => $file->getFilename()]));
+@@ -1109,6 +1126,10 @@ function _file_save_upload_single(\SplFileInfo $file_info, $form_field_name, $va
+     return FALSE;
+   }
+ 
++  // Update the filename with any changes as a result of transliteration or
++  // renaming due to an existing file.
++  $file->setFilename(\Drupal::service('file_system')->basename($file->destination));
++
+   // Set the permissions on the new file.
+   $file_system->chmod($file->getFileUri());
+ 
+diff --git a/core/modules/file/tests/src/Functional/SaveUploadTest.php b/core/modules/file/tests/src/Functional/SaveUploadTest.php
+index 446b565dc13..b9e7a491b40 100644
+--- a/core/modules/file/tests/src/Functional/SaveUploadTest.php
++++ b/core/modules/file/tests/src/Functional/SaveUploadTest.php
+@@ -59,10 +59,17 @@ class SaveUploadTest extends FileManagedTestBase {
+    */
+   protected $imageExtension;
+ 
++  /**
++   * The user used by the test.
++   *
++   * @var \Drupal\user\Entity\User
++   */
++  protected $account;
++
+   protected function setUp() {
+     parent::setUp();
+-    $account = $this->drupalCreateUser(['access site reports']);
+-    $this->drupalLogin($account);
++    $this->account = $this->drupalCreateUser(['access site reports']);
++    $this->drupalLogin($this->account);
+ 
+     $image_files = $this->drupalGetTestFiles('image');
+     $this->image = File::create((array) current($image_files));
+@@ -168,6 +175,48 @@ public function testDuplicate() {
+     $this->assertEqual($max_fid_before_duplicate, $max_fid_after, 'A new managed file was not created.');
+   }
+ 
++  /**
++   * Tests filename transliteration.
++   */
++  public function testTransliteration() {
++    $file = $this->generateFile('TEXT-Ã…â€œ', 64, 5, 'text');
++
++    // Upload a file with a name with uppercase and unicode characters.
++    $edit = [
++      'files[file_test_upload]' => \Drupal::service('file_system')->realpath($file),
++      'extensions' => 'txt',
++      'is_image_file' => FALSE,
++    ];
++    $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
++    $this->assertSession()->statusCodeEquals(200);
++    // Test that the file name has not been transliterated.
++    $this->assertSession()->responseContains('File name is TEXT-Ã…â€œ.txt.');
++
++    // Enable transliteration via the UI.
++    $this->drupalLogin($this->rootUser);
++    $this->drupalPostForm('admin/config/media/file-system', ['filename_transliteration' => TRUE], 'Save configuration');
++    $this->drupalLogin($this->account);
++
++    // Upload a file with a name with uppercase and unicode characters.
++    $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
++    $this->assertSession()->statusCodeEquals(200);
++    // Test that the file name has been transliterated.
++    $this->assertSession()->responseContains('File name is text-a.aeuoe.txt.');
++
++    // Generate another file with a name that will be changed when
++    // transliteration is on.
++    $file = $this->generateFile('S  Pace--Ã°Å¸â„¢Ë†', 64, 5, 'text');
++    $edit = [
++      'files[file_test_upload]' => \Drupal::service('file_system')->realpath($file),
++      'extensions' => 'txt',
++      'is_image_file' => FALSE,
++    ];
++    $this->drupalPostForm('file-test/upload', $edit, t('Submit'));
++    $this->assertSession()->statusCodeEquals(200);
++    // Test that the file name has been transliterated.
++    $this->assertSession()->responseContains('File name is s-pace-adegaace.txt.');
++  }
++
+   /**
+    * Test extension handling.
+    */
+diff --git a/core/modules/system/config/install/system.file.yml b/core/modules/system/config/install/system.file.yml
+index 02b376f4544..f31139eb1b3 100644
+--- a/core/modules/system/config/install/system.file.yml
++++ b/core/modules/system/config/install/system.file.yml
+@@ -1,3 +1,4 @@
+ allow_insecure_uploads: false
+ default_scheme: 'public'
+ temporary_maximum_age: 21600
++filename_transliteration: false
+diff --git a/core/modules/system/config/schema/system.schema.yml b/core/modules/system/config/schema/system.schema.yml
+index e68bbae5a85..c958daf2cdd 100644
+--- a/core/modules/system/config/schema/system.schema.yml
++++ b/core/modules/system/config/schema/system.schema.yml
+@@ -281,6 +281,9 @@ system.file:
+     temporary_maximum_age:
+       type: integer
+       label: 'Maximum age for temporary files'
++    filename_transliteration:
++      type: boolean
++      label: 'Transliterate names of uploaded files'
+ 
+ system.image:
+   type: config_object
+diff --git a/core/modules/system/src/Form/FileSystemForm.php b/core/modules/system/src/Form/FileSystemForm.php
+index d81488b44e7..65783947f1d 100644
+--- a/core/modules/system/src/Form/FileSystemForm.php
++++ b/core/modules/system/src/Form/FileSystemForm.php
+@@ -147,6 +147,13 @@ public function buildForm(array $form, FormStateInterface $form_state) {
+       '#description' => t('Temporary files are not referenced, but are in the file system and therefore may show up in administrative lists. <strong>Warning:</strong> If enabled, temporary files will be permanently deleted and may not be recoverable.'),
+     ];
+ 
++    $form['filename_transliteration'] = [
++      '#type' => 'checkbox',
++      '#title' => t('Enable filename transliteration'),
++      '#default_value' => $config->get('filename_transliteration'),
++      '#description' => t('Transliteration ensures that filenames do not contain unicode characters.'),
++    ];
++
+     return parent::buildForm($form, $form_state);
+   }
+ 
+@@ -155,7 +162,8 @@ public function buildForm(array $form, FormStateInterface $form_state) {
+    */
+   public function submitForm(array &$form, FormStateInterface $form_state) {
+     $config = $this->config('system.file')
+-      ->set('temporary_maximum_age', $form_state->getValue('temporary_maximum_age'));
++      ->set('temporary_maximum_age', $form_state->getValue('temporary_maximum_age'))
++      ->set('filename_transliteration', (bool) $form_state->getValue('filename_transliteration'));
+ 
+     if ($form_state->hasValue('file_default_scheme')) {
+       $config->set('default_scheme', $form_state->getValue('file_default_scheme'));
+diff --git a/core/modules/system/tests/src/Kernel/Migrate/d6/MigrateSystemConfigurationTest.php b/core/modules/system/tests/src/Kernel/Migrate/d6/MigrateSystemConfigurationTest.php
+index f1c62a481af..b0e02fb8f0e 100644
+--- a/core/modules/system/tests/src/Kernel/Migrate/d6/MigrateSystemConfigurationTest.php
++++ b/core/modules/system/tests/src/Kernel/Migrate/d6/MigrateSystemConfigurationTest.php
+@@ -49,6 +49,8 @@ class MigrateSystemConfigurationTest extends MigrateDrupal6TestBase {
+       'default_scheme' => 'public',
+       // temporary_maximum_age is not handled by the migration.
+       'temporary_maximum_age' => 21600,
++      // filename_transliteration is not handled by migration.
++      'filename_transliteration' => FALSE,
+     ],
+     'system.image.gd' => [
+       'jpeg_quality' => 75,
+diff --git a/core/modules/system/tests/src/Kernel/Migrate/d7/MigrateSystemConfigurationTest.php b/core/modules/system/tests/src/Kernel/Migrate/d7/MigrateSystemConfigurationTest.php
+index 8fef991b4fa..065c6118868 100644
+--- a/core/modules/system/tests/src/Kernel/Migrate/d7/MigrateSystemConfigurationTest.php
++++ b/core/modules/system/tests/src/Kernel/Migrate/d7/MigrateSystemConfigurationTest.php
+@@ -47,6 +47,8 @@ class MigrateSystemConfigurationTest extends MigrateDrupal7TestBase {
+       'default_scheme' => 'public',
+       // temporary_maximum_age is not handled by the migration.
+       'temporary_maximum_age' => 21600,
++      // filename_transliteration is not handled by migration.
++      'filename_transliteration' => FALSE,
+     ],
+     'system.image.gd' => [
+       'jpeg_quality' => 80,

@@ -20,6 +20,9 @@ abstract class TestBase extends WebTestBase {
    */
   public static $modules = ['image', 'lazyloader', 'path', 'node', 'field'];
 
+  /**
+   * {@inheritdoc}
+   */
   public function setUp() {
     parent::setUp();
 
@@ -32,7 +35,7 @@ abstract class TestBase extends WebTestBase {
       'edit own page content',
       'administer lazyloader',
       'administer url aliases',
-      'create url aliases'
+      'create url aliases',
     ]);
     $this->drupalLogin($user);
 
@@ -81,9 +84,12 @@ abstract class TestBase extends WebTestBase {
   }
 
   /**
-   * Asserts if lazyloader is enabled on the page.
-   * @param bool|TRUE $enabled
+   * Asserts if Lazyloader is enabled on the page.
+   *
+   * @param bool $enabled
+   *   Whether or not lazyloader should be enabled.
    * @param string $message
+   *   The message.
    */
   protected function assertLazyloaderEnabled($enabled = TRUE, $message = '') {
     if ($message === '') {
@@ -99,4 +105,5 @@ abstract class TestBase extends WebTestBase {
       $this->assertFalse(count($images), $message);
     }
   }
+
 }

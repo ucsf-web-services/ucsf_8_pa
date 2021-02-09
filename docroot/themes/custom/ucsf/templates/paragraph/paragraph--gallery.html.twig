@@ -1,13 +1,26 @@
+{% if paragraph.field_remove_top_space[0].value == '1' %}
+  {% set remove = 'remove-top-space' %}
+{% endif %}
+
 {% set classes = [
   'paragraph--type--gallery',
 ] %}
 
 {{ attach_library('ucsf/slick_gallery') }}
 <div class="paragraph-text-block gallery-background-fill"></div>
-<div{{ attributes.addClass(classes) }}>
 
+{% if paragraph.field_anchor_link.value|render != '' %}
+  {{ content.field_anchor_link }}
+{% endif %}
+{% if paragraph.field_title.value|render != '' %}
+  <div class="gallery-title-description {{ remove }}">
+  <h2>{{ content.field_title }}</h2>
+  {{ content.field_description }}
+  </div>
+{% endif %}
+
+<div{{ attributes.addClass(classes) }}>
   <div class="gallery-container">
-  {{ content }}
+  {{ content|without('field_title', 'field_description', 'field_anchor_link', 'field_remove_top_space') }}
   </div>
 </div>
-

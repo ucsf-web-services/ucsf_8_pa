@@ -16,7 +16,7 @@ function acquia_search_install() {
   // This causes an invocation of hook_acquia_subscription_status() which is
   // implemented in this module to set up the environment.
   // Rebuild data about all currently available modules.
-  system_rebuild_module_data();
+  \Drupal::service('extension.list.module')->reset();
 
   _acquia_search_set_version();
   $subscription = new Subscription();
@@ -126,7 +126,7 @@ function acquia_search_requirements($phase) {
 function _acquia_search_set_version() {
   // Cache the version in a variable so we can send it at not extra cost.
   $version = \Drupal::config('acquia_search.settings')->get('version');
-  $info = system_get_info('module', 'acquia_search');
+  $info = \Drupal::service('extension.list.module')->getExtensionInfo('acquia_search');
   // Send the version, or at least the core compatibility as a fallback.
   $new_version = isset($info['version']) ? (string) $info['version'] : (string) \Drupal::VERSION;
   if ($version != $new_version) {

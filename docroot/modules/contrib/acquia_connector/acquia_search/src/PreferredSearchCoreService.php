@@ -219,9 +219,22 @@ class PreferredSearchCoreService {
 
     $possible_core_ids = [];
 
+    // The Acquia Search Solr module tries to use this core before any auto
+    // detected core in case if it's set in the site configuration.
+    if ($default_search_core = \Drupal::config('acquia_search.settings')->get('default_search_core')) {
+      $possible_core_ids[] = $default_search_core;
+    }
+
     // In index naming, we only accept alphanumeric chars.
     $sites_foldername = preg_replace('/[^a-zA-Z0-9]+/', '', $this->sitesFolderName);
     $ah_env = preg_replace('/[^a-zA-Z0-9]+/', '', $this->ahEnv);
+
+    $context = [
+      'ah_env' => $ah_env,
+      'ah_db_role' => $this->ahDbName,
+      'identifier' => $this->acquiaIdentifier,
+      'sites_foldername' => $sites_foldername,
+    ];
 
     if ($ah_env) {
 
@@ -242,6 +255,9 @@ class PreferredSearchCoreService {
     if (!empty($_SERVER['AH_PRODUCTION']) || !empty($_ENV['AH_PRODUCTION'])) {
       $possible_core_ids[] = $this->acquiaIdentifier;
     }
+
+    // Let other modules alter the list possible cores.
+    \Drupal::moduleHandler()->alter('acquia_search_get_list_of_possible_cores', $possible_core_ids, $context);
 
     return $possible_core_ids;
 

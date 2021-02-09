@@ -8,17 +8,32 @@ use Drupal\Core\Condition\ConditionPluginCollection;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 
+/**
+ * Class VisibilityChecker.
+ */
 class VisibilityChecker {
 
   use ConditionAccessResolverTrait;
 
-  /** @var  \Drupal\Core\Entity\EntityStorageInterface */
+  /**
+   * The image style storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
   protected $imageStyleStorage;
 
-  /** @var \Drupal\Core\Condition\ConditionManager */
+  /**
+   * The condition manager.
+   *
+   * @var \Drupal\Core\Condition\ConditionManager
+   */
   protected $conditionManager;
 
-  /** @var \Drupal\Core\Config\ConfigFactoryInterface  */
+  /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
   protected $configFactory;
 
   /**
@@ -38,22 +53,37 @@ class VisibilityChecker {
   }
 
   /**
+   * Gets the condition list.
+   *
    * @return \Drupal\Core\Condition\ConditionPluginCollection
+   *   The condition list.
    */
   protected function getConditionList() {
     return new ConditionPluginCollection($this->conditionManager, $this->configFactory->get('lazyloader.exclude')->get('visibility'));
   }
 
   /**
+   * Asserts if Lazyloader is enabled.
+   *
    * @return bool
+   *   Whether or not Lazyloader is enabled.
    */
   public function isEnabled() {
-    $enabled =  $this->configFactory->get('lazyloader.configuration')->get('enabled');
+    $enabled = $this->configFactory->get('lazyloader.configuration')->get('enabled');
 
     $conditions_apply = $this->resolveConditions(iterator_to_array($this->getConditionList()->getIterator()), 'and');
     return $enabled && $conditions_apply;
   }
 
+  /**
+   * Asserts if the uri is a valid filename.
+   *
+   * @param string $uri
+   *   The uri.
+   *
+   * @return bool
+   *   Whether or not the uri is a valid filename.
+   */
   public function isValidFilename($uri) {
     $excluded_files = $this->configFactory->get('lazyloader.exclude')->get('filenames');
     $parts = explode('/', $uri);
@@ -62,6 +92,15 @@ class VisibilityChecker {
     return !(bool) preg_match('/^' . $filename . '$/m', $excluded_files);
   }
 
+  /**
+   * Asserts if a uri is a valid image style.
+   *
+   * @param string $uri
+   *   The uri.
+   *
+   * @return bool
+   *   Whether or not this is a valid image style.
+   */
   public function isValidImageStyle($uri) {
     $excluded_styles = $this->filterSelectedValues($this->configFactory->get('lazyloader.exclude')->get('image_styles'));
     // If no image styles are selected we have nothing to exclude.
@@ -75,7 +114,7 @@ class VisibilityChecker {
       // Not a derived image, nothing to do here.
       return TRUE;
     }
-    
+
     $excluded_styles = implode('|', $excluded_styles);
     return !preg_match('/styles\/[' . $excluded_styles . ']/', $uri);
   }

@@ -38,4 +38,8 @@ function ucsf_preprocess_image(&$variables) {
     }
   };
 
+  // Adds a class responsible for the same animation as LazyLoaded elements.
+  $variables['attributes']['class'][] = 'element-fade';
+  // Adds a library responsible for running animation when element is in view.
+  $variables['#attached']['library'][] = 'ucsf/element_fade';
 }
