@@ -15,7 +15,7 @@ CKEDITOR.dialog.add('blankdiv', function( editor ) {
             label: 'Align',
             title: 'Align - set the elements container alignment.',
             items: [
-              [ editor.lang.common.alignCenter, 'align-center' ],
+              //[ editor.lang.common.alignCenter, 'align-center' ],
               //[ editor.lang.common.alignLeft, 'align-left' ],
               //[ editor.lang.common.alignRight, 'align-right' ],
               ['Half Image Right', 'half-image-right'],
@@ -25,7 +25,7 @@ CKEDITOR.dialog.add('blankdiv', function( editor ) {
               ['Full Bleed',  'full-bleed-image' ]
             ],
             setup: function( widget ) {
-              this.setValue( widget.data.align ? widget.data.align : 'align-left' );
+              this.setValue( widget.data.align ? widget.data.align : 'half-image-left' );
             },
             commit: function( widget ) {
               widget.setData( 'align', this.getValue() );
@@ -38,6 +38,9 @@ CKEDITOR.dialog.add('blankdiv', function( editor ) {
             rows: 12,
             setup: function( widget ) {
               var blankdiv = decodeURIComponent(widget.data.blankdiv);
+              if (blankdiv == 'undefined') {
+                blankdiv = '';
+              }
               // must remove <!--{cke_protected} and --> but protect comments.
               if (blankdiv.indexOf("<!--{cke_protected}") > -1) {
                 //console.log('Index of cke_protected is: ' + blankdiv.indexOf("<!--{cke_protected}") );
