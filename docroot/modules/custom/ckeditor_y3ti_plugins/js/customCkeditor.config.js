@@ -51,7 +51,7 @@ CKEDITOR.on( 'dialogDefinition', function( ev )
 				          this.setValue( data['advanced']['advCSSClasses'] || '' );
   					}
 
-        }
+        };
       infoTab.add( buttonLink );
    }
-})
+});

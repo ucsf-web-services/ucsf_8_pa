@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\ucsf_wysiwyg\Plugin\CKEditorPlugin\ucsfquote.
+ * Contains \Drupal\ucsf_wysiwyg\Plugin\CKEditorPlugin\blankdiv.
  */
 
 namespace Drupal\ucsf_wysiwyg\Plugin\CKEditorPlugin;
@@ -62,8 +62,8 @@ class blankdiv extends CKEditorPluginBase {
    */
   public function getButtons() {
     return [
-      'blankdiv' => [
-        'label' => t('BlankDiv'),
+      'Blankdiv' => [
+        'label' => t('blankdiv'),
         'image' => drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/blankdiv/icons/blankdiv.png'
       ]
     ];
