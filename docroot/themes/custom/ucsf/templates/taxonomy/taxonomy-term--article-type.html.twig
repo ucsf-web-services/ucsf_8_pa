@@ -15,9 +15,12 @@
 
 			<div class="topic-content">
 				{{ content.description }}
-
 				<div class="news-list article-type__news-list">
-					{{ drupal_view('media_coverage_articles', 'block_1') }}
+          {% if name.0|render|striptags == "News Package" %}
+            {{ drupal_view('media_coverage_articles', 'block_3') }}
+          {% else %}
+					  {{ drupal_view('media_coverage_articles', 'block_1') }}
+          {% endif %}
 				</div>
 			</div>
 		</div>
