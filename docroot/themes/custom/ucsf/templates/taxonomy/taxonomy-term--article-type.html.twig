@@ -1,29 +1,29 @@
 {% set classes = ['main'] %}
 
-<main {{ attributes.addClass(classes) }}>
-  <a id="main-content" tabindex="-1"></a>
-  <div class="topic-banner">
-    {{ content.field_taxonomy_banner_image }}
-  </div>
+<main {{ attributes.addClass(classes, "article-type") }}>
+	<a id="main-content" tabindex="-1"></a>
+	<div class="topic-banner">
+		{{ content.field_taxonomy_banner_image }}
+	</div>
 
-  <div class="topic-page">
-    <div class="topic-content-wrapper">
-      <header class="basic-header topic-page__header media-coverage__header">
-        <h1 class="topic-page__header-title">{{ name }}</h1>
-      </header>
+	<div class="topic-page">
+		<div class="topic-content-wrapper">
+			<header class="basic-header topic-page__header article-type__header">
+				<h1 class="topic-page__header-title">{{ name }}</h1>
+			</header>
 
 
-        <div class="topic-content">
-          {{ content.description }}
+			<div class="topic-content">
+				{{ content.description }}
 
-          <div class="news-list article-type-news-list">
-            {{ drupal_view('media_coverage_articles', 'block_1') }}
-          </div>
-        </div>
-    </div>
-  </div>
+				<div class="news-list article-type__news-list">
+					{{ drupal_view('media_coverage_articles', 'block_1') }}
+				</div>
+			</div>
+		</div>
+	</div>
 </main>
 
 <div class="footer-ctas-wrapper" role="complementary">
-  {{ content.field_ankle_cta }}
+	{{ content.field_ankle_cta }}
 </div>
