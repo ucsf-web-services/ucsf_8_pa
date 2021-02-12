@@ -1,12 +1,11 @@
 <?php
 
+use \Drupal\block_content\BlockContentInterface;
 // Include all files from the includes directory.
 $includes_path = dirname(__FILE__) . '/php-includes/*.inc';
 foreach (glob($includes_path) as $filename) {
   require_once dirname(__FILE__) . '/php-includes/' . basename($filename);
 }
-
-use \Drupal\block_content\BlockContentInterface;
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter() for form templates.
@@ -25,3 +24,4 @@ function ucsf_preprocess_webform(&$vars){
   $wf = \Drupal\webform\Entity\Webform::load($wfid);
   $vars["title"] = $wf->label();
 }
+
