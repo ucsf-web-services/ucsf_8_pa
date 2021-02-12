@@ -48,23 +48,25 @@ class TweetsBlock extends BlockBase {  /**
       //$tweet->full_text = check_markup($tweet->full_text, 'full_html');
       //$tweet->full_text = '   ';
       $tweet->full_text = preg_replace('~[\r\n]~', ' ', $tweet->full_text);
-      if(isset($tweet->retweeted_status) && $tweet->retweeted_status!=null){
+      if(isset($tweet->retweeted_status) && $tweet->retweeted_status!=null) {
         $retweet_urls = $tweet->retweeted_status->entities->urls;
-        foreach($retweet_urls as $retweet_url) {
+        foreach ($retweet_urls as $retweet_url) {
           $pattern = $retweet_url->url;
-          $pattern = preg_replace("/https:\/\/t\.co\//","",$pattern);
+          $pattern = preg_replace("/https:\/\/t\.co\//", "", $pattern);
           $pattern = "/https:\/\/t\.co\/$pattern/i";
-          if(preg_match($pattern, $tweet->retweeted_status->full_text, $url)) {
-            $tweet->retweeted_status->full_text =  preg_replace($pattern, "<a href=\"{$url[0]}\">{$url[0]}</a>", $tweet->retweeted_status->full_text);
+          if (preg_match($pattern, $tweet->retweeted_status->full_text, $url)) {
+            $tweet->retweeted_status->full_text = preg_replace($pattern, "<a href=\"{$url[0]}\">{$url[0]}</a>", $tweet->retweeted_status->full_text);
           }
         }
-        $retweet_media = $tweet->retweeted_status->entities->media;
-        if($retweet_media){
-          $pattern = $retweet_media[0]->url;
-          $pattern = preg_replace("/https:\/\/t\.co\//","",$pattern);
-          $pattern = "/https:\/\/t\.co\/$pattern/i";
-          if(preg_match($pattern, $tweet->retweeted_status->full_text, $url)) {
-            $tweet->retweeted_status->full_text =  preg_replace($pattern, "<a href=\"{$url[0]}\">{$url[0]}</a>", $tweet->retweeted_status->full_text);
+        if (isset($tweet->retweeted_status->entities->media)) {
+          $retweet_media = $tweet->retweeted_status->entities->media;
+          if ($retweet_media) {
+            $pattern = $retweet_media[0]->url;
+            $pattern = preg_replace("/https:\/\/t\.co\//", "", $pattern);
+            $pattern = "/https:\/\/t\.co\/$pattern/i";
+            if (preg_match($pattern, $tweet->retweeted_status->full_text, $url)) {
+              $tweet->retweeted_status->full_text = preg_replace($pattern, "<a href=\"{$url[0]}\">{$url[0]}</a>", $tweet->retweeted_status->full_text);
+            }
           }
         }
       }
