@@ -552,88 +552,94 @@
 .home-talking-about {
   background: $white;
   margin-top: $space-five;
-  float: left;
-
-  .card-three-up {
-    margin: 0 20px;
-    display: block;
-
-    > li {
-      float: none;
-      width: 100%;
-    }
-
-    .news-card {
-      margin-bottom: 0;
-
-      // .news-card__image img {
-      //   float: right;
-      // }
-
-      @include breakpoint($new-x-small-max) {
-        .news-card__copy {
-          margin-right: 10%;
-          margin-left: 0;
-        }
-
-        .news-card__image img {
-          width: 100%;
-        }
-      }
-    }
-  }
 
   @include breakpoint($new-x-small) {
     margin-top: $space-five;
-
-    .card-three-up {
-      display: block;
-
-      > li {
-        float: left;
-        width: 46%;
-        margin-left: 2%;
-
-        &:nth-child(odd) {
-          clear: left;
-          margin-right: 2%;
-          margin-left: 0;
-        }
-      }
-
-      .news-card {
-        margin-bottom: 0;
-
-        .news-card__image img {
-          float: none;
-        }
-      }
-    }
-  }
-
-  @include breakpoint($new-small) {
-    .card-three-up {
-      margin: 0 $space-five;
-    }
   }
 
   @include breakpoint($new-large) {
-    margin-top: $space-ten;
-    float: none;
+  margin-top: $space-ten;
+  }
 
-    .card-three-up {
+  .card-three-up {
+    margin-top: 0;
+
+    @include breakpoint($new-x-small) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      margin: 0 $article-gutter;
+      column-gap: 4%;
+    }
+
+    @include breakpoint($new-small) {
+      margin: 0 $space-five;
+    }
+
+    // .quicklinks-trigger appears at this breakpoint,
+    //  add its width to margin right
+    @include breakpoint($new-medium) {
+      margin: 0 70px 0 $space-five;
+    }
+
+    @include breakpoint($new-large) {
       @include card-three-up;
       margin: 0 $space-ten;
+    }
+  }
 
-      > li {
-        float: none;
-        width: 100%;
-        margin-left: 0;
+  .news-card {
+    &__copy {
+      margin-left: 0;
+      margin-right: $article-gutter;
+      padding-left: $article-gutter;
+
+      @include breakpoint($new-x-small) {
+        margin-left: 10%;
+        margin-right: 0;
+        padding-left: $space-four;
       }
 
-      .news-card {
+      @include breakpoint($new-large) {
         margin-bottom: $space-five;
       }
+    }
+
+    &__image img {
+      width: 100%;
+    }
+  }
+
+  &__title {
+    @include fs-heading;
+
+    margin: 0;
+    margin-bottom: $space-two;
+    padding: 20px;
+    padding-bottom: 0;
+
+    @include breakpoint($new-small) {
+      padding: $space-five;
+      padding-bottom: 0;
+    }
+
+    @include breakpoint($new-large) {
+      padding: $space-ten;
+      padding-bottom: 0;
+    }
+  }
+
+  &__description {
+    padding: 0 20px;
+    color: $gray-blue;
+    margin-bottom: $space-four;
+    margin-top: 0;
+
+    @include breakpoint($new-small) {
+      padding: 0 $space-five;
+    }
+
+    @include breakpoint($new-large) {
+      padding: 0 $space-ten;
     }
   }
 }
@@ -644,40 +650,6 @@
 
     margin: 0;
     margin-bottom: $space-two;
-  }
-}
-
-.home-talking-about__title {
-  @include fs-heading;
-
-  margin: 0;
-  margin-bottom: $space-two;
-  padding: 20px;
-  padding-bottom: 0;
-
-  @include breakpoint($new-small) {
-    padding: $space-five;
-    padding-bottom: 0;
-  }
-
-  @include breakpoint($new-large) {
-    padding: $space-ten;
-    padding-bottom: 0;
-  }
-}
-
-.home-talking-about__description {
-  padding: 0 20px;
-  color: $gray-blue;
-  margin-bottom: $space-four;
-  margin-top: 0;
-
-  @include breakpoint($new-small) {
-    padding: 0 $space-five;
-  }
-
-  @include breakpoint($new-large) {
-    padding: 0 $space-ten;
   }
 }
 
