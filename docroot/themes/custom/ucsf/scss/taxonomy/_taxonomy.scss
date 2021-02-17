@@ -129,8 +129,8 @@
   }
 }
 
-.media-coverage__header {
-
+// "Article Type" vocabulary pages
+.article-type {
   h1 {
     padding-top: 32px;
     padding-bottom: 32px;
@@ -143,6 +143,26 @@
     @include breakpoint($new-large) {
       padding-top: $space-ten;
     }
+  }
+
+  .article-header__title {
+    @include fs-heading-three;
+    margin: 0;
+    transition: 0.3s ease-out color;
+  }
+
+  a:hover .article-header__title {
+    color: $c-blue-link;
+  }
+
+  .article-header__byline li {
+    border-bottom: none;
+    margin: 0;
+    padding-bottom: 0;
+  }
+
+  .media-coverage__list-byline {
+    color: $c-navy;
   }
 }
 

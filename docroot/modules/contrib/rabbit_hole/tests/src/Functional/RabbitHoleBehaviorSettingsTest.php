@@ -1,19 +1,19 @@
 <?php
 
-namespace Drupal\rabbit_hole\Tests;
+namespace Drupal\Tests\rabbit_hole\Functional;
 
-use Drupal\simpletest\WebTestBase;
-use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use Drupal\rabbit_hole\Entity\BehaviorSettings;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Test the RabbitHoleBehaviorSettings configuration entity functionality.
  *
  * @group rabbit_hole
  */
-class RabbitHoleBehaviorSettingsTest extends WebTestBase {
+class RabbitHoleBehaviorSettingsTest extends BrowserTestBase {
   const DEFAULT_TEST_ENTITY = 'node';
+  const DEFAULT_TEST_ENTITY_TYPE = 'node_type';
   const DEFAULT_ACTION = 'bundle_default';
   const DEFAULT_OVERRIDE = BehaviorSettings::OVERRIDE_ALLOW;
   const DEFAULT_REDIRECT_CODE = BehaviorSettings::REDIRECT_NOT_APPLICABLE;
@@ -22,19 +22,37 @@ class RabbitHoleBehaviorSettingsTest extends WebTestBase {
   const DEFAULT_BUNDLE_REDIRECT_CODE = BehaviorSettings::REDIRECT_NOT_APPLICABLE;
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * Modules to enable.
    *
    * @var array
    */
   public static $modules = ['rabbit_hole', self::DEFAULT_TEST_ENTITY];
 
+  /**
+   * Behavior settings manager.
+   *
+   * @var \Drupal\rabbit_hole\BehaviorSettingsManager
+   */
   private $behaviorSettingsManager;
 
+  /**
+   * Config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
   private $configFactory;
 
+  /**
+   * Test content type.
+   *
+   * @var \Drupal\Core\Entity\EntityInterface
+   */
   private $testNodeType;
-
-  private $testNode;
 
   /**
    * {@inheritdoc}
@@ -45,7 +63,6 @@ class RabbitHoleBehaviorSettingsTest extends WebTestBase {
     $this->behaviorSettingsManager = $this->container
       ->get('rabbit_hole.behavior_settings_manager');
     $this->testNodeType = $this->generateTestNodeType();
-    $this->testNode = $this->generateTestNode();
   }
 
   /**
@@ -56,7 +73,7 @@ class RabbitHoleBehaviorSettingsTest extends WebTestBase {
    */
   public function testSettings() {
     $this->saveAndTestExpectedValues(self::DEFAULT_ACTION,
-      __METHOD__, '', 'test_behavior_settings');
+      __METHOD__, self::DEFAULT_TEST_ENTITY_TYPE, $this->testNodeType->id());
   }
 
   /**
@@ -64,13 +81,15 @@ class RabbitHoleBehaviorSettingsTest extends WebTestBase {
    */
   public function testBundleSettingsDefault() {
     $settings = \Drupal::config('rabbit_hole.behavior_settings.default');
-    $this->assertEqual($settings->get('action'),
-      self::DEFAULT_BUNDLE_ACTION,
+    $this->assertEquals(self::DEFAULT_BUNDLE_ACTION,
+        $settings->get('action'),
       'Unexpected default action');
-    $this->assertEqual($settings->get('allow_override'),
-      self::DEFAULT_BUNDLE_OVERRIDE, 'Unexpected default override');
-    $this->assertEqual($settings->get('redirect_code'),
-      self::DEFAULT_BUNDLE_REDIRECT_CODE, 'Unexpected default redirect');
+    $this->assertEquals(self::DEFAULT_BUNDLE_OVERRIDE,
+        $settings->get('allow_override'),
+       'Unexpected default override');
+    $this->assertEquals(self::DEFAULT_BUNDLE_REDIRECT_CODE,
+        $settings->get('redirect_code'),
+        'Unexpected default redirect');
   }
 
   /**
@@ -80,9 +99,8 @@ class RabbitHoleBehaviorSettingsTest extends WebTestBase {
    * a generated bundle (a NodeType in this case) and be found based on that ID.
    */
   public function testBundleSettings() {
-    $this->createTestNodeType();
     $this->saveAndTestExpectedValues('page_not_found', __METHOD__,
-      self::DEFAULT_TEST_ENTITY, $this->testNodeType->id());
+      self::DEFAULT_TEST_ENTITY_TYPE, $this->testNodeType->id());
     $this->deleteTestNodeType();
   }
 
@@ -95,7 +113,7 @@ class RabbitHoleBehaviorSettingsTest extends WebTestBase {
     $action = $this->behaviorSettingsManager->loadBehaviorSettingsAsConfig(
       self::DEFAULT_TEST_ENTITY,
       'f4515736-cfa0-4e38-b3ed-1306f56bd2a1')->get('action');
-    $this->assertEqual(self::DEFAULT_BUNDLE_ACTION, $action,
+    $this->assertEquals($action, self::DEFAULT_BUNDLE_ACTION,
       'Unexpected default action');
   }
 
@@ -105,8 +123,8 @@ class RabbitHoleBehaviorSettingsTest extends WebTestBase {
   public function testLoadNullEditable() {
     $editable = $this->behaviorSettingsManager
       ->loadBehaviorSettingsAsEditableConfig(self::DEFAULT_TEST_ENTITY,
-          '6b92ed36-f17f-4799-97d0-ae1801ed37ff');
-    $this->assertEqual($editable, NULL);
+        '6b92ed36-f17f-4799-97d0-ae1801ed37ff');
+    $this->assertNull($editable);
   }
 
   /**
@@ -129,7 +147,7 @@ class RabbitHoleBehaviorSettingsTest extends WebTestBase {
     ], $entity_type_label, $entity_id);
     $action = $this->behaviorSettingsManager->loadBehaviorSettingsAsConfig(
       $entity_type_label, $entity_id)->get('action');
-    $this->assertEqual($action, $expected_action, 'Unexpected action '
+    $this->assertEquals($expected_action, $action, 'Unexpected action '
       . ' (called from ' . $calling_method . ')');
 
     // Clean up the entity afterwards.
@@ -141,31 +159,15 @@ class RabbitHoleBehaviorSettingsTest extends WebTestBase {
    * Helper function to generate the test node type.
    */
   private function generateTestNodeType() {
-    return NodeType::create([
-        'type' => 'test_behavior_settings_node_type',
-        'name' => 'Test Behavior Settings Node Type',
-      ]
+    $type = NodeType::create([
+      'type' => 'test_behavior_settings_node_type',
+      'name' => 'Test Behavior Settings Node Type',
+    ]
     );
-  }
 
-  /**
-   * Helper function to generate the test node.
-   */
-  private function generateTestNode() {
-    return Node::create(
-      [
-        'nid' => NULL,
-        'type' => $this->testNodeType->id(),
-        'title' => 'Test Behavior Settings Node',
-      ]
-    );
-  }
+    $type->save();
 
-  /**
-   * Helper function to create the test node type in the database.
-   */
-  private function createTestNodeType() {
-    $this->testNodeType->save();
+    return $type;
   }
 
   /**
@@ -173,20 +175,6 @@ class RabbitHoleBehaviorSettingsTest extends WebTestBase {
    */
   private function deleteTestNodeType() {
     $this->testNodeType->delete();
-  }
-
-  /**
-   * Helper function to create the test node in the database.
-   */
-  private function createTestNode() {
-    $this->testNode->save();
-  }
-
-  /**
-   * Helper function to delete the test node from the database.
-   */
-  private function deleteTestNode() {
-    $this->testNode->delete();
   }
 
 }
