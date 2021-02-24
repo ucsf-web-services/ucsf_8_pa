@@ -15,26 +15,29 @@
     '.paragraph--type--gallery  :not(.slick-active) .element-fade'
   ];
 
-  // Get the NodeList of all the selectors matching elements on the page.
-  const excludeSelectors = document.querySelectorAll(excludeElements.toString());
-  excludeSelectors.forEach(element => element.classList.remove('element-fade'));
-
   // element to be animated
-  const elementFade = document.querySelectorAll('.element-fade');
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.intersectionRatio > 0) {
-          // adds the class responsible for animation on the first viewport appearance
-          entry.target.classList.add('element-fade--in-viewport');
-          observer.unobserve(entry.target);
-        }
-      })
-    })
+  Drupal.behaviors.fadeInImages = {
+    attach: function (context, settings) {
+      // Get the NodeList of all the selectors matching elements on the page.
+      const excludeSelectors = document.querySelectorAll(excludeElements.toString());
+      excludeSelectors.forEach(element => element.classList.remove('element-fade'));
 
-    elementFade.forEach(element => {
-      observer.observe(element);
-    });
+      const elementFade = document.querySelectorAll('.element-fade');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.intersectionRatio > 0) {
+              // adds the class responsible for animation on the first viewport appearance
+              entry.target.classList.add('element-fade--in-viewport');
+              observer.unobserve(entry.target);
+            }
+          })
+        })
+
+        elementFade.forEach(element => {
+          observer.observe(element);
+        });
+      }
+    }
   }
-
 })();
