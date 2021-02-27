@@ -30,39 +30,37 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-<ul{{ attributes.addClass('menu-parent--wrapper') }}>
-  {% else %}
-  <ul class="menu-child--menu">
+      <ul{{ attributes.addClass('menu-parent--wrapper') }}>
+    {% else %}
+      <ul class="menu-child--menu">
     {% endif %}
+
     {% for item in items %}
       {% set menu_attributes = menus_attribute(items|keys[loop.index0]) %}
 
+      {# Classes for menu <ul> #}
       {% if menu_level == 0 %}
-      {%
-        set classes = [
-        'menu-item',
-        'menu-item-parent',
-        item.is_expanded ? 'menu-item--expanded',
-        item.is_collapsed ? 'menu-item--collapsed',
-        item.in_active_trail ? 'menu-item--active-trail',
-        menu_attributes.item.class ? menu_attributes.item.class,
-      ]
-      %}
+        {% set classes = [
+          'menu-item',
+          'menu-item-parent',
+          item.is_expanded ? 'menu-item--expanded',
+          item.is_collapsed ? 'menu-item--collapsed',
+          item.in_active_trail ? 'menu-item--active-trail',
+          menu_attributes.item.class ? menu_attributes.item.class,
+        ]%}
       {% else %}
-      {%
-        set classes = [
-        'menu-item',
-        item.is_expanded ? 'menu-item--expanded',
-        item.is_collapsed ? 'menu-item--collapsed',
-        item.in_active_trail ? 'menu-item--active-trail',
-        menu_attributes.item.class ? menu_attributes.item.class,
-      ]
-      %}
+        {% set classes = [
+          'menu-item',
+          item.is_expanded ? 'menu-item--expanded',
+          item.is_collapsed ? 'menu-item--collapsed',
+          item.in_active_trail ? 'menu-item--active-trail',
+          menu_attributes.item.class ? menu_attributes.item.class,
+        ]%}
       {% endif %}
 
       <li{{ item.attributes.addClass(classes) }}
         {% if menu_attributes.item.id %}
-          {{ item.attributes.setAttribute('id', menu_attributes.item.id) }}
+          {{ item.attributes.setAttribute('id', menu_attributes.item.id)}}
         {% endif %}
         {% if menu_attributes.item.style %}
           {{ item.attributes.setAttribute('style', menu_attributes.item.style) }}
@@ -72,18 +70,7 @@
           <span>{{ item.title }}</span>
         {% endset %}
 
-        {% if menu_attributes.link is empty %}
-          {{ link(title_wrap, item.url) }}
-        {% else %}
-          {{ link(title_wrap, item.url, menu_attributes.link) }}
-        {% endif %}
-
-        {% if menu_level > 0 and item.is_expanded %}
-          <span class="fas fa-angle-right"></span>
-        {% endif %}
-
-        {% if item.below or item.title == 'Search' %}
-        {# Hack so About can be navy #}
+        {# Classes that are used on submenu and it's trigger #}
         {% if item.title == 'About' %}
           {% set item_title_class = 'about-menu' %}
         {% elseif item.title == 'Search' %}
@@ -91,23 +78,54 @@
         {% else %}
           {% set item_title_class = item.title|clean_class %}
         {% endif %}
-          {# End Hack #}
-          <div class="menu-child--wrapper wrapper--{{ item_title_class }}" data-level="level-{{ menu_level }}">
 
-            {# Only show the side title if the menu is not search #}
-            {% if item.title != 'Search' %}
+        {# Accessibility related variables #}
+        {% if item.title == 'Search' %}
+          {% set item_title = "Open or Close Search Form" %} {# overwriting search button title #}
+        {% else %}
+          {% set item_title = item.title %}
+        {% endif %}
+        {% set expanded = "false" %} {# setting aria-expanded attribute value #}
+
+        {# START. LEVEL-0 BUTTONS AND LEVEL-1/LEVEL-2 LINKS #}
+        {% if menu_level == 0 %}
+          <button
+            class="menu-item-top-level menu-item-{{ item_title_class }}"
+            aria-controls="aria-{{ item_title_class }}"
+            aria-expanded={{expanded}}
+          >
+            {{ item_title }}
+          </button>
+        {# level-1/level-2 LINKS #}
+        {% else %}
+          {{ link(title_wrap, item.url) }}
+        {% endif %}
+        {# END. LEVEL-0 BUTTONS AND LEVEL-1/LEVEL-2 LINKS #}
+
+        {% if menu_level > 0 and item.is_expanded %}
+          <span class="fas fa-angle-right"></span>
+        {% endif %}
+
+        {# START. LEVEL-0/LEVEL-1 SUBMENU PANEL #}
+        {% if item.below and item.title != 'Search' %}
+          <div id="aria-{{ item_title_class }}" class="menu-child--wrapper wrapper--{{ item_title_class }}" data-level="level-{{ menu_level }}">
+            {# Level-0 close btn #}
             <span class="menu-item-close">Close menu</span>
 
+            {# Level-0/Level-1 submenu titles #}
             <div data-section="section-{{ item_title_class }}" class="menu-child--label">
-              {# added span so we can hide this during animation #}
-              <span>{{ item.title }}</span>
+              <h{{menu_level + 2 }} class="menu-child--label-text">{{ item.title }}</h{{menu_level + 2 }}>
             </div>
-            {% endif %}
 
+            {# submenu links #}
             {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+          </div>
+        {% endif %}
+        {# START. LEVEL-0/LEVEL-1 PANEL #}
 
-            {# Hack so Search can be here #}
-            {% if item.title == 'Search' %}
+        {# Start. Search Form #}
+        {% if item.title == 'Search' %}
+          <div id="aria-{{ item_title_class }}" class="menu-child--wrapper wrapper--{{ item_title_class }}">
             <div class="home-search__form">
               <form action="/search" accept-charset="utf-8" method="get" class="search__form">
                 <label for="header-desktop-search" class="visually-hidden">search</label>
@@ -138,11 +156,10 @@
                 <input type="submit" id="edit-submit" name="op" value="Search" class="home-search__form-submit">
               </form>
             </div>
-        {% endif %}
-            {# End Hack #}
           </div>
-
         {% endif %}
+        {# End Search Form #}
+
       </li>
     {% endfor %}
   </ul>

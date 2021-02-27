@@ -4,6 +4,9 @@ $search-icon: 28px;
 $search-icon-sticky: 24px;
 $hover-border-size: 4px;
 
+/*---------------In this section---------------------*\
+  HIDING MOBILE MOBILE
+\*---------------------------------------------------*/
 header .menu--main {
   @include breakpoint($bp-until-large) {
     display: none;
@@ -24,95 +27,88 @@ header .menu--main {
   }
 }
 
+/*---------------In this section---------------------*\
+  DESKTOP MENU
+\*---------------------------------------------------*/
 [block="block-ucsf-main-menu-desktop"] {
   margin: 0;
   padding-left: 0;
   position: relative;
   .menu-child--wrapper {
     @include visually-hidden;
+    visibility: hidden;
+  }
+
+  /*---------------In this section---------------------*\
+    TOP LEVEL MENU ITEMS
+  \*---------------------------------------------------*/
+  .menu-item-top-level {
+    background-color: transparent;
+    color: $gray-blue;
+    border: none;
+    line-height: $nav-line-height;
+    letter-spacing: 0;
+    font-size: $font-size-sm;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    margin: 0 0 0 $space-five;
+    padding: 0 0 $hover-border-size 0;
+    transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1) line-height;
+
+    &.is-active,
+    &:active,
+    &:hover {
+      border-bottom: $hover-border-size solid $c-blue-link;
+      padding-bottom: 0; // padding bottom is replaced by the border bottom
+    }
+  }
+
+  // Remove margin from first menu item
+  > .menu-item:first-child > .menu-item-top-level {
+    margin-left: 0;
+  }
+
+  /*---------------In this section---------------------*\
+    SEARCH ICON, SEARCH FORM
+  \*---------------------------------------------------*/
+  .search {
+    .menu-item-search-menu {
+      display: inline-block;
+      width: $search-icon;
+      height: $nav-line-height;
+      background-image: url(/themes/custom/ucsf/assets/images/magnifier.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: $search-icon;
+      max-width: $search-icon;
+      vertical-align: middle;
+      padding-bottom: 0;
+      margin-left: $space-five;
+      margin-right: 22px; // to offset icon to the right
+      margin-top: $hover-border-size / 2;
+      margin-bottom: $hover-border-size / 2;
+      text-indent: -9999px;
+
+      &.is-active,
+      &:active,
+      &:hover {
+        background-image: url(/themes/custom/ucsf/assets/images/magnifier-hover.svg);
+        border-bottom: 0;
+      }
+
+      // "X" btn when search form is open
+      &.active {
+        background-image: url(/themes/custom/ucsf/assets/images/x-large.svg);
+
+        &:hover {
+          background-image: url(/themes/custom/ucsf/assets/images/x-large.svg);
+        }
+      }
+    }
   }
 
   .menu-item {
     display: inline-block;
-    /*
-    > span {
-      line-height: 1.5;
-      letter-spacing: 0;
-      text-decoration: none;
-      border-bottom: none;
-      color: $gray-blue;
-      display: inline-block;
-      font-size: $font-size-sm;
-      padding: $space 0;
-      margin: 0 $space-five;
-      text-transform: none;
-      position: relative;
-      width: auto;
-      font-family: $font-helvetica-neue-roman;
-      font-weight: 500;
-      height: $space-octuple;
-      padding-right: 0;
-      margin-right: 0;
-      //border: 1px solid red;
-    }
-    */
-    a {
-      line-height: $nav-line-height; // Height of Header Navigation without border bottom.
-      letter-spacing: 0;
-      text-decoration: none;
-      border-bottom: none;
-      color: $gray-blue;
-      display: inline-block;
-      font-size: $font-size-sm;
-      text-transform: none;
-      position: relative;
-      width: auto;
-      font-family: $font-helvetica-neue-roman;
-      font-weight: 500;
-      margin: 0 0 0 $space-five;
-      // to prevent content below from jumping
-      // padding bottom needs to be the same as border bottom on hover
-      padding-bottom: $hover-border-size;
-      // Used when minimizing Header Navigation when sticky at the top
-      transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1) line-height;
-    }
-
-
-    &.search {
-
-      &:hover {
-
-      }
-
-      > a {
-        background: url(/themes/custom/ucsf/assets/images/magnifier.svg) no-repeat center #fff;
-        background-size: $search-icon;
-        max-width: $search-icon;
-        vertical-align: middle;
-        padding-bottom: 0;
-        margin-right: 22px; // to offset icon to the right
-        margin-top: $hover-border-size / 2;
-        margin-bottom: $hover-border-size / 2;
-
-        &:hover {
-          background-image: url(/themes/custom/ucsf/assets/images/magnifier-hover.svg);
-        }
-
-        &.active {
-          background-image: url(/themes/custom/ucsf/assets/images/x-large.svg);
-
-          &:hover {
-            background-image: url(/themes/custom/ucsf/assets/images/x-large.svg);
-          }
-        }
-
-        span {
-          color: transparent;
-        }
-
-      }
-
-    }
 
     .menu-item:hover > .menu-child--wrapper,
     &:active > .menu-child--wrapper,
@@ -120,6 +116,7 @@ header .menu--main {
       //border: 1px solid red;
       @include visually-hidden-reset;
       @include menu-animation;
+      visibility: visible;
 
       &.wrapper--search-menu {
         @include visually-hidden;
@@ -127,7 +124,7 @@ header .menu--main {
       }
 
       .menu-child--menu,
-      .menu-child--label span,
+      .menu-child--label-text,
       ::after
       {
         animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both;
@@ -136,6 +133,10 @@ header .menu--main {
       .menu-child--wrapper {
         animation: none;
       }
+    }
+
+    a {
+      position: relative;
     }
 
     .menu-child--wrapper {
@@ -148,6 +149,7 @@ header .menu--main {
         &.active {
           @include visually-hidden-reset;
           @include menu-animation;
+          visibility: visible;
           z-index: $z-slicknav-panel-open;
         }
       }
@@ -213,22 +215,26 @@ header .menu--main {
   }
 
   [data-level="level-0"] > .menu-child--label {
-    @include eyebrow;
-    &:after {
-      background: $c-white;
-    }
-    color: $c-white;
     background: $c-teal;
     //float: left;
     box-sizing: border-box;
     height: 48px;
-    line-height: 48px;
+
     transform: rotate(90deg);
     transform-origin: 0px 0px 0px;
     padding: 0 24px;
     width: 400px;
     margin-top: 1px;
 
+    .menu-child--label-text {
+      @include eyebrow;
+      line-height: 48px;
+      margin-bottom: 0;
+      color: $c-white;
+      &:after {
+        background: $c-white;
+      }
+    }
 
     @each $area, $color, $color2 in $areas {
       &[data-section="section-#{$area}"] {
@@ -236,22 +242,22 @@ header .menu--main {
       }
     }
   }
-
-
 }
 
-// When Header Navigation is sticky
+/*---------------In this section---------------------*\
+  STICKY HEADER NAVIGATION
+\*---------------------------------------------------*/
 .fixed-nav {
   [block="block-ucsf-main-menu-desktop"] {
-    .menu-item {
-      a {
-        // Reduce the height of element
-        line-height: $nav-line-height-sticky;
-      }
+    .menu-item-top-level {
+      // Reduce the height of element
+      line-height: $nav-line-height-sticky;
     }
+
     // Minimized search icon for sticky nav
     .search {
-      a {
+      .menu-item-search-menu {
+        height: $nav-line-height-sticky;
         background-size: $search-icon-sticky;
         max-width: $search-icon-sticky;
       }
@@ -259,52 +265,44 @@ header .menu--main {
   }
 }
 
-// Level One Hover/Active state.
-[block="block-ucsf-main-menu-desktop"] {
-  > .menu-item > a {
-    &.is-active,
-    &:active,
-    &:hover {
+/*---------------In this section---------------------*\
+  HACKS TO GET TOP MENU BUTTONS ACT AS ACTIVE LINK
+\*---------------------------------------------------*/
+// Need to underline top level menu item when the page listed in it's submenu is visited
+
+@mixin menu-item-is-active($name:"about-menu") {
+  [block="block-ucsf-main-menu-desktop"] {
+    .menu-item-#{$name} {
       border-bottom: $hover-border-size solid $c-blue-link;
-      padding-bottom: 0; // padding bottom is replaced by the border bottom
+      padding-bottom: 0;
     }
-  }
-
-  > .menu-item.search > a {
-    &.is-active,
-    &:active,
-    &:hover {
-      border-bottom: 0; // padding bottom is replaced by the border bottom
-    }
-  }
-
-  /*
-  > .menu-item > span {
-    &:active,
-    &:hover {
-      border-bottom: $hover-border-size solid $blue;
-    }
-  }
-  */
-  > .menu-item:first-child > a {
-    margin-left: 0;
   }
 }
 
-.path-news, //Search
-.page-node-type-article,
-.page-node-type-magazine-article,
-.page-node-type-news-package,
+[class*="alias-about-"],
+[class*="alias-cgr"],
+[class*="alias-communications"] {
+  @include menu-item-is-active();
+}
+
+[class*="alias-patient-care"] {
+  @include menu-item-is-active("patient-care");
+}
+
+[class*="alias-research"] {
+  @include menu-item-is-active("research");
+}
+
+[class*="alias-education"] {
+  @include menu-item-is-active("education");
+}
+
 .page-node-type-trending,
-.page-node-type-author {
-  [block="block-ucsf-main-menu-desktop"] {
-    > .menu-item > a {
-      &[href="/news"] {
-        border-bottom: $hover-border-size solid $c-blue-link;
-        padding-bottom: 0;
-      }
-    }
-  }
+.page-node-type-author,
+.alias-campus-news,
+[class*="alias-news"],
+[class*="alias-magazine"] {
+  @include menu-item-is-active("news--media");
 }
 
 // Level 0 - Dropdown box 1st Column.
@@ -413,7 +411,7 @@ header .menu--main {
       }
     }
 
-    .menu-child--label {
+    .menu-child--label-text {
       @include eyebrow;
       margin-left: 80px;
       //margin-top: 74px;
