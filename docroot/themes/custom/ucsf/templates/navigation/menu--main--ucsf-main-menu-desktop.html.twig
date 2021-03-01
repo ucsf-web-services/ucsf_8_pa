@@ -30,7 +30,7 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes.addClass('menu-parent--wrapper') }}>
+      <ul{{ attributes.addClass('menu-parent--wrapper ucsf-menu-parent--desktop') }}>
     {% else %}
       <ul class="menu-child--menu">
     {% endif %}
@@ -97,12 +97,22 @@
             {{ item_title }}
           </button>
         {# level-1/level-2 LINKS #}
+        {% elseif menu_level > 0 and item.is_expanded %}
+          <button
+            class="menu-item-submenu menu-item-{{ item_title_class }}"
+            aria-controls="aria-{{ item_title_class }}"
+            aria-expanded={{expanded}}
+          >
+            {{ item_title }}
+          </button>
+
         {% else %}
           {{ link(title_wrap, item.url) }}
         {% endif %}
         {# END. LEVEL-0 BUTTONS AND LEVEL-1/LEVEL-2 LINKS #}
 
         {% if menu_level > 0 and item.is_expanded %}
+
           <span class="fas fa-angle-right"></span>
         {% endif %}
 
