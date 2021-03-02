@@ -96,16 +96,16 @@
           >
             {{ item_title }}
           </button>
-        {# level-1/level-2 LINKS #}
+        {# level-1/level-2 buttons #}
         {% elseif menu_level > 0 and item.is_expanded %}
           <button
-            class="menu-item-submenu menu-item-{{ item_title_class }}"
+            class="menu-item-submenu-toggle menu-item-{{ item_title_class }}"
             aria-controls="aria-{{ item_title_class }}"
             aria-expanded={{expanded}}
           >
             {{ item_title }}
           </button>
-
+        {# level-1/level-2 LINKS #}
         {% else %}
           {{ link(title_wrap, item.url) }}
         {% endif %}
@@ -119,8 +119,13 @@
         {# START. LEVEL-0/LEVEL-1 SUBMENU PANEL #}
         {% if item.below and item.title != 'Search' %}
           <div id="aria-{{ item_title_class }}" class="menu-child--wrapper wrapper--{{ item_title_class }}" data-level="level-{{ menu_level }}">
+
             {# Level-0 close btn #}
-            <span class="menu-item-close">Close menu</span>
+            {% if menu_level == 0 %}
+              <button class="menu-item-close" aria-controls="aria-{{ item_title_class }}" aria-expanded={{expanded}}>
+                  Close menu
+              </button>
+            {% endif %}
 
             {# Level-0/Level-1 submenu titles #}
             <div data-section="section-{{ item_title_class }}" class="menu-child--label">

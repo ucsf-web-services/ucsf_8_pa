@@ -1,7 +1,8 @@
 "use strict";
 
 /**
- * Animation of elements based on location in the viewport.
+ * Main navigation, Desktop.
+ * TODO: write logic for changing '.menu-item-submenu-toggle' aria-expanded based on hover state.
  */
 (function ($, window) {
   Drupal.behaviors.desktopDropdownHeight = {
@@ -55,7 +56,7 @@
           }, 250);
         });
 
-        var nolink = $(".menu-item a.nolink");
+        var nolink = $(".menu-item-submenu-toggle");
         nolink.each(function () {
           $(this).on("click", function (event) {
             event.preventDefault();
@@ -87,8 +88,10 @@
           var $triggerToggle = $this.find(".menu-item-top-level");
           if ($this.hasClass("menu-item-open")) {
             setAria($triggerToggle, "true");
+            setAria($(".menu-item-close"), "true");
           } else {
             setAria($triggerToggle, "false");
+            setAria($(".menu-item-close"), "false");
           }
         });
 
@@ -96,11 +99,13 @@
           e.stopPropagation(); // Key line to work perfectly
           if ($(this).parent().parent().hasClass("menu-item-open")) {
             $(this).parent().parent().removeClass("menu-item-open");
+            setAria($(".menu-item-close"), "false");
+            setAria($(".menu-item-parent").find(".menu-item-top-level"), "false");
           }
         });
 
         // Shows menus when it's being tabbed through
-        var $dropdown = $(".menu-child--wrapper", context);
+        var $dropdown = $(".menu-item--expanded", context);
         $dropdown.on("focusin", function () {
           // Menu dropdowns open on focus.
           $(this).parents(".menu-item--expanded").addClass("menu-item-open");
@@ -120,6 +125,19 @@
                 $this.parents(".menu-item--expanded").first().removeClass("menu-item-open");
               }
           }, 500);
+        });
+
+        var $submenuTriggerToggle = $(".menu-item-submenu-toggle");
+        $submenuTriggerToggle.on("click touchstart", function (e) {
+          var $submenuWrapper = $(this).parents(".menu-item--expanded").first();
+          e.preventDefault();
+          e.stopPropagation();
+          $submenuWrapper.toggleClass("menu-item-open");
+          if ($submenuWrapper.hasClass("menu-item-open")) {
+            setAria($submenuTriggerToggle, "true");
+          } else {
+            setAria($submenuTriggerToggle, "false");
+          }
         });
       });
     }
