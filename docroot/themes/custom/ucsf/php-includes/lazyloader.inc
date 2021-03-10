@@ -8,11 +8,11 @@ function ucsf_preprocess_image(&$variables) {
   // create an alt key with empty string as a value.
   if (empty($variables['attributes']['alt'])) {
     $variables['attributes']['alt'] = '';
-  };
+  }
 
   if (empty($variables['attributes']['loading'])) {
     $variables['attributes']['loading'] = 'lazy';
-  };
+  }
 
   if ($variables['attributes']['src']) {
     // Saves data-src value to src attribute, removes data-src.
@@ -36,6 +36,6 @@ function ucsf_preprocess_image(&$variables) {
         unset($variables['attributes']['data-src']);
       }
     }
-  };
+  }
 
 }
