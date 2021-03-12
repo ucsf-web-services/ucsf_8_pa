@@ -460,3 +460,13 @@ a[name] {
 .combined-header-region--has-subnav ~ .region-content .main a[name] {
   top: -200px;
 }
+
+// Add zoom effect to any image style that contains "zoom on hover" in it's name
+[data-entity-embed-display-settings*="zoom_on_hover"] {
+  overflow: hidden;
+
+  a:hover img {
+    transition: transform 0.2s cubic-bezier(0.77, 0, 0.175, 1);
+    transform: scale(1.1);
+  }
+}
