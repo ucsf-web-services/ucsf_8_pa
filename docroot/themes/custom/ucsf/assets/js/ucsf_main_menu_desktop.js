@@ -55,98 +55,116 @@
             resizeMenuPanel();
           }, 250);
         });
-
-        var nolink = $(".menu-item-submenu-toggle");
-        nolink.each(function () {
-          $(this).on("click", function (event) {
-            event.preventDefault();
-          });
-        });
-
-        /**
-         * Set aria-expanded attribute value on element that triggers the submenu visibility
-         * @param {jQuery Object} trigger
-         * @param {String} value
-         */
-        var setAria = function setAria(trigger, value) {
-          trigger.attr("aria-expanded", value);
-        };
-
-        $(".menu-item-parent").on("click touchstart", function () {
-          var $this = $(this);
-          // do not add 'menu-item-open' class if the menu item is search
-          if ($this.hasClass("search")) {
-            $this.siblings().removeClass("menu-item-open");
-            return;
-          }
-          // Toggle visibility of submenu panel on btn click. Automatically close other panels
-          $this.toggleClass("menu-item-open").siblings().removeClass("menu-item-open");
-          // reset area of previously opened panels.
-          $this.siblings().find(".menu-item-top-level").attr("aria-expanded", false);
-
-          // Set aria attribute based on panel visibility.
-          var $triggerToggle = $this.find(".menu-item-top-level");
-          if ($this.hasClass("menu-item-open")) {
-            setAria($triggerToggle, "true");
-            setAria($(".menu-item-close"), "true");
-          } else {
-            setAria($triggerToggle, "false");
-            setAria($(".menu-item-close"), "false");
-          }
-        });
-
-        $(".menu-item-close").on("click touchstart", function (e) {
-          e.stopPropagation(); // Key line to work perfectly
-          if ($(this).parent().parent().hasClass("menu-item-open")) {
-            $(this).parent().parent().removeClass("menu-item-open");
-            setAria($(".menu-item-close"), "false");
-            setAria($(".menu-item-parent").find(".menu-item-top-level"), "false");
-          }
-        });
-
-        // Shows menus when it's being tabbed through
-        var $dropdown = $(".menu-item--expanded", context);
-        $dropdown.on("focusin", function () {
-          // Menu dropdowns open on focus.
-          $(this).parents(".menu-item--expanded").addClass("menu-item-open");
-        });
-
-        // Menu dropdown closes when focus is out.
-        $dropdown.on("focusout", function () {
-          var $this = $(this);
-          // Waits and only removes class if newly focused element is outside the dropdown
-          setTimeout(function () {
-            // Closes second level subnav
-            if ($(document.activeElement).parents(".menu-child--wrapper").length === 0) {
-              $this.parents(".menu-item-parent").removeClass("menu-item-open");
-            }
-            // Closes the third level subnav if the current focused element is not in it.
-            else if ($this.has(document.activeElement).length === 0) {
-                $this.parents(".menu-item--expanded").first().removeClass("menu-item-open");
-              }
-          }, 500);
-        });
-
-        var $submenuTriggerToggle = $(".menu-item-submenu-toggle");
-        $submenuTriggerToggle.on("click touchstart", function (e) {
-          var $submenuWrapper = $(this).parents(".menu-item--expanded").first();
-          e.preventDefault();
-          e.stopPropagation();
-          $submenuWrapper.toggleClass("menu-item-open");
-          if ($submenuWrapper.hasClass("menu-item-open")) {
-            setAria($submenuTriggerToggle, "true");
-          } else {
-            setAria($submenuTriggerToggle, "false");
-          }
-        });
       });
     }
   };
 
-  Drupal.behaviors.keyboardAcessibleSeacrhForm = {
+  // Main menu
+  Drupal.behaviors.keyboardAccessibleMenu = {
+    attach: function attach(context, settings) {
+      var nolink = $(".menu-item-submenu-toggle");
+      nolink.each(function () {
+        $(this).on("click", function (event) {
+          event.preventDefault();
+        });
+      });
+
+      /**
+       * Set aria-expanded attribute value on element that triggers the submenu visibility
+       * @param {jQuery Object} trigger
+       * @param {String} value
+       */
+      var setAria = function setAria(trigger, value) {
+        trigger.attr("aria-expanded", value);
+      };
+
+      $(".menu-item-parent").on("click touchstart", function () {
+        var $this = $(this);
+        // do not add 'menu-item-open' class if the menu item is search
+        if ($this.hasClass("search")) {
+          $this.siblings().removeClass("menu-item-open");
+          return;
+        }
+        // Toggle visibility of submenu panel on btn click. Automatically close other panels
+        $this.toggleClass("menu-item-open").siblings().removeClass("menu-item-open");
+        // reset area of previously opened panels.
+        $this.siblings().find(".menu-item-top-level").attr("aria-expanded", false);
+
+        // Set aria attribute based on panel visibility.
+        var $triggerToggle = $this.find(".menu-item-top-level");
+        if ($this.hasClass("menu-item-open")) {
+          setAria($triggerToggle, "true");
+          setAria($(".menu-item-close"), "true");
+        } else {
+          setAria($triggerToggle, "false");
+          setAria($(".menu-item-close"), "false");
+        }
+      });
+
+      $(".menu-item-close").on("click touchstart", function (e) {
+        e.stopPropagation(); // Key line to work perfectly
+        if ($(this).parent().parent().hasClass("menu-item-open")) {
+          $(this).parent().parent().removeClass("menu-item-open");
+          setAria($(".menu-item-close"), "false");
+          setAria($(".menu-item-parent").find(".menu-item-top-level"), "false");
+        }
+      });
+
+      // Shows menus when it's being tabbed through
+      var $dropdownMenu = $(".menu-item--expanded", context);
+      $dropdownMenu.on("focusin", function () {
+        // Menu dropdowns open on focus.
+        $(this).parents(".menu-item--expanded").addClass("menu-item-open");
+      });
+
+      // Menu dropdown closes when focus is out.
+      $dropdownMenu.on("focusout", function () {
+        var $this = $(this);
+        // Waits and only removes class if newly focused element is outside the dropdown
+        setTimeout(function () {
+          // Closes second level subnav
+          if ($(document.activeElement).parents(".menu-child--wrapper").length === 0) {
+            $this.parents(".menu-item-parent").removeClass("menu-item-open");
+          }
+          // Closes the third level subnav if the current focused element is not in it.
+          else if ($this.has(document.activeElement).length === 0) {
+              $this.parents(".menu-item--expanded").first().removeClass("menu-item-open");
+            }
+        }, 500);
+      });
+
+      // Toggle submenu open / close on btn click
+      var $submenuTriggerToggle = $(".menu-item-submenu-toggle");
+      $submenuTriggerToggle.on("click touchstart", function (e) {
+        var $submenuWrapper = $(this).parents(".menu-item--expanded").first();
+        e.preventDefault();
+        e.stopPropagation();
+        $submenuWrapper.toggleClass("menu-item-open").siblings(".menu-item-open").removeClass("menu-item-open");
+
+        if ($submenuWrapper.hasClass("menu-item-open")) {
+          setAria($submenuTriggerToggle, "true");
+          setAria($submenuWrapper.siblings().find($submenuTriggerToggle), "false");
+        } else {
+          setAria($submenuTriggerToggle, "false");
+        }
+      });
+    }
+  };
+
+  Drupal.behaviors.keyboardAccessibleSearchForm = {
     attach: function attach(context, settings) {
       var $searchToggle = $(".menu-item-search-menu", context);
       var $search = $(".wrapper--search-menu", context);
+
+      /**
+       * Set aria-expanded attribute value on element that triggers the submenu visibility
+       * @param {jQuery Object} trigger
+       * @param {String} value
+       */
+      var setAria = function setAria(trigger, value) {
+        trigger.attr("aria-expanded", value);
+      };
+
       $searchToggle.click(function (e) {
         e.preventDefault();
 
@@ -154,6 +172,9 @@
         $searchToggle.toggleClass("active");
         if ($searchToggle.hasClass("active")) {
           $(".wrapper--search-menu .home-search__form-input").focus();
+          setAria($searchToggle, true);
+        } else {
+          setAria($searchToggle, false);
         }
       });
 
@@ -162,6 +183,7 @@
         if (!$(this).hasClass("search")) {
           $search.removeClass("active");
           $searchToggle.removeClass("active");
+          setAria($searchToggle, false);
         }
       });
 
@@ -169,6 +191,7 @@
       $search.on("focusin", function () {
         $search.addClass("active");
         $searchToggle.addClass("active"); // changes toggle icon
+        setAria($searchToggle, true);
       });
 
       //Search form closes when tabbing away.
@@ -187,6 +210,7 @@
           if (document.activeElement.closest(".wrapper--search-menu") === null) {
             $search.removeClass("active");
             $searchToggle.removeClass("active");
+            setAria($searchToggle, false);
           }
           // delay needs to be at least 150 to avoid a race condition with $searchToggle.toggleClass('active');
         }, 150);
