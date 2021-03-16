@@ -45,6 +45,7 @@
   }
 }
 
+// Implementing a bug fix from https://css-tricks.com/preventing-a-grid-blowout/
 @mixin card-three-up {
   // @todo - Modified by ZK for responsive.
   list-style: none;
@@ -55,7 +56,7 @@
   @include breakpoint($new-large) {
     grid-column: 1/-1;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-auto-rows: auto;
     grid-gap: 5%;
     grid-row-gap: 0;

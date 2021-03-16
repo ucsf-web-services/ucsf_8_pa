@@ -4,13 +4,8 @@
   opacity: 0;
 
   // on scroll down makes section fade in.
-  &--in-viewport:not(.lazyload) {
+  &--in-viewport {
     animation: fade .8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-  }
-
-  // Fix for IE
-  .explorer & {
-    opacity: 1;
   }
 }
 
@@ -24,22 +19,6 @@
     &--in-viewport {
       animation: element-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
     }
-  }
-}
-
-.field-card-image {
-  // Removes fade-in animation from News Card images
-  .element-fade {
-    opacity: 1;
-    animation: none;
-  }
-}
-
-.field-taxonomy-banner-image {
-  // Removes fade-in animation from Taxonomy Banner images
-  .element-fade {
-    opacity: 1;
-    animation: none;
   }
 }
 

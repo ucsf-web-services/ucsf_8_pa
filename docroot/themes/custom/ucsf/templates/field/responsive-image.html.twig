@@ -24,12 +24,6 @@
       #}
       <!--[if IE 9]><video style="display: none;"><![endif]-->
       {% for source_attributes in sources %}
-        {# Removes lazyloading if a trigger attribute is present and the LazyLoad class is still on the element #}
-        {% if (attributes.storage['data-no-lazyload']) and (source_attributes.hasClass('lazyload')) %}
-          {# Removes LazyLoad class, saves data-srcset value to srcset attribute, removes data-srcset. #}
-          {% set srcset = source_attributes.storage['data-srcset'] %}
-          {% set source_attributes = source_attributes.removeClass('lazyload').removeAttribute('data-srcset').setAttribute('srcset', srcset) %}
-        {% endif %}
         <source{{ source_attributes }}/>
       {% endfor %}
       <!--[if IE 9]></video><![endif]-->
