@@ -4,119 +4,262 @@ $search-icon: 28px;
 $search-icon-sticky: 24px;
 $hover-border-size: 4px;
 
+.main-nav {
+  // variable to print .main-nav
+  $block: &;
 
-// Hide the desktop menu in mobile
-.menu--main {
+
+  // Hide the desktop menu in mobile
   @include breakpoint($bp-until-large) {
     display: none;
   }
-}
 
-/*---------------In this section---------------------*\
-  DESKTOP MENU
-\*---------------------------------------------------*/
-.ucsf-menu-parent--desktop {
-  margin: 0;
-  padding-left: 0;
-  position: relative;
-  float: right;
-  clear: both;
+  // navbar menu <ul>
+  &__menu {
+    margin: 0;
+    padding-left: 0;
+    position: relative;
+    float: right;
+    clear: both;
 
-  // Level-0 and level-1 menu.
-  .menu-child--wrapper {
-    @include visually-hidden;
-    visibility: hidden;
-    background: $c-grey-pale;
-    height: auto;
-    right: 0;
-    // position open menu panel behind open quicklinks panel
-    z-index: $z-quicklinks-open-page;
-    width: 800px;
-
-    @include breakpoint($new-large) {
-      width: 999px;
+    .menu-item {
+      display: inline-block;
     }
   }
 
-  .menu-item {
-    display: inline-block;
+  // navbar buttons
+  &__toggle {
+    background-color: transparent;
+    color: $gray-blue;
+    border: none;
+    line-height: $nav-line-height;
+    letter-spacing: 0;
+    font-size: $font-size-sm;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    margin: 0 0 0 $space-five;
+    padding: 0 0 $hover-border-size 0;
+    transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1) line-height;
 
-    .menu-child--wrapper {
+    &:focus,
+    &:hover {
+      border-bottom: $hover-border-size solid $c-blue-link;
+      padding-bottom: 0; // padding bottom is replaced by the border bottom
+    }
+
+    &:focus {
+      outline: 1px solid $c-navy;
+    }
+
+    // Remove margin from first menu item
+    #{$block}__menu .menu-item:first-child & {
+      margin-left: 0;
+    }
+
+    // make top level menu item "active" when visiting linked page
+    .menu-item--active-trail & {
+      border-bottom: $hover-border-size solid $c-blue-link;
+      padding-bottom: 0;
+    }
+  }
+
+}
+
+
+/*---------------In this section---------------------*\
+  SUBMENU
+\*---------------------------------------------------*/
+.main-submenu {
+  // variable to print .main-submenu
+  $block: &;
+
+  @include visually-hidden;
+  visibility: hidden;
+  background: $c-grey-pale;
+  height: auto;
+  right: 0;
+  z-index: $z-quicklinks-open-page;
+  width: 800px;
+  position: relative;
+
+  @include breakpoint($new-large) {
+    width: 999px;
+  }
+
+
+  // Level-1 Expanded menu wrapper 2nd column.
+  &--1 {
+    position: absolute;
+    right: 0;
+    top: 48px;
+    width: 450px;
+
+    @include breakpoint($new-large) {
+      width: 535px;
+    }
+  }
+
+  // Level-0 Expanded menu 1st column.
+  &__menu {
+    #{$block}--0 & {
+      display: block;
+      //margin-top: 64px;
+      width: 350px;
+
+      @include breakpoint($new-large) {
+        width: 464px;
+      }
+
+      .menu-item {
+        border-bottom: 1px solid #d5d9de;
+        display: block;
+        margin-left: 73px;
+      }
+    }
+
+    // Level-0 Expanded menu 2nd column.
+     #{$block}--1 & {
+      padding-right: 80px;
+      padding-left: 0;
+      width: 100%;
+      animation: none;
+      .menu-item {
+        margin-left: 80px;
+      }
+    }
+
+    .menu-item--expanded {
+      // Icon angle right
+      .fa-angle-right {
+        display: inline-block;
+        line-height: 32px;
+        height: 48px;
+        padding: 8px 0;
+        width: 16px;
+      }
+
+      // Icon angle right on menu item hover
+      &:hover .fa-angle-right {
+        color: $c-blue-link;
+      }
+    }
+
+    a {
+      @include link-colors($c-navy, $c-blue-link);
+      display: block;
+      font-family: $font-helvetica-neue-light;
+      font-size: 18px;
+      line-height: 32px;
+      height: auto;
+      margin: 0;
+      padding: $space 20px $space 0;
       position: relative;
     }
 
-    /*---------------In this section---------------------*\
-      SUBMENU VISIBILITY
-    \*---------------------------------------------------*/
-    // When top level button is clicked.
-    &.menu-item-open > .menu-child--wrapper,
-    // When Level-1 link is hovered over
-    .menu-item:hover > .menu-child--wrapper {
-      // border: 1px solid red;
-      @include visually-hidden-reset;
-      @include menu-animation;
-      visibility: visible;
+    span.ext {
+      position: absolute;
+      height: 32px;
+      right: 0;
+      top: 20%;
+    }
+  }
 
-      .menu-child--menu,
-      .menu-child--label-text,
-      ::after {
-        animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both;
-      }
-
-      // Level-1 Expanded menu 2nd column, removing menu drop down animation.
-      .menu-child--wrapper {
-        animation: none;
+  // left and right column labels
+  &__label {
+    &-text {
+      @include eyebrow;
+      margin-left: 80px;
+      &:after {
+        background: none;
       }
     }
 
-    // for debugging only.
-    //&.research > .menu-child--wrapper {
-    //  @include visually-hidden-reset;
-    //
-    //  .menu-child--wrapper {
-    //    @include visually-hidden-reset;
-    //  }
-    //}
+    &--0 {
+      background: $c-teal;
+      //float: left;
+      box-sizing: border-box;
+      height: 48px;
+      transform: rotate(90deg);
+      transform-origin: 0px 0px 0px;
+      padding: 0 24px;
+      width: 400px;
+      margin-top: 1px;
+
+      @each $area, $color, $color2 in $areas {
+        &[data-section="section-#{$area}"] {
+          background: $color;
+        }
+      }
+
+      #{$block}__label-text {
+        @include eyebrow;
+        line-height: 48px;
+        margin: 0;
+        color: $c-white;
+        &:after {
+          background: $c-white;
+        }
+      }
+    }
+  }
+
+  // left column submenu button
+  &__toggle {
+    border: 0;
+    display: inline-block;
+    width: calc(100% - 22px);
+    background-color: transparent;
+    padding: $space 20px $space 0;
+    text-align: left;
+
+    &:hover {
+      color: $c-blue-link;
+    }
+  }
+
+  /*---------------In this section---------------------*\
+    Animations and visibility
+  \*---------------------------------------------------*/
+  // When top level button is clicked.
+  .main-nav__menu .menu-item-open > & {
+    @include visually-hidden-reset;
+    @include menu-animation;
+    visibility: visible;
+
+    #{$block}__menu,
+    #{$block}__label-text,
+    ::after {
+      animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both;
+    }
+  }
+
+  // When left column button is hovered/clicked.
+  &--0 .menu-item:hover &--1,
+  &--0 .menu-item-open > & {
+    @include visually-hidden-reset;
+    visibility: visible;
   }
 }
 
-/*---------------In this section---------------------*\
-  TOP LEVEL MENU ITEMS
-\*---------------------------------------------------*/
-.menu-item-top-level {
-  background-color: transparent;
-  color: $gray-blue;
-  border: none;
-  line-height: $nav-line-height;
-  letter-spacing: 0;
-  font-size: $font-size-sm;
-  font-family: $font-helvetica-neue-roman;
-  font-weight: 500;
-  margin: 0 0 0 $space-five;
-  padding: 0 0 $hover-border-size 0;
-  transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1) line-height;
-
-  &:focus,
-  &:hover {
-    border-bottom: $hover-border-size solid $c-blue-link;
-    padding-bottom: 0; // padding bottom is replaced by the border bottom
-  }
+// close button for submenu
+.menu-item-close {
+  display: block;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 20px;
+  height: 20px;
+  background: url("../images/x-large.svg") left center no-repeat transparent;
+  background-size: 20px 20px;
+  cursor: pointer;
+  text-indent: -9999px;
+  border: 0;
 
   &:focus {
-    outline: 1px solid $c-navy;
-  }
-
-  // make top level menu item "active" when visiting linked page
-  .menu-item--active-trail & {
-    border-bottom: $hover-border-size solid $c-blue-link;
-    padding-bottom: 0;
-  }
-
-  // Remove margin from first menu item
-  .menu-parent--wrapper .menu-item:first-child & {
-    margin-left: 0;
+    border: 1px solid $c-navy;
   }
 }
+
 
 /*---------------In this section---------------------*\
   SEARCH BUTTON, ICON, FORM
@@ -170,11 +313,11 @@ $hover-border-size: 4px;
 }
 
 // Search form
-.wrapper--search-menu {
+.main-nav__search {
   background: none;
   width: 650px !important;
 
-  .menu-item > .menu-child--wrapper & {
+  .menu-item > .main-submenu & {
     animation: none;
   }
 
@@ -201,8 +344,8 @@ $hover-border-size: 4px;
   STICKY HEADER NAVIGATION
 \*---------------------------------------------------*/
 .fixed-nav {
-  .ucsf-menu-parent--desktop {
-    .menu-item-top-level {
+  .main-nav__menu {
+    .main-nav__submenu-wrapper {
       // Reduce the height of element
       line-height: $nav-line-height-sticky;
     }
@@ -219,168 +362,6 @@ $hover-border-size: 4px;
 }
 
 /*---------------In this section---------------------*\
-  SUBMENU LINKS
-\*---------------------------------------------------*/
-.menu-child--menu {
-  .menu-item {
-    border-bottom: 1px solid #d5d9de;
-    display: block;
-    margin-left: 73px;
-  }
-
-  .menu-item--expanded {
-
-    // Icon angle right
-    .fa-angle-right {
-      display: inline-block;
-      line-height: 32px;
-      height: 48px;
-      padding: 8px 0;
-      width: 16px;
-    }
-
-    // Icon angle right on menu item hover
-    &:hover .fa-angle-right {
-      color: $c-blue-link;
-    }
-  }
-
-  a {
-    @include link-colors($c-navy, $c-blue-link);
-    display: block;
-    font-family: $font-helvetica-neue-light;
-    font-size: 18px;
-    line-height: 32px;
-    height: auto;
-    margin: 0;
-    padding: $space 20px $space 0;
-    position: relative;
-  }
-
-  span.ext {
-    position: absolute;
-    height: 32px;
-    right: 0;
-    top: 20%;
-  }
-
-  // toggle button for submenu
-  .menu-item-submenu-toggle {
-    border: 0;
-    display: inline-block;
-    width: calc(100% - 22px);
-    background-color: transparent;
-    padding: $space 20px $space 0;
-    text-align: left;
-
-    &:hover {
-      color: $c-blue-link;
-    }
-  }
-
-
-}
-
-// close button for submenu
-.menu-item-close {
-  display: block;
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 20px;
-  height: 20px;
-  background: url("../images/x-large.svg") left center no-repeat transparent;
-  background-size: 20px 20px;
-  cursor: pointer;
-  text-indent: -9999px;
-  border: 0;
-
-  &:focus {
-    border: 1px solid $c-navy;
-  }
-}
-
-/*---------------In this section---------------------*\
-  Level 0 - Dropdown box 1st Column.
-\*---------------------------------------------------*/
-[data-level="level-0"] {
-  > .menu-child--label {
-    background: $c-teal;
-    //float: left;
-    box-sizing: border-box;
-    height: 48px;
-
-    transform: rotate(90deg);
-    transform-origin: 0px 0px 0px;
-    padding: 0 24px;
-    width: 400px;
-    margin-top: 1px;
-
-    .menu-child--label-text {
-      @include eyebrow;
-      line-height: 48px;
-      margin-bottom: 0;
-      color: $c-white;
-      &:after {
-        background: $c-white;
-      }
-    }
-
-    @each $area, $color, $color2 in $areas {
-      &[data-section="section-#{$area}"] {
-        background: $color;
-      }
-    }
-  }
-
-  > .menu-child--menu {
-    display: block;
-    //margin-top: 64px;
-    width: 350px;
-
-    @include breakpoint($new-large) {
-      width: 464px;
-    }
-  }
-}
-
-/*---------------In this section---------------------*\
-  Level-1 Expanded menu 2nd column.
-\*---------------------------------------------------*/
-.ucsf-menu-parent--desktop {
-  [data-level="level-1"] {
-    position: absolute;
-    right: 0;
-    top: 48px;
-    width: 450px;
-
-    @include breakpoint($new-large) {
-      width: 535px;
-    }
-
-    .menu-child--menu {
-      padding-right: 80px;
-      padding-left: 0;
-      width: 100%;
-      animation: none;
-      .menu-item {
-        margin-left: 80px;
-      }
-    }
-
-    .menu-child--label-text {
-      @include eyebrow;
-      margin-left: 80px;
-      //margin-top: 74px;
-
-      &:after {
-        content: none;
-      }
-    }
-  }
-}
-
-/*---------------In this section---------------------*\
   ACTIVE MENU BUTTON WHEN VIEWING LINKED PAGE
 \*---------------------------------------------------*/
 // Need to underline top level menu item when viewing the articles
@@ -389,7 +370,7 @@ $hover-border-size: 4px;
 .page-node-type-author,
 [class*="alias-news"],
 [class*="alias-magazine"] {
-  .ucsf-menu-parent--desktop {
+  .main-nav {
     .menu-item-news--media {
       border-bottom: $hover-border-size solid $c-blue-link;
       padding-bottom: 0;

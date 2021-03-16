@@ -3658,57 +3658,19 @@ figure figure[class="image"] {
   right: 0; }
 
 @media (max-width: 849px) {
-  .menu--main {
+  .main-nav {
     display: none; } }
 
-.ucsf-menu-parent--desktop {
+.main-nav__menu {
   margin: 0;
   padding-left: 0;
   position: relative;
   float: right;
   clear: both; }
-  .ucsf-menu-parent--desktop .menu-child--wrapper {
-    position: absolute !important;
-    clip: rect(1px, 1px, 1px, 1px);
-    overflow: hidden;
-    height: 1px;
-    width: 1px;
-    word-wrap: normal;
-    visibility: hidden;
-    background: #f2f4f6;
-    height: auto;
-    right: 0;
-    z-index: 780;
-    width: 800px; }
-    @media (min-width: 1050px) {
-      .ucsf-menu-parent--desktop .menu-child--wrapper {
-        width: 999px; } }
-  .ucsf-menu-parent--desktop .menu-item {
-    display: inline-block;
- }
-    .ucsf-menu-parent--desktop .menu-item .menu-child--wrapper {
-      position: relative; }
-    .ucsf-menu-parent--desktop .menu-item.menu-item-open > .menu-child--wrapper,
-    .ucsf-menu-parent--desktop .menu-item .menu-item:hover > .menu-child--wrapper {
-      clip: auto;
-      overflow: visible;
-      -webkit-animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
-      animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
-      visibility: visible; }
-      .ucsf-menu-parent--desktop .menu-item.menu-item-open > .menu-child--wrapper .menu-child--menu,
-      .ucsf-menu-parent--desktop .menu-item.menu-item-open > .menu-child--wrapper .menu-child--label-text,
-      .ucsf-menu-parent--desktop .menu-item.menu-item-open > .menu-child--wrapper ::after,
-      .ucsf-menu-parent--desktop .menu-item .menu-item:hover > .menu-child--wrapper .menu-child--menu,
-      .ucsf-menu-parent--desktop .menu-item .menu-item:hover > .menu-child--wrapper .menu-child--label-text,
-      .ucsf-menu-parent--desktop .menu-item .menu-item:hover > .menu-child--wrapper ::after {
-        -webkit-animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both;
-                animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both; }
-      .ucsf-menu-parent--desktop .menu-item.menu-item-open > .menu-child--wrapper .menu-child--wrapper,
-      .ucsf-menu-parent--desktop .menu-item .menu-item:hover > .menu-child--wrapper .menu-child--wrapper {
-        -webkit-animation: none;
-                animation: none; }
+  .main-nav__menu .menu-item {
+    display: inline-block; }
 
-.menu-item-top-level {
+.main-nav__toggle {
   background-color: transparent;
   color: #506380;
   border: none;
@@ -3721,16 +3683,209 @@ figure figure[class="image"] {
   padding: 0 0 4px 0;
   -webkit-transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) line-height;
   transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) line-height; }
-  .menu-item-top-level:focus, .menu-item-top-level:hover {
+  .main-nav__toggle:focus, .main-nav__toggle:hover {
     border-bottom: 4px solid #0071ad;
     padding-bottom: 0; }
-  .menu-item-top-level:focus {
+  .main-nav__toggle:focus {
     outline: 1px solid #052049; }
-  .menu-item--active-trail .menu-item-top-level {
+  .main-nav__menu .menu-item:first-child .main-nav__toggle {
+    margin-left: 0; }
+  .menu-item--active-trail .main-nav__toggle {
     border-bottom: 4px solid #0071ad;
     padding-bottom: 0; }
-  .menu-parent--wrapper .menu-item:first-child .menu-item-top-level {
-    margin-left: 0; }
+
+.main-submenu {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  overflow: hidden;
+  height: 1px;
+  width: 1px;
+  word-wrap: normal;
+  visibility: hidden;
+  background: #f2f4f6;
+  height: auto;
+  right: 0;
+  z-index: 780;
+  width: 800px;
+  position: relative;
+ }
+  @media (min-width: 1050px) {
+    .main-submenu {
+      width: 999px; } }
+  .main-submenu--1 {
+    position: absolute;
+    right: 0;
+    top: 48px;
+    width: 450px; }
+    @media (min-width: 1050px) {
+      .main-submenu--1 {
+        width: 535px; } }
+  .main-submenu--0 .main-submenu__menu {
+    display: block;
+    width: 350px; }
+    @media (min-width: 1050px) {
+      .main-submenu--0 .main-submenu__menu {
+        width: 464px; } }
+    .main-submenu--0 .main-submenu__menu .menu-item {
+      border-bottom: 1px solid #d5d9de;
+      display: block;
+      margin-left: 73px; }
+  .main-submenu--1 .main-submenu__menu {
+    padding-right: 80px;
+    padding-left: 0;
+    width: 100%;
+    -webkit-animation: none;
+            animation: none; }
+    .main-submenu--1 .main-submenu__menu .menu-item {
+      margin-left: 80px; }
+  .main-submenu__menu .menu-item--expanded .fa-angle-right {
+    display: inline-block;
+    line-height: 32px;
+    height: 48px;
+    padding: 8px 0;
+    width: 16px; }
+  .main-submenu__menu .menu-item--expanded:hover .fa-angle-right {
+    color: #0071ad; }
+  .main-submenu__menu a {
+    display: block;
+    font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-size: 18px;
+    line-height: 32px;
+    height: auto;
+    margin: 0;
+    padding: 8px 20px 8px 0;
+    position: relative; }
+    .main-submenu__menu a:link {
+      color: #052049; }
+    .main-submenu__menu a:visited, .main-submenu__menu a:link:visited {
+      color: #052049; }
+    .main-submenu__menu a:focus {
+      color: #052049; }
+    .main-submenu__menu a.active:hover, .main-submenu__menu a.is-active:hover, .main-submenu__menu a.active-trail:hover, .main-submenu__menu a.visited:hover, .main-submenu__menu a:hover {
+      color: #0071ad; }
+    .main-submenu__menu a.is-active, .main-submenu__menu a:active, .main-submenu__menu a.active-trail {
+      color: #052049; }
+  .main-submenu__menu span.ext {
+    position: absolute;
+    height: 32px;
+    right: 0;
+    top: 20%; }
+  .main-submenu__label-text {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    font-weight: 500;
+    font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.6px;
+    line-height: 1.4em;
+    color: #052049;
+    text-transform: uppercase;
+    margin-left: 80px; }
+    .main-submenu__label-text::after {
+      content: ' ';
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: #052049;
+      margin: 0 5px 3px; }
+    .main-submenu__label-text:after {
+      background: none; }
+  .main-submenu__label--0 {
+    background: #058488;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    height: 48px;
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+    -webkit-transform-origin: 0px 0px 0px;
+            transform-origin: 0px 0px 0px;
+    padding: 0 24px;
+    width: 400px;
+    margin-top: 1px; }
+    .main-submenu__label--0[data-section="section-about"] {
+      background: #716fb2; }
+    .main-submenu__label--0[data-section="section-about-menu"] {
+      background: #052049; }
+    .main-submenu__label--0[data-section="section-campus-news"] {
+      background: #052049; }
+    .main-submenu__label--0[data-section="section-education"] {
+      background: #568001; }
+    .main-submenu__label--0[data-section="section-location"] {
+      background: #568001; }
+    .main-submenu__label--0[data-section="section-news-center"] {
+      background: #716fb2; }
+    .main-submenu__label--0[data-section="section-news--media"] {
+      background: #716fb2; }
+    .main-submenu__label--0[data-section="section-patient-care"] {
+      background: #007cbe; }
+    .main-submenu__label--0[data-section="section-research"] {
+      background: #058488; }
+    .main-submenu__label--0[data-section="section-ucsf-magazine"] {
+      background: #716fb2; }
+    .main-submenu__label--0 .main-submenu__label-text {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+      font-weight: 500;
+      font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+      font-size: 12px;
+      letter-spacing: 1.6px;
+      line-height: 1.4em;
+      color: #052049;
+      text-transform: uppercase;
+      line-height: 48px;
+      margin: 0;
+      color: #fff; }
+      .main-submenu__label--0 .main-submenu__label-text::after {
+        content: ' ';
+        display: inline-block;
+        width: 40px;
+        height: 1px;
+        background: #052049;
+        margin: 0 5px 3px; }
+      .main-submenu__label--0 .main-submenu__label-text:after {
+        background: #fff; }
+  .main-submenu__toggle {
+    border: 0;
+    display: inline-block;
+    width: calc(100% - 22px);
+    background-color: transparent;
+    padding: 8px 20px 8px 0;
+    text-align: left; }
+    .main-submenu__toggle:hover {
+      color: #0071ad; }
+  .main-nav__menu .menu-item-open > .main-submenu {
+    clip: auto;
+    overflow: visible;
+    -webkit-animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
+    animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
+    visibility: visible; }
+    .main-nav__menu .menu-item-open > .main-submenu .main-submenu__menu,
+    .main-nav__menu .menu-item-open > .main-submenu .main-submenu__label-text,
+    .main-nav__menu .menu-item-open > .main-submenu ::after {
+      -webkit-animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both;
+              animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both; }
+  .main-submenu--0 .menu-item:hover .main-submenu--1,
+  .main-submenu--0 .menu-item-open > .main-submenu {
+    clip: auto;
+    overflow: visible;
+    visibility: visible; }
+
+.menu-item-close {
+  display: block;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 20px;
+  height: 20px;
+  background: url("../images/x-large.svg") left center no-repeat transparent;
+  background-size: 20px 20px;
+  cursor: pointer;
+  text-indent: -9999px;
+  border: 0; }
+  .menu-item-close:focus {
+    border: 1px solid #052049; }
 
 .menu-item-search-menu {
   display: inline-block;
@@ -3762,205 +3917,38 @@ figure figure[class="image"] {
   .menu-item--active-trail .menu-item-search-menu {
     border-bottom: 0; }
 
-.wrapper--search-menu {
+.main-nav__search {
   background: none;
   width: 650px !important; }
-  .menu-item > .menu-child--wrapper .wrapper--search-menu {
+  .menu-item > .main-submenu .main-nav__search {
     -webkit-animation: none;
             animation: none; }
-  .wrapper--search-menu.active {
+  .main-nav__search.active {
     -webkit-animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
     animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
     visibility: visible;
     z-index: 2; }
-  .wrapper--search-menu .home-search__form {
+  .main-nav__search .home-search__form {
     position: relative; }
-    .wrapper--search-menu .home-search__form .home-search__form-input {
+    .main-nav__search .home-search__form .home-search__form-input {
       width: 100%; }
-    .wrapper--search-menu .home-search__form .home-search__form-submit {
+    .main-nav__search .home-search__form .home-search__form-submit {
       position: absolute;
       top: 17px;
       right: 5px; }
 
-.fixed-nav .ucsf-menu-parent--desktop .menu-item-top-level {
+.fixed-nav .main-nav__menu .main-nav__submenu-wrapper {
   line-height: 60px; }
 
-.fixed-nav .ucsf-menu-parent--desktop .search .menu-item-search-menu {
+.fixed-nav .main-nav__menu .search .menu-item-search-menu {
   height: 60px;
   background-size: 24px;
   max-width: 24px; }
 
-.menu-child--menu .menu-item {
-  border-bottom: 1px solid #d5d9de;
-  display: block;
-  margin-left: 73px; }
-
-.menu-child--menu .menu-item--expanded .fa-angle-right {
-  display: inline-block;
-  line-height: 32px;
-  height: 48px;
-  padding: 8px 0;
-  width: 16px; }
-
-.menu-child--menu .menu-item--expanded:hover .fa-angle-right {
-  color: #0071ad; }
-
-.menu-child--menu a {
-  display: block;
-  font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-  font-size: 18px;
-  line-height: 32px;
-  height: auto;
-  margin: 0;
-  padding: 8px 20px 8px 0;
-  position: relative; }
-  .menu-child--menu a:link {
-    color: #052049; }
-  .menu-child--menu a:visited, .menu-child--menu a:link:visited {
-    color: #052049; }
-  .menu-child--menu a:focus {
-    color: #052049; }
-  .menu-child--menu a.active:hover, .menu-child--menu a.is-active:hover, .menu-child--menu a.active-trail:hover, .menu-child--menu a.visited:hover, .menu-child--menu a:hover {
-    color: #0071ad; }
-  .menu-child--menu a.is-active, .menu-child--menu a:active, .menu-child--menu a.active-trail {
-    color: #052049; }
-
-.menu-child--menu span.ext {
-  position: absolute;
-  height: 32px;
-  right: 0;
-  top: 20%; }
-
-.menu-child--menu .menu-item-submenu-toggle {
-  border: 0;
-  display: inline-block;
-  width: calc(100% - 22px);
-  background-color: transparent;
-  padding: 8px 20px 8px 0;
-  text-align: left; }
-  .menu-child--menu .menu-item-submenu-toggle:hover {
-    color: #0071ad; }
-
-.menu-item-close {
-  display: block;
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 20px;
-  height: 20px;
-  background: url("../images/x-large.svg") left center no-repeat transparent;
-  background-size: 20px 20px;
-  cursor: pointer;
-  text-indent: -9999px;
-  border: 0; }
-  .menu-item-close:focus {
-    border: 1px solid #052049; }
-
-[data-level="level-0"] > .menu-child--label {
-  background: #058488;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  height: 48px;
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
-  -webkit-transform-origin: 0px 0px 0px;
-          transform-origin: 0px 0px 0px;
-  padding: 0 24px;
-  width: 400px;
-  margin-top: 1px; }
-  [data-level="level-0"] > .menu-child--label .menu-child--label-text {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-    font-weight: 500;
-    font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-    font-size: 12px;
-    letter-spacing: 1.6px;
-    line-height: 1.4em;
-    color: #052049;
-    text-transform: uppercase;
-    line-height: 48px;
-    margin-bottom: 0;
-    color: #fff; }
-    [data-level="level-0"] > .menu-child--label .menu-child--label-text::after {
-      content: ' ';
-      display: inline-block;
-      width: 40px;
-      height: 1px;
-      background: #052049;
-      margin: 0 5px 3px; }
-    [data-level="level-0"] > .menu-child--label .menu-child--label-text:after {
-      background: #fff; }
-  [data-level="level-0"] > .menu-child--label[data-section="section-about"] {
-    background: #716fb2; }
-  [data-level="level-0"] > .menu-child--label[data-section="section-about-menu"] {
-    background: #052049; }
-  [data-level="level-0"] > .menu-child--label[data-section="section-campus-news"] {
-    background: #052049; }
-  [data-level="level-0"] > .menu-child--label[data-section="section-education"] {
-    background: #568001; }
-  [data-level="level-0"] > .menu-child--label[data-section="section-location"] {
-    background: #568001; }
-  [data-level="level-0"] > .menu-child--label[data-section="section-news-center"] {
-    background: #716fb2; }
-  [data-level="level-0"] > .menu-child--label[data-section="section-news--media"] {
-    background: #716fb2; }
-  [data-level="level-0"] > .menu-child--label[data-section="section-patient-care"] {
-    background: #007cbe; }
-  [data-level="level-0"] > .menu-child--label[data-section="section-research"] {
-    background: #058488; }
-  [data-level="level-0"] > .menu-child--label[data-section="section-ucsf-magazine"] {
-    background: #716fb2; }
-
-[data-level="level-0"] > .menu-child--menu {
-  display: block;
-  width: 350px; }
-  @media (min-width: 1050px) {
-    [data-level="level-0"] > .menu-child--menu {
-      width: 464px; } }
-
-.ucsf-menu-parent--desktop [data-level="level-1"] {
-  position: absolute;
-  right: 0;
-  top: 48px;
-  width: 450px; }
-  @media (min-width: 1050px) {
-    .ucsf-menu-parent--desktop [data-level="level-1"] {
-      width: 535px; } }
-  .ucsf-menu-parent--desktop [data-level="level-1"] .menu-child--menu {
-    padding-right: 80px;
-    padding-left: 0;
-    width: 100%;
-    -webkit-animation: none;
-            animation: none; }
-    .ucsf-menu-parent--desktop [data-level="level-1"] .menu-child--menu .menu-item {
-      margin-left: 80px; }
-  .ucsf-menu-parent--desktop [data-level="level-1"] .menu-child--label-text {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-    font-weight: 500;
-    font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-    font-size: 12px;
-    letter-spacing: 1.6px;
-    line-height: 1.4em;
-    color: #052049;
-    text-transform: uppercase;
-    margin-left: 80px; }
-    .ucsf-menu-parent--desktop [data-level="level-1"] .menu-child--label-text::after {
-      content: ' ';
-      display: inline-block;
-      width: 40px;
-      height: 1px;
-      background: #052049;
-      margin: 0 5px 3px; }
-    .ucsf-menu-parent--desktop [data-level="level-1"] .menu-child--label-text:after {
-      content: none; }
-
-.page-node-type-trending .ucsf-menu-parent--desktop .menu-item-news--media,
-.page-node-type-author .ucsf-menu-parent--desktop .menu-item-news--media,
-[class*="alias-news"] .ucsf-menu-parent--desktop .menu-item-news--media,
-[class*="alias-magazine"] .ucsf-menu-parent--desktop .menu-item-news--media {
+.page-node-type-trending .main-nav .menu-item-news--media,
+.page-node-type-author .main-nav .menu-item-news--media,
+[class*="alias-news"] .main-nav .menu-item-news--media,
+[class*="alias-magazine"] .main-nav .menu-item-news--media {
   border-bottom: 4px solid #0071ad;
   padding-bottom: 0; }
 
@@ -14133,7 +14121,7 @@ body.page-node-type-magazine-homepage,
         vertical-align: middle; } }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      .explorer .header nav.menu--main {
+      .explorer .header nav.main-nav {
         position: absolute;
         right: 0;
         bottom: 0; } }
@@ -14159,7 +14147,7 @@ body.page-node-type-magazine-homepage,
       width: 100%; }
     .explorer img {
       width: 100%; }
-    .explorer .header .menu--main {
+    .explorer .header .main-nav {
       display: block; }
     .explorer .home-banner__image {
       display: block; }
