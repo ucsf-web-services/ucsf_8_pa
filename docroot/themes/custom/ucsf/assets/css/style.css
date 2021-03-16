@@ -3868,6 +3868,8 @@ figure figure[class="image"] {
               animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both; }
   .main-submenu--0 .menu-item:hover .main-submenu--1,
   .main-submenu--0 .menu-item-open > .main-submenu {
+    -webkit-animation: none;
+            animation: none;
     clip: auto;
     overflow: visible;
     visibility: visible; }
@@ -3908,11 +3910,11 @@ figure figure[class="image"] {
     border-bottom: 0; }
   .menu-item-search-menu:focus {
     border: 1px solid #052049; }
-  .menu-item-search-menu.active {
+  .menu-item-open .menu-item-search-menu {
     background-image: url(/themes/custom/ucsf/assets/images/x-large.svg); }
-    .menu-item-search-menu.active:hover, .menu-item-search-menu.active:focus {
+    .menu-item-open .menu-item-search-menu:hover, .menu-item-open .menu-item-search-menu:focus {
       background-image: url(/themes/custom/ucsf/assets/images/x-large.svg); }
-    .menu-item-search-menu.active:focus {
+    .menu-item-open .menu-item-search-menu:focus {
       border: 1px solid #052049; }
   .menu-item--active-trail .menu-item-search-menu {
     border-bottom: 0; }
@@ -3923,7 +3925,7 @@ figure figure[class="image"] {
   .menu-item > .main-submenu .main-nav__search {
     -webkit-animation: none;
             animation: none; }
-  .main-nav__search.active {
+  .menu-item-open .main-nav__search {
     -webkit-animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
     animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
     visibility: visible;

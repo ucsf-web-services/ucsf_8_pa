@@ -236,6 +236,7 @@ $hover-border-size: 4px;
   // When left column button is hovered/clicked.
   &--0 .menu-item:hover &--1,
   &--0 .menu-item-open > & {
+    animation: none;
     @include visually-hidden-reset;
     visibility: visible;
   }
@@ -293,7 +294,7 @@ $hover-border-size: 4px;
   }
 
   // "X" btn when search form is open
-  &.active {
+  .menu-item-open & {
     background-image: url(/themes/custom/ucsf/assets/images/x-large.svg);
 
     &:hover,
@@ -309,7 +310,6 @@ $hover-border-size: 4px;
   .menu-item--active-trail & {
     border-bottom: 0;
   }
-
 }
 
 // Search form
@@ -321,7 +321,7 @@ $hover-border-size: 4px;
     animation: none;
   }
 
-  &.active {
+  .menu-item-open & {
     @include menu-animation;
     visibility: visible;
     z-index: $z-slicknav-panel-open;
@@ -378,9 +378,12 @@ $hover-border-size: 4px;
   }
 }
 
+/*---------------In this section---------------------*\
+  HEADER "GIVE" BUTTON
+\*---------------------------------------------------*/
 .universal-header__give-mobile {
     display: none;
-@include breakpoint($bp-until-large) {
+  @include breakpoint($bp-until-large) {
     display: block;
     position: absolute;
     bottom: 0;

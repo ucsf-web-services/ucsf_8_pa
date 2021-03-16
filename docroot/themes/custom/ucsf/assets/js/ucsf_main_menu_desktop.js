@@ -15,7 +15,7 @@
             // reset the height on screen resize
             self.height("auto");
             var mainHeight = self.height();
-            var childMenu = self.find(".main-submenu");
+            var childMenu = self.find(".main-submenu__menu");
             var totalHeight = mainHeight;
             var childHeight = 0;
 
@@ -30,7 +30,7 @@
             self.find(".main-submenu__label").width(totalHeight + 20);
 
             // Get the height of the ul .main-submenu__menu
-            var $innerMenu = self.children(".main-submenu");
+            var $innerMenu = self.children(".main-submenu__menu");
             var innerMenuHeight = $innerMenu.height();
 
             // Set the min-height of each of the ul's child data-level="level-1"
@@ -61,7 +61,7 @@
   // Main menu
   Drupal.behaviors.keyboardAccessibleMenu = {
     attach: function attach(context, settings) {
-      var nolink = $(".main-submenu__toggle");
+      var nolink = $("main-nav__toggle, .main-submenu__toggle");
       nolink.each(function () {
         $(this).on("click", function (event) {
           event.preventDefault();
@@ -83,84 +83,56 @@
         var $parent = $this.parent('.main-nav__submenu-wrapper, .search');
         var $otherPanels = $parent.siblings();
 
-        $parent.toggleClass("menu-item-open");
-        $otherPanels.removeClass("menu-item-open");
+        $parent.toggleClass('menu-item-open');
+        $otherPanels.removeClass('menu-item-open');
 
         // Set aria attribute based on panel visibility.
-        if ($parent.hasClass("menu-item-open")) {
-          setAria($this, "true");
-          setAria($(".menu-item-close"), "true");
+        if ($parent.hasClass('menu-item-open')) {
+          setAria($this, 'true');
+          setAria($('.menu-item-close'), 'true');
           // reset area of previously opened panels.
-          $otherPanels.find(".main-nav__toggle").attr("aria-expanded", false);
+          $otherPanels.find('.main-nav__toggle').attr('aria-expanded', false);
         } else {
-          setAria($this, "false");
-          setAria($(".menu-item-close"), "false");
+          setAria($this, 'false');
+          setAria($('.menu-item-close'), 'false');
         }
       });
 
       // The "x" button inside menu panel.
-      $(".menu-item-close").on("click touchstart", function (e) {
-        console.log("x");
-        e.stopPropagation(); // Key line to work perfectly
-        $(this).parent().parent().removeClass("menu-item-open");
-        setAria($(".menu-item-close"), "false");
-        setAria($(".main-nav__submenu-wrapper").find(".main-nav__toggle"), "false");
+      $('.menu-item-close', context).on('click touchstart', function (e) {
+        var $this = $(this);
+        var $parent = $this.parents('.main-nav__submenu-wrapper');
+        $parent.removeClass("menu-item-open");
+        $parent.find('.main-nav__toggle').focus();
       });
 
-      // Shows menus when it's being tabbed through
-      // const $dropdownMenu= $(".menu-item--expanded", context);
-      // $dropdownMenu.on("focusin", function () {
-      //   // Menu dropdowns open on focus.
-      //   $(this).parents(".menu-item--expanded").addClass("menu-item-open");
-      // });
-
-      // Menu dropdown closes when focus is out.
-      // $dropdownMenu.on("focusout", function () {
-      //   const $this = $(this);
-      //   // Waits and only removes class if newly focused element is outside the dropdown
-      //   setTimeout(function () {
-      //     // Closes second level submenu
-      //     if (
-      //       $(document.activeElement).parents(".menu-child--wrapper")
-      //         .length === 0
-      //     ) {
-      //       $this
-      //         .parents(".main-nav__submenu-wrapper")
-      //         .removeClass("menu-item-open");
-      //     }
-      //     // Closes the third level submenu if the current focused element is not in it.
-      //     else if ($this.has(document.activeElement).length === 0) {
-      //       $this
-      //         .parents(".menu-item--expanded")
-      //         .first()
-      //         .removeClass("menu-item-open");
-      //     }
-      //   }, 500);
-      // });
-
-      // // Toggle submenu open / close on btn click
+      // Toggle submenu open / close on btn click
       // const $submenuTriggerToggle = $(".main-submenu__toggle");
-      // $submenuTriggerToggle.on("click touchstart", function (e) {
-      //   const $submenuWrapper = $(this).parents(".menu-item--expanded").first();
-      //   e.preventDefault();
-      //   e.stopPropagation();
-      //   $submenuWrapper.toggleClass("menu-item-open").siblings(".menu-item-open").removeClass("menu-item-open");
+      $('.main-submenu__toggle', context).on('click touchstart', function (e) {
+        e.stopPropagation();
+        var $this = $(this);
+        var $parent = $this.parent('.menu-item--expanded');
+        var $otherSubmenues = $parent.siblings();
 
-      //   if ($submenuWrapper.hasClass("menu-item-open")) {
-      //     setAria($submenuTriggerToggle, "true");
-      //     setAria($submenuWrapper.siblings().find($submenuTriggerToggle), "false");
+        $parent.toggleClass('menu-item-open');
+        $otherSubmenues.removeClass('menu-item-open');
 
-      //   } else {
-      //     setAria($submenuTriggerToggle, "false");
-      //   }
-      // });
+        // Set aria attribute based on panel visibility.
+        if ($parent.hasClass('menu-item-open')) {
+          setAria($this, 'true');
+          // reset area of previously opened submenues.
+          $otherSubmenues.find('.main-nav__toggle').attr('aria-expanded', false);
+        } else {
+          setAria($this, 'false');
+        }
+      });
     }
   };
 
   Drupal.behaviors.keyboardAccessibleSearchForm = {
     attach: function attach(context, settings) {
-      var $searchToggle = $(".menu-item-search-menu", context);
-      var $search = $(".main-nav__search", context);
+      var $searchToggle = $('.menu-item-search-menu', context);
+      var $search = $(".search", context);
 
       /**
        * Set aria-expanded attribute value on element that triggers the submenu visibility
@@ -173,35 +145,13 @@
 
       $searchToggle.click(function (e) {
         e.preventDefault();
-
-        $search.toggleClass("active");
-        $searchToggle.toggleClass("active");
-        if ($searchToggle.hasClass("active")) {
-          $(".main-nav__search .home-search__form-input").focus();
-          setAria($searchToggle, true);
-        } else {
-          setAria($searchToggle, false);
+        if ($search.hasClass('menu-item-open')) {
+          $('.main-nav__search .home-search__form-input').focus();
         }
-      });
-
-      $(".main-nav__menu .menu-item", context).click(function (e) {
-        // If other menu item is clicked close search form
-        if (!$(this).hasClass("search")) {
-          $search.removeClass("active");
-          $searchToggle.removeClass("active");
-          setAria($searchToggle, false);
-        }
-      });
-
-      //Search form opens when focus is inside.
-      $search.on("focusin", function () {
-        $search.addClass("active");
-        $searchToggle.addClass("active"); // changes toggle icon
-        setAria($searchToggle, true);
       });
 
       //Search form closes when tabbing away.
-      $search.on("focusout", function () {
+      $search.on('focusout', function () {
         //Wait and only remove classes if newly focused element is outside the search form
         setTimeout(function () {
           // When browser cant find activeElement it returns <body> or null
@@ -213,9 +163,8 @@
 
           // Close the search box if the currently focused el.
           //  is not inside the search box
-          if (document.activeElement.closest(".main-nav__search") === null) {
-            $search.removeClass("active");
-            $searchToggle.removeClass("active");
+          if (document.activeElement.closest('.main-nav__search') === null) {
+            $search.removeClass('menu-item-open');
             setAria($searchToggle, false);
           }
           // delay needs to be at least 150 to avoid a race condition with $searchToggle.toggleClass('active');
