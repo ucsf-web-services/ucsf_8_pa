@@ -9,8 +9,6 @@ use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\core\Url;
-use Drupal\media_entity\Entity\Media;
-use Drupal\image\Entity\ImageStyle;
 
 /**
  * Preprocess function for channel <title> element.
@@ -400,42 +398,6 @@ function views_rss_core_preprocess_item_source(&$variables) {
   $variables['elements'][0]['attributes'] = array('url' => $GLOBALS['base_url'] . \Drupal::service('path.current')->getPath(),);
 }
 
-/**
- * Preprocess function for item <description> element.
- * This adds an image to the <description> at the beginning.
- */
-function views_rss_core_preprocess_item_description_image(&$variables) {
-
-  $image_array = array();
-
-  if (!empty($variables['raw']['items'])) {
-    foreach ($variables['raw']['items'] as $item) {
-
-      // Entity reference to media.
-      $entity = Media::load($item['raw']->target_id);
-      $file_uri = $entity->field_image->entity->getFileUri();
-
-      $sized_image = ImageStyle::load('article_header_s_260px');
-      $url = $sized_image->buildUrl($file_uri);
-
-      $image_array = [
-        'url' => $url,
-      ];
-
-      $file_uri = $sized_image->buildUri($file_uri);
-
-      $image = \Drupal::service('image.factory')->get($file_uri);
-      if ($image->isValid()) {
-        $image_array['width'] = $image->getWidth();
-        $image_array['height'] = $image->getHeight();
-      }
-    }
-  }
-
-  $variables = array();
-  $variables['description_image'] = $image_array;
-
-}
 
 /**
  * Preprocess function for item <dc:creator> element.

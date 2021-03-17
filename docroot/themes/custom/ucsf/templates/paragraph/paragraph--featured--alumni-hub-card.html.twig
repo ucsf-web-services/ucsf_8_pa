@@ -1,18 +1,27 @@
-{# used on news package node #}
+{# used on "Magazine Homepage" node, "Magazine Issue" taxonomy #}
 
-{% if content.field_link|render|striptags != '' %}
-  {# Feature Paragraph > Overwrite Link #}
-  {% set link = paragraph.field_link.value.0.uri %}
-{% elseif drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id)|render|striptags != '' %}
-  {# Feature Paragraph > News Article (News) > External URL #}
-  {% set external_link = drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id) %}
-  {% set link = external_link.0['#url'].uri %}
-  {% set link_class = "icon-link--external" %}
-{% else %}
-  {# Feature Paragraph > News Article (News) > ID #}
-  {% set link = drupal_url('node/' ~ content.field_news_article.0['#node'].id ) %}
-{% endif %}
+{# Only show "Alumni Card" if it's not empty #}
+{% if content.field_link|render|striptags != ''
+  or drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id)|render|striptags != ''
+  or content.field_news_article.0['#node'].id != ''
+%}
 
+  {# Link url variable - Stat #}
+  {% if content.field_link|render|striptags != '' %}
+    {# Feature Paragraph > Overwrite Link #}
+    {% set link = paragraph.field_link.value.0.uri %}
+  {% elseif drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id)|render|striptags != '' %}
+    {# Feature Paragraph > News Article (News) > External URL #}
+    {% set external_link = drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id) %}
+    {% set link = external_link.0['#url'].uri %}
+    {% set link_class = "icon-link--external" %}
+  {% else %}
+    {# Feature Paragraph > News Article (News) > ID #}
+    {% set link = drupal_url('node/' ~ content.field_news_article.0['#node'].id ) %}
+  {% endif %}
+  {# Link url variable - End #}
+
+  {# "Alumni Card" #}
   <a href="{{ link }}">
     <article class="four-card-row magazine-alumni">
       <div class="card-row__image">
@@ -38,7 +47,7 @@
           </h3>
         </header>
         <div class="card-row__body">
-         {{ content.field_text_body }}
+          {{ content.field_text_body }}
         </div>
         {% if content.field_banner_cta_text|render|striptags != '' %}
         <p class="card-row__link link--cta">
@@ -48,3 +57,4 @@
       </div>
     </article>
   </a>
+{% endif %}

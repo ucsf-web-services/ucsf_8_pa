@@ -73,10 +73,6 @@ element_overlap_detection:
   js:
     assets/js/ucsf_element_overlap_detection.js: {}
 
-polyfills:
-  js:
-    https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver: { weight: -100, type: external, minified: true }
-
 header_subnav:
   js:
     assets/js/ucsf_header_region_subnav.js: {}
@@ -84,3 +80,12 @@ header_subnav:
 press_releases_tab:
   js:
     assets/js/ucsf_press_releases_tab.js: {}
+
+lazyload:
+  js:
+    assets/js/ucsf_lazyload.js: {}
+    https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js:
+      type: external
+      minified: true
+      attributes:
+        async: true
