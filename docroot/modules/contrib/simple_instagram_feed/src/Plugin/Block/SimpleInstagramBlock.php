@@ -33,6 +33,7 @@ class SimpleInstagramBlock extends BlockBase implements ContainerFactoryPluginIn
     return [
         'items' => 12,
         'styling' => 'true',
+        'captions' => false,
         'instagram_username' => 'instagram',
         'display_profile' => true,
         'display_biography' => true,
@@ -41,6 +42,7 @@ class SimpleInstagramBlock extends BlockBase implements ContainerFactoryPluginIn
         'items_per_row_l_720' => 5,
         'items_per_row_l_960' => 5,
         'items_per_row_h_960' => 5,
+        'lazy_load' => true,
       ] + parent::defaultConfiguration();
   }
 
@@ -71,6 +73,16 @@ class SimpleInstagramBlock extends BlockBase implements ContainerFactoryPluginIn
       '#title' => $this->t('Display bio?'),
       '#description' => $this->t('Do you wish to display the Instagram Bio on this Instagram Feed?'),
       '#default_value' => isset($config['simple_instagram_display_biography']) ? $config['simple_instagram_display_biography'] : 'true',
+    ];
+
+    $form['simple_instagram_captions'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Display captions'),
+      '#description' => $this->t('Enables displaying captions for each post as overlay on hover.'),
+      '#default_value' => isset($config['simple_instagram_captions']) ? $config['simple_instagram_captions'] : FALSE,
+      '#attributes' => [
+        'id' => 'simple_instagram_captions',
+      ],
     ];
 
     $form['simple_instagram_items'] = [
@@ -154,8 +166,37 @@ class SimpleInstagramBlock extends BlockBase implements ContainerFactoryPluginIn
       '#type' => 'select',
       '#options' => ['true' => 'True', 'false' => 'False'],
       '#title' => $this->t('Styling'),
-      '#description' => $this->t('Set to False to omit instagramFeed styles and provide your own in your CSS.'),
+      '#description' => $this->t('Uncheck to omit instagramFeed styles and provide your own in your CSS. Enabled by default when using capions.'),
       '#default_value' => isset($config['simple_instagram_styling']) ? $config['simple_instagram_styling'] : 'true',
+      '#states' => [
+        'disabled' => [
+          ':input[id="simple_instagram_captions"]' => ['checked' => TRUE],
+        ],
+      ],
+      '#default_value' => isset($config['simple_instagram_styling']) ?? 'true',
+    ];
+
+    $simple_image_sizes = [
+      '640' => 640,
+      '480' => 480,
+      '320' => 320,
+      '240' => 240,
+      '150' => 150,
+    ];
+
+    $form['simple_instagram_image_size'] = [
+      '#type' => 'select',
+      '#options' => $simple_image_sizes,
+      '#title' => $this->t('Image Size'),
+      '#description' => $this->t('Scale of items to build gallery. Accepted values [150, 240, 320, 480, 640].'),
+      '#default_value' => isset($config['simple_instagram_image_size']) ? $config['simple_instagram_image_size'] : '640',
+    ];
+
+    $form['simple_instagram_lazy_load'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Lazyload assets'),
+      '#description' => $this->t('Do you wish to Lazy-load on this Instagram Feed?'),
+      '#default_value' => isset($config['simple_instagram_lazy_load']) ? $config['simple_instagram_lazy_load'] : 'true',
     ];
 
     // Add a warning if the js library is not available.
@@ -173,6 +214,7 @@ class SimpleInstagramBlock extends BlockBase implements ContainerFactoryPluginIn
     $this->configuration['simple_instagram_username'] = $values['simple_instagram_username'];
     $this->configuration['simple_instagram_display_profile'] = $values['simple_instagram_display_profile'];
     $this->configuration['simple_instagram_display_biography'] = $values['simple_instagram_display_biography'];
+    $this->configuration['simple_instagram_captions'] = $values['simple_instagram_captions'];
     $this->configuration['simple_instagram_items'] = $values['simple_instagram_items'];
     $this->configuration['simple_instagram_items_per_row_type'] = $values['simple_instagram_items_per_row']['simple_instagram_items_per_row_type'];
     $this->configuration['simple_instagram_items_per_row_default'] = $values['simple_instagram_items_per_row']['simple_instagram_items_per_row_default'];
@@ -180,6 +222,8 @@ class SimpleInstagramBlock extends BlockBase implements ContainerFactoryPluginIn
     $this->configuration['simple_instagram_items_per_row_l_960'] = $values['simple_instagram_items_per_row']['simple_instagram_items_per_row_l_960'];
     $this->configuration['simple_instagram_items_per_row_h_960'] = $values['simple_instagram_items_per_row']['simple_instagram_items_per_row_h_960'];
     $this->configuration['simple_instagram_styling'] = $values['simple_instagram_styling'];
+    $this->configuration['simple_instagram_image_size'] = $values['simple_instagram_image_size'];
+    $this->configuration['simple_instagram_lazy_load'] = $values['simple_instagram_lazy_load'];
   }
 
   /**
@@ -221,6 +265,8 @@ class SimpleInstagramBlock extends BlockBase implements ContainerFactoryPluginIn
     return [
       'items' => $config['simple_instagram_items'],
       'styling' => $config['simple_instagram_styling'],
+      'captions' => $config['simple_instagram_captions'],
+      'image_size' => $config['simple_instagram_image_size'],
       'instagram_username' => $config['simple_instagram_username'],
       'display_profile' => $config['simple_instagram_display_profile'],
       'display_biography' => $config['simple_instagram_display_biography'],
@@ -229,6 +275,7 @@ class SimpleInstagramBlock extends BlockBase implements ContainerFactoryPluginIn
       'items_per_row_l_720' => $config['simple_instagram_items_per_row_l_720'] + 1,
       'items_per_row_l_960' => $config['simple_instagram_items_per_row_l_960'] + 1,
       'items_per_row_h_960' => $config['simple_instagram_items_per_row_h_960'] + 1,
+      'lazy_load' => $config['simple_instagram_lazy_load'],
     ];
   }
 
