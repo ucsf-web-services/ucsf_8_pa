@@ -3697,7 +3697,7 @@ figure figure[class="image"] {
     border-bottom: 4px solid #0071ad;
     padding-bottom: 0; }
   .main-nav__toggle:focus {
-    outline: 1px solid #052049; }
+    outline: 1px dotted #052049; }
   .main-nav__menu .menu-item:first-child .main-nav__toggle {
     margin-left: 0; }
   .menu-item--active-trail .main-nav__toggle {
@@ -3897,7 +3897,7 @@ figure figure[class="image"] {
   text-indent: -9999px;
   border: 0; }
   .menu-item-close:focus {
-    border: 1px solid #052049; }
+    border: 1px dotted #052049; }
 
 .menu-item-search-menu {
   display: inline-block;
@@ -3919,13 +3919,13 @@ figure figure[class="image"] {
     background-image: url(/themes/custom/ucsf/assets/images/magnifier-hover.svg);
     border-bottom: 0; }
   .menu-item-search-menu:focus {
-    border: 1px solid #052049; }
+    border: 1px dotted #052049; }
   .menu-item-open .menu-item-search-menu {
     background-image: url(/themes/custom/ucsf/assets/images/x-large.svg); }
     .menu-item-open .menu-item-search-menu:hover, .menu-item-open .menu-item-search-menu:focus {
       background-image: url(/themes/custom/ucsf/assets/images/x-large.svg); }
     .menu-item-open .menu-item-search-menu:focus {
-      border: 1px solid #052049; }
+      border: 1px dotted #052049; }
   .menu-item--active-trail .menu-item-search-menu {
     border-bottom: 0; }
 
@@ -8833,6 +8833,12 @@ body.loading .quicklinks {
   @media (min-width: 769px) {
     .home-search__form .home-search__form-input {
       width: 99%; } }
+  @media (min-width: 850px) {
+    .home-search__form .home-search__form-input {
+      height: 100px;
+      padding-left: 32px;
+      font-size: 24px;
+      font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif; } }
   .home-search__form .home-search__form-input::-webkit-input-placeholder {
     color: #506380; }
   .home-search__form .home-search__form-input::-moz-placeholder {
@@ -8858,22 +8864,18 @@ body.loading .quicklinks {
   border: none;
   background-size: 28px;
   text-indent: -9999px; }
-  .home-search__form .home-search__form-submit:hover {
-    cursor: pointer;
-    color: auto;
-    border-color: transparent;
-    background: url("/themes/custom/ucsf/assets/images/magnifier-hover.svg") no-repeat center transparent;
-    background-size: 28px; }
-
-@media (min-width: 850px) {
-  .home-search__form .home-search__form-input {
-    height: 100px;
-    padding-left: 32px;
-    font-size: 24px;
-    font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
-  .home-search__form .home-search__form-submit {
-    position: relative;
-    top: -2px; } }
+  @media (min-width: 850px) {
+    .home-search__form .home-search__form-submit {
+      position: relative;
+      top: -2px; }
+      .home-search__form .home-search__form-submit:hover {
+        cursor: pointer;
+        color: auto;
+        border-color: transparent;
+        background: url("/themes/custom/ucsf/assets/images/magnifier-hover.svg") no-repeat center transparent;
+        background-size: 28px; }
+      .home-search__form .home-search__form-submit:focus {
+        border: 1px dotted #052049; } }
 
 .narrow-page .home-search__form {
   padding-bottom: 48px;

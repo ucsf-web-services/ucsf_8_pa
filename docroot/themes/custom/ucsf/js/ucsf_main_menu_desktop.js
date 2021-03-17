@@ -4,16 +4,16 @@
 (function ($, window) {
   Drupal.behaviors.desktopDropdownHeight = {
     attach: function (context, settings) {
-      $(window, context).once("menu-desktop").each(function () {
+      $(window, context).once('menu-desktop').each(function () {
         // Set dropdown heights based on the content within.
         var dropdown = $('[data-level="level-0"]');
         const resizeMenuPanel = () => {
           dropdown.each(function () {
             var self = $(this);
             // reset the height on screen resize
-            self.height("auto");
+            self.height('auto');
             var mainHeight = self.height();
-            var childMenu = self.find(".main-submenu__menu");
+            var childMenu = self.find('.main-submenu__menu');
             var totalHeight = mainHeight;
             var childHeight = 0;
 
@@ -25,17 +25,17 @@
             });
 
             self.height(totalHeight + 68);
-            self.find(".main-submenu__label").width(totalHeight + 20);
+            self.find('.main-submenu__label').width(totalHeight + 20);
 
             // Get the height of the ul .main-submenu__menu
-            const $innerMenu = self.children(".main-submenu__menu");
+            const $innerMenu = self.children('.main-submenu__menu');
             const innerMenuHeight = $innerMenu.height();
 
             // Set the min-height of each of the ul's child data-level="level-1"
             // so that inner menu panel has enough height to hover from parent link to it
             if ($innerMenu.length !== 0) {
               var $innerMenuChild = $innerMenu.find('[data-level="level-1"]');
-              $innerMenuChild.css("min-height", innerMenuHeight + "px");
+              $innerMenuChild.css('min-height', innerMenuHeight + 'px');
             }
           });
         };
@@ -45,7 +45,7 @@
 
         // At the end of a screen resize.
         let resizeTimer = null;
-        $(window).on("resize", context, () => {
+        $(window).on('resize', context, () => {
           clearTimeout(resizeTimer);
           resizeTimer = setTimeout(() => {
             // resizing has "stopped".
@@ -60,9 +60,9 @@
   // Main menu
   Drupal.behaviors.keyboardAccessibleMenu = {
     attach: function attach(context, settings) {
-      var nolink = $("main-nav__toggle, .main-submenu__toggle");
+      var nolink = $('main-nav__toggle, .main-submenu__toggle');
       nolink.each(function () {
-        $(this).on("click", function (event) {
+        $(this).on('click', function (event) {
           event.preventDefault();
 
         });
@@ -74,7 +74,7 @@
        * @param {String} value
        */
       const setAria = ( trigger, value ) => {
-        trigger.attr("aria-expanded", value);
+        trigger.attr('aria-expanded', value);
       }
 
       // Toggle open the sub panels on main nav button click.
@@ -102,7 +102,7 @@
       $('.menu-item-close', context).on('click touchstart', function (e) {
         const $this = $(this);
         const $parent = $this.parents('.main-nav__submenu-wrapper');
-        $parent.removeClass("menu-item-open");
+        $parent.removeClass('menu-item-open');
         $parent.find('.main-nav__toggle').focus();
       });
 
@@ -133,7 +133,7 @@
   Drupal.behaviors.keyboardAccessibleSearchForm = {
     attach: function (context, settings) {
       const $searchToggle = $('.menu-item-search-menu', context);
-      const $search = $(".search", context);
+      const $search = $('.search', context);
 
       /**
        * Set aria-expanded attribute value on element that triggers the submenu visibility
@@ -141,7 +141,7 @@
        * @param {String} value
        */
         const setAria = ( trigger, value ) => {
-        trigger.attr("aria-expanded", value);
+        trigger.attr('aria-expanded', value);
       }
 
       $searchToggle.click(function (e) {
@@ -183,15 +183,15 @@
   Drupal.behaviors.mainMenuSearchFilter = {
     attach: function attach(context, settings) {
       // Selector for the form.
-      const $form = $(".search__form", context);
+      const $form = $('.search__form', context);
       $form.submit(function () {
         const $this = $(this);
         // Find checked radio button inside the form and get it's value.
-        const option = $this.find(".search-filter__radio:checked").val();
+        const option = $this.find('.search-filter__radio:checked').val();
         // If value is "News" redirect to news filter search.
-        if (option === "News") {
-          $this.attr("action", "/news/filter");
-          $this.find(".home-search__form-input").attr("name", "combine");
+        if (option === 'News') {
+          $this.attr('action', '/news/filter');
+          $this.find('.home-search__form-input').attr('name', 'combine');
         }
 
         return true;

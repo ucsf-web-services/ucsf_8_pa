@@ -447,6 +447,13 @@
       width: 99%;
     }
 
+    @include breakpoint($bp-large) {
+      height: 100px;
+      padding-left: 32px;
+      font-size: $font-size-bg;
+      font-family: $font-helvetica-neue-light;
+    }
+
     &::-webkit-input-placeholder {
       color: $gray-blue;
     }
@@ -476,28 +483,22 @@
     text-indent: -9999px;
     //padding-top: 10px;
 
-    &:hover {
-      cursor: pointer;
-      color: auto;
-      border-color: transparent;
-      @include background-image('magnifier-hover.svg', center, transparent);
-      background-size: 28px;
-    }
-  }
-
-  @include breakpoint($bp-large) {
-    .home-search__form-input {
-      height: 100px;
-      padding-left: 32px;
-      font-size: $font-size-bg;
-      font-family: $font-helvetica-neue-light;
-    }
-
-    .home-search__form-submit {
+    @include breakpoint($bp-large) {
       position: relative;
       top: -2px;
-    }
 
+      &:hover {
+        cursor: pointer;
+        color: auto;
+        border-color: transparent;
+        @include background-image('magnifier-hover.svg', center, transparent);
+        background-size: 28px;
+      }
+
+      &:focus {
+        border: 1px dotted $c-navy;
+      }
+    }
   }
 }
 
