@@ -13,7 +13,7 @@
             // reset the height on screen resize
             self.height('auto');
             var mainHeight = self.height();
-            var childMenu = self.find('.main-submenu__menu');
+            var childMenu = self.find('[data-level="level-1"]');
             var totalHeight = mainHeight;
             var childHeight = 0;
 
