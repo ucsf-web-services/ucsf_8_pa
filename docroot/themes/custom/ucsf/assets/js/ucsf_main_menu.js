@@ -4,7 +4,7 @@
  * Main navigation, Desktop.
  */
 
-(function ($) {
+($, function (window) {
 
   // Wait for the document to be ready.
   $(function () {
@@ -200,9 +200,7 @@
     // Initialize.
     watchResize();
   });
-})(jQuery);
 
-(function ($, window) {
   // Main menu search form redirect
   Drupal.behaviors.mainMenuSearchFilter = {
     attach: function attach(context, settings) {
@@ -223,4 +221,4 @@
     }
   };
 })(jQuery, window);
-//# sourceMappingURL=ucsf_main_menu_desktop.js.map
+//# sourceMappingURL=ucsf_main_menu.js.map
