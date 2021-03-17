@@ -13127,11 +13127,18 @@ body.page-node-type-magazine-homepage,
     body.page-node-type-magazine-homepage .magazine-home-feature h2 a,
     .magazine-topic-issue-page .magazine-home-feature h2 a {
       color: #121a31; }
+  @media (max-width: 768px) {
+    body.page-node-type-magazine-homepage .magazine-home-feature .card-row__copy,
+    .magazine-topic-issue-page .magazine-home-feature .card-row__copy {
+      margin-top: 0;
+      margin-right: 0;
+      padding-right: 20px; } }
   @media (min-width: 769px) {
     body.page-node-type-magazine-homepage .magazine-home-feature .card-row__copy,
     .magazine-topic-issue-page .magazine-home-feature .card-row__copy {
       float: right;
-      width: 50%; } }
+      width: 50%;
+      padding-right: 40px; } }
   @media (min-width: 850px) {
     body.page-node-type-magazine-homepage .magazine-home-feature .card-row__copy,
     .magazine-topic-issue-page .magazine-home-feature .card-row__copy {
@@ -13140,10 +13147,18 @@ body.page-node-type-magazine-homepage,
     body.page-node-type-magazine-homepage .magazine-home-feature .card-row__copy,
     .magazine-topic-issue-page .magazine-home-feature .card-row__copy {
       float: none;
-      width: auto; } }
+      width: auto;
+      grid-column: 8/-1;
+      padding-right: 80px;
+      -ms-flex-item-align: center;
+          align-self: center; } }
   body.page-node-type-magazine-homepage .magazine-home-feature .card-row__body,
   .magazine-topic-issue-page .magazine-home-feature .card-row__body {
     margin-top: 24px; }
+    @media (max-width: 768px) {
+      body.page-node-type-magazine-homepage .magazine-home-feature .card-row__body,
+      .magazine-topic-issue-page .magazine-home-feature .card-row__body {
+        display: block; } }
     body.page-node-type-magazine-homepage .magazine-home-feature .card-row__body p,
     .magazine-topic-issue-page .magazine-home-feature .card-row__body p {
       margin: 0;
@@ -13151,32 +13166,17 @@ body.page-node-type-magazine-homepage,
   body.page-node-type-magazine-homepage .magazine-home-feature.card-row .card-row__body,
   .magazine-topic-issue-page .magazine-home-feature.card-row .card-row__body {
     margin-top: 0; }
-  @media (max-width: 768px) {
-    body.page-node-type-magazine-homepage .magazine-home-feature .card-row__copy,
-    .magazine-topic-issue-page .magazine-home-feature .card-row__copy {
-      margin-top: 0;
-      margin-right: 0;
-      padding-right: 20px; }
-    body.page-node-type-magazine-homepage .magazine-home-feature .card-row__body,
-    .magazine-topic-issue-page .magazine-home-feature .card-row__body {
-      display: block; } }
-  @media (min-width: 769px) {
-    body.page-node-type-magazine-homepage .magazine-home-feature .card-row__copy,
-    .magazine-topic-issue-page .magazine-home-feature .card-row__copy {
-      padding-right: 40px; } }
   @media (min-width: 1050px) {
     body.page-node-type-magazine-homepage .magazine-home-feature,
     .magazine-topic-issue-page .magazine-home-feature {
       grid-template-columns: repeat(12, 1fr); }
       body.page-node-type-magazine-homepage .magazine-home-feature .card-row__image,
       .magazine-topic-issue-page .magazine-home-feature .card-row__image {
-        grid-column: 1/8; }
-      body.page-node-type-magazine-homepage .magazine-home-feature .card-row__copy,
-      .magazine-topic-issue-page .magazine-home-feature .card-row__copy {
-        grid-column: 8/-1;
-        padding-right: 80px;
-        -ms-flex-item-align: center;
-            align-self: center; } }
+        grid-column: 1/8; } }
+  body.page-node-type-magazine-homepage .magazine-home-feature--alt .card-row__copy,
+  .magazine-topic-issue-page .magazine-home-feature--alt .card-row__copy {
+    float: none;
+    width: auto; }
   body.page-node-type-magazine-homepage .card-row .card-row__image::after,
   .magazine-topic-issue-page .card-row .card-row__image::after {
     display: none; }
