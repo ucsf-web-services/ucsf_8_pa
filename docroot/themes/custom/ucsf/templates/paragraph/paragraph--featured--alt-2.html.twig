@@ -5,19 +5,26 @@
 {% block wrapper_top %}
   {% set unique_title = paragraph.field_news_article.entity.label %}
   <!-- nid: {{ paragraph.field_news_article.target_id }}  -->
-  <article{{attributes.addClass('news-card')}} aria-label="Teaser for: {{unique_title}}">
+      {% if article_type == 'magazine_article' %}
+    <article class="news-card" aria-label="Teaser for: {{unique_title}}" data-primary-area="pa-ucsf-magazine">
+    {% else %}
+    <article class="news-card" aria-label="Teaser for: {{unique_title}}" data-primary-area="{{'pa-' ~ primary_area|clean_class}}">
+    {% endif %}
+
     <a href="{{ link }}" class="news-card__link">
     {% endblock wrapper_top %}
-
     {% block article_image %}
       {# Feature Paragraph > News Article (News) > Card Image #}
-      {% set card_image_uri = paragraph.field_news_article.entity.field_card_image.0.entity.field_media_image.entity.fileuri %}
-      {% set card_image_alt = paragraph.field_news_article.entity.field_card_image.0.entity.field_media_image.alt %}
-      <figure>
-        <picture>
-          <img src="{{ card_image_uri|image_style('featured_news_card__image') }}" alt="{{card_image_alt}}"/>
-        </picture>
-      </figure>
+      {% if drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id, 'card')|render %}
+        {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id, {label: 'hidden', type: 'media_responsive_thumbnail', settings: {responsive_image_style: 'featured_news_card', image_link: ''}}) }}
+      {% else %}
+        {# Fall back when no image is provided in the article or card overwrite field #}
+        <figure>
+          <picture>
+            <img class="element-fade" src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image">
+          </picture>
+        </figure>
+      {% endif %}
     {% endblock article_image %}
 
     {% block wrapper_bottom %}

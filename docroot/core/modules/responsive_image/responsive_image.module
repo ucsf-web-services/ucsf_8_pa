@@ -234,6 +234,24 @@ function template_preprocess_responsive_image(&$variables) {
     }
     $variables['img_element']['#attributes'] = $variables['attributes'];
   }
+
+  // Get width and height from fallback responsive image style and transfer them
+  // to img tag so browser can do aspect ratio calculation and prevent
+  // recalculation of layout on image load.
+  // We are assuming that all image styles in this responsive image have the
+  // same aspect ratio.
+  $image_style = ImageStyle::load($responsive_image_style->getFallbackImageStyle());
+  $build_uri = $image_style->buildUri($variables['uri']);
+  if (!file_exists($build_uri)) {
+    $image_style->createDerivative($variables['uri'], $build_uri);
+  }
+  $image_factory = \Drupal::service('image.factory')->get($build_uri);
+  $height = $image_factory->getToolkit()->getHeight();
+  $width = $image_factory->getToolkit()->getWidth();
+  if ($width && $height) {
+    $variables['img_element']['#width'] = $width;
+    $variables['img_element']['#height'] = $height;
+  }
 }
 
 /**
