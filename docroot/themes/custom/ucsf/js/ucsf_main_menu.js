@@ -193,7 +193,7 @@
      * Watch for when the screen resizes horizontally from mobile to desktop.
      */
     const watchResize = () => {
-      // Use MatchMedia to ensure that the range slider only happens in desktop.
+      // Use MatchMedia to ensure that desktop related code runs only on desktop
       const mql = matchMedia('(min-width: 850px)');
       // Detect Desktop on page load.
       desktopDetect(mql);
