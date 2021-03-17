@@ -134,12 +134,6 @@ function views_rss_core_views_rss_item_elements() {
     'preprocess functions' => array('views_rss_core_preprocess_item_link'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-link',
   );
-  $elements['description-image'] = array(
-    'description' => t('The image to include in the description'),
-    'preprocess functions' => array('views_rss_core_preprocess_item_description_image',
-      'views_rss_rewrite_relative_paths'),
-    'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-description',
-  );
   $elements['description'] = array(
     'description' => t('The item synopsis. Required by RSS specification.'),
     'preprocess functions' => array('views_rss_core_preprocess_item_description',

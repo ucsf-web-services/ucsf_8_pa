@@ -8,7 +8,7 @@ function ucsf_preprocess_image(&$variables) {
   // create an alt key with empty string as a value.
   if (empty($variables['attributes']['alt'])) {
     $variables['attributes']['alt'] = '';
-  };
+  }
 
   $variables['attributes']['loading'] = 'lazy';
   // Adds a class responsible for the same animation as LazyLoaded elements.
