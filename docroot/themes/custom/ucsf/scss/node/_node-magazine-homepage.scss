@@ -28,7 +28,6 @@ body.page-node-type-magazine-homepage,
   }
 
   .magazine-home-feature {
-
     h2 {
       @include fs-heading-two;
       margin-bottom: $space-three;
@@ -40,9 +39,16 @@ body.page-node-type-magazine-homepage,
     }
 
     .card-row__copy {
+      @include breakpoint($new-small-max) {
+        margin-top: 0;
+        margin-right: 0;
+        padding-right: 20px;
+      }
+
       @include breakpoint($new-small) {
         float: right;
         width: 50%;
+        padding-right: 40px;
       }
 
       @include breakpoint($new-medium) {
@@ -52,11 +58,18 @@ body.page-node-type-magazine-homepage,
       @include breakpoint($new-large) {
         float: none;
         width: auto;
+        grid-column: 8/-1;
+        padding-right: 80px;
+        align-self: center;
       }
     }
 
     .card-row__body {
       margin-top: $space-three;
+
+      @include breakpoint($new-small-max) {
+        display: block;
+      }
 
       p {
         margin: 0;
@@ -70,35 +83,18 @@ body.page-node-type-magazine-homepage,
       }
     }
 
-    @include breakpoint($new-small-max) {
-      .card-row__copy {
-        margin-top: 0;
-        margin-right: 0;
-        padding-right: 20px;
-      }
-
-      .card-row__body {
-        display: block;
-      }
-    }
-
-    @include breakpoint($new-small) {
-      .card-row__copy {
-        padding-right: 40px;
-      }
-    }
-
     @include breakpoint($new-large) {
       grid-template-columns: repeat(12, 1fr);
 
       .card-row__image {
         grid-column: 1/8;
       }
+    }
 
+    &--alt {
       .card-row__copy {
-        grid-column: 8/-1;
-        padding-right: 80px;
-        align-self: center;
+        float: none;
+        width: auto;
       }
     }
   }
