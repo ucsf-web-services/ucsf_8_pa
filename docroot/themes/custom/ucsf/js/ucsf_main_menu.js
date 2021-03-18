@@ -1,9 +1,7 @@
 /**
  * Main navigation, Desktop.
  */
-
-(($, window => {
-
+ (($ => {
   // Wait for the document to be ready.
   $(() => {
     const desktopMenu = () => {
@@ -28,9 +26,10 @@
         const $this = $(this);
         const $parent = $this.parent('.main-nav__submenu-wrapper, .search');
         const $otherPanels = $parent.siblings();
-
         $parent.toggleClass('menu-item-open');
         $otherPanels.removeClass('menu-item-open');
+        // close previously opened level-1 submenues
+        $otherPanels.find('.main-submenu__toggle').parent('.menu-item--expanded').removeClass('menu-item-open');
 
         // Set aria attribute based on panel visibility.
         if ($parent.hasClass('menu-item-open')) {
@@ -50,11 +49,12 @@
         const $parent = $this.parents('.main-nav__submenu-wrapper');
         $parent.removeClass('menu-item-open');
         $parent.find('.main-nav__toggle').focus();
+         // close previously opened level-1 submenues
+        $('.main-submenu__toggle').parent('.menu-item--expanded').removeClass('menu-item-open');
       });
 
 
       // Toggle submenu open / close on btn click
-      // const $submenuTriggerToggle = $(".main-submenu__toggle");
       $('.main-submenu__toggle').on('click touchstart', function (e) {
         e.stopPropagation();
         const $this = $(this);
@@ -126,8 +126,8 @@
     }
 
     const keyboardAccessibleSearchForm = () => {
-      const $searchToggle = $('.menu-item-search-menu', context);
-      const $search = $('.search', context);
+      const $searchToggle = $('.menu-item-search-menu');
+      const $search = $('.search');
 
       /**
        * Set aria-expanded attribute value on element that triggers the submenu visibility
@@ -184,7 +184,6 @@
         getMenuPanelHeight();
         keyboardAccessibleSearchForm();
       } else {
-        console.log("mobile");
         return;
       }
     }
@@ -205,6 +204,10 @@
     watchResize();
   });
 
+
+}))(jQuery);
+
+(function ($, window) {
   // Main menu search form redirect
   Drupal.behaviors.mainMenuSearchFilter = {
     attach: function attach(context, settings) {
@@ -224,6 +227,4 @@
       });
     },
   };
-
-}))(jQuery, window);
-
+})(jQuery, window);
