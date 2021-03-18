@@ -4925,7 +4925,7 @@ body.loading .quicklinks {
   padding: 40px 20px;
   padding-bottom: 0;
   clear: both;
-  float: left; }
+  float: none; }
   .layout-columns__1 .layout__heading {
     margin-bottom: 32px; }
   .layout-columns__1 .field-content-wrapper-content {
@@ -4939,17 +4939,16 @@ body.loading .quicklinks {
   @media (min-width: 850px) {
     .layout-columns__1 {
       padding: 40px;
-      padding-bottom: 0; } }
+      padding-bottom: 0;
+      float: none; } }
   @media (min-width: 1050px) {
     .layout-columns__1 {
-      float: none;
       padding: 80px;
       padding-bottom: 0; }
       .layout-columns__1 .field-content-wrapper-content {
-        float: none;
         grid-column: 1/-1;
         display: grid;
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(1, minmax(0, 1fr));
         grid-auto-rows: auto;
         grid-gap: 0;
         grid-row-gap: 0; } }
@@ -4999,7 +4998,7 @@ body.loading .quicklinks {
         float: none;
         grid-column: 1/-1;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-auto-rows: auto;
         grid-gap: 5%;
         grid-row-gap: 0; }
@@ -5049,7 +5048,7 @@ body.loading .quicklinks {
       .layout-columns__3 .field-content-wrapper-content, .layout-columns__3 .field-supporting-mag-articlesl, .layout-columns__3 .field-supporting-feature-article {
         grid-column: 1/-1;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         grid-auto-rows: auto;
         grid-gap: 5%;
         grid-row-gap: 0; }
@@ -5116,7 +5115,7 @@ body.loading .quicklinks {
       .layout-columns__4 .field-content-wrapper-content {
         grid-column: 1/-1;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         grid-auto-rows: auto;
         grid-gap: 5%;
         grid-row-gap: 0; }
@@ -5874,6 +5873,8 @@ body.loading .quicklinks {
   .fact-card img {
     height: 5rem;
     max-width: none;
+    width: auto; }
+  .fact-card figure[class="embedded-entity"] img {
     width: auto; }
   .fact-card figure.align-center {
     margin: 0 0 32px; }
@@ -12772,6 +12773,8 @@ body.page-node-type-magazine-article #block-ucsf-content {
   body.page-node-type-magazine-article #block-ucsf-content em {
     font-family: "Ivar-Italic", "Georgia", "Times New Roman", serif;
     font-style: normal; }
+  body.page-node-type-magazine-article #block-ucsf-content strong em {
+    font-weight: 700; }
   body.page-node-type-magazine-article #block-ucsf-content .small-text em, body.page-node-type-magazine-article #block-ucsf-content .small-text strong {
     font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
   body.page-node-type-magazine-article #block-ucsf-content .small-text em {
@@ -12788,7 +12791,8 @@ body.page-node-type-magazine-article #block-ucsf-content {
   body.page-node-type-magazine-article #block-ucsf-content .embedded-entity strong,
   body.page-node-type-magazine-article #block-ucsf-content .footer-ctas-wrapper strong,
   body.page-node-type-magazine-article #block-ucsf-content h2 strong,
-  body.page-node-type-magazine-article #block-ucsf-content h3 strong {
+  body.page-node-type-magazine-article #block-ucsf-content h3 strong,
+  body.page-node-type-magazine-article #block-ucsf-content p.feature-text strong {
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-weight: normal; }
   body.page-node-type-magazine-article #block-ucsf-content dom-twocolumn-layout em,
@@ -12799,7 +12803,8 @@ body.page-node-type-magazine-article #block-ucsf-content {
   body.page-node-type-magazine-article #block-ucsf-content .blockquote em,
   body.page-node-type-magazine-article #block-ucsf-content .footer-ctas-wrapper em,
   body.page-node-type-magazine-article #block-ucsf-content h2 em,
-  body.page-node-type-magazine-article #block-ucsf-content h3 em {
+  body.page-node-type-magazine-article #block-ucsf-content h3 em,
+  body.page-node-type-magazine-article #block-ucsf-content p.feature-text em {
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-style: italic; }
   body.page-node-type-magazine-article #block-ucsf-content .caption-drupal-entity em {
@@ -12858,6 +12863,8 @@ body.page-node-type-magazine-article #block-ucsf-content {
   body.page-node-type-magazine-article #block-ucsf-content .eyebrow-title::after {
     color: #121a31;
     background-color: #121a31; }
+  body.page-node-type-magazine-article #block-ucsf-content .col-white-text h2 {
+    color: #fff; }
   @media (min-width: 1050px) {
     body.page-node-type-magazine-article #block-ucsf-content .col-white-text .layout__heading,
     body.page-node-type-magazine-article #block-ucsf-content .featureoverlaydark .field--name-title {

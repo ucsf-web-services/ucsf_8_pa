@@ -151,7 +151,7 @@
   padding: $space-five 20px;
   padding-bottom: 0;
   clear: both;
-  float: left;
+  float: none;
 
   .layout__heading {
     margin-bottom: $space-four;
@@ -174,18 +174,17 @@
   @include breakpoint($new-medium) {
     padding: $space-five;
     padding-bottom: 0;
+    float: none;
   }
 
   @include breakpoint($new-large) {
-    float: none;
     padding: $space-ten;
     padding-bottom: 0;
 
     .field-content-wrapper-content {
-      float: none;
       grid-column: 1/-1;
       display: grid;
-      grid-template-columns: repeat(1, 1fr);
+      grid-template-columns: repeat(1, minmax(0, 1fr));
       grid-auto-rows: auto;
       grid-gap: 0;
       grid-row-gap: 0;
@@ -255,7 +254,7 @@
       float: none;
       grid-column: 1/-1;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       grid-auto-rows: auto;
       grid-gap: 5%;
       grid-row-gap: 0;
@@ -326,7 +325,7 @@
     .field-content-wrapper-content, .field-supporting-mag-articlesl, .field-supporting-feature-article { // PL: .layout-columns__three
       grid-column: 1/-1;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       grid-auto-rows: auto;
       grid-gap: 5%;
       grid-row-gap: 0;
@@ -423,7 +422,7 @@
     .field-content-wrapper-content { // PL: .layout-columns__three
       grid-column: 1/-1;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       grid-auto-rows: auto;
       grid-gap: 5%;
       grid-row-gap: 0;

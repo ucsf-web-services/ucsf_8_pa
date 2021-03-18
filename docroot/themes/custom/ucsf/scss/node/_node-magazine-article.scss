@@ -180,6 +180,10 @@ body.page-node-type-magazine-article #block-ucsf-content {
     font-style: normal;
   }
 
+  strong em {
+    font-weight: $fw-bold;
+  }
+
   .small-text {
     em, strong {
       font-family: $font-helvetica-neue-roman;
@@ -208,7 +212,8 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .embedded-entity,
   .footer-ctas-wrapper,
   h2,
-  h3 {
+  h3,
+  p.feature-text {
     strong {
       font-family: $font-helvetica-neue-medium;
       font-weight: normal;
@@ -223,7 +228,8 @@ body.page-node-type-magazine-article #block-ucsf-content {
   .blockquote,
   .footer-ctas-wrapper,
   h2,
-  h3 {
+  h3,
+  p.feature-text {
     em {
       font-family: $font-helvetica-neue-light;
       font-style: italic;
@@ -309,8 +315,11 @@ body.page-node-type-magazine-article #block-ucsf-content {
     }
   }
 
-  .col-white-text .layout__heading,
+  .col-white-text h2 {
+    color: $c-white;
+  }
 
+  .col-white-text .layout__heading,
   .featureoverlaydark .field--name-title {
     @include breakpoint($new-large) {
       color: $c-white;
