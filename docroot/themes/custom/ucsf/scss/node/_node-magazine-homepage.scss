@@ -1034,6 +1034,7 @@ body.page-node-type-magazine-homepage,
 
       @include breakpoint(1050px) {
         margin-left: 64px;
+        grid-row: 1;
       }
     }
 
@@ -1044,6 +1045,31 @@ body.page-node-type-magazine-homepage,
 
       @include breakpoint(1050px) {
         margin: 0;
+      }
+    }
+
+    .four-card-row {
+      overflow: visible;
+    }
+
+    .card-row__cta-wrapper {
+      @include breakpoint(1050px) {
+        position: relative;
+
+        // White box hack.
+        // Remove the overflow hidden on .four-card-row.magazine-alumni
+        // Add position relative to .card-row__cta-wrapper
+        &::after {
+          content: "";
+          display: block;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 100%;
+          width: 50vw;
+          background: white;
+          margin-top: -33px; // This is to line up the box top to the card title bottom.
+        }
       }
     }
 
@@ -1058,10 +1084,11 @@ body.page-node-type-magazine-homepage,
     .magazine-hub-inside__inside {
 
       @include breakpoint(1050px) {
-        // background-color: $c-background-gray;
+        background-color: $c-background-gray;
         margin-top: 5.39rem;
-        padding-right: 0;
         margin-right: 40px;
+        padding-right: 0;
+        margin-bottom: .5rem;
       }
 
       @include breakpoint(1280px) {
