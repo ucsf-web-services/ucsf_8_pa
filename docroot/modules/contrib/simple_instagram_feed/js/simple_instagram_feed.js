@@ -15,9 +15,15 @@
         var display_profile = simple_instagram_feed_array[i].display_profile;
         var display_biography = simple_instagram_feed_array[i].display_biography;
         var items = simple_instagram_feed_array[i].items;
+        var image_size = simple_instagram_feed_array[i].image_size;
         var styling = (simple_instagram_feed_array[i].styling === 'true' ? true : false);
         var unique_id = simple_instagram_feed_array[i].unique_id;
-
+        var lazy_load = simple_instagram_feed_array[i].lazy_load;
+        var captions = simple_instagram_feed_array[i].captions;
+        // if captions are enabled, styling must be enabled by force.
+        if (captions) {
+           styling = true;
+        }
         // Verify items per row.
         var items_per_row;
         if (simple_instagram_feed_array[i].items_per_row_type == 0) {
@@ -34,15 +40,20 @@
         }
 
         var feed_settings = {
+          host: 'https://images' + ~~(Math.random() * 3333) + '-focus-opensocial.googleusercontent.com/gadgets/proxy?container=none&url=https://www.instagram.com/',
           username: instagram_username,
-          container: `#${unique_id}`,
+          max_tries: 8,
+          container: "#".concat(unique_id),
           display_profile: display_profile,
           display_biography: display_biography,
+          display_captions: captions,
           display_gallery: true,
           callback: null,
           styling: styling,
           items: items,
-          margin: 0.25
+          image_size: image_size,
+          margin: 0.25,
+          lazy_load: lazy_load,
         };
 
         if (styling) {
