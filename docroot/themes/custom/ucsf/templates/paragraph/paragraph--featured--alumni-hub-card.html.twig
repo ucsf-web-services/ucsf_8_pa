@@ -46,14 +46,16 @@
             {% endif %}
           </h3>
         </header>
-        <div class="card-row__body">
-          {{ content.field_text_body }}
+        <div class="card-row__cta-wrapper">
+          <div class="card-row__body">
+            {{ content.field_text_body }}
+          </div>
+          {% if content.field_banner_cta_text|render|striptags != '' %}
+          <p class="card-row__link link--cta">
+            {{ content.field_banner_cta_text }}
+          </p>
+          {% endif %}
         </div>
-        {% if content.field_banner_cta_text|render|striptags != '' %}
-        <p class="card-row__link link--cta">
-          {{ content.field_banner_cta_text }}
-        </p>
-        {% endif %}
       </div>
     </article>
   </a>
