@@ -1043,6 +1043,18 @@ body.page-node-type-magazine-homepage {
       padding-bottom: $space-ten;
     }
 
+    .magazine-hub-inside__form {
+      margin: 0;
+
+      @include breakpoint(769px) {
+        margin-bottom: $space-ten;
+      }
+
+      @include breakpoint(1050px) {
+        margin-bottom: 0;
+      }
+    }
+
     .magazine-hub-inside__header {
       @include breakpoint(769px) {
         margin-left: 40px;
@@ -1065,7 +1077,9 @@ body.page-node-type-magazine-homepage {
     }
 
     .four-card-row {
-      overflow: visible;
+      @include breakpoint(1050px) {
+        overflow: visible;
+      }
     }
 
     .card-row__cta-wrapper {
@@ -1089,6 +1103,11 @@ body.page-node-type-magazine-homepage {
       }
     }
 
+    .card-row__link {
+      margin-top: .5rem;
+      margin-bottom: 0;
+    }
+
     .magazine-hub-inside__hub,
     .magazine-hub-inside__inside {
       @include breakpoint(769px) {
@@ -1098,17 +1117,25 @@ body.page-node-type-magazine-homepage {
     }
 
     .magazine-hub-inside__inside {
+      padding-top: 0;
 
       @include breakpoint(1050px) {
         background-color: $c-background-gray;
         margin-top: 5.39rem;
         margin-right: 40px;
         padding-right: 0;
-        margin-bottom: .5rem;
       }
 
       @include breakpoint(1280px) {
         margin-top: 3.41rem;
+      }
+    }
+
+    .magazine-hub-inside__hub {
+      margin-bottom: $space-ten;
+
+      @include breakpoint(1050px) {
+        margin-bottom: 0;
       }
     }
   }
