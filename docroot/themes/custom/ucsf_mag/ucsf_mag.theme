@@ -41,7 +41,8 @@ function _replace_metatag_magazine_fallback_image(array &$attachments) {
 
   // Fallback image.
   // TODO: Add the image to the theme and reference it here.
-  $fallback_image = "https://www.ucsf.edu/sites/default/files/styles/w/public/2021-01/Lookahead-Edit.jpg";
+  $host = \Drupal::request()->getHost();
+  $fallback_image = "https://$host/themes/custom/ucsf_mag/assets/images/ucsf-magazine-social.jpg";
   // Metatags that need to be overwritten.
   $tags_to_overwrite = ['twitter_cards_image', 'og_image_secure_url', 'og_image', 'image_src'];
 

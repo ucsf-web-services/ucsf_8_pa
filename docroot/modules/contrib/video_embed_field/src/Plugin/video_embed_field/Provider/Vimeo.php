@@ -18,7 +18,7 @@ class Vimeo extends ProviderPluginBase {
    * {@inheritdoc}
    */
   public function renderEmbedCode($width, $height, $autoplay) {
-    /* 
+    /*
     * Modification to allow the ability to add 1 option to the end of a vimeo embed
     * Get the raw input of what was entered for the url.
     * Match to get the option after the url
@@ -32,13 +32,13 @@ class Vimeo extends ProviderPluginBase {
     else {
       $url = $this->getVideoId();
     }
-    
+
     $iframe = [
       '#type' => 'video_embed_iframe',
       '#provider' => 'vimeo',
       '#url' => sprintf('https://player.vimeo.com/video/%s', $url),
       '#query' => [
-        'autoplay' => $autoplay, 
+        'autoplay' => $autoplay,
       ],
       '#attributes' => [
         'width' => $width,
@@ -47,7 +47,6 @@ class Vimeo extends ProviderPluginBase {
         'allowfullscreen' => 'allowfullscreen',
       ],
     ];
-
     if ($time_index = $this->getTimeIndex()) {
       $iframe['#fragment'] = sprintf('t=%s', $time_index);
     }

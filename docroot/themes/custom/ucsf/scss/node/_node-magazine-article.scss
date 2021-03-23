@@ -160,6 +160,11 @@ body.page-node-type-magazine-article,
       }
     }
   }
+
+  // needed to center "View more" button
+  .layout-columns__1 {
+    float: none;
+  }
 }
 
 body.page-node-type-magazine-article #block-ucsf-content,
@@ -174,6 +179,10 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
   em {
     font-family: $font-ivar-italic;
     font-style: normal;
+  }
+
+  strong em {
+    font-weight: $fw-bold;
   }
 
   .small-text {
@@ -204,7 +213,8 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
   .embedded-entity,
   .footer-ctas-wrapper,
   h2,
-  h3 {
+  h3,
+  p.feature-text {
     strong {
       font-family: $font-helvetica-neue-medium;
       font-weight: normal;
@@ -219,7 +229,8 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
   .blockquote,
   .footer-ctas-wrapper,
   h2,
-  h3 {
+  h3,
+  p.feature-text {
     em {
       font-family: $font-helvetica-neue-light;
       font-style: italic;
@@ -305,8 +316,11 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
     }
   }
 
-  .col-white-text .layout__heading,
+  .col-white-text h2 {
+    color: $c-white;
+  }
 
+  .col-white-text .layout__heading,
   .featureoverlaydark .field--name-title {
     @include breakpoint($new-large) {
       color: $c-white;
@@ -600,6 +614,14 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
 
     &::before {
       display: none;
+    }
+  }
+
+  .article-twocol-banner {
+    // overwriting default video ratio.
+    .video-embed-field-responsive-video {
+      padding-bottom: 108.33%;
+      height: 0;
     }
   }
 }

@@ -11,6 +11,14 @@
 // $direction - should be either "left" or "right",  they are used to create selectors and css declarations.
 $align-directions: left, right;
 
+.wysiwyg_blankdiv {
+  border: 0px solid midnightblue;
+  //background-color: #85bef4;
+  //display: block;
+  //padding: 1em 1em;
+  overflow: auto;
+}
+
 // Code for wrapper of image or video.
 // Span element full width of the screen
 @mixin wrapper-full-width-small-screen() {
@@ -199,13 +207,13 @@ $align-directions: left, right;
 .align-center {
   display: table;
   width: 100%;
-  margin-top: $space-seven;
-  margin-bottom: $space-seven;
+  margin-top: $space-two;
+  margin-bottom: $space-two;
 
   @include breakpoint($new-small) {
     width: initial;
-    margin-top: $space-ten;
-    margin-bottom: $space-ten;
+    margin-top: $space-five;
+    margin-bottom: $space-five;
   }
 
   img,
@@ -217,4 +225,9 @@ $align-directions: left, right;
     display: table-caption;
     caption-side: bottom;
   }
+}
+
+// Fixing the bug with center aligned videos not having any width
+.align-center--video {
+  width: 100%;
 }

@@ -14,7 +14,7 @@
     }
   }
 
-  label[for=edit-combine] {
+  label[for=edit-combine--2] {
     @include visually-hidden;
   }
 
@@ -120,7 +120,7 @@
   }
 
   // Submit button.
-  [data-drupal-selector="edit-submit-news-filter"] {
+  [data-drupal-selector="edit-submit-news-filter-2"] {
     @include background-image('magnifier.svg', center);
     appearance: none;
     background-size: 23px;
@@ -185,7 +185,7 @@
     padding: 0;
     max-width: 1440px;
 
-   [data-drupal-selector="edit-submit-news-filter"] {
+   [data-drupal-selector="edit-submit-news-filter-2"] {
       top: 8px;
       left: calc(100% - 245px);
 
@@ -219,7 +219,7 @@
      }
    }
 
-   #edit-count {
+   [data-drupal-selector="edit-count"] {
      height: 32px;
      padding: 0 20px;
      padding-bottom: 8px;
@@ -286,7 +286,7 @@
   }
 
   // Submit button.
-  [data-drupal-selector="edit-submit-news-filter"] {
+  [data-drupal-selector="edit-submit-news-filter-2"] {
     right: 64px;
     top: 16px;
 
@@ -335,7 +335,7 @@
       grid-column: 1/4;
 
       //had to move this to here to fix Chrome
-      #edit-tid-1--2 {
+      #edit-tid-1--4 {
         columns: 3 12em;
       }
     }
@@ -350,7 +350,7 @@
 
     @include breakpoint($bp-medium) {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       grid-row-gap: 55px;
       height: auto;
       padding: 64px 80px 85px;
@@ -548,8 +548,8 @@
 }
 
 // Publication min/max date labels
-label[for=edit-field-date-and-time-value-1],
-label[for=edit-field-date-and-time-value-2] {
+label[for=edit-field-date-and-time-value-1--2],
+label[for=edit-field-date-and-time-value-2--2] {
   @include breakpoint(1027px) {
     @include visually-hidden;
   }

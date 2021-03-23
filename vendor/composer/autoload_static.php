@@ -12,6 +12,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '32dcc8afd4335739640db7d200c1971d' => __DIR__ . '/..' . '/symfony/polyfill-apcu/bootstrap.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '7e9bd612cc444b3eed788ebbe46263a0' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/autoload.php',
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
@@ -19,16 +20,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
-        '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
-        'fbeead2280a8f3911a1fe6dd034f7d5e' => __DIR__ . '/..' . '/mkalkbrenner/php-htmldiff-advanced/src/HtmlDiffAdvancedInterface.php',
-        '96f8d8288528d52059397cad6ec61f17' => __DIR__ . '/..' . '/mkalkbrenner/php-htmldiff-advanced/src/HtmlDiffAdvanced.php',
-        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
-        '7e9bd612cc444b3eed788ebbe46263a0' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/autoload.php',
-        'a16312f9300fed4a097923eacb0ba814' => __DIR__ . '/..' . '/igorw/get-in/src/get_in.php',
-        'e9b046393eb3376a21bcc1a30bd2fe64' => __DIR__ . '/..' . '/querypath/querypath/src/qp_functions.php',
-        '5a12a5271c58108e0aa33355e6ac54ea' => __DIR__ . '/..' . '/drupal/console-core/src/functions.php',
-        'c65d09b6820da036953a371c8c73a9b1' => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook/polyfills.php',
         '07d7f1a47144818725fd8d91a907ac57' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/create_uploaded_file.php',
         'da94ac5d3ca7d2dbab84ce561ce72bfd' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_headers_from_sapi.php',
         '3d97c8dcdfba8cb85d3b34f116bb248b' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_method_from_sapi.php',
@@ -45,6 +36,14 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'cc8e14526dc240491e17a838cb78508c' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_server.legacy.php',
         '786bf90caabc9e09b6ad4cc5ca8f0e30' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_uploaded_files.legacy.php',
         '751a5a3f463e4be759be31748b61737c' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/parse_cookie_header.legacy.php',
+        'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
+        '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+        'fbeead2280a8f3911a1fe6dd034f7d5e' => __DIR__ . '/..' . '/mkalkbrenner/php-htmldiff-advanced/src/HtmlDiffAdvancedInterface.php',
+        '96f8d8288528d52059397cad6ec61f17' => __DIR__ . '/..' . '/mkalkbrenner/php-htmldiff-advanced/src/HtmlDiffAdvanced.php',
+        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
+        'a16312f9300fed4a097923eacb0ba814' => __DIR__ . '/..' . '/igorw/get-in/src/get_in.php',
+        'e9b046393eb3376a21bcc1a30bd2fe64' => __DIR__ . '/..' . '/querypath/querypath/src/qp_functions.php',
+        '5a12a5271c58108e0aa33355e6ac54ea' => __DIR__ . '/..' . '/drupal/console-core/src/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -63,10 +62,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'c' => 
         array (
             'cweagans\\Composer\\' => 18,
-        ),
-        'Z' => 
-        array (
-            'Zend\\Feed\\' => 10,
         ),
         'X' => 
         array (
@@ -134,7 +129,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         ),
         'M' => 
         array (
-            'MetzWeb\\Instagram\\' => 18,
             'Masterminds\\' => 12,
         ),
         'L' => 
@@ -142,6 +136,7 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'Lullabot\\AMP\\' => 13,
             'Laminas\\ZendFrameworkBridge\\' => 28,
             'Laminas\\Stdlib\\' => 15,
+            'Laminas\\Feed\\' => 13,
             'Laminas\\Escaper\\' => 16,
             'Laminas\\Diactoros\\' => 18,
         ),
@@ -167,7 +162,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'FontLib\\' => 8,
             'FastImageSize\\tests\\' => 20,
             'FastImageSize\\' => 14,
-            'Facebook\\' => 9,
         ),
         'E' => 
         array (
@@ -206,7 +200,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'CloudFlarePhpSdk\\' => 17,
             'Cheppers\\GatherContent\\' => 23,
             'ChapterThree\\AppleNewsAPI\\' => 26,
-            'Carbon\\' => 7,
         ),
         'B' => 
         array (
@@ -218,7 +211,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
             'Asm89\\Stack\\' => 12,
             'Alchemy\\Zippy\\' => 14,
             'Acquia\\ContentHubClient\\' => 24,
-            'Abraham\\TwitterOAuth\\' => 21,
         ),
     );
 
@@ -240,10 +232,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'cweagans\\Composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/cweagans/composer-patches/src',
-        ),
-        'Zend\\Feed\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/zendframework/zend-feed/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -429,10 +417,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/oomphinc/composer-installers-extender/src',
         ),
-        'MetzWeb\\Instagram\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/cosenary/instagram/src',
-        ),
         'Masterminds\\' => 
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
@@ -448,6 +432,10 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'Laminas\\Stdlib\\' => 
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-stdlib/src',
+        ),
+        'Laminas\\Feed\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laminas/laminas-feed/src',
         ),
         'Laminas\\Escaper\\' => 
         array (
@@ -500,10 +488,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'FastImageSize\\' => 
         array (
             0 => __DIR__ . '/..' . '/marc1706/fast-image-size/lib',
-        ),
-        'Facebook\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook',
         ),
         'EspressoDev\\InstagramBasicDisplay\\' => 
         array (
@@ -624,10 +608,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         array (
             0 => __DIR__ . '/..' . '/chapter-three/apple-news-api/src',
         ),
-        'Carbon\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
-        ),
         'Behat\\Mink\\Driver\\' => 
         array (
             0 => __DIR__ . '/..' . '/behat/mink-browserkit-driver/src',
@@ -649,10 +629,6 @@ class ComposerStaticInit380e5124de96ceb79a5aab5c54e86348
         'Acquia\\ContentHubClient\\' => 
         array (
             0 => __DIR__ . '/..' . '/acquia/content-hub-php/src',
-        ),
-        'Abraham\\TwitterOAuth\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/abraham/twitteroauth/src',
         ),
     );
 

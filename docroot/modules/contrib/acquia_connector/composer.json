@@ -4,13 +4,13 @@
     "description": "Allows Drupal websites to connect with Acquia.",
     "license": "GPL-2.0-or-later",
     "require": {
-        "php": "^7.1",
-        "drupal/core": "^8.7"
+        "ext-json": "*",
+        "drupal/core": "^8.8 || ^9"
     },
     "require-dev": {
         "acquia/coding-standards": "^0.4.1",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
-        "drush/drush": "~9.0"
+        "drupal/acquia_search": "*"
     },
     "extra": {
         "branch-alias": {
@@ -22,5 +22,17 @@
             }
         },
         "phpcodesniffer-search-depth": 4
-    }
+    },
+    "repositories": {
+        "acquia-search": {
+            "type": "path",
+            "url": "./acquia_search"
+        },
+        "drupal": {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

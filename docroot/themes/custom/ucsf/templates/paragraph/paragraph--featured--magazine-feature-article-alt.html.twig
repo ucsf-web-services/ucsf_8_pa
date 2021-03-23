@@ -1,0 +1,5 @@
+{% extends "paragraph--featured--magazine-feature-article.html.twig" %}
+
+{% block default_image %}
+  {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id, {label: 'hidden', type: 'media_responsive_thumbnail', settings: {responsive_image_style: 'magazine_feature_article', image_link: ''}}) }}
+{% endblock %}
