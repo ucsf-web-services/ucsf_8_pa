@@ -13,7 +13,7 @@ use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class SetupForm.
+ * Acquia Connector setup form.
  *
  * @package Drupal\acquia_connector\Form
  */
@@ -53,7 +53,7 @@ class SetupForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['acquia_connector.settings', 'acquia_search.settings'];
+    return ['acquia_connector.settings'];
   }
 
   /**
@@ -168,7 +168,7 @@ class SetupForm extends ConfigFormBase {
           $form_state->setErrorByName('', $e->getCustomMessage());
         }
         else {
-          \Drupal::logger('acquia connector')->error($e->getMessage());
+          $this->getLogger('acquia connector')->error($e->getMessage());
           $form_state->setErrorByName('', $this->t("Can't connect to the Acquia Subscription."));
         }
       }
@@ -199,7 +199,7 @@ class SetupForm extends ConfigFormBase {
     }
 
     // Don't set message or redirect if multistep.
-    if (!$form_state->getErrors() && empty($form_data['rebuild'])) {
+    if (!$form_state->getErrors() && $form_state->isRebuilding() === FALSE) {
       // Check subscription and send a heartbeat to Acquia via XML-RPC.
       // Our status gets updated locally via the return data.
       $subscription = new Subscription();

@@ -2580,49 +2580,46 @@
     },
     {
         "name": "drupal/acquia_connector",
-        "version": "1.23.0",
-        "version_normalized": "1.23.0.0",
+        "version": "2.0.0",
+        "version_normalized": "2.0.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/acquia_connector.git",
-            "reference": "8.x-1.23"
+            "reference": "8.x-2.0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/acquia_connector-8.x-1.23.zip",
-            "reference": "8.x-1.23",
-            "shasum": "f0315866d07753a3252167f7524c351bb09603ba"
+            "url": "https://ftp.drupal.org/files/projects/acquia_connector-8.x-2.0.zip",
+            "reference": "8.x-2.0",
+            "shasum": "5bbce9a9d89fbefd32527464ec340e308e8dff8f"
         },
         "require": {
-            "drupal/core": "^8.8 || ^9",
+            "drupal/core": "^8.9 || ^9",
             "ext-json": "*"
         },
         "require-dev": {
-            "acquia/coding-standards": "^0.4.1",
-            "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
-            "drupal/acquia_search": "*",
-            "drupal/search_api": "^1.17",
-            "drupal/search_api_solr": "~1.0"
+            "drupal/acquia_search_solr": "*",
+            "drupal/search_api": "*",
+            "drupal/search_api_solr": "*"
         },
         "type": "drupal-module",
         "extra": {
             "drupal": {
-                "version": "8.x-1.23",
-                "datestamp": "1607714467",
+                "version": "8.x-2.0",
+                "datestamp": "1614301293",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
                 }
             },
             "branch-alias": {
-                "dev-8.x-1.x": "1.x-dev"
+                "dev-8.x-2.x": "2.x-dev"
             },
             "drush": {
                 "services": {
-                    "drush.services.yml": "^9"
+                    "drush.services.yml": "^9 || ^10"
                 }
-            },
-            "phpcodesniffer-search-depth": 4
+            }
         },
         "installation-source": "dist",
         "notification-url": "https://packages.drupal.org/8/downloads",
@@ -3279,36 +3276,35 @@
     },
     {
         "name": "drupal/anchor_link",
-        "version": "2.0.0-alpha2",
-        "version_normalized": "2.0.0.0-alpha2",
+        "version": "2.5.0",
+        "version_normalized": "2.5.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/anchor_link.git",
-            "reference": "8.x-2.0-alpha2"
+            "reference": "8.x-2.5"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/anchor_link-8.x-2.0-alpha2.zip",
-            "reference": "8.x-2.0-alpha2",
-            "shasum": "0da1de26d4367a9c360bae9f57b7a8ac9064e96b"
+            "url": "https://ftp.drupal.org/files/projects/anchor_link-8.x-2.5.zip",
+            "reference": "8.x-2.5",
+            "shasum": "849e94b2687ffc1f7984604fda929d7201933757"
         },
         "require": {
             "drupal/core": "*",
-            "drupal/fakeobjects": "*"
+            "drupal/fakeobjects": "^1.0"
         },
         "type": "drupal-module",
         "extra": {
-            "branch-alias": {
-                "dev-2.x": "2.x-dev",
-                "dev-8.x-2.x": "8.2.x-dev"
-            },
             "drupal": {
-                "version": "8.x-2.0-alpha2",
-                "datestamp": "1530956624",
+                "version": "8.x-2.5",
+                "datestamp": "1612887560",
                 "security-coverage": {
-                    "status": "not-covered",
-                    "message": "Alpha releases are not covered by Drupal security advisories."
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
                 }
+            },
+            "branch-alias": {
+                "dev-8.x-2.x": "8.2.x-dev"
             }
         },
         "installation-source": "dist",
@@ -6929,39 +6925,36 @@
     },
     {
         "name": "drupal/file_mdm",
-        "version": "1.1.0",
-        "version_normalized": "1.1.0.0",
+        "version": "2.0.0-rc1",
+        "version_normalized": "2.0.0.0-RC1",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/file_mdm.git",
-            "reference": "8.x-1.1"
+            "reference": "8.x-2.0-rc1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/file_mdm-8.x-1.1.zip",
-            "reference": "8.x-1.1",
-            "shasum": "7f354aec6f89e3141c2aa1fb3747ad5d4578c13f"
+            "url": "https://ftp.drupal.org/files/projects/file_mdm-8.x-2.0-rc1.zip",
+            "reference": "8.x-2.0-rc1",
+            "shasum": "3db959411ad443b86846ae33175e4a776738e111"
         },
         "require": {
-            "drupal/core": "~8.0",
-            "lsolesen/pel": "0.9.6",
-            "phenx/php-font-lib": "0.5",
-            "php": ">=5.6"
+            "drupal/core": "^8.8 || ^9",
+            "lsolesen/pel": "^0.9.6",
+            "phenx/php-font-lib": "^0.5",
+            "php": ">=7"
         },
         "require-dev": {
             "drupal/image_effects": "*"
         },
         "type": "drupal-module",
         "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
             "drupal": {
-                "version": "8.x-1.1",
-                "datestamp": "1488273785",
+                "version": "8.x-2.0-rc1",
+                "datestamp": "1576506188",
                 "security-coverage": {
-                    "status": "covered",
-                    "message": "Covered by Drupal's security advisory policy"
+                    "status": "not-covered",
+                    "message": "RC releases are not covered by Drupal security advisories."
                 }
             }
         },
@@ -6979,28 +6972,22 @@
         "description": "Provides a service to manage file metadata.",
         "homepage": "https://www.drupal.org/project/file_mdm",
         "support": {
-            "source": "http://cgit.drupalcode.org/file_mdm"
+            "source": "https://git.drupalcode.org/project/file_mdm"
         }
     },
     {
         "name": "drupal/file_mdm_exif",
-        "version": "1.1.0",
-        "version_normalized": "1.1.0.0",
+        "version": "2.1.0",
+        "version_normalized": "2.1.0.0",
         "require": {
-            "drupal/core": "~8.0",
-            "drupal/file_mdm": "self.version"
-        },
-        "require-dev": {
-            "drupal/image_effects": "*"
+            "drupal/core": "^8.8 || ^9",
+            "drupal/file_mdm": "*"
         },
         "type": "metapackage",
         "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
             "drupal": {
-                "version": "8.x-1.1",
-                "datestamp": "1488273785",
+                "version": "8.x-2.1",
+                "datestamp": "1586801064",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -7020,7 +7007,7 @@
         "description": "Provides a file metadata plugin for EXIF image information.",
         "homepage": "https://www.drupal.org/project/file_mdm",
         "support": {
-            "source": "http://cgit.drupalcode.org/file_mdm"
+            "source": "https://git.drupalcode.org/project/file_mdm"
         }
     },
     {
@@ -7029,16 +7016,13 @@
         "version_normalized": "1.1.0.0",
         "require": {
             "drupal/core": "~8.0",
-            "drupal/file_mdm": "self.version"
+            "drupal/file_mdm": "*"
         },
         "require-dev": {
             "drupal/image_effects": "*"
         },
         "type": "metapackage",
         "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
             "drupal": {
                 "version": "8.x-1.1",
                 "datestamp": "1488273785",
@@ -7061,7 +7045,7 @@
         "description": "Provides a file metadata plugin for TTF/OTF/WOFF font information.",
         "homepage": "https://www.drupal.org/project/file_mdm",
         "support": {
-            "source": "http://cgit.drupalcode.org/file_mdm"
+            "source": "https://git.drupalcode.org/project/file_mdm"
         }
     },
     {
@@ -7436,53 +7420,68 @@
     },
     {
         "name": "drupal/google_analytics",
-        "version": "2.4.0",
-        "version_normalized": "2.4.0.0",
+        "version": "2.5.0",
+        "version_normalized": "2.5.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/google_analytics.git",
-            "reference": "8.x-2.4"
+            "reference": "8.x-2.5"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/google_analytics-8.x-2.4.zip",
-            "reference": "8.x-2.4",
-            "shasum": "f2e78ec140024ddcd19e027704ba73c33731f656"
+            "url": "https://ftp.drupal.org/files/projects/google_analytics-8.x-2.5.zip",
+            "reference": "8.x-2.5",
+            "shasum": "9e0ff72cc313bf9295fe8bd73a68f5f7688513ab"
         },
         "require": {
-            "drupal/core": "~8.5"
+            "drupal/core": "^8.8.6|^9.0"
         },
         "require-dev": {
-            "drupal/php": "*",
-            "drupal/token": "*"
+            "drupal/token": "^1.7"
         },
         "type": "drupal-module",
         "extra": {
-            "branch-alias": {
-                "dev-2.x": "2.x-dev"
-            },
             "drupal": {
-                "version": "8.x-2.4",
-                "datestamp": "1548968580",
+                "version": "8.x-2.5",
+                "datestamp": "1591298527",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
                 }
+            },
+            "branch-alias": {
+                "dev-8.x-2.x": "2.x-dev"
             }
         },
         "installation-source": "dist",
         "notification-url": "https://packages.drupal.org/8/downloads",
         "license": [
-            "GPL-2.0+"
+            "GPL-2.0-or-later"
         ],
         "authors": [
             {
-                "name": "hass",
-                "homepage": "https://www.drupal.org/u/hass"
+                "name": "See contributors",
+                "homepage": "https://www.drupal.org/node/49388/committers"
             },
             {
-                "name": "See other contributors",
-                "homepage": "https://www.drupal.org/node/49388/committers"
+                "name": "budda",
+                "homepage": "https://www.drupal.org/user/13164"
+            },
+            {
+                "name": "ixismark",
+                "homepage": "https://www.drupal.org/user/3632333"
+            },
+            {
+                "name": "japerry",
+                "homepage": "https://www.drupal.org/user/45640"
+            },
+            {
+                "name": "pfaocle",
+                "homepage": "https://www.drupal.org/user/9740"
+            },
+            {
+                "name": "roberto.rivera.ixis",
+                "homepage": "https://www.drupal.org/user/3632325"
             }
         ],
         "description": "Allows your site to be tracked by Google Analytics by adding a Javascript tracking code to every page.",
@@ -7494,30 +7493,27 @@
     },
     {
         "name": "drupal/google_tag",
-        "version": "1.1.0",
-        "version_normalized": "1.1.0.0",
+        "version": "1.4.0",
+        "version_normalized": "1.4.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/google_tag.git",
-            "reference": "8.x-1.1"
+            "reference": "8.x-1.4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/google_tag-8.x-1.1.zip",
-            "reference": "8.x-1.1",
-            "shasum": "69c434d465ccf7c180c39c3bfba7e1ae34aaaad7"
+            "url": "https://ftp.drupal.org/files/projects/google_tag-8.x-1.4.zip",
+            "reference": "8.x-1.4",
+            "shasum": "1bdc6f93d1c79c27738320597f2185f5de37432f"
         },
         "require": {
-            "drupal/core": "~8.0"
+            "drupal/core": "^8.8 || ^9"
         },
         "type": "drupal-module",
         "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
             "drupal": {
-                "version": "8.x-1.1",
-                "datestamp": "1534988884",
+                "version": "8.x-1.4",
+                "datestamp": "1593179846",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -7527,7 +7523,7 @@
         "installation-source": "dist",
         "notification-url": "https://packages.drupal.org/8/downloads",
         "license": [
-            "GPL 2.0"
+            "GPL-2.0-or-later"
         ],
         "authors": [
             {
@@ -7538,7 +7534,7 @@
         "description": "Allows your website analytics to be managed using Google Tag Manager.",
         "homepage": "https://www.drupal.org/project/google_tag",
         "support": {
-            "source": "http://cgit.drupalcode.org/google_tag"
+            "source": "https://git.drupalcode.org/project/google_tag"
         }
     },
     {
@@ -7601,42 +7597,41 @@
     },
     {
         "name": "drupal/image_effects",
-        "version": "2.3.0",
-        "version_normalized": "2.3.0.0",
+        "version": "3.0.0-rc1",
+        "version_normalized": "3.0.0.0-RC1",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/image_effects.git",
-            "reference": "8.x-2.3"
+            "reference": "8.x-3.0-rc1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/image_effects-8.x-2.3.zip",
-            "reference": "8.x-2.3",
-            "shasum": "59d1adbfc722b0e0f447d1aedda7cf95e2701425"
+            "url": "https://ftp.drupal.org/files/projects/image_effects-8.x-3.0-rc1.zip",
+            "reference": "8.x-3.0-rc1",
+            "shasum": "f71de9eebd3b679a2692607b44c09d19aaa1aee8"
         },
         "require": {
-            "drupal/core": ">=8.2.0",
-            "drupal/file_mdm_exif": "^1",
-            "drupal/file_mdm_font": "^1"
+            "drupal/core": "^8.8 || ^9",
+            "drupal/file_mdm": "^2",
+            "drupal/file_mdm_exif": "*",
+            "drupal/file_mdm_font": "*",
+            "php": ">=7"
         },
         "conflict": {
-            "drupal/imagemagick": "<2.3"
+            "drupal/imagemagick": "<3"
         },
         "require-dev": {
-            "drupal/imagemagick": "*",
-            "drupal/jquery_colorpicker": "*"
+            "drupal/imagemagick": "^3",
+            "drupal/jquery_colorpicker": "^1"
         },
         "type": "drupal-module",
         "extra": {
-            "branch-alias": {
-                "dev-2.x": "2.x-dev"
-            },
             "drupal": {
-                "version": "8.x-2.3",
-                "datestamp": "1547928180",
+                "version": "8.x-3.0-rc1",
+                "datestamp": "1579511590",
                 "security-coverage": {
-                    "status": "covered",
-                    "message": "Covered by Drupal's security advisory policy"
+                    "status": "not-covered",
+                    "message": "RC releases are not covered by Drupal security advisories."
                 }
             }
         },
@@ -7658,7 +7653,7 @@
         "description": "Provides effects and operations for the Image API.",
         "homepage": "https://www.drupal.org/project/image_effects",
         "support": {
-            "source": "http://cgit.drupalcode.org/image_effects"
+            "source": "https://git.drupalcode.org/project/image_effects"
         }
     },
     {
@@ -11691,37 +11686,37 @@
     },
     {
         "name": "drupal/taxonomy_import",
-        "version": "1.1.0",
-        "version_normalized": "1.1.0.0",
+        "version": "2.0.0-alpha3",
+        "version_normalized": "2.0.0.0-alpha3",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/taxonomy_import.git",
-            "reference": "8.x-1.1"
+            "reference": "2.0.0-alpha3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/taxonomy_import-8.x-1.1.zip",
-            "reference": "8.x-1.1",
-            "shasum": "75c6802a8055b265ced760c443bb0cb126eb148c"
+            "url": "https://ftp.drupal.org/files/projects/taxonomy_import-2.0.0-alpha3.zip",
+            "reference": "2.0.0-alpha3",
+            "shasum": "c9015a42a29f96d90a10b496f0f42a7c7335bc0a"
         },
         "require": {
-            "drupal/core": "~8.0"
+            "drupal/core": "^8 || ^9"
         },
         "type": "drupal-module",
         "extra": {
             "drupal": {
-                "version": "8.x-1.1",
-                "datestamp": "1601653345",
+                "version": "2.0.0-alpha3",
+                "datestamp": "1611400629",
                 "security-coverage": {
-                    "status": "covered",
-                    "message": "Covered by Drupal's security advisory policy"
+                    "status": "not-covered",
+                    "message": "Alpha releases are not covered by Drupal security advisories."
                 }
             }
         },
         "installation-source": "dist",
         "notification-url": "https://packages.drupal.org/8/downloads",
         "license": [
-            "GPL-2.0-or-later"
+            "GPL-2.0+"
         ],
         "authors": [
             {
@@ -11745,10 +11740,16 @@
                 "homepage": "https://www.drupal.org/user/3568458"
             }
         ],
-        "description": "A module to import taxonomy using CSV or XML file to a user defined vocabulary",
+        "description": "A module to import taxonomy using CSV or XML file to a user defined vocabulary.",
         "homepage": "https://www.drupal.org/project/taxonomy_import",
+        "keywords": [
+            "Drupal",
+            "taxonomy_import"
+        ],
         "support": {
-            "source": "https://git.drupalcode.org/project/taxonomy_import"
+            "source": "http://cgit.drupalcode.org/taxonomy_import",
+            "issues": "https://www.drupal.org/project/issues/taxonomy_import",
+            "documentation": "https://www.drupal.org/project/taxonomy_import"
         }
     },
     {
@@ -12568,51 +12569,60 @@
     },
     {
         "name": "drupal/webform",
-        "version": "5.13.0",
-        "version_normalized": "5.13.0.0",
+        "version": "5.25.0",
+        "version_normalized": "5.25.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/webform.git",
-            "reference": "8.x-5.13"
+            "reference": "8.x-5.25"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/webform-8.x-5.13.zip",
-            "reference": "8.x-5.13",
-            "shasum": "2dfca686adb7eea2dc1c4d96b42ea7a1e0330500"
+            "url": "https://ftp.drupal.org/files/projects/webform-8.x-5.25.zip",
+            "reference": "8.x-5.25",
+            "shasum": "115f8bc21549abc080543eb772166eb4fd2a162e"
         },
         "require": {
-            "drupal/core": "^8.7.7 || ^9"
+            "drupal/core": "^8.8"
         },
         "require-dev": {
-            "drupal/address": "~1.4",
+            "drupal/address": "~1.0",
             "drupal/bootstrap": "~3.0",
             "drupal/captcha": "~1.0",
-            "drupal/chosen": "~2.6",
-            "drupal/devel": "*",
-            "drupal/entity_print": "^2.1",
+            "drupal/chosen": "~2.0",
+            "drupal/clientside_validation": "~3.0",
+            "drupal/clientside_validation_jquery": "*",
+            "drupal/devel": "~3.0",
+            "drupal/entity": "~1.0",
+            "drupal/entity_print": "~2.0",
             "drupal/gnode": "*",
-            "drupal/group": "~1.0",
-            "drupal/mailsystem": "~4.1",
-            "drupal/select2": "~1.1",
+            "drupal/group": "1.0",
+            "drupal/lingotek": "~3.0",
+            "drupal/mailsystem": "~4.0",
+            "drupal/paragraphs": "~1.0",
+            "drupal/select2": "~1.0",
             "drupal/smtp": "~1.0",
-            "drupal/telephone_validation": "^2.2",
-            "drupal/token": "~1.3",
+            "drupal/styleguide": "~1.0",
+            "drupal/telephone_validation": "~2.0",
+            "drupal/token": "~1.0",
+            "drupal/variationcache": "~1.0",
             "drupal/webform_access": "*",
             "drupal/webform_attachment": "*",
+            "drupal/webform_clientside_validation": "*",
             "drupal/webform_devel": "*",
             "drupal/webform_entity_print": "*",
             "drupal/webform_group": "*",
             "drupal/webform_node": "*",
             "drupal/webform_options_limit": "*",
             "drupal/webform_scheduled_email": "*",
+            "drupal/webform_share": "*",
             "drupal/webform_ui": "*"
         },
         "type": "drupal-module",
         "extra": {
             "drupal": {
-                "version": "8.x-5.13",
-                "datestamp": "1589661354",
+                "version": "8.x-5.25",
+                "datestamp": "1614873338",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"

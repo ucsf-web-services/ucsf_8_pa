@@ -19,13 +19,14 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
+use Drupal\path_alias\AliasManagerInterface;
 use Drupal\user\Entity\Role;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class SpiController.
+ * SPI Controller class.
  */
 class SpiController extends ControllerBase {
 
@@ -37,16 +38,26 @@ class SpiController extends ControllerBase {
   protected $client;
 
   /**
+   * Path alias manager.
+   *
+   * @var mixed
+   */
+  protected $pathAliasManager;
+
+  /**
    * Constructs a \Drupal\system\ConfigFormBase object.
    *
    * @param \Drupal\acquia_connector\Client $client
    *   Acquia Client.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   Config factory service.
+   * @param \Drupal\path_alias\AliasManagerInterface $path_alias
+   *   Path alias service.
    */
-  public function __construct(Client $client, ConfigFactoryInterface $config_factory) {
+  public function __construct(Client $client, ConfigFactoryInterface $config_factory, AliasManagerInterface $path_alias) {
     $this->client = $client;
     $this->configFactory = $config_factory;
+    $this->pathAliasManager = $path_alias;
   }
 
   /**
@@ -55,7 +66,8 @@ class SpiController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('acquia_connector.client'),
-      $container->get('config.factory')
+      $container->get('config.factory'),
+      $container->get('path_alias.manager')
     );
   }
 
@@ -70,7 +82,6 @@ class SpiController extends ControllerBase {
    *   An associative array keyed by types of information.
    */
   public function get($method = '') {
-
     $config = $this->configFactory->getEditable('acquia_connector.settings');
 
     // Get the Drupal version.
@@ -92,7 +103,7 @@ class SpiController extends ControllerBase {
         $config->set('spi.site_environment', $_SERVER['AH_SITE_ENVIRONMENT']);
         $environment = $_SERVER['AH_SITE_ENVIRONMENT'];
         if ($env_detection_enabled) {
-          $config->set('spi.site_machine_name', $this->getAcquiaHostedMachineName());
+          $this->state()->set('spi.site_machine_name', $this->getAcquiaHostedMachineName());
         }
       }
     }
@@ -118,8 +129,8 @@ class SpiController extends ControllerBase {
       'site_uuid'          => $this->config('acquia_connector.settings')->get('spi.site_uuid'),
       'env_changed_action' => $this->config('acquia_connector.settings')->get('spi.environment_changed_action'),
       'acquia_hosted'      => $acquia_hosted,
-      'name'               => $this->config('acquia_connector.settings')->get('spi.site_name'),
-      'machine_name'       => $this->config('acquia_connector.settings')->get('spi.site_machine_name'),
+      'name'               => $this->state()->get('spi.site_name'),
+      'machine_name'       => $this->state()->get('spi.site_machine_name'),
       'environment'        => $environment,
       'modules'            => $this->getModules(),
       'platform'           => $platform,
@@ -411,7 +422,7 @@ class SpiController extends ControllerBase {
 
       $count = 0;
       foreach ($result as $record) {
-        $last_five_nodes[$count]['url'] = \Drupal::service('path_alias.manager')
+        $last_five_nodes[$count]['url'] = $this->pathAliasManager
           ->getAliasByPath('/node/' . $record->nid, $record->langcode);
         $last_five_nodes[$count]['title'] = $record->title;
         $last_five_nodes[$count]['type'] = $record->type;
@@ -434,11 +445,13 @@ class SpiController extends ControllerBase {
   private function getWatchdogData() {
     $wd = [];
     if ($this->moduleHandler()->moduleExists('dblog')) {
+      // phpcs:disable
       $result = Database::getConnection()->select('watchdog', 'w')
         ->fields('w', ['wid', 'severity', 'type', 'message', 'timestamp'])
         ->condition('w.severity', [RfcLogLevel::EMERGENCY, RfcLogLevel::CRITICAL], 'IN')
         ->condition('w.timestamp', \Drupal::time()->getRequestTime() - 3600, '>')
         ->execute();
+      // phpcs:enable
 
       while ($record = $result->fetchAssoc()) {
         $wd[$record['severity']] = $record;
@@ -774,7 +787,7 @@ class SpiController extends ControllerBase {
     $ver = [];
 
     $ver['base_version'] = \Drupal::VERSION;
-    $install_root = $server['DOCUMENT_ROOT'] . base_path();
+    $install_root = DRUPAL_ROOT;
     $ver['distribution'] = '';
 
     // Determine if this puppy is Acquia Drupal.

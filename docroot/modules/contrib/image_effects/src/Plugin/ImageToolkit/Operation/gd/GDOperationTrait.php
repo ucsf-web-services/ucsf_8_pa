@@ -3,7 +3,6 @@
 namespace Drupal\image_effects\Plugin\ImageToolkit\Operation\gd;
 
 use Drupal\Component\Utility\Color;
-use Drupal\Component\Utility\Unicode;
 use Drupal\image_effects\Component\ColorUtility;
 use Drupal\image_effects\Component\GdGaussianBlur;
 use Drupal\image_effects\Component\GdImageAnalysis;
@@ -44,7 +43,7 @@ trait GDOperationTrait {
    *   An array with four elements for red, green, blue, and alpha.
    */
   protected function hexToRgba($rgba_hex) {
-    $rgbHex = Unicode::substr($rgba_hex, 0, 7);
+    $rgbHex = mb_substr($rgba_hex, 0, 7);
     try {
       $rgb = Color::hexToRgb($rgbHex);
       $opacity = ColorUtility::rgbaToOpacity($rgba_hex);
