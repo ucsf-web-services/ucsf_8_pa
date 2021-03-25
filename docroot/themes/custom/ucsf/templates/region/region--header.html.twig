@@ -1,4 +1,5 @@
 {% extends 'region.html.twig' %}
+
 {% block content %}
   {# var is_minimized_sticky_menu is created through php-includes\region.inc #}
   <header class="combined-header-region {% if is_minimized_sticky_menu %} is-minimized-sticky-menu fixed-nav fixed-nav--visible{% endif %}">
@@ -9,7 +10,7 @@
       </div>
     </section>
     <section class="header-region">
-      <div class="header">
+      <div class="header {{header_class}}">
         {% block logo %}
           {% include '@theme/header/header--logo.twig' %}
         {% endblock logo %}
@@ -18,6 +19,7 @@
         {{ content }}
         {# main nav #}
       </div>
+      {% block magazine_nav %}{% endblock magazine_nav %}
       {# var has_subnav is created through php-includes\region.inc #}
       {% if has_subnav %}
         {# If we made it this far, load ucsf\js\ucsf_header_region_subnav.js #}

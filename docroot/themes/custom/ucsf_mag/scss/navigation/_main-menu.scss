@@ -10,8 +10,23 @@ header .menu--main {
   }
 }
 
+.magazine-nav {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+
+  &__menu {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1320px;
+    padding: 0 20px;
+  }
+}
+
 // Hide the desktop menu in mobile
-#block-ucsf-mag-main-menu-desktop {
+#block-ucsf-mag-main-menu-desktop,
+#block-magazinemainmenu {
   @include breakpoint($bp-until-large) {
     display: none;
   }
@@ -24,7 +39,8 @@ header .menu--main {
   }
 }
 
-[block="block-ucsf-mag-main-menu-desktop"] {
+[block="block-ucsf-mag-main-menu-desktop"],
+[block="block-magazinemainmenu"] {
   margin: 0;
   padding-left: 0;
   position: relative;
@@ -215,7 +231,8 @@ header .menu--main {
 
 // When Header Navigation is sticky
 .fixed-nav {
-  [block="block-ucsf-mag-main-menu-desktop"] {
+  [block="block-ucsf-mag-main-menu-desktop"],
+  [block="block-magazinemainmenu"] {
     .menu-item {
       a {
         // Reduce the height of element
@@ -233,7 +250,8 @@ header .menu--main {
 }
 
 // Level One Hover/Active state.
-[block="block-ucsf-mag-main-menu-desktop"] {
+[block="block-ucsf-mag-main-menu-desktop"],
+[block="block-magazinemainmenu"] {
   > .menu-item > a {
     &.is-active,
     &:active,
@@ -270,7 +288,8 @@ header .menu--main {
 .page-node-type-news-package,
 .page-node-type-trending,
 .page-node-type-author {
-  [block="block-ucsf-mag-main-menu-desktop"] {
+  [block="block-ucsf-mag-main-menu-desktop"],
+  [block="block-magazinemainmenu"] {
     > .menu-item > a {
       &[href="/news"] {
         border-bottom: $hover-border-size solid $c-blue-link;
@@ -281,7 +300,8 @@ header .menu--main {
 }
 
 // Level 0 - Dropdown box 1st Column.
-[block="block-ucsf-mag-main-menu-desktop"] {
+[block="block-ucsf-mag-main-menu-desktop"],
+[block="block-magazinemainmenu"] {
 
   [data-level="level-0"] > .menu-child--menu {
     display: block;
@@ -348,7 +368,8 @@ header .menu--main {
 }
 
 // Level-1 Expanded menu 2nd column.
-[block="block-ucsf-mag-main-menu-desktop"] {
+[block="block-ucsf-mag-main-menu-desktop"],
+[block="block-magazinemainmenu"] {
   [data-level="level-1"] {
     position: absolute;
     right: 0;
@@ -379,4 +400,53 @@ header .menu--main {
       }
     }
   }
+}
+
+.menu--magazine-main-menu {
+  $logo-width: 350px;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr $logo-width 1fr;
+  background-color: $ucsf-blue;
+}
+
+.menu--magazine-main-menu .header--logo {
+    // position: absolute;
+    // left: 50%;
+    // transform: translateX(-50%);
+    $logo-width: 350px;
+    width: $logo-width;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    align-self: center;
+    z-index: 1000;
+
+    .logo__img {
+      margin: 0 auto;
+    }
+}
+
+[block="block-magazinemainmenu"] {
+  $logo-width: 350px;
+  grid-row: 1;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, auto) $logo-width repeat(3, auto);
+  grid-template-rows: 1fr;
+}
+
+.menu-item-parent {
+  grid-row: 1;
+}
+
+
+.menu-item-parent:nth-child(4) {
+  grid-column: 5;
+}
+.menu-item-parent:nth-child(5) {
+  grid-column: 6;
+}
+.menu-item-parent:nth-child(6) {
+  grid-column: 7;
 }
