@@ -26,12 +26,31 @@ function acquia_connector_requirements($phase) {
 
   switch ($phase) {
     case 'runtime':
+      // Unsupported Warning to upgrade to 3.x
+      if (strtotime('1 May 2021') < time()) {
+        $ret['acquia_connector_2_eol'] = [
+          'title' => t('Acquia Connector 8.x-2.x'),
+          'value' => t('The 2.x version reached EOL at 2021-05-01!'),
+          'description' => t('This version of connector is unsupported. Upgrade to 3.x! This version is fully backwards compatible and works with all versions of Acquia Search'),
+          'severity' => REQUIREMENT_ERROR,
+        ];
+      }
+      elseif (strtotime('1 May 2021') > time()) {
+        $ret['acquia_connector_2_eol'] = [
+          'title' => t('Acquia Connector 8.x-2.x'),
+          'value' => t('This version will be EOL on 2021-05-01!'),
+          'description' => t('This version of connector will soon be unsupported. Upgrade to 3.x. It is fully backwards compatible and works with all versions of Acquia Search'),
+          'severity' => REQUIREMENT_WARNING,
+        ];
+      }
       acquia_connector_load_versions();
       $config = \Drupal::config('acquia_connector.settings');
       $use_cron = $config->get('spi.use_cron');
       $last_sent = \Drupal::state()->get('acquia_connector.cron_last', 0);
       $subscription = new Subscription();
       $has_credentials = $subscription->hasCredentials();
+      $state_site_name = \Drupal::state()->get('spi.site_name');
+      $state_site_machine_name = \Drupal::state()->get('spi.site_machine_name');
 
       if ($has_credentials) {
         $key = sha1(Drupal::service('private_key')->get());
@@ -41,7 +60,7 @@ function acquia_connector_requirements($phase) {
         $blocked = $config->get('spi.blocked');
         $environment_change = \Drupal::service('acquia_connector.spi')->checkEnvironmentChange();
         $is_acquia_hosted = \Drupal::service('acquia_connector.spi')->checkAcquiaHosted();
-        $name_required = is_null($config->get('spi.site_name')) && is_null($config->get('spi.site_machine_name')) && !$is_acquia_hosted;
+        $name_required = is_null($state_site_name) && is_null($state_site_machine_name) && !$is_acquia_hosted;
         $interval = $config->get('cron_interval');
         if ($config->get('cron_interval_override')) {
           $interval = $config->get('cron_interval_override');
@@ -184,123 +203,4 @@ function acquia_connector_requirements($phase) {
   }
 
   return $requirements;
-}
-
-/**
- * Rebuild all the menu data.
- */
-function acquia_connector_update_8001() {
-  \Drupal::service('router.builder')->rebuild();
-}
-
-/**
- * Add mapping for the http_response_debug_cacheability_headers variable.
- */
-function acquia_connector_update_8002() {
-  $config_factory = \Drupal::configFactory();
-  $config = $config_factory->getEditable('acquia_connector.settings');
-  $mapping = $config->get('mapping');
-  $mapping['http_response_debug_cacheability_headers'] = ['container_parameter', 'http.response.debug_cacheability_headers'];
-  $config->set('mapping', $mapping);
-  $config->save(TRUE);
-}
-
-/**
- * Remove cache and cache_lifetime from the mapping.
- */
-function acquia_connector_update_8003() {
-  $config_factory = \Drupal::configFactory();
-  $config = $config_factory->getEditable('acquia_connector.settings');
-  $config->clear('mapping.cache');
-  $config->clear('mapping.cache_lifetime');
-
-  $variables_automatic = $config->get('spi.set_variables_automatic');
-
-  foreach (['cache_lifetime', 'cache'] as $variable) {
-    if (($key = array_search($variable, $variables_automatic)) !== FALSE) {
-      unset($variables_automatic[$key]);
-    }
-  }
-  $config->set('spi.set_variables_automatic', array_values($variables_automatic));
-  $config->save(TRUE);
-}
-
-/**
- * Delete the multisite related settings as it is not currently supported.
- */
-function acquia_connector_update_8004() {
-  $config_factory = \Drupal::configFactory();
-  $config = $config_factory->getEditable('acquia_connector.settings');
-
-  $config->clear('spi.multisite_identifier');
-  $config->clear('spi.is_multisite');
-  $config->clear('spi.machine_multisite_identifier');
-
-  $config->save(TRUE);
-}
-
-/**
- * Move Acquia Subscription credentials into State.
- *
- * Remove Acquia Subscription credentials from the config and place it into the
- * State storage. For more info see https://www.drupal.org/node/2635138.
- */
-function acquia_connector_update_8005() {
-  $config = \Drupal::configFactory()->getEditable('acquia_connector.settings');
-  $storage = new Storage();
-
-  if ($config->get('key')) {
-    $storage->setKey($config->get('key'));
-    $config->clear('key');
-  }
-
-  if ($config->get('identifier')) {
-    $storage->setIdentifier($config->get('identifier'));
-    $config->clear('identifier');
-  }
-
-  $config->save(TRUE);
-}
-
-/**
- * Delete the spi module diff data settings.
- */
-function acquia_connector_update_8006() {
-  $config_factory = \Drupal::configFactory();
-  $config = $config_factory->getEditable('acquia_connector.settings');
-
-  if ($config->get('spi.module_diff_data')) {
-    $config->clear('spi.module_diff_data');
-  }
-
-  $config->save(TRUE);
-}
-
-/**
- * Move subscription data to state.
- */
-function acquia_connector_update_8007() {
-  $config = \Drupal::configFactory()->getEditable('acquia_connector.settings');
-
-  // Handle subscription data first.
-  $subscription_data = $config->get('subscription_data');
-  if ($subscription_data) {
-    \Drupal::state()->set('acquia_subscription_data', $subscription_data);
-    $config->clear('subscription_data')->save();
-  }
-
-  // Now handle SPI vars.
-  $spi_moved_keys = [
-    'def_vars',
-    'def_waived_vars',
-    'def_timestamp',
-    'new_optional_data',
-  ];
-  foreach ($spi_moved_keys as $key) {
-    $data = $config->get("spi.$key");
-    if ($data) {
-      \Drupal::state()->set("acquia_spi_data.$key", $data);
-      $config->clear("spi.$key")->save();
-    }
-  }
 }

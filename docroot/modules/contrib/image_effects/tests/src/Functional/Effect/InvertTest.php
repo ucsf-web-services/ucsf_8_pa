@@ -33,7 +33,7 @@ class InvertTest extends ImageEffectsTestBase {
     $this->addEffectToTestStyle($effect);
 
     // Test on the PNG test image.
-    $original_uri = $this->getTestImageCopyUri('/files/image-test.png', 'simpletest');
+    $original_uri = $this->getTestImageCopyUri('core/tests/fixtures/files/image-test.png');
 
     // Expected colors after negate.
     $colors = [

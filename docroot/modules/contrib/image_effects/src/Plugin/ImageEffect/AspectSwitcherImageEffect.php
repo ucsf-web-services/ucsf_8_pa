@@ -96,7 +96,7 @@ class AspectSwitcherImageEffect extends ConfigurableImageEffectBase {
 
     $form['ratio_adjustment'] = [
       '#type' => 'number',
-      '#title' => t('Ratio adjustment (advanced)'),
+      '#title' => $this->t('Ratio adjustment (advanced)'),
       '#required' => TRUE,
       '#size' => 7,
       '#min' => 0,
