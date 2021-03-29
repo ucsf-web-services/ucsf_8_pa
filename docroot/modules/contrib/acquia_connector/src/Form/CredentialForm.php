@@ -13,7 +13,7 @@ use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class CredentialForm.
+ * Form for Acquia Credentials.
  */
 class CredentialForm extends ConfigFormBase {
 
@@ -51,7 +51,7 @@ class CredentialForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['acquia_connector.settings', 'acquia_search.settings'];
+    return ['acquia_connector.settings'];
   }
 
   /**

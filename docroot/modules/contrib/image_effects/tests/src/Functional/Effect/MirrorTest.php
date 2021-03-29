@@ -27,7 +27,7 @@ class MirrorTest extends ImageEffectsTestBase {
     $this->changeToolkit($toolkit_id, $toolkit_config, $toolkit_settings);
 
     // Test on the PNG test image.
-    $original_uri = $this->getTestImageCopyUri('/files/image-test.png', 'simpletest');
+    $original_uri = $this->getTestImageCopyUri('core/tests/fixtures/files/image-test.png');
 
     // Test data.
     $test_data = [
@@ -84,7 +84,7 @@ class MirrorTest extends ImageEffectsTestBase {
       $uuid = $this->addEffectToTestStyle($effect);
 
       // Assert effect summary text.
-      $this->assertText($data['expected_text']);
+      $this->assertSession()->pageTextContains($data['expected_text']);
 
       // Check that ::applyEffect generates image with expected mirror. Colors
       // of the derivative image should be swapped according to the mirror

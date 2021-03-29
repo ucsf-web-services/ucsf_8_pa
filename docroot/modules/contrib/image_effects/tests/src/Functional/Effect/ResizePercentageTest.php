@@ -26,7 +26,7 @@ class ResizePercentageTest extends ImageEffectsTestBase {
   public function testResizePercentage($toolkit_id, $toolkit_config, array $toolkit_settings) {
     $this->changeToolkit($toolkit_id, $toolkit_config, $toolkit_settings);
 
-    $original_uri = $this->getTestImageCopyUri('/files/image-test.png', 'simpletest');
+    $original_uri = $this->getTestImageCopyUri('core/tests/fixtures/files/image-test.png');
     $derivative_uri = $this->testImageStyle->buildUri($original_uri);
 
     $test_data = [
