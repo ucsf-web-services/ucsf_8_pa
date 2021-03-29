@@ -4,340 +4,131 @@ $search-icon: 28px;
 $search-icon-sticky: 24px;
 $hover-border-size: 4px;
 
-header .menu--main {
+.main-nav {
+  // variable to print .main-nav
+  $block: &;
+
+
+  // Hide the desktop menu in mobile
   @include breakpoint($bp-until-large) {
     display: none;
   }
-}
 
-// Hide the desktop menu in mobile
-#block-ucsf-main-menu-desktop {
-  @include breakpoint($bp-until-large) {
-    display: none;
-  }
-}
-
-// Hide the mobile menu in desktop
-#block-ucsf-main-menu {
-  @include breakpoint($new-medium) {
-    display: none;
-  }
-}
-
-[block="block-ucsf-main-menu-desktop"] {
-  margin: 0;
-  padding-left: 0;
-  position: relative;
-  .menu-child--wrapper {
-    @include visually-hidden;
-  }
-
-  .menu-item {
-    display: inline-block;
-    /*
-    > span {
-      line-height: 1.5;
-      letter-spacing: 0;
-      text-decoration: none;
-      border-bottom: none;
-      color: $gray-blue;
-      display: inline-block;
-      font-size: $font-size-sm;
-      padding: $space 0;
-      margin: 0 $space-five;
-      text-transform: none;
-      position: relative;
-      width: auto;
-      font-family: $font-helvetica-neue-roman;
-      font-weight: 500;
-      height: $space-octuple;
-      padding-right: 0;
-      margin-right: 0;
-      //border: 1px solid red;
-    }
-    */
-    a {
-      line-height: $nav-line-height; // Height of Header Navigation without border bottom.
-      letter-spacing: 0;
-      text-decoration: none;
-      border-bottom: none;
-      color: $gray-blue;
-      display: inline-block;
-      font-size: $font-size-sm;
-      text-transform: none;
-      position: relative;
-      width: auto;
-      font-family: $font-helvetica-neue-roman;
-      font-weight: 500;
-      margin: 0 0 0 $space-five;
-      // to prevent content below from jumping
-      // padding bottom needs to be the same as border bottom on hover
-      padding-bottom: $hover-border-size;
-      // Used when minimizing Header Navigation when sticky at the top
-      transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1) line-height;
-    }
-
-
-    &.search {
-
-      &:hover {
-
-      }
-
-      > a {
-        background: url(/themes/custom/ucsf/assets/images/magnifier.svg) no-repeat center #fff;
-        background-size: $search-icon;
-        max-width: $search-icon;
-        vertical-align: middle;
-        padding-bottom: 0;
-        margin-right: 22px; // to offset icon to the right
-        margin-top: $hover-border-size / 2;
-        margin-bottom: $hover-border-size / 2;
-
-        &:hover {
-          background-image: url(/themes/custom/ucsf/assets/images/magnifier-hover.svg);
-        }
-
-        &.active {
-          background-image: url(/themes/custom/ucsf/assets/images/x-large.svg);
-
-          &:hover {
-            background-image: url(/themes/custom/ucsf/assets/images/x-large.svg);
-          }
-        }
-
-        span {
-          color: transparent;
-        }
-
-      }
-
-    }
-
-    .menu-item:hover > .menu-child--wrapper,
-    &:active > .menu-child--wrapper,
-    &.menu-item-open > .menu-child--wrapper {
-      //border: 1px solid red;
-      @include visually-hidden-reset;
-      @include menu-animation;
-
-      &.wrapper--search-menu {
-        @include visually-hidden;
-        animation: none;
-      }
-
-      .menu-child--menu,
-      .menu-child--label span,
-      ::after
-      {
-        animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both;
-      }
-
-      .menu-child--wrapper {
-        animation: none;
-      }
-    }
-
-    .menu-child--wrapper {
-      position: relative;
-
-      &.wrapper--search-menu {
-        @include visually-hidden;
-        animation: none;
-
-        &.active {
-          @include visually-hidden-reset;
-          @include menu-animation;
-          z-index: $z-slicknav-panel-open;
-        }
-      }
-
-      .menu-item-close {
-        display: block;
-        position: absolute;
-        top: 24px;
-        right: 24px;
-        width: 20px;
-        height: 20px;
-        background: url("../images/x-large.svg") left center no-repeat transparent;
-        background-size: 20px 20px;
-        cursor: pointer;
-        text-indent: -9999px;
-      }
-    }
+  // navbar menu <ul>
+  &__menu {
+    margin: 0;
+    padding-left: 0;
+    position: relative;
+    float: right;
+    clear: both;
 
     .menu-item {
-      .menu-item-close {
-        display: none;
-      }
-    }
-    // for debugging only.
-    //&.research > .menu-child--wrapper {
-    //  @include visually-hidden-reset;
-    //
-    //  .menu-child--wrapper {
-    //    @include visually-hidden-reset;
-    //  }
-    //}
-  }
-
-  .menu-child--wrapper {
-    background: $c-grey-pale;
-    height: auto;
-    right: 0;
-    // position open menu panel behind open quicklinks panel
-    z-index: $z-quicklinks-open-page;
-    width: 800px;
-
-    @include breakpoint($new-large) {
-      width: 999px;
-    }
-
-    &.wrapper--search-menu {
-      background: none;
-      width: 650px !important;
-      //right: -82px;
-      //border: 1px solid #ececec;
-      .home-search__form {
-        position: relative;
-        .home-search__form-input {
-          width: 100%;
-        }
-        .home-search__form-submit {
-          position: absolute;
-          top: 17px;
-          right: 5px;
-        }
-      }
+      display: inline-block;
     }
   }
 
-  [data-level="level-0"] > .menu-child--label {
-    @include eyebrow;
-    &:after {
-      background: $c-white;
-    }
-    color: $c-white;
-    background: $c-teal;
-    //float: left;
-    box-sizing: border-box;
-    height: 48px;
-    line-height: 48px;
-    transform: rotate(90deg);
-    transform-origin: 0px 0px 0px;
-    padding: 0 24px;
-    width: 400px;
-    margin-top: 1px;
+  // navbar buttons
+  &__toggle {
+    background-color: transparent;
+    color: $gray-blue;
+    border: none;
+    line-height: $nav-line-height;
+    letter-spacing: 0;
+    font-size: $font-size-sm;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    margin: 0 0 0 $space-five;
+    padding: 0 0 $hover-border-size 0;
+    transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1) line-height;
 
-
-    @each $area, $color, $color2 in $areas {
-      &[data-section="section-#{$area}"] {
-        background: $color;
-      }
-    }
-  }
-
-
-}
-
-// When Header Navigation is sticky
-.fixed-nav {
-  [block="block-ucsf-main-menu-desktop"] {
-    .menu-item {
-      a {
-        // Reduce the height of element
-        line-height: $nav-line-height-sticky;
-      }
-    }
-    // Minimized search icon for sticky nav
-    .search {
-      a {
-        background-size: $search-icon-sticky;
-        max-width: $search-icon-sticky;
-      }
-    }
-  }
-}
-
-// Level One Hover/Active state.
-[block="block-ucsf-main-menu-desktop"] {
-  > .menu-item > a {
-    &.is-active,
-    &:active,
+    &:focus,
     &:hover {
       border-bottom: $hover-border-size solid $c-blue-link;
       padding-bottom: 0; // padding bottom is replaced by the border bottom
     }
-  }
 
-  > .menu-item.search > a {
-    &.is-active,
-    &:active,
-    &:hover {
-      border-bottom: 0; // padding bottom is replaced by the border bottom
+    &:focus {
+      outline: 1px dotted $c-navy;
+    }
+
+    // Remove margin from first menu item
+    #{$block}__menu .menu-item:first-child & {
+      margin-left: 0;
+    }
+
+    // make top level menu item "active" when visiting linked page
+    .menu-item--active-trail & {
+      border-bottom: $hover-border-size solid $c-blue-link;
+      padding-bottom: 0;
     }
   }
 
-  /*
-  > .menu-item > span {
-    &:active,
-    &:hover {
-      border-bottom: $hover-border-size solid $blue;
-    }
-  }
-  */
-  > .menu-item:first-child > a {
-    margin-left: 0;
-  }
 }
 
-.path-news, //Search
-.page-node-type-article,
-.page-node-type-magazine-article,
-.page-node-type-news-package,
-.page-node-type-trending,
-.page-node-type-author {
-  [block="block-ucsf-main-menu-desktop"] {
-    > .menu-item > a {
-      &[href="/news"] {
-        border-bottom: $hover-border-size solid $c-blue-link;
-        padding-bottom: 0;
-      }
-    }
+
+/*---------------In this section---------------------*\
+  SUBMENU
+\*---------------------------------------------------*/
+.main-submenu {
+  // variable to print .main-submenu
+  $block: &;
+
+  @include visually-hidden;
+  visibility: hidden;
+  background: $c-grey-pale;
+  height: auto;
+  right: 0;
+  z-index: $z-quicklinks-open-page;
+  width: 800px;
+  position: relative;
+
+  @include breakpoint($new-large) {
+    width: 999px;
   }
-}
 
-// Level 0 - Dropdown box 1st Column.
-[block="block-ucsf-main-menu-desktop"] {
 
-  [data-level="level-0"] > .menu-child--menu {
-    display: block;
-    //margin-top: 64px;
-    width: 350px;
+  // Level-1 Expanded menu wrapper 2nd column.
+  &--1 {
+    position: absolute;
+    right: 0;
+    top: 48px;
+    width: 450px;
 
     @include breakpoint($new-large) {
-      width: 464px;
+      width: 535px;
+    }
+  }
+
+  // Level-0 Expanded menu 1st column.
+  &__menu {
+    #{$block}--0 & {
+      display: block;
+      //margin-top: 64px;
+      width: 350px;
+
+      @include breakpoint($new-large) {
+        width: 464px;
+      }
+
+      .menu-item {
+        border-bottom: 1px solid #d5d9de;
+        display: block;
+        margin-left: 73px;
+      }
     }
 
-    .menu-item {
-      border-bottom: 1px solid #d5d9de;
-      display: block;
-      margin-left: 73px;
-
+    // Level-0 Expanded menu 2nd column.
+     #{$block}--1 & {
+      padding-right: 80px;
+      padding-left: 0;
+      width: 100%;
+      animation: none;
+      .menu-item {
+        margin-left: 80px;
+      }
     }
 
     .menu-item--expanded {
-      > a,
-      > span span {
-        border: 0;
-        display: inline-block;
-        width: calc(100% - 22px);
-
-        &:hover {
-          color: $c-blue-link;
-        }
-      }
-
       // Icon angle right
       .fa-angle-right {
         display: inline-block;
@@ -361,8 +152,8 @@ header .menu--main {
       line-height: 32px;
       height: auto;
       margin: 0;
-      padding: $space 0;
-      padding-right: 20px;
+      padding: $space 20px $space 0;
+      position: relative;
     }
 
     span.ext {
@@ -372,62 +163,222 @@ header .menu--main {
       top: 20%;
     }
   }
+
+  // left and right column labels
+  &__label {
+    &-text {
+      @include eyebrow;
+      margin-left: 80px;
+      &:after {
+        background: none;
+      }
+    }
+
+    &--0 {
+      background: $c-teal;
+      //float: left;
+      box-sizing: border-box;
+      height: 48px;
+      transform: rotate(90deg);
+      transform-origin: 0px 0px 0px;
+      padding: 0 24px;
+      width: 400px;
+      margin-top: 1px;
+
+      @each $area, $color, $color2 in $areas {
+        &[data-section="section-#{$area}"] {
+          background: $color;
+        }
+      }
+
+      #{$block}__label-text {
+        @include eyebrow;
+        line-height: 48px;
+        margin: 0;
+        color: $c-white;
+        &:after {
+          background: $c-white;
+        }
+      }
+    }
+  }
+
+  // left column submenu button
+  &__toggle {
+    border: 0;
+    display: inline-block;
+    width: calc(100% - 22px);
+    background-color: transparent;
+    padding: $space 20px $space 0;
+    text-align: left;
+
+    &:hover {
+      color: $c-blue-link;
+    }
+  }
+
+  /*---------------In this section---------------------*\
+    Animations and visibility
+  \*---------------------------------------------------*/
+  // When top level button is clicked.
+  .main-nav__menu .menu-item-open > & {
+    @include visually-hidden-reset;
+    @include menu-animation;
+    visibility: visible;
+
+    #{$block}__menu,
+    #{$block}__label-text,
+    ::after {
+      animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both;
+    }
+  }
+
+  // When left column button is hovered/clicked.
+  &--0 .menu-item:hover &--1,
+  &--0 .menu-item-open > & {
+    animation: none;
+    @include visually-hidden-reset;
+    visibility: visible;
+  }
 }
 
-.menu-parent--wrapper {
-  float: right;
-  clear: both;
+// close button for submenu
+.menu-item-close {
+  display: block;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 20px;
+  height: 20px;
+  background: url("../images/x-large.svg") left center no-repeat transparent;
+  background-size: 20px 20px;
+  cursor: pointer;
+  text-indent: -9999px;
+  border: 0;
 
-  & > li.menu-item--active-trail {
-    & > a {
+  &:focus {
+    border: 1px dotted $c-navy;
+  }
+}
+
+
+/*---------------In this section---------------------*\
+  SEARCH BUTTON, ICON, FORM
+\*---------------------------------------------------*/
+
+.menu-item-search-menu {
+  display: inline-block;
+  width: $search-icon;
+  height: $nav-line-height;
+  background-image: url(/themes/custom/ucsf/assets/images/magnifier.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: $search-icon;
+  max-width: $search-icon;
+  vertical-align: middle;
+  padding-bottom: 0;
+  margin-left: $space-five;
+  margin-right: 22px; // to offset icon to the right
+  margin-top: $hover-border-size / 2;
+  margin-bottom: $hover-border-size / 2;
+  text-indent: -9999px;
+
+  &:focus,
+  &:hover {
+    background-image: url(/themes/custom/ucsf/assets/images/magnifier-hover.svg);
+    border-bottom: 0;
+  }
+
+  &:focus {
+    border: 1px dotted $c-navy;
+  }
+
+  // "X" btn when search form is open
+  .menu-item-open & {
+    background-image: url(/themes/custom/ucsf/assets/images/x-large.svg);
+
+    &:hover,
+    &:focus {
+      background-image: url(/themes/custom/ucsf/assets/images/x-large.svg);
+    }
+
+    &:focus {
+      border: 1px dotted $c-navy;
+    }
+  }
+
+  .menu-item--active-trail & {
+    border-bottom: 0;
+  }
+}
+
+// Search form
+.main-nav__search {
+  background: none;
+  width: 650px !important;
+
+  .menu-item > .main-submenu & {
+    animation: none;
+  }
+
+  .menu-item-open & {
+    @include menu-animation;
+    visibility: visible;
+    z-index: $z-slicknav-panel-open;
+  }
+
+  .home-search__form {
+    position: relative;
+    .home-search__form-input {
+      width: 100%;
+    }
+    .home-search__form-submit {
+      position: absolute;
+      top: 17px;
+      right: 5px;
+    }
+  }
+}
+
+/*---------------In this section---------------------*\
+  STICKY HEADER NAVIGATION
+\*---------------------------------------------------*/
+.fixed-nav {
+  .main-nav__toggle {
+    // Reduce the height of element
+    line-height: $nav-line-height-sticky;
+  }
+
+  // Minimized search icon for sticky nav
+  .menu-item-search-menu {
+    height: $nav-line-height-sticky;
+    background-size: $search-icon-sticky;
+    max-width: $search-icon-sticky;
+  }
+}
+
+/*---------------In this section---------------------*\
+  ACTIVE MENU BUTTON WHEN VIEWING LINKED PAGE
+\*---------------------------------------------------*/
+// Need to underline top level menu item when viewing the articles
+.page-node-type-trending,
+.page-node-type-author,
+[class*="alias-news"],
+[class*="alias-magazine"] {
+  .main-nav {
+    .menu-item-news--media {
       border-bottom: $hover-border-size solid $c-blue-link;
       padding-bottom: 0;
     }
-
-    &.search > a  {
-      border-bottom: 0;
-    }
-  }
-
-}
-
-// Level-1 Expanded menu 2nd column.
-[block="block-ucsf-main-menu-desktop"] {
-  [data-level="level-1"] {
-    position: absolute;
-    right: 0;
-    top: 48px;
-    width: 450px;
-
-    @include breakpoint($new-large) {
-      width: 535px;
-    }
-
-    .menu-child--menu {
-      padding-right: 80px;
-      padding-left: 0;
-      width: 100%;
-      animation: none;
-      .menu-item {
-        margin-left: 80px;
-      }
-    }
-
-    .menu-child--label {
-      @include eyebrow;
-      margin-left: 80px;
-      //margin-top: 74px;
-
-      &:after {
-        content: none;
-      }
-    }
   }
 }
 
+/*---------------In this section---------------------*\
+  HEADER "GIVE" BUTTON
+\*---------------------------------------------------*/
 .universal-header__give-mobile {
     display: none;
-@include breakpoint($bp-until-large) {
+  @include breakpoint($bp-until-large) {
     display: block;
     position: absolute;
     bottom: 0;
