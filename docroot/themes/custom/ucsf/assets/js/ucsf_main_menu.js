@@ -53,6 +53,10 @@
         $parent.find('.main-nav__toggle').focus();
         // close previously opened level-1 submenues
         $('.main-submenu__toggle').parent('.menu-item--expanded').removeClass('menu-item-open');
+        // Set aria attribute.
+        setAria($this, 'false');
+        // reset area of main submenu toggle.
+        setAria($('.main-nav__toggle'), 'false');
       });
 
       // Toggle submenu open / close on btn click
