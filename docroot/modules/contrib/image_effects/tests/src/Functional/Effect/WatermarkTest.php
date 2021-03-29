@@ -27,10 +27,10 @@ class WatermarkTest extends ImageEffectsTestBase {
     $this->changeToolkit($toolkit_id, $toolkit_config, $toolkit_settings);
 
     // 1. Basic test.
-    $original_uri = $this->getTestImageCopyUri('/files/image-1.png', 'simpletest');
+    $original_uri = $this->getTestImageCopyUri('core/tests/fixtures/files/image-1.png');
     $derivative_uri = $this->testImageStyle->buildUri($original_uri);
 
-    $watermark_uri = $this->getTestImageCopyUri('/files/image-test.png', 'simpletest');
+    $watermark_uri = $this->getTestImageCopyUri('core/tests/fixtures/files/image-test.png');
 
     $effect = [
       'id' => 'image_effects_watermark',
@@ -61,7 +61,7 @@ class WatermarkTest extends ImageEffectsTestBase {
     // 2. Test for scaled watermark. Place a fuchsia watermark scaled to 5%
     // over a sample image and check the color of pixels inside/outside the
     // watermark to see that it was scaled properly.
-    $original_uri = $this->getTestImageCopyUri('/files/image-1.png', 'simpletest');
+    $original_uri = $this->getTestImageCopyUri('core/tests/fixtures/files/image-1.png');
     $derivative_uri = $this->testImageStyle->buildUri($original_uri);
 
     $watermark_uri = $this->getTestImageCopyUri('/tests/images/fuchsia.png', 'image_effects');
@@ -98,7 +98,7 @@ class WatermarkTest extends ImageEffectsTestBase {
     $original_uri = $this->getTestImageCopyUri('/tests/images/fuchsia.png', 'image_effects');
     $derivative_uri = $this->testImageStyle->buildUri($original_uri);
 
-    $watermark_uri = $this->getTestImageCopyUri('/files/image-test.png', 'simpletest');
+    $watermark_uri = $this->getTestImageCopyUri('core/tests/fixtures/files/image-test.png');
 
     $effect = [
       'id' => 'image_effects_watermark',
@@ -132,7 +132,7 @@ class WatermarkTest extends ImageEffectsTestBase {
     $original_uri = $this->getTestImageCopyUri('/tests/images/fuchsia.png', 'image_effects');
     $derivative_uri = $this->testImageStyle->buildUri($original_uri);
 
-    $watermark_uri = $this->getTestImageCopyUri('/files/image-test.png', 'simpletest');
+    $watermark_uri = $this->getTestImageCopyUri('core/tests/fixtures/files/image-test.png');
 
     $effect = [
       'id' => 'image_effects_watermark',

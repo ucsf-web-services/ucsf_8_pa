@@ -40,7 +40,7 @@ class InterlaceTest extends ImageEffectsTestBase {
     $test_data = [
       // Test on the PNG test image.
       [
-        'test_file' => $this->getTestImageCopyUri('/files/image-test.png', 'simpletest'),
+        'test_file' => $this->getTestImageCopyUri('core/tests/fixtures/files/image-test.png'),
       ],
     ];
 

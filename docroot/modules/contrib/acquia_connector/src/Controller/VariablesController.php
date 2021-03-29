@@ -31,7 +31,7 @@ class VariablesController extends ControllerBase {
    * Construction method.
    */
   public function __construct() {
-    $this->mapping = \Drupal::config('acquia_connector.settings')->get('mapping');
+    $this->mapping = $this->config('acquia_connector.settings')->get('mapping');
   }
 
   /**
@@ -48,7 +48,7 @@ class VariablesController extends ControllerBase {
     $this->configs = [];
     $names = \Drupal::configFactory()->listAll();
     foreach ($names as $config_name) {
-      $this->configs[$config_name] = \Drupal::config($config_name)->get();
+      $this->configs[$config_name] = $this->config($config_name)->get();
     }
 
     return $this->configs;
@@ -209,9 +209,9 @@ class VariablesController extends ControllerBase {
       return;
     }
     $saved = [];
-    $ignored = \Drupal::config('acquia_connector.settings')->get('spi.ignored_set_variables');
+    $ignored = $this->config('acquia_connector.settings')->get('spi.ignored_set_variables');
 
-    if (!\Drupal::config('acquia_connector.settings')->get('spi.set_variables_override')) {
+    if (!$this->config('acquia_connector.settings')->get('spi.set_variables_override')) {
       $ignored[] = 'acquia_spi_set_variables_automatic';
     }
     // Some variables can never be set.
@@ -223,7 +223,7 @@ class VariablesController extends ControllerBase {
       'user_register',
     ]);
     // Variables that can be automatically set.
-    $whitelist = \Drupal::config('acquia_connector.settings')->get('spi.set_variables_automatic');
+    $whitelist = $this->config('acquia_connector.settings')->get('spi.set_variables_automatic');
     foreach ($set_variables as $key => $value) {
       // Approved variables get set immediately unless ignored.
       if (in_array($key, $whitelist) && !in_array($key, $ignored)) {
