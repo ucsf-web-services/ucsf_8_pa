@@ -10,23 +10,9 @@ header .menu--main {
   }
 }
 
-.magazine-nav {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  margin-left: -50vw;
-
-  &__menu {
-    width: 100%;
-    margin: 0 auto;
-    max-width: 1320px;
-    padding: 0 20px;
-  }
-}
-
 // Hide the desktop menu in mobile
 #block-ucsf-mag-main-menu-desktop,
-#block-magazinemainmenu {
+.magazine-nav__menu {
   @include breakpoint($bp-until-large) {
     display: none;
   }
@@ -40,7 +26,7 @@ header .menu--main {
 }
 
 [block="block-ucsf-mag-main-menu-desktop"],
-[block="block-magazinemainmenu"] {
+.magazine-nav__menu {
   margin: 0;
   padding-left: 0;
   position: relative;
@@ -232,7 +218,7 @@ header .menu--main {
 // When Header Navigation is sticky
 .fixed-nav {
   [block="block-ucsf-mag-main-menu-desktop"],
-  [block="block-magazinemainmenu"] {
+  .magazine-nav__menu {
     .menu-item {
       a {
         // Reduce the height of element
@@ -251,7 +237,7 @@ header .menu--main {
 
 // Level One Hover/Active state.
 [block="block-ucsf-mag-main-menu-desktop"],
-[block="block-magazinemainmenu"] {
+.magazine-nav__menu {
   > .menu-item > a {
     &.is-active,
     &:active,
@@ -289,7 +275,7 @@ header .menu--main {
 .page-node-type-trending,
 .page-node-type-author {
   [block="block-ucsf-mag-main-menu-desktop"],
-  [block="block-magazinemainmenu"] {
+  .magazine-nav__menu {
     > .menu-item > a {
       &[href="/news"] {
         border-bottom: $hover-border-size solid $c-blue-link;
@@ -301,7 +287,7 @@ header .menu--main {
 
 // Level 0 - Dropdown box 1st Column.
 [block="block-ucsf-mag-main-menu-desktop"],
-[block="block-magazinemainmenu"] {
+.magazine-nav__menu {
 
   [data-level="level-0"] > .menu-child--menu {
     display: block;
@@ -369,7 +355,7 @@ header .menu--main {
 
 // Level-1 Expanded menu 2nd column.
 [block="block-ucsf-mag-main-menu-desktop"],
-[block="block-magazinemainmenu"] {
+.magazine-nav__menu {
   [data-level="level-1"] {
     position: absolute;
     right: 0;
@@ -402,51 +388,84 @@ header .menu--main {
   }
 }
 
-.menu--magazine-main-menu {
-  $logo-width: 350px;
+.magazine-nav {
+  $mag-nav-line-height: 92px; // total with hover border should be 96px
+  $mag-nav-line-height-sticky: 60px;
+  // $search-icon: 28px;
+  // $search-icon-sticky: 24px;
+  $mag-hover-border-size: 4px;
+  $logo-width: 362px;
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: 1fr $logo-width 1fr;
   background-color: $ucsf-blue;
-}
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
 
-.menu--magazine-main-menu .header--logo {
-    // position: absolute;
-    // left: 50%;
-    // transform: translateX(-50%);
-    $logo-width: 350px;
+  .header--logo {
+    $logo-width: 362px;
+    position: relative;
     width: $logo-width;
     grid-column: 2;
     grid-row: 1;
     justify-self: center;
-    align-self: center;
-    z-index: 1000;
+    z-index: 1;
+    // line-height: $mag-nav-line-height;
 
-    .logo__img {
-      margin: 0 auto;
+    .logo__link {
+      background-color: $c-navy;
+      position: absolute;
+      height: 112px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+  }
+
+  &__menu {
+    $logo-width: 362px;
+    grid-row: 1;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, auto) $logo-width repeat(3, auto);
+    grid-template-rows: 1fr;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1320px;
+    padding: 0 20px;
+
+    a.main-navigation__link {
+      @include eyebrow;
+      color: $white;
+      line-height: $mag-nav-line-height;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  .menu-child-wrapper {
+    display: none;
+  }
 }
 
-[block="block-magazinemainmenu"] {
-  $logo-width: 350px;
+
+.menu-top-level__item {
   grid-row: 1;
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, auto) $logo-width repeat(3, auto);
-  grid-template-rows: 1fr;
-}
-
-.menu-item-parent {
-  grid-row: 1;
+  color: $white;
 }
 
 
-.menu-item-parent:nth-child(4) {
+.menu-top-level__item:nth-child(4) {
   grid-column: 5;
 }
-.menu-item-parent:nth-child(5) {
+.menu-top-level__item:nth-child(5) {
   grid-column: 6;
 }
-.menu-item-parent:nth-child(6) {
+.menu-top-level__item:nth-child(6) {
   grid-column: 7;
 }
