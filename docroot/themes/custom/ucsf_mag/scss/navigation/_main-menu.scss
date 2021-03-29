@@ -430,12 +430,13 @@ header .menu--main {
     grid-row: 1;
     grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: repeat(3, auto) $logo-width repeat(3, auto);
+    grid-template-columns: repeat(3, minmax(0,1fr)) $logo-width repeat(3, minmax(0,1fr));
     grid-template-rows: 1fr;
     width: 100%;
     margin: 0 auto;
     max-width: 1320px;
     padding: 0 20px;
+    justify-items: center;
 
     a.main-navigation__link {
       @include eyebrow;
@@ -451,21 +452,37 @@ header .menu--main {
   .menu-child-wrapper {
     display: none;
   }
+
+  .menu-top-level__item {
+    // white-space: nowrap;
+  }
+
+  a.main-navigation__link {
+    margin: 0;
+  }
+
+  // @for $i from 1 through 3 {
+  //   .menu-top-level__item:nth-child(#{$i}) {
+  //     justify-self: end;
+  //   }
+
+
+  //   .menu-top-level__item:nth-child(#{$i}) .main-navigation__link {
+  //     margin-left: 0;
+  //     margin-right: 40px;
+  //   }
+  // }
+
+  // forcing last 3 menu items to skip center grid column.
+  @for $i from 1 through 3 {
+    .menu-top-level__item:nth-child(#{$i + 3}) {
+      grid-column: calc(4 + #{$i});
+    }
+  }
 }
 
 
 .menu-top-level__item {
   grid-row: 1;
   color: $white;
-}
-
-
-.menu-top-level__item:nth-child(4) {
-  grid-column: 5;
-}
-.menu-top-level__item:nth-child(5) {
-  grid-column: 6;
-}
-.menu-top-level__item:nth-child(6) {
-  grid-column: 7;
 }
