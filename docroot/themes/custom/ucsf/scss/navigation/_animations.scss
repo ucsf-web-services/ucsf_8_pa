@@ -7,30 +7,35 @@
 .page-node-type-news-center .combined-header-region,
 .alias-home .combined-header-region,
 .page-node-type-article  .combined-header-region {
-    animation: fade-and-slide 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0s both;
+  @include breakpoint($new-medium) {
+    animation: fade-and-slide 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0s;
     animation-fill-mode: none !important
-}
-.alias-home main.main {
-  animation: fade 1.0s cubic-bezier(0.77, 0, 0.175, 1) 1.25s both;
-}
-.alias-home .narrow-page-header  {
-  animation: fade 1.0s cubic-bezier(0.77, 0, 0.175, 1) 1.25s both;
+  }
 }
 
-
-
-.page-node-type-article .page_narrow {
-  animation: header-fade $transition-time-long cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+.alias-home {
+  main.main,
+  .narrow-page-header {
+    @include breakpoint($new-medium) {
+      animation: fade 1.0s cubic-bezier(0.77, 0, 0.175, 1) 1.25s both;
+    }
+  }
 }
+
 .page-node-type-article .image-style-article-feature-banner__image,
 .page-node-type-magazine-article .image-style-article-feature-banner__image {
-  animation: fade 2000ms cubic-bezier(0.77, 0, 0.175, 1) 0ms both;
+  @include breakpoint($new-medium) {
+    animation: fade 2000ms cubic-bezier(0.77, 0, 0.175, 1) 0ms both;
+  }
 }
+
 .page-node-type-article .article-header.article-medium-header,
 .page-node-type-magazine-article .article-header.article-medium-header {
-  animation: header-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-
+  @include breakpoint($new-medium) {
+    animation: header-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+  }
 }
+
 .topics-list__topics .slick-slide .topic-card {
   transition: .5s cubic-bezier(0.77, 0, 0.175, 1) all;
 }
@@ -39,28 +44,22 @@
   animation-fill-mode: forwards;
 }
 
-
-.article-header__author,
-.article-header h1,
-.article-header__byline {
-  animation: header-fade 1s 0ms forwards;
-  animation-name: header-fade;
-  animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
-  animation-fill-mode: forwards;
-  //transition: 2s;
-}
-
-
 .page-node-type-news-center {
   h1 {
-    animation: header-fade .8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    @include breakpoint($new-medium) {
+      animation: header-fade .8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    }
   }
   .news-center-banner_list {
-    animation: header-swoosh-no-fade 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    @include breakpoint($new-medium) {
+      animation: header-swoosh-and-fade 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    }
   }
   .news-center-banner__featured,
   .news-search {
-    animation: header-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    @include breakpoint($new-medium) {
+      animation: header-swoosh-and-fade 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    }
   }
 }
 
@@ -165,7 +164,7 @@
 }
 
 
-@keyframes header-swoosh {
+@keyframes header-swoosh-and-fade {
   0% {
     opacity: 0;
     transform: translateY(350px);
@@ -180,7 +179,7 @@
   }
 }
 
-@keyframes header-swoosh-no-fade {
+@keyframes header-swoosh {
   0% {
     transform: translateY(350px);
   }
