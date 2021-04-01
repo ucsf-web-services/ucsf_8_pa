@@ -1300,16 +1300,18 @@ a.icon-transit {
   .element-fade--in-viewport {
     -webkit-animation: fade 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
             animation: fade 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
+    @media (max-width: 849px) {
+      .article-medium-banner .element-fade--in-viewport {
+        -webkit-animation: none;
+                animation: none; } }
+  @media (max-width: 849px) {
+    .article-medium-banner .element-fade {
+      opacity: 1; } }
 
 @media (min-width: 769px) {
   .element-swoosh--in-viewport {
     -webkit-animation: element-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
             animation: element-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
-
-@media (max-width: 849px) {
-  .article-medium-header {
-    -webkit-animation: none;
-            animation: none; } }
 
 @-webkit-keyframes fade {
   0% {
@@ -3745,17 +3747,6 @@ figure figure[class="image"] {
         word-wrap: normal;
         -webkit-animation: none;
                 animation: none; }
-      [block="block-ucsf-main-menu-desktop"] .menu-item .menu-item:hover > .menu-child--wrapper .menu-child--menu,
-      [block="block-ucsf-main-menu-desktop"] .menu-item .menu-item:hover > .menu-child--wrapper .menu-child--label span,
-      [block="block-ucsf-main-menu-desktop"] .menu-item .menu-item:hover > .menu-child--wrapper ::after,
-      [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper .menu-child--menu,
-      [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper .menu-child--label span,
-      [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper ::after,
-      [block="block-ucsf-main-menu-desktop"] .menu-item.menu-item-open > .menu-child--wrapper .menu-child--menu,
-      [block="block-ucsf-main-menu-desktop"] .menu-item.menu-item-open > .menu-child--wrapper .menu-child--label span,
-      [block="block-ucsf-main-menu-desktop"] .menu-item.menu-item-open > .menu-child--wrapper ::after {
-        -webkit-animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both;
-                animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both; }
       [block="block-ucsf-main-menu-desktop"] .menu-item .menu-item:hover > .menu-child--wrapper .menu-child--wrapper,
       [block="block-ucsf-main-menu-desktop"] .menu-item:active > .menu-child--wrapper .menu-child--wrapper,
       [block="block-ucsf-main-menu-desktop"] .menu-item.menu-item-open > .menu-child--wrapper .menu-child--wrapper {
