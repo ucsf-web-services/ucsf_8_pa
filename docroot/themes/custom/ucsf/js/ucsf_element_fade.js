@@ -12,7 +12,9 @@
     '.column2 .element-fade',
     '.column3 .element-fade',
     '.field-taxonomy-banner-image .element-fade',
-    '.paragraph--type--gallery  :not(.slick-active) .element-fade'
+    '.paragraph--type--gallery  :not(.slick-active) .element-fade',
+    '.article-twocol-banner .element-fade',
+    '.article-medium-banner .element-fade'
   ];
 
   // element to be animated
