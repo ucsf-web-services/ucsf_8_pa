@@ -6,18 +6,6 @@
   // on scroll down makes section fade in.
   &--in-viewport {
     animation: fade $transition-time-long cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-
-    .article-medium-banner & {
-      @include breakpoint($new-medium-max) {
-        animation: none;
-      }
-    }
-  }
-
-  .article-medium-banner & {
-    @include breakpoint($new-medium-max) {
-      opacity: 1;
-    }
   }
 }
 
@@ -31,6 +19,15 @@
     &--in-viewport {
       animation: element-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
     }
+  }
+}
+
+// On screen size below $new-medium-max can't run the swoosh animation
+// because title text is visible over the body text
+// /news/2021/03/420137/uc-consortium-launches-first-clinical-trial-using-crispr-correct-gene-defect
+.article-medium-header {
+  @include breakpoint($new-medium-max) {
+    animation: none;
   }
 }
 
