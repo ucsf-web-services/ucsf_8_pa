@@ -2,9 +2,9 @@
   {% set alt = post.raw.caption ? post.raw.caption[:50] ~ (post.raw.caption|length > 50 ? '...') : '' %}
   {% if post.post_url %}
     <a class="post" href="{{ post.post_url }}">
-      <img class="lazyloaded post__image" src="{{ post.media_url }}" alt="{{ alt }}" />
+      <img class="post__image" src="{{ post.media_url }}" alt="{{ alt }}" />
     </a>
   {% else %}
-    <img class="lazyloaded post__image" src="{{ post.media_url }}" alt="{{ alt }}" />
+    <img class="post__image" src="{{ post.media_url }}" alt="{{ alt }}" />
   {% endif %}
 {% endif %}
