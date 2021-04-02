@@ -1,8 +1,10 @@
+// Desktop menu, for mobile go to _slicknav.scss
 $nav-line-height: 84px;
 $nav-line-height-sticky: 60px;
 $search-icon: 28px;
 $search-icon-sticky: 24px;
 $hover-border-size: 4px;
+$label-width: 48px;
 
 .main-nav {
   // variable to print .main-nav
@@ -79,13 +81,20 @@ $hover-border-size: 4px;
   height: auto;
   right: 0;
   z-index: $z-quicklinks-open-page;
-  width: 800px;
   position: relative;
 
-  @include breakpoint($new-large) {
-    width: 999px;
-  }
+  // Level-0 Expanded menu wrapper 2nd column.
+  &--0 {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: 1fr;
+    width: calc(800px + #{$label-width});
 
+    @include breakpoint($new-large) {
+      width: calc(999px + #{$label-width});
+    }
+
+  }
 
   // Level-1 Expanded menu wrapper 2nd column.
   &--1 {
@@ -101,9 +110,9 @@ $hover-border-size: 4px;
 
   // Level-0 Expanded menu 1st column.
   &__menu {
-    #{$block}--0 & {
+    #{$block}--0 > & {
       display: block;
-      //margin-top: 64px;
+      padding-top: $label-width;
       width: 350px;
 
       @include breakpoint($new-large) {
@@ -176,14 +185,9 @@ $hover-border-size: 4px;
 
     &--0 {
       background: $c-teal;
-      //float: left;
       box-sizing: border-box;
-      height: 48px;
-      transform: rotate(90deg);
-      transform-origin: 0px 0px 0px;
-      padding: 0 24px;
-      width: 400px;
-      margin-top: 1px;
+      width: $label-width;
+      padding: 24px 0;
 
       @each $area, $color, $color2 in $areas {
         &[data-section="section-#{$area}"] {
@@ -193,10 +197,14 @@ $hover-border-size: 4px;
 
       #{$block}__label-text {
         @include eyebrow;
-        line-height: 48px;
+        line-height: $label-width;
         margin: 0;
         color: $c-white;
+        writing-mode: vertical-rl;
         &:after {
+          width: 1px;
+          height: 40px;
+          margin: 5px 3px 5px 0;
           background: $c-white;
         }
       }

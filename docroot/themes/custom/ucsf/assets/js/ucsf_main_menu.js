@@ -101,7 +101,7 @@
           });
 
           self.height(totalHeight + 68);
-          self.find('.main-submenu__label').width(totalHeight + 20);
+          // self.find('.main-submenu__label').width(totalHeight + 20);
 
           // Get the height of the ul .main-submenu__menu
           var $innerMenu = self.children('.main-submenu__menu');
