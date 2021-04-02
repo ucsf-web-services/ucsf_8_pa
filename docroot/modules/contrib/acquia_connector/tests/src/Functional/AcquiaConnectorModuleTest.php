@@ -204,6 +204,22 @@ class AcquiaConnectorModuleTest extends BrowserTestBase {
     \Drupal::configFactory()->getEditable('acquia_connector.settings')->set('spi.server', 'http://mock-spi-server')->save();
     \Drupal::configFactory()->getEditable('acquia_connector.settings')->set('spi.ssl_verify', FALSE)->save();
     \Drupal::configFactory()->getEditable('acquia_connector.settings')->set('spi.ssl_override', TRUE)->save();
+
+    // Create a node, since some SPI data is only gathered if nodes exist.
+    $this->createContentType([
+      'type' => 'test_content_type',
+      'name' => 'Test content type',
+    ]);
+    $this->createNode([
+      'type' => 'test_content_type',
+      'title' => 'Dummy node',
+      'body' => [
+        [
+          'value' => 'Dummy node body',
+        ],
+      ],
+    ]);
+
   }
 
   /**
@@ -415,7 +431,7 @@ class AcquiaConnectorModuleTest extends BrowserTestBase {
     $this->assertTrue($is_active, 'Subscription is active after successful connection.');
     $check_subscription = $subscription->update();
     \Drupal::state()->resetCache();
-    $this->assertTrue(is_array($check_subscription), 'Subscription is array after successful connection.');
+    $this->assertIsArray($check_subscription, 'Subscription is array after successful connection.');
     // Now stored subscription data should match.
     $stored = \Drupal::config('acquia_connector.settings');
     $this->assertIdentical(\Drupal::state()->get('acquia_connector_test_request_count', 0), 4, '1 additional HTTP request made via acquia_agent_check_subscription().');
@@ -461,7 +477,7 @@ class AcquiaConnectorModuleTest extends BrowserTestBase {
     // Hold onto subcription data for comparison.
     $stored = \Drupal::config('acquia_connector.settings');
     $this->assertNotIdentical($check_subscription, '503', 'Subscription is not storing 503.');
-    $this->assertTrue(is_array($check_subscription), 'Storing subscription array data.');
+    $this->assertIsArray($check_subscription, 'Storing subscription array data.');
     $this->assertIdentical(\Drupal::state()->get('acquia_connector_test_request_count', 0), 4, 'Have made 4 HTTP requests so far.');
   }
 
@@ -617,6 +633,8 @@ class AcquiaConnectorModuleTest extends BrowserTestBase {
     $storage->setIdentifier('');
 
     \Drupal::state()->set('acquia_connector_test_request_count', 0);
+    \Drupal::state()->delete('spi.site_name');
+    \Drupal::state()->delete('spi.site_machine_name');
     \Drupal::state()->resetCache();
   }
 

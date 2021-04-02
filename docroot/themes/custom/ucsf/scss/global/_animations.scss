@@ -5,7 +5,22 @@
 
   // on scroll down makes section fade in.
   &--in-viewport {
-    animation: fade .8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    animation: fade $transition-time-long cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+
+    // because on screen size above $new-medium-max still need opcity:0
+    // else, title text is visible over the body text
+    // /news/2021/03/420137/uc-consortium-launches-first-clinical-trial-using-crispr-correct-gene-defect
+    .article-medium-banner & {
+      @include breakpoint($new-medium-max) {
+        animation: none;
+      }
+    }
+  }
+
+  .article-medium-banner & {
+    @include breakpoint($new-medium-max) {
+      opacity: 1;
+    }
   }
 }
 

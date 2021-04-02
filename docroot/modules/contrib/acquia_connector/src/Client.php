@@ -9,16 +9,18 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\State\StateInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use GuzzleHttp\Exception\RequestException;
 
 /**
- * Class Client.
+ * Acquia connector client.
  *
  * @package Drupal\acquia_connector
  */
 class Client {
 
   use LoggerChannelTrait;
+  use StringTranslationTrait;
   use MessengerTrait;
 
   /**
@@ -50,6 +52,13 @@ class Client {
   protected $config;
 
   /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
    * The state service.
    *
    * @var \Drupal\Core\State\StateInterface
@@ -59,13 +68,14 @@ class Client {
   /**
    * Client constructor.
    *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Config Factory Interface.
    * @param \Drupal\Core\State\StateInterface $state
    *   The state service.
    */
-  public function __construct(ConfigFactoryInterface $config, StateInterface $state) {
-    $this->config = $config->get('acquia_connector.settings');
+  public function __construct(ConfigFactoryInterface $configFactory, StateInterface $state) {
+    $this->configFactory = $configFactory;
+    $this->config = $configFactory->get('acquia_connector.settings');
     $this->server = $this->config->get('spi.server');
     $this->state = $state;
 
@@ -159,13 +169,8 @@ class Client {
       $body['revision'] = ACQUIA_DRUPAL_REVISION;
     }
 
-    // Include Acquia Search for Search API module version number.
-    if (\Drupal::moduleHandler()->moduleExists('acquia_search')) {
-      foreach (['acquia_search', 'search_api', 'search_api_solr'] as $name) {
-        $info = \Drupal::service('extension.list.module')->getExtensionInfo($name);
-        // Send the version, or at least the core compatibility as a fallback.
-        $body['search_version'][$name] = isset($info['version']) ? (string) $info['version'] : (string) $info['core_version_requirement'];
-      }
+    if ($search_info = $this->getSearchModulesData()) {
+      $body['search_version'] = $search_info;
     }
 
     try {
@@ -174,14 +179,13 @@ class Client {
         $subscription += $response['result']['body'];
         // Subscription activated.
         if (is_numeric($this->state->get('acquia_subscription_data')) && is_array($response['result']['body'])) {
-          \Drupal::moduleHandler()->invokeAll('acquia_subscription_status', [$subscription]);
           $this->state->set('acquia_subscription_data', $subscription);
         }
         return $subscription;
       }
     }
     catch (ConnectorException $e) {
-      $this->messenger()->addError(t('Error occurred while retrieving Acquia subscription information. See logs for details.'));
+      $this->messenger()->addError($this->t('Error occurred while retrieving Acquia subscription information. See logs for details.'));
       if ($e->isCustomized()) {
         $this->getLogger('acquia connector')
           ->error($e->getCustomMessage() . '. Response data: @data', ['@data' => json_encode($e->getAllCustomMessages())]);
@@ -193,6 +197,35 @@ class Client {
     }
 
     return FALSE;
+  }
+
+  /**
+   * Get information on Acquia Search modules.
+   *
+   * @return array|null
+   *   Versions for enabled search modules, NULL otherwise.
+   */
+  protected function getSearchModulesData(): ?array {
+
+    // This is the only search module compatible with this version of Acquia
+    // Connector for now.
+    if (!\Drupal::moduleHandler()->moduleExists('acquia_search_solr')) {
+      return NULL;
+    }
+
+    // Include Acquia Search Solr for Search API module version number.
+    $modules = ['acquia_search_solr', 'search_api_solr'];
+    $result = [];
+
+    foreach ($modules as $name) {
+      $extension_list = \Drupal::service('extension.list.module');
+      $info = $extension_list->getExtensionInfo($name);
+      // Send the version, or at least the core compatibility as a fallback.
+      $result[$name] = isset($info['version']) ? (string) $info['version'] : (string) $info['core_version_requirement'];
+    }
+
+    return $result;
+
   }
 
   /**

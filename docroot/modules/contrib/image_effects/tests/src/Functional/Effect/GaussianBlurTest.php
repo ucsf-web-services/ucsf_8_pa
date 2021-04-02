@@ -58,7 +58,7 @@ class GaussianBlurTest extends ImageEffectsTestBase {
     // The upper-left corner of the inner red square has been blurred.
     // For fully transparent, the background color differs by toolkit. In this
     // case, we just check for the alpha channel value equal to 80.
-    $this->assertEqual(80, imagecolorsforindex($image->getToolkit()->getResource(), imagecolorat($image->getToolkit()->getResource(), 25, 25))['alpha']);
+    $this->assertEquals(80, imagecolorsforindex($image->getToolkit()->getResource(), imagecolorat($image->getToolkit()->getResource(), 25, 25))['alpha']);
   }
 
 }

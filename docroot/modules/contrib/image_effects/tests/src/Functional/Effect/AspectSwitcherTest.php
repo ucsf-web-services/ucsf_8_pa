@@ -3,6 +3,7 @@
 namespace Drupal\Tests\image_effects\Functional\Effect;
 
 use Drupal\Core\Config\ConfigValueException;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Tests\image_effects\Functional\ImageEffectsTestBase;
 use Drupal\image\Entity\ImageStyle;
 
@@ -52,8 +53,11 @@ class AspectSwitcherTest extends ImageEffectsTestBase {
       $style_label = ucfirst($orientation) . ' Image Style Test';
       $style = ImageStyle::create(['name' => $style_name, 'label' => $style_label]);
       $style->addImageEffect($this->effects[$orientation]);
-      $this->assertTrue($style->save());
+      $this->assertEquals(SAVED_NEW, $style->save());
     }
+
+    $test_directory = 'public://styles/' . $this->testImageStyleName;
+    $this->fileSystem->prepareDirectory($test_directory, FileSystemInterface::CREATE_DIRECTORY);
   }
 
   /**
@@ -73,14 +77,14 @@ class AspectSwitcherTest extends ImageEffectsTestBase {
 
     $image_factory = $this->container->get('image.factory');
 
-    $test_landscape_file = drupal_get_path('module', 'simpletest') . '/files/image-test.png';
-    $original_landscape_uri = file_unmanaged_copy($test_landscape_file, 'public://', FILE_EXISTS_RENAME);
+    $test_landscape_file = 'core/tests/fixtures/files/image-test.png';
+    $original_landscape_uri = $this->fileSystem->copy($test_landscape_file, 'public://', FileSystemInterface::EXISTS_RENAME);
 
     $img_portrait = imagerotate(imagecreatefrompng($original_landscape_uri), 90, 0);
     $generated_uri = \Drupal::service('file_system')->realpath('public://image-test-portrait.png');
     imagepng($img_portrait, $generated_uri);
     $test_portrait_file = $generated_uri;
-    $original_portrait_uri = file_unmanaged_copy($test_portrait_file, 'public://', FILE_EXISTS_RENAME);
+    $original_portrait_uri = $this->fileSystem->copy($test_portrait_file, 'public://', FileSystemInterface::EXISTS_RENAME);
 
     // Add aspect switcher effect.
     $effect = [
@@ -154,10 +158,10 @@ class AspectSwitcherTest extends ImageEffectsTestBase {
     // and the invalidation of the parent image style cache tag is changed.
     $pre_flush_invalidations_parent = $this->getImageStyleCacheTagInvalidations($this->testImageStyleName);
     $pre_flush_invalidations_child = $this->getImageStyleCacheTagInvalidations('portrait_image_style_test');
-    $this->assertNotEquals(0, count(file_scan_directory('public://styles/' . $this->testImageStyleName, '/.*/')));
+    $this->assertNotEquals(0, count($this->fileSystem->scanDirectory('public://styles/' . $this->testImageStyleName, '/.*/')));
     $portrait_image_style = ImageStyle::load('portrait_image_style_test');
     $portrait_image_style->flush();
-    $this->assertEquals(0, count(file_scan_directory('public://styles/' . $this->testImageStyleName, '/.*/')));
+    $this->assertFalse(is_dir('public://styles/' . $this->testImageStyleName));
     $this->assertNotEquals($this->getImageStyleCacheTagInvalidations($this->testImageStyleName), $pre_flush_invalidations_parent);
     $this->assertNotEquals($this->getImageStyleCacheTagInvalidations('portrait_image_style_test'), $pre_flush_invalidations_child);
 
@@ -216,7 +220,8 @@ class AspectSwitcherTest extends ImageEffectsTestBase {
       ],
     ];
     $this->testImageStyle->addImageEffect($effect);
-    $this->setExpectedException(ConfigValueException::class, "You can not select the Image Effects Test image style itself for the landscape style");
+    $this->expectException(ConfigValueException::class);
+    $this->expectExceptionMessage("You can not select the Image Effects Test image style itself for the landscape style");
     $this->testImageStyle->save();
   }
 
@@ -233,7 +238,8 @@ class AspectSwitcherTest extends ImageEffectsTestBase {
       ],
     ];
     $this->testImageStyle->addImageEffect($effect);
-    $this->setExpectedException(ConfigValueException::class, "You can not select the Image Effects Test image style itself for the portrait style");
+    $this->expectException(ConfigValueException::class);
+    $this->expectExceptionMessage("You can not select the Image Effects Test image style itself for the portrait style");
     $this->testImageStyle->save();
   }
 
