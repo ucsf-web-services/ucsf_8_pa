@@ -1,5 +1,32 @@
+// // Allow iFrames to be responsive
+// .video-container {
+//   position: relative;
+//   height: 0;
+//   margin-bottom: $space-ten;
+//   padding-bottom: 56.25%; // 16:9
+
+//   iframe {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     margin-bottom: 0; // bottom margin is removed here because it can cause issues with the parent wrapper
+//   }
+// }
+
 .virtual-tour {
-  &__embed {
-    margin-bottom: -1px;
+  @include breakpoint($new-medium) {
   }
+
+  &__embed {
+    padding-bottom: 100%;
+    margin-bottom: -1px;
+
+    @include breakpoint($new-medium) {
+      position: relative;
+      padding-bottom: 56.25%; // 16:9
+    }
+  }
+
 }
