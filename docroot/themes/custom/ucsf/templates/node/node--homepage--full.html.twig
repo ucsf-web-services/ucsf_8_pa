@@ -1,18 +1,20 @@
 {% set banner_style = node.field_banner_box_alignment.entity.label|clean_class %}
-
+{% set expanded = 'false' %}
 {% if banner_style == 'right-bottom-align-text-box' %}
   {% set layout = 'home-banner-two' %}
 {% elseif banner_style == 'left-bottom-align-text-box' %}
   {% set layout = 'home-banner-three' %}
 {% endif %}
 
-<nav class="quicklinks">
-  <div class="quicklinks-trigger">
-    <a class="quicklinks__openlink">{{ "Quick Links"|t }} <span class="fas fa-caret-up"></span><span class="fas fa-caret-right"></span></a>
-  </div>
-  <div class="quicklinks-menu">
-    <div class="quicklinks-close"><span class="fas fa-times"></span></div>
+<nav class="quicklinks" aria-labelledby="quicklinks-main-title">
+  <button class="quicklinks-trigger" aria-expanded="{{expanded}}" aria-controls="slide-quicklinks" aria-label="Open/Close Quicklinks menu">
+    {# added inline style to fix chrome bug https://stackoverflow.com/questions/43278142/chrome-does-not-support-writing-mode-for-button-tag #}
+    <p class="quicklinks__main-title" id="quicklinks-main-title" style="writing-mode:vertical-lr;">{{ "Quick Links"|t }}<span class="fas fa-caret-right"></span></p>
+
+  </button>
+  <div class="quicklinks-menu" id="slide-quicklinks">
     {{ content.field_quick_link_menu }}
+    <button class="quicklinks-close" aria-controls="slide-quicklinks" aria-expanded="{{expanded}}"><span class="fas fa-times"></span><span class="visually-hidden">{{ "Close Quick Links"|t }}</span></button>
     {{ attach_library('ucsf/quicklinks') }}
   </div>
 </nav>
