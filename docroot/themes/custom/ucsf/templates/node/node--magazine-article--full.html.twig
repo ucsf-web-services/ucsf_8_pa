@@ -1,6 +1,7 @@
 {% set layout = node.field_banner_layout.value %}
 
 {% set body_classes = not node.isPublished() ? "node--unpublished" %}
+{{ attach_library('ucsf/ucsf_social_icons') }}
 {{ attach_library('ucsf/element_overlap_detection') }}
 <main class="main {{ body_classes }}">
   {# link is in html.html.twig #}
