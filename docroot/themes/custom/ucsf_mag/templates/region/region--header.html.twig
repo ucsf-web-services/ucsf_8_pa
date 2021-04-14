@@ -1,2 +1,33 @@
-{% extends '@ucsf/region/region--header.html.twig' %}
-{% set header_class = 'header--magazine' %}
+{# {% extends '@ucsf/region/region--header.html.twig' %}
+{% set header_class = 'header--magazine' %} #}
+{% extends 'region.html.twig' %}
+
+{% block content %}
+  {# var is_minimized_sticky_menu is created through php-includes\region.inc #}
+  <header class="combined-header-region {% if is_minimized_sticky_menu %} is-minimized-sticky-menu fixed-nav fixed-nav--visible{% endif %}">
+    <section class="universal-header-region">
+      <div class="universal-header universal-header-mag">
+        <p id="site-name" class="universal-header__title">University of California San Francisco</p>
+        <div class="mag-menu-external">
+          <a href="https://ucsf.edu/news" class="mag-menu-external__ucsf">Visit UCSF News Center<span class="ext" aria-label="(link is external)"></span></a>
+          <a href="https://giving.ucsf.edu" class="universal-header__give mag-menu-external__give">Give to UCSF</a>
+        </div>
+      </div>
+    </section>
+    <section class="header-region mag-nav mag-nav mag-nav--active">
+      <div class="header {{header_class}} mag-nav__navbar">
+        <button class="nav-toggle" aria-expanded="false">
+          <span class="nav-toggle__icon">Toggle Main Menu</span>
+        </button>
+
+        {% block logo %}
+          {% include '@ucsf_mag/components/header/magazine-header--logo.twig' %}
+        {% endblock logo %}
+        {% include '@theme/header/header--search.twig' %}
+        <div class="slicknav-placeholder"></div>
+        {{ content }}
+        {# main nav #}
+      </div>
+    </section>
+  </header>
+{% endblock content %}

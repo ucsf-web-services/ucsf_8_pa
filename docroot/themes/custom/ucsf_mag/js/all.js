@@ -4,6 +4,31 @@
  (($ => {
   // Wait for the document to be ready.
   $(() => {
+    /**
+    * Set aria-expanded attribute value on element that triggers the submenu visibility
+    * @param {jQuery Object} trigger
+    * @param {String} value
+    */
+    const setAria = ( trigger, value ) => {
+      trigger.attr('aria-expanded', value);
+    }
+
+    const $navbar = $('.mag-nav');
+    const menuId =  document.querySelector('.mag-menu').getAttribute('id');
+    const $navToggle = $('.nav-toggle');
+    $navToggle.attr("aria-controls", menuId);
+    console.log(menuId);
+    $navToggle.on('click', function (e) {
+      const $this = $(this);
+      $this.toggleClass('nav-toggle--active');
+      $navbar.toggleClass('mag-nav--active');
+      if ($this.attr("aria-expanded") === "false") {
+        setAria($this, "true");
+      } else {
+        setAria($this, "false");
+      }
+    });
+
     const magazineDesktopMenu = () => {
       const menuButton = $('magazine-nav__toggle, .magazine-submenu__toggle, .menu-item-close--magazine');
       menuButton.each(function () {
@@ -11,15 +36,6 @@
           event.preventDefault();
         });
       });
-
-      /**
-       * Set aria-expanded attribute value on element that triggers the submenu visibility
-       * @param {jQuery Object} trigger
-       * @param {String} value
-       */
-      const setAria = ( trigger, value ) => {
-        trigger.attr('aria-expanded', value);
-      }
 
       // Toggle open the sub panels on main nav button click.
       $('.magazine-nav__toggle').on('click touchstart', function (e) {

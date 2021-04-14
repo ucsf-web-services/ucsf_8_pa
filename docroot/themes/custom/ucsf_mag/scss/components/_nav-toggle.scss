@@ -1,0 +1,61 @@
+.nav-toggle {
+  // variable to print .nav-toggle
+  $block: &;
+  $menu-bar-position: 7px;
+
+  float: left;
+  white-space: nowrap;
+  overflow: hidden;
+  min-width: 40px;
+  max-width: 40px;
+  width: 40px;
+  height: 40px;
+  margin-right: .75em;
+  background-color: transparent;
+  border: 0;
+  outline: 1px solid transparent;
+
+  &__icon {
+    display: block;
+    position: relative;
+    width: 25px;
+    height: 2px;
+    background-color: $c-blue-link;
+    outline: 1px solid transparent;
+    transition-property: background-color, transform;
+    transition-duration: .3s;
+    margin: 0;
+    text-indent: 300%;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 25px;
+      height: 2px;
+      background-color: $c-blue-link;
+      outline: 1px solid transparent;
+      transition-property: background-color,transform;
+      transition-duration: .3s;
+    }
+
+    &::before {
+      top: -#{$menu-bar-position};
+    }
+
+    &::after {
+      top: $menu-bar-position;
+    }
+
+    #{$block}--active & {
+      background-color: transparent;
+      &::before {
+        transform: translateY($menu-bar-position) rotate(45deg);
+      }
+      &::after {
+        transform: translateY(-#{$menu-bar-position}) rotate(-45deg);
+      }
+    }
+  }
+}

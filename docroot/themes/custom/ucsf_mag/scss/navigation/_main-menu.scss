@@ -1,302 +1,101 @@
-$mag-nav-line-height: 92px; // total with hover border should be 96px
-// $mag-nav-line-height-sticky: 60px;
-$mag-hover-border-size: 4px;
-
-  // $search-icon: 28px;
-  // $search-icon-sticky: 24px;
-  $magazine-logo-width: 362px;
-
-.magazine-nav {
-  // variable to print .magazine-nav
+.mag-menu {
+  @include ul-item-list-reset();
+  // variable to print .mag-menu
   $block: &;
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 1fr $magazine-logo-width 1fr;
-  background-color: $ucsf-blue;
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  margin-left: -50vw;
+  // top level menu links, these are used to assign a grid aria to menu li
+  $links: latest, features, insights, voices, allissues, trending, collections;
 
-  .header--logo {
-    position: relative;
-    width: $magazine-logo-width;
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: center;
-    z-index: 1;
-    // line-height: $mag-nav-line-height;
-
-    .logo__link {
-      background-color: $c-navy;
-      position: absolute;
-      height: 112px;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-
-  // navbar menu <ul>
-  &__menu {
-    grid-row: 1;
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0,1fr)) $magazine-logo-width repeat(3, minmax(0,1fr));
-    grid-template-rows: 1fr;
-    width: 100%;
-    margin: 0 auto;
-    max-width: 1220px;
-    padding: 0 20px;
-    justify-items: center;
-
-    .menu-item {
-      display: inline-block;
-    }
-  }
-
-   // navbar buttons
-   &__toggle {
-    @include eyebrow;
-    grid-row: 1;
-    color: $white;
-    background-color: transparent;
-    line-height: $mag-nav-line-height;
-    border: none;
-    margin: 0;
-    padding: 0 0 $mag-hover-border-size 0;
-    transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1) line-height;
-
-    &::after {
-      display: none;
-    }
-
-    &:focus,
-    &:hover {
-      border-bottom: $mag-hover-border-size solid $white;
-      padding-bottom: 0; // padding bottom is replaced by the border bottom
-    }
-
-    &:focus {
-      outline: 1px dotted $c-navy;
-    }
-
-    // Remove margin from first menu item
-    #{$block}__menu .menu-item:first-child & {
-      margin-left: 0;
-    }
-
-    // make top level menu item "active" when visiting linked page
-    .menu-item--active-trail & {
-      border-bottom: $mag-hover-border-size solid $white;
-      padding-bottom: 0;
-    }
-  }
-
-  // forcing last 3 menu items to skip center grid column.
-  @for $i from 1 through 3 {
-    #{$block}__menu .menu-item:nth-child(#{$i + 3}) {
-      grid-column: calc(4 + #{$i});
-    }
-  }
-}
-
-/*---------------In this section---------------------*\
-  SUBMENU
-\*---------------------------------------------------*/
-.magazine-submenu {
-  // variable to print .magazine-submenu
-  $block: &;
-
-  @include visually-hidden;
+  display: none;
   visibility: hidden;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  grid-template-rows: 1fr;
-  background: $c-grey-pale;
-  height: auto;
-  z-index: $z-quicklinks-open-page;
-  width: 800px;
+  width: 100%;
   position: absolute;
-  transform: translateX(8%);
+  top: 100%;
+  left: 0;
+  background-color: $c-grey-pale;
 
-  @include breakpoint($new-large) {
-    width: 999px;
+  @include breakpoint($bp-large) {
+    margin: 0 auto;
+    max-width: 1280px;
   }
 
 
-  // Level-1 Expanded menu wrapper 2nd column.
-  &--1 {
-    position: absolute;
-    right: 0;
-    top: 48px;
-    width: 450px;
-
-    @include breakpoint($new-large) {
-      width: 535px;
-    }
+  .mag-nav--active & {
+    display: block;
+    visibility: visible;
   }
 
-  // Level-0 Expanded menu 1st column.
+  // top level ul
   &__menu {
-    #{$block}--0 & {
-      display: block;
-      //margin-top: 64px;
-      width: 350px;
+    display: grid;
+    grid-template-areas:
+    "latest"
+    "features"
+    "insights"
+    "voices"
+    "allissues"
+    "trending"
+    "collections";
 
-      @include breakpoint($new-large) {
-        width: 464px;
-      }
-
-      .menu-item {
-        border-bottom: 1px solid #d5d9de;
-        display: block;
-        margin-left: 73px;
-      }
+    @include breakpoint($bp-large) {
+      grid-template-columns: 30% repeat(4, 1fr);
+      grid-template-rows: min-content auto auto;
+      grid-template-areas:
+        "latest features insights voices allissues"
+        "trending features insights voices allissues"
+        "collections features insights voices allissues";
     }
 
-    // Level-0 Expanded menu 2nd column.
-     #{$block}--1 & {
-      padding-right: 80px;
-      padding-left: 0;
-      width: 100%;
-      animation: none;
-      .menu-item {
-        margin-left: 80px;
-      }
+  }
+
+
+  @each $link in $links {
+    &__item--#{$link} {
+      grid-area: #{$link};
+    }
+  }
+
+  &__link {
+    // specificity modification
+    #{$block} & {
+      color: $c-dark-navy;
     }
 
-    .menu-item--expanded {
-      // Icon angle right
-      .fa-angle-right {
-        display: inline-block;
-        line-height: 32px;
-        height: 48px;
-        padding: 8px 0;
-        width: 16px;
-      }
+    &:hover {
+      text-decoration: underline;
+    }
 
-      // Icon angle right on menu item hover
-      &:hover .fa-angle-right {
+    // top level li
+    &--alt {
+      @include magazine-eyebrow;
+      text-decoration: underline;
+      margin: 0;
+
+      &:hover  {
         color: $c-blue-link;
       }
     }
-
-    a {
-      @include link-colors($c-navy, $c-blue-link);
-      display: block;
-      font-family: $font-helvetica-neue-light;
-      font-size: 18px;
-      line-height: 32px;
-      height: auto;
-      margin: 0;
-      padding: $space 20px $space 0;
-      position: relative;
-    }
-
-    span.ext {
-      position: absolute;
-      height: 32px;
-      right: 0;
-      top: 20%;
-    }
   }
 
-  // left and right column labels
-  &__label {
-    &-text {
-      @include eyebrow;
-      margin-left: 80px;
-      &:after {
-        background: none;
-      }
-    }
-
-    &--0 {
-      background: $c-teal;
-      box-sizing: border-box;
-      padding: 24px 0;
-      width: 48px;
-      margin-top: 1px;
-
-      // TODO: get colors
-      // @each $area, $color, $color2 in $areas {
-      //   &[data-section="section-#{$area}"] {
-      //     background: $color;
-      //   }
-      // }
-
-      #{$block}__label-text {
-        @include eyebrow;
-        line-height: 48px;
-        margin: 0;
-        color: $c-white;
-        writing-mode: vertical-rl;
-        &:after {
-          width: 1px;
-          height: 40px;
-          margin: 5px 3px 5px 0;
-          background: $c-white;
-        }
-      }
-    }
+  &__no-link {
+    font-family: $font-helvetica-neue-light;
+    font-size: 1.5rem;
   }
 
-  // left column submenu button
   &__toggle {
-    border: 0;
-    display: inline-block;
-    width: calc(100% - 22px);
-    background-color: transparent;
-    padding: $space 20px $space 0;
-    text-align: left;
-
-    &:hover {
-      color: $c-blue-link;
-    }
-  }
-
-  /*---------------In this section---------------------*\
-    Animations and visibility
-  \*---------------------------------------------------*/
-  // When top level button is clicked.
-  .magazine-nav__menu .menu-item-open > & {
-    @include visually-hidden-reset;
-    @include menu-animation;
-    visibility: visible;
-
-    #{$block}__menu,
-    #{$block}__label-text,
-    ::after {
-      animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both;
-    }
-  }
-
-  // When left column button is hovered/clicked.
-  &--0 .menu-item:hover &--1,
-  &--0 .menu-item-open > & {
-    animation: none;
-    @include visually-hidden-reset;
-    visibility: visible;
+    @include button-reset();
   }
 }
 
-// close button for submenu
-.menu-item-close--magazine {
-  display: block;
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 20px;
-  height: 20px;
-  background: url("../images/x-large.svg") left center no-repeat transparent;
-  background-size: 20px 20px;
-  cursor: pointer;
-  text-indent: -9999px;
-  border: 0;
+.mag-submenu {
+  // variable to print .mag-menu
+  $block: &;
+  &__link {
+    font-family: $font-helvetica-neue-roman;
+    font-size: 0.875rem;
 
-  &:focus {
-    border: 1px dotted $c-navy;
+    // specificity modification
+    #{$block} & {
+      color: $c-gulf-blue;
+    }
   }
 }
