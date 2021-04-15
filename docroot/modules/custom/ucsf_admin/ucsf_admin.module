@@ -1,0 +1,7 @@
+<?php
+
+function ucsf_admin_preprocess_page(&$variables) {
+  if (\Drupal::service('router.admin_context')->isAdminRoute()) {
+    $variables['#attached']['library'][] = 'ucsf_admin/paragraphs';
+  }
+}

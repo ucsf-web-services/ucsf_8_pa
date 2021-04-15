@@ -51,6 +51,10 @@
         $parent.find('.main-nav__toggle').focus();
          // close previously opened level-1 submenues
         $('.main-submenu__toggle').parent('.menu-item--expanded').removeClass('menu-item-open');
+        // Set aria attribute.
+        setAria($this, 'false');
+        // reset area of main submenu toggle.
+        setAria($('.main-nav__toggle'), 'false');
       });
 
 
@@ -96,7 +100,6 @@
           });
 
           self.height(totalHeight + 68);
-          self.find('.main-submenu__label').width(totalHeight + 20);
 
           // Get the height of the ul .main-submenu__menu
           const $innerMenu = self.children('.main-submenu__menu');

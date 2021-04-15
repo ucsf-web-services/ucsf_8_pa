@@ -1,19 +1,4 @@
-// MOBILE MENU
-.slicknav_nav {
-  display: none;
-
-  // Hide the mobile menu in desktop
-  @include breakpoint($new-medium) {
-    display: none;
-  }
-}
-
-.slicknav-placeholder {
-  @include breakpoint($bp-large) {
-    display: none;
-  }
-}
-
+// Mobile menu, for desktop menu go to _main-menu.scss
 .slicknav_menu {
 
   .slicknav_menutxt {
@@ -44,7 +29,16 @@
   }
 }
 
+.slicknav-placeholder,
+#block-ucsf-main-menu {
+  @include breakpoint($new-medium) {
+    display: none;
+  }
+}
+
+// MOBILE MENU
 .slicknav_nav {
+  display: none;
   background: $c-grey-pale;
   position: fixed;
   right: 0;
@@ -53,6 +47,12 @@
   bottom: 0;
   width: 100%;
   z-index: $z-dropdown;
+
+  // Hide the mobile menu in desktop
+  @include breakpoint($new-medium) {
+    display: none;
+  }
+
 
   ul.menu-parent-wrapper {
     padding-left: 24px;
