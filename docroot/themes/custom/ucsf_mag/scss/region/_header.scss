@@ -1,13 +1,30 @@
 .mag-nav {
+  $navbar-height: 50px;
+  height: auto;
+  padding: 0;
+
+  &--active.header-region{
+    background-color: $c-grey-pale;
+  }
+
   &__navbar {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-content: center;
+    height: 50px;
+    padding-top: 11px;
+    padding-bottom: 12px;
   }
 
   .logo__img {
-    height: 30px;
-    width: auto;
+    height: auto;
+    width: 45vw;
     transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) all;
+
+    @include breakpoint (320px) {
+      height: 30px;
+      width: auto;
+    }
 
     @include breakpoint ($new-medium) {
       height: 52px;
@@ -18,8 +35,35 @@
     }
   }
 
+  .header--logo {
+    align-self: center;
+    justify-self: center;
+  }
+
   .header--search {
     display: block;
+  }
+
+  .mobile-search-reveal {
+    right: 20px;
+    width: 24px;
+    height: $navbar-height;
+    background-position: center;
+    background-size: 24px;
+    max-width: 24px;
+    min-width: 24px;
+    background-color: transparent;
+    background-image: url('/themes/custom/ucsf/assets/images/magnifier.svg');
+  }
+
+  .mobile-search-reveal:hover {
+    width: 24px;
+    background-size: 24px;
+    background-color: transparent;
+  }
+
+  .nav-toggle {
+    left: 0;
   }
 }
 
@@ -31,11 +75,11 @@
 }
 
 
-.mag-menu-external {
-  // variable to print .mag-menu-external
+.mag-nav__ucsf {
+  // variable to print .mag-nav__ucsf
   $block: &;
 
-  &__ucsf {
+  &-news {
     transition: 0.15s $transition-type color;
     display: none;
 
@@ -65,45 +109,27 @@
       }
     }
 
-    .ext {
-      // TODO this should be a part of .mag-menu-external__ucsf--large
-      @include breakpoint($bp-medium) {
-        display: block;
-        width: 1rem;
-        height: auto;
-        background-size: 25px 25px;
-        padding-right: 45px;
-        filter: brightness(0) saturate(100%) invert(7%) sepia(68%) saturate(795%) hue-rotate(190deg) brightness(100%) contrast(95%);
-      }
-
-
-      @include breakpoint($bp-large) {
-        width: 10px;
-        background-size: 14px 14px;
-        margin-left: .5rem;
-        padding-right: 20px;
-        filter: brightness(0) invert(1);
-      }
-    }
-
-    // Needed more specificity
-    .mag-menu-external &:hover .ext {
-      @include breakpoint($bp-large) {
-        background-size: 14px 14px;
-      }
-    }
-
     &--menu {
-      // TODO this should be a part of .mag-menu-external__ucsf--large
+      $menu-link-block: &;
       font-size: 1.125rem;
       font-family: $font-helvetica-neue-medium;
-      line-height: 26px;
+      line-height: 77px;
+      display: flex;
+      justify-content: space-between;
 
       @include breakpoint($bp-large) {
         display: none;
       }
-    }
 
+      // Needed more specificity
+      .mag-menu__menu & {
+        color: $c-dark-navy;
+
+        &:hover  {
+          color: $c-blue-link;
+        }
+      }
+    }
   }
 
   // show header link only on desktop

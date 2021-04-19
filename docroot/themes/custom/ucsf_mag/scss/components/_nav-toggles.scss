@@ -6,11 +6,10 @@
   float: left;
   white-space: nowrap;
   overflow: hidden;
-  min-width: 40px;
-  max-width: 40px;
-  width: 40px;
-  height: 40px;
-  margin-right: .75em;
+  min-width: 25px;
+  max-width: 25px;
+  width: 25px;
+  height: auto;
   background-color: transparent;
   border: 0;
   outline: 1px solid transparent;
@@ -57,5 +56,28 @@
         transform: translateY(-#{$menu-bar-position}) rotate(-45deg);
       }
     }
+  }
+}
+
+.subnav-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+
+  &:hover .accordion-arrow {
+    border-top-color: $c-blue-link;
+    border-right-color: $c-blue-link;
+  }
+
+  &__icon {
+    margin-left: auto;
   }
 }
