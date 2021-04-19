@@ -38,26 +38,21 @@
       "trending"
       "collections";
 
+    margin-bottom: 0;
+    padding: 0 $page-gutter;
+    margin-top: 1.2rem;
 
-    // specificity modification
-    #{$block} & {
-      padding: 0 $page-gutter;
-      margin-top: 1.2rem;
+    @include breakpoint($bp-medium) {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(3, min-content) auto auto;
+      grid-template-areas:
+        "latest   allissues"
+        "features allissues"
+        "insights allissues"
+        "voices allissues"
+        "trending trending"
+        "collections collections";
     }
-
-
-
-    // @include breakpoint($bp-medium) {
-    //   grid-template-columns: 1fr 1fr;
-    //   grid-template-rows: repeat(3, min-content) auto auto;
-    //   grid-template-areas:
-    //     "latest   allissues"
-    //     "features allissues"
-    //     "insights allissues"
-    //     "voices allissues"
-    //     "trending trending"
-    //     "collections collections";
-    // }
 
     // @include breakpoint($bp-large) {
     //   grid-template-columns: 30% repeat(4, 1fr);
@@ -99,28 +94,36 @@
     &--featured {
       margin-bottom: 0;
     }
+
+
   }
 
-  // &__item:nth-child(5) {
-  //   @include breakpoint($bp-medium) {
-  //     position: relative;
-  //     margin-left: 2rem;
-  //   }
+  &__item:nth-child(4) {
+    @include breakpoint($bp-medium) {
+      margin-bottom: 4rem;
+    }
+  }
 
-  //   &::before {
-  //     @include breakpoint($bp-medium) {
-  //       content: "";
-  //       display: block;
-  //       position: absolute;
-  //       height: auto;
-  //       width: 1px;
-  //       border-left: 1px solid #d5d9de;
-  //       top: 1rem;
-  //       bottom: 2rem;
-  //       left: -2rem;
-  //     }
-  //   }
-  // }
+  &__item:nth-child(5) {
+    @include breakpoint($bp-medium) {
+      position: relative;
+      margin-left: 2rem;
+    }
+
+    &::before {
+      @include breakpoint($bp-medium) {
+        content: "";
+        display: block;
+        position: absolute;
+        height: auto;
+        width: 1px;
+        border-left: 1px solid #d5d9de;
+        top: 1rem;
+        bottom: 0;
+        left: -2rem;
+      }
+    }
+  }
 
   &__no-link + .mag-submenu {
     margin-top: 1rem;
