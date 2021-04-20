@@ -15,6 +15,14 @@
     padding-top: 11px;
     padding-bottom: 12px;
 
+    @include breakpoint ($bp-medium) {
+      height: 72px;
+    }
+
+    @include breakpoint($bp-medium-plus) {
+      height: 112px;
+    }
+
     @include breakpoint($bp-xl) {
       max-width: 1440px;
       padding-right: 80px;
@@ -23,28 +31,31 @@
     }
   }
 
+  .header--logo {
+    align-self: center;
+    justify-self: center;
+    @include breakpoint ($bp-xs) {
+
+    }
+  }
+
   .logo__img {
     height: auto;
     width: 45vw;
     transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) all;
 
-    @include breakpoint (320px) {
-      height: 30px;
+    @include breakpoint ($bp-xs) {
       width: auto;
+      min-width: 178px;
     }
 
-    @include breakpoint ($new-medium) {
-      height: 52px;
+    @include breakpoint ($bp-medium) {
+      min-width: 320px;
     }
 
     @include breakpoint ($bp-large) {
-      height: 72px;
+      min-width: 438px;
     }
-  }
-
-  .header--logo {
-    align-self: center;
-    justify-self: center;
   }
 
   .header--search {
@@ -55,7 +66,7 @@
 
   .mobile-search-reveal {
     $search-icon-size: 24px;
-    $search-icon-size-big: 30px;
+    $search-icon-size-big: 36px;
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
@@ -67,20 +78,26 @@
     background-color: transparent;
     background-image: url('/themes/custom/ucsf/assets/images/magnifier.svg');
 
-    @include breakpoint($bp-xl) {
+    @include breakpoint($bp-medium-plus) {
       right: 0;
       background-size: $search-icon-size-big;
       width: $search-icon-size-big;
       max-width: $search-icon-size-big;
       min-width: $search-icon-size-big;
     }
+
+    &:hover {
+      width: $search-icon-size;
+      background-size: $search-icon-size;
+      background-color: transparent;
+
+      @include breakpoint($bp-medium-plus) {
+        width: $search-icon-size-big;
+        background-size: $search-icon-size-big;
+      }
+    }
   }
 
-  .mobile-search-reveal:hover {
-    width: 24px;
-    background-size: 24px;
-    background-color: transparent;
-  }
 
   .nav-toggle {
     left: 0;

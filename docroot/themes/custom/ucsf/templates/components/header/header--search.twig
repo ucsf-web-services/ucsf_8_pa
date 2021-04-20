@@ -1,11 +1,14 @@
 {{ attach_library('ucsf/universalsearch') }}
-<div class="header--search menu-item"><a href="/search" role="button" class="nolink mobile-search-reveal"><span>Search</span></a>
-<div class="home-search__form">
+{# modifyer_search_classes are used in magazine template include #}
+{% set modifyer_search_classes = modifyer_search_classes ? : '' %}
+{% set link = link ?: path('<front>') %}
+<div class="header--search menu-item"><a href="/search" role="button" class="nolink mobile-search-reveal {{modifyer_search_icon}}"><span>Search</span></a>
+<div class="home-search__form {{modifyer_search_form}}">
   <form action="/search" accept-charset="utf-8" method="get" class="search__form">
     <label for="header-search" class="visually-hidden">Small screen search</label>
-    <input type="text" name="search" id="header-search" size="32" class="home-search__form-input" value="{{ searchterm }}" placeholder="Search people, places, ideas" />
+    <input type="text" name="search" id="header-search" size="32" class="home-search__form-input {{modifyer_search_form_input}}" value="{{ searchterm }}" placeholder="Search people, places, ideas" />
     {# this should be /images/search.svg file #}
-    <input type="submit" id="edit-submit-header" name="op" value="Search" class="home-search__form-submit">
+    <input type="submit" id="edit-submit-header" name="op" value="Search" class="home-search__form-submit {{modifyer_search_form_submit}}">
     {# Filter Radio buttons start #}
     <fieldset class="fieldset-reset">
       <legend class="visually-hidden">Choose what type of search to perform</legend>

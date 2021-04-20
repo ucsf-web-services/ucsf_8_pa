@@ -36,9 +36,9 @@
   outline: 1px solid transparent; }
   @media (min-width: 850px) {
     .nav-toggle {
-      min-width: 30px;
-      max-width: 30px;
-      width: 30px;
+      min-width: 48px;
+      max-width: 48px;
+      width: 48px;
       height: 50px; } }
   .nav-toggle__icon {
     display: block;
@@ -57,7 +57,7 @@
     text-indent: 300%; }
     @media (min-width: 850px) {
       .nav-toggle__icon {
-        width: 30px; } }
+        width: 48px; } }
     .nav-toggle__icon::before, .nav-toggle__icon::after {
       content: "";
       position: absolute;
@@ -74,17 +74,17 @@
               transition-duration: .3s; }
       @media (min-width: 850px) {
         .nav-toggle__icon::before, .nav-toggle__icon::after {
-          width: 30px; } }
+          width: 48px; } }
     .nav-toggle__icon::before {
       top: -7px; }
       @media (min-width: 850px) {
         .nav-toggle__icon::before {
-          top: -10px; } }
+          top: -14px; } }
     .nav-toggle__icon::after {
       top: 7px; }
       @media (min-width: 850px) {
         .nav-toggle__icon::after {
-          top: 10px; } }
+          top: 14px; } }
     .nav-toggle--active .nav-toggle__icon {
       background-color: transparent; }
       .nav-toggle--active .nav-toggle__icon::before {
@@ -92,15 +92,15 @@
                 transform: translateY(7px) rotate(45deg); }
         @media (min-width: 850px) {
           .nav-toggle--active .nav-toggle__icon::before {
-            -webkit-transform: translateY(10px) rotate(45deg);
-                    transform: translateY(10px) rotate(45deg); } }
+            -webkit-transform: translateY(14px) rotate(45deg);
+                    transform: translateY(14px) rotate(45deg); } }
       .nav-toggle--active .nav-toggle__icon::after {
         -webkit-transform: translateY(-7px) rotate(-45deg);
                 transform: translateY(-7px) rotate(-45deg); }
         @media (min-width: 850px) {
           .nav-toggle--active .nav-toggle__icon::after {
-            -webkit-transform: translateY(-10px) rotate(-45deg);
-                    transform: translateY(-10px) rotate(-45deg); } }
+            -webkit-transform: translateY(-14px) rotate(-45deg);
+                    transform: translateY(-14px) rotate(-45deg); } }
 
 .subnav-toggle {
   position: absolute;
@@ -262,7 +262,7 @@
         grid-template-areas: "latest   allissues" "features allissues" "insights allissues" "voices allissues" "trending trending" "collections collections"; } }
     @media (min-width: 970px) {
       .mag-menu__menu {
-        grid-template-columns: 28% repeat(4, 1fr);
+        grid-template-columns: 27% repeat(4, 1fr);
         grid-template-rows: -webkit-min-content auto auto;
         grid-template-rows: min-content auto auto;
         grid-template-areas: "latest features insights voices allissues" "trending features insights voices allissues" "collections features insights voices allissues";
@@ -558,12 +558,22 @@
     height: 50px;
     padding-top: 11px;
     padding-bottom: 12px; }
+    @media (min-width: 600px) {
+      .mag-nav__navbar {
+        height: 72px; } }
+    @media (min-width: 970px) {
+      .mag-nav__navbar {
+        height: 112px; } }
     @media (min-width: 1280px) {
       .mag-nav__navbar {
         max-width: 1440px;
         padding-right: 80px;
         padding-left: 80px;
         margin: 0 auto; } }
+  .mag-nav .header--logo {
+    -ms-flex-item-align: center;
+        align-self: center;
+    justify-self: center; }
   .mag-nav .logo__img {
     height: auto;
     width: 45vw;
@@ -571,18 +581,14 @@
     transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) all; }
     @media (min-width: 320px) {
       .mag-nav .logo__img {
-        height: 30px;
-        width: auto; } }
+        width: auto;
+        min-width: 178px; } }
+    @media (min-width: 600px) {
+      .mag-nav .logo__img {
+        min-width: 320px; } }
     @media (min-width: 850px) {
       .mag-nav .logo__img {
-        height: 52px; } }
-    @media (min-width: 850px) {
-      .mag-nav .logo__img {
-        height: 72px; } }
-  .mag-nav .header--logo {
-    -ms-flex-item-align: center;
-        align-self: center;
-    justify-self: center; }
+        min-width: 438px; } }
   .mag-nav .header--search {
     display: block;
     position: relative;
@@ -599,17 +605,21 @@
     min-width: 24px;
     background-color: transparent;
     background-image: url("/themes/custom/ucsf/assets/images/magnifier.svg"); }
-    @media (min-width: 1280px) {
+    @media (min-width: 970px) {
       .mag-nav .mobile-search-reveal {
         right: 0;
-        background-size: 30px;
-        width: 30px;
-        max-width: 30px;
-        min-width: 30px; } }
-  .mag-nav .mobile-search-reveal:hover {
-    width: 24px;
-    background-size: 24px;
-    background-color: transparent; }
+        background-size: 36px;
+        width: 36px;
+        max-width: 36px;
+        min-width: 36px; } }
+    .mag-nav .mobile-search-reveal:hover {
+      width: 24px;
+      background-size: 24px;
+      background-color: transparent; }
+      @media (min-width: 970px) {
+        .mag-nav .mobile-search-reveal:hover {
+          width: 36px;
+          background-size: 36px; } }
   .mag-nav .nav-toggle {
     left: 0; }
 
