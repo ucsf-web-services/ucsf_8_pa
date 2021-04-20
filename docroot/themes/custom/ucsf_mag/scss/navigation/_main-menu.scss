@@ -12,10 +12,11 @@
   left: 0;
   background-color: $c-grey-pale;
 
-  // @include breakpoint($bp-large) {
-  //   margin: 0 auto;
-  //   max-width: 1280px;
-  // }
+  @include breakpoint($bp-xl) {
+    left: 50%;
+    margin-left: -50vw;
+    width: 100vw;
+  }
 
   ul {
     list-style: none;
@@ -54,26 +55,24 @@
         "collections collections";
     }
 
-    // @include breakpoint($bp-large) {
-    //   grid-template-columns: 30% repeat(4, 1fr);
-    //   grid-template-rows: min-content auto auto;
-    //   grid-template-areas:
-    //     "latest features insights voices allissues"
-    //     "trending features insights voices allissues"
-    //     "collections features insights voices allissues";
-    // }
-
-    .universal-header__give-mobile {
-      position: relative;
-      width: calc(100% + (#{$page-gutter} * 2)); // busting out of the container
-      margin-left: -#{$page-gutter}; //aligning to the left
+    @include breakpoint($bp-medium-plus) {
+      grid-template-columns: 28% repeat(4, 1fr);
+      grid-template-rows: min-content auto auto;
+      grid-template-areas:
+        "latest features insights voices allissues"
+        "trending features insights voices allissues"
+        "collections features insights voices allissues";
+      column-gap: 5%;
     }
 
-    a.universal-header__give {
-      padding-left: $page-gutter;
-      padding-right: $page-gutter;
-      background-position-x: calc(100% - 15px); // icon needs to be flush with the right edge
-      background-size: 38px;
+    @include breakpoint($bp-xl) {
+      max-width: 1440px;
+      padding: 0 80px 0 86px; // aligning left to .universal-header__title
+      margin: 0 auto;
+    }
+
+    @include breakpoint(1440px) {
+      padding-left: 80px;
     }
   }
 
@@ -93,14 +92,64 @@
 
     &--featured {
       margin-bottom: 0;
+
+      &::after {
+        content: "";
+        display: block;
+        border-bottom: 1px solid $c-border-grey-blue;
+        transition: width 1s ease-in-out width;
+      }
     }
 
+    &--trending {
+      border-top: 1px solid $c-border-grey-blue;
+    }
 
+    &--collections::after {
+      @include breakpoint($bp-medium-plus) {
+        border-bottom: none;
+      }
+    }
+  }
+
+  // Using nth-child because this styles are grid layout related.
+
+  &__item:nth-child(1) {
+    @include breakpoint($bp-medium-plus) {
+      // margin-right: 1rem;
+    }
+  }
+
+  &__item:nth-child(2) {
+    position: relative;
+
+    @include breakpoint($bp-medium-plus) {
+      margin-left: 2rem;
+    }
+
+    &::before {
+      @include breakpoint($bp-medium-plus) {
+        content: "";
+        display: block;
+        position: absolute;
+        height: auto;
+        width: 1px;
+        border-left: 1px solid #d5d9de;
+        top: 1rem;
+        bottom: 0;
+        left: -2rem;
+
+      }
+    }
   }
 
   &__item:nth-child(4) {
     @include breakpoint($bp-medium) {
       margin-bottom: 4rem;
+    }
+
+    @include breakpoint($bp-medium-plus) {
+      margin-bottom: 0;
     }
   }
 
@@ -108,6 +157,10 @@
     @include breakpoint($bp-medium) {
       position: relative;
       margin-left: 2rem;
+    }
+
+    @include breakpoint($bp-medium-plus) {
+      margin-left: 0;
     }
 
     &::before {
@@ -122,6 +175,22 @@
         bottom: 0;
         left: -2rem;
       }
+
+      @include breakpoint($bp-large) {
+        display: none;
+      }
+    }
+  }
+
+  &__item:nth-child(6) {
+    @include breakpoint($bp-medium-plus) {
+      // margin-right: 1rem;
+    }
+  }
+
+  &__item:nth-child(7) {
+    @include breakpoint($bp-medium-plus) {
+      // margin-right: 1rem;
     }
   }
 
@@ -152,15 +221,18 @@
       margin: 0; // to make link more centered
       line-height: 48px;
 
-      // @include breakpoint($bp-medium) {
-      //   margin-bottom: .5rem;
-      // }
-
       &:hover  {
         color: $c-blue-link;
 
         .icon-home {
           filter: $filter-c-blue-link;
+        }
+      }
+
+      #{$block}__item--latest & {
+        @include breakpoint($bp-medium-plus) {
+          flex-direction: row-reverse;
+          justify-content: start;
         }
       }
     }
@@ -174,20 +246,8 @@
     margin-bottom: 0;
     line-height: 66px;
 
-    &::after {
-      content: "";
-      display: block;
-      border-bottom: 1px solid $c-border-grey-blue;
-      transition: width 1s ease-in-out;
-    }
-
     &:hover  {
       color: $c-blue-link;
-    }
-
-
-    #{$block}__item--trending & {
-      border-top: 1px solid $c-border-grey-blue;
     }
   }
 
@@ -196,6 +256,16 @@
     width: 1.375rem;
     height: 1.375rem;
     margin-left: .5rem;
+
+    @include breakpoint($bp-medium-plus) {
+      margin-left: 0;
+      margin-right: .5rem;
+    }
+
+    @include breakpoint($bp-xl) {
+      position: absolute;
+      margin-left: -2.3rem;
+    }
   }
 }
 
@@ -204,14 +274,13 @@
   float: left
 }
 
-.menu-item--expanded + .mag-nav__ucsf {
-  border-top: 1px solid $c-border-grey-blue;
-}
 .menu-item--expanded .mag-menu__no-link {
-  // border-bottom: none;
-
   &::after {
-    width: 0;
+    width: 0%;
+
+    @include breakpoint($bp-medium-plus) {
+      width: 100%;
+    }
   }
 }
 
@@ -282,6 +351,48 @@
  // Visit UCSF News Center link - End
 }
 
+.mag-nav__ucsf-give--menu {
+  display: block;
+  position: relative;
+  width: calc(100% + (#{$page-gutter} * 2)); // busting out of the container
+  margin-left: -#{$page-gutter}; //aligning to the left
+
+  @include breakpoint($bp-large) {
+    display: block;
+  }
+
+  @include breakpoint($bp-medium-plus) {
+    display: none;
+  }
+
+  /*---------------In this section---------------------*\
+    MENU "GIVE" BUTTON
+  \*---------------------------------------------------*/
+  .universal-header__give {
+    padding-left: $page-gutter;
+    padding-right: $page-gutter;
+    background-position-x: calc(100% - 15px); // icon needs to be flush with the right edge
+    background-size: 38px;
+
+    @include breakpoint($bp-large) {
+      width: calc(100% + (#{$page-gutter} * 2)); // busting out of the container
+      float: none;
+      color: $white;
+      width: 100%;
+      text-align: left;
+      font-family: $font-helvetica-neue-medium;
+      background: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg) center no-repeat #007cbe;
+      background-size: 38px;
+      background-position-x: calc(100% - 15px); // icon needs to be flush with the right edge
+    }
+
+    @include breakpoint($bp-medium-plus) {
+      display: none;
+    }
+  }
+}
+
+
 .mag-submenu {
   // variable to print .mag-menu
   $block: &;
@@ -305,8 +416,14 @@
   .mag-menu__item--trending & {
     display: none;
     visibility: hidden;
+
+    @include breakpoint($bp-medium-plus) {
+      display: block;
+      visibility: visible;
+    }
   }
 
+  // Mobile dropdown
   .mag-menu__item--active & {
     display: block;
     visibility: visible;
