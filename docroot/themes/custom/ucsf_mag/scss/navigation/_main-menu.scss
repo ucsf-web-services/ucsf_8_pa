@@ -39,9 +39,12 @@
       "trending"
       "collections";
 
+    position: relative;
     margin-bottom: 0;
-    padding: 0 $page-gutter;
     margin-top: 1.2rem;
+    padding: 0 $page-gutter;
+    background-color: $c-grey-pale;
+    z-index: 1;
 
     @include breakpoint($bp-medium) {
       grid-template-columns: 1fr 1fr;
@@ -134,7 +137,7 @@
         position: absolute;
         height: auto;
         width: 1px;
-        border-left: 1px solid #d5d9de;
+        border-left: 1px solid $c-border-grey-blue;
         top: 1rem;
         bottom: 0;
         left: -2rem;
@@ -176,7 +179,7 @@
         left: -2rem;
       }
 
-      @include breakpoint($bp-large) {
+      @include breakpoint($bp-medium-plus) {
         display: none;
       }
     }
@@ -203,6 +206,7 @@
     width: calc(100% - 20px);
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
 
     // specificity modification
     #{$block} & {
@@ -235,6 +239,11 @@
           justify-content: start;
         }
       }
+    }
+
+    // Making sure that external icon wraps to new line with the word.
+    &.ext {
+      display: inline-block;
     }
   }
 

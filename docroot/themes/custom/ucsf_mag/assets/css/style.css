@@ -81,7 +81,10 @@
         .nav-toggle__icon::before {
           top: -10px; } }
     .nav-toggle__icon::after {
-      top: 10px; }
+      top: 7px; }
+      @media (min-width: 850px) {
+        .nav-toggle__icon::after {
+          top: 10px; } }
     .nav-toggle--active .nav-toggle__icon {
       background-color: transparent; }
       .nav-toggle--active .nav-toggle__icon::before {
@@ -96,8 +99,8 @@
                 transform: translateY(-7px) rotate(-45deg); }
         @media (min-width: 850px) {
           .nav-toggle--active .nav-toggle__icon::after {
-            -webkit-transform: translateY(-10px) rotate(45deg);
-                    transform: translateY(-10px) rotate(45deg); } }
+            -webkit-transform: translateY(-10px) rotate(-45deg);
+                    transform: translateY(-10px) rotate(-45deg); } }
 
 .subnav-toggle {
   position: absolute;
@@ -245,9 +248,12 @@
   .mag-menu__menu {
     display: grid;
     grid-template-areas: "latest" "features" "insights" "voices" "allissues" "trending" "collections";
+    position: relative;
     margin-bottom: 0;
+    margin-top: 1.2rem;
     padding: 0 20px;
-    margin-top: 1.2rem; }
+    background-color: #f2f4f6;
+    z-index: 1; }
     @media (min-width: 600px) {
       .mag-menu__menu {
         grid-template-columns: 1fr 1fr;
@@ -342,7 +348,7 @@
       top: 1rem;
       bottom: 0;
       left: -2rem; } }
-  @media (min-width: 850px) {
+  @media (min-width: 970px) {
     .mag-menu__item:nth-child(5)::before {
       display: none; } }
   .mag-menu__no-link + .mag-submenu {
@@ -355,7 +361,9 @@
     display: flex;
     -webkit-box-align: center;
         -ms-flex-align: center;
-            align-items: center; }
+            align-items: center;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap; }
     .mag-menu .mag-menu__link {
       color: #121a31; }
     .mag-menu__link:hover {
@@ -385,6 +393,8 @@
           -webkit-box-pack: start;
               -ms-flex-pack: start;
                   justify-content: start; } }
+    .mag-menu__link.ext {
+      display: inline-block; }
   .mag-menu__no-link {
     position: relative;
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
@@ -574,11 +584,15 @@
         align-self: center;
     justify-self: center; }
   .mag-nav .header--search {
-    display: block; }
+    display: block;
+    position: relative;
+    height: 100%; }
   .mag-nav .mobile-search-reveal {
     right: 20px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
     width: 24px;
-    height: 50px;
     background-position: center;
     background-size: 24px;
     max-width: 24px;
@@ -587,7 +601,11 @@
     background-image: url("/themes/custom/ucsf/assets/images/magnifier.svg"); }
     @media (min-width: 1280px) {
       .mag-nav .mobile-search-reveal {
-        right: 80px; } }
+        right: 0;
+        background-size: 30px;
+        width: 30px;
+        max-width: 30px;
+        min-width: 30px; } }
   .mag-nav .mobile-search-reveal:hover {
     width: 24px;
     background-size: 24px;

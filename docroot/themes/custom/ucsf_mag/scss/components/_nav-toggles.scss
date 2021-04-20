@@ -66,7 +66,11 @@
     }
 
     &::after {
-      top: $menu-bar-position-large;
+      top: $menu-bar-position;
+
+      @include breakpoint ($bp-large) {
+        top: $menu-bar-position-large;
+      }
     }
 
     #{$block}--active & {
@@ -82,7 +86,7 @@
         transform: translateY(-#{$menu-bar-position}) rotate(-45deg);
 
         @include breakpoint ($bp-large) {
-          transform: translateY(-#{$menu-bar-position-large}) rotate(45deg);
+          transform: translateY(-#{$menu-bar-position-large}) rotate(-45deg);
         }
       }
     }
