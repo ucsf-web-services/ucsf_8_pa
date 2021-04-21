@@ -38,6 +38,10 @@
 
     &--active {
       left: -3px;
+
+      @include breakpoint($bp-large) {
+        left: -5;
+      }
     }
   }
 
@@ -73,10 +77,6 @@
     display: block;
     position: relative;
     justify-self: end;
-
-    // @include breakpoint ($bp-large) {
-    //   grid-column: 2/-1;
-    // }
   }
 
   .mag-home-search__form {
@@ -130,6 +130,8 @@
   }
 
   .mobile-search-reveal {
+    $offset-top: 12px;
+    $offset-top-big: -16px;
     $search-icon-size: 24px;
     $search-icon-size-big: 36px;
     right: 20px;
@@ -143,10 +145,11 @@
     overflow: hidden;
 
     @include breakpoint ($bp-medium) {
-      top: 12px;
+      top: $offset-top;
     }
 
     @include breakpoint($bp-large) {
+      top: $offset-top-big;
       right: 0;
       background-size: $search-icon-size-big;
       width: $search-icon-size-big;
@@ -160,22 +163,33 @@
       background-size: $search-icon-size;
       background-color: transparent;
 
-      @include breakpoint($bp-medium-plus) {
+      @include breakpoint($bp-large) {
         width: $search-icon-size-big;
         background-size: $search-icon-size-big;
       }
     }
 
     &.active {
+      background-color: transparent;
 
       @include breakpoint ($bp-medium) {
-        top: 11px;
+        top: calc(#{$offset-top} - 1px); //centering vertically
       }
-    }
 
-    &.active,
-    &.active:hover {
-      background-color: transparent;
+      @include breakpoint($bp-large) {
+        top: calc(#{$offset-top-big} + 1px); //centering vertically
+        width: $search-icon-size-big;
+        background-size: $search-icon-size-big;
+      }
+
+      &:hover {
+        background-color: transparent;
+
+        @include breakpoint($bp-large) {
+          width: $search-icon-size-big;
+          background-size: $search-icon-size-big;
+        }
+      }
     }
   }
 

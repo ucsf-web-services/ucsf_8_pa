@@ -579,6 +579,9 @@
     left: 0; }
     .mag-nav .nav-toggle--active {
       left: -3px; }
+      @media (min-width: 850px) {
+        .mag-nav .nav-toggle--active {
+          left: -5; } }
   .mag-nav .header--logo {
     -ms-flex-item-align: center;
         align-self: center;
@@ -642,6 +645,7 @@
         top: 12px; } }
     @media (min-width: 850px) {
       .mag-nav .mobile-search-reveal {
+        top: -16px;
         right: 0;
         background-size: 36px;
         width: 36px;
@@ -652,15 +656,26 @@
       width: 24px;
       background-size: 24px;
       background-color: transparent; }
-      @media (min-width: 970px) {
+      @media (min-width: 850px) {
         .mag-nav .mobile-search-reveal:hover {
           width: 36px;
           background-size: 36px; } }
-    @media (min-width: 600px) {
-      .mag-nav .mobile-search-reveal.active {
-        top: 11px; } }
-    .mag-nav .mobile-search-reveal.active, .mag-nav .mobile-search-reveal.active:hover {
+    .mag-nav .mobile-search-reveal.active {
       background-color: transparent; }
+      @media (min-width: 600px) {
+        .mag-nav .mobile-search-reveal.active {
+          top: calc(12px - 1px); } }
+      @media (min-width: 850px) {
+        .mag-nav .mobile-search-reveal.active {
+          top: calc(-16px + 1px);
+          width: 36px;
+          background-size: 36px; } }
+      .mag-nav .mobile-search-reveal.active:hover {
+        background-color: transparent; }
+        @media (min-width: 850px) {
+          .mag-nav .mobile-search-reveal.active:hover {
+            width: 36px;
+            background-size: 36px; } }
   .mag-nav--active.header-region {
     background-color: #f2f4f6; }
   .mag-nav--active .header--search-active ~ .header-mag-menu {
