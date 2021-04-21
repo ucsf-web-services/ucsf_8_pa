@@ -569,7 +569,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             $url = $element->getAttribute('src');
             if (!$component = $this->getImageComponent($url)) {
               \Drupal::logger('ucsf_applenews')->error('throwing out HTML containing invalid src attribute ' . $doc->saveHTML($element));
-              continue;
+              break;
             }
             $component->setLayout(_ucsf_applenews_photo_component_layout());
           }
