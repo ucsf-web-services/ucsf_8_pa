@@ -1,11 +1,9 @@
 .mag-nav {
+  // variable to print .mag-nav
+  $block: &;
   $navbar-height: 50px;
   height: auto;
   padding: 0;
-
-  &--active.header-region{
-    background-color: $c-grey-pale;
-  }
 
   &__navbar {
     display: grid;
@@ -34,9 +32,6 @@
   .header--logo {
     align-self: center;
     justify-self: center;
-    @include breakpoint ($bp-xs) {
-
-    }
   }
 
   .logo__img {
@@ -55,13 +50,17 @@
 
     @include breakpoint ($bp-large) {
       min-width: 438px;
+
+      #{$block}--active & {
+        min-width: 338px;
+      }
     }
   }
 
   .header--search {
     display: block;
     position: relative;
-    height: 100%;
+    justify-self: end;
   }
 
   .mobile-search-reveal {
@@ -77,11 +76,13 @@
     min-width: $search-icon-size;
     background-color: transparent;
     background-image: url('/themes/custom/ucsf/assets/images/magnifier.svg');
+    overflow: hidden;
 
     @include breakpoint($bp-medium-plus) {
       right: 0;
       background-size: $search-icon-size-big;
       width: $search-icon-size-big;
+      height: $search-icon-size-big;
       max-width: $search-icon-size-big;
       min-width: $search-icon-size-big;
     }
@@ -101,6 +102,121 @@
 
   .nav-toggle {
     left: 0;
+  }
+
+  // When menu is open
+  &--active {
+    &.header-region {
+      background-color: $c-grey-pale;
+    }
+    // Search Form
+    .mag-home-search__form {
+      height: 54px;
+      top: 0;
+      clip: auto;
+      animation: none;
+
+      @include breakpoint($bp-xl) {
+        right: -60px;
+      }
+
+      &.active {
+        display: block;
+        height: 54px;
+        top: 0;
+        animation: none;
+        width: 492px;
+
+        .search__form {
+          border: none;
+        }
+      }
+
+      .fieldset-reset {
+        display: none;
+        visibility: hidden;
+      }
+
+      &-submit {
+        position: absolute;
+        margin: 0;
+        right: 52px;
+        top: -5px;
+        background-size: 36px;
+        width: 36px;
+        max-width: 36px;
+        min-width: 36px;
+        background-color: transparent;
+
+        &:hover {
+          background-size: 36px;
+          width: 36px;
+          max-width: 36px;
+          min-width: 36px;
+        }
+      }
+
+      &-input {
+        height: 52px;
+        position: absolute;
+        width: auto;
+        max-width: 0;
+        padding-right: 0; // so that search text doesn't spill over the buttons
+        padding-left: 0;
+        // right: -60px;
+      }
+    }
+
+    .mag-mobile-search-reveal.active {
+      z-index: 3;
+      animation-duration: 1s;
+      animation-name: hide-fade-in;
+
+      @include breakpoint($bp-xl) {
+        right: -58px;
+      }
+    }
+
+    .mag-home-search__form-input {
+      right: 0;
+      clip-path: polygon(78% 0, 90% 0, 90% 100%, 78% 100%);
+      transition: clip-path .5s;
+    }
+
+    .active .mag-home-search__form-input {
+      width: auto;
+      max-width: 492px;
+      padding-right: 165px; // so that search text doesn't spill over the buttons
+      padding-left: 20px;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+
+
+      &#header-search {
+        @include breakpoint ($bp-large) {
+          border: 1px solid #DCE0E6;
+        }
+      }
+    }
+
+  }
+}
+
+@keyframes hide-fade-in {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.header--logo-minimized .logo__img {
+  @include breakpoint ($bp-large) {
+    min-width: 338px;
   }
 }
 
@@ -170,7 +286,7 @@
       .mag-menu__menu & {
         color: $c-dark-navy;
 
-        &:hover  {
+        &:hover {
           color: $c-blue-link;
         }
       }
@@ -187,7 +303,6 @@
     }
   }
 }
-
 
 .ie-message {
   display: none;

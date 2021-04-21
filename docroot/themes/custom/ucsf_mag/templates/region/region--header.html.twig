@@ -24,13 +24,14 @@
         {% block logo %}
           {% include '@ucsf_mag/components/header/magazine-header--logo.twig' %}
         {% endblock logo %}
-        {% set modifyer_search_classes = {
+        {% set modifyer_search_vars = {
           modifyer_search_icon: 'mag-mobile-search-reveal',
           modifyer_search_form: 'mag-home-search__form',
           modifyer_search_form_input: 'mag-home-search__form-input',
-          modifyer_search_form_submit: 'mag-home-search__form-submit'
+          modifyer_search_form_submit: 'mag-home-search__form-submit',
+          filter_option_text: 'UCSF News Center & Magazine'
           } %}
-        {% include '@theme/header/header--search.twig' with modifyer_search_classes %}
+        {% include '@theme/header/header--search.twig' with modifyer_search_vars %}
         <div class="slicknav-placeholder"></div>
         {{ content }}
         {# main nav #}

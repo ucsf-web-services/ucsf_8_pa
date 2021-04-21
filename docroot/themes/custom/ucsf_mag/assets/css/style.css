@@ -235,6 +235,9 @@
   top: 100%;
   left: 0;
   background-color: #f2f4f6; }
+  @media (min-width: 970px) {
+    .mag-menu {
+      padding-bottom: 3rem; } }
   @media (min-width: 1280px) {
     .mag-menu {
       left: 50%;
@@ -244,7 +247,10 @@
     list-style: none; }
   .mag-nav--active .mag-menu {
     display: block;
-    visibility: visible; }
+    visibility: visible;
+    z-index: 1;
+    -webkit-box-shadow: 0px 1px 1px 0px #0003;
+            box-shadow: 0px 1px 1px 0px #0003; }
   .mag-menu__menu {
     display: grid;
     grid-template-areas: "latest" "features" "insights" "voices" "allissues" "trending" "collections";
@@ -262,13 +268,13 @@
         grid-template-areas: "latest   allissues" "features allissues" "insights allissues" "voices allissues" "trending trending" "collections collections"; } }
     @media (min-width: 970px) {
       .mag-menu__menu {
-        grid-template-columns: 27% repeat(4, 1fr);
+        grid-template-columns: 25.5% 2rem repeat(4, 1fr);
         grid-template-rows: -webkit-min-content auto auto;
         grid-template-rows: min-content auto auto;
-        grid-template-areas: "latest features insights voices allissues" "trending features insights voices allissues" "collections features insights voices allissues";
-        -webkit-column-gap: 5%;
-           -moz-column-gap: 5%;
-                column-gap: 5%; } }
+        grid-template-areas: "latest . features insights voices allissues" "trending . features insights voices allissues" "collections . features insights voices allissues";
+        -webkit-column-gap: 2rem;
+           -moz-column-gap: 2rem;
+                column-gap: 2rem; } }
     @media (min-width: 1280px) {
       .mag-menu__menu {
         max-width: 1440px;
@@ -311,9 +317,6 @@
   .mag-menu__item:nth-child(2) {
     position: relative; }
     @media (min-width: 970px) {
-      .mag-menu__item:nth-child(2) {
-        margin-left: 2rem; } }
-    @media (min-width: 970px) {
       .mag-menu__item:nth-child(2)::before {
         content: "";
         display: block;
@@ -323,7 +326,10 @@
         border-left: 1px solid #d5d9de;
         top: 1rem;
         bottom: 0;
-        left: -2rem; } }
+        left: -3rem; } }
+    @media (min-width: 1440px) {
+      .mag-menu__item:nth-child(2)::before {
+        top: -90px; } }
   @media (min-width: 600px) {
     .mag-menu__item:nth-child(4) {
       margin-bottom: 4rem; } }
@@ -352,7 +358,7 @@
     .mag-menu__item:nth-child(5)::before {
       display: none; } }
   .mag-menu__no-link + .mag-submenu {
-    margin-top: 1rem; }
+    margin-top: .5rem; }
   .mag-menu__link {
     line-height: 32px;
     width: calc(100% - 20px);
@@ -402,8 +408,9 @@
     color: #121a31;
     margin-bottom: 0;
     line-height: 66px; }
-    .mag-menu__no-link:hover {
-      color: #0071ad; }
+    @media (max-width: 970px) {
+      .mag-menu__no-link:hover {
+        color: #0071ad; } }
   .mag-menu .icon-home {
     background-size: 1.5rem;
     width: 1.375rem;
@@ -548,8 +555,6 @@
 .mag-nav {
   height: auto;
   padding: 0; }
-  .mag-nav--active.header-region {
-    background-color: #f2f4f6; }
   .mag-nav__navbar {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -588,11 +593,13 @@
         min-width: 320px; } }
     @media (min-width: 850px) {
       .mag-nav .logo__img {
-        min-width: 438px; } }
+        min-width: 438px; }
+        .mag-nav--active .mag-nav .logo__img {
+          min-width: 338px; } }
   .mag-nav .header--search {
     display: block;
     position: relative;
-    height: 100%; }
+    justify-self: end; }
   .mag-nav .mobile-search-reveal {
     right: 20px;
     top: 50%;
@@ -604,12 +611,14 @@
     max-width: 24px;
     min-width: 24px;
     background-color: transparent;
-    background-image: url("/themes/custom/ucsf/assets/images/magnifier.svg"); }
+    background-image: url("/themes/custom/ucsf/assets/images/magnifier.svg");
+    overflow: hidden; }
     @media (min-width: 970px) {
       .mag-nav .mobile-search-reveal {
         right: 0;
         background-size: 36px;
         width: 36px;
+        height: 36px;
         max-width: 36px;
         min-width: 36px; } }
     .mag-nav .mobile-search-reveal:hover {
@@ -622,6 +631,98 @@
           background-size: 36px; } }
   .mag-nav .nav-toggle {
     left: 0; }
+  .mag-nav--active.header-region {
+    background-color: #f2f4f6; }
+  .mag-nav--active .mag-home-search__form {
+    height: 54px;
+    top: 0;
+    clip: auto;
+    -webkit-animation: none;
+            animation: none; }
+    @media (min-width: 1280px) {
+      .mag-nav--active .mag-home-search__form {
+        right: -60px; } }
+    .mag-nav--active .mag-home-search__form.active {
+      display: block;
+      height: 54px;
+      top: 0;
+      -webkit-animation: none;
+              animation: none;
+      width: 492px; }
+      .mag-nav--active .mag-home-search__form.active .search__form {
+        border: none; }
+    .mag-nav--active .mag-home-search__form .fieldset-reset {
+      display: none;
+      visibility: hidden; }
+    .mag-nav--active .mag-home-search__form-submit {
+      position: absolute;
+      margin: 0;
+      right: 52px;
+      top: -5px;
+      background-size: 36px;
+      width: 36px;
+      max-width: 36px;
+      min-width: 36px;
+      background-color: transparent; }
+      .mag-nav--active .mag-home-search__form-submit:hover {
+        background-size: 36px;
+        width: 36px;
+        max-width: 36px;
+        min-width: 36px; }
+    .mag-nav--active .mag-home-search__form-input {
+      height: 52px;
+      position: absolute;
+      width: auto;
+      max-width: 0;
+      padding-right: 0;
+      padding-left: 0; }
+  .mag-nav--active .mag-mobile-search-reveal.active {
+    z-index: 3;
+    -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+    -webkit-animation-name: hide-fade-in;
+            animation-name: hide-fade-in; }
+    @media (min-width: 1280px) {
+      .mag-nav--active .mag-mobile-search-reveal.active {
+        right: -58px; } }
+  .mag-nav--active .mag-home-search__form-input {
+    right: 0;
+    -webkit-clip-path: polygon(78% 0, 90% 0, 90% 100%, 78% 100%);
+            clip-path: polygon(78% 0, 90% 0, 90% 100%, 78% 100%);
+    -webkit-transition: -webkit-clip-path .5s;
+    transition: -webkit-clip-path .5s;
+    transition: clip-path .5s;
+    transition: clip-path .5s, -webkit-clip-path .5s; }
+  .mag-nav--active .active .mag-home-search__form-input {
+    width: auto;
+    max-width: 492px;
+    padding-right: 165px;
+    padding-left: 20px;
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
+    @media (min-width: 850px) {
+      .mag-nav--active .active .mag-home-search__form-input#header-search {
+        border: 1px solid #DCE0E6; } }
+
+@-webkit-keyframes hide-fade-in {
+  0% {
+    opacity: 0; }
+  50% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@keyframes hide-fade-in {
+  0% {
+    opacity: 0; }
+  50% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@media (min-width: 850px) {
+  .header--logo-minimized .logo__img {
+    min-width: 338px; } }
 
 @media (min-width: 850px) {
   .universal-header-mag {

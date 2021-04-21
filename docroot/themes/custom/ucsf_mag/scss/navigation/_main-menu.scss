@@ -12,6 +12,10 @@
   left: 0;
   background-color: $c-grey-pale;
 
+  @include breakpoint($bp-medium-plus) {
+    padding-bottom: 3rem;
+  }
+
   @include breakpoint($bp-xl) {
     left: 50%;
     margin-left: -50vw;
@@ -25,6 +29,8 @@
   .mag-nav--active & {
     display: block;
     visibility: visible;
+    z-index: 1;
+    box-shadow: 0px 1px 1px 0px #0003;
   }
 
   // top level ul
@@ -59,13 +65,13 @@
     }
 
     @include breakpoint($bp-medium-plus) {
-      grid-template-columns: 27% repeat(4, 1fr);
+      grid-template-columns: 25.5% 2rem repeat(4, 1fr);
       grid-template-rows: min-content auto auto;
       grid-template-areas:
-        "latest features insights voices allissues"
-        "trending features insights voices allissues"
-        "collections features insights voices allissues";
-      column-gap: 5%;
+        "latest . features insights voices allissues"
+        "trending . features insights voices allissues"
+        "collections . features insights voices allissues";
+      column-gap: 2rem;
     }
 
     @include breakpoint($bp-xl) {
@@ -126,10 +132,6 @@
   &__item:nth-child(2) {
     position: relative;
 
-    @include breakpoint($bp-medium-plus) {
-      margin-left: 2rem;
-    }
-
     &::before {
       @include breakpoint($bp-medium-plus) {
         content: "";
@@ -140,8 +142,11 @@
         border-left: 1px solid $c-border-grey-blue;
         top: 1rem;
         bottom: 0;
-        left: -2rem;
+        left: -3rem;
+      }
 
+      @include breakpoint($bp-full) {
+        top: -90px;
       }
     }
   }
@@ -198,7 +203,7 @@
   }
 
   &__no-link + .mag-submenu {
-    margin-top: 1rem;
+    margin-top: .5rem;
   }
 
   &__link {
@@ -255,8 +260,10 @@
     margin-bottom: 0;
     line-height: 66px;
 
-    &:hover  {
-      color: $c-blue-link;
+    &:hover {
+      @include breakpoint(max-width $bp-medium-plus) {
+        color: $c-blue-link;
+      }
     }
   }
 

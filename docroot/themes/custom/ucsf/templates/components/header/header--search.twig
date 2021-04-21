@@ -1,6 +1,7 @@
 {{ attach_library('ucsf/universalsearch') }}
 {# modifyer_search_classes are used in magazine template include #}
-{% set modifyer_search_classes = modifyer_search_classes ? : '' %}
+{% set modifyer_search_vars = modifyer_search_vars ? : '' %}
+{% set filter_option_text = filter_option_text ?: 'UCSF News Center' %}
 {% set link = link ?: path('<front>') %}
 <div class="header--search menu-item"><a href="/search" role="button" class="nolink mobile-search-reveal {{modifyer_search_icon}}"><span>Search</span></a>
 <div class="home-search__form {{modifyer_search_form}}">
@@ -26,7 +27,7 @@
           <input id="newscenter" type="radio" name="filter" class="visually-hidden search-filter__radio" value="News">
           <div class="search-filter__label">
             <span class="search-filter__option"></span>
-            <span>UCSF News Center</span>
+            <span>{{filter_option_text}}</span>
           </div>
         </label>
       </div>
