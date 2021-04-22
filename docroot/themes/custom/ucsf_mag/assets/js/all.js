@@ -26,6 +26,13 @@
       var $this = $(this);
       $this.toggleClass("nav-toggle--active");
       $navbar.toggleClass("mag-nav--active");
+
+      if ($navbar.hasClass("mag-nav--active")) {
+        $('body').addClass('has-fixed-nav');
+      } else {
+        $('body').removeClass('has-fixed-nav');
+      }
+
       if ($this.attr("aria-expanded") === "false") {
         setAria($this, "true");
       } else {
@@ -33,23 +40,10 @@
       }
     });
 
-    var fixedBody = function fixedBody() {
-      if ($navbar.hasClass("mag-nav--active")) {
-        $('body').addClass('fixed');
-      } else {
-        $('body').removeClass('fixed');
-      }
-
-      $navToggle.on("click", function (e) {
-        $('body').toggleClass('fixed');
-      });
-    };
-
     // Only execute subnav extend / collapse code in mobile
     var mobileDetect = function mobileDetect(event) {
       // Mobile
       if (event.matches) {
-        fixedBody();
         $subnavToggle.on("click", function (e) {
           var $this = $(this);
           var $subnavMenuCollapsable = $this.closest(".mag-menu__item");
@@ -65,9 +59,6 @@
         $subnavToggle.off("click");
         // Remove unnecessary Aria controls from desktop subnav
         $subnavToggle.removeAttr("aria-expanded aria-controls");
-
-        $('body').removeClass('fixed');
-
         $(".mag-mobile-search-reveal").click(function (e) {
           e.preventDefault();
 
