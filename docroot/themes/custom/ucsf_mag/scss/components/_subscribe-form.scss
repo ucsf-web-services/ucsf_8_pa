@@ -2,9 +2,9 @@
   clear: both;
   padding-bottom: $space-five;
 
-  @include breakpoint($new-medium) {
-    grid-column: 4;
-  }
+  // @include breakpoint($new-medium) {
+  //   grid-column: 4;
+  // }
 
   & &__title {
     @include breakpoint($new-medium) {
@@ -34,75 +34,44 @@
 
 .email-subscribe {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 1fr;
-  border-bottom: 1px solid $c-gray-border;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
 
   @include breakpoint($new-medium) {
-    border-bottom: none;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
   }
 
   & &__input {
-    border: 0;
-    height: 3.75rem;
+    background-color: $white;
+    color: $c-dark-navy;
     height: 3rem;
-    padding: 0;
-    background-color: transparent;
-    box-shadow: none;
+    padding: 9px 17px;
+    border: none;
 
     @include breakpoint($new-medium) {
-      background-color: $white;
-      color: $c-dark-navy;
       height: 3.75rem;
-      padding: 9px 17px;
+
     }
   }
 
   &__submit {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: end;
-    border: 0;
+    border: none;
     border-radius: 0;
+    background-color: $c-blue;
+    justify-content: center;
     color: $white;
+    height: 3rem;
     min-height: 3rem;
-    padding-right: 8px;
+    font-size: 16px;
 
     @include breakpoint($new-medium) {
-      justify-content: center;
-      background-color: $c-blue;
       min-height: 3.75rem;
       padding-right: 1.5em;
     }
 
     &:hover {
-      background-color: transparent;
-
-      @include breakpoint($new-medium) {
-        background-color: $c-blue-link;
-      }
-
-      &::after {
-        transform: translateX(16px);
-      }
-    }
-
-    &::after {
-      content: "";
-      display: inline-block;
-      background-repeat: no-repeat;
-      background-color: transparent;
-      background-position: 0 center;
-      width: .87rem;
-      height: .87rem;
-      background-image: url('../images/cta-arrow-white.svg');
-      transform: translateX(8px);
-      transition: $transition-time cubic-bezier(0.33,0.66,0.66,1) transform;
-
-      @include breakpoint($new-medium) {
-        display: none;
-      }
+      background-color: $c-blue-link;
     }
   }
 }
