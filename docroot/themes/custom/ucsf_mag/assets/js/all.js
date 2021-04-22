@@ -37,6 +37,10 @@
     var mobileDetect = function mobileDetect(event) {
       // Mobile
       if (event.matches) {
+        $navToggle.on("click", function (e) {
+          $('body').toggleClass('fixed');
+        });
+
         $subnavToggle.on("click", function (e) {
           var $this = $(this);
           var $subnavMenuCollapsable = $this.closest(".mag-menu__item");
@@ -52,6 +56,8 @@
         $subnavToggle.off("click");
         // Remove unnecessary Aria controls from desktop subnav
         $subnavToggle.removeAttr("aria-expanded aria-controls");
+
+        $('body').removeClass('fixed');
 
         $(".mag-mobile-search-reveal").click(function (e) {
           e.preventDefault();

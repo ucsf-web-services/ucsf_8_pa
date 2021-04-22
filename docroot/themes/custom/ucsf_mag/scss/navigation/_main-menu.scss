@@ -357,7 +357,7 @@
     padding-right: 45px;
     align-self: center;
 
-    @include breakpoint($bp-large) {
+    @include breakpoint($bp-medium-plus) {
       width: 14px;
       height: 14px;
       background-size: 14px;
@@ -371,7 +371,7 @@
     height: 2rem;
     background-size: 25px 25px;
 
-    @include breakpoint($bp-large) {
+    @include breakpoint($bp-medium-plus) {
       width: 14px;
       height: 14px;
       background-size: 14px;
@@ -390,15 +390,18 @@
   display: flex;
   justify-content: space-between;
 
-  @include breakpoint($bp-large) {
+  @include breakpoint($bp-medium-plus) {
     @include magazine-eyebrow;
     display: flex;
     width: max-content;
     float: right;
+    // position: relative;
+    // transform: translateY(-100%); // move up to appear as part of the menu
+    // bottom: 6px; // eyeball the position until on the same line as the menu item
   }
 
   &:hover {
-    @include breakpoint($bp-large) {
+    @include breakpoint($bp-medium-plus) {
       text-decoration: underline;
     }
   }
