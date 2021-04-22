@@ -1,11 +1,6 @@
 .mag-nav {
   // variable to print .mag-nav
   $block: &;
-  $navbar-height: 50px;
-  $navbar-height-medium: 72px;
-  $navbar-height-big: 112px;
-  $search-form-height: 162px;
-  $search-form-height-tablet: 142px;
   height: auto;
   padding: 0;
 
@@ -13,16 +8,16 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-content: center;
-    height: $navbar-height;
+    height: $mag-navbar-height;
     padding-top: 11px;
     padding-bottom: 12px;
 
     @include breakpoint ($bp-medium) {
-      height: $navbar-height-medium;
+      height: $mag-navbar-height-medium;
     }
 
     @include breakpoint($bp-large) {
-      height: $navbar-height-big;
+      height: $mag-navbar-height-big;
     }
 
     @include breakpoint($bp-xl) {
@@ -149,19 +144,6 @@
       background-color: $c-grey-pale;
     }
 
-    // Need to move menu below search form when both are open in mobile
-    .header--search-active ~ .header-mag-menu {
-      top: calc(#{$navbar-height} + #{$search-form-height});
-
-      @include breakpoint ($bp-medium) {
-        top: calc(#{$navbar-height-medium} + #{$search-form-height});
-      }
-
-      @include breakpoint ($bp-large) {
-        top: $navbar-height-big;
-      }
-    }
-
     // Search form is open and it is inside the open menu. Icon "x"
     .mag-mobile-search-reveal.active {
       @include breakpoint($bp-large) {
@@ -196,29 +178,23 @@
 
 // SEARCH FORM
 .mag-home-search__form {
-  $navbar-height: 50px;
-  $navbar-height-medium: 72px;
-  $navbar-height-big: 112px;
-  $search-form-height: 162px;
-  $search-form-height-tablet: 142px;
-
   // open form
   &.active {
     // Specificity war
     .mag-nav .header--search & {
       position: absolute !important;
-      top: calc(#{$navbar-height} - 10px);
+      top: calc(#{$mag-navbar-height} - 10px); // eyeballing the value subtracted
       right: 0;
       width: 100vw;
 
       @include breakpoint ($bp-medium) {
-        top: calc(#{$navbar-height-medium} - 10px);
+        top: calc(#{$mag-navbar-height-medium} - 10px); // eyeballing the value subtracted
         right: 20px;
         margin-right: -20px;
       }
 
       @include breakpoint($bp-large) {
-        top: calc(#{$navbar-height-big} - 55px);
+        top: calc(#{$mag-navbar-height-big} - 55px); // eyeballing the value subtracted
         width: 650px;
       }
 

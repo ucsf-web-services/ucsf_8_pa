@@ -33,14 +33,23 @@
       }
     });
 
+    var fixedBody = function fixedBody() {
+      if ($navbar.hasClass("mag-nav--active")) {
+        $('body').addClass('fixed');
+      } else {
+        $('body').removeClass('fixed');
+      }
+
+      $navToggle.on("click", function (e) {
+        $('body').toggleClass('fixed');
+      });
+    };
+
     // Only execute subnav extend / collapse code in mobile
     var mobileDetect = function mobileDetect(event) {
       // Mobile
       if (event.matches) {
-        $navToggle.on("click", function (e) {
-          $('body').toggleClass('fixed');
-        });
-
+        fixedBody();
         $subnavToggle.on("click", function (e) {
           var $this = $(this);
           var $subnavMenuCollapsable = $this.closest(".mag-menu__item");
@@ -83,12 +92,19 @@
       }
     };
 
-    // Use MatchMedia to ensure that subnav expand/collapse is only happening in mobile
-    var mql = matchMedia("(max-width: 850px)");
-    // Detect mobile on page load.
-    mobileDetect(mql);
-    // Watch to see if the page size changes.
-    mql.addListener(mobileDetect);
+    /**
+     * Watch for when the screen resizes horizontally from mobile to desktop.
+     */
+    var watchResize = function watchResize() {
+      // Use MatchMedia to ensure that subnav expand/collapse is only happening in mobile
+      var mql = matchMedia("(max-width: 850px)");
+      // Detect mobile on page load.
+      mobileDetect(mql);
+      // Watch to see if the page size changes.
+      mql.addListener(mobileDetect);
+    };
+    // Initialize.
+    watchResize();
   });
 })(jQuery);
 //# sourceMappingURL=all.js.map

@@ -1,6 +1,7 @@
 .mag-menu {
   // variable to print .mag-menu
   $block: &;
+  $universal-header-height: 40px;
   // top level menu links, these are used to assign a grid aria to menu li
   $links: latest, features, insights, voices, allissues, trending, collections;
 
@@ -29,9 +30,34 @@
   .mag-nav--active & {
     display: block;
     visibility: visible;
-    z-index: 1;
-    box-shadow: 0px 1px 1px 0px #0003;
+    z-index: 3;
   }
+
+  // Need to move menu below search form when both are open in mobile
+  .header--search-active ~ & {
+    top: calc(#{$mag-navbar-height} + #{$mag-search-form-height} + #{$universal-header-height});
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+
+    @include breakpoint ($bp-medium) {
+      top: calc(#{$mag-navbar-height-medium} + #{$mag-search-form-height} + #{$universal-header-height});
+    }
+
+    @include breakpoint ($bp-large) {
+      position: absolute;
+      top: $mag-navbar-height-big;
+      bottom: auto;
+      left: 50%;
+      margin-left: -50vw;
+      width: 100vw;
+      z-index: 1;
+    }
+  }
+
 
   // top level ul
   &__menu {

@@ -250,9 +250,27 @@
   .mag-nav--active .mag-menu {
     display: block;
     visibility: visible;
-    z-index: 1;
-    -webkit-box-shadow: 0px 1px 1px 0px #0003;
-            box-shadow: 0px 1px 1px 0px #0003; }
+    z-index: 3; }
+  .header--search-active ~ .mag-menu {
+    top: calc(50px + 162px + 40px);
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; }
+    @media (min-width: 600px) {
+      .header--search-active ~ .mag-menu {
+        top: calc(72px + 162px + 40px); } }
+    @media (min-width: 850px) {
+      .header--search-active ~ .mag-menu {
+        position: absolute;
+        top: 112px;
+        bottom: auto;
+        left: 50%;
+        margin-left: -50vw;
+        width: 100vw;
+        z-index: 1; } }
   .mag-menu__menu {
     display: grid;
     grid-template-areas: "latest" "features" "insights" "voices" "allissues" "trending" "collections";
@@ -703,14 +721,6 @@
             background-size: 36px; } }
   .mag-nav--active.header-region {
     background-color: #f2f4f6; }
-  .mag-nav--active .header--search-active ~ .header-mag-menu {
-    top: calc(50px + 162px); }
-    @media (min-width: 600px) {
-      .mag-nav--active .header--search-active ~ .header-mag-menu {
-        top: calc(72px + 162px); } }
-    @media (min-width: 850px) {
-      .mag-nav--active .header--search-active ~ .header-mag-menu {
-        top: 112px; } }
   @media (min-width: 850px) {
     .mag-nav--active .mag-mobile-search-reveal.active {
       z-index: 3;
