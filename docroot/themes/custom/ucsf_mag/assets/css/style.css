@@ -236,7 +236,9 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #f2f4f6; }
+  background-color: #f2f4f6;
+  -webkit-box-shadow: 0 10px 20px -5px rgba(155, 166, 182, 0.4);
+          box-shadow: 0 10px 20px -5px rgba(155, 166, 182, 0.4); }
   @media (min-width: 970px) {
     .mag-menu {
       padding-bottom: 3rem; } }
@@ -724,8 +726,8 @@
   @media (min-width: 850px) {
     .mag-nav--active .mag-mobile-search-reveal.active {
       z-index: 3;
-      -webkit-animation-duration: 1s;
-              animation-duration: 1s;
+      -webkit-animation-duration: .3s;
+              animation-duration: .3s;
       -webkit-animation-name: hide-fade-in;
               animation-name: hide-fade-in;
       right: 0;
@@ -836,7 +838,11 @@
       padding-left: 20px;
       -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
               clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-      top: 5px; } }
+      top: 5px;
+      -webkit-transition: -webkit-clip-path 1s;
+      transition: -webkit-clip-path 1s;
+      transition: clip-path 1s;
+      transition: clip-path 1s, -webkit-clip-path 1s; } }
   @media (min-width: 1280px) {
     .mag-nav--active .active .mag-home-search__form-input {
       right: 0; } }
