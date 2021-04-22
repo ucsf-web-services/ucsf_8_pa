@@ -40,7 +40,7 @@
       left: -3px;
 
       @include breakpoint($bp-large) {
-        left: -5;
+        left: -5px;
       }
     }
   }
@@ -77,56 +77,6 @@
     display: block;
     position: relative;
     justify-self: end;
-  }
-
-  .mag-home-search__form {
-
-    &.active {
-      position: absolute !important;
-      top: calc(#{$navbar-height} - 10px);
-      right: 0;
-      width: 100vw;
-
-      @include breakpoint ($bp-medium) {
-        top: calc(#{$navbar-height-medium} - 10px);
-      }
-
-      @include breakpoint ($new-medium) {
-        top: calc(#{$navbar-height-medium} - 10px);
-        left: 0;
-        right: 0;
-        margin-right: -20px;
-      }
-
-      @include breakpoint($bp-large) {
-        top: calc(#{$navbar-height-big} - 10px);
-      }
-    }
-
-    &-submit {
-      @include breakpoint ($new-medium) {
-        position: absolute;
-        top: 20px;
-      }
-
-      &:hover {
-        background-color: transparent;
-      }
-    }
-
-    &-input {
-      // @include breakpoint($bp-large) {
-      //   width: 100%;
-      //   max-width: 100%;
-      // }
-
-
-      &#header-search {
-        // @include breakpoint ($bp-large) {
-        //   border: 1px solid #DCE0E6;
-        // }
-      }
-    }
   }
 
   .mobile-search-reveal {
@@ -207,109 +157,178 @@
         top: calc(#{$navbar-height-medium} + #{$search-form-height});
       }
 
-      @include breakpoint ($new-medium) {
-        top: calc(#{$navbar-height-medium} + #{$search-form-height-tablet});
+      @include breakpoint ($bp-large) {
+        top: $navbar-height-big;
       }
     }
 
-    // Search Form
-    .mag-home-search__form {
+    // Search form is open and it is inside the open menu. Icon "x"
+    .mag-mobile-search-reveal.active {
+      @include breakpoint($bp-large) {
+        z-index: 3;
+        animation-duration: 1s;
+        animation-name: hide-fade-in;
+        right: 0;
+        top: -8px;
+        background-size: 18px;
+        width: 18px;
+        height: 18px;
+        max-width: 18px;
+        min-width: 18px;
+        filter: $filter-c-dark-navy;
+
+        &:hover {
+          background-size: 18px;
+          width: 18px;
+          height: 18px;
+          max-width: 18px;
+          min-width: 18px;
+          filter: none;
+        }
+      }
+
       @include breakpoint($bp-xl) {
+        right: -58px;
+      }
+    }
+  }
+}
+
+// SEARCH FORM
+.mag-home-search__form {
+  $navbar-height: 50px;
+  $navbar-height-medium: 72px;
+  $navbar-height-big: 112px;
+  $search-form-height: 162px;
+  $search-form-height-tablet: 142px;
+
+  // open form
+  &.active {
+    // Specificity war
+    .mag-nav .header--search & {
+      position: absolute !important;
+      top: calc(#{$navbar-height} - 10px);
+      right: 0;
+      width: 100vw;
+
+      @include breakpoint ($bp-medium) {
+        top: calc(#{$navbar-height-medium} - 10px);
+        right: 20px;
+        margin-right: -20px;
+      }
+
+      @include breakpoint($bp-large) {
+        top: calc(#{$navbar-height-big} - 55px);
+        width: 650px;
+      }
+
+      @include breakpoint($new-xl) {
+        right: -60px;
+      }
+    }
+
+    // when menu is open and form is open
+    .mag-nav--active .header--search & {
+      @include breakpoint($bp-large) {
+        display: block;
         height: 54px;
-        top: 0;
-        clip: auto;
+        top: -30px;
+        right: 0;
         animation: none;
+        width: 492px;
+      }
+
+      @include breakpoint($bp-xl) {
         right: -60px;
       }
 
-      &.active {
-        @include breakpoint($bp-medium-plus) {
-          top: calc(#{$navbar-height-big} - 111px);
-        }
-
-        @include breakpoint($bp-xl) {
-          display: block;
-          height: 54px;
-          top: 0;
-          animation: none;
-          width: 492px;
-        }
-
-        .search__form {
-          @include breakpoint($bp-xl) {
-            border: none;
-          }
+      .search__form {
+        @include breakpoint($bp-large) {
+          border: none;
         }
       }
 
       .fieldset-reset {
-        @include breakpoint($bp-xl) {
+        @include breakpoint($bp-large) {
           display: none;
           visibility: hidden;
         }
       }
+    }
+  }
 
-      &-submit {
-        @include breakpoint($bp-xl) {
-          position: absolute;
-          margin: 0;
-          right: 52px;
-          top: -5px;
+  &-submit {
+    position: absolute;
+    top: 8px;
+
+    .mag-home-search__form & {
+      background-color: transparent;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+
+    // inside open menu
+    .mag-nav--active & {
+      @include breakpoint($bp-large) {
+        position: absolute;
+        margin: 0;
+        right: 52px;
+        top: 0px;
+        background-size: 36px;
+        width: 36px;
+        max-width: 36px;
+        min-width: 36px;
+      }
+
+      @include breakpoint($bp-xl) {
+        top: 5;
+        right: 71px;
+      }
+
+      &:hover {
+        @include breakpoint($bp-large) {
           background-size: 36px;
           width: 36px;
           max-width: 36px;
           min-width: 36px;
         }
-
-        &:hover {
-          @include breakpoint($bp-xl) {
-            background-size: 36px;
-            width: 36px;
-            max-width: 36px;
-            min-width: 36px;
-          }
-        }
       }
+    }
+  }
 
-      &-input {
-        @include breakpoint($bp-xl) {
-          height: 52px;
-          position: absolute;
-          width: auto;
-          max-width: 0;
-          padding-right: 0; // so that search text doesn't spill over the buttons
-          padding-left: 0;
-          // right: -60px;
-        }
+  &-input {
+    width: 100%;
+
+    //when menu is open
+    .mag-nav--active & {
+      @include breakpoint($bp-large) {
+        height: 52px;
+        position: absolute;
+        width: auto;
+        max-width: 0;
+        padding-right: 0; // so that search text doesn't spill over the buttons
+        padding-left: 0;
+        // right: -60px;
       }
     }
 
-    .mag-mobile-search-reveal.active {
-      @include breakpoint($bp-xl) {
-        z-index: 3;
-        animation-duration: 1s;
-        animation-name: hide-fade-in;
-        right: -58px;
-      }
-    }
-
-    .mag-home-search__form-input {
-      @include breakpoint($bp-xl) {
-        right: 0;
-        clip-path: polygon(78% 0, 90% 0, 90% 100%, 78% 100%);
-        transition: clip-path .5s;
-      }
-    }
-
-    .active .mag-home-search__form-input {
-      @include breakpoint($bp-xl) {
+    // When menu is open and the form is open
+    .mag-nav--active .active & {
+      @include breakpoint($bp-large) {
         width: auto;
         max-width: 492px;
         padding-right: 165px; // so that search text doesn't spill over the buttons
         padding-left: 20px;
         clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        top: 5px;
       }
 
+      @include breakpoint($bp-xl) {
+        right: 0;
+      }
 
       &#header-search {
         @include breakpoint ($bp-large) {
@@ -317,7 +336,6 @@
         }
       }
     }
-
   }
 }
 
@@ -335,12 +353,13 @@
 
 
 .header--logo-minimized .logo__img {
-  @include breakpoint ($bp-medium-plus) {
+  @include breakpoint ($bp-large) {
     min-width: 338px;
   }
 }
 
 .universal-header-mag {
+
   @include breakpoint($bp-large) {
     display: flex;
     align-self: center;
@@ -386,29 +405,6 @@
 
       &:hover {
         text-decoration: underline;
-      }
-    }
-
-
-    &--menu {
-      $menu-link-block: &;
-      font-size: 1.125rem;
-      font-family: $font-helvetica-neue-medium;
-      line-height: 77px;
-      display: flex;
-      justify-content: space-between;
-
-      @include breakpoint($bp-medium-plus) {
-        display: none;
-      }
-
-      // Needed more specificity
-      .mag-menu__menu & {
-        color: $c-dark-navy;
-
-        &:hover {
-          color: $c-blue-link;
-        }
       }
     }
   }

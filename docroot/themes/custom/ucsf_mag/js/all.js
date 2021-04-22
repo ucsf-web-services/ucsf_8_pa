@@ -76,7 +76,7 @@
     };
 
     // Use MatchMedia to ensure that subnav expand/collapse is only happening in mobile
-    const mql = matchMedia("(max-width: 969px)");
+    const mql = matchMedia("(max-width: 850px)");
     // Detect mobile on page load.
     mobileDetect(mql);
     // Watch to see if the page size changes.
