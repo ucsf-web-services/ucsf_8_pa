@@ -1,48 +1,60 @@
-// .has-fixed-nav {
-//   overflow: hidden;
-//   max-height: 100vh;
-// }
+.has-fixed-nav {
+  overflow: hidden;
+  max-height: 100vh;
+}
 
-// .mag-nav--active::after {
-// .menu--magazine-main-menu:before {
-  // content: "";
-  // display: block;
-  // position: fixed;
-  // background: #4E5365;
-  // transition: max-height 0.6s cubic-bezier(0.77,0,0.175,1);
-  // height: 100vh;
-  // max-height: 100vh;
-  // position: fixed;
-  // width: 100%;
-  // z-index: 1;
-  // overflow: auto;
-// }
+.mag-nav::after {
+  content: "";
+  display: block;
+  position: fixed;
+  background: #4E5365;
+  transition: max-height 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+  max-height: 0;
+  height: 105vh;
+  max-height: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  overflow: auto;
+}
+
+.mag-nav--active::after {
+  max-height: 105vh;
+}
 
 .mag-menu {
-  // z-index: 2;
   // variable to print .mag-menu
   $block: &;
   $universal-header-height: 40px;
   // top level menu links, these are used to assign a grid aria to menu li
   $links: latest, features, insights, voices, allissues, popular, collections;
 
-  display: none;
-  visibility: hidden;
   width: 100%;
   position: absolute;
   top: 100%;
   left: 0;
   background-color: $c-grey-pale;
-  box-shadow: 0 10px 20px -5px rgba(155, 166, 182, 0.4);
-
-  @include breakpoint($bp-medium-plus) {
-    padding-bottom: 3rem;
-  }
+  z-index: 2;
+  transition: max-height 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+  max-height: 0;
+  overflow-y: auto;
 
   @include breakpoint($bp-xl) {
     left: 50%;
     margin-left: -50vw;
     width: 100vw;
+  }
+
+  .mag-nav--active & {
+    max-height: 100vh;
+  }
+
+  // Shim to allow offset the absolute positioning and allow content inside to scroll.
+  &:after {
+    display: block;
+    content: '';
+    height: 300px;
+    background: #4E5365;
   }
 
   ul {
@@ -79,7 +91,6 @@
       z-index: 1;
     }
   }
-
 
   // top level ul
   &__menu {
@@ -120,11 +131,13 @@
         "popular . features insights voices allissues"
         "collections . features insights voices allissues";
       column-gap: 2rem;
+      padding-bottom: 3rem;
     }
 
     @include breakpoint($bp-xl) {
       max-width: 1440px;
-      padding: 0 80px 0 86px; // aligning left to .universal-header__title
+      padding-right: 80px;
+      padding-left: 86px; // aligning left to .universal-header__title
       margin: 0 auto;
     }
 
