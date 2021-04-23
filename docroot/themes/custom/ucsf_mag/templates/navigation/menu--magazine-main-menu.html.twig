@@ -66,10 +66,14 @@
               </a>
             {% elseif item.title == "Latest Issue" %}
               {# This link has an image of the latest issue #}
-              <a href="{{ item.url }}" class="mag-menu__link mag-submenu__link latest-issue">
+              <div class="mag-menu__link mag-submenu__link latest-issue">
+                {{ drupal_view('latest_magazine_issue')}}
+              </div>
+
+              {# <a href="{{ item.url }}" class="mag-menu__link mag-submenu__link latest-issue">
                 <img src="/sites/default/files/styles/quarter/public/2021-02/ucsf-magazine-winter-2021-cover_0.jpg" aria-hidden="true" class="latest-issue__img" width="160" height="186" loading="lazy"></img>
                 {{ item.title }}
-              </a>
+              </a> #}
             {% else %}
               {# Menu item is a link #}
               {{ link(item.title, item.url, { "class":[(menu_level > 0) ? "mag-menu__link mag-submenu__link" : "mag-menu__link mag-menu__link--alt" ]}) }}
