@@ -1,14 +1,17 @@
 {% set classes = ['main'] %}
 {% set layout = term.field_banner_layout.value %}
-
+{% set no_page_title = no_page_title ? no_page_title : '' %}
 <div class="magazine-topic-issue-page magazine-topic-page">
 <main {{ attributes.addClass(classes) }}>
   <a id="main-content" tabindex="-1"></a>
   <div class="magazine-topic-page">
-
-      <header class="magazine-topic-page__header">
-        <h1 class="magazine-topic-page__header-title">UCSF Magazine <span class="magazine-topic-page__header-subtitle">{{ name }}</span></h1>
-      </header>
+        <header class="magazine-topic-page__header">
+          {% if no_page_title != true %}
+            <h1 class="magazine-topic-page__header-title">UCSF Magazine <span class="magazine-topic-page__header-subtitle">{{ name }}</span></h1>
+          {% else %}
+            <h1 class="magazine-topic-page__header-title--alt">{{ name }}</h1>
+          {% endif %}
+        </header>
 
       {% if layout == 'featuretwosupport' %}
         {% include '@theme/banner/magazine-feature-two-support.twig' %}

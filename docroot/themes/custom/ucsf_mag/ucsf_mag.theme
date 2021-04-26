@@ -79,3 +79,16 @@ function _get_current_controller_entity() {
   }
   return NULL;
 }
+
+/**
+ * Implements template_preprocess_node().
+ */
+function ucsf_mag_preprocess_node(&$variables) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  $path_alias = \Drupal::service('path.alias_manager')
+    ->getAliasByPath($current_path);
+  // If magazine homepage
+  if ($path_alias == '/magazine') {
+    $variables['no_page_banner'] = true;
+  }
+}
