@@ -26,9 +26,6 @@ html {
     -webkit-transform: rotate(-45deg);
             transform: rotate(-45deg); }
 
-.logo-svg {
-  fill: white !important; }
-
 .nav-toggle {
   float: left;
   white-space: nowrap;
@@ -200,8 +197,8 @@ html {
   content: "";
   position: fixed;
   background: #4E5365;
-  -webkit-transition: max-height 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-  transition: max-height 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+  -webkit-transition: max-height 0.5s cubic-bezier(0.33, 0.66, 0.66, 1);
+  transition: max-height 0.5s cubic-bezier(0.33, 0.66, 0.66, 1);
   height: 105vh;
   max-height: 0;
   position: fixed;
@@ -210,8 +207,8 @@ html {
   overflow: auto; }
 
 .mag-nav--active::after {
-  -webkit-animation: menu-background-slide-out 0.6s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-          animation: menu-background-slide-out 0.6s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
+  -webkit-animation: menu-background-slide-out 0.5s cubic-bezier(0.33, 0.66, 0.66, 1) 0ms forwards;
+          animation: menu-background-slide-out 0.5s cubic-bezier(0.33, 0.66, 0.66, 1) 0ms forwards; }
 
 .mag-menu {
   width: 100%;
@@ -220,8 +217,8 @@ html {
   left: 0;
   background-color: #f2f4f6;
   z-index: 2;
-  -webkit-transition: max-height 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-  transition: max-height 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+  -webkit-transition: max-height 0.5s cubic-bezier(0.33, 0.66, 0.66, 1);
+  transition: max-height 0.5s cubic-bezier(0.33, 0.66, 0.66, 1);
   max-height: 0;
   overflow-y: auto;
   display: none; }
@@ -231,8 +228,8 @@ html {
       margin-left: -50vw;
       width: 100vw; } }
   .mag-nav--active .mag-menu {
-    -webkit-animation: menu-slide-out 0.6s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-            animation: menu-slide-out 0.6s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; }
+    -webkit-animation: menu-slide-out 0.5s cubic-bezier(0.33, 0.66, 0.66, 1) 0ms forwards;
+            animation: menu-slide-out 0.5s cubic-bezier(0.33, 0.66, 0.66, 1) 0ms forwards; }
   .mag-menu:after {
     display: block;
     content: '';
@@ -585,6 +582,10 @@ html {
 .mag-submenu__menu {
   padding: 0; }
 
+.mag-submenu__item {
+  line-height: 18px;
+  margin-bottom: 16px; }
+
 .mag-submenu__link {
   font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   font-size: 0.9rem; }
@@ -611,51 +612,17 @@ html {
     margin-top: 24px;
     margin-bottom: 13px; }
 
-@-webkit-keyframes menu-slide-out {
-  0% {
-    display: block;
-    max-height: 0; }
-  50% { }
-  100% {
-    max-height: 100vh; } }
-
-@keyframes menu-slide-out {
-  0% {
-    display: block;
-    max-height: 0; }
-  50% { }
-  100% {
-    max-height: 100vh; } }
-
-@-webkit-keyframes menu-background-slide-out {
-  0% {
-    display: block;
-    max-height: 0; }
-  50% { }
-  100% {
-    max-height: 105vh; } }
-
-@keyframes menu-background-slide-out {
-  0% {
-    display: block;
-    max-height: 0; }
-  50% { }
-  100% {
-    max-height: 105vh; } }
-
 [block="block-ucsf-mag-main-menu"] {
   display: none; }
 
 .mag-nav {
   height: auto;
   padding: 0;
-  -webkit-transition: background-color 0.3s cubic-bezier(0.77, 0, 0.175, 1);
-  transition: background-color 0.3s cubic-bezier(0.77, 0, 0.175, 1); }
+  -webkit-transition: background-color 0.3s cubic-bezier(0.33, 0.66, 0.66, 1);
+  transition: background-color 0.3s cubic-bezier(0.33, 0.66, 0.66, 1); }
   .mag-nav__navbar {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    -ms-flex-line-pack: center;
-        align-content: center;
     height: 50px;
     padding-top: 11px;
     padding-bottom: 12px; }
@@ -687,8 +654,8 @@ html {
   .mag-nav .logo__img {
     height: auto;
     width: 45vw;
-    -webkit-transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) all;
-    transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) all; }
+    -webkit-transition: 0.3s cubic-bezier(0.33, 0.66, 0.66, 1) all;
+    transition: 0.3s cubic-bezier(0.33, 0.66, 0.66, 1) all; }
     @media (min-width: 320px) {
       .mag-nav .logo__img {
         width: auto;
@@ -880,22 +847,6 @@ html {
     @media (min-width: 850px) {
       .mag-nav--active .active .mag-home-search__form-input#header-search {
         border: 1px solid #DCE0E6; } }
-
-@-webkit-keyframes hide-fade-in {
-  0% {
-    opacity: 0; }
-  50% {
-    opacity: 0; }
-  100% {
-    opacity: 1; } }
-
-@keyframes hide-fade-in {
-  0% {
-    opacity: 0; }
-  50% {
-    opacity: 0; }
-  100% {
-    opacity: 1; } }
 
 @media (min-width: 850px) {
   .header--logo-minimized .logo__img {

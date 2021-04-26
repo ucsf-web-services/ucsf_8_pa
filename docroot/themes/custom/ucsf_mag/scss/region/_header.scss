@@ -3,13 +3,11 @@
   $block: &;
   height: auto;
   padding: 0;
-  // background-color: white;
-  transition: background-color .3s cubic-bezier(0.77, 0, 0.175, 1);
+  transition: background-color $transition-time $transition-type;
 
   &__navbar {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-content: center;
     height: $mag-navbar-height;
     padding-top: 11px;
     padding-bottom: 12px;
@@ -54,7 +52,7 @@
   .logo__img {
     height: auto;
     width: 45vw;
-    transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) all;
+    transition: $transition-time $transition-type all;
 
     @include breakpoint ($bp-xs) {
       width: auto;
@@ -147,7 +145,6 @@
   // When menu is open
   &--active {
     &.header-region {
-      // transition: background-color .60s cubic-bezier(0.77, 0, 0.175, 1);
       background-color: $c-grey-pale;
     }
 
@@ -327,19 +324,6 @@
     }
   }
 }
-
-@keyframes hide-fade-in {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 
 .header--logo-minimized .logo__img {
   @include breakpoint($bp-large) {
