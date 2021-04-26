@@ -3,6 +3,8 @@
   $block: &;
   height: auto;
   padding: 0;
+  // background-color: white;
+  transition: background-color .3s cubic-bezier(0.77, 0, 0.175, 1);
 
   &__navbar {
     display: grid;
@@ -30,6 +32,10 @@
 
   .nav-toggle {
     left: 0;
+
+    &:focus-visible {
+      border: 1px dotted $c-dark-navy;
+    }
 
     &--active {
       left: -3px;
@@ -141,6 +147,7 @@
   // When menu is open
   &--active {
     &.header-region {
+      // transition: background-color .60s cubic-bezier(0.77, 0, 0.175, 1);
       background-color: $c-grey-pale;
     }
 
@@ -178,8 +185,11 @@
 
 // SEARCH FORM
 .mag-home-search__form {
+  visibility: hidden;
+
   // open form
   &.active {
+    visibility: visible;
     // Specificity war
     .mag-nav .header--search & {
       position: absolute !important;
