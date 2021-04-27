@@ -326,6 +326,8 @@ class ResponsiveImageFieldDisplayTest extends ImageFieldTestBase {
       '#theme' => 'image',
       '#alt' => $alt,
       '#uri' => file_url_transform_relative($large_style->buildUrl($image->getSource())),
+      '#width' => 360,
+      '#height' => 240,
     ];
     // The image.html.twig template has a newline after the <img> tag but
     // responsive-image.html.twig doesn't have one after the fallback image, so

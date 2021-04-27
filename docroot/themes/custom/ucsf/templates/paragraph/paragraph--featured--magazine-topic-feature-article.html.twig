@@ -17,7 +17,10 @@
         {{ content.field_image_media }}
       {% else %}
         {# Feature Paragraph > News Article (News) > Card Image #}
-        {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id) }}
+        {% block default_image %}
+          {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id, {label: 'hidden', type: 'media_responsive_thumbnail', settings: {responsive_image_style: 'feature_banner', image_link: ''}}) }}
+        {% endblock %}
+        {# {{ drupal_field('field_card_image', 'node', paragraph.field_news_article.target_id) }} #}
       {% endif %}
     </a>
   </div>

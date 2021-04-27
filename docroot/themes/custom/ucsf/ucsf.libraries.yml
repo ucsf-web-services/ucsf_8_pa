@@ -6,9 +6,8 @@ global:
     assets/vendor/slicknav-1.0.10/dist/jquery.slicknav.js: {}
     assets/js/all.js: {}
     assets/js/ucsf_element_slide.js: {}
+    assets/js/ucsf_main_menu.js: {}
     assets/js/ucsf_sticky_nav.js: {}
-    assets/js/ucsf_search_placeholder_rotation.js: {}
-    assets/js/ucsf-social-icons.js: {}
   dependencies:
     - ucsf/polyfills
 
@@ -73,9 +72,9 @@ element_overlap_detection:
   js:
     assets/js/ucsf_element_overlap_detection.js: {}
 
-polyfills:
+ucsf_social_icons:
   js:
-    https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver: { weight: -100, type: external, minified: true }
+     assets/js/ucsf_social_icons.js: {}
 
 header_subnav:
   js:
@@ -84,3 +83,16 @@ header_subnav:
 press_releases_tab:
   js:
     assets/js/ucsf_press_releases_tab.js: {}
+
+lazyload:
+  js:
+    assets/js/ucsf_lazyload.js: {}
+    https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js:
+      type: external
+      minified: true
+      attributes:
+        async: true
+
+search_placeholder_rotation:
+  js:
+    assets/js/ucsf_search_placeholder_rotation.js: {}

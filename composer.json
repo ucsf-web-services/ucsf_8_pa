@@ -57,11 +57,11 @@
     "oomphinc/composer-installers-extender": "^1.1",
     "wikimedia/composer-merge-plugin": "^1.4.1",
     "cweagans/composer-patches": "^1.6",
-    "drupal/core": "~8.9.12",
+    "drupal/core": "~8.9.14",
     "drupal-composer/drupal-scaffold": "^2.5",
     "ucdavis/sitefarm_seed": "dev-ucsf",
     "drupal/acquia_lift": "~3.0",
-    "drupal/acquia_connector": "^1.18",
+    "drupal/acquia_connector": "^2.0",
     "drupal/acquia_contenthub": "^1.25",
     "drupal/address": "^1.2",
     "drupal/admin_toolbar": "^2.0",
@@ -71,7 +71,7 @@
     "drupal/better_exposed_filters": "^5.0",
     "drupal/conditional_fields": "^1.0",
     "drupal/ctools": "3.2",
-    "drupal/chosen": "^2.5",
+    "drupal/chosen": "^2.6",
     "drupal/colorbox": "^1.4",
     "drupal/config_update": "^1.5",
     "drupal/ckeditor_liststyle": "^1.3",
@@ -81,7 +81,7 @@
     "drupal/entity_reference_revisions": "^1.4",
     "drupal/fieldblock": "^2.0@alpha",
     "drupal/field_group": "^3.0",
-    "drupal/google_analytics": "^2.2",
+    "drupal/google_analytics": "^2.5",
     "drupal/geofield": "^1.0@beta",
     "drupal/geofield_map": "^2.5",
     "drupal/geocoder": "^2.0@beta",
@@ -137,7 +137,7 @@
     "drupal/simple_sitemap": "^3.3",
     "drupal/social_media_links": "^2.6",
     "drupal/smart_trim": "^1.2",
-    "drupal/taxonomy_import": "^1.1",
+    "drupal/taxonomy_import": "^2.0",
     "drupal/entity_browser": "^2.0",
     "drupal/inline_entity_form": "^1.0",
     "drupal/menu_reference_render": "^2.0@alpha",
@@ -170,14 +170,13 @@
     "drupal/save_edit": "^1.1",
     "drupal/image_widget_crop": "^2.2",
     "drupal/crop": "2.0-rc1",
-    "drupal/lazyloader": "1.x-dev@dev",
     "twig/extensions": "^1.5",
     "drupal/twig_extensions": "^2.0",
-    "drupal/image_effects": "~2.0",
+    "drupal/image_effects": "^3.0",
     "drupal/editor_advanced_link": "^1.4",
     "drupal/entity_embed_link": "^1.0",
     "drupal/youtube_gallery": "^1.0",
-    "drupal/anchor_link": "^2.0",
+    "drupal/anchor_link": "^2.5",
     "drupal/config_ignore": "^2.1",
     "drupal/token_conditions": "1.x-dev",
     "drupal/views_rss": "2.x-dev",
@@ -185,10 +184,8 @@
     "drupal/acquia_purge": "^1.0",
     "drupal/cloudflare": "^1.0@alpha",
     "drupal/content_lock": "^2.1",
-    "drupal/rabbit_hole": "^1.0@beta",
     "drupal/scheduler_content_moderation_integration": "^1.0",
     "drupal/svg_image_field": "^1.2",
-    "drupal/socialfeed": "1.0",
     "espresso-dev/instagram-basic-display-php": "^1.1",
     "drupal/embed": "^1.4",
     "drupal/schema_metatag": "^1.6",
@@ -196,7 +193,9 @@
     "drupal/advagg": "^4.1",
     "drupal/entity": "^1.2",
     "drupal/seckit": "^2.0",
-    "drupal/simple_instagram_feed": "^3.6"
+    "drupal/simple_instagram_feed": "^3.6",
+    "drupal/rabbit_hole": "^1.0@beta",
+    "drupal/paragraphs_edit": "^2.0@alpha"
   },
   "require-dev": {
     "drupal/console": "^1.8",
@@ -263,7 +262,9 @@
         "UCSF FilterAlign - remove aggressive removal of classes" : "./patches/core-filteralign.patch",
         "2973706 - Styles dropdown configuration permit multiple tags" : "https://www.drupal.org/files/issues/2020-07-14/allow-multiple-elements-2973706-12.patch",
         "2918784 - Views RSS row plugin incorrectly assumes links are relative" : "https://www.drupal.org/files/issues/2020-06-03/2918784_36.patch",
-        "UCSF FilterCaption - Fix decode entities on FilterCaption" : "./patches/core-filtercaption.patch"
+        "UCSF FilterCaption - Fix decode entities on FilterCaption" : "./patches/core-filtercaption.patch",
+        "Acquia Connector - add missing SVG images" : "https://www.drupal.org/files/issues/2021-03-24/check-svg-and-error-svg-not-found-3200283-5.patch",
+        "Responsive Image - Get width and height from fallback responsive image style" : "https://www.drupal.org/files/issues/2021-02-12/3192234-10.patch"
       },
       "drupal/field_group": {
         "2652642 - Allow to position the group in the advanced sidebar column": "https://www.drupal.org/files/issues/2018-07-26/2652642-57.patch"
@@ -288,12 +289,6 @@
       },
       "drupal/metatag" : {
         "Fallback options for various metatag fields, only display the first valid option" : "./patches/metatag_fallback.patch"
-      },
-       "drupal/lazyloader" : {
-        "Fix the noscript img tag from loading in IE and Edge during a lazy load" : "./patches/lazyloader_fix_noscript_image.patch"
-      },
-      "drupal/socialfeed" : {
-        "Using Basic Display Instagram API" : "https://www.drupal.org/files/issues/2020-03-09/basic-display-api-3112416-8.patch"
       },
        "drupal/svg_image_field" : {
         "Adds media library pop-up file upload form on the SVG tab" : "./patches/svg_image_field-media-library-3053011.patch"

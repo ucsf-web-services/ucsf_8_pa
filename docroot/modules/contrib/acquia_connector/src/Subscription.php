@@ -5,7 +5,7 @@ namespace Drupal\acquia_connector;
 use Drupal\acquia_connector\Helper\Storage;
 
 /**
- * Class Subscription.
+ * Storage class for Acquia Subscriptions.
  *
  * @package Drupal\acquia_connector.
  */
@@ -52,6 +52,8 @@ class Subscription {
       // If there is not an identifier or key, delete any old subscription data.
       \Drupal::state()->delete('acquia_subscription_data');
       \Drupal::state()->set('acquia_subscription_data', ['active' => FALSE]);
+      \Drupal::state()->delete('spi.site_name');
+      \Drupal::state()->delete('spi.site_machine_name');
     }
     else {
       // Get our subscription data.
@@ -77,11 +79,8 @@ class Subscription {
             return $current_subscription;
         }
       }
-      if ($subscription) {
-        \Drupal::moduleHandler()->invokeAll('acquia_subscription_status', [$subscription]);
-        if ($subscription != $current_subscription) {
-          \Drupal::state()->set('acquia_subscription_data', $subscription);
-        }
+      if ($subscription && $subscription != $current_subscription) {
+        \Drupal::state()->set('acquia_subscription_data', $subscription);
       }
     }
 

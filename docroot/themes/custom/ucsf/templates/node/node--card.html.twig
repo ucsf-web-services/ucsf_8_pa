@@ -9,7 +9,6 @@
   #}
 
 {% set classes = ['news-card'] %}
-
 {% set primary_area = node.field_primary_area.0.entity.label|clean_class %}
 
 {% set campus_news_subs = ['announcements', 'happenings', 'honors--awards', 'spotlight'] %}
@@ -31,8 +30,8 @@
       {{ content.field_card_image }}
     {% else %}
       <figure>
-        <picture>
-          <img class="element-fade" src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image">
+        <picture class="news-card-background">
+          <img class="element-fade" src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image" height="216" width="384">
         </picture>
       </figure>
     {% endif %}

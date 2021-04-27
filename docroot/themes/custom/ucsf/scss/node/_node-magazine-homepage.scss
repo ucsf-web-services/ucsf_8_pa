@@ -28,7 +28,6 @@ body.page-node-type-magazine-homepage,
   }
 
   .magazine-home-feature {
-
     h2 {
       @include fs-heading-two;
       margin-bottom: $space-three;
@@ -40,9 +39,16 @@ body.page-node-type-magazine-homepage,
     }
 
     .card-row__copy {
+      @include breakpoint($new-small-max) {
+        margin-top: 0;
+        margin-right: 0;
+        padding-right: 20px;
+      }
+
       @include breakpoint($new-small) {
         float: right;
         width: 50%;
+        padding-right: 40px;
       }
 
       @include breakpoint($new-medium) {
@@ -52,11 +58,18 @@ body.page-node-type-magazine-homepage,
       @include breakpoint($new-large) {
         float: none;
         width: auto;
+        grid-column: 8/-1;
+        padding-right: 80px;
+        align-self: center;
       }
     }
 
     .card-row__body {
       margin-top: $space-three;
+
+      @include breakpoint($new-small-max) {
+        display: block;
+      }
 
       p {
         margin: 0;
@@ -70,35 +83,18 @@ body.page-node-type-magazine-homepage,
       }
     }
 
-    @include breakpoint($new-small-max) {
-      .card-row__copy {
-        margin-top: 0;
-        margin-right: 0;
-        padding-right: 20px;
-      }
-
-      .card-row__body {
-        display: block;
-      }
-    }
-
-    @include breakpoint($new-small) {
-      .card-row__copy {
-        padding-right: 40px;
-      }
-    }
-
     @include breakpoint($new-large) {
-      grid-template-columns: repeat(12, 1fr);
+      grid-template-columns: repeat(12, minmax(0, 1fr));
 
       .card-row__image {
         grid-column: 1/8;
       }
+    }
 
+    &--alt {
       .card-row__copy {
-        grid-column: 8/-1;
-        padding-right: 80px;
-        align-self: center;
+        float: none;
+        width: auto;
       }
     }
   }
@@ -187,6 +183,14 @@ body.page-node-type-magazine-homepage,
       h3 {
         @include fs-heading-three;
         color: $c-dark-navy;
+      }
+
+      .card-row__body {
+        margin-top: 0;
+
+        p {
+          margin-top: 16px;
+        }
       }
     }
   }
@@ -325,6 +329,12 @@ body.page-node-type-magazine-homepage,
       }
     }
   }
+
+  // needed to center magazine button
+  // https://ucsf.lndo.site/magazine
+  .layout-columns__1 {
+    float: none;
+  }
 }
 
 .magazine-issue-banner {
@@ -460,6 +470,12 @@ body.page-node-type-magazine-homepage,
   img {
     margin: 0 auto;
     width: 100%;
+  }
+}
+
+body.page-node-type-magazine-homepage {
+  .layout-panel {
+    margin-bottom: 40px;
   }
 }
 
@@ -1027,6 +1043,18 @@ body.page-node-type-magazine-homepage,
       padding-bottom: $space-ten;
     }
 
+    .magazine-hub-inside__form {
+      margin: 0;
+
+      @include breakpoint(769px) {
+        margin-bottom: $space-ten;
+      }
+
+      @include breakpoint(1050px) {
+        margin-bottom: 0;
+      }
+    }
+
     .magazine-hub-inside__header {
       @include breakpoint(769px) {
         margin-left: 40px;
@@ -1034,6 +1062,7 @@ body.page-node-type-magazine-homepage,
 
       @include breakpoint(1050px) {
         margin-left: 64px;
+        grid-row: 1;
       }
     }
 
@@ -1047,6 +1076,38 @@ body.page-node-type-magazine-homepage,
       }
     }
 
+    .four-card-row {
+      @include breakpoint(1050px) {
+        overflow: visible;
+      }
+    }
+
+    .card-row__cta-wrapper {
+      @include breakpoint(1050px) {
+        position: relative;
+
+        // White box hack.
+        // Remove the overflow hidden on .four-card-row.magazine-alumni
+        // Add position relative to .card-row__cta-wrapper
+        &::after {
+          content: "";
+          display: block;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 100%;
+          width: 50vw;
+          background: white;
+          margin-top: -33px; // This is to line up the box top to the card title bottom.
+        }
+      }
+    }
+
+    .card-row__link {
+      margin-top: .5rem;
+      margin-bottom: 0;
+    }
+
     .magazine-hub-inside__hub,
     .magazine-hub-inside__inside {
       @include breakpoint(769px) {
@@ -1056,16 +1117,30 @@ body.page-node-type-magazine-homepage,
     }
 
     .magazine-hub-inside__inside {
+      padding-top: 0;
 
       @include breakpoint(1050px) {
-        background-color: $c-background-gray;
+        background:
+        linear-gradient(
+          to bottom,
+          $c-background-gray 90%,
+          transparent 10%
+        );
         margin-top: 5.39rem;
-        padding-right: 0;
         margin-right: 40px;
+        padding-right: 0;
       }
 
       @include breakpoint(1280px) {
         margin-top: 3.41rem;
+      }
+    }
+
+    .magazine-hub-inside__hub {
+      margin-bottom: $space-ten;
+
+      @include breakpoint(1050px) {
+        margin-bottom: 0;
       }
     }
   }
@@ -1074,10 +1149,13 @@ body.page-node-type-magazine-homepage,
 
     @include breakpoint(1050px) {
       padding-top: 4.5rem;
+      padding-bottom: 4.5rem;
     }
 
     @include breakpoint(1280px) {
       padding-top: 8.7rem;
+      padding-bottom: 8.7rem;
+
     }
   }
 }

@@ -4,17 +4,26 @@
   opacity: 0;
 
   // on scroll down makes section fade in.
-  &--in-viewport:not(.lazyload) {
-    animation: fade .8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+  &--in-viewport {
+    animation: fade $transition-time-long cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+
+    // because on screen size above $new-medium-max still need opcity:0
+    // else, title text is visible over the body text
+    // /news/2021/03/420137/uc-consortium-launches-first-clinical-trial-using-crispr-correct-gene-defect
+    .article-medium-banner & {
+      @include breakpoint($new-medium-max) {
+        animation: none;
+      }
+    }
   }
 
-  // Fix for IE
-  .explorer & {
-    opacity: 1;
+  .article-medium-banner & {
+    @include breakpoint($new-medium-max) {
+      opacity: 1;
+    }
   }
 }
 
-// Screen size up to 769 px
 // animation for "Recommended Reading" section
 .element-swoosh {
   // Screen size starting at 769 px
@@ -24,22 +33,6 @@
     &--in-viewport {
       animation: element-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
     }
-  }
-}
-
-.field-card-image {
-  // Removes fade-in animation from News Card images
-  .element-fade {
-    opacity: 1;
-    animation: none;
-  }
-}
-
-.field-taxonomy-banner-image {
-  // Removes fade-in animation from Taxonomy Banner images
-  .element-fade {
-    opacity: 1;
-    animation: none;
   }
 }
 

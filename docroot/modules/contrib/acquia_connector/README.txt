@@ -9,15 +9,7 @@ telephone support.
 
 These modules allow you to connect any Drupal 8.x site to Acquia Insight.
 
-[1] https://www.acquia.com/products-services/acquia-insight-subscription
-
-Modules in this project
---------------------------------------------------------------------------------
-
-Acquia Search: Provides integration between your Drupal site and Acquia's
-hosted search service. Requires Apache Solr Search Integration module.
-
-    NOTE: See acquia_search/README.txt for more information for this module.
+[1] https://docs.acquia.com/acquia-cloud/insight/
 
 Installation
 --------------------------------------------------------------------------------

@@ -29,33 +29,8 @@ function image_effects_requirements($phase) {
 }
 
 /**
- * Minimum 1.x schema version to allow upgrading from.
+ * Minimum 2.x schema version to allow upgrading from.
  */
 function image_effects_update_last_removed() {
-  return 8004;
-}
-
-/**
- * Enable file_mdm module and required submodules.
- */
-function image_effects_update_8201() {
-  \Drupal::service('module_installer')->install([
-    'file_mdm',
-    'file_mdm_exif',
-    'file_mdm_font',
-  ]);
-}
-
-/**
- * Clear caches to discover new effects.
- */
-function image_effects_update_8202() {
-  // Empty function.
-}
-
-/**
- * Clear caches to discover new effects.
- */
-function image_effects_update_8203() {
-  // Empty function.
+  return 8203;
 }
