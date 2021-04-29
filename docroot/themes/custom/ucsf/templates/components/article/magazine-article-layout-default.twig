@@ -13,10 +13,12 @@
 <div class="main-content narrow-page">
 	{% if layout == 'medium' and content.field_banner_image|render != '' %}
 		{% set class= 'article-medium-header' %}
-	{% endif %}
 
-	{% if layout == 'medium' and content.field_video_banner|render != '' %}
+	{% elseif layout == 'medium' and content.field_video_banner|render != '' %}
 		{% set class= 'article-medium-header article-medium-header-video' %}
+
+  {% else %}
+      {% set class = 'article-no-banner' %}
 	{% endif %}
 
 	<header class="article-header {{ class }}">
