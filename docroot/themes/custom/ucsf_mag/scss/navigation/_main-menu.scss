@@ -270,7 +270,7 @@
   }
 
   &__link {
-    line-height: 32px;
+    // line-height: 32px;
     width: calc(100% - 20px);
     display: flex;
     align-items: center;
@@ -335,13 +335,9 @@
     height: 1.375rem;
     margin-left: .5rem;
 
-    @include breakpoint($bp-medium-plus) {
-      margin-left: 0;
-      margin-right: .5rem;
-    }
-
     @include breakpoint($bp-xl) {
       position: absolute;
+      margin-right: .5rem;
       margin-left: -2.3rem;
     }
   }
@@ -540,8 +536,11 @@
     // specificity modification
     #{$block} & {
       color: $c-gulf-blue;
-    }
 
+      &:hover {
+        color: $c-blue-link;
+      }
+    }
   }
 
   .mag-menu__item--featured & {
@@ -565,6 +564,10 @@
   display: block;
   padding-bottom: 0;
   color: $c-gulf-blue;
+
+  &:hover {
+    color: $c-blue-link;
+  }
 
   img {
     margin-top: 24px;
