@@ -104,13 +104,13 @@
 					{{ content.field_alumni_hub }}
 				</div>
 				<div class="magazine-hub-inside__inside">
-          {# Movable Subscribe Form, replaces "Read, Watch, Listen" #}
+          {# Movable Subscribe Form, replaces "Books, Videos, Podcasts" #}
           {% if '1' in content.field_subscribe_in_recommended[0] %}
           <div class="magazine__subscribe-movable {{ mag_subscribe_form }}">
             {{block('form_subscribe_mag')}}
           </div>
           {% else %}
-            {# "Read, Watch, Listen" Section #}
+            {# "Books, Videos, Podcasts" Section #}
             <div class="magazine-hub-inside__header">
               <h2 class="magazine-hub-inside__title">Recommended</h2>
               {# <p class="magazine-hub-inside__inside-more">
@@ -123,7 +123,7 @@
                 <img src="/themes/custom/ucsf/assets/images/read-icon.svg" alt="">
               </figure>
               <div class="magazine-hub-recommended__body">
-                <p class="magazine-hub-recommended-label">Read</p>
+                <p class="magazine-hub-recommended-label">Books</p>
                 {{ content.field_recommended_read}}
               </div>
             </div>
@@ -133,7 +133,7 @@
                 <img src="/themes/custom/ucsf/assets/images/watch-icon.svg" alt="">
               </figure>
               <div class="magazine-hub-recommended__body">
-                <p class="magazine-hub-recommended-label">Watch</p>
+                <p class="magazine-hub-recommended-label">Videos</p>
                 {{ content.field_recommended_watch }}
               </div>
             </div>
@@ -143,7 +143,7 @@
                 <img src="/themes/custom/ucsf/assets/images/listen-icon.svg" alt="">
               </figure>
               <div class="magazine-hub-recommended__body">
-                <p class="magazine-hub-recommended-label">Listen</p>
+                <p class="magazine-hub-recommended-label">Podcasts</p>
                   {{ content.field_recommended_listen }}
               </div>
             </div>
