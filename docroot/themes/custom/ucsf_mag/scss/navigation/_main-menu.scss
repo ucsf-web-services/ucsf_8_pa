@@ -1,409 +1,574 @@
-$nav-line-height: 84px;
-$nav-line-height-sticky: 60px;
-$search-icon: 28px;
-$search-icon-sticky: 24px;
-$hover-border-size: 4px;
-
-header .menu--main {
-  @include breakpoint($bp-until-large) {
-    display: none;
-  }
+.has-fixed-nav {
+  overflow: hidden;
+  max-height: 100vh;
+  position: fixed;
 }
 
-// Hide the desktop menu in mobile
-#block-ucsf-mag-main-menu-desktop {
-  @include breakpoint($bp-until-large) {
-    display: none;
-  }
+.mag-nav::after {
+  content: "";
+  position: fixed;
+  background: #4E5365;
+  transition: max-height $transition-time-long $transition-type;
+  height: 105vh;
+  max-height: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  overflow: auto;
 }
 
-// Hide the mobile menu in desktop
-#block-ucsf-mag-main-menu {
-  @include breakpoint($new-medium) {
-    display: none;
-  }
+.mag-nav--active::after {
+  animation: menu-background-slide-out $transition-time-long $transition-type 0ms forwards;
 }
 
-[block="block-ucsf-mag-main-menu-desktop"] {
-  margin: 0;
-  padding-left: 0;
-  position: relative;
-  .menu-child--wrapper {
-    @include visually-hidden;
+.mag-menu {
+  // variable to print .mag-menu
+  $block: &;
+  $universal-header-height: 40px;
+  // top level menu links, these are used to assign a grid aria to menu li
+  $links: latest, features, insights, voices, allissues, popular, collections;
+
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: $c-grey-pale;
+  z-index: 2;
+  transition: max-height $transition-time-long $transition-type;
+  max-height: 0;
+  overflow-y: auto;
+  display: none;
+
+  @include breakpoint($bp-xl) {
+    left: 50%;
+    margin-left: -50vw;
+    width: 100vw;
   }
 
-  .menu-item {
-    display: inline-block;
-    /*
-    > span {
-      line-height: 1.5;
-      letter-spacing: 0;
-      text-decoration: none;
-      border-bottom: none;
-      color: $gray-blue;
-      display: inline-block;
-      font-size: $font-size-sm;
-      padding: $space 0;
-      margin: 0 $space-five;
-      text-transform: none;
-      position: relative;
-      width: auto;
-      font-family: $font-helvetica-neue-roman;
-      font-weight: 500;
-      height: $space-octuple;
-      padding-right: 0;
-      margin-right: 0;
-      //border: 1px solid red;
-    }
-    */
-    a {
-      line-height: $nav-line-height; // Height of Header Navigation without border bottom.
-      letter-spacing: 0;
-      text-decoration: none;
-      border-bottom: none;
-      color: $gray-blue;
-      display: inline-block;
-      font-size: $font-size-sm;
-      text-transform: none;
-      position: relative;
-      width: auto;
-      font-family: $font-helvetica-neue-roman;
-      font-weight: 500;
-      margin: 0 0 0 $space-five;
-      // to prevent content below from jumping
-      // padding bottom needs to be the same as border bottom on hover
-      padding-bottom: $hover-border-size;
-      // Used when minimizing Header Navigation when sticky at the top
-      transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1) line-height;
+  .mag-nav--active & {
+    // display: block;
+    // max-height: 100vh;
+    animation: menu-slide-out $transition-time-long $transition-type 0ms forwards;
+  }
+
+  // Shim to allow offset the absolute positioning and allow content inside to scroll.
+  &:after {
+    display: block;
+    content: '';
+    height: 300px;
+    background: #4E5365;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  .mag-nav--active & {
+    display: block;
+    visibility: visible;
+    z-index: 3;
+  }
+
+  // Need to move menu below search form when both are open in mobile
+  .header--search-active ~ & {
+    top: calc(#{$mag-navbar-height} + #{$mag-search-form-height} + #{$universal-header-height});
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+
+    @include breakpoint ($bp-medium) {
+      top: calc(#{$mag-navbar-height-medium} + #{$mag-search-form-height} + #{$universal-header-height});
     }
 
+    @include breakpoint ($bp-large) {
+      position: absolute;
+      top: $mag-navbar-height-big;
+      bottom: auto;
+      left: 50%;
+      margin-left: -50vw;
+      width: 100vw;
+    }
+  }
 
-    &.search {
+  // top level ul
+  &__menu {
+    display: grid;
+    grid-template-areas:
+      "latest"
+      "features"
+      "insights"
+      "voices"
+      "allissues"
+      "popular"
+      "collections";
 
-      &:hover {
+    position: relative;
+    margin-bottom: 0;
+    margin-top: 1.2rem;
+    padding: 0 $page-gutter;
+    background-color: $c-grey-pale;
+    z-index: 1;
 
-      }
-
-      > a {
-        background: url(/themes/custom/ucsf/assets/images/magnifier.svg) no-repeat center #fff;
-        background-size: $search-icon;
-        max-width: $search-icon;
-        vertical-align: middle;
-        padding-bottom: 0;
-        margin-right: 22px; // to offset icon to the right
-        margin-top: $hover-border-size / 2;
-        margin-bottom: $hover-border-size / 2;
-
-        &:hover {
-          background-image: url(/themes/custom/ucsf/assets/images/magnifier-hover.svg);
-        }
-
-        &.active {
-          background-image: url(/themes/custom/ucsf/assets/images/x-large.svg);
-
-          &:hover {
-            background-image: url(/themes/custom/ucsf/assets/images/x-large.svg);
-          }
-        }
-
-        span {
-          color: transparent;
-        }
-
-      }
-
+    @include breakpoint($bp-medium) {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(3, min-content) auto auto;
+      grid-template-areas:
+        "latest   allissues"
+        "features allissues"
+        "insights allissues"
+        "voices allissues"
+        "popular popular"
+        "collections collections";
     }
 
-    .menu-item:hover > .menu-child--wrapper,
-    &:active > .menu-child--wrapper,
-    &.menu-item-open > .menu-child--wrapper {
-      //border: 1px solid red;
-      @include visually-hidden-reset;
-      @include menu-animation;
+    @include breakpoint($bp-medium-plus) {
+      grid-template-columns: 25.5% 2rem repeat(4, 1fr);
+      grid-template-rows: min-content auto auto;
+      grid-template-areas:
+        "latest . features insights voices allissues"
+        "popular . features insights voices allissues"
+        "collections . features insights voices allissues";
+      column-gap: 2rem;
+      padding-bottom: 3rem;
+    }
 
-      &.wrapper--search-menu {
-        @include visually-hidden;
-        animation: none;
-      }
+    @include breakpoint($bp-xl) {
+      max-width: 1440px;
+      padding-right: 80px;
+      padding-left: 86px; // aligning left to .universal-header__title
+      margin: 0 auto;
+    }
 
-      .menu-child--menu,
-      .menu-child--label span,
-      ::after
-      {
-        animation: fade 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0.25s both;
-      }
+    @include breakpoint(1440px) {
+      padding-left: 80px;
+    }
+  }
 
-      .menu-child--wrapper {
-        animation: none;
+  &__item {
+    margin-bottom: 1rem;
+
+    // applying a modifier class and assigning grid area to element with that class
+    @each $link in $links {
+      &--#{$link} {
+        grid-area: #{$link};
       }
     }
 
-    .menu-child--wrapper {
-      position: relative;
+    &--allissues {
+      margin-bottom: 2rem;
+    }
 
-      &.wrapper--search-menu {
-        @include visually-hidden;
-        animation: none;
+    &--featured {
+      margin-bottom: 0;
 
-        &.active {
-          @include visually-hidden-reset;
-          @include menu-animation;
-          z-index: $z-slicknav-panel-open;
-        }
+      &::after {
+        content: "";
+        display: block;
+        border-bottom: 1px solid $c-border-grey-blue;
+        transition: width 1s ease-in-out width;
       }
+    }
 
-      .menu-item-close {
+    &--popular {
+      border-top: 1px solid $c-border-grey-blue;
+    }
+
+    &--collections::after {
+      @include breakpoint($bp-medium-plus) {
+        border-bottom: none;
+      }
+    }
+  }
+
+  // Using nth-child because this styles are grid layout related.
+
+  &__item:nth-child(1) {
+    @include breakpoint($bp-medium-plus) {
+      margin-right: 1rem;
+    }
+  }
+
+  &__item:nth-child(2) {
+    position: relative;
+
+    &::before {
+      @include breakpoint($bp-medium-plus) {
+        content: "";
         display: block;
         position: absolute;
-        top: 24px;
-        right: 24px;
-        width: 20px;
-        height: 20px;
-        background: url("../images/x-large.svg") left center no-repeat transparent;
-        background-size: 20px 20px;
-        cursor: pointer;
-        text-indent: -9999px;
+        height: auto;
+        width: 1px;
+        border-left: 1px solid $c-border-grey-blue;
+        top: 1rem;
+        bottom: 0;
+        left: -3rem;
+      }
+
+      @include breakpoint($bp-full) {
+        top: -90px;
       }
     }
+  }
 
-    .menu-item {
-      .menu-item-close {
+  &__item:nth-child(4) {
+    @include breakpoint($bp-medium) {
+      margin-bottom: 4rem;
+    }
+
+    @include breakpoint($bp-medium-plus) {
+      margin-bottom: 0;
+    }
+  }
+
+  &__item:nth-child(5) {
+    @include breakpoint($bp-medium) {
+      position: relative;
+      margin-left: 2rem;
+    }
+
+    @include breakpoint($bp-medium-plus) {
+      margin-left: 0;
+    }
+
+    &::before {
+      @include breakpoint($bp-medium) {
+        content: "";
+        display: block;
+        position: absolute;
+        height: auto;
+        width: 1px;
+        border-left: 1px solid #d5d9de;
+        top: 1rem;
+        bottom: 0;
+        left: -2rem;
+      }
+
+      @include breakpoint($bp-medium-plus) {
         display: none;
       }
     }
-    // for debugging only.
-    //&.research > .menu-child--wrapper {
-    //  @include visually-hidden-reset;
-    //
-    //  .menu-child--wrapper {
-    //    @include visually-hidden-reset;
-    //  }
-    //}
   }
 
-  .menu-child--wrapper {
-    background: $c-grey-pale;
-    height: auto;
-    right: 0;
-    // position open menu panel behind open quicklinks panel
-    z-index: $z-quicklinks-open-page;
-    width: 800px;
-
-    @include breakpoint($new-large) {
-      width: 999px;
+  &__item:nth-child(6) {
+    .mag-submenu {
+      margin-bottom: 1.5rem;
     }
+  }
 
-    &.wrapper--search-menu {
-      background: none;
-      width: 650px !important;
-      //right: -82px;
-      //border: 1px solid #ececec;
-      .home-search__form {
-        position: relative;
-        .home-search__form-input {
-          width: 100%;
-        }
-        .home-search__form-submit {
-          position: absolute;
-          top: 17px;
-          right: 5px;
-        }
+  &__item:nth-child(7) {
+    @include breakpoint($bp-medium-plus) {
+      .mag-submenu {
+        margin-bottom: 1.5rem;
       }
     }
   }
 
-  [data-level="level-0"] > .menu-child--label {
-    @include eyebrow;
-    &:after {
-      background: $c-white;
-    }
-    color: $c-white;
-    background: $c-teal;
-    //float: left;
-    box-sizing: border-box;
-    height: 48px;
-    line-height: 48px;
-    transform: rotate(90deg);
-    transform-origin: 0px 0px 0px;
-    padding: 0 24px;
-    width: 400px;
-    margin-top: 1px;
-
-
-    @each $area, $color, $color2 in $areas {
-      &[data-section="section-#{$area}"] {
-        background: $color;
-      }
-    }
+  &__no-link + .mag-submenu {
+    margin-top: .5rem;
   }
 
+  &__link {
+    line-height: 32px;
+    width: calc(100% - 20px);
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
 
-}
-
-// When Header Navigation is sticky
-.fixed-nav {
-  [block="block-ucsf-mag-main-menu-desktop"] {
-    .menu-item {
-      a {
-        // Reduce the height of element
-        line-height: $nav-line-height-sticky;
-      }
+    // specificity modification
+    #{$block} & {
+      color: $c-dark-navy;
     }
-    // Minimized search icon for sticky nav
-    .search {
-      a {
-        background-size: $search-icon-sticky;
-        max-width: $search-icon-sticky;
-      }
-    }
-  }
-}
 
-// Level One Hover/Active state.
-[block="block-ucsf-mag-main-menu-desktop"] {
-  > .menu-item > a {
-    &.is-active,
-    &:active,
     &:hover {
-      border-bottom: $hover-border-size solid $c-blue-link;
-      padding-bottom: 0; // padding bottom is replaced by the border bottom
-    }
-  }
-
-  > .menu-item.search > a {
-    &.is-active,
-    &:active,
-    &:hover {
-      border-bottom: 0; // padding bottom is replaced by the border bottom
-    }
-  }
-
-  /*
-  > .menu-item > span {
-    &:active,
-    &:hover {
-      border-bottom: $hover-border-size solid $blue;
-    }
-  }
-  */
-  > .menu-item:first-child > a {
-    margin-left: 0;
-  }
-}
-
-.path-news, //Search
-.page-node-type-article,
-.page-node-type-magazine-article,
-.page-node-type-news-package,
-.page-node-type-trending,
-.page-node-type-author {
-  [block="block-ucsf-mag-main-menu-desktop"] {
-    > .menu-item > a {
-      &[href="/news"] {
-        border-bottom: $hover-border-size solid $c-blue-link;
-        padding-bottom: 0;
-      }
-    }
-  }
-}
-
-// Level 0 - Dropdown box 1st Column.
-[block="block-ucsf-mag-main-menu-desktop"] {
-
-  [data-level="level-0"] > .menu-child--menu {
-    display: block;
-    //margin-top: 64px;
-    width: 350px;
-
-    @include breakpoint($new-large) {
-      width: 464px;
+      text-decoration: underline;
     }
 
-    .menu-item {
-      border-bottom: 1px solid #d5d9de;
-      display: block;
-      margin-left: 73px;
+    // top level li
+    &--alt {
+      @include magazine-eyebrow;
+      text-decoration: underline;
+      text-underline-offset: .3rem;
+      margin: 0; // to make link more centered
+      line-height: 48px;
 
-    }
+      &:hover  {
+        color: $c-blue-link;
 
-    .menu-item--expanded {
-      > a,
-      > span span {
-        border: 0;
-        display: inline-block;
-        width: calc(100% - 22px);
-
-        &:hover {
-          color: $c-blue-link;
+        .icon-home {
+          filter: $filter-c-blue-link;
         }
       }
 
-      // Icon angle right
-      .fa-angle-right {
-        display: inline-block;
-        line-height: 32px;
-        height: 48px;
-        padding: 8px 0;
-        width: 16px;
+      #{$block}__item--latest & {
+        @include breakpoint($bp-medium-plus) {
+          justify-content: start;
+        }
       }
+    }
 
-      // Icon angle right on menu item hover
-      &:hover .fa-angle-right {
+    // Making sure that external icon wraps to new line with the word.
+    &.ext {
+      display: inline-block;
+    }
+  }
+
+  &__no-link {
+    position: relative;
+    font-family: $font-helvetica-neue-light;
+    font-size: 1.5rem;
+    color: $c-dark-navy;
+    margin-bottom: 0;
+    line-height: 66px;
+
+    &:hover {
+      @include breakpoint(max-width $bp-medium-plus) {
         color: $c-blue-link;
       }
     }
+  }
 
-    a {
-      @include link-colors($c-navy, $c-blue-link);
-      display: block;
-      font-family: $font-helvetica-neue-light;
-      font-size: 18px;
-      line-height: 32px;
-      height: auto;
-      margin: 0;
-      padding: $space 0;
-      padding-right: 20px;
+  .icon-home {
+    background-size: 1.5rem;
+    width: 1.375rem;
+    height: 1.375rem;
+    margin-left: .5rem;
+
+    @include breakpoint($bp-medium-plus) {
+      margin-left: 0;
+      margin-right: .5rem;
     }
 
-    span.ext {
+    @include breakpoint($bp-xl) {
       position: absolute;
-      height: 32px;
-      right: 0;
-      top: 20%;
+      margin-left: -2.3rem;
     }
   }
 }
 
-// Level-1 Expanded menu 2nd column.
-[block="block-ucsf-mag-main-menu-desktop"] {
-  [data-level="level-1"] {
-    position: absolute;
-    right: 0;
-    top: 48px;
-    width: 450px;
+.mag-nav .slicknav_btn {
+  position: relative;
+  float: left
+}
 
-    @include breakpoint($new-large) {
-      width: 535px;
-    }
+.menu-item--expanded .mag-menu__no-link {
+  &::after {
+    width: 0%;
 
-    .menu-child--menu {
-      padding-right: 80px;
-      padding-left: 0;
+    @include breakpoint($bp-medium-plus) {
       width: 100%;
-      animation: none;
-      .menu-item {
-        margin-left: 80px;
-      }
-    }
-
-    .menu-child--label {
-      @include eyebrow;
-      margin-left: 80px;
-      //margin-top: 74px;
-
-      &:after {
-        content: none;
-      }
     }
   }
 }
+
+// External link
+.ext {
+  .mag-menu__link--alt & {
+    background-size: 15px;
+    width: 15px;
+    height: 15px;
+  }
+
+  .mag-menu__link--alt:hover & {
+    background-size: 15px;
+  }
+
+  .mag-submenu__link & {
+    background-size: 12px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .mag-submenu__link:hover & {
+    background-size: 12px;
+    background-image: url("/themes/custom/ucsf/assets/images/external-link.svg");
+  }
+
+  // Visit UCSF News Center link - Start
+  // link inside the header
+  .mag-nav__ucsf-news & {
+    @include breakpoint($bp-medium) {
+      display: block;
+      width: 1rem;
+      height: auto;
+    }
+
+    @include breakpoint($bp-large) {
+      width: 10px;
+      background-size: 14px 14px;
+      margin-left: .5rem;
+      padding-right: 20px;
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  // Needed more specificity
+  .mag-nav__ucsf .mag-nav__ucsf-news:hover & {
+    @include breakpoint($bp-large) {
+      background-size: 14px 14px;
+    }
+  }
+
+  // link inside menu panel
+  .mag-nav__ucsf-news--menu & {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    background-size: 25px 25px;
+    padding-right: 45px;
+    align-self: center;
+
+    @include breakpoint($bp-medium-plus) {
+      width: 14px;
+      height: 14px;
+      background-size: 14px;
+      padding-right: 25px;
+    }
+  }
+
+  .mag-nav__ucsf-news--menu:hover & {
+    filter: $filter-c-blue-link;
+    width: 2rem;
+    height: 2rem;
+    background-size: 25px 25px;
+
+    @include breakpoint($bp-medium-plus) {
+      width: 14px;
+      height: 14px;
+      background-size: 14px;
+      padding-right: 25px;
+    }
+  }
+
+ // Visit UCSF News Center link - End
+}
+
+// Visit UCSF News Center ( inside menu panel ).
+.mag-nav__ucsf-news--menu {
+  font-size: 1.125rem;
+  font-family: $font-helvetica-neue-medium;
+  line-height: 77px;
+  display: flex;
+  justify-content: space-between;
+
+  @include breakpoint($bp-medium-plus) {
+    @include magazine-eyebrow;
+    display: flex;
+    width: max-content;
+    float: right;
+  }
+
+  &:hover {
+    @include breakpoint($bp-medium-plus) {
+      text-decoration: underline;
+    }
+  }
+
+  // Needed more specificity
+  .mag-menu__menu & {
+    color: $c-dark-navy;
+
+    &:hover {
+      color: $c-blue-link;
+    }
+  }
+}
+
+.mag-nav__ucsf-give--menu {
+  display: block;
+  position: relative;
+  width: calc(100% + (#{$page-gutter} * 2)); // busting out of the container
+  margin-left: -#{$page-gutter}; //aligning to the left
+
+  @include breakpoint($bp-large) {
+    display: block;
+  }
+
+  @include breakpoint($bp-medium-plus) {
+    display: none;
+  }
+
+  /*---------------In this section---------------------*\
+    MENU "GIVE" BUTTON
+  \*---------------------------------------------------*/
+  .universal-header__give {
+    padding-left: $page-gutter;
+    padding-right: $page-gutter;
+    // specificity war
+    .mag-nav__ucsf & {
+      background-position-x: calc(100% - 15px); // icon needs to be flush with the right edge
+      background-size: 38px;
+    }
+
+    @include breakpoint($bp-large) {
+      width: calc(100% + (#{$page-gutter} * 2)); // busting out of the container
+      float: none;
+      color: $white;
+      width: 100%;
+      text-align: left;
+      font-family: $font-helvetica-neue-medium;
+      background: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg) center no-repeat #007cbe;
+      background-size: 38px;
+      background-position-x: calc(100% - 15px); // icon needs to be flush with the right edge
+    }
+
+    @include breakpoint($bp-medium-plus) {
+      display: none;
+    }
+  }
+}
+
+
+.mag-submenu {
+  // variable to print .mag-menu
+  $block: &;
+
+  &__menu {
+    padding: 0;
+  }
+
+  &__item {
+    line-height: 18px;
+    margin-bottom: 16px;
+  }
+
+  &__link {
+    font-family: $font-helvetica-neue-roman;
+    font-size: 0.9rem;
+
+    // specificity modification
+    #{$block} & {
+      color: $c-gulf-blue;
+    }
+
+  }
+
+  .mag-menu__item--featured & {
+    display: none;
+    visibility: hidden;
+
+    @include breakpoint($bp-medium-plus) {
+      display: block;
+      visibility: visible;
+    }
+  }
+
+  // Mobile dropdown
+  .mag-menu__item--active & {
+    display: block;
+    visibility: visible;
+  }
+}
+
+.latest-issue a {
+  display: block;
+  padding-bottom: 0;
+  color: $c-gulf-blue;
+
+  img {
+    margin-top: 24px;
+    margin-bottom: 13px;
+  }
+}
+

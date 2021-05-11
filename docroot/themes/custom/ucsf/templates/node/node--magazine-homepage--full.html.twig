@@ -6,36 +6,38 @@
 
 {% set body_classes = not node.isPublished() ? "node--unpublished" %}
 
-<header class="basic-header magazine-homepage-banner {{ banner_image }} {{ body_classes}}">
-  <div class="magazine-homepage-banner__header">
-    <h1 class="magazine-homepage-banner__title">{{ label }}</h1>
+{% if not no_page_banner %}
+  <header class="basic-header magazine-homepage-banner {{ banner_image }} {{ body_classes}}">
+    <div class="magazine-homepage-banner__header">
+      <h1 class="magazine-homepage-banner__title">{{ label }}</h1>
 
-    {% if content.field_issue_title|render|striptags != ''  %}
-      <div class="magazine-issue-banner">
-      {{ content.field_issue_cover }}
+      {% if content.field_issue_title|render|striptags != ''  %}
+        <div class="magazine-issue-banner">
+        {{ content.field_issue_cover }}
 
-        <div class="magazine-issue-banner__content">
-          <h2 class="magazine-issue-banner__title">{{ content.field_issue_title }}</h2>
-          {{ content.field_issue_description }}
+          <div class="magazine-issue-banner__content">
+            <h2 class="magazine-issue-banner__title">{{ content.field_issue_title }}</h2>
+            {{ content.field_issue_description }}
 
-          <h3 class="magazine-issue-banner__about-title">About this Issue:</h3>
-          <p class="magazine-issue-banner__about-desc">
-          {{ content.field_volume_issue }}
+            <h3 class="magazine-issue-banner__about-title">About this Issue:</h3>
+            <p class="magazine-issue-banner__about-desc">
+            {{ content.field_volume_issue }}
 
-          {% if node.field_editorial_team is not empty %}
-          <br />
-          {{ content.field_editorial_team }}
-          {% endif %}
+            {% if node.field_editorial_team is not empty %}
+            <br />
+            {{ content.field_editorial_team }}
+            {% endif %}
 
-          </p>
-          {% if node.field_issue_download_pdf is not empty %}
-          <p class="magazine-issue-banner__download">{{ content.field_issue_download_pdf }}</p>
-          {% endif %}
+            </p>
+            {% if node.field_issue_download_pdf is not empty %}
+            <p class="magazine-issue-banner__download">{{ content.field_issue_download_pdf }}</p>
+            {% endif %}
+          </div>
         </div>
-      </div>
-    {% endif %}
-  </div>
-</header>
+      {% endif %}
+    </div>
+  </header>
+{% endif %}
 
 <div class="full-width-page-wrapper">
   <main class="main">
