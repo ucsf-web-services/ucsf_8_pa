@@ -1,0 +1,36 @@
+.mag-narrow-page {
+  @include breakpoint($new-large) {
+    .main-content {
+      @include grid;
+
+      &.narrow-page {
+        @include grid-fifteen;
+      }
+
+      grid-template-rows: auto auto;
+    }
+  }
+
+  &__header {
+    @include breakpoint($new-large) {
+      grid-column: 1 / -1;
+    }
+
+    .node--unpublished & {
+      background-color: #fdecf0 !important;
+    }
+  }
+
+  &__body {
+    @include breakpoint($new-large) {
+      grid-column: 4 / -4;
+      max-width: $mag-page-narrow;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .node--unpublished & {
+      background-color: #fdecf0 !important;
+    }
+  }
+}
