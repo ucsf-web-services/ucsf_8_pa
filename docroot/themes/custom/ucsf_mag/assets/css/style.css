@@ -392,7 +392,7 @@ html {
       margin-bottom: 4rem; } }
   @media (min-width: 970px) {
     .mag-menu__item:nth-child(4) {
-      margin-bottom: 0; } }
+      margin-bottom: 1rem; } }
   @media (min-width: 600px) {
     .mag-menu__item:nth-child(5) {
       position: relative;
@@ -416,13 +416,15 @@ html {
       display: none; } }
   .mag-menu__item:nth-child(6) .mag-submenu {
     margin-bottom: 1.5rem; }
+    @media (min-width: 970px) {
+      .mag-menu__item:nth-child(6) .mag-submenu {
+        margin-bottom: 0; } }
   @media (min-width: 970px) {
     .mag-menu__item:nth-child(7) .mag-submenu {
-      margin-bottom: 1.5rem; } }
+      margin-bottom: 0; } }
   .mag-menu__no-link + .mag-submenu {
     margin-top: .5rem; }
   .mag-menu__link {
-    line-height: 32px;
     width: calc(100% - 20px);
     display: -webkit-box;
     display: -ms-flexbox;
@@ -447,6 +449,10 @@ html {
       text-underline-offset: .3rem;
       margin: 0;
       line-height: 48px; }
+      @media (min-width: 970px) {
+        .mag-menu__link--alt {
+          line-height: 32px;
+          margin-bottom: 18px; } }
       .mag-menu__link--alt:hover {
         color: #0071ad; }
         .mag-menu__link--alt:hover .icon-home {
@@ -462,25 +468,23 @@ html {
   .mag-menu__no-link {
     position: relative;
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-    font-size: 1.5rem;
     color: #121a31;
-    margin-bottom: 0;
-    line-height: 66px; }
+    margin-bottom: 0; }
     @media (max-width: 970px) {
       .mag-menu__no-link:hover {
         color: #0071ad; } }
+    .mag-menu .mag-menu__no-link {
+      font-size: 1.5rem;
+      line-height: 66px; }
   .mag-menu .icon-home {
     background-size: 1.5rem;
     width: 1.375rem;
     height: 1.375rem;
     margin-left: .5rem; }
-    @media (min-width: 970px) {
-      .mag-menu .icon-home {
-        margin-left: 0;
-        margin-right: .5rem; } }
     @media (min-width: 1280px) {
       .mag-menu .icon-home {
         position: absolute;
+        margin-right: .5rem;
         margin-left: -2.3rem; } }
 
 .mag-nav .slicknav_btn {
@@ -629,12 +633,18 @@ html {
 .mag-submenu__item {
   line-height: 18px;
   margin-bottom: 16px; }
+  @media (min-width: 970px) {
+    .mag-submenu__item {
+      line-height: 20px;
+      margin-bottom: 18px; } }
 
 .mag-submenu__link {
   font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   font-size: 0.9rem; }
   .mag-submenu .mag-submenu__link {
     color: #344160; }
+    .mag-submenu .mag-submenu__link:hover {
+      color: #0071ad; }
 
 .mag-menu__item--featured .mag-submenu {
   display: none;
@@ -652,6 +662,8 @@ html {
   display: block;
   padding-bottom: 0;
   color: #344160; }
+  .latest-issue a:hover {
+    color: #0071ad; }
   .latest-issue a img {
     margin-top: 24px;
     margin-bottom: 13px; }

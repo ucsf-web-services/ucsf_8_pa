@@ -218,7 +218,7 @@
     }
 
     @include breakpoint($bp-medium-plus) {
-      margin-bottom: 0;
+      margin-bottom: 1rem;
     }
   }
 
@@ -254,13 +254,17 @@
   &__item:nth-child(6) {
     .mag-submenu {
       margin-bottom: 1.5rem;
+
+      @include breakpoint($bp-medium-plus) {
+        margin-bottom: 0;
+      }
     }
   }
 
   &__item:nth-child(7) {
-    @include breakpoint($bp-medium-plus) {
-      .mag-submenu {
-        margin-bottom: 1.5rem;
+    .mag-submenu {
+      @include breakpoint($bp-medium-plus) {
+        margin-bottom: 0;
       }
     }
   }
@@ -270,7 +274,7 @@
   }
 
   &__link {
-    line-height: 32px;
+    // line-height: 32px;
     width: calc(100% - 20px);
     display: flex;
     align-items: center;
@@ -290,8 +294,13 @@
       @include magazine-eyebrow;
       text-decoration: underline;
       text-underline-offset: .3rem;
-      margin: 0; // to make link more centered
+      margin: 0;
       line-height: 48px;
+
+      @include breakpoint($bp-medium-plus) {
+        line-height: 32px;
+        margin-bottom: 18px;
+      }
 
       &:hover  {
         color: $c-blue-link;
@@ -317,15 +326,19 @@
   &__no-link {
     position: relative;
     font-family: $font-helvetica-neue-light;
-    font-size: 1.5rem;
     color: $c-dark-navy;
     margin-bottom: 0;
-    line-height: 66px;
+
 
     &:hover {
       @include breakpoint(max-width $bp-medium-plus) {
         color: $c-blue-link;
       }
+    }
+
+    #{$block} & {
+      font-size: 1.5rem;
+      line-height: 66px;
     }
   }
 
@@ -335,13 +348,9 @@
     height: 1.375rem;
     margin-left: .5rem;
 
-    @include breakpoint($bp-medium-plus) {
-      margin-left: 0;
-      margin-right: .5rem;
-    }
-
     @include breakpoint($bp-xl) {
       position: absolute;
+      margin-right: .5rem;
       margin-left: -2.3rem;
     }
   }
@@ -531,6 +540,11 @@
   &__item {
     line-height: 18px;
     margin-bottom: 16px;
+
+    @include breakpoint($bp-medium-plus) {
+      line-height: 20px;
+      margin-bottom: 18px;
+    }
   }
 
   &__link {
@@ -540,8 +554,11 @@
     // specificity modification
     #{$block} & {
       color: $c-gulf-blue;
-    }
 
+      &:hover {
+        color: $c-blue-link;
+      }
+    }
   }
 
   .mag-menu__item--featured & {
@@ -565,6 +582,10 @@
   display: block;
   padding-bottom: 0;
   color: $c-gulf-blue;
+
+  &:hover {
+    color: $c-blue-link;
+  }
 
   img {
     margin-top: 24px;
