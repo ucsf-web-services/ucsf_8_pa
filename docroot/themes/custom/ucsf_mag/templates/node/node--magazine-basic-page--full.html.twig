@@ -1,15 +1,15 @@
 {% set body_classes = not node.isPublished() ? "node--unpublished" %}
 {% set title_classes = 'page-header__title' %}
-<main class="main mag-narrow-page {{ body_classes }}" {{ attributes.addClass(classes) }}>
+<main class="main mag-basic-page {{ body_classes }}" {{ attributes.addClass(classes) }}>
 	<a id="main-content" tabindex="-1"></a>
 
 	<div class="main-content narrow-page">
-		<header class="mag-basic-header mag-narrow-page__header">
+		<header class="mag-basic-header mag-basic-page__header">
 			<div class="mag-basic-header__header">
 				<h1 class="mag-basic-header__title">{{ label }}</h1>
 			</div>
 		</header>
-    <div class="mag-narrow-page__body">{{ content.body }}</div>
+    <div class="mag-basic-page__body">{{ content.body }}</div>
 		{{ content.field_content_panel }}
 	</div>
 </main>
