@@ -22,11 +22,16 @@
   }
 
   &__body {
+    padding-left: $page-gutter;
+    padding-right: $page-gutter;
+
     @include breakpoint($new-large) {
       grid-column: 4 / -4;
       max-width: $mag-page-narrow;
       width: 100%;
       margin: 0 auto;
+      padding-left: 0;
+      padding-right: 0;
     }
 
     .node--unpublished & {
