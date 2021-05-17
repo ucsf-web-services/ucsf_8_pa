@@ -21,7 +21,12 @@
   }
 
   &__subtitle {
-    @include fs-heading-three($c-dark-navy, $font-helvetica-neue-light);
+    @include fs-heading-three;
+    font-size: 28px;
     margin: 8px 0;
+
+    @include breakpoint(600px) {
+      font-size: 32px;
+    }
   }
 }
