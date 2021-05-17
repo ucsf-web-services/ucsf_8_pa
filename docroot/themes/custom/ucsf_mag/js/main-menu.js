@@ -14,7 +14,8 @@
     };
 
     const $navbar = $(".mag-nav");
-    const menuId = document.querySelector(".mag-menu").getAttribute("id");
+    const $menu = $(".mag-menu");
+    const menuId = $menu.attr("id");
     const $navToggle = $(".nav-toggle");
     $navToggle.attr("aria-controls", menuId);
     const $subnavToggle = $(".subnav-toggle");
@@ -35,6 +36,43 @@
       } else {
         setAria($this, "false");
       }
+    });
+
+    // Close menu if user clicks on empty space below.
+    $menu.bind('click', function(event) {
+      if($(event.target).closest('.mag-menu__menu').length === 0) {
+        $navToggle.removeClass("nav-toggle--active");
+        $navbar.removeClass("mag-nav--active");
+        setAria($navToggle, "false");
+        $navToggle.focus();
+      }
+    });
+
+    // Close menu when user tabbed out of it.
+    $menu.on('focusout', function () {
+      // Delay to ensure that new element is in focus.
+      setTimeout(function () {
+        // When browser can't find activeElement it returns <body> or null
+        // which triggers the false positive for document.activeElement.closest('.mag-menu') === null
+        if (
+          document.activeElement === document.body ||
+          document.activeElement === null
+          ) {
+          return;
+        }
+
+        // Close the menu if the currently focused el.
+        //  is not inside the menu
+        if (
+          document.activeElement.closest('.combined-header-region') === null
+        ) {
+          console.log("out");
+          $navToggle.removeClass("nav-toggle--active");
+          $navbar.removeClass("mag-nav--active");
+          setAria($navToggle, "false");
+          $navToggle.focus()
+        }
+      }, 150);
     });
 
     // Only execute subnav extend / collapse code in mobile
