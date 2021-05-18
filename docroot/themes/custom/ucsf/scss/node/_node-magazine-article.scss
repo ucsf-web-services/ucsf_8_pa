@@ -204,7 +204,7 @@ body.page-node-type-magazine-article #block-ucsf-content {
   }
 
   // Overwriting default strong and em font
-  dom-twocolumn-layout,
+  // dom-twocolumn-layout,
   .layout__heading,
   .paragraph--type--column-content h2,
   .caption-drupal-entity,
@@ -220,7 +220,7 @@ body.page-node-type-magazine-article #block-ucsf-content {
     }
   }
 
-  dom-twocolumn-layout,
+  // dom-twocolumn-layout,
   .layout__heading,
   .paragraph--type--column-content h2,
   .caption-drupal-entity,
@@ -233,6 +233,35 @@ body.page-node-type-magazine-article #block-ucsf-content {
     em {
       font-family: $font-helvetica-neue-light;
       font-style: italic;
+    }
+  }
+
+  @for $column-number from 1 through 4 {
+    .layout-columns__#{$column-number} {
+      // In column layout use Ivar if italic/bold text is not modified
+      strong {
+        font-family: $font-ivar;
+        font-weight: $fw-bold;
+      }
+
+      em {
+        font-family: $font-ivar-italic;
+        font-style: normal;
+      }
+
+      // In column layout - use Helvetica if bold/italic text has been modified:
+      // such as - used as image caption, used as small text.
+      .field-image-caption strong,
+      .small-text strong {
+        font-family: $font-helvetica-neue-medium;
+        font-weight: normal;
+      }
+
+      .field-image-caption em,
+      .small-text em {
+        font-family: $font-helvetica-neue-roman;
+        font-style: italic;
+      }
     }
   }
 
