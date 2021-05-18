@@ -1,0 +1,30 @@
+{% set body_classes = not node.isPublished() ? "node--unpublished" %}
+{% set title_classes = 'page-header__title' %}
+<main class="main mag-basic-page {{ body_classes }}" {{ attributes.addClass(classes) }}>
+	<a id="main-content" tabindex="-1"></a>
+
+	<div class="main-content narrow-page">
+		<header class="mag-basic-header mag-basic-page__header">
+			<div class="mag-basic-header__header">
+				<h1 class="mag-basic-header__title">{{ label }}</h1>
+        {% if content.field_mag_page_sub_title|render|striptags != ''  %}
+          <h2 class="mag-basic-header__subtitle">{{ content.field_mag_page_sub_title.0 }}</h2>
+        {% endif %}
+			</div>
+		</header>
+    <div class="mag-basic-page__body">{{ content.body }}</div>
+		{{ content.field_content_panel }}
+	</div>
+</main>
+
+{% if content.field_footer_tabs_events_columne|render|striptags != ''  %}
+	<div class="narrow-page-full-width-wrapper" role="complementary">
+		{{ content.field_footer_tabs_events_columne }}
+	</div>
+{% endif %}
+
+{% if content.field_ankle_cta|render|striptags != ''  %}
+	<div class="footer-ctas-wrapper footer-ctas-wrapper--mag" role="complementary">
+		{{ content.field_ankle_cta }}
+	</div>
+{% endif %}

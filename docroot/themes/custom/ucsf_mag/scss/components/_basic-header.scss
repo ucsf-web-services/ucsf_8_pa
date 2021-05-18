@@ -1,0 +1,37 @@
+// Header style shared by Page content types
+.mag-basic-header {
+  @include wrapper;
+
+  background: $c-grey-pale;
+  margin-bottom: $space-five;
+  padding: 20px;
+  color: $c-dark-navy;
+
+  @include breakpoint($new-small) {
+    padding: $space-five;
+    margin-bottom: $space-ten;
+  }
+
+  @include breakpoint($new-large) {
+    padding: $space-ten;
+  }
+
+  &__title {
+    @include fs-heading($c-dark-navy);
+  }
+
+  &__subtitle {
+    @include fs-heading-three;
+    font-size: 28px;
+    margin: 8px 0;
+
+    @include breakpoint(600px) {
+      font-size: 32px;
+    }
+
+    strong {
+      font-family: $font-granjon;
+      font-weight: 600;
+    }
+  }
+}
