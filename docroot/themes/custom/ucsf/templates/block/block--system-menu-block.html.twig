@@ -31,6 +31,7 @@
  * http://www.w3.org/TR/WCAG-TECHS/H42.html for more information.
  */
 #}
+
 {%
   set classes = [
     'block',
@@ -39,6 +40,10 @@
     'menu--' ~ derivative_plugin_id|clean_class,
   ]
 %}
+{# External Link module is configured in the ui to look for .menu--main
+  if you need .ext icon add that class or add your own class through UI
+  https://ucsf.edu/admin/config/user-interface/extlink
+#}
 {% set heading_id = attributes.id ~ '-menu'|clean_id %}
 <nav aria-labelledby="{{ heading_id }}"{{ attributes.addClass(classes)|without('role', 'aria-labelledby') }}>
   {# Label. If not displayed, we still provide it for screen readers. #}
@@ -48,9 +53,8 @@
   {{ title_prefix }}
   <h2{{ title_attributes.setAttribute('id', heading_id) }}>{{ configuration.label }}</h2>
   {{ title_suffix }}
-
-  {# Menu. #}
   {% block content %}
     {{ content }}
   {% endblock %}
 </nav>
+
