@@ -45,7 +45,8 @@
           menu_attributes.item.class ? menu_attributes.item.class
         ]
       %}
-      <li{{ item.attributes.addClass(classes) }}
+
+      <li{{ item.attributes.addClass(classes, (menu_level > 0) ? 'dropdown-menu__item' : 'menu-top-level__item') }}
         {% if menu_attributes.item.id %}
           {{ item.attributes.setAttribute('id', menu_attributes.item.id) }}
         {% endif %}
@@ -54,7 +55,7 @@
         {% endif %}
       >
         {% if menu_attributes.link is empty %}
-          {{ link(item.title, item.url) }}
+          {{ link(item.title, item.url, { 'class':[(menu_level > 0) ? 'main-navigation__link dropdown-menu__link' : 'main-navigation__link' ]}) }}
         {% else %}
           {{ link(item.title, item.url, menu_attributes.link) }}
         {% endif %}
