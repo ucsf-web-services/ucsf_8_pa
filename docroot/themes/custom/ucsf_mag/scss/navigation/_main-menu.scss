@@ -158,6 +158,9 @@
 
     &--allissues {
       margin-bottom: 2rem;
+      @include breakpoint($bp-medium-plus) {
+        margin-bottom: 1rem;
+      }
     }
 
     &--featured {
@@ -422,13 +425,6 @@
     background-size: 25px 25px;
     padding-right: 45px;
     align-self: center;
-
-    @include breakpoint($bp-medium-plus) {
-      width: 14px;
-      height: 14px;
-      background-size: 14px;
-      padding-right: 25px;
-    }
   }
 
   .mag-nav__ucsf-news--menu:hover & {
@@ -436,19 +432,12 @@
     width: 2rem;
     height: 2rem;
     background-size: 25px 25px;
-
-    @include breakpoint($bp-medium-plus) {
-      width: 14px;
-      height: 14px;
-      background-size: 14px;
-      padding-right: 25px;
-    }
   }
 
  // Visit UCSF News Center link - End
 }
 
-// Visit UCSF News Center ( inside menu panel ).
+// Visit UCSF News Center ( mobile/tablet ).
 .mag-nav__ucsf-news--menu {
   font-size: 1.125rem;
   font-family: $font-helvetica-neue-medium;
@@ -457,16 +446,7 @@
   justify-content: space-between;
 
   @include breakpoint($bp-medium-plus) {
-    @include magazine-eyebrow;
-    display: flex;
-    width: max-content;
-    float: right;
-  }
-
-  &:hover {
-    @include breakpoint($bp-medium-plus) {
-      text-decoration: underline;
-    }
+    display: none;
   }
 
   // Needed more specificity
