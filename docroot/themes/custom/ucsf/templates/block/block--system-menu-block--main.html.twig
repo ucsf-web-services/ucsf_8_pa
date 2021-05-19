@@ -37,7 +37,8 @@
     'block-menu',
     'navigation',
     'menu--' ~ derivative_plugin_id|clean_class,
-    'main-nav',
+    'desktop' not in configuration.label|lower ? 'main-menu--mobile',
+    'main-nav'
   ]
 %}
 {% set heading_id = attributes.id ~ '-menu'|clean_id %}
