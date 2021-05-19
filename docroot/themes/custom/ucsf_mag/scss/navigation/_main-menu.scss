@@ -26,7 +26,7 @@
   $block: &;
   $universal-header-height: 40px;
   // top level menu links, these are used to assign a grid aria to menu li
-  $links: latest, features, insights, voices, allissues, popular, collections;
+  $links: home, features, insights, voices, allissues, popular, collections;
 
   width: 100%;
   position: absolute;
@@ -96,7 +96,7 @@
   &__menu {
     display: grid;
     grid-template-areas:
-      "latest"
+      "home"
       "features"
       "insights"
       "voices"
@@ -115,7 +115,7 @@
       grid-template-columns: 1fr 1fr;
       grid-template-rows: repeat(3, min-content) auto auto;
       grid-template-areas:
-        "latest   allissues"
+        "home   allissues"
         "features allissues"
         "insights allissues"
         "voices allissues"
@@ -127,7 +127,7 @@
       grid-template-columns: 25.5% 2rem repeat(4, 1fr);
       grid-template-rows: min-content auto auto;
       grid-template-areas:
-        "latest . features insights voices allissues"
+        "home . features insights voices allissues"
         "popular . features insights voices allissues"
         "collections . features insights voices allissues";
       column-gap: 2rem;
@@ -310,7 +310,7 @@
         }
       }
 
-      #{$block}__item--latest & {
+      #{$block}__item--home & {
         @include breakpoint($bp-medium-plus) {
           justify-content: start;
         }
