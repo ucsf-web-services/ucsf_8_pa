@@ -1,0 +1,46 @@
+.mag-basic-page {
+  @include breakpoint($new-large) {
+    .main-content {
+      @include grid;
+
+      &.narrow-page {
+        @include grid-fifteen;
+      }
+
+      grid-template-rows: auto auto;
+    }
+  }
+
+  &__header {
+    @include breakpoint($new-large) {
+      grid-column: 1 / -1;
+    }
+
+    .node--unpublished & {
+      background-color: #fdecf0 !important;
+    }
+  }
+
+  &__body {
+    padding-left: $page-gutter;
+    padding-right: $page-gutter;
+    color: $c-dark-navy;
+
+    @include breakpoint($new-large) {
+      grid-column: 4 / -4;
+      max-width: $mag-page-narrow;
+      width: 100%;
+      margin: 0 auto;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .node--unpublished & {
+      background-color: #fdecf0 !important;
+    }
+  }
+
+  h2 {
+    color: $c-dark-navy;
+  }
+}
