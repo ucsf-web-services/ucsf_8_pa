@@ -2,44 +2,49 @@
 {% set layout = term.field_banner_layout.value %}
 {% set no_page_title = no_page_title ? no_page_title : '' %}
 <div class="magazine-topic-issue-page magazine-topic-page">
-<main {{ attributes.addClass(classes) }}>
-  <a id="main-content" tabindex="-1"></a>
-  <div class="magazine-topic-page">
-        <header class="magazine-topic-page__header">
-          {% if no_page_title != true %}
-            <h1 class="magazine-topic-page__header-title">UCSF Magazine <span class="magazine-topic-page__header-subtitle">{{ name }}</span></h1>
-          {% else %}
-            <h1 class="magazine-topic-page__header-title--alt">{{ name }}</h1>
-          {% endif %}
-        </header>
+	<main {{ attributes.addClass(classes) }}>
+		<a id="main-content" tabindex="-1"></a>
+		<div class="magazine-topic-page">
+			<header class="magazine-topic-page__heade mag-basic-header">
+				{% if no_page_title != true %}
+					<h1 class="magazine-topic-page__header-title">UCSF Magazine
+						<span class="magazine-topic-page__header-subtitle">{{ name }}</span>
+					</h1>
+				{% else %}
+					<h1 class="mag-basic-header__title">{{ name }}</h1>
+				{% endif %}
+				{% if content.field_mag_page_sub_title|render|striptags != ''  %}
+					<div class="mag-basic-header__subtitle">{{ content.field_mag_page_sub_title.0 }}</div>
+				{% endif %}
+			</header>
 
-      {% if layout == 'featuretwosupport' %}
-        {% include '@theme/banner/magazine-feature-two-support.twig' %}
-      {% elseif layout == 'featurethreesupport' %}
-        {% include '@theme/banner/magazine-feature-three-support.twig' %}
-      {% else %}
+			{% if layout == 'featuretwosupport' %}
+				{% include '@theme/banner/magazine-feature-two-support.twig' %}
+			{% elseif layout == 'featurethreesupport' %}
+				{% include '@theme/banner/magazine-feature-three-support.twig' %}
+				{% else %}
 
-      {% endif %}
+			{% endif %}
 
-    <div class="topic-page-wrapper magazine-topics-latest">
-          <h2 class="magazine-topics-latest__title">The Latest</h2>
+			<div class="topic-page-wrapper magazine-topics-latest">
+				<h2 class="magazine-topics-latest__title">The Latest</h2>
 
-          <div class="news-list">
-            {% block article_view %}
+				<div class="news-list">
+					{% block article_view %}
 
-              {% if layout == 'featuretwosupport' or layout == 'featurethreesupport' %}
-                {{ drupal_view('topics_tags_news_articles', 'block_2') }}
-              {% else %}
-                {{ drupal_view('topics_tags_news_articles', 'block_4') }}
-              {% endif %}
+						{% if layout == 'featuretwosupport' or layout == 'featurethreesupport' %}
+							{{ drupal_view('topics_tags_news_articles', 'block_2') }}
+						{% else %}
+							{{ drupal_view('topics_tags_news_articles', 'block_4') }}
+						{% endif %}
 
-            {% endblock %}
-          </div>
-    </div>
-  </div>
-</main>
+					{% endblock %}
+				</div>
+			</div>
+		</div>
+	</main>
 </div>
 
 <div class="footer-ctas-wrapper magazine-topic-footer-ctas-wrapper" role="complementary">
-  {{ content.field_ankle_cta }}
+	{{ content.field_ankle_cta }}
 </div>
