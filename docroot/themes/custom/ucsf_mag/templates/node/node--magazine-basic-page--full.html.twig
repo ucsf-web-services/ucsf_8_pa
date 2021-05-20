@@ -5,12 +5,10 @@
 
 	<div class="main-content narrow-page">
 		<header class="mag-basic-header mag-basic-page__header">
-			<div class="mag-basic-header__header">
-				<h1 class="mag-basic-header__title">{{ label }}</h1>
-        {% if content.field_mag_page_sub_title|render|striptags != ''  %}
-          <div class="mag-basic-header__subtitle">{{ content.field_mag_page_sub_title.0 }}</div>
-        {% endif %}
-			</div>
+      <h1 class="mag-basic-header__title">{{ label }}</h1>
+      {% if content.field_mag_page_sub_title|render|striptags != ''  %}
+        <div class="mag-basic-header__subtitle">{{ content.field_mag_page_sub_title.0 }}</div>
+      {% endif %}
 		</header>
     <div class="mag-basic-page__body">{{ content.body }}</div>
 		{{ content.field_content_panel }}
