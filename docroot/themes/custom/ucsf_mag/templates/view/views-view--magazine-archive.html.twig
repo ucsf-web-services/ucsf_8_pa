@@ -1,0 +1,64 @@
+{%
+  set classes = [
+    'view-' ~ id|clean_class,
+    'view-display-id-' ~ display_id,
+  ]
+%}
+
+<main{{attributes.addClass(classes)}}>
+  <a id="main-content" tabindex="-1"></a>
+
+	{{ title_prefix }}
+	{% if title %}
+		{{ title }}
+	{% endif %}
+	{{ title_suffix }}
+	{% if header %}
+		<div class="view-header">
+			{{ header }}
+		</div>
+	{% endif %}
+	{% if exposed %}
+		<a class="filter-toggle collapsed" data-toggle="collapse" href="#filters" aria-expanded="true">Filter by</a>
+		<div class="filters collapse" id="filters">
+			{{ exposed }}
+		</div>
+	{% endif %}
+	{% if attachment_before %}
+		<div class="attachment attachment-before">
+			{{ attachment_before }}
+		</div>
+	{% endif %}
+
+	{% if rows %}
+		<div class="view-content">
+			{{ rows }}
+		</div>
+	{% elseif empty %}
+		<div class="view-empty">
+			{{ empty }}
+		</div>
+	{% endif %}
+
+	{% if pager %}
+		{{ pager }}
+	{% endif %}
+	{% if attachment_after %}
+		<div class="attachment attachment-after">
+			{{ attachment_after }}
+		</div>
+	{% endif %}
+	{% if more %}
+		{{ more }}
+	{% endif %}
+	{% if footer %}
+		<div class="view-footer">
+			{{ footer }}
+		</div>
+	{% endif %}
+	{% if feed_icons %}
+		<div class="feed-icons">
+			{{ feed_icons }}
+		</div>
+	{% endif %}
+</main>
