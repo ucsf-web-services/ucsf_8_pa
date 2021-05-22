@@ -1,4 +1,4 @@
-.field-ankle-cta {
+.field-ankle-cta { // PL: .footer-ctas
   h2,
   h3 {
     strong {
@@ -18,5 +18,34 @@
   h2 {
     @include fs-articles-title;
     color: $c-dark-navy;
+  }
+
+  // Magazine needed footer to brake into two columns sooner then default uscf
+  @include breakpoint(850px) {
+    @include grid-two;
+    grid-gap: 0;
+    > .field__item { // PL: .footer-cta
+      float: none;
+      width: auto;
+
+      &:first-child {
+        padding-right: 0;
+
+        .field--type-text-with-summary  {
+          border-right: 1px solid $gray-lighter;
+          padding-right: $space-ten;
+        }
+      }
+
+      &:last-child {
+        padding-left: 0;
+
+        .field--type-text-with-summary  {
+          border-left: 1px solid $gray-lighter;
+          padding-left: $space-ten;
+          margin-left: -1px;
+        }
+      }
+    }
   }
 }
