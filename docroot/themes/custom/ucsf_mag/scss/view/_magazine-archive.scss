@@ -8,11 +8,38 @@
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
+
   ul {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: min-content;
-    gap: 3rem 4rem;
+    padding-left: $page-gutter;
+    padding-right: $page-gutter;
+
+    @include breakpoint ($bp-medium) {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: min-content;
+      gap: 3rem 4rem;
+    }
+
+    @include breakpoint ($bp-medium-plus) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @include breakpoint ($full-width-elements) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+  }
+
+  li {
+    margin-bottom: 2.3rem;
+    @include breakpoint ($bp-medium) {
+      margin-bottom: 0;
+    }
+  }
+
+  li:last-child {
+    margin-bottom: 0;
   }
 
   h2 {
@@ -22,6 +49,11 @@
     letter-spacing: 0.2px;
     margin-bottom: 0;
     margin-top: 1rem;
+  }
+
+  .link--cta {
+    display: block;
+    width: max-content;
   }
 
   &__cover:hover ~ .link--cta {

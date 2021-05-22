@@ -1067,11 +1067,29 @@ html {
   width: 100%;
   margin: 0 auto; }
   .magazine-archive ul {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: -webkit-min-content;
-    grid-auto-rows: min-content;
-    gap: 3rem 4rem; }
+    padding-left: 20px;
+    padding-right: 20px; }
+    @media (min-width: 600px) {
+      .magazine-archive ul {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: -webkit-min-content;
+        grid-auto-rows: min-content;
+        gap: 3rem 4rem; } }
+    @media (min-width: 970px) {
+      .magazine-archive ul {
+        grid-template-columns: repeat(4, 1fr); } }
+    @media (min-width: 1320px) {
+      .magazine-archive ul {
+        padding-left: 0;
+        padding-right: 0; } }
+  .magazine-archive li {
+    margin-bottom: 2.3rem; }
+    @media (min-width: 600px) {
+      .magazine-archive li {
+        margin-bottom: 0; } }
+  .magazine-archive li:last-child {
+    margin-bottom: 0; }
   .magazine-archive h2 {
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 1.13rem;
@@ -1079,6 +1097,11 @@ html {
     letter-spacing: 0.2px;
     margin-bottom: 0;
     margin-top: 1rem; }
+  .magazine-archive .link--cta {
+    display: block;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content; }
   .magazine-archive__cover:hover ~ .link--cta {
     background-position: 100% center; }
   .magazine-archive__cover:hover ~ .link--cta ~ .link--cta {
@@ -1246,5 +1269,32 @@ body.page-node-type-magazine-homepage h1 {
   @media (min-width: 600px) {
     .field-ankle-cta h2 {
       font-size: 36px; } }
+
+@media (min-width: 850px) {
+  .field-ankle-cta {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-gap: 5%;
+    grid-row-gap: 0;
+    grid-gap: 0; } }
+  @media (min-width: 850px) and (min-width: 600px) {
+    .field-ankle-cta {
+      grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+@media (min-width: 850px) {
+    .field-ankle-cta > .field__item {
+      float: none;
+      width: auto; }
+      .field-ankle-cta > .field__item:first-child {
+        padding-right: 0; }
+        .field-ankle-cta > .field__item:first-child .field--type-text-with-summary {
+          border-right: 1px solid #d1d3d3;
+          padding-right: 80px; }
+      .field-ankle-cta > .field__item:last-child {
+        padding-left: 0; }
+        .field-ankle-cta > .field__item:last-child .field--type-text-with-summary {
+          border-left: 1px solid #d1d3d3;
+          padding-left: 80px;
+          margin-left: -1px; } }
 
 /*# sourceMappingURL=style.css.map */
