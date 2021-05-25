@@ -40,9 +40,9 @@ function _replace_metatag_magazine_fallback_image(array &$attachments) {
   }
 
   // Fallback image.
-  // TODO: Add the image to the theme and reference it here.
   $host = \Drupal::request()->getHost();
-  $fallback_image = "https://$host/themes/custom/ucsf_mag/assets/images/ucsf-magazine-social.jpg";
+  $theme_dir = drupal_get_path('theme', 'ucsf_mag');
+  $fallback_image = "https://$host/$theme_dir/assets/images/ucsf-magazine-social-share-image.jpg";
   // Metatags that need to be overwritten.
   $tags_to_overwrite = ['twitter_cards_image', 'og_image_secure_url', 'og_image', 'image_src'];
 
