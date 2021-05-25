@@ -1,0 +1,90 @@
+.view-recommended-books-videos-podcasts {
+  .item-list > ul {
+    list-style: none;
+    margin-top: 0;
+    padding-left: $page-gutter;
+    padding-right: $page-gutter;
+    color: $c-dark-navy;
+
+    @include breakpoint ($new-large) {
+      grid-column: 1/-1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-rows: auto;
+      gap: 0 5%;
+      padding-left: $space-five;
+      padding-right: $space-five;
+    }
+  }
+
+  .item-list > ul > li {
+    @include breakpoint($new-x-small) {
+      width: 48%;
+      float: left;
+      margin-left: 2%;
+    }
+
+    @include breakpoint($new-large) {
+      width: 100%;
+      margin-left: 0;
+      float: none;
+    }
+  }
+
+  .item-list li:nth-child(2n+1) {
+    @include breakpoint($new-x-small) {
+      clear: left;
+      margin-right: 2%;
+      margin-left: 0;
+    }
+
+    @include breakpoint($new-large) {
+      margin-right: 0;
+      float: none;
+    }
+  }
+
+  figure {
+    display: none;
+    @include breakpoint ($new-x-small) {
+      display: block;
+    }
+  }
+
+  .news-card {
+    border-bottom: 1px solid $c-gray-lighter;
+    @include breakpoint ($new-x-small) {
+      margin-bottom: 40px;
+      border-bottom: none;
+    }
+  }
+
+  .news-card__link {
+    margin-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .news-card__copy {
+    margin-top: 16px;
+    margin-left: 0;
+    padding-left: 0;
+    padding-top: 0;
+    margin-right: 0;
+    padding-bottom: 16px;
+
+    @include breakpoint ($new-x-small) {
+      padding: 20px 0;
+      margin-top: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .article-affiliation {
+    color: $magazine-gray-blue;
+
+    &::before  {
+      background-color: $magazine-gray-blue;
+    }
+  }
+}
