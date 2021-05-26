@@ -41,4 +41,4 @@ go to /admin/structure/block
     - Resources;
 
 5 Change "Alumni Stories" link inside the Magazine menu to
- https://alumni.ucsf.edu/stories
+https://alumni.ucsf.edu/stories

@@ -5,22 +5,28 @@
  {% set has_mag_subscribe = "magazine-hub-inside--has-form" %}
  {% set mag_subscribe_form = "magazine-hub-inside__form" %}
 {% endif %}
-
+{% set no_page_title = no_page_title ? no_page_title : '' %}
 <div class="magazine-topic-issue-page magazine-issue-page">
 	<main {{ attributes.addClass(classes) }}>
 		<a id="main-content" tabindex="-1"></a>
 		<div class="magazine-topic-page">
 			<header class="basic-header magazine-homepage-banner {{ banner_image }} {{ body_classes}}">
 				<div class="magazine-homepage-banner__header">
-					<h1 class="magazine-homepage-banner__title">UCSF Magazine
-						<span class="magazine-issue-page__header-subtitle">{{ name }}</span>
-					</h1>
+					{% if no_page_title != true %}
+            <h1 class="magazine-homepage-banner__title">UCSF Magazine
+              <span class="magazine-issue-page__header-subtitle">{{ name }}</span>
+            </h1>
+          {% else %}
+            <h1 class="magazine-homepage-banner__title--alt">{{ name }}</h1>
+          {% endif %}
 
 					<div class="magazine-issue-banner">
 						{{ content.field_issue_cover }}
 
 						<div class="magazine-issue-banner__content">
-							<h2 class="magazine-issue-banner__title">{{ name }}</h2>
+              {% if no_page_title != true %}
+							  <h2 class="magazine-issue-banner__title">{{ name }}</h2>
+              {% endif %}
 							{{ content.field_issue_description }}
 
 							<h3 class="magazine-issue-banner__about-title">About this Issue:</h3>
@@ -153,9 +159,9 @@
 
 			<div class="magazine-inside-hub">
 				<div class="magazine-inside-hub__heading">
-					<h2>Inside UCSF</h2>
+					<h2>UCSF News</h2>
 					<p class="magazine-inside-hub__heading-more">
-						<a href="/news" class="link--cta">Visit the News Center</a>
+						<a href="https://ucsf.edu/news" class="link--cta">Visit the News Center</a>
 					</p>
 				</div>
 				{{ content.field_inside_ucsf }}
@@ -163,7 +169,6 @@
 
 		</div>
 	</main>
-
   {% if content.field_ankle_cta.0 %}
     {# Magazine signup #}
     <div class="footer-ctas-wrapper magazine-issue-footer-ctas-wrapper" role="complementary">

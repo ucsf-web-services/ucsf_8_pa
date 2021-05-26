@@ -40,9 +40,9 @@ function _replace_metatag_magazine_fallback_image(array &$attachments) {
   }
 
   // Fallback image.
-  // TODO: Add the image to the theme and reference it here.
   $host = \Drupal::request()->getHost();
-  $fallback_image = "https://$host/themes/custom/ucsf_mag/assets/images/ucsf-magazine-social.jpg";
+  $theme_dir = drupal_get_path('theme', 'ucsf_mag');
+  $fallback_image = "https://$host/$theme_dir/assets/images/ucsf-magazine-social-share-image.jpg";
   // Metatags that need to be overwritten.
   $tags_to_overwrite = ['twitter_cards_image', 'og_image_secure_url', 'og_image', 'image_src'];
 
@@ -78,4 +78,17 @@ function _get_current_controller_entity() {
     }
   }
   return NULL;
+}
+
+/**
+ * Implements template_preprocess_node().
+ */
+function ucsf_mag_preprocess_node(&$variables) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  $path_alias = \Drupal::service('path.alias_manager')
+    ->getAliasByPath($current_path);
+  // If magazine homepage
+  if ($path_alias == '/magazine') {
+    $variables['no_page_banner'] = true;
+  }
 }

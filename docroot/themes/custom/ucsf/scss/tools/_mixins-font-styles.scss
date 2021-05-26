@@ -27,14 +27,14 @@
   }
 }
 
-@mixin fs-body {
-  font-family: $font-helvetica-neue-light;
+@mixin fs-body ($color: $c-navy, $font-family: $font-helvetica-neue-light) {
+  font-family: $font-family;
   font-size: 18px;
   font-style: normal;
   font-stretch: normal;
   line-height: 32px;
   letter-spacing: 0.2px;
-  color: $c-navy;
+  color: $color;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -49,22 +49,22 @@
   line-height: 82px;
 }
 
-@mixin fs-article-medium-h1 {
-  @include fs-heading-sm;
+@mixin fs-article-medium-h1 ($font-family: $font-granjon) {
+  @include fs-heading-sm($font-family);
 
   @include font-large {
     @include fs-heading-two-md;
   }
 }
 
-@mixin fs-heading {
+@mixin fs-heading ($color: $navy, $font-family: $font-helvetica-neue-light)  {
   @include font-smooth;
 
-  font-family: $font-helvetica-neue-light;
+  font-family: $font-family;
   font-size: 32px;
   line-height: 1.25;
   letter-spacing: -0.6px;
-  color: $navy;
+  color: $color;
 
   @include font-large {
     font-size: 56px;
@@ -72,14 +72,14 @@
   }
 }
 
-@mixin fs-heading-latest-topic {
+@mixin fs-heading-latest-topic ($color: $navy, $font-family: $font-helvetica-neue-light) {
   @include font-smooth;
 
-  font-family: $font-helvetica-neue-light;
+  font-family: $font-family;
   font-size: 29px;
   line-height: 1.25;
   letter-spacing: -0.6px;
-  color: $navy;
+  color: $color;
 
   @include font-large {
     font-size: 48px;
@@ -92,47 +92,48 @@
   letter-spacing: -1px;
 }
 
-@mixin fs-heading-sm {
+@mixin fs-heading-sm ($font-family: $font-granjon) {
   @include font-smooth;
-  font-family: $font-granjon;
+  font-family: $font-family;
   font-size: 31px;
   line-height: 1.2em;
   letter-spacing: -0.6px;
 }
 
-@mixin fs-heading-blockquote {
-  @include fs-heading-sm;
+@mixin fs-heading-blockquote ($font-family: $font-granjon) {
+  @include fs-heading-sm ($font-family);
 
   @include font-large {
     @include fs-heading-blockquote-md;
   }
 }
 
+
 @mixin fs-heading-two-md {
   font-size: 56px;
   letter-spacing: -1.2px;
 }
 
-@mixin fs-heading-two-sm {
+@mixin fs-heading-two-sm ($color: $c-navy, $font-family: $font-granjon) {
   @include font-smooth;
-  font-family: $font-granjon;
+  font-family: $font-family;
   font-size: 28px;
   line-height: 1;
   letter-spacing: -0.6px;
-  color: $c-navy;
+  color: $color;
 }
 
-@mixin fs-heading-two {
-  @include fs-heading-two-sm;
+@mixin fs-heading-two ($color: $c-navy, $font-family: $font-granjon) {
+  @include fs-heading-two-sm ($color, $font-family);
 
   @include font-large {
     @include fs-heading-two-md;
   }
 }
 
-@mixin fs-heading-three {
-  color: $c-navy;
-  font-family: $font-granjon;
+@mixin fs-heading-three ($color: $c-navy, $font-family: $font-granjon) {
+  color: $color;
+  font-family: $font-family;
   font-size: 28px;
   font-weight: normal;
   line-height: 1.2em;
@@ -143,8 +144,8 @@
   }
 }
 
-@mixin fs-articles-title {
-  font-family: $font-helvetica-neue-light;
+@mixin fs-articles-title ($font-family: $font-helvetica-neue-light) {
+  font-family: $font-family;
   font-size: 24px;
   line-height: 1.4;
   letter-spacing: -0.8px;
@@ -154,8 +155,8 @@
   }
 }
 
-@mixin fs-articles-title-hthree {
-  font-family: $font-helvetica-neue-light;
+@mixin fs-articles-title-hthree ($font-family: $font-helvetica-neue-light) {
+  font-family: $font-family;
   font-size: 20px;
   line-height: 1.4;
   font-weight: 500;
@@ -165,8 +166,8 @@
   }
 }
 
-@mixin fs-articles-title-hfour {
-  font-family: $font-helvetica-neue-light;
+@mixin fs-articles-title-hfour ($font-family: $font-helvetica-neue-light) {
+  font-family: $font-family;
   font-size: 18px;
   line-height: 1.4;
   font-weight: 500;
@@ -177,8 +178,8 @@
   }
 }
 
-@mixin fs-articles-title-hfive {
-  font-family: $font-helvetica-neue-medium;
+@mixin fs-articles-title-hfive ($font-family: $font-helvetica-neue-medium) {
+  font-family: $font-family;
   font-size: 16px;
   line-height: 1.4;
   font-weight: 500;
@@ -189,8 +190,8 @@
   }
 }
 
-@mixin fs-articles-title-hsix {
-  font-family: $font-helvetica-neue-medium;
+@mixin fs-articles-title-hsix ($font-family: $font-helvetica-neue-medium) {
+  font-family: $font-family;
   font-size: 16px;
   line-height: 1.2;
   font-weight: 500;
@@ -201,10 +202,10 @@
   }
 }
 
-@mixin fs-display {
+@mixin fs-display ($font-family: $font-granjon) {
   @include font-smooth;
 
-  font-family: $font-granjon;
+  font-family: $font-family;
   font-size: 40px;
   line-height: 1;
   letter-spacing: -1px;
@@ -215,23 +216,23 @@
   }
 }
 
-@mixin fs-filter-label {
-  font-family: $font-helvetica-neue-bold;
+@mixin fs-filter-label ($font-family: $font-helvetica-neue-bold) {
+  font-family: $font-family;
   font-size: 12px;
   letter-spacing: 1.6px;
   line-height: 16px;
   text-transform: uppercase;
 }
 
-@mixin fs-option-label {
-  font-family: $font-helvetica-neue-light;
+@mixin fs-option-label ($font-family: $font-helvetica-neue-light) {
+  font-family: $font-family;
   font-size: 14px;
   letter-spacing: .16px;
   line-height: 14px;
 }
 
-@mixin fs-small-title {
-  font-family: $font-helvetica-neue-medium;
+@mixin fs-small-title ($font-family: $font-helvetica-neue-medium) {
+  font-family: $font-family;
   font-size: $font-size;
   margin-top: $space;
   letter-spacing: -0.2px;
@@ -241,8 +242,8 @@
   }
 }
 
-@mixin fs-small-body {
-  font-family: $font-helvetica-neue-roman;
+@mixin fs-small-body ($font-family: $font-helvetica-neue-roman) {
+  font-family: $font-family;
   font-size: 14px;
   line-height: 1.71;
   letter-spacing: 0.3px;
@@ -254,8 +255,8 @@
   margin-bottom: 16px;
 }
 
-@mixin fs-trending {
-  @include fs-heading-sm;
+@mixin fs-trending ($font-family: $font-granjon) {
+  @include fs-heading-sm ($font-family);
 
   @include font-large {
     @include fs-trending-md;

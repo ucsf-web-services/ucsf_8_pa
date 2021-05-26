@@ -1,0 +1,46 @@
+// Icon SVG styles
+//
+// Documentation about Sass functions https://sass-lang.com/documentation/at-rules/control
+// Documentation about Sass Placeholder Selectors https://sass-lang.com/documentation/style-rules/placeholder-selectors
+// Testing how Sass will compile to css https://www.sassmeister.com
+//
+// Variables and placeholders used
+// @param $icon-styles - a sass list of icon styles.
+// @param #{$item} - current item from $icon-styles iterated over by the @each loop
+
+$icon-styles: home;
+
+// Styles common to all icons
+@each $item in $icon-styles {
+  .icon-#{$item} {
+    content: ' ';
+    display: inline-block;
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: $space-six $space-six;
+    height: 10px;
+    width: 10px;
+  }
+}
+
+// Generates current item's svg name from the list of icon styles
+@each $item in $icon-styles {
+  .icon-#{$item} {
+    background-image: url(/themes/custom/ucsf_mag/assets/images/#{$item}.svg);
+  }
+}
+
+// pure css ^ icon
+.accordion-arrow {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid $c-dark-navy;
+  border-right: 2px solid $c-dark-navy;
+  transform: rotate(135deg);
+
+  .mag-menu__item--active & {
+    transform: rotate(-45deg);
+  }
+}

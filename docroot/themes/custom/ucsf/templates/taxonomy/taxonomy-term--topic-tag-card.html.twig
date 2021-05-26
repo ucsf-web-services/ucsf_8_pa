@@ -1,3 +1,5 @@
-<li class="topic-card" style="background: url('{{ file_url(term.field_taxonomy_card_image.entity.field_media_image.entity.uri.value | image_style('topic__card')) }}') no-repeat transparent center top"><a href="{{ url }}">
+{% set image_url = term.field_taxonomy_card_image.entity.field_media_image.entity.uri.value ? term.field_taxonomy_card_image.entity.field_media_image.entity.uri.value : term.field_issue_cover.entity.field_media_image.entity.uri.value %}
+{% set image_style = term.field_taxonomy_card_image.entity.field_media_image.entity.uri.value ? 'topic__card' : 'magazine_issue_cover' %}
+<li class="topic-card" style="background: url('{{ file_url(image_url | image_style(image_style)) }}') no-repeat transparent center top"><a href="{{ url }}">
   <span>{{ name }}</span></a>
 </li>

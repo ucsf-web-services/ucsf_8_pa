@@ -1,0 +1,11 @@
+{% extends "@ucsf/block/block--system-menu-block.html.twig" %}
+{% set  title_classes = [
+  'mag-menu__title',
+  'header-mag-menu__title'
+] %}
+{# External Link module is configured in the ui to look for .menu--main
+  if you need .ext icon add that class or add your own class through UI
+  https://ucsf.edu/admin/config/user-interface/extlink
+#}
+{% set  attributes = attributes.addClass('mag-menu header-mag-menu menu--main') %}
+{% set  title_attributes = title_attributes.setAttribute('class', title_classes) %}
