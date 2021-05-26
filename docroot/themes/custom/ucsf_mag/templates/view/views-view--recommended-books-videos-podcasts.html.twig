@@ -37,7 +37,7 @@
   'view-id-' ~ id,
   'view-display-id-' ~ display_id,
   dom_id ? 'js-view-dom-id-' ~ dom_id,
-  'recommended-books-videos-podcasts',
+  'recommended-media',
 ]
 %}
 
@@ -50,15 +50,11 @@
     {% endif %}
     {{ title_suffix }}
     {% if header %}
-      <div class="recommended-books-videos-podcasts__header">
+      <div class="recommended-media__header">
         {{ header }}
       </div>
     {% endif %}
-    {% if exposed %}
-      <div class="view-filters">
-        {{ exposed }}
-      </div>
-    {% endif %}
+    {# Removed exposed filter, because for this view we are hardcoding a filter in view header #}
     {% if attachment_before %}
       <div class="attachment attachment-before">
         {{ attachment_before }}
@@ -66,7 +62,7 @@
     {% endif %}
 
     {% if rows %}
-      <div class="recommended-books-videos-podcasts__wrapper">
+      <div class="recommended-media__wrapper">
         {{ rows }}
       </div>
     {% elseif empty %}

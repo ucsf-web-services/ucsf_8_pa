@@ -1,4 +1,46 @@
-.view-recommended-books-videos-podcasts {
+.recommended-media {
+
+  &__filter {
+    padding-left: $page-gutter;
+
+
+    @include breakpoint($new-x-small) {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: $space-five;
+    }
+
+
+
+    &-title {
+      @include fs-heading($c-dark-navy);
+      margin-bottom: 0;
+    }
+
+    &-items {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+    }
+
+    a {
+      @include magazine-eyebrow;
+      margin-left: 1rem;
+      padding: 8px;
+      background: $c-grey-pale;
+      color: $c-dark-navy;
+    }
+
+    .first-child {
+      margin-left: 0;
+
+      @include breakpoint($new-x-small) {
+        margin-left: 1.5rem;
+      }
+    }
+  }
+
   .item-list > ul {
     list-style: none;
     margin-top: 0;
