@@ -15,12 +15,10 @@ Compile and watch for changes to sass files. docroot/themes/custom/ucsf_mag
 $ npm start
 ```
 
-### Temporary Workflow 5/11/2021
+### Temporary Workflow 5/26/2021
 1. Set Magazine theme as your default.
 2. Create issue branches off of  `magazine` branch
-3. merge `MAG-133-review` into your issue branch (this has the newest styling based on feedback for the MAG-133)
-
-4. Enable theme specific blocks
+3. Enable theme specific blocks
 go to /admin/structure/block
 
 ##### Header Region:
@@ -39,6 +37,3 @@ go to /admin/structure/block
 ###### Blocks to disable.
     - Get Involved;
     - Resources;
-
-5 Change "Alumni Stories" link inside the Magazine menu to
-https://alumni.ucsf.edu/stories
