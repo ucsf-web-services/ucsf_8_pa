@@ -7,7 +7,6 @@
     @include breakpoint($new-x-small) {
       display: flex;
       flex-direction: row;
-      align-items: center;
       margin-bottom: $space-five;
     }
 
@@ -17,7 +16,6 @@
 
     &-title {
       @include fs-heading($c-dark-navy);
-      font-size: 36px;
       margin-bottom: 0;
     }
 
@@ -25,6 +23,12 @@
       list-style: none;
       padding-left: 0;
       display: flex;
+      align-self: end;
+
+      @include breakpoint($new-x-small) {
+        margin-top: 0;
+        margin-bottom: 1rem;
+      }
     }
 
     a {
@@ -44,7 +48,7 @@
       margin-left: 0;
 
       @include breakpoint($new-x-small) {
-        margin-left: 1.5rem;
+        margin-left: 60px;
       }
     }
   }
@@ -128,6 +132,10 @@
       margin-left: 0;
       margin-right: 0;
     }
+  }
+
+  .news-card__copy h2 {
+    color: $c-dark-navy;
   }
 
   .article-affiliation {
