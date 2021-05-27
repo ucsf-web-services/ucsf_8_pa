@@ -3,10 +3,8 @@
 namespace Drupal\stage_file_proxy;
 
 use Drupal\Component\Utility\UrlHelper;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\StreamWrapper\PublicStream;
-use Drupal\Core\StreamWrapper\StreamWrapperManager;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
@@ -38,20 +36,12 @@ class FetchManager implements FetchManagerInterface {
   protected $logger;
 
   /**
-   * The config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
-  /**
    * {@inheritdoc}
    */
-  public function __construct(Client $client, FileSystemInterface $file_system, LoggerInterface $logger, ConfigFactoryInterface $config_factory) {
+  public function __construct(Client $client, FileSystemInterface $file_system, LoggerInterface $logger) {
     $this->client = $client;
     $this->fileSystem = $file_system;
     $this->logger = $logger;
-    $this->configFactory = $config_factory;
   }
 
   /**
@@ -118,13 +108,13 @@ class FetchManager implements FetchManagerInterface {
    * {@inheritdoc}
    */
   public function styleOriginalPath($uri, $style_only = TRUE) {
-    $scheme = StreamWrapperManager::getScheme($uri);
+    $scheme = $this->fileSystem->uriScheme($uri);
     if ($scheme) {
-      $path = StreamWrapperManager::getTarget($uri);
+      $path = file_uri_target($uri);
     }
     else {
       $path = $uri;
-      $scheme = $this->configFactory->get('system.file')->get('default_scheme');
+      $scheme = file_default_scheme();
     }
 
     // It is a styles path, so we extract the different parts.

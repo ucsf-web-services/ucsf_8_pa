@@ -4,7 +4,6 @@ namespace Drupal\stage_file_proxy\EventSubscriber;
 
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\StreamWrapper\StreamWrapperManager;
 use Drupal\Core\Url;
 use Drupal\stage_file_proxy\EventDispatcher\AlterExcludedPathsEvent;
 use Drupal\stage_file_proxy\FetchManagerInterface;
@@ -113,11 +112,6 @@ class ProxySubscriber implements EventSubscriberInterface {
       return;
     }
 
-    // Moving to parent directory is insane here, so prevent that.
-    if (in_array('..', explode('/', $request_path))) {
-      return;
-    }
-
     $alter_excluded_paths_event = new AlterExcludedPathsEvent([]);
     $this->eventDispatcher->dispatch('stage_file_proxy.alter_excluded_paths', $alter_excluded_paths_event);
     $excluded_paths = $alter_excluded_paths_event->getExcludedPaths();
@@ -151,7 +145,7 @@ class ProxySubscriber implements EventSubscriberInterface {
       }
       if ($config->get('use_imagecache_root')) {
         // Config says: Fetch the original.
-        $fetch_path = StreamWrapperManager::getTarget($original_path);
+        $fetch_path = file_uri_target($original_path);
       }
     }
 
