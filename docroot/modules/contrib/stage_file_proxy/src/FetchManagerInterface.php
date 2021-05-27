@@ -2,7 +2,6 @@
 
 namespace Drupal\stage_file_proxy;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\File\FileSystemInterface;
 use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
@@ -21,10 +20,8 @@ interface FetchManagerInterface {
    *   The file system.
    * @param \Psr\Log\LoggerInterface $logger
    *   The logger interface.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The configuration factory.
    */
-  public function __construct(Client $client, FileSystemInterface $file_system, LoggerInterface $logger, ConfigFactoryInterface $config_factory);
+  public function __construct(Client $client, FileSystemInterface $file_system, LoggerInterface $logger);
 
   /**
    * Downloads a remote file and saves it to the local files directory.
