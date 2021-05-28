@@ -15,7 +15,7 @@ Compile and watch for changes to sass files. docroot/themes/custom/ucsf_mag
 $ npm start
 ```
 
-### Temporary Workflow 5/26/2021
+### Temporary Workflow 5/28/2021
 1. Set Magazine theme as your default.
 2. Create issue branches off of  `magazine` branch
 3. Enable theme specific blocks
@@ -27,9 +27,12 @@ go to /admin/structure/block
 ###### Blocks to disable.
     - Main navigation;
     - Main navigation - Desktop;
-
+##### Content Region:
+###### Blocks to enable
+    - Magazine Archive Carousel: Magazine Archive Carousel;
+###### Blocks to disable.
+    - Special Notice Concerning COVID-19;
 ##### Footer Region:
-
 ###### Blocks to enable
     - UCSF Magazine;
     - News &amp; Media;
