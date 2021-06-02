@@ -12,6 +12,7 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RedirectDestinationInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
+use Drupal\domain\DomainInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -81,16 +82,6 @@ class DomainListBuilder extends DraggableListBuilder {
   protected $userStorage;
 
   /**
-   * The number of entities to list per page.
-   *
-   * DraggableListBuilder sets this to FALSE, which cancels any pagination.
-   * Restore the default value from EntityListBuilder.
-   *
-   * @var int|false
-   */
-  protected $limit = 50;
-
-  /**
    * {@inheritdoc}
    */
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
@@ -135,6 +126,8 @@ class DomainListBuilder extends DraggableListBuilder {
     $this->moduleHandler = $module_handler;
     $this->domainElementManager = $domain_element_manager;
     $this->userStorage = $this->entityTypeManager->getStorage('user');
+    // DraggableListBuilder sets this to FALSE, which cancels any pagination.
+    $this->limit = 50;
   }
 
   /**
@@ -343,7 +336,7 @@ class DomainListBuilder extends DraggableListBuilder {
     // that allow users to view the entire list.
     if (!$this->currentUser->hasPermission('administer domains') && !$this->currentUser->hasPermission('view domain list')) {
       $user = $this->userStorage->load($this->currentUser->id());
-      $allowed = $this->domainElementManager->getFieldValues($user, DOMAIN_ADMIN_FIELD);
+      $allowed = $this->domainElementManager->getFieldValues($user, DomainInterface::DOMAIN_ADMIN_FIELD);
       $query->condition('id', array_keys($allowed), 'IN');
     }
 

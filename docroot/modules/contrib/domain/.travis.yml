@@ -7,11 +7,13 @@ services:
 matrix:
   fast_finish: true
   include:
-    - env: DRUPAL_BRANCH="8.8.x" drupal" UPDATE_PHPUNIT="composer run-script drupal-phpunit-upgrade" MODULE_LIST="domain domain_access domain_alias domain_config domain_source"
+    - env: DRUPAL_BRANCH="8.8.x" drupal" MODULE_LIST="domain domain_access domain_alias domain_config domain_source"
       php: 7.3
-    - env: DRUPAL_BRANCH="8.9.x" drupal" UPDATE_PHPUNIT="composer run-script drupal-phpunit-upgrade" MODULE_LIST="domain domain_access domain_alias domain_config domain_source"
+    - env: DRUPAL_BRANCH="8.9.x" drupal" MODULE_LIST="domain domain_access domain_alias domain_config domain_source"
       php: 7.3
-    - env: DRUPAL_BRANCH="9.0.x" drupal" UPDATE_PHPUNIT="composer run-script drupal-phpunit-upgrade" MODULE_LIST="domain domain_access domain_alias domain_config domain_source"
+    - env: DRUPAL_BRANCH="9.0.x" drupal" MODULE_LIST="domain domain_access domain_alias domain_config domain_source"
+      php: 7.3
+    - env: DRUPAL_BRANCH="9.1.x" drupal" MODULE_LIST="domain domain_access domain_alias domain_config domain_source"
       php: 7.3
 
 addons:
@@ -50,7 +52,7 @@ before_install:
   # Remove Xdebug. Not an issue for PHP 7.
   - phpenv config-rm xdebug.ini || true
 
-  - composer self-update
+  - composer self-update --1
 
   # Install Drush.
   - composer global require --no-interaction drush/drush:8.*
@@ -72,9 +74,6 @@ before_script:
   # Download Drupal 8 core.
   - git clone --depth=1 --branch $DRUPAL_BRANCH https://git.drupal.org/project/drupal.git
   - cd drupal
-
-  # Update PHPUnit when needed (only 8.7).
-  - $UPDATE_PHPUNIT
 
   # Install dependencies.
   - composer install

@@ -50,15 +50,23 @@ function domain_config_ui_admin_form($op) {
     $route = \Drupal::routeMatch()->getRouteObject();
     // We make a special exception for the themes overview, which is unique.
     // @TODO: make this list extensible.
-    $special = $route->getPath() === '/admin/appearance';
-    if ($route->hasDefault('_form') || $special) {
-      $form_name = $route->getDefault('_form');
-      if (method_exists($form_name, 'getEditableConfigNames') || $special) {
+    $special_form = FALSE;
+    $special_paths = [
+      '/admin/appearance',
+      '/admin/appearance/settings',
+      '/admin/appearance/settings/{theme}',
+    ];
+    if (in_array($route->getPath(), $special_paths, TRUE)) {
+      $special_form = TRUE;
+    }
+    if ($route->hasDefault('_form') || $special_form) {
+      $base_form = $route->getDefault('_form');
+      if ($special_form || (is_callable($base_form, TRUE) && method_exists($base_form, 'getEditableConfigNames'))) {
         $params = [
           'op' => $op,
           'route_name' => \Drupal::routeMatch()->getRouteName(),
         ];
-        foreach (\Drupal::routeMatch()->getParameters() as $key => $value) {
+        foreach (\Drupal::routeMatch()->getRawParameters() as $key => $value) {
           $params[$key] = $value;
         }
         $title = new TranslatableMarkup('Enable domain configuration');
@@ -143,8 +151,13 @@ function domain_config_ui_save_warning_message(array $domain_options = []) {
 function domain_config_ui_path_is_registered() {
   $path_pages = \Drupal::config('domain_config_ui.settings')->get('path_pages');
   // Theme settings pass arguments, so check both path and route.
-  $path = \Drupal::requestStack()->getCurrentRequest()->getPathInfo();
-  return \Drupal::service('path.matcher')->matchPath($path, $path_pages);
+  $path = \Drupal::service('path.current')->getPath();
+
+  // Get internal path without language prefix.
+  $url = Url::fromUri('internal:' . $path);
+  $internal_path = '/' . $url->getInternalPath();
+
+  return \Drupal::service('path.matcher')->matchPath($internal_path, $path_pages);
 }
 
 /**

@@ -74,7 +74,7 @@ class DomainConfigUIController {
       \Drupal::messenger()->addMessage($message);
     }
     else {
-      \Drupal::messenger()->addMessage($this->t('The operation failed.'));
+      \Drupal::messenger()->addError($this->t('The operation failed.'));
     }
     // Return to the invoking page.
     return new RedirectResponse($url->toString(), 302);
@@ -210,7 +210,7 @@ class DomainConfigUIController {
    * Sorts items by parent config.
    */
   public function sortItems($a, $b) {
-    return $a['item'] > $b['item'];
+    return strcmp($a['item'], $b['item']);
   }
 
   /**
