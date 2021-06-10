@@ -1,26 +1,10 @@
-{# Display available on News and News Package content types #}
-{# Display implemented on:
- Fields:
-  News Center > Support Articles (news_center.field_support_articles)
- Views:
-  articles_by_author
-  articles_by_term
-  articles_for_news_center
-  #}
-
-{% set classes = ['news-card'] %}
-{% set primary_area = node.field_primary_area.0.entity.label|clean_class %}
-
-{% set campus_news_subs = ['announcements', 'happenings', 'honors--awards', 'spotlight'] %}
-{% if primary_area in campus_news_subs %}
-  {% set primary_area = 'campus-news' %}
-  {% set primary_area_field = 'Campus News'|t %}
-{% endif %}
+{% set classes = ['news-card news-card--magazine-article magazine-article-card'] %}
 
 {% if node.field_external_url.value.0.uri  %}
  {% set link = node.field_external_url.value.0.uri %}
 {% else %}
  {% set link = url %}
+ {% set exturl = ' remove-ext-url' %}
 {% endif %}
 
 <article {{ attributes.addClass(classes) }} data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
@@ -37,9 +21,9 @@
     {% endif %}
 
     <header class="news-card__copy">
-      {% block byline %}
-        {% include '@theme/article/byline.twig' %}
-      {% endblock %}
+      <p class="magazine-card__byline">
+        {{ content.field_magazine_topic_area }}
+      </p>
       {% if content.field_short_title|render|striptags != ''  %}
         <h2>{{ content.field_short_title }}</h2>
       {% else %}

@@ -1,0 +1,22 @@
+{% if node.field_external_url.value.0.uri  %}
+ {% set link = node.field_external_url.value.0.uri %}
+ {% set exturl = ' ext-url' %}
+{% else %}
+ {% set link = url %}
+ {% set exturl = ' remove-ext-url' %}
+{% endif %}
+
+<div class="recommended-article__image">
+  {{ content.field_card_image }}
+</div>
+<header class="recommended-article__copy">
+  <ul class="article-header__byline{{ exturl }}">
+    <li class="article-header__primary-area article-header__mag-topic-area">{{ content.field_magazine_topic_area }}</li>
+    <li class="article-header__date magazine-article-card__date">{{ content.field_magazine_issue }}</li>
+  </ul>
+  {% if content.field_short_title|render|striptags != ''  %}
+    <h2><a href="{{ link }}">{{ content.field_short_title }}</a></h2>
+  {% else %}
+    <h2><a href="{{ link }}">{{ label }}</a></h2>
+  {% endif %}
+</header>
