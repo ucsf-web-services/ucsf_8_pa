@@ -18,9 +18,7 @@
 
 <div class="tags-menu-region">
   {% if content.field_topics|render or content.field_tags|render %}
-    <h3 class="tags-menu__title">{{ "UCSF News Center Topics"|t }}</h3>
-    <ul class="tags-menu">
-      {{ content.field_topics }} {{ content.field_tags }}
-    </ul>
+    <h3 class="tags-menu__title">{{ "UCSF News Topics"|t }}</h3>
+    {{ drupal_view('ucsf_topics_for_magazine_articles_terms', 'block_1') }}
   {% endif %}
 </div>
