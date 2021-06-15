@@ -1,0 +1,34 @@
+{% set classes = ['news-card'] %}
+
+{% if node.field_external_url.value.0.uri  %}
+ {% set link = node.field_external_url.value.0.uri %}
+{% else %}
+ {% set link = 'https://www.ucsf.edu' ~ path('entity.node.canonical', {'node': node.id}) %}
+{% endif %}
+
+<article {{ attributes.addClass(classes) }} data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
+  <a href="{{ link }}" class="news-card__link">
+
+    {% if content.field_card_image['#items'] is not empty %}
+      {{ content.field_card_image }}
+    {% else %}
+      <figure>
+        <picture class="news-card-background">
+          <img class="element-fade" src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image" height="216" width="384">
+        </picture>
+      </figure>
+    {% endif %}
+
+    <header class="news-card__copy">
+    <ul class="article-header__byline">
+      <li class="article-header__primary-area article-header__mag-topic-area"><span class="article-topic-area">UCSF News</span></li>
+      <li class="article-header__date">{{ content.field_date_and_time }}</li>
+    </ul>
+      {% if content.field_short_title|render|striptags != ''  %}
+        <h2>{{ content.field_short_title }}</h2>
+      {% else %}
+        <h2>{{ label }}</h2>
+      {% endif %}
+    </header>
+  </a>
+</article>

@@ -1,0 +1,24 @@
+{{ content.body }}
+    {{ content.field_content_panel }}
+
+{% if content.field_legacy_gallery|render %}
+  {% set classes = [
+  'paragraph--type--gallery',
+  ] %}
+  {{ attach_library('ucsf/slick_gallery') }}
+  <div class="paragraph-text-block gallery-background-fill"></div>
+  <div{{ attributes.addClass(classes) }}>
+    <div class="gallery-container">
+        {{content.field_legacy_gallery}}
+    </div>
+  </div>
+
+{% endif %}
+
+
+<div class="tags-menu-region">
+  {% if content.field_topics|render or content.field_tags|render %}
+    <h3 class="tags-menu__title">{{ "UCSF News Topics"|t }}</h3>
+    {{ drupal_view('ucsf_topics_for_magazine_articles_terms', 'block_1') }}
+  {% endif %}
+</div>

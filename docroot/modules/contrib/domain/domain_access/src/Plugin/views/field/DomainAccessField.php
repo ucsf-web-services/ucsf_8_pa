@@ -23,7 +23,8 @@ class DomainAccessField extends EntityField {
       foreach ($items as &$item) {
         $object = $item['raw'];
         $entity = $object->getEntity();
-        $url = $entity->toUrl()->toString();
+        // Mark the entity as external to force domain URL prefixing.
+        $url = $entity->toUrl('canonical', ['external' => TRUE])->toString();
         $domain = $item['rendered']['#options']['entity'];
         $item['rendered']['#type'] = 'markup';
         $item['rendered']['#markup'] = '<a href="' . $domain->buildUrl($url) . '">' . $domain->label() . '</a>';
@@ -41,10 +42,10 @@ class DomainAccessField extends EntityField {
     $domainA = isset($a['rendered']['#options']['entity']) ? $a['rendered']['#options']['entity'] : 0;
     $domainB = isset($b['rendered']['#options']['entity']) ? $b['rendered']['#options']['entity'] : 0;
     if ($domainA !== 0) {
-      return $domainA->getWeight() > $domainB->getWeight();
+      return ($domainA->getWeight() > $domainB->getWeight()) ? 1 : 0;
     }
     // We don't have a domain object so sort as best we can.
-    return $a['rendered']['#plain_text'] > $b['rendered']['#plain_text'];
+    return strcmp($a['rendered']['#plain_text'], $b['rendered']['#plain_text']);
   }
 
 }

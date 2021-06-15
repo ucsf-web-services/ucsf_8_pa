@@ -1013,6 +1013,9 @@ html {
   .footer-bottom a:visited,
   .footer-bottom a:link {
     color: #9ba6b6; }
+  @media (min-width: 769px) {
+    .footer-bottom ul {
+      text-align: right; } }
 
 .magazine-topic-issue-page .magazine-topic-page__header-title--alt {
   -webkit-font-smoothing: antialiased;
@@ -1243,13 +1246,11 @@ html {
     padding-left: 0;
     display: -webkit-box;
     display: -ms-flexbox;
-    display: flex;
-    -ms-flex-item-align: end;
-        align-self: end; }
+    display: flex; }
     @media (min-width: 600px) {
       .recommended-media__filter-items {
-        margin-top: 0;
-        margin-bottom: 1rem; } }
+        margin-top: 25px;
+        margin-bottom: 0; } }
   .recommended-media__filter a {
     font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 12px;
@@ -1371,6 +1372,9 @@ body.page-node-type-magazine-homepage h1 {
       margin-bottom: 8px;
       padding-bottom: 0; } }
 
+.page-node-type-magazine-basic-page {
+  background: #fff; }
+
 @media (min-width: 1050px) {
   .mag-basic-page .main-content {
     display: grid;
@@ -1417,6 +1421,18 @@ body.page-node-type-magazine-homepage h1 {
 
 .mag-basic-page h2 {
   color: #121a31; }
+
+.page-node-type-magazine-article .tags-menu__title::after {
+  content: ' ';
+  display: inline-block;
+  width: 0;
+  height: 20px;
+  margin: 0;
+  margin-right: 20px;
+  margin-bottom: -5px;
+  padding-right: 30px;
+  background: url("../images/ext-link-gray.svg") right center no-repeat transparent;
+  background-size: 20px; }
 
 .mag-basic-header {
   max-width: 1440px;

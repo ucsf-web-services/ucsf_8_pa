@@ -9,7 +9,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\domain\DomainInterface;
-use Drupal\domain\DomainNegotiator;
+use Drupal\domain\DomainNegotiatorInterface;
 
 /**
  * Defines the domain entity.
@@ -523,7 +523,7 @@ class Domain extends ConfigEntityBase implements DomainInterface {
   /**
    * {@inheritdoc}
    */
-  public function setMatchType($match_type = DomainNegotiator::DOMAIN_MATCH_EXACT) {
+  public function setMatchType($match_type = DomainNegotiatorInterface::DOMAIN_MATCHED_EXACT) {
     $this->matchType = $match_type;
   }
 
@@ -565,6 +565,18 @@ class Domain extends ConfigEntityBase implements DomainInterface {
       $this->setCanonical();
     }
     return $this->canonical;
+  }
+
+  /**
+   * Prevent render errors when Twig wants to read this object.
+   *
+   * @see \Drupal\Core\Template\TwigExtension::escapeFilter()
+   *
+   * @return string
+   *   The name of the domain being rendered.
+   */
+  public function toString() {
+    return $this->name;
   }
 
 }
