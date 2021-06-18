@@ -4,17 +4,19 @@
  {% set link = 'https://www.ucsf.edu' ~ path('entity.node.canonical', {'node': node.id}) %}
 {% endif %}
 
-<div class="recommended-article__image">
-  {{ content.field_card_image }}
-</div>
-<header class="recommended-article__copy">
-  <ul class="article-header__byline ext-url">
-    <li class="article-header__primary-area article-header__mag-topic-area"><span class="article-topic-area">UCSF News</span></li>
-    <li class="article-header__date">{{ content.field_date_and_time }}</li>
-  </ul>
-  {% if content.field_short_title|render|striptags != ''  %}
-    <h2><a href="{{ link }}">{{ content.field_short_title }}</a></h2>
-  {% else %}
-    <h2><a href="{{ link }}">{{ label }}</a></h2>
-  {% endif %}
-</header>
+<a href="{{ link }}" class="recommended-article__link">
+  <div class="recommended-article__image">
+    {{ content.field_card_image }}
+  </div>
+  <header class="recommended-article__copy">
+    <ul class="article-header__byline ext-url">
+      <li class="article-header__primary-area article-header__mag-topic-area"><span class="article-topic-area">UCSF News</span></li>
+      <li class="article-header__date">{{ content.field_date_and_time }}</li>
+    </ul>
+    {% if content.field_short_title|render|striptags != ''  %}
+      <h2>{{ content.field_short_title }}</h2>
+    {% else %}
+      <h2>{{ label }}</h2>
+    {% endif %}
+  </header>
+</a>

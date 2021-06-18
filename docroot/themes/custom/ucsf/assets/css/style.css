@@ -8065,20 +8065,6 @@ body.loading .quicklinks {
   .has-recommended-article .recommended-articles__banner {
     position: relative;
     padding: 0; }
-    @media (min-width: 850px) {
-      .has-recommended-article .recommended-articles__banner {
-        display: grid;
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-        grid-gap: 5%;
-        grid-row-gap: 0;
-        padding: 0;
-        grid-template-rows: auto;
-        background: #fff;
-        max-width: 1440px; } }
-  @media (min-width: 850px) and (min-width: 850px) {
-    .has-recommended-article .recommended-articles__banner {
-      grid-template-columns: repeat(16, minmax(0, 1fr));
-      grid-gap: 0; } }
 
 @media (max-width: 849px) {
   .recommended-articles__title {
@@ -8091,10 +8077,30 @@ body.loading .quicklinks {
 
 @media (min-width: 850px) {
   .recommended-articles__title {
-    grid-column: 2/7;
-    grid-row: 1;
-    margin: 40px 0;
+    margin: 0 0 40px 0;
+    padding-top: 16px;
     z-index: 2; } }
+
+@media (min-width: 850px) {
+  .recommended-article__link {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-gap: 5%;
+    grid-row-gap: 0;
+    padding: 0;
+    grid-template-rows: auto;
+    background: #fff;
+    max-width: 1440px; } }
+  @media (min-width: 850px) and (min-width: 850px) {
+    .recommended-article__link {
+      grid-template-columns: repeat(16, minmax(0, 1fr));
+      grid-gap: 0; } }
+
+.recommended-article__link:hover h2 {
+  color: #0071ad; }
+
+.page-node-type-magazine-article #block-ucsf-mag-content .recommended-article__link:hover .field--name-title {
+  color: #0071ad; }
 
 .recommended-article__image {
   background-color: transparent;
@@ -8132,9 +8138,6 @@ body.loading .quicklinks {
     line-height: 1.2em;
     letter-spacing: -0.6px;
     line-height: 1.2; }
-    .recommended-article__copy h2 a {
-      text-decoration: none;
-      color: #052049; }
     @media (min-width: 1050px) {
       .recommended-article__copy h2 {
         font-size: fs-heading-two;
