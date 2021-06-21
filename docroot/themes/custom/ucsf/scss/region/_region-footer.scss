@@ -65,6 +65,8 @@
 
   @include breakpoint($new-large) {
     @include grid-three;
+    // overwriting minmax, to get even spacing in column 3
+    grid-template-columns: repeat(3, 1fr);
     float: none;
 
     .logo-follow,
