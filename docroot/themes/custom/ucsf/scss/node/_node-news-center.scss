@@ -363,15 +363,21 @@
   }
 }
 
-  .magazine-article-card__date {
-    &.news-card__date::before {
-      display: none;
-    }
-
-    &.article-header__date::before {
-      display: none;
-    }
+.magazine-article-card__date {
+  &.news-card__date::before {
+    display: none;
   }
+
+  &.article-header__date::before {
+    display: none;
+  }
+}
+
+.magazine-alumni__byline {
+  .news-card__date.article-header__date.magazine-alumni__date::before {
+    display: none;
+  }
+}
 
 a[href*="http"] {
   .field-featured-media-article .news-card__date,
