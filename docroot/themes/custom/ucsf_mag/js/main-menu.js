@@ -43,6 +43,7 @@
       if($(event.target).closest('.mag-menu__menu').length === 0) {
         $navToggle.removeClass("nav-toggle--active");
         $navbar.removeClass("mag-nav--active");
+        $('body').removeClass('has-fixed-nav');
         setAria($navToggle, "false");
         $navToggle.focus();
       }
