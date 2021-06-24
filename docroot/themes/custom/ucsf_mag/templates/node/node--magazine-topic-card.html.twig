@@ -1,0 +1,35 @@
+{% set classes = ['news-card news-card--magazine-article magazine-article-card'] %}
+
+{% if node.field_external_url.value.0.uri  %}
+ {% set link = node.field_external_url.value.0.uri %}
+{% else %}
+ {% set link = url %}
+ {% set exturl = ' remove-ext-url' %}
+{% endif %}
+
+<article {{ attributes.addClass(classes) }} data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
+  <a href="{{ link }}" class="news-card__link">
+
+    {% if content.field_card_image['#items'] is not empty %}
+      {{ content.field_card_image }}
+    {% else %}
+      <figure>
+        <picture class="news-card-background">
+          <img class="element-fade" src="/themes/custom/ucsf/assets/images/card/transparent-news-card.png" alt="Placeholder image" height="216" width="384">
+        </picture>
+      </figure>
+    {% endif %}
+
+    <header class="news-card__copy">
+    <ul class="article-header__byline magazine-card__byline{{ exturl }}">
+      <li class="article-header__mag-topic-area">{{ content.field_magazine_topic_area }}</li>
+      <li class="article-header__date magazine-article-card__date">{{ content.field_magazine_issue }}</li>
+    </ul>
+      {% if content.field_short_title|render|striptags != ''  %}
+        <h2>{{ content.field_short_title }}</h2>
+      {% else %}
+        <h2>{{ label }}</h2>
+      {% endif %}
+    </header>
+  </a>
+</article>

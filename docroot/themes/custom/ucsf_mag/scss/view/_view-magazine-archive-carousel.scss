@@ -1,0 +1,135 @@
+.block-views-blockmagazine-archive-carousel-block-1 {
+  background-color: $c-grey-pale;
+}
+
+.view-magazine-archive-carousel {
+  max-width: 1440px;
+  padding: $space-five $page-gutter;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+
+  @include breakpoint ($new-small) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .view-header {
+    max-width: 1320px;
+
+    @include breakpoint ($new-small) {
+      margin-left: $space-five;
+    }
+
+    @include breakpoint ($new-large) {
+      margin-left: $space-ten;
+    }
+  }
+
+  .topics-list__title {
+    @include fs-heading($c-dark-navy);
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .topics-list__description {
+    color: $magazine-gray-blue;
+  }
+
+  .topics-list__view-all {
+    @include breakpoint ($new-small) {
+      padding-right: $page-gutter;
+    }
+
+    @include breakpoint ($full-width-elements) {
+      padding-right: calc(#{$page-gutter} * 2);
+    }
+  }
+
+  .topics-list__topics-wrapper-space-bottom {
+    background-color: transparent;
+  }
+
+  .slick-slider .slick-slide {
+    width: 330px;
+  }
+
+  .slick-slider .slick-arrow {
+    height: 24px;
+    width: 24px;
+    top: 58%;
+  }
+
+
+  .slick-slider .slick-prev {
+    @include breakpoint ($new-small) {
+      left: 17px;
+    }
+
+    @include breakpoint ($new-large) {
+      left: 56px;
+    }
+
+    @include breakpoint ($full-width-elements) {
+      left: 57px;
+    }
+  }
+
+  .slick-slider .slick-next {
+    right: 0;
+
+    @include breakpoint ($new-small) {
+      right: 16px;
+    }
+
+    @include breakpoint ($full-width-elements) {
+      right: 60px;
+    }
+  }
+
+  .topics-list__topics.slick-slider {
+    list-style: none;
+    padding-left: 0;
+
+    @include breakpoint ($new-small) {
+      padding-left: 8px; // lining up first image edge to the carousel title
+      padding-right: $space-five;
+    }
+
+    @include breakpoint ($new-large) {
+      padding-left: 47px; // lining up first image edge to the carousel title
+    }
+
+    @include breakpoint ($full-width-elements) {
+      padding-left: 3.3%; // lining up first image edge to the carousel title
+      padding-right: 0;
+    }
+  }
+
+  .topic-card {
+    height: 307px;
+    width: 263px;
+    background-size: contain !important;
+  }
+
+  .topic-card a {
+    height: 307px;
+    width: 263px;
+  }
+
+  .topic-card span {
+    background-color: transparent;
+    bottom: -100px;
+  }
+
+  // Specificity issue
+  .slick-slider .topic-card span {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+
+  .topic-card a:hover span {
+    bottom: -100px;
+  }
+}

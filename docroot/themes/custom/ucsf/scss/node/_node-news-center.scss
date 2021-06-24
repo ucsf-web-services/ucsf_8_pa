@@ -363,17 +363,44 @@
   }
 }
 
-  .magazine-article-card__date {
-    &.news-card__date::before {
-      display: none;
-    }
-
-    &.article-header__date::before {
-      display: none;
-    }
+.magazine-article-card__date {
+  &.news-card__date::before {
+    display: none;
   }
 
+  &.article-header__date::before {
+    display: none;
+  }
+}
+
+.magazine-alumni__byline {
+  .news-card__date.article-header__date.magazine-alumni__date::before {
+    display: none;
+  }
+}
+
 a[href*="http"] {
+  .field-featured-media-article .news-card__date,
+  .media-coverage__list-date,
+  .article-header__date {
+    padding-right: 30px;
+    background: url('../images/ext-link-gray.svg') right center no-repeat transparent;
+    background-size: 20px;
+  }
+
+  // removes external url icon
+  .remove-ext-url {
+    .field-featured-media-article .news-card__date,
+    .media-coverage__list-date,
+    .article-header__date {
+      padding-right: 0;
+      background: none;
+      background-size: 0;
+    }
+  }
+}
+
+.ext-url {
   .field-featured-media-article .news-card__date,
   .media-coverage__list-date,
   .article-header__date {

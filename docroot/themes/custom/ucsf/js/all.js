@@ -14,7 +14,7 @@
     Drupal.behaviors.slickNav = {
         attach: function (context, settings) {
 
-            $('#block-ucsf-main-menu').slicknav({
+            $('.main-menu--mobile').slicknav({
                 duplicate: false,
                 prependTo: '.slicknav-placeholder',
                 label: 'Main Menu',

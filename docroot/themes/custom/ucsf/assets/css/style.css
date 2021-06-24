@@ -6836,8 +6836,24 @@ body.loading .quicklinks {
         grid-template-columns: repeat(15, minmax(0, 1fr));
         grid-gap: 0; } }
 
+.page-node-type-magazine-basic-page h2 {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+  font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.6px;
+  color: #052049; }
+  @media (min-width: 600px) {
+    .page-node-type-magazine-basic-page h2 {
+      font-size: 56px;
+      letter-spacing: -1.2px; } }
+
 .page-node-type-narrow-page .narrow-page,
-.path-webform .narrow-page {
+.path-webform .narrow-page,
+.page-node-type-magazine-basic-page .narrow-page {
   margin-bottom: 80px; }
 
 .page-node-type-full-width-page,
@@ -7557,6 +7573,11 @@ body.loading .quicklinks {
     .tags-menu-region .tags-menu .tags-menu__item:first-child::before {
       display: none; }
 
+.tags-menu-region .views-element-container {
+  display: inline; }
+  .tags-menu-region .views-element-container div {
+    display: inline; }
+
 .tags-menu__title {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -8044,20 +8065,6 @@ body.loading .quicklinks {
   .has-recommended-article .recommended-articles__banner {
     position: relative;
     padding: 0; }
-    @media (min-width: 850px) {
-      .has-recommended-article .recommended-articles__banner {
-        display: grid;
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-        grid-gap: 5%;
-        grid-row-gap: 0;
-        padding: 0;
-        grid-template-rows: auto;
-        background: #fff;
-        max-width: 1440px; } }
-  @media (min-width: 850px) and (min-width: 850px) {
-    .has-recommended-article .recommended-articles__banner {
-      grid-template-columns: repeat(16, minmax(0, 1fr));
-      grid-gap: 0; } }
 
 @media (max-width: 849px) {
   .recommended-articles__title {
@@ -8070,10 +8077,30 @@ body.loading .quicklinks {
 
 @media (min-width: 850px) {
   .recommended-articles__title {
-    grid-column: 2/7;
-    grid-row: 1;
-    margin: 40px 0;
+    margin: 0 0 40px 0;
+    padding-top: 16px;
     z-index: 2; } }
+
+@media (min-width: 850px) {
+  .recommended-article__link {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-gap: 5%;
+    grid-row-gap: 0;
+    padding: 0;
+    grid-template-rows: auto;
+    background: #fff;
+    max-width: 1440px; } }
+  @media (min-width: 850px) and (min-width: 850px) {
+    .recommended-article__link {
+      grid-template-columns: repeat(16, minmax(0, 1fr));
+      grid-gap: 0; } }
+
+.recommended-article__link:hover h2 {
+  color: #0071ad; }
+
+.page-node-type-magazine-article #block-ucsf-mag-content .recommended-article__link:hover .field--name-title {
+  color: #0071ad; }
 
 .recommended-article__image {
   background-color: transparent;
@@ -8111,9 +8138,6 @@ body.loading .quicklinks {
     line-height: 1.2em;
     letter-spacing: -0.6px;
     line-height: 1.2; }
-    .recommended-article__copy h2 a {
-      text-decoration: none;
-      color: #052049; }
     @media (min-width: 1050px) {
       .recommended-article__copy h2 {
         font-size: fs-heading-two;
@@ -9557,9 +9581,26 @@ body.loading .quicklinks {
 .magazine-article-card__date.article-header__date::before {
   display: none; }
 
+.magazine-alumni__byline .news-card__date.article-header__date.magazine-alumni__date::before {
+  display: none; }
+
 a[href*="http"] .field-featured-media-article .news-card__date,
 a[href*="http"] .media-coverage__list-date,
 a[href*="http"] .article-header__date {
+  padding-right: 30px;
+  background: url("../images/ext-link-gray.svg") right center no-repeat transparent;
+  background-size: 20px; }
+
+a[href*="http"] .remove-ext-url .field-featured-media-article .news-card__date,
+a[href*="http"] .remove-ext-url .media-coverage__list-date,
+a[href*="http"] .remove-ext-url .article-header__date {
+  padding-right: 0;
+  background: none;
+  background-size: 0; }
+
+.ext-url .field-featured-media-article .news-card__date,
+.ext-url .media-coverage__list-date,
+.ext-url .article-header__date {
   padding-right: 30px;
   background: url("../images/ext-link-gray.svg") right center no-repeat transparent;
   background-size: 20px; }
@@ -11728,10 +11769,12 @@ a[href*="http"] .article-header__date {
       padding: 0 20px;
       padding-bottom: 8px;
       display: none; }
-  .scrolled + #block-ucsf-content {
+  .scrolled + #block-ucsf-content,
+  .scrolled + #block-ucsf-mag-content {
     padding-top: 365px; }
     @media (max-width: 599px) {
-      .scrolled + #block-ucsf-content {
+      .scrolled + #block-ucsf-content,
+      .scrolled + #block-ucsf-mag-content {
         padding-top: 200px; } }
 
 .desktop-results {
@@ -12791,7 +12834,8 @@ body.page-node-type-magazine-article,
   .magazine-topic-issue-page .layout-columns__1 {
     float: none; }
 
-body.page-node-type-magazine-article #block-ucsf-content {
+body.page-node-type-magazine-article #block-ucsf-content,
+body.page-node-type-magazine-article #block-ucsf-mag-content {
   font-family: "Ivar-Regular", "Georgia", "Times New Roman", serif;
   font-size: 16px;
   font-style: normal;
@@ -12804,25 +12848,35 @@ body.page-node-type-magazine-article #block-ucsf-content {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
   font-weight: 500; }
   @media (min-width: 600px) {
-    body.page-node-type-magazine-article #block-ucsf-content {
+    body.page-node-type-magazine-article #block-ucsf-content,
+    body.page-node-type-magazine-article #block-ucsf-mag-content {
       font-size: 19px;
       line-height: 32px;
       letter-spacing: 0.4px; } }
-  body.page-node-type-magazine-article #block-ucsf-content strong {
+  body.page-node-type-magazine-article #block-ucsf-content strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content strong {
     font-family: "Ivar-Regular", "Georgia", "Times New Roman", serif;
     font-weight: 700; }
-  body.page-node-type-magazine-article #block-ucsf-content em {
+  body.page-node-type-magazine-article #block-ucsf-content em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content em {
     font-family: "Ivar-Italic", "Georgia", "Times New Roman", serif;
     font-style: normal; }
-  body.page-node-type-magazine-article #block-ucsf-content strong em {
+  body.page-node-type-magazine-article #block-ucsf-content strong em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content strong em {
     font-weight: 700; }
-  body.page-node-type-magazine-article #block-ucsf-content .small-text em, body.page-node-type-magazine-article #block-ucsf-content .small-text strong {
+  body.page-node-type-magazine-article #block-ucsf-content .small-text em, body.page-node-type-magazine-article #block-ucsf-content .small-text strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .small-text em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .small-text strong {
     font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
-  body.page-node-type-magazine-article #block-ucsf-content .small-text em {
+  body.page-node-type-magazine-article #block-ucsf-content .small-text em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .small-text em {
     font-style: italic; }
   body.page-node-type-magazine-article #block-ucsf-content .article-header .field-sub-title,
   body.page-node-type-magazine-article #block-ucsf-content .field-blockquote-source-org,
-  body.page-node-type-magazine-article #block-ucsf-content p.feature-text {
+  body.page-node-type-magazine-article #block-ucsf-content p.feature-text,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-header .field-sub-title,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .field-blockquote-source-org,
+  body.page-node-type-magazine-article #block-ucsf-mag-content p.feature-text {
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
   body.page-node-type-magazine-article #block-ucsf-content .layout__heading strong,
   body.page-node-type-magazine-article #block-ucsf-content .paragraph--type--column-content h2 strong,
@@ -12832,7 +12886,16 @@ body.page-node-type-magazine-article #block-ucsf-content {
   body.page-node-type-magazine-article #block-ucsf-content .footer-ctas-wrapper strong,
   body.page-node-type-magazine-article #block-ucsf-content h2 strong,
   body.page-node-type-magazine-article #block-ucsf-content h3 strong,
-  body.page-node-type-magazine-article #block-ucsf-content p.feature-text strong {
+  body.page-node-type-magazine-article #block-ucsf-content p.feature-text strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout__heading strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .paragraph--type--column-content h2 strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .caption-drupal-entity strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .embedded-entity strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .footer-ctas-wrapper strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content h2 strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content h3 strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content p.feature-text strong {
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-weight: normal; }
   body.page-node-type-magazine-article #block-ucsf-content .layout__heading em,
@@ -12843,72 +12906,110 @@ body.page-node-type-magazine-article #block-ucsf-content {
   body.page-node-type-magazine-article #block-ucsf-content .footer-ctas-wrapper em,
   body.page-node-type-magazine-article #block-ucsf-content h2 em,
   body.page-node-type-magazine-article #block-ucsf-content h3 em,
-  body.page-node-type-magazine-article #block-ucsf-content p.feature-text em {
+  body.page-node-type-magazine-article #block-ucsf-content p.feature-text em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout__heading em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .paragraph--type--column-content h2 em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .caption-drupal-entity em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .footer-ctas-wrapper em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content h2 em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content h3 em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content p.feature-text em {
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-style: italic; }
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__1 strong {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__1 strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__1 strong {
     font-family: "Ivar-Regular", "Georgia", "Times New Roman", serif;
     font-weight: 700; }
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__1 em {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__1 em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__1 em {
     font-family: "Ivar-Italic", "Georgia", "Times New Roman", serif;
     font-style: normal; }
   body.page-node-type-magazine-article #block-ucsf-content .layout-columns__1 .field-image-caption strong,
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__1 .small-text strong {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__1 .small-text strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__1 .field-image-caption strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__1 .small-text strong {
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-weight: normal; }
   body.page-node-type-magazine-article #block-ucsf-content .layout-columns__1 .field-image-caption em,
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__1 .small-text em {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__1 .small-text em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__1 .field-image-caption em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__1 .small-text em {
     font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-style: italic; }
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__2 strong {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__2 strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__2 strong {
     font-family: "Ivar-Regular", "Georgia", "Times New Roman", serif;
     font-weight: 700; }
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__2 em {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__2 em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__2 em {
     font-family: "Ivar-Italic", "Georgia", "Times New Roman", serif;
     font-style: normal; }
   body.page-node-type-magazine-article #block-ucsf-content .layout-columns__2 .field-image-caption strong,
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__2 .small-text strong {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__2 .small-text strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__2 .field-image-caption strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__2 .small-text strong {
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-weight: normal; }
   body.page-node-type-magazine-article #block-ucsf-content .layout-columns__2 .field-image-caption em,
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__2 .small-text em {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__2 .small-text em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__2 .field-image-caption em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__2 .small-text em {
     font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-style: italic; }
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__3 strong {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__3 strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__3 strong {
     font-family: "Ivar-Regular", "Georgia", "Times New Roman", serif;
     font-weight: 700; }
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__3 em {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__3 em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__3 em {
     font-family: "Ivar-Italic", "Georgia", "Times New Roman", serif;
     font-style: normal; }
   body.page-node-type-magazine-article #block-ucsf-content .layout-columns__3 .field-image-caption strong,
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__3 .small-text strong {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__3 .small-text strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__3 .field-image-caption strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__3 .small-text strong {
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-weight: normal; }
   body.page-node-type-magazine-article #block-ucsf-content .layout-columns__3 .field-image-caption em,
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__3 .small-text em {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__3 .small-text em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__3 .field-image-caption em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__3 .small-text em {
     font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-style: italic; }
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__4 strong {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__4 strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__4 strong {
     font-family: "Ivar-Regular", "Georgia", "Times New Roman", serif;
     font-weight: 700; }
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__4 em {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__4 em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__4 em {
     font-family: "Ivar-Italic", "Georgia", "Times New Roman", serif;
     font-style: normal; }
   body.page-node-type-magazine-article #block-ucsf-content .layout-columns__4 .field-image-caption strong,
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__4 .small-text strong {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__4 .small-text strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__4 .field-image-caption strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__4 .small-text strong {
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-weight: normal; }
   body.page-node-type-magazine-article #block-ucsf-content .layout-columns__4 .field-image-caption em,
-  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__4 .small-text em {
+  body.page-node-type-magazine-article #block-ucsf-content .layout-columns__4 .small-text em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__4 .field-image-caption em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .layout-columns__4 .small-text em {
     font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-style: italic; }
-  body.page-node-type-magazine-article #block-ucsf-content .caption-drupal-entity em {
+  body.page-node-type-magazine-article #block-ucsf-content .caption-drupal-entity em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .caption-drupal-entity em {
     font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
   body.page-node-type-magazine-article #block-ucsf-content blockquote em,
-  body.page-node-type-magazine-article #block-ucsf-content .blockquote-content__text em {
+  body.page-node-type-magazine-article #block-ucsf-content .blockquote-content__text em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content blockquote em,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote-content__text em {
     font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif; }
   body.page-node-type-magazine-article #block-ucsf-content .blockquote strong,
-  body.page-node-type-magazine-article #block-ucsf-content .blockquote-content__text strong {
+  body.page-node-type-magazine-article #block-ucsf-content .blockquote-content__text strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote strong,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote-content__text strong {
     font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif; }
   body.page-node-type-magazine-article #block-ucsf-content p.feature-text,
   body.page-node-type-magazine-article #block-ucsf-content .article-art-credit,
@@ -12930,7 +13031,28 @@ body.page-node-type-magazine-article #block-ucsf-content {
   body.page-node-type-magazine-article #block-ucsf-content .article-header__byline.media,
   body.page-node-type-magazine-article #block-ucsf-content .news-card__byline.media,
   body.page-node-type-magazine-article #block-ucsf-content .news-card__copy .article-header__date,
-  body.page-node-type-magazine-article #block-ucsf-content .news-card__copy .field--type-datetime {
+  body.page-node-type-magazine-article #block-ucsf-content .news-card__copy .field--type-datetime,
+  body.page-node-type-magazine-article #block-ucsf-mag-content p.feature-text,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-art-credit,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .field-image-caption,
+  body.page-node-type-magazine-article #block-ucsf-mag-content figcaption,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .topics-list__description,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .field-featured-media-article .news-card__date,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .media-coverage__list-date,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .field-featured-media-article .news-card__date::before,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .media-coverage__list-date::before,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .tags-menu-region .tags-menu .tags-menu__item::before,
+  body.page-node-type-magazine-article #block-ucsf-mag-content figure.half-image-left figcaption,
+  body.page-node-type-magazine-article #block-ucsf-mag-content figure.half-image-right figcaption,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-header__author,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-header__author a,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .basic-header__subheading,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-header .field-sub-title,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-affiliation::before,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-header__byline.media,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .news-card__byline.media,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .news-card__copy .article-header__date,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .news-card__copy .field--type-datetime {
     color: #384559; }
   body.page-node-type-magazine-article #block-ucsf-content .article-header__date,
   body.page-node-type-magazine-article #block-ucsf-content .article-header__byline .article-header__date,
@@ -12946,29 +13068,58 @@ body.page-node-type-magazine-article #block-ucsf-content {
   body.page-node-type-magazine-article #block-ucsf-content .bg-gray .layout__heading,
   body.page-node-type-magazine-article #block-ucsf-content .footer-ctas-wrapper h2,
   body.page-node-type-magazine-article #block-ucsf-content h1,
-  body.page-node-type-magazine-article #block-ucsf-content h2 {
+  body.page-node-type-magazine-article #block-ucsf-content h2,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-header__date,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-header__byline .article-header__date,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-header .field--name-title,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .recommended-article__copy .field--name-title,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .news-card__copy .field--name-title,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote-content__cite,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .field-blockquote-source,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-header__byline .article-affiliation,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .recommended-articles__title,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .tags-menu__title,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .eyebrow-title,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .bg-gray .layout__heading,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .footer-ctas-wrapper h2,
+  body.page-node-type-magazine-article #block-ucsf-mag-content h1,
+  body.page-node-type-magazine-article #block-ucsf-mag-content h2 {
     color: #121a31; }
   body.page-node-type-magazine-article #block-ucsf-content [data-primary-area^="pa-"] + .news-card__date::before,
   body.page-node-type-magazine-article #block-ucsf-content [data-primary-area^="pa-"] + .article-header__date::before,
   body.page-node-type-magazine-article #block-ucsf-content .article-header__date::before,
-  body.page-node-type-magazine-article #block-ucsf-content .article-header__byline .article-affiliation::before {
+  body.page-node-type-magazine-article #block-ucsf-content .article-header__byline .article-affiliation::before,
+  body.page-node-type-magazine-article #block-ucsf-mag-content [data-primary-area^="pa-"] + .news-card__date::before,
+  body.page-node-type-magazine-article #block-ucsf-mag-content [data-primary-area^="pa-"] + .article-header__date::before,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-header__date::before,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-header__byline .article-affiliation::before {
     background-color: #384559; }
   body.page-node-type-magazine-article #block-ucsf-content .blockquote-content__cite::after,
   body.page-node-type-magazine-article #block-ucsf-content .field-blockquote-source::after,
-  body.page-node-type-magazine-article #block-ucsf-content .eyebrow-title::after {
+  body.page-node-type-magazine-article #block-ucsf-content .eyebrow-title::after,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote-content__cite::after,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .field-blockquote-source::after,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .eyebrow-title::after {
     color: #121a31;
     background-color: #121a31; }
-  body.page-node-type-magazine-article #block-ucsf-content .col-white-text h2 {
+  body.page-node-type-magazine-article #block-ucsf-content .col-white-text h2,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .col-white-text h2 {
     color: #fff; }
   @media (min-width: 1050px) {
     body.page-node-type-magazine-article #block-ucsf-content .col-white-text .layout__heading,
-    body.page-node-type-magazine-article #block-ucsf-content .featureoverlaydark .field--name-title {
+    body.page-node-type-magazine-article #block-ucsf-content .featureoverlaydark .field--name-title,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .col-white-text .layout__heading,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .featureoverlaydark .field--name-title {
       color: #fff; } }
   body.page-node-type-magazine-article #block-ucsf-content .twocolleftdark,
-  body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark {
+  body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark {
     background: #000; }
     body.page-node-type-magazine-article #block-ucsf-content .twocolleftdark .article-twocol-header,
-    body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header {
+    body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header {
       background: #000;
       width: 100%; }
       body.page-node-type-magazine-article #block-ucsf-content .twocolleftdark .article-twocol-header h1,
@@ -12978,7 +13129,15 @@ body.page-node-type-magazine-article #block-ucsf-content {
       body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header h1,
       body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .field-sub-title,
       body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-header__author,
-      body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .field--name-title {
+      body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .field--name-title,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header h1,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .field-sub-title,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .article-header__author,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .field--name-title,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header h1,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .field-sub-title,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .article-header__author,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .field--name-title {
         color: #fff; }
         body.page-node-type-magazine-article #block-ucsf-content .twocolleftdark .article-twocol-header h1 a,
         body.page-node-type-magazine-article #block-ucsf-content .twocolleftdark .article-twocol-header .field-sub-title a,
@@ -12987,7 +13146,15 @@ body.page-node-type-magazine-article #block-ucsf-content {
         body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header h1 a,
         body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .field-sub-title a,
         body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-header__author a,
-        body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .field--name-title a {
+        body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .field--name-title a,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header h1 a,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .field-sub-title a,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .article-header__author a,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .field--name-title a,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header h1 a,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .field-sub-title a,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .article-header__author a,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .field--name-title a {
           color: #fff;
           border-bottom: 1px solid #fff; }
           body.page-node-type-magazine-article #block-ucsf-content .twocolleftdark .article-twocol-header h1 a:hover,
@@ -12997,24 +13164,44 @@ body.page-node-type-magazine-article #block-ucsf-content {
           body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header h1 a:hover,
           body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .field-sub-title a:hover,
           body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-header__author a:hover,
-          body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .field--name-title a:hover {
+          body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .field--name-title a:hover,
+          body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header h1 a:hover,
+          body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .field-sub-title a:hover,
+          body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .article-header__author a:hover,
+          body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .field--name-title a:hover,
+          body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header h1 a:hover,
+          body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .field-sub-title a:hover,
+          body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .article-header__author a:hover,
+          body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .field--name-title a:hover {
             background: transparent;
             border-bottom: none; }
       body.page-node-type-magazine-article #block-ucsf-content .twocolleftdark .article-twocol-header .article-header__byline .article-header__primary-area,
       body.page-node-type-magazine-article #block-ucsf-content .twocolleftdark .article-twocol-header .article-header__byline .article-header__date,
       body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-header__byline .article-header__primary-area,
-      body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-header__byline .article-header__date {
+      body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-header__byline .article-header__date,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .article-header__byline .article-header__primary-area,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .article-header__byline .article-header__date,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .article-header__byline .article-header__primary-area,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .article-header__byline .article-header__date {
         color: #fff; }
         body.page-node-type-magazine-article #block-ucsf-content .twocolleftdark .article-twocol-header .article-header__byline .article-header__primary-area::before,
         body.page-node-type-magazine-article #block-ucsf-content .twocolleftdark .article-twocol-header .article-header__byline .article-header__date::before,
         body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-header__byline .article-header__primary-area::before,
-        body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-header__byline .article-header__date::before {
+        body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-header__byline .article-header__date::before,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .article-header__byline .article-header__primary-area::before,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .article-header__byline .article-header__date::before,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .article-header__byline .article-header__primary-area::before,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .article-header__byline .article-header__date::before {
           background: #fff; }
       body.page-node-type-magazine-article #block-ucsf-content .twocolleftdark .article-twocol-header .article-affiliation,
-      body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-affiliation {
+      body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-affiliation,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .article-affiliation,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .article-affiliation {
         color: #fff; }
         body.page-node-type-magazine-article #block-ucsf-content .twocolleftdark .article-twocol-header .article-affiliation::before,
-        body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-affiliation::before {
+        body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-affiliation::before,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .article-affiliation::before,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .article-affiliation::before {
           background: #fff; }
   @media (min-width: 1050px) {
     body.page-node-type-magazine-article #block-ucsf-content .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .field-sub-title,
@@ -13022,146 +13209,214 @@ body.page-node-type-magazine-article #block-ucsf-content {
     body.page-node-type-magazine-article #block-ucsf-content .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-topic-area,
     body.page-node-type-magazine-article #block-ucsf-content .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-affiliation,
     body.page-node-type-magazine-article #block-ucsf-content .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-issue,
-    body.page-node-type-magazine-article #block-ucsf-content .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-art-credit {
+    body.page-node-type-magazine-article #block-ucsf-content .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-art-credit,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .field-sub-title,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-header__author,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-topic-area,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-affiliation,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-issue,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-art-credit {
       color: #fff; } }
   @media (max-width: 1049px) {
     body.page-node-type-magazine-article #block-ucsf-content .twocolleftdark .article-twocol-header .article-art-credit,
-    body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-art-credit {
+    body.page-node-type-magazine-article #block-ucsf-content .twocolrightdark .article-twocol-header .article-art-credit,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .twocolleftdark .article-twocol-header .article-art-credit,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .twocolrightdark .article-twocol-header .article-art-credit {
       color: #fff; } }
-  body.page-node-type-magazine-article #block-ucsf-content .paragraph-text-block {
+  body.page-node-type-magazine-article #block-ucsf-content .paragraph-text-block,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .paragraph-text-block {
     background-color: transparent; }
-  body.page-node-type-magazine-article #block-ucsf-content .article-no-banner {
+  body.page-node-type-magazine-article #block-ucsf-content .article-no-banner,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-no-banner {
     background: none;
     text-align: center;
     color: #121a31; }
     @media (min-width: 650px) {
-      body.page-node-type-magazine-article #block-ucsf-content .article-no-banner {
+      body.page-node-type-magazine-article #block-ucsf-content .article-no-banner,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .article-no-banner {
         max-width: 600px;
         margin-left: auto;
         margin-right: auto;
         padding: 0; } }
     @media (min-width: 1050px) {
-      body.page-node-type-magazine-article #block-ucsf-content .article-no-banner {
+      body.page-node-type-magazine-article #block-ucsf-content .article-no-banner,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .article-no-banner {
         background: #fff;
         grid-column: 2 / -2; } }
     @media (min-width: 1280px) {
-      body.page-node-type-magazine-article #block-ucsf-content .article-no-banner {
+      body.page-node-type-magazine-article #block-ucsf-content .article-no-banner,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .article-no-banner {
         grid-column: 5 / -5; } }
     body.page-node-type-magazine-article #block-ucsf-content .article-no-banner h1,
-    body.page-node-type-magazine-article #block-ucsf-content .article-no-banner .article-header__author {
+    body.page-node-type-magazine-article #block-ucsf-content .article-no-banner .article-header__author,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .article-no-banner h1,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .article-no-banner .article-header__author {
       color: #121a31; }
     body.page-node-type-magazine-article #block-ucsf-content .article-no-banner .article-header__author,
-    body.page-node-type-magazine-article #block-ucsf-content .article-no-banner .article-header__subheading {
+    body.page-node-type-magazine-article #block-ucsf-content .article-no-banner .article-header__subheading,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .article-no-banner .article-header__author,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .article-no-banner .article-header__subheading {
       color: #384559; }
-  body.page-node-type-magazine-article #block-ucsf-content .article-header__author {
+  body.page-node-type-magazine-article #block-ucsf-content .article-header__author,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-header__author {
     width: 100%; }
   @media (min-width: 1050px) {
-    body.page-node-type-magazine-article #block-ucsf-content .page_narrow {
+    body.page-node-type-magazine-article #block-ucsf-content .page_narrow,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .page_narrow {
       background: #fff; } }
   @media (min-width: 650px) {
     body.page-node-type-magazine-article #block-ucsf-content .page_narrow,
-    body.page-node-type-magazine-article #block-ucsf-content .paragraph-text-block {
+    body.page-node-type-magazine-article #block-ucsf-content .paragraph-text-block,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .page_narrow,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .paragraph-text-block {
       max-width: 600px;
       margin: 0 auto;
       padding: 0;
       padding-bottom: 1px; } }
   @media (min-width: 1050px) {
     body.page-node-type-magazine-article #block-ucsf-content .page_narrow,
-    body.page-node-type-magazine-article #block-ucsf-content .paragraph-text-block {
+    body.page-node-type-magazine-article #block-ucsf-content .paragraph-text-block,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .page_narrow,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .paragraph-text-block {
       grid-column: 2 / -2; } }
   @media (min-width: 1280px) {
     body.page-node-type-magazine-article #block-ucsf-content .page_narrow,
-    body.page-node-type-magazine-article #block-ucsf-content .paragraph-text-block {
+    body.page-node-type-magazine-article #block-ucsf-content .paragraph-text-block,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .page_narrow,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .paragraph-text-block {
       grid-column: 5 / -5; } }
   body.page-node-type-magazine-article #block-ucsf-content .page_narrow.gallery-background-fill,
-  body.page-node-type-magazine-article #block-ucsf-content .paragraph-text-block.gallery-background-fill {
+  body.page-node-type-magazine-article #block-ucsf-content .paragraph-text-block.gallery-background-fill,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .page_narrow.gallery-background-fill,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .paragraph-text-block.gallery-background-fill {
     display: none; }
-  body.page-node-type-magazine-article #block-ucsf-content .paragraph--type--gallery {
+  body.page-node-type-magazine-article #block-ucsf-content .paragraph--type--gallery,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .paragraph--type--gallery {
     margin-top: 40px; }
-  body.page-node-type-magazine-article #block-ucsf-content .field-column-content-content .paragraph-text-block {
+  body.page-node-type-magazine-article #block-ucsf-content .field-column-content-content .paragraph-text-block,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .field-column-content-content .paragraph-text-block {
     margin: 0;
     max-width: none; }
   @media (min-width: 1280px) {
     body.page-node-type-magazine-article #block-ucsf-content figure.half-image-right,
-    body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-right {
+    body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-right,
+    body.page-node-type-magazine-article #block-ucsf-mag-content figure.half-image-right,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .embedded-entity.half-image-right {
       margin-right: -35%; }
       body.page-node-type-magazine-article #block-ucsf-content figure.half-image-right figcaption,
-      body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-right figcaption {
+      body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-right figcaption,
+      body.page-node-type-magazine-article #block-ucsf-mag-content figure.half-image-right figcaption,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .embedded-entity.half-image-right figcaption {
         padding-right: 44%; }
     body.page-node-type-magazine-article #block-ucsf-content figure.half-image-left,
-    body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-left {
+    body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-left,
+    body.page-node-type-magazine-article #block-ucsf-mag-content figure.half-image-left,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .embedded-entity.half-image-left {
       margin-left: -35%; }
       body.page-node-type-magazine-article #block-ucsf-content figure.half-image-left figcaption,
-      body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-left figcaption {
+      body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-left figcaption,
+      body.page-node-type-magazine-article #block-ucsf-mag-content figure.half-image-left figcaption,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .embedded-entity.half-image-left figcaption {
         padding-left: 44%; }
     body.page-node-type-magazine-article #block-ucsf-content figure.half-image-right-full,
-    body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-right-full {
+    body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-right-full,
+    body.page-node-type-magazine-article #block-ucsf-mag-content figure.half-image-right-full,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .embedded-entity.half-image-right-full {
       margin-right: -60%; }
       body.page-node-type-magazine-article #block-ucsf-content figure.half-image-right-full figcaption,
-      body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-right-full figcaption {
+      body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-right-full figcaption,
+      body.page-node-type-magazine-article #block-ucsf-mag-content figure.half-image-right-full figcaption,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .embedded-entity.half-image-right-full figcaption {
         padding-right: 53%; }
     body.page-node-type-magazine-article #block-ucsf-content figure.half-image-left-full,
-    body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-left-full {
+    body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-left-full,
+    body.page-node-type-magazine-article #block-ucsf-mag-content figure.half-image-left-full,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .embedded-entity.half-image-left-full {
       margin-left: -60%; }
       body.page-node-type-magazine-article #block-ucsf-content figure.half-image-left-full figcaption,
-      body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-left-full figcaption {
+      body.page-node-type-magazine-article #block-ucsf-content .embedded-entity.half-image-left-full figcaption,
+      body.page-node-type-magazine-article #block-ucsf-mag-content figure.half-image-left-full figcaption,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .embedded-entity.half-image-left-full figcaption {
         padding-left: 53%; } }
   @media (min-width: 1280px) {
-    body.page-node-type-magazine-article #block-ucsf-content .full-bleed-image {
+    body.page-node-type-magazine-article #block-ucsf-content .full-bleed-image,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .full-bleed-image {
       margin-left: -53%;
       margin-right: -53%; }
-      body.page-node-type-magazine-article #block-ucsf-content .full-bleed-image img {
+      body.page-node-type-magazine-article #block-ucsf-content .full-bleed-image img,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .full-bleed-image img {
         max-width: 100%; } }
-  body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout {
+  body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout {
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
     @media (min-width: 850px) {
-      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout.callout-left {
+      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout.callout-left,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout.callout-left {
         margin-left: -20%; }
-      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout.callout-right {
+      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout.callout-right,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout.callout-right {
         margin-right: -20%; } }
     @media (min-width: 1050px) {
-      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout {
+      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout {
         width: 60%;
         padding: 64px; }
-        body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout.callout-left {
+        body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout.callout-left,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout.callout-left {
           margin-left: -30%; }
-        body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout.callout-right {
+        body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout.callout-right,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout.callout-right {
           margin-right: -30%; } }
     @media (min-width: 1280px) {
-      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout {
+      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout {
         width: 75%;
         padding: 64px; }
-        body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout.callout-left {
+        body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout.callout-left,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout.callout-left {
           margin-left: -50%; }
-        body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout.callout-right {
+        body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout.callout-right,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout.callout-right {
           margin-right: -50%; } }
-    body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout .link--cta {
+    body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout .link--cta,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout .link--cta {
       background-position: 98% center;
       -webkit-transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
       transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position; }
-      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout .link--cta:hover {
+      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout .link--cta:hover,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout .link--cta:hover {
         background-position: 100% center; }
-      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout .link--cta:hover {
+      body.page-node-type-magazine-article #block-ucsf-content .ucsfcallout .link--cta:hover,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .ucsfcallout .link--cta:hover {
         padding-right: 24px; }
-  body.page-node-type-magazine-article #block-ucsf-content .blockquote {
+  body.page-node-type-magazine-article #block-ucsf-content .blockquote,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote {
     background: #fff; }
     @media (min-width: 1280px) {
-      body.page-node-type-magazine-article #block-ucsf-content .blockquote {
+      body.page-node-type-magazine-article #block-ucsf-content .blockquote,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote {
         width: 75%; }
-        body.page-node-type-magazine-article #block-ucsf-content .blockquote.blockquote--half-right {
+        body.page-node-type-magazine-article #block-ucsf-content .blockquote.blockquote--half-right,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote.blockquote--half-right {
           margin-right: -50%; }
-        body.page-node-type-magazine-article #block-ucsf-content .blockquote.blockquote--half-left {
+        body.page-node-type-magazine-article #block-ucsf-content .blockquote.blockquote--half-left,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote.blockquote--half-left {
           margin-left: -50%; }
-        body.page-node-type-magazine-article #block-ucsf-content .blockquote.blockquote--full-right {
+        body.page-node-type-magazine-article #block-ucsf-content .blockquote.blockquote--full-right,
+        body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote.blockquote--full-right {
           width: 100%; } }
-  body.page-node-type-magazine-article #block-ucsf-content .blockquote.blockquote-full-width {
+  body.page-node-type-magazine-article #block-ucsf-content .blockquote.blockquote-full-width,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote.blockquote-full-width {
     width: 100%; }
-    body.page-node-type-magazine-article #block-ucsf-content .blockquote.blockquote-full-width .blockquote-content {
+    body.page-node-type-magazine-article #block-ucsf-content .blockquote.blockquote-full-width .blockquote-content,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote.blockquote-full-width .blockquote-content {
       background: #fff; }
     @media (max-width: 768px) {
-      body.page-node-type-magazine-article #block-ucsf-content .blockquote.blockquote-full-width .field-blockquote-image {
+      body.page-node-type-magazine-article #block-ucsf-content .blockquote.blockquote-full-width .field-blockquote-image,
+      body.page-node-type-magazine-article #block-ucsf-mag-content .blockquote.blockquote-full-width .field-blockquote-image {
         margin-top: -15%; } }
-  body.page-node-type-magazine-article #block-ucsf-content .article-header__mag-topic-area {
+  body.page-node-type-magazine-article #block-ucsf-content .article-header__mag-topic-area,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-header__mag-topic-area {
     color: #121a31;
     font-size: 13px;
     margin: 0;
@@ -13169,11 +13424,20 @@ body.page-node-type-magazine-article #block-ucsf-content {
     letter-spacing: 1.6px;
     font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-weight: 500; }
-    body.page-node-type-magazine-article #block-ucsf-content .article-header__mag-topic-area::before {
+    body.page-node-type-magazine-article #block-ucsf-content .article-header__mag-topic-area::before,
+    body.page-node-type-magazine-article #block-ucsf-mag-content .article-header__mag-topic-area::before {
       display: none; }
-  body.page-node-type-magazine-article #block-ucsf-content .article-twocol-banner .video-embed-field-responsive-video {
+  body.page-node-type-magazine-article #block-ucsf-content .article-twocol-banner .video-embed-field-responsive-video,
+  body.page-node-type-magazine-article #block-ucsf-mag-content .article-twocol-banner .video-embed-field-responsive-video {
     padding-bottom: 108.33%;
     height: 0; }
+
+.magazine-card__byline .article-issue {
+  color: #384559;
+  font-size: 14px;
+  font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  letter-spacing: 0.2px;
+  font-weight: 500; }
 
 body.page-node-type-magazine-homepage,
 .magazine-topic-issue-page {
@@ -13210,7 +13474,7 @@ body.page-node-type-magazine-homepage,
     @media (min-width: 1050px) {
       body.page-node-type-magazine-homepage .magazine-homepage-banner,
       .magazine-topic-issue-page .magazine-homepage-banner {
-        padding: 80px; } }
+        padding: 40px 80px; } }
   body.page-node-type-magazine-homepage .magazine-home-feature h2,
   .magazine-topic-issue-page .magazine-home-feature h2 {
     -webkit-font-smoothing: antialiased;
@@ -14000,7 +14264,11 @@ body.page-node-type-magazine-homepage .layout-panel {
     line-height: 1.4em;
     color: #121a31;
     text-transform: uppercase;
-    margin: 0 0 1rem 0; }
+    margin: 0 0 1rem 0;
+    padding-right: 30px;
+    background: url("../images/ext-link-gray.svg") right center no-repeat transparent;
+    background-size: 20px;
+    display: inline-block; }
 
 .magazine-hub-inside__inside .news-card__link {
   color: #121a31; }
@@ -14151,9 +14419,11 @@ body.page-node-type-magazine-homepage .layout-panel {
   .magazine-topic-page .magazine-hub-inside {
     border-bottom: 1px solid #d1d3d3; } }
 
-.magazine-topic-page .magazine-alumni.four-card-row .magazine-alumni__date,
 .magazine-topic-page .magazine-alumni.four-card-row .card-row__image::after {
   display: none; }
+
+.magazine-topic-page .magazine-alumni.four-card-row .magazine-alumni__date {
+  text-indent: -9999px; }
 
 .magazine-topic-page .magazine-hub-inside__inside .news-card__link {
   color: #121a31; }

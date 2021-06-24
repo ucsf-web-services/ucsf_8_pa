@@ -86,7 +86,6 @@ AddEncoding gzip svgz
   # If you do not have mod_rewrite installed, you should remove these
   # directories from your webroot or otherwise protect them from being
   # downloaded.
-  RewriteRule "^.well-known/acme-challenge" - [L]
   RewriteRule "/\.|^\.(?!well-known/)" - [F]
 
   # If your site can be accessed both with and without the 'www.' prefix, you
@@ -105,24 +104,6 @@ AddEncoding gzip svgz
   # uncomment the following:
   # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
   # RewriteRule ^ http%{ENV:protossl}://%1%{REQUEST_URI} [L,R=301]
-  
-  # Serve different robots.txt for valid stag domain wwwstage.ucsf.edu
-  RewriteCond %{HTTP_HOST} ^wwwstage\.ucsf\.edu$ [NC]
-  RewriteRule ^robots\.txt$ robots_noindex.txt [NC,L]
-  
-  # exclude Acquia domains
-  RewriteCond %{HTTP_HOST} !\.acquia-sites\.com [NC]
-
-  # rewrite to www
-  RewriteCond %{HTTP_HOST} ^ucsf\.edu$ [NC]
-  RewriteCond %{ENV:AH_SITE_ENVIRONMENT} prod [NC]
-  RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-  
-  # ensure https
-  RewriteCond %{ENV:AH_SITE_ENVIRONMENT} prod [NC]
-  RewriteCond %{HTTP:X-Forwarded-Proto} !https
-  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
 
   # Modify the RewriteBase if you are using Drupal in a subdirectory or in a
   # VirtualDocumentRoot and the rewrite rules are not working properly.
@@ -133,7 +114,7 @@ AddEncoding gzip svgz
   # If your site is running in a VirtualDocumentRoot at http://example.com/,
   # uncomment the following line:
   # RewriteBase /
-  
+
   # Redirect common PHP files to their new locations.
   RewriteCond %{REQUEST_URI} ^(.*)?/(install.php) [OR]
   RewriteCond %{REQUEST_URI} ^(.*)?/(rebuild.php)

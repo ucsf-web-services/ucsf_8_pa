@@ -23,7 +23,7 @@ body.page-node-type-magazine-homepage,
     }
 
     @include breakpoint($new-large) {
-      padding: $space-ten;
+      padding: $space-five $space-ten;
     }
   }
 
@@ -852,10 +852,14 @@ body.page-node-type-magazine-homepage {
   &-label {
     @include magazine-eyebrow;
     margin: 0 0 1rem 0;
+    padding-right: 30px;
+    background: url('../images/ext-link-gray.svg') right center no-repeat transparent;
+    background-size: 20px;
+    display: inline-block;
   }
 }
 
-// "Watch, Read, Listen"
+// "Watch, Read, Listen" (a.k.a "Books, Videos, Podcasts")
 .magazine-hub-inside__inside {
   .news-card__link {
     color: $c-dark-navy;
@@ -1000,9 +1004,14 @@ body.page-node-type-magazine-homepage {
   }
 
   .magazine-alumni.four-card-row {
-    .magazine-alumni__date,
     .card-row__image::after {
       display: none;
+    }
+  }
+
+  .magazine-alumni.four-card-row {
+    .magazine-alumni__date {
+      text-indent: -9999px;
     }
   }
 

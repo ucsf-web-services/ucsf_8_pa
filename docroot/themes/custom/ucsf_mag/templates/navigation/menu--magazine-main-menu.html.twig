@@ -1,0 +1,99 @@
+{#
+/**
+ * @file
+ * Theme override to display a menu.
+ *
+ * Available variables:
+ * - menu_name: The machine name of the menu.
+ * - items: A nested list of menu items. Each menu item contains:
+ *   - attributes: HTML attributes for the menu item.
+ *   - below: The menu item child items.
+ *   - title: The menu link title.
+ *   - url: The menu link url, instance of \Drupal\Core\Url
+ *   - localized_options: Menu link localized options.
+ *   - is_expanded: TRUE if the link has visible children within the current
+ *     menu tree.
+ *   - is_collapsed: TRUE if the link has children within the current menu tree
+ *     that are not currently visible.
+ *   - in_active_trail: TRUE if the link is in the active trail.
+ */
+#}
+{% import _self as menus %}
+
+{#
+  We call a macro which calls itself to render the full tree.
+  @see https://twig.symfony.com/doc/1.x/tags/macro.html
+#}
+{{ menus.menu_links(items, attributes, 0) }}
+
+{% macro menu_links(items, attributes, menu_level) %}
+	{% import _self as menus %}
+	{% if items %}
+		{% if menu_level == 0 %}
+			<ul{{attributes.addClass("mag-menu__menu")}}>
+			{% else %}
+				<ul class="mag-submenu__menu">
+				{% endif %}
+
+				{% for item in items %}
+					{% set item_title_class = item.title|clean_class|replace({"-" : ""}) %}
+					{% set item_title = item.title %}
+					{% set featured_link = [menu_level == 0 and item.url.isrouted and item.url.routeName == "<nolink>" ? 'mag-menu__item--featured' ] %}
+					{% set classes = [
+            "menu-item",
+            item.is_expanded ? "menu-item--expanded",
+            item.is_collapsed ? "menu-item--collapsed",
+            item.in_active_trail ? "menu-item--active-trail",
+            menu_level == 0 and item.is_expanded ? "mag-menu__submenu-wrapper",
+            menu_level > 0 ? "mag-submenu__item" : "mag-menu__item mag-menu__item--" ~ item_title_class ,
+          ] %}
+					{# setting aria-expanded attribute value #}
+					{% set expanded = "false" %}
+
+          <li{{item.attributes.addClass(classes, featured_link)}}>
+            {# Top level menu item that is not a title #}
+            {% if menu_level == 0 and item.url.isrouted and item.url.routeName == "<nolink>" %}
+              <h2 class="mag-menu__no-link"> {{ item_title }}
+                <button class="subnav-toggle" aria-controls="aria-{{ item_title_class }}" aria-expanded={{expanded}} aria-label="Toggle Submenu">
+                  <span class="subnav-toggle__icon accordion-arrow"></span>
+                </button>
+              </h2>
+            {% elseif item.title == "Home" %}
+              {# This link has an icon #}
+              <a href="{{ item.url }}" class="mag-menu__link mag-menu__link--alt">
+                {{ item.title }}
+                <span aria-hidden="true" class="icon-home"></span>
+              </a>
+            {% elseif item.title == "Latest Issue" %}
+              {# This link has an image of the latest issue #}
+              <div class="mag-menu__link mag-submenu__link latest-issue">
+                {{ drupal_view('latest_magazine_issue')}}
+              </div>
+
+            {% else %}
+              {# Menu item is a link #}
+              {{ link(item.title, item.url, { "class":[(menu_level > 0) ? "mag-menu__link mag-submenu__link" : "mag-menu__link mag-menu__link--alt" ]}) }}
+            {% endif %}
+
+					{# START. SUBMENU WRAPPER #}
+					{% if item.below and item.title != "Search" %}
+						<div
+							id="aria-{{ item_title_class }}" class="mag-submenu mag-submenu--{{ menu_level }}">
+							{# submenu links #}
+							{{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+						</div>
+					{% endif %}
+					{# END. SUBMENU WRAPPER #}
+				</li>
+		{% endfor %}
+		{% if menu_level == 0 %}
+    {# LINKS THAT DISPLAY IN HEADER ON DESKTOP #}
+			<div class="mag-nav__ucsf">
+				<a href="https://ucsf.edu/news" class="mag-nav__ucsf-news--menu">Visit UCSF News Center</a>
+				<div class="universal-header__give-mobile mag-nav__ucsf-give--menu">
+					<a class="universal-header__give" href="https://giving.ucsf.edu">Give to UCSF</a>
+				</div>
+			</div>
+		{% endif %}
+	</ul>
+{% endif %}{% endmacro %}
