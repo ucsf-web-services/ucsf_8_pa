@@ -10,6 +10,7 @@
   {% if content.field_link|render|striptags != '' %}
     {# Feature Paragraph > Overwrite Link #}
     {% set link = paragraph.field_link.value.0.uri %}
+    {% set link_class = "icon-link--external" %}
   {% elseif drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id)|render|striptags != '' %}
     {# Feature Paragraph > News Article (News) > External URL #}
     {% set external_link = drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id) %}
@@ -18,6 +19,7 @@
   {% else %}
     {# Feature Paragraph > News Article (News) > ID #}
     {% set link = drupal_url('node/' ~ content.field_news_article.0['#node'].id ) %}
+    {% set link_class = "remove-ext-url" %}
   {% endif %}
   {# Link url variable - End #}
 
