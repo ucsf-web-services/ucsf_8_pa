@@ -27,12 +27,6 @@ function _replace_metatag_magazine_fallback_image(array &$attachments) {
     return;
   }
 
-  // Exit if this is a Non "/magazine" page.
-  $current_uri = \Drupal::request()->getRequestUri();
-  if (strpos($current_uri, 'magazine') == FALSE) {
-    return;
-  }
-
   // Don't run if a "Social image" is provided.
   $entity = _get_current_controller_entity();
   if ($entity->field_facebook_image->target_id || $entity->field_card_image->target_id) {
