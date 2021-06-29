@@ -2,6 +2,7 @@
 
 namespace Drupal\entity_block\Plugin\Block;
 
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -30,14 +31,14 @@ class EntityBlock extends BlockBase implements ContainerFactoryPluginInterface {
   /**
    * The entity type manager.
    *
-   * @var EntityTypeManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   public $entityTypeManager;
 
   /**
    * The entity storage for our entity type.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface;
+   * @var \Drupal\Core\Entity\EntityStorageInterface
    */
   protected $entityStorage;
 
@@ -79,7 +80,7 @@ class EntityBlock extends BlockBase implements ContainerFactoryPluginInterface {
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
       $configuration, $plugin_id, $plugin_definition,
-      $container->get('entity.manager'),
+      $container->get('entity_type.manager'),
       $container->get('entity_display.repository')
     );
   }
@@ -141,6 +142,15 @@ class EntityBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
     $this->configuration['entity'] = $form_state->getValue('entity');
     $this->configuration['view_mode'] = $form_state->getValue('view_mode');
+
+    if ($entity = $this->entityStorage->load($this->configuration['entity'])) {
+      $plugin_definition = $this->getPluginDefinition();
+      $admin_label = $plugin_definition['admin_label'];
+      $this->configuration['label'] = new FormattableMarkup('@entity_label (@admin_label)', [
+        '@entity_label' => $entity->label(),
+        '@admin_label' => $admin_label,
+      ]);
+    }
   }
 
   /**
