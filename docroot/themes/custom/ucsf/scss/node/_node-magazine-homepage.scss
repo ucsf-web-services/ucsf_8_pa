@@ -208,10 +208,15 @@ body.page-node-type-magazine-homepage,
     }
 
     .card-row__copy {
-      padding-right: $article-gutter;
-      padding-left: $article-gutter;
+      padding-right: 0;
+      padding-left: 0;
       float: none;
       width: 100%;
+
+      @include breakpoint($new-small) {
+        padding-right: $article-gutter;
+        padding-left: $article-gutter;
+      }
 
       @include breakpoint($new-medium) {
         float: right;
@@ -992,7 +997,7 @@ body.page-node-type-magazine-homepage {
 }
 
 .footer-ctas-wrapper {
-  margin-top: -2rem;
+  // remove this cause it's covering View more buttons in mobile margin-top: -2rem;
 }
 
 // overrides for the magazine topic page
