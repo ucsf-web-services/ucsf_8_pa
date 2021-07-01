@@ -255,6 +255,7 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
 
       // In column layout - use Helvetica if bold/italic text has been modified:
       // such as - used as image caption, used as small text.
+      // Also if it is a title
       .field-image-caption strong,
       figcaption strong,
       .small-text strong {
@@ -267,6 +268,21 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
       .small-text em {
         font-family: $font-helvetica-neue-roman;
         font-style: italic;
+      }
+
+      // Added this in as part of MAG-224 ticket
+      @for $heading-number from 1 through 4 {
+        h#{$heading-number} {
+          strong {
+            font-family: $font-helvetica-neue-medium;
+            font-weight: normal;
+          }
+
+          em {
+            font-family: $font-helvetica-neue-roman;
+            font-style: italic;
+          }
+        }
       }
     }
   }
