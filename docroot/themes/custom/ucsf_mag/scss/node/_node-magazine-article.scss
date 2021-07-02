@@ -1,4 +1,4 @@
-.page-node-type-magazine-article {
+body.page-node-type-magazine-article {
   .tags-menu__title {
     &::after {
       content: ' ';
@@ -11,6 +11,18 @@
       padding-right: 30px;
       background: url("../images/ext-link-gray.svg") right center no-repeat transparent;
       background-size: 20px;
+    }
+  }
+
+  #block-ucsf-mag-content {
+    .paragraph-text-block {
+      &.paragraph-responsive-areas {
+        @include breakpoint($new-large) {
+            grid-column: 1 / -1;
+            max-width: 100%;
+            margin-bottom: $space-ten;
+        }
+      }
     }
   }
 }
