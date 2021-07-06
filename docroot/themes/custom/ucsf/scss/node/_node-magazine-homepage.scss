@@ -195,6 +195,9 @@ body.page-node-type-magazine-homepage,
     }
   }
 
+  // Affects both issue and homepages Alumni Hub.
+  // Also affects "Big Picture" section on issue pages
+  // For homepage only use .magazine-hub-inside
   .magazine-alumni {
     &__byline {
 
@@ -208,15 +211,10 @@ body.page-node-type-magazine-homepage,
     }
 
     .card-row__copy {
-      padding-right: 0;
-      padding-left: 0;
+      padding-right: $article-gutter;
+      padding-left: $article-gutter;
       float: none;
       width: 100%;
-
-      @include breakpoint($new-small) {
-        padding-right: $article-gutter;
-        padding-left: $article-gutter;
-      }
 
       @include breakpoint($new-medium) {
         float: right;
@@ -484,6 +482,7 @@ body.page-node-type-magazine-homepage {
   }
 }
 
+// Unique class for homepage Alumni Hub
 .magazine-hub-inside {
   @include clearfix;
   clear: both;
@@ -524,6 +523,13 @@ body.page-node-type-magazine-homepage {
       p {
         margin: $space-two 0;
         color: $magazine-gray-blue;
+      }
+    }
+
+    .magazine-alumni .card-row__copy {
+      @include breakpoint($new-small-max) {
+        padding-right: 0;
+        padding-left: 0;
       }
     }
   }
