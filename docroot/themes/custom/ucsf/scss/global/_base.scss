@@ -242,29 +242,30 @@ a.button-reverse:visited,
     padding: $space-two 0;
     border-bottom: 1px solid $gray-lightest;
     background-image: url('../images/cta-arrow.svg');
-    background-position: right center;
     background-repeat: no-repeat;
     background-color: transparent;
     background-size: 14px 10px;
     padding-right: 20px;
-  }
-}
-
-.cta--list {
-  a {
     transition: $transition-time cubic-bezier(0.33,0.66,0.66,1) background-color,
-                $transition-time cubic-bezier(0.33,0.66,0.66,1) background-position;
+    $transition-time cubic-bezier(0.33,0.66,0.66,1) background-position;
     background-position: 97% center;
 
     &:hover,
     &:focus {
       // declaring each background property separately on purpose,
       // all inclusive background shorthand can accidentally overwrite images set as backgrounds.
-      background-image: url('../images/cta-arrow.svg');
-      background-size: 14px 10px;
       background-repeat: no-repeat;
       background-position: 98% center;
       background-color: $c-blue-link-rollover;
+    }
+  }
+}
+
+.cta--list {
+  a {
+    &:hover,
+    &:focus {
+      background-image: url('../images/cta-arrow.svg');
     }
   }
 }
@@ -273,6 +274,11 @@ a.button-reverse:visited,
   a {
     background-image: url('../images/ext-link.svg');
     background-size: 20px;
+
+    &:hover,
+    &:focus {
+      background-image: url('../images/ext-link.svg');
+    }
   }
 }
 
