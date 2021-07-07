@@ -1,5 +1,12 @@
-{% set classes = ['paragraph-text-block paragraph-responsive-areas'] %}
+{% if paragraph.field_full_width_desktop_area[0].value == '1' %}
+  {% set fullwidth = 'paragraph-responsive-areas-fullwidth' %}
+{% endif %}
+
+{% set classes = [
+'paragraph-text-block paragraph-responsive-areas',
+fullwidth
+] %}
 
 <div{{ attributes.addClass(classes) }}>
-  {{ content }}
+  {{ content|without('field_full_width_desktop_area') }}
 </div>
