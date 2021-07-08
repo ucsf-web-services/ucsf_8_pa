@@ -11955,6 +11955,8 @@ a[href*="http"] .remove-ext-url .article-header__date {
   background: #f2f4f6; }
   .view-news-filter .view-header {
     display: none; }
+  .view-news-filter:not(.contextual-region) {
+    position: relative; }
   .view-news-filter .view-content {
     max-width: 1440px;
     background: url("../images/gray-sq.svg") right top no-repeat #fff;
@@ -11989,8 +11991,33 @@ a[href*="http"] .remove-ext-url .article-header__date {
     margin: 0 auto;
     background: #fff; }
   .view-news-filter .view-empty {
-    padding: 40px;
-    margin-top: -80px; }
+    margin-top: -80px;
+    position: relative; }
+    @media (min-width: 850px) {
+      .view-news-filter .view-empty {
+        padding-left: 80px; } }
+    .view-news-filter .view-empty::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 16px;
+      height: 16px;
+      background-color: #f2f4f6; }
+      @media (min-width: 850px) {
+        .view-news-filter .view-empty::before {
+          width: 80px;
+          height: 80px;
+          left: 0; } }
+    .view-news-filter .view-empty__text {
+      padding: 40px 16px;
+      margin-bottom: 0; }
+      @media (min-width: 850px) {
+        .view-news-filter .view-empty__text {
+          padding: calc(80px + 16px) 16px;
+          margin: 0 auto;
+          max-width: 827px; } }
 
 .search-filter__indicator-list {
   font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
