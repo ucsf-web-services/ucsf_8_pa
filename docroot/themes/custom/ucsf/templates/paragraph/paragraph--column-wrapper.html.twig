@@ -10,13 +10,22 @@
   {% set backgroundhex = 'background-color:#' ~ paragraph.field_background_color_hex.value %}
 {% endif %}
 
+{# Setting field "Manage display" format to "key", iterating through those keys (a.k.a. item.value) and using them as classes #}
+{% set layout_control_class = '' %}
+{% if paragraph.field_column_layout_controls %}
+  {% for key, item in paragraph.field_column_layout_controls if key|first != '#' %}
+    {% set layout_control_class = layout_control_class ~ " " ~ item.value %}
+  {% endfor %}
+{% endif %}
+
 {% set classes = [
   'layout-columns__' ~ paragraph.field_content_wrapper_content.value |length,
   paragraph.field_background_color.value,
   remove,
-  whitetext
+  whitetext,
+  layout_control_class
 ] %}
 
 <div{{ attributes.addClass(classes) }} style="{{ backgroundhex }}">
-  {{ content|without('field_background_color', 'field_remove_top_space', 'field_background_color_hex', 'field_white_text') }}
+  {{ content|without('field_background_color', 'field_remove_top_space', 'field_background_color_hex', 'field_white_text', 'field_column_layout_controls') }}
 </div>
