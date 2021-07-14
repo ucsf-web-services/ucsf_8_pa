@@ -572,6 +572,7 @@
 
 .video.article-full-width {
   margin: 0;
+  background-color: $white;
 
   @include breakpoint($new-large) {
     grid-column: 2 / -2;
@@ -579,6 +580,21 @@
 
   @include breakpoint($new-xl) {
     grid-column: 3 / -3;
+  }
+}
+
+// Ticket https://ucsfredesign.atlassian.net/browse/UCSFD8-1085
+.video {
+  background-color: $white;
+
+  .field-video-caption {
+    padding-left: $article-gutter;
+    padding-right: $article-gutter;
+
+    @include breakpoint($new-small) {
+      padding-left: 11%;
+      padding-right: 11%;
+    }
   }
 }
 
