@@ -442,6 +442,10 @@
     display: none;
   }
 
+  &:not(.contextual-region) {
+    position: relative;
+  }
+
   .view-content {
     max-width: $bp-full;
     background: url("../images/gray-sq.svg") right top no-repeat $white;
@@ -474,8 +478,40 @@
   }
 
   .view-empty {
-    padding: $space-five;
     margin-top: -$space-ten;
+    position: relative;
+
+    @include breakpoint($new-medium) {
+      padding-left: 80px;
+    }
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 16px;
+      height: 16px;
+      background-color: #f2f4f6;
+
+      @include breakpoint($new-medium) {
+        width: 80px;
+        height: 80px;
+        left: 0;
+      }
+    }
+
+    &__text {
+      padding: $space-five 16px;
+      margin-bottom: 0;
+
+      @include breakpoint($new-medium) {
+        padding: calc(#{$space-ten} + 16px) 16px;
+        margin: 0 auto;
+        max-width: 827px;
+      }
+    }
   }
 }
 
