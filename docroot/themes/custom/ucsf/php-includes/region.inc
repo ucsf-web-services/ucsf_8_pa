@@ -10,7 +10,7 @@ function ucsf_preprocess_region(&$variables) {
     $current_path = \Drupal::service('path.current')->getPath();
     $alias = \Drupal::service('path.alias_manager')->getAliasByPath($current_path);
     // make sure the menu shows up on all slugs starting with /cphp
-    if (strpos($alias, '/cphp') === 0) {
+    if (strpos($alias, '/cphp') === 0 || strpos($alias, '/topic/parnassus') === 0) {
       // Create a variable to be used in @theme/templates/region/region--header.html.twig
       $variables['has_subnav'] = TRUE;
     }
