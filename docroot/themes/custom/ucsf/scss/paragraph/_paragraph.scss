@@ -529,6 +529,46 @@
   }
 }
 
+.column-list {
+  div:first-child {
+    @include breakpoint($new-small-max) {
+      margin-bottom: 0;
+    }
+
+    ul {
+      @include breakpoint($new-small-max) {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  div + div {
+    @include breakpoint($new-small-max) {
+      margin-bottom: 0;
+    }
+
+    ul {
+      @include breakpoint($new-small-max) {
+        border-top: none;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  div:last-child {
+    @include breakpoint($new-small-max) {
+      margin-bottom: 40px;
+    }
+
+    ul {
+      @include breakpoint($new-small-max) {
+        border-top: none;
+      }
+    }
+  }
+
+}
+
 .bg-gray {
   background: $background-gray;
   padding-bottom: $space-five;
