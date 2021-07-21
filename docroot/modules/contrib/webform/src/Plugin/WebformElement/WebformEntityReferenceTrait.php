@@ -209,15 +209,6 @@ trait WebformEntityReferenceTrait {
   /**
    * {@inheritdoc}
    */
-  public function getExportDefaultOptions() {
-    return [
-      'entity_reference_items' => ['id', 'title', 'url'],
-    ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function buildExportOptionsForm(array &$form, FormStateInterface $form_state, array $export_options) {
     if (isset($form['entity_reference'])) {
       return;
@@ -648,6 +639,32 @@ trait WebformEntityReferenceTrait {
       unset($element[$key]['#ajax'], $element[$key]['#limit_validation_errors']);
       $this->buildAjaxElementTriggerRecursive($id, $element[$key]);
     }
+  }
+
+  /****************************************************************************/
+  // Display submission value methods.
+  /****************************************************************************/
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function formatHtmlItems(array &$element, WebformSubmissionInterface $webform_submission, array $options = []) {
+    $format = $this->getItemsFormat($element);
+    if (strpos($format, 'checklist:') === 0) {
+      $this->setOptions($element);
+    }
+    return parent::formatHtmlItems($element, $webform_submission, $options);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function formatTextItems(array &$element, WebformSubmissionInterface $webform_submission, array $options = []) {
+    $format = $this->getItemsFormat($element);
+    if (strpos($format, 'checklist:') === 0) {
+      $this->setOptions($element);
+    }
+    return parent::formatTextItems($element, $webform_submission, $options);
   }
 
 }

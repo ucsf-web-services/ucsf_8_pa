@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
@@ -12,6 +8,16 @@ use Countable;
 use Iterator;
 use Serializable;
 use SplPriorityQueue as PhpSplPriorityQueue;
+
+use function current;
+use function in_array;
+use function is_int;
+use function key;
+use function max;
+use function next;
+use function reset;
+use function serialize;
+use function unserialize;
 
 /**
  * This is an efficient implementation of an integer priority queue in PHP
@@ -23,13 +29,11 @@ use SplPriorityQueue as PhpSplPriorityQueue;
  */
 class FastPriorityQueue implements Iterator, Countable, Serializable
 {
-    const EXTR_DATA     = PhpSplPriorityQueue::EXTR_DATA;
-    const EXTR_PRIORITY = PhpSplPriorityQueue::EXTR_PRIORITY;
-    const EXTR_BOTH     = PhpSplPriorityQueue::EXTR_BOTH;
+    public const EXTR_DATA     = PhpSplPriorityQueue::EXTR_DATA;
+    public const EXTR_PRIORITY = PhpSplPriorityQueue::EXTR_PRIORITY;
+    public const EXTR_BOTH     = PhpSplPriorityQueue::EXTR_BOTH;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     protected $extractFlag = self::EXTR_DATA;
 
     /**
@@ -58,7 +62,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * @var integer|null
      */
-    protected $maxPriority = null;
+    protected $maxPriority;
 
     /**
      * Total number of elements in the queue
@@ -86,6 +90,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * @param mixed $value
      * @param integer $priority
+     * @return void
      */
     public function insert($value, $priority)
     {
@@ -193,7 +198,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
             case self::EXTR_BOTH:
                 return [
                     'data'     => current($this->values[$this->maxPriority]),
-                    'priority' => $this->maxPriority
+                    'priority' => $this->maxPriority,
                 ];
         }
     }
@@ -211,6 +216,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Set the iterator pointer to the next element in the queue
      * removing the previous element
+     *
+     * @return void
      */
     protected function nextAndRemove()
     {
@@ -317,6 +324,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * Set the extract flag
      *
      * @param integer $flag
+     * @return void
      */
     public function setExtractFlags($flag)
     {

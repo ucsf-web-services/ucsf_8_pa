@@ -20,6 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 abstract class WebformVariantBase extends PluginBase implements WebformVariantInterface {
 
   use WebformEntityInjectionTrait;
+  use WebformPluginSettingsTrait;
 
   /**
    * The webform variant ID.
@@ -133,6 +134,20 @@ abstract class WebformVariantBase extends PluginBase implements WebformVariantIn
    */
   public function description() {
     return $this->pluginDefinition['description'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getMachineNameReplacePattern() {
+    return $this->pluginDefinition['machine_name_replace_pattern'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getMachineNameReplace() {
+    return $this->pluginDefinition['machine_name_replace'];
   }
 
   /**

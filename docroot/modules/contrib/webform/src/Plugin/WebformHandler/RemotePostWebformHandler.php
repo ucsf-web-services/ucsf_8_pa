@@ -3,7 +3,10 @@
 namespace Drupal\webform\Plugin\WebformHandler;
 
 use Drupal\Component\Render\MarkupInterface;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\EventSubscriber\MainContentViewSubscriber;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
@@ -148,8 +151,7 @@ class RemotePostWebformHandler extends WebformHandlerBase {
    * {@inheritdoc}
    */
   public function getSummary() {
-    $configuration = $this->getConfiguration();
-    $settings = $configuration['settings'];
+    $settings = $this->getSettings();
 
     if (!$this->isResultsEnabled()) {
       $settings['updated_url'] = '';
@@ -301,6 +303,7 @@ class RemotePostWebformHandler extends WebformHandlerBase {
       '#options' => [
         'POST' => 'POST',
         'PUT' => 'PUT',
+        'PATCH' => 'PATCH',
         'GET' => 'GET',
       ],
       '#default_value' => $this->configuration['method'],
@@ -533,7 +536,7 @@ class RemotePostWebformHandler extends WebformHandlerBase {
     }
 
     // If debugging is enabled, display the request and response.
-    $this->debug(t('Remote post successful!'), $state, $request_url, $request_method, $request_type, $request_options, $response, 'warning');
+    $this->debug($this->t('Remote post successful!'), $state, $request_url, $request_method, $request_type, $request_options, $response, 'warning');
 
     // Replace [webform:handler] tokens in submission data.
     // Data structured for [webform:handler:remote_post:completed:key] tokens.
@@ -587,7 +590,9 @@ class RemotePostWebformHandler extends WebformHandlerBase {
     // Append uploaded file name, uri, and base64 data to data.
     $webform = $this->getWebform();
     foreach ($data as $element_key => $element_value) {
-      if (empty($element_value)) {
+      // Ignore empty and not equal to zero values.
+      // @see https://stackoverflow.com/questions/732979/php-whats-an-alternative-to-empty-where-string-0-is-not-treated-as-empty
+      if (empty($element_value) && $element_value !== 0 && $element_value !== '0') {
         continue;
       }
 
@@ -1061,14 +1066,30 @@ class RemotePostWebformHandler extends WebformHandlerBase {
       if (strpos($error_url, '/') === 0) {
         $error_url = $base_url . preg_replace('#^' . $base_path . '#', '/', $error_url);
       }
-      $response = new TrustedRedirectResponse($error_url);
+
       $request = $this->requestStack->getCurrentRequest();
+
+      // Build Ajax redirect or trusted redirect response.
+      $wrapper_format = $request->get(MainContentViewSubscriber::WRAPPER_FORMAT);
+      $is_ajax_request = ($wrapper_format === 'drupal_ajax');
+      if ($is_ajax_request) {
+        $response = new AjaxResponse();
+        $response->addCommand(new RedirectCommand($error_url));
+        $response->setData($response->getCommands());
+      }
+      else {
+        $response = new TrustedRedirectResponse($error_url);
+      }
       // Save the session so things like messages get saved.
       $request->getSession()->save();
       $response->prepare($request);
       // Make sure to trigger kernel events.
       $this->kernel->terminate($request, $response);
       $response->send();
+      // Only exit, an Ajax request to prevent headers from being overwritten.
+      if ($is_ajax_request) {
+        exit;
+      }
     }
   }
 

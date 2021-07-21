@@ -1,4 +1,3 @@
-uuid: null
 langcode: en
 status: open
 dependencies:
@@ -24,7 +23,6 @@ elements: |
   textfield:
     '#type': textfield
     '#title': textfield
-  
 css: ''
 javascript: ''
 settings:
@@ -212,7 +210,9 @@ handlers:
     status: false
     conditions: {  }
     weight: 0
-    settings: {  }
+    settings:
+      format: yaml
+      submission: false
 variants:
   settings:
     id: override
@@ -259,7 +259,7 @@ variants:
         debug:
           status: true
       debug: true
-  no_results:
+  No-Results:
     id: override
     label: 'No results'
     notes: 'Saving of results is disabled.'
@@ -274,7 +274,7 @@ variants:
       elements: ''
       handlers: {  }
       debug: true
-  custom_form_properties:
+  Custom-Form-Properties:
     id: override
     label: Elements
     notes: 'Alters custom form properties.'
