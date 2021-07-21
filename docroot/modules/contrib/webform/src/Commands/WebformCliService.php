@@ -6,6 +6,7 @@ use Drupal\Component\Utility\Variable;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Mail\MailFormatHelper;
+use Drupal\Core\Render\RenderContext;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Site\Settings;
 use Drupal\webform\Controller\WebformResultsExportController;
@@ -17,6 +18,7 @@ use Drupal\webform\Utility\WebformObjectHelper;
 use Drupal\webform\Utility\WebformYaml;
 use Drupal\webform_submission_export_import\Form\WebformSubmissionExportImportUploadForm;
 use Drush\Commands\DrushCommands;
+use Drush\Drush;
 use Psr\Log\LogLevel;
 
 /**
@@ -197,16 +199,6 @@ class WebformCliService implements WebformCliServiceInterface {
       'aliases' => ['wfls'],
     ];
 
-    $items['webform-libraries-make'] = [
-      'description' => 'Generates libraries YAML to be included in a drush.make.yml files.',
-      'core' => ['8+'],
-      'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_ROOT,
-      'examples' => [
-        'webform-libraries-make' => 'Generates libraries YAML to be included in a drush.make.yml file.',
-      ],
-      'aliases' => ['wflm'],
-    ];
-
     $items['webform-libraries-composer'] = [
       'description' => "Generates the Webform module's composer.json with libraries as repositories.",
       'core' => ['8+'],
@@ -286,7 +278,7 @@ class WebformCliService implements WebformCliServiceInterface {
       'core' => ['8+'],
       'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_ROOT,
       'examples' => [
-        'webform-repair' => 'Generates HTML documentation used by the Webform module\'s documentation pages.',
+        'webform-docs' => 'Generates HTML documentation used by the Webform module\'s documentation pages.',
       ],
       'aliases' => ['wfd'],
     ];
@@ -490,8 +482,6 @@ class WebformCliService implements WebformCliServiceInterface {
     $entity_type_manager = \Drupal::service('entity_type.manager');
     /** @var \Drupal\webform\WebformSubmissionStorageInterface $submission_storage */
     $submission_storage = $entity_type_manager->getStorage('webform_submission');
-    /** @var \Drupal\webform\WebformRequestInterface $request_handler */
-    $request_handler = \Drupal::service('webform.request');
 
     // Make sure there are submissions that need to be deleted.
     if (!$submission_storage->getTotal($webform)) {
@@ -500,7 +490,7 @@ class WebformCliService implements WebformCliServiceInterface {
     }
 
     if (!$webform) {
-      $submission_total = \Drupal::entityQuery('webform_submission')->count()->execute();
+      $submission_total = \Drupal::entityQuery('webform_submission')->count()->accessCheck(FALSE)->execute();
       $form_total = \Drupal::entityQuery('webform')->count()->execute();
 
       $t_args = [
@@ -513,7 +503,7 @@ class WebformCliService implements WebformCliServiceInterface {
         return $this->drush_user_abort();
       }
 
-      $form = new WebformResultsClearForm($entity_type_manager, $request_handler);
+      $form = WebformResultsClearForm::create(\Drupal::getContainer());
       $form->batchSet();
       $this->drush_backend_batch_process();
     }
@@ -530,7 +520,7 @@ class WebformCliService implements WebformCliServiceInterface {
         return $this->drush_user_abort();
       }
 
-      $form = new WebformSubmissionsPurgeForm($entity_type_manager, $request_handler);
+      $form = WebformSubmissionsPurgeForm::create(\Drupal::getContainer());
       $form->batchSet($webform, $source_entity);
       $this->drush_backend_batch_process();
     }
@@ -690,35 +680,6 @@ class WebformCliService implements WebformCliServiceInterface {
     $description = MailFormatHelper::htmlToText($description);
 
     $this->drush_print($description);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function drush_webform_libraries_make() {
-    /** @var \Drupal\webform\WebformLibrariesManagerInterface $libraries_manager */
-    $libraries_manager = \Drupal::service('webform.libraries_manager');
-    $libraries = $libraries_manager->getLibraries(TRUE);
-
-    $data = [
-      'core' => '8.x',
-      'api' => 2,
-      'libraries' => [],
-    ];
-    foreach ($libraries as $library_name => $library) {
-      $url = $library['download_url']->toString();
-      $data['libraries'][$library_name] = [
-        'directory_name' => $library_name,
-        'destination' => 'libraries',
-        'download' => [
-          'type' => 'get',
-          'url' => $url,
-        ],
-      ];
-    }
-
-    $data = Yaml::encode($data);
-    $this->drush_print($data);
   }
 
   /**
@@ -886,19 +847,34 @@ class WebformCliService implements WebformCliServiceInterface {
 
     // Validate all webform elements.
     $this->drush_print($this->dt('Validating webform elements…'));
-    /** @var \Drupal\webform\WebformEntityElementsValidatorInterface $elements_validator */
-    $elements_validator = \Drupal::service('webform.elements_validator');
 
-    /** @var \Drupal\webform\WebformInterface[] $webforms */
-    $webforms = Webform::loadMultiple();
-    foreach ($webforms as $webform) {
-      if ($messages = $elements_validator->validate($webform)) {
-        $this->drush_print('  ' . $this->dt('@title (@id): Found element validation errors.', ['@title' => $webform->label(), '@id' => $webform->id()]));
-        foreach ($messages as $message) {
-          $this->drush_print('  - ' . strip_tags($message));
+    \Drupal::moduleHandler()->loadAll();
+
+    /** @var \Drupal\Core\Render\RendererInterface $renderer */
+    $renderer = \Drupal::service('renderer');
+    $render_context = new RenderContext();
+    $renderer->executeInRenderContext($render_context, function () {
+      /** @var \Drupal\webform\WebformEntityElementsValidatorInterface $elements_validator */
+      $elements_validator = \Drupal::service('webform.elements_validator');
+
+      /** @var \Drupal\webform\WebformInterface[] $webforms */
+      $webforms = Webform::loadMultiple();
+      foreach ($webforms as $webform) {
+        // Ignored test files.
+        // @todo Determine why these webforms are throwing error via CLI.
+        if (in_array($webform->id(), ['test_element_managed_file_limit', 'test_composite_custom_file', 'test_element_comp_file_plugin'])) {
+          continue;
+        }
+
+        $messages = $elements_validator->validate($webform);
+        if ($messages) {
+          $this->drush_print('  ' . $this->dt('@title (@id): Found element validation errors.', ['@title' => $webform->label(), '@id' => $webform->id()]));
+          foreach ($messages as $message) {
+            $this->drush_print('  - ' . strip_tags($message));
+          }
         }
       }
-    }
+    });
 
     Cache::invalidateTags(['rendered']);
     // @todo Remove when that is fixed in https://www.drupal.org/node/2773591.
@@ -1083,7 +1059,7 @@ class WebformCliService implements WebformCliServiceInterface {
       return $this->drush_user_abort();
     }
 
-    $drupal_root = $this->drush_get_context('DRUSH_DRUPAL_ROOT');
+    $drupal_root = Drush::bootstrapManager()->getRoot();
     if (file_exists($drupal_root . '/composer.json')) {
       $composer_json = $drupal_root . '/composer.json';
       $composer_directory = '';
@@ -1379,7 +1355,7 @@ $functions
    * @hook validate $command_name
    */
   public function $validate_method(CommandData \$commandData) {
-    \$arguments = \$commandData->arguments();
+    \$arguments = array_values(\$commandData->arguments());
     array_shift(\$arguments);
     call_user_func_array([\$this->cliService, '$validate_method'], \$arguments);
   }";

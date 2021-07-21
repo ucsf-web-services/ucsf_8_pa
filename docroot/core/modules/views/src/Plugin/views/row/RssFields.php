@@ -2,19 +2,9 @@
 
 namespace Drupal\views\Plugin\views\row;
 
-use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Image\ImageFactory;
 use Drupal\Core\Url;
-use Drupal\field\Entity\FieldConfig;
-use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\file\Entity\File;
-use Drupal\file\Plugin\Field\FieldType\FileFieldItemList;
-use Drupal\image\Entity\ImageStyle;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Renders an RSS item based on fields.

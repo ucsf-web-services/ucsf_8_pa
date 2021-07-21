@@ -3,7 +3,7 @@
 // @codingStandardsIgnoreFile
 
 /**
- * This is file was generated using Drush. DO NOT EDIT. 
+ * This is file was generated using Drush. DO NOT EDIT.
  *
  * @see drush webform-generate-commands
  * @see \Drupal\webform\Commands\DrushCliServiceBase::generate_commands_drush8
@@ -135,20 +135,6 @@ function webform_drush_command() {
         'webform:libraries:status',
       ),
     ),
-    'webform-libraries-make' => array(
-      'description' => 'Generates libraries YAML to be included in a drush.make.yml files.',
-      'core' => array(
-        '8+',
-      ),
-      'bootstrap' => 1,
-      'examples' => array(
-        'webform-libraries-make' => 'Generates libraries YAML to be included in a drush.make.yml file.',
-      ),
-      'aliases' => array(
-        'wflm',
-        'webform:libraries:make',
-      ),
-    ),
     'webform-libraries-composer' => array(
       'description' => "Generates the Webform module's composer.json with libraries as repositories.",
       'core' => array(
@@ -246,7 +232,7 @@ function webform_drush_command() {
       ),
       'bootstrap' => 1,
       'examples' => array(
-        'webform-repair' => "Generates HTML documentation used by the Webform module's documentation pages.",
+        'webform-docs' => "Generates HTML documentation used by the Webform module's documentation pages.",
       ),
       'aliases' => array(
         'wfd',
@@ -368,17 +354,6 @@ function drush_webform_tidy() {
  */
 function drush_webform_libraries_status() {
   return call_user_func_array([\Drupal::service('webform.cli_service'), 'drush_webform_libraries_status'], func_get_args());
-}
-
-/******************************************************************************/
-// drush webform-libraries-make. DO NOT EDIT.
-/******************************************************************************/
-
-/**
- * Implements drush_hook_COMMAND().
- */
-function drush_webform_libraries_make() {
-  return call_user_func_array([\Drupal::service('webform.cli_service'), 'drush_webform_libraries_make'], func_get_args());
 }
 
 /******************************************************************************/
