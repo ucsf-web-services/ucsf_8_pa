@@ -46,6 +46,11 @@ class CropFunctionalTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
+  protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp() {
     parent::setUp();
 
@@ -156,7 +161,7 @@ class CropFunctionalTest extends BrowserTestBase {
    */
   protected function doTestFileUriAlter() {
     // Get the test file.
-    file_unmanaged_copy(drupal_get_path('module', 'crop') . '/tests/files/sarajevo.png', PublicStream::basePath());
+    \Drupal::service('file_system')->copy(drupal_get_path('module', 'crop') . '/tests/files/sarajevo.png', PublicStream::basePath());
     $file_uri = 'public://sarajevo.png';
     $file = File::create(['uri' => $file_uri, 'status' => FILE_STATUS_PERMANENT]);
     $file->save();
