@@ -2,10 +2,12 @@
 
 namespace Drupal\imageapi_optimize\Entity;
 
+use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityWithPluginCollectionInterface;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\imageapi_optimize\ImageAPIOptimizeProcessorPluginCollection;
 use Drupal\imageapi_optimize\ImageAPIOptimizeProcessorInterface;
 use Drupal\imageapi_optimize\ImageAPIOptimizePipelineInterface;
@@ -171,41 +173,39 @@ class ImageAPIOptimizePipeline extends ConfigEntityBase implements ImageAPIOptim
       return FALSE;
     }
 
-    if (count($this->getProcessors())) {
-      /*
-      Copy image to optimize to a temp location so that:
-      1. It's always a local image.
-      2. The filename is only ascii characters.
-      3. Multiple pipelines can be applied to the same image at the same time.
-      */
-      $file_extension = substr(strrchr($image_uri,'.'),1);
-      $temp_image_uri_base = \Drupal::service('file_system')->tempnam('temporary://', 'image_api_optimize_' . $this->id());
-      // Ensure this file is cleaned up at the end of the request.
-      $this->temporaryFiles[] = $temp_image_uri_base;
-      // Copy the file we are trying to optimize to the temporary location.
-      file_unmanaged_copy($image_uri, $temp_image_uri_base, FILE_EXISTS_REPLACE);
+    /*
+    Copy image to optimize to a temp location so that:
+    1. It's always a local image.
+    2. The filename is only ascii characters.
+    */
+    $file_extension = strtolower(substr(strrchr($image_uri,'.'),1));
+    $temp_image_uri = 'temporary://image_api_optimize_' . Crypt::randomBytesBase64(8) . '.' . $file_extension;
 
-      // Some processors require the correct file extension, add that on.
-      $temp_image_uri = $temp_image_uri_base . '.' .$file_extension;
-      file_unmanaged_move($temp_image_uri_base, $temp_image_uri);
-      // Ensure this file is cleaned up at the end of the request.
-      $this->temporaryFiles[] = $temp_image_uri;
-      $image_changed = FALSE;
-
-      foreach ($this->getProcessors() as $processor) {
-        $image_changed = $processor->applyToImage($temp_image_uri) || $image_changed;
-        // The file may have changed on disk after each processor has been
-        // applied, and PHP has a cache of file size information etc. so clear
-        // it here so that later calls to filesize() etc. get the correct
-        // information.
-        clearstatcache();
+    foreach ($this->getProcessors() as $processor) {
+      // Create a copy of this image for the processor to work on.
+      $temp_image_uri = \Drupal::service('file_system')->copy($image_uri, $temp_image_uri, FileSystemInterface::EXISTS_RENAME);
+      if ($temp_image_uri === FALSE) {
+        return FALSE;
       }
+      // Add the temporary file to be cleaned up later.
+      $this->temporaryFiles[] = $temp_image_uri;
+
+      // Apply the actual processor.
+      $image_changed = $processor->applyToImage($temp_image_uri);
+
+      // The file may have changed on disk after each processor has been
+      // applied, and PHP has a cache of file size information etc. so clear
+      // it here so that later calls to filesize() etc. get the correct
+      // information.
+      clearstatcache();
 
       if ($image_changed) {
         // Copy the temporary file back over the original image.
-        file_unmanaged_move($temp_image_uri, $image_uri, FILE_EXISTS_REPLACE);
+        \Drupal::service('file_system')->move($temp_image_uri, $image_uri, FileSystemInterface::EXISTS_REPLACE);
       }
     }
+
+    return TRUE;
   }
 
   /**
@@ -298,7 +298,7 @@ class ImageAPIOptimizePipeline extends ConfigEntityBase implements ImageAPIOptim
   public function __destruct() {
     foreach ($this->temporaryFiles as $file) {
       if (file_exists($file)) {
-        file_unmanaged_delete($file);
+        \Drupal::service('file_system')->delete($file);
       }
     }
   }

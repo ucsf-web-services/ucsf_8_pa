@@ -7,13 +7,13 @@ use Drupal\Tests\image\Kernel\ImageItemTest as OriginalImageItemTest;
 /**
  * Tests using entity fields of the image field type.
  *
- * @group image
+ * @group imageapi_optimize
  */
 class ImageItemTest extends OriginalImageItemTest {
 
-  /**
-   * {@inheritdoc}
-   */
-  public static $modules = ['file', 'image', 'imageapi_optimize'];
+ /**
+  * {@inheritdoc}
+  */
+  public static $modules = ['imageapi_optimize'];
 
 }

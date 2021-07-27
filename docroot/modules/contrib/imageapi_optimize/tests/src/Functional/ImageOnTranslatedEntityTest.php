@@ -1,15 +1,19 @@
 <?php
 
-namespace Drupal\imageapi_optimize\Tests;
+namespace Drupal\Tests\imageapi_optimize\Functional;
 
 use Drupal\Tests\image\Functional\ImageOnTranslatedEntityTest as OriginalImageOnTranslatedEntityTest;
 
 /**
- * Tests creation, deletion, and editing of image styles and effects.
+ * Uploads images to translated nodes.
  *
- * @group image
+ * @group imageapi_optimize
  */
 class ImageOnTranslatedEntityTest extends OriginalImageOnTranslatedEntityTest {
+
+ /**
+  * {@inheritdoc}
+  */
   public static $modules = ['imageapi_optimize'];
 
 }

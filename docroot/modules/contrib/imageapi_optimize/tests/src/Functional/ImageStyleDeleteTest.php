@@ -1,16 +1,19 @@
 <?php
 
-namespace Drupal\imageapi_optimize\Tests;
+namespace Drupal\Tests\imageapi_optimize\Functional;
 
 use Drupal\Tests\image\Functional\ImageStyleDeleteTest as OriginalImageStyleDeleteTest;
 
 /**
  * Tests image style deletion using the UI.
  *
- * @group image
+ * @group imageapi_optimize
  */
 class ImageStyleDeleteTest extends OriginalImageStyleDeleteTest {
 
-  public static $modules = ['node', 'image', 'field_ui', 'image_module_test', 'imageapi_optimize'];
+ /**
+  * {@inheritdoc}
+  */
+  public static $modules = ['imageapi_optimize'];
 
 }

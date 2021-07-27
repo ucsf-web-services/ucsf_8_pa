@@ -1,15 +1,19 @@
 <?php
 
-namespace Drupal\imageapi_optimize\Tests;
+namespace Drupal\Tests\imageapi_optimize\Functional;
 
 use Drupal\Tests\image\Functional\ImageStyleFlushTest as OriginalImageStyleFlushTest;
 
 /**
- * Tests creation, deletion, and editing of image styles and effects.
+ * Tests flushing of image styles.
  *
- * @group image
+ * @group imageapi_optimize
  */
 class ImageStyleFlushTest extends OriginalImageStyleFlushTest {
+
+ /**
+  * {@inheritdoc}
+  */
   public static $modules = ['imageapi_optimize'];
 
 }
