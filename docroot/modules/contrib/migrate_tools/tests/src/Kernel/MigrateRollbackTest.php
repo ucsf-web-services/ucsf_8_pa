@@ -4,6 +4,7 @@ namespace Drupal\Tests\migrate_tools\Kernel;
 
 use Drupal\migrate_tools\MigrateExecutable;
 use Drupal\taxonomy\Entity\Vocabulary;
+use Drupal\taxonomy\VocabularyInterface;
 use Drupal\Tests\migrate\Kernel\MigrateTestBase;
 
 /**
@@ -18,12 +19,18 @@ class MigrateRollbackTest extends MigrateTestBase {
    *
    * @var array
    */
-  public static $modules = ['field', 'taxonomy', 'text', 'user'];
+  public static $modules = [
+    'field',
+    'system',
+    'taxonomy',
+    'text',
+    'user',
+  ];
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('user');
     $this->installEntitySchema('taxonomy_vocabulary');
@@ -34,7 +41,7 @@ class MigrateRollbackTest extends MigrateTestBase {
   /**
    * Tests rolling back configuration and content entities.
    */
-  public function testRollback() {
+  public function testRollback(): void {
     // We use vocabularies to demonstrate importing and rolling back
     // configuration entities.
     $vocabulary_data_rows = [
@@ -68,9 +75,9 @@ class MigrateRollbackTest extends MigrateTestBase {
     foreach ($vocabulary_data_rows as $row) {
       /** @var \Drupal\taxonomy\Entity\Vocabulary $vocabulary */
       $vocabulary = Vocabulary::load($row['id']);
-      $this->assertTrue($vocabulary);
+      $this->assertInstanceOf(VocabularyInterface::class, $vocabulary);
       $map_row = $vocabulary_id_map->getRowBySource(['id' => $row['id']]);
-      $this->assertNotNull($map_row['destid1']);
+      $this->assertEqual($map_row['destid1'], $vocabulary->id());
     }
 
     // Test id list rollback.
@@ -78,29 +85,15 @@ class MigrateRollbackTest extends MigrateTestBase {
     $rollback_executable->rollback();
     /** @var \Drupal\taxonomy\Entity\Vocabulary $vocabulary */
     $vocabulary = Vocabulary::load(1);
-    $this->assertFalse($vocabulary);
+    $this->assertEmpty($vocabulary);
     $map_row = $vocabulary_id_map->getRowBySource(['id' => 1]);
-    $this->assertFalse($map_row);
+    $this->assertEmpty($map_row);
 
-    // TODO: remove after 8.6 is sunset.
-    // @see https://www.drupal.org/project/migrate_tools/issues/3008316
-    include_once $this->root . '/core/includes/install.core.inc';
-    $version = _install_get_version_info(\Drupal::VERSION);
-    if ($version['minor'] == 6) {
-      /** @var \Drupal\taxonomy\Entity\Vocabulary $vocabulary */
-      $vocabulary = Vocabulary::load(1);
-      $this->assertFalse($vocabulary);
-      $map_row = $vocabulary_id_map->getRowBySource(['id' => 1]);
-      $this->assertFalse($map_row);
-    }
-    else {
-      /** @var \Drupal\taxonomy\Entity\Vocabulary $vocabulary */
-      $vocabulary = Vocabulary::load(2);
-      $this->assertTrue($vocabulary);
-      $map_row = $vocabulary_id_map->getRowBySource(['id' => 2]);
-      $this->assertNotNull($map_row['destid1']);
-    }
-
+    /** @var \Drupal\taxonomy\Entity\Vocabulary $vocabulary */
+    $vocabulary = Vocabulary::load(2);
+    $this->assertInstanceOf(VocabularyInterface::class, $vocabulary);
+    $map_row = $vocabulary_id_map->getRowBySource(['id' => 2]);
+    $this->assertEqual($map_row['destid1'], $vocabulary->id());
   }
 
 }

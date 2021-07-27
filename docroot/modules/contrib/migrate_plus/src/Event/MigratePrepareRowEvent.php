@@ -2,8 +2,8 @@
 
 namespace Drupal\migrate_plus\Event;
 
-use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Plugin\MigrateSourceInterface;
+use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Row;
 use Symfony\Component\EventDispatcher\Event;
 
@@ -38,10 +38,8 @@ class MigratePrepareRowEvent extends Event {
    *
    * @param \Drupal\migrate\Row $row
    *   Row of source data to be analyzed/manipulated.
-   *
    * @param \Drupal\migrate\Plugin\MigrateSourceInterface $source
    *   Source plugin that is the source of the event.
-   *
    * @param \Drupal\migrate\Plugin\MigrationInterface $migration
    *   Migration entity.
    */

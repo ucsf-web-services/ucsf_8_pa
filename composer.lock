@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41bbedef0e16667cbe93445334d34571",
+    "content-hash": "da6017db23e3c77dc679fe8b0cb09a89",
     "packages": [
         {
             "name": "acquia/content-hub-php",
@@ -4130,10 +4130,11 @@
                     "2061377 - Allow image style to be selected in Text Editor's image dialog": "https://www.drupal.org/files/issues/2020-01-28/2061377-356.patch",
                     "UCSF FilterAlign - remove aggressive removal of classes": "./patches/core-filteralign.patch",
                     "2973706 - Styles dropdown configuration permit multiple tags": "https://www.drupal.org/files/issues/2020-07-14/allow-multiple-elements-2973706-12.patch",
-                    "2918784 - Views RSS row plugin incorrectly assumes links are relative": "https://www.drupal.org/files/issues/2020-06-03/2918784_36.patch",
                     "UCSF FilterCaption - Fix decode entities on FilterCaption": "./patches/core-filtercaption.patch",
                     "3200283 - Acquia Connector - add missing SVG images": "https://www.drupal.org/files/issues/2021-03-24/check-svg-and-error-svg-not-found-3200283-5.patch",
-                    "3192234 - Responsive Image - Get width and height from fallback responsive image style": "https://www.drupal.org/files/issues/2021-02-12/3192234-10.patch"
+                    "3192234 - Responsive Image - Get width and height from fallback responsive image style": "https://www.drupal.org/files/issues/2021-02-12/3192234-10.patch",
+                    "2511878 - Support enclosure field in Views RssFields row plugin": "https://www.drupal.org/files/issues/2020-07-24/views-rss-fields-enclosure-2511878-30.patch",
+                    "2918784 - Views RSS row plugin incorrectly assumes links are relative. Using custom patch due to conflict with 2511878": "./patches/views-rss-fields-enclosure-2511878-custom.patch"
                 }
             },
             "autoload": {
@@ -5109,7 +5110,8 @@
                     }
                 },
                 "patches_applied": {
-                    "2838729 - Allow iteraction of CKEditor Dialog on top of Drupal Dialog": "./patches/entity_embed_allowinteraction.patch"
+                    "UCSF Entity Embed Caption Fix - Allows the HTML tags to come through from the WYSIWYG": "./patches/entity_embed_caption_fix.patch",
+                    "2838729 - Allow interaction of CKEditor Dialog on top of Drupal Dialog": "./patches/entity_embed_allowinteraction.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -5190,7 +5192,8 @@
                     }
                 },
                 "patches_applied": {
-                    "Prevent Entity Embed Link from overriding entity_embed_container.html.yml file in the theme": "./patches/entity_embed_link.patch"
+                    "Prevent Entity Embed Link from overriding entity_embed_container.html.yml file in the theme": "./patches/entity_embed_link.patch",
+                    "Drupal 9 compatibility fix": "https://www.drupal.org/files/issues/2020-06-06/entity_embed_link.1.0.rector.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -6694,30 +6697,27 @@
         },
         {
             "name": "drupal/imageapi_optimize_resmushit",
-            "version": "1.0.0-beta1",
+            "version": "2.0.0-beta1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/imageapi_optimize_resmushit.git",
-                "reference": "8.x-1.0-beta1"
+                "reference": "2.0.0-beta1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/imageapi_optimize_resmushit-8.x-1.0-beta1.zip",
-                "reference": "8.x-1.0-beta1",
-                "shasum": "da4162b44a4df6b93632840e55ae7b26adbc1e36"
+                "url": "https://ftp.drupal.org/files/projects/imageapi_optimize_resmushit-2.0.0-beta1.zip",
+                "reference": "2.0.0-beta1",
+                "shasum": "2c2b0d6408e7ffaf4d44310388e916e329509c1e"
             },
             "require": {
-                "drupal/core": "~8.0",
+                "drupal/core": "^8 || ^9",
                 "drupal/imageapi_optimize": "*"
             },
             "type": "drupal-module",
             "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev"
-                },
                 "drupal": {
-                    "version": "8.x-1.0-beta1",
-                    "datestamp": "1535657580",
+                    "version": "2.0.0-beta1",
+                    "datestamp": "1592296873",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."
@@ -6737,7 +6737,7 @@
             "description": "Provide a reSmush.it optimizer for ImageAPI Optimize.",
             "homepage": "https://www.drupal.org/project/imageapi_optimize_resmushit",
             "support": {
-                "source": "http://cgit.drupalcode.org/imageapi_optimize_resmushit"
+                "source": "https://git.drupalcode.org/project/imageapi_optimize_resmushit"
             }
         },
         {
@@ -8130,25 +8130,25 @@
         },
         {
             "name": "drupal/migrate_plus",
-            "version": "4.1.0",
+            "version": "5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/migrate_plus.git",
-                "reference": "8.x-4.1"
+                "reference": "8.x-5.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/migrate_plus-8.x-4.1.zip",
-                "reference": "8.x-4.1",
-                "shasum": "cfd7ef2b17ede664b2b74eb101032a03c386457e"
+                "url": "https://ftp.drupal.org/files/projects/migrate_plus-8.x-5.1.zip",
+                "reference": "8.x-5.1",
+                "shasum": "1257427ab0c64459c3c1e42bb2a98d3114b77163"
             },
             "require": {
-                "drupal/core": "^8.3"
+                "drupal/core": "^8.8 || ^9",
+                "php": ">=7.1"
             },
             "require-dev": {
                 "drupal/migrate_example_advanced_setup": "*",
-                "drupal/migrate_example_setup": "*",
-                "drupal/migrate_tools": "*"
+                "drupal/migrate_example_setup": "*"
             },
             "suggest": {
                 "ext-soap": "*",
@@ -8156,12 +8156,9 @@
             },
             "type": "drupal-module",
             "extra": {
-                "branch-alias": {
-                    "dev-4.x": "4.x-dev"
-                },
                 "drupal": {
-                    "version": "8.x-4.1",
-                    "datestamp": "1546879080",
+                    "version": "8.x-5.1",
+                    "datestamp": "1588261060",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -8170,7 +8167,7 @@
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
             "license": [
-                "GPL-2.0+"
+                "GPL-2.0-or-later"
             ],
             "authors": [
                 {
@@ -8179,16 +8176,17 @@
                     "role": "Maintainer"
                 },
                 {
-                    "name": "mikeryan",
-                    "homepage": "https://www.drupal.org/user/4420"
+                    "name": "Lucas Hedding",
+                    "homepage": "https://www.drupal.org/u/heddn",
+                    "role": "Maintainer"
                 }
             ],
             "description": "Enhancements to core migration support.",
             "homepage": "https://www.drupal.org/project/migrate_plus",
             "support": {
-                "source": "https://cgit.drupalcode.org/migrate_plus",
+                "source": "https://git.drupalcode.org/project/migrate_plus",
                 "issues": "https://www.drupal.org/project/issues/migrate_plus",
-                "irc": "irc://irc.freenode.org/drupal-migrate"
+                "slack": "#migrate"
             }
         },
         {
@@ -8252,35 +8250,36 @@
         },
         {
             "name": "drupal/migrate_tools",
-            "version": "4.1.0",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/migrate_tools.git",
-                "reference": "8.x-4.1"
+                "reference": "8.x-5.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/migrate_tools-8.x-4.1.zip",
-                "reference": "8.x-4.1",
-                "shasum": "0355d5309fbb738759332779d0ecf5f19a1da0a4"
+                "url": "https://ftp.drupal.org/files/projects/migrate_tools-8.x-5.0.zip",
+                "reference": "8.x-5.0",
+                "shasum": "b7c91aa6f7de9d6d548f65f83c8736e47e5926a1"
             },
             "require": {
-                "drupal/core": "^8.3",
-                "drupal/migrate_plus": "^4"
+                "drupal/core": "^8.8 | ^9",
+                "drupal/migrate_plus": "^5",
+                "php": ">=7.1"
             },
             "require-dev": {
-                "drupal/migrate_plus": "4.x-dev",
-                "drupal/migrate_source_csv": "^2.2",
-                "drush/drush": "^9"
+                "drupal/migrate_plus": "^5",
+                "drupal/migrate_source_csv": "^3",
+                "drush/drush": "^10"
+            },
+            "suggest": {
+                "drush/drush": "^9 || ^10"
             },
             "type": "drupal-module",
             "extra": {
-                "branch-alias": {
-                    "dev-4.x": "4.x-dev"
-                },
                 "drupal": {
-                    "version": "8.x-4.1",
-                    "datestamp": "1546879080",
+                    "version": "8.x-5.0",
+                    "datestamp": "1588260531",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -8288,7 +8287,7 @@
                 },
                 "drush": {
                     "services": {
-                        "drush.services.yml": "^9"
+                        "drush.services.yml": "^9 || ^10"
                     }
                 }
             },
@@ -8298,24 +8297,26 @@
             ],
             "authors": [
                 {
-                    "name": "heddn",
-                    "homepage": "https://www.drupal.org/user/1463982"
+                    "name": "Mike Ryan",
+                    "homepage": "https://www.drupal.org/u/mikeryan",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Lucas Hedding",
+                    "homepage": "https://www.drupal.org/u/heddn",
+                    "role": "Maintainer"
                 },
                 {
                     "name": "mikeryan",
                     "homepage": "https://www.drupal.org/user/4420"
-                },
-                {
-                    "name": "moshe weitzman",
-                    "homepage": "https://www.drupal.org/user/23"
                 }
             ],
             "description": "Tools to assist in developing and running migrations.",
             "homepage": "http://drupal.org/project/migrate_tools",
             "support": {
-                "source": "http://cgit.drupalcode.org/migrate_tools",
-                "issues": "http://drupal.org/project/migrate_tools",
-                "irc": "irc://irc.freenode.org/drupal-migrate"
+                "source": "https://git.drupalcode.org/project/migrate_tools",
+                "issues": "https://www.drupal.org/project/issues/migrate_tools",
+                "slack": "#migrate"
             }
         },
         {
@@ -19397,7 +19398,6 @@
         "drupal/better_normalizers": 20,
         "drupal/ldap": 10,
         "drupal/entity_clone": 10,
-        "drupal/imageapi_optimize_resmushit": 10,
         "drupal/authorization": 20,
         "drupal/xmlsitemap": 15,
         "drupal/token_conditions": 20,
@@ -19407,7 +19407,8 @@
         "drupal/rabbit_hole": 10,
         "drupal/paragraphs_edit": 15,
         "drupal/feeds": 15,
-        "drupal/feeds_tamper": 10
+        "drupal/feeds_tamper": 10,
+        "drupal/imageapi_optimize_resmushit": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,

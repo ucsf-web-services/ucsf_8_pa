@@ -1,6 +1,5 @@
 langcode: en
 status: true
-dependencies: {  }
 id: csv_source_test
 label: Test edit of column aliases for CSV source plugin
 class: null
@@ -11,17 +10,20 @@ migration_group: csv_test
 source:
   plugin: csv
   path: 'public://test.csv'
-  header_row_count: 1
+  header_offset: 0
   enclosure: '"'
-  keys:
+  ids:
     - vid
-  column_names:
-    0:
-      vid: 'Vocabulary Id'
-    1:
-      name: 'Name'
-    2:
-      description: 'Description'
+  fields:
+    -
+      name: vid
+      label: Vocabulary Id
+    -
+      name: name
+      label: Name
+    -
+      name: description
+      label: Description
 process:
   vid: vid
   name: name
@@ -31,3 +33,7 @@ destination:
 migration_dependencies:
   required: {  }
   optional: {  }
+dependencies:
+  enforced:
+    module:
+      - csv_source_test

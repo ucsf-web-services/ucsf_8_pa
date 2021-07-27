@@ -4,6 +4,7 @@ namespace Drupal\Tests\migrate_tools\Kernel;
 
 use Drupal\migrate_tools\MigrateExecutable;
 use Drupal\taxonomy\Entity\Vocabulary;
+use Drupal\taxonomy\VocabularyInterface;
 use Drupal\Tests\migrate\Kernel\MigrateTestBase;
 
 /**
@@ -18,12 +19,19 @@ class MigrateImportTest extends MigrateTestBase {
    *
    * @var array
    */
-  public static $modules = ['field', 'taxonomy', 'text', 'user'];
+  public static $modules = [
+    'field',
+    'system',
+    'taxonomy',
+    'text',
+    'user',
+    'system',
+  ];
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('user');
     $this->installEntitySchema('taxonomy_vocabulary');
@@ -34,7 +42,7 @@ class MigrateImportTest extends MigrateTestBase {
   /**
    * Tests rolling back configuration and content entities.
    */
-  public function testImport() {
+  public function testImport(): void {
     // We use vocabularies to demonstrate importing and rolling back
     // configuration entities.
     $vocabulary_data_rows = [
@@ -68,14 +76,14 @@ class MigrateImportTest extends MigrateTestBase {
 
     /** @var \Drupal\taxonomy\Entity\Vocabulary $vocabulary */
     $vocabulary = Vocabulary::load(1);
-    $this->assertFalse($vocabulary);
+    $this->assertEmpty($vocabulary);
     $map_row = $vocabulary_id_map->getRowBySource(['id' => 1]);
-    $this->assertFalse($map_row);
+    $this->assertEmpty($map_row);
     /** @var \Drupal\taxonomy\Entity\Vocabulary $vocabulary */
     $vocabulary = Vocabulary::load(2);
-    $this->assertTrue($vocabulary);
+    $this->assertInstanceOf(VocabularyInterface::class, $vocabulary);
     $map_row = $vocabulary_id_map->getRowBySource(['id' => 2]);
-    $this->assertNotNull($map_row['destid1']);
+    $this->assertEqual($map_row['destid1'], $vocabulary->id());
   }
 
 }

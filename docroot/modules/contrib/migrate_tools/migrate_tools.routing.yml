@@ -181,17 +181,3 @@ migrate_tools.execute:
         type: entity:migration
       migration_group:
         type: entity:migration_group
-migrate_tools.source_csv:
-  path: '/admin/structure/migrate/manage/{migration_group}/migrations/{migration}/source/edit'
-  defaults:
-    _form: 'Drupal\migrate_tools\Form\SourceCsvForm'
-    _migrate_group: true
-  requirements:
-    _permission: 'administer migrations'
-    _custom_access: 'Drupal\migrate_tools\Form\SourceCsvForm::access'
-  options:
-    parameters:
-      migration:
-        type: entity:migration
-      migration_group:
-        type: entity:migration_group

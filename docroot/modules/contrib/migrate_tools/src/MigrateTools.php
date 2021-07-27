@@ -8,6 +8,11 @@ namespace Drupal\migrate_tools;
 class MigrateTools {
 
   /**
+   * Default ID list delimiter.
+   */
+  const DEFAULT_ID_LIST_DELIMITER = ':';
+
+  /**
    * Build the list of specific source IDs to import.
    *
    * @param array $options
@@ -19,7 +24,7 @@ class MigrateTools {
   public static function buildIdList(array $options) {
     $options += [
       'idlist' => NULL,
-      'idlist-delimiter' => ':',
+      'idlist-delimiter' => self::DEFAULT_ID_LIST_DELIMITER,
     ];
     $id_list = [];
     if ($options['idlist']) {

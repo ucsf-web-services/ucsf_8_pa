@@ -3,12 +3,10 @@
 namespace Drupal\migrate_plus\Plugin\migrate\process;
 
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
-use Drupal\Core\Entity\EntityManagerInterface;
-use Drupal\Core\Entity\EntityReferenceSelection\SelectionPluginManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\MigrateException;
 use Drupal\migrate\MigrateExecutableInterface;
+use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -16,14 +14,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * This plugin looks for existing entities.
  *
- * @MigrateProcessPlugin(
- *   id = "entity_lookup",
- *   handle_multiples = TRUE
- * )
- *
  * In its most simple form, this plugin needs no configuration. However, if the
  * lookup properties cannot be determined through introspection, define them via
  * configuration.
+ *
+ * Available configuration keys:
+ * - access_check: (optional) Indicates if access to the entity for this user
+ *   will be checked. Default is true.
+ *
+ * @codingStandardsIgnoreStart
  *
  * Example usage with minimal configuration:
  * @code
@@ -35,8 +34,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *     default_value: page
  *   field_tags:
  *     plugin: entity_lookup
+ *     access_check: false
  *     source: tags
  * @endcode
+ * In this example above, the access check is disabled.
  *
  * Example usage with full configuration:
  * @code
@@ -49,15 +50,29 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *     entity_type: taxonomy_term
  *     ignore_case: true
  * @endcode
+ *
+ * @codingStandardsIgnoreEnd
+ *
+ * @MigrateProcessPlugin(
+ *   id = "entity_lookup",
+ *   handle_multiples = TRUE
+ * )
  */
 class EntityLookup extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The entity manager.
+   * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entityManager;
+  protected $entityTypeManager;
+
+  /**
+   * The field manager.
+   *
+   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
+   */
+  protected $entityFieldManager;
 
   /**
    * The migration.
@@ -123,30 +138,29 @@ class EntityLookup extends ProcessPluginBase implements ContainerFactoryPluginIn
   protected $destinationProperty;
 
   /**
-   * {@inheritdoc}
+   * The access check flag.
+   *
+   * @var string
    */
-  public function __construct(array $configuration, $pluginId, $pluginDefinition, MigrationInterface $migration, EntityManagerInterface $entityManager, SelectionPluginManagerInterface $selectionPluginManager) {
-    parent::__construct($configuration, $pluginId, $pluginDefinition);
-    $this->migration = $migration;
-    $this->entityManager = $entityManager;
-    $this->selectionPluginManager = $selectionPluginManager;
-    $pluginIdParts = explode(':', $this->migration->getDestinationPlugin()->getPluginId());
-    $this->destinationEntityType = empty($pluginIdParts[1]) ? NULL : $pluginIdParts[1];
-    $this->destinationBundleKey = $this->destinationEntityType ? $this->entityManager->getDefinition($this->destinationEntityType)->getKey('bundle') : NULL;
-  }
+  protected $accessCheck = TRUE;
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $pluginId, $pluginDefinition, MigrationInterface $migration = NULL) {
-    return new static(
+    $instance = new static(
       $configuration,
       $pluginId,
-      $pluginDefinition,
-      $migration,
-      $container->get('entity.manager'),
-      $container->get('plugin.manager.entity_reference_selection')
+      $pluginDefinition
     );
+    $instance->migration = $migration;
+    $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->entityFieldManager = $container->get('entity_field.manager');
+    $instance->selectionPluginManager = $container->get('plugin.manager.entity_reference_selection');
+    $pluginIdParts = explode(':', $instance->migration->getDestinationPlugin()->getPluginId());
+    $instance->destinationEntityType = empty($pluginIdParts[1]) ? NULL : $pluginIdParts[1];
+    $instance->destinationBundleKey = $instance->destinationEntityType ? $instance->entityTypeManager->getDefinition($instance->destinationEntityType)->getKey('bundle') : NULL;
+    return $instance;
   }
 
   /**
@@ -177,6 +191,9 @@ class EntityLookup extends ProcessPluginBase implements ContainerFactoryPluginIn
    *   with the $row above.
    */
   protected function determineLookupProperties($destinationProperty) {
+    if (isset($this->configuration['access_check'])) {
+      $this->accessCheck = $this->configuration['access_check'];
+    }
     if (!empty($this->configuration['value_key'])) {
       $this->lookupValueKey = $this->configuration['value_key'];
     }
@@ -194,7 +211,7 @@ class EntityLookup extends ProcessPluginBase implements ContainerFactoryPluginIn
       // See if we can introspect the lookup properties from destination field.
       if (!empty($this->migration->getProcess()[$this->destinationBundleKey][0]['default_value'])) {
         $destinationEntityBundle = $this->migration->getProcess()[$this->destinationBundleKey][0]['default_value'];
-        $fieldConfig = $this->entityManager->getFieldDefinitions($this->destinationEntityType, $destinationEntityBundle)[$destinationProperty]->getConfig($destinationEntityBundle);
+        $fieldConfig = $this->entityFieldManager->getFieldDefinitions($this->destinationEntityType, $destinationEntityBundle)[$destinationProperty]->getConfig($destinationEntityBundle);
         switch ($fieldConfig->getType()) {
           case 'entity_reference':
             if (empty($this->lookupBundle)) {
@@ -211,9 +228,11 @@ class EntityLookup extends ProcessPluginBase implements ContainerFactoryPluginIn
 
             // Make an assumption that if the selection handler can target more
             // than one type of entity that we will use the first entity type.
-            $this->lookupEntityType = $this->lookupEntityType ?: reset($this->selectionPluginManager->createInstance($fieldConfig->getSetting('handler'))->getPluginDefinition()['entity_types']);
-            $this->lookupValueKey = $this->lookupValueKey ?: $this->entityManager->getDefinition($this->lookupEntityType)->getKey('label');
-            $this->lookupBundleKey = $this->lookupBundleKey ?: $this->entityManager->getDefinition($this->lookupEntityType)->getKey('bundle');
+            $fieldHandler = $fieldConfig->getSetting('handler');
+            $selection = $this->selectionPluginManager->createInstance($fieldHandler);
+            $this->lookupEntityType = $this->lookupEntityType ?: reset($selection->getPluginDefinition()['entity_types']);
+            $this->lookupValueKey = $this->lookupValueKey ?: $this->entityTypeManager->getDefinition($this->lookupEntityType)->getKey('label');
+            $this->lookupBundleKey = $this->lookupBundleKey ?: $this->entityTypeManager->getDefinition($this->lookupEntityType)->getKey('bundle');
             break;
 
           case 'file':
@@ -258,8 +277,9 @@ class EntityLookup extends ProcessPluginBase implements ContainerFactoryPluginIn
 
     $multiple = is_array($value);
 
-    $query = $this->entityManager->getStorage($this->lookupEntityType)
+    $query = $this->entityTypeManager->getStorage($this->lookupEntityType)
       ->getQuery()
+      ->accessCheck($this->accessCheck)
       ->condition($this->lookupValueKey, $value, $multiple ? 'IN' : NULL);
     // Sqlite and possibly others returns data in a non-deterministic order.
     // Make it deterministic.
@@ -280,7 +300,7 @@ class EntityLookup extends ProcessPluginBase implements ContainerFactoryPluginIn
     if (!$ignoreCase) {
       // Returns the entity's identifier.
       foreach ($results as $k => $identifier) {
-        $entity = $this->entityManager->getStorage($this->lookupEntityType)->load($identifier);
+        $entity = $this->entityTypeManager->getStorage($this->lookupEntityType)->load($identifier);
         $result_value = $entity instanceof ConfigEntityInterface ? $entity->get($this->lookupValueKey) : $entity->get($this->lookupValueKey)->value;
         if (($multiple && !in_array($result_value, $value, TRUE)) || (!$multiple && $result_value !== $value)) {
           unset($results[$k]);
