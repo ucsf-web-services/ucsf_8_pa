@@ -1,15 +1,19 @@
 <?php
 
-namespace Drupal\imageapi_optimize\Tests;
+namespace Drupal\Tests\imageapi_optimize\Functional;
 
 use Drupal\Tests\image\Functional\ImageEffectsTest as OriginalImageEffectsTest;
 
 /**
- * Tests creation, deletion, and editing of image styles and effects.
+ * Tests that the image effects pass parameters to the toolkit correctly.
  *
- * @group image
+ * @group imageapi_optimize
  */
 class ImageEffectsTest extends OriginalImageEffectsTest {
+
+ /**
+  * {@inheritdoc}
+  */
   public static $modules = ['imageapi_optimize'];
 
 }

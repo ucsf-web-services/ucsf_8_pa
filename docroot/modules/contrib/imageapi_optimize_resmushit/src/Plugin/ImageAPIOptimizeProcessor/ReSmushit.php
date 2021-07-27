@@ -2,6 +2,7 @@
 
 namespace Drupal\imageapi_optimize_resmushit\Plugin\ImageAPIOptimizeProcessor;
 
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Image\ImageFactory;
 use Drupal\imageapi_optimize\ConfigurableImageAPIOptimizeProcessorBase;
@@ -77,7 +78,7 @@ final class ReSmushit extends ConfigurableImageAPIOptimizeProcessorBase {
         // Now go fetch that, and save it locally.
         $smushedFile = $this->httpClient->get($json->dest);
         if ($smushedFile->getStatusCode() == 200) {
-          file_unmanaged_save_data($smushedFile->getBody(), $image_uri, FILE_EXISTS_REPLACE);
+          \Drupal::service('file_system')->saveData($smushedFile->getBody(), $image_uri, FileSystemInterface::EXISTS_REPLACE);
           return TRUE;
         }
       }

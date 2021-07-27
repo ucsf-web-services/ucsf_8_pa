@@ -1,15 +1,19 @@
 <?php
 
-namespace Drupal\imageapi_optimize\Tests;
+namespace Drupal\Tests\imageapi_optimize\Functional;
 
 use Drupal\Tests\image\Functional\ImageFieldDefaultImagesTest as OriginalImageFieldDefaultImagesTest;
 
 /**
- * Tests creation, deletion, and editing of image styles and effects.
+ * Tests setting up default images both to the field and field storage.
  *
- * @group image
+ * @group imageapi_optimize
  */
 class ImageFieldDefaultImagesTest extends OriginalImageFieldDefaultImagesTest {
+
+ /**
+  * {@inheritdoc}
+  */
   public static $modules = ['imageapi_optimize'];
 
 }
