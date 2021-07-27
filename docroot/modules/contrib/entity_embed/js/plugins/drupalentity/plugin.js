@@ -133,7 +133,11 @@
               var entityElement = editor.document.createElement('drupal-entity');
               var attributes = values.attributes;
               for (var key in attributes) {
-                entityElement.setAttribute(key, attributes[key]);
+                if (typeof attributes[key] === "object") {
+									entityElement.setAttribute(key, attributes[key].value);
+								} else {
+									entityElement.setAttribute(key, attributes[key]);
+								}
               }
               editor.insertHtml(entityElement.getOuterHtml());
             }

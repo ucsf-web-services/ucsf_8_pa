@@ -3,8 +3,18 @@
 namespace Drupal\views\Plugin\views\row;
 
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Image\ImageFactory;
 use Drupal\Core\Url;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\file\Entity\File;
+use Drupal\file\Plugin\Field\FieldType\FileFieldItemList;
+use Drupal\image\Entity\ImageStyle;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Renders an RSS item based on fields.
@@ -289,7 +299,7 @@ class RssFields extends RowPluginBase {
     if ($this->options['guid_field_options']['guid_field_is_permalink']) {
       $guid_is_permalink_string = 'true';
 
-      // If guid is internal link, get absolute URL from URI
+      // If the guid is an internal link, get the absolute URL from the URI.
       if (!UrlHelper::isExternal($item_guid)) {
         $item_guid = $this->getAbsoluteUrl($item_guid);
       }
