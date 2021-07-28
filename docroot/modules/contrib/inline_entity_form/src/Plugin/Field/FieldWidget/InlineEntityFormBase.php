@@ -57,7 +57,7 @@ abstract class InlineEntityFormBase extends WidgetBase implements ContainerFacto
   /**
    * Constructs an InlineEntityFormBase object.
    *
-   * @param array $plugin_id
+   * @param string $plugin_id
    *   The plugin_id for the widget.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
@@ -128,6 +128,8 @@ abstract class InlineEntityFormBase extends WidgetBase implements ContainerFacto
   /**
    * Sets inline entity form ID.
    *
+   * @see ::makeIefId
+   *
    * @param string $ief_id
    *   The inline entity form ID.
    */
@@ -143,6 +145,29 @@ abstract class InlineEntityFormBase extends WidgetBase implements ContainerFacto
    */
   protected function getIefId() {
     return $this->iefId;
+  }
+
+  /**
+   * Makes an IEF ID from array parents.
+   *
+   * IEF ID is used a) for element ID, b) for form state keys.
+   * We need the IEF form ID to reflect the tree structure of IEFs, so that
+   * the form state keys can be sorted to ensure inside-out saving of entities.
+   *
+   * Also, "add" and "edit" IEFs have different array parents, which messes up
+   * form state, so we fixup this here with a, errrm, pragmatic hack.
+   *
+   * @see \Drupal\inline_entity_form\WidgetSubmit::doSubmit
+   *
+   * @param string[] $parents
+   *   The array parents.
+   * @return string
+   *   The resulting inline entity form ID.
+   */
+  protected function makeIefId(array $parents) {
+    $iefId = implode('-', $parents);
+    $iefId = preg_replace('#-inline_entity_form-entities-([0-9]+)-form-#', '-$1-', $iefId);
+    return $iefId;
   }
 
   /**
@@ -190,6 +215,7 @@ abstract class InlineEntityFormBase extends WidgetBase implements ContainerFacto
   public static function defaultSettings() {
     return [
       'form_mode' => 'default',
+      'revision' => FALSE,
       'override_labels' => FALSE,
       'label_singular' => '',
       'label_plural' => '',
@@ -211,6 +237,11 @@ abstract class InlineEntityFormBase extends WidgetBase implements ContainerFacto
       '#default_value' => $this->getSetting('form_mode'),
       '#options' => $this->entityDisplayRepository->getFormModeOptions($entity_type_id),
       '#required' => TRUE,
+    ];
+    $element['revision'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Create new revision'),
+      '#default_value' => $this->getSetting('revision'),
     ];
     $element['override_labels'] = [
       '#type' => 'checkbox',
@@ -267,7 +298,7 @@ abstract class InlineEntityFormBase extends WidgetBase implements ContainerFacto
     else {
       $form_mode_label = $this->t('Default');
     }
-    $summary[] = t('Form mode: @mode', ['@mode' => $form_mode_label]);
+    $summary[] = $this->t('Form mode: @mode', ['@mode' => $form_mode_label]);
     if ($this->getSetting('override_labels')) {
       $summary[] = $this->t(
         'Overriden labels are used: %singular and %plural',
@@ -276,6 +307,10 @@ abstract class InlineEntityFormBase extends WidgetBase implements ContainerFacto
     }
     else {
       $summary[] = $this->t('Default labels are used.');
+    }
+
+    if ($this->getSetting('revision')) {
+      $summary[] = $this->t('Create new revision');
     }
 
     if ($this->getSetting('collapsible')) {
@@ -349,21 +384,17 @@ abstract class InlineEntityFormBase extends WidgetBase implements ContainerFacto
         'entities' => [],
       ];
       // Store the $items entities in the widget state, for further manipulation.
-      foreach ($items as $delta => $item) {
-        $entity = $item->entity;
-        // The $entity can be NULL if the reference is broken.
-        if ($entity) {
-          // Display the entity in the correct translation.
-          if ($translating) {
-            $entity = TranslationHelper::prepareEntity($entity, $form_state);
-          }
-          $widget_state['entities'][$delta] = [
-            'entity' => $entity,
-            'weight' => $delta,
-            'form' => NULL,
-            'needs_save' => $entity->isNew(),
-          ];
+      foreach ($items->referencedEntities() as $delta => $entity) {
+        // Display the entity in the correct translation.
+        if ($translating) {
+          $entity = TranslationHelper::prepareEntity($entity, $form_state);
         }
+        $widget_state['entities'][$delta] = [
+          'entity' => $entity,
+          'weight' => $delta,
+          'form' => NULL,
+          'needs_save' => $entity->isNew(),
+        ];
       }
       $form_state->set(['inline_entity_form', $this->iefId], $widget_state);
     }
@@ -395,6 +426,7 @@ abstract class InlineEntityFormBase extends WidgetBase implements ContainerFacto
       '#default_value' => $entity,
       '#op' => $operation,
       '#form_mode' => $this->getSetting('form_mode'),
+      '#revision' => $this->getSetting('revision'),
       '#save_entity' => FALSE,
       '#ief_row_delta' => $delta,
       // Used by Field API and controller methods to find the relevant

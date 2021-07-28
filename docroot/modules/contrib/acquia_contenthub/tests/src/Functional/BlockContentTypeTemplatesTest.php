@@ -48,6 +48,7 @@ class BlockContentTypeTemplatesTest extends BlockContentTypeTest {
 
     $expected = '</head><body><div><p>block_body_value</p></div><div data-content-barrier-exclude="true"></div></body></html>';
     $this->assertRaw($expected, 'The block.html.twig and the block--block-content.html.twig are not used.');
+    $this->assertOffCanvasWrapperRemoved();
 
     // Make ch_test_subtheme_advanced theme default.
     $this->config('system.theme')
@@ -61,6 +62,7 @@ class BlockContentTypeTemplatesTest extends BlockContentTypeTest {
 
     $expected = '</head><body><div>block--block-content--acquia-contenthub.html.twig<h2>' . $block->label() . '</h2><div><p>block_body_value</p></div></div><div data-content-barrier-exclude="true"></div></body></html>';
     $this->assertRaw($expected, 'The block--block-content--acquia-contenthub.html.twig is used.');
+    $this->assertOffCanvasWrapperRemoved();
   }
 
 }

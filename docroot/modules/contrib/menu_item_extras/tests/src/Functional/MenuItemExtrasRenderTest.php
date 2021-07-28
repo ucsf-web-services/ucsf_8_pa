@@ -47,12 +47,20 @@ class MenuItemExtrasRenderTest extends BrowserTestBase {
    */
   protected $linksNumber = 3;
 
+  /**
+   * {@inheritdoc}
+   */
   public static $modules = ['menu_item_extras'];
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp(): void {
     parent::setUp();
     // Add a new custom menu.
     $menu_name = 'testmenu';

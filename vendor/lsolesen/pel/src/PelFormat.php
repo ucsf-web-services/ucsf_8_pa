@@ -22,7 +22,6 @@
  * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA 02110-1301 USA
  */
-namespace lsolesen\pel;
 
 /**
  * Namespace for functions operating on Exif formats.
@@ -42,6 +41,8 @@ namespace lsolesen\pel;
  * @package
  *
  */
+namespace lsolesen\pel;
+
 class PelFormat
 {
 
@@ -162,7 +163,7 @@ class PelFormat
     /**
      * Values for format's short names
      */
-    protected static $formatName = array(
+    protected static $formatName = [
         self::ASCII => 'Ascii',
         self::BYTE => 'Byte',
         self::SHORT => 'Short',
@@ -175,9 +176,9 @@ class PelFormat
         self::FLOAT => 'Float',
         self::DOUBLE => 'Double',
         self::UNDEFINED => 'Undefined'
-    );
+    ];
 
-    protected static $formatLength = array(
+    protected static $formatLength = [
         self::ASCII => 1,
         self::BYTE => 1,
         self::SHORT => 2,
@@ -190,7 +191,7 @@ class PelFormat
         self::FLOAT => 4,
         self::DOUBLE => 8,
         self::UNDEFINED => 1
-    );
+    ];
 
     /**
      * Returns the name of a format like 'Ascii' for the {@link ASCII} format
@@ -203,9 +204,8 @@ class PelFormat
     {
         if (array_key_exists($type, self::$formatName)) {
             return self::$formatName[$type];
-        } else {
-            return Pel::fmt('Unknown format: 0x%X', $type);
         }
+        throw new PelIllegalFormatException($type);
     }
 
     /**
@@ -220,8 +220,7 @@ class PelFormat
     {
         if (array_key_exists($type, self::$formatLength)) {
             return self::$formatLength[$type];
-        } else {
-            return Pel::fmt('Unknown format: 0x%X', $type);
         }
+        throw new PelIllegalFormatException($type);
     }
 }

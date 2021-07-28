@@ -1,0 +1,11 @@
+services:
+
+  acquia_contenthub_audit.subscriber_audit:
+    class: \Drupal\acquia_contenthub_audit\SubscriberAudit
+    arguments: ['@config.factory', '@entity.repository', '@database', '@event_dispatcher', '@acquia_contenthub_subscriber.subscriber_common', '@acquia_contenthub.client_manager', '@entity_type.manager', '@acquia_contenthub.import_entity_manager', '@acquia_contenthub.acquia_contenthub_entities_tracking']
+
+  acquia_contenthub_audit.pre_entity_delete.content_lock:
+    class: Drupal\acquia_contenthub_audit\EventSubscriber\ContentLockPreEntityDelete
+    arguments: ['@module_handler']
+    tags:
+      - { name: event_subscriber }

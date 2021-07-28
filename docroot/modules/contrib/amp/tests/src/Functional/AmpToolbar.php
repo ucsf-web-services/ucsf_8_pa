@@ -19,6 +19,7 @@ class AmpToolbarWorks extends BasicTestCaseBase {
     'amp',
     'amp_toolbar',
     'node',
+    'metatag',
     'schema_metatag',
     'token',
     'views',

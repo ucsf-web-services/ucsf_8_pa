@@ -2,12 +2,12 @@
 
 namespace Drupal\acquia_contenthub;
 
-use Drupal\Core\Database\Connection;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Database\Query\Merge;
 use Drupal\Component\Uuid\Uuid;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\IntegrityConstraintViolationException;
+use Drupal\Core\Database\Query\Merge;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Tracks in a table the list of all entities imported from Content Hub.

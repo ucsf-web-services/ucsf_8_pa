@@ -14,7 +14,7 @@ class SelectorPluginTest extends ImageEffectsTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'image',
     'image_effects',
     'image_effects_module_test',

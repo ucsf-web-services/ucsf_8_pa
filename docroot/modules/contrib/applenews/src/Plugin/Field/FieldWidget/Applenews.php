@@ -3,13 +3,16 @@
 namespace Drupal\applenews\Plugin\Field\FieldWidget;
 
 use Drupal\applenews\ApplenewsManager;
+use Drupal\applenews\Repository\ApplenewsChannelRepository;
+use Drupal\applenews\Repository\ApplenewsTemplateRepository;
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a default applenews widget.
@@ -25,22 +28,206 @@ use Drupal\Core\Url;
 class Applenews extends WidgetBase {
 
   /**
+   * Apple news channel repository.
+   *
+   * @var \Drupal\applenews\Repository\ApplenewsChannelRepository
+   */
+  protected $channelRepository;
+
+  /**
+   * Apple news template repository.
+   *
+   * @var \Drupal\applenews\Repository\ApplenewsTemplateRepository
+   */
+  protected $templateRepository;
+
+  /**
+   * Constructs a WidgetBase object.
+   *
+   * @param string $plugin_id
+   *   The plugin_id for the widget.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The definition of the field to which the widget is associated.
+   * @param array $settings
+   *   The widget settings.
+   * @param array $third_party_settings
+   *   Any third party settings.
+   * @param \Drupal\applenews\Repository\ApplenewsChannelRepository $channel_repository
+   *   Apple news channel repository.
+   * @param \Drupal\applenews\Repository\ApplenewsTemplateRepository $template_repository
+   *   Apple news channel repository.
+   */
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, ApplenewsChannelRepository $channel_repository, ApplenewsTemplateRepository $template_repository) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
+    $this->channelRepository = $channel_repository;
+    $this->templateRepository = $template_repository;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $plugin_id,
+      $plugin_definition,
+      $configuration['field_definition'],
+      $configuration['settings'],
+      $configuration['third_party_settings'],
+      $container->get('applenews.channel_repository'),
+      $container->get('applenews.template_repository')
+    );
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $field_name = $items->getName();
-    $default_channels = unserialize($items[$delta]->channels);
-    $channels = $this->getChannels();
-
+    $channels = $this->channelRepository->getChannels();
     /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
     $entity = $items->getEntity();
+    $templates = $this->templateRepository->getTemplatesForEntity($entity);
+
     $element['#attached']['library'][] = 'applenews/drupal.applenews.admin';
-    $templates = $this->getTemplates($entity);
+    if (empty($channels)) {
+      $element = $this->formElementNoChannels($items, $delta, $element, $form, $form_state);
+    }
+    elseif (empty($templates)) {
+      $element = $this->formElementNoTemplates($items, $delta, $element, $form, $form_state);
+    }
+    else {
+      $element = $this->formElementFullyConfigured($items, $delta, $element, $form, $form_state);
+    }
+
+    $element = $this->addDownloadLinks($items, $delta, $element, $form, $form_state);
+    $element = $this->moveToAdvancedSettings($items, $delta, $element, $form, $form_state);
+    return $element;
+  }
+
+  /**
+   * The Apple News widget when there are no templates configured.
+   *
+   * Renders a message prompting the user to configure Apple News templates.
+   *
+   * @param \Drupal\Core\Field\FieldItemListInterface $items
+   *   Array of default values for this field.
+   * @param int $delta
+   *   The order of this item in the array of sub-elements (0, 1, 2, etc.).
+   * @param array $element
+   *   The form array element for the Apple News widget.
+   * @param array $form
+   *   The form structure where widgets are being attached to. This might be a
+   *   full form structure, or a sub-element of a larger form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return array
+   *   Apple News widget element.
+   */
+  protected function formElementNoTemplates(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
+    /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+    $entity = $items->getEntity();
+    $element['message'] = [
+      '#type' => 'item',
+      '#title' => $this->t('No templates available'),
+      '#markup' => $this->t('Add a template to %type type. Check Apple News template <a href=":url">configuration</a> page.', [
+        '%type' => $entity->bundle(),
+        ':url' => Url::fromRoute('entity.applenews_template.collection')->toString(),
+      ]),
+    ];
+    return $element;
+  }
+
+  /**
+   * The Apple News widget when there are no channels configured.
+   *
+   * Renders a message prompting the user to configure Apple News channels. Also
+   * renders a list of links to download the Apple News format article in the
+   * various configured templates, if any.
+   *
+   * @param \Drupal\Core\Field\FieldItemListInterface $items
+   *   Array of default values for this field.
+   * @param int $delta
+   *   The order of this item in the array of sub-elements (0, 1, 2, etc.).
+   * @param array $element
+   *   The form array element for the Apple News widget.
+   * @param array $form
+   *   The form structure where widgets are being attached to. This might be a
+   *   full form structure, or a sub-element of a larger form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return array
+   *   Apple News widget element.
+   */
+  protected function formElementNoChannels(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
+    $element['message'] = [
+      '#type' => 'item',
+      '#title' => $this->t('No channels available'),
+      '#markup' => $this->t('There are no channels available. At least one channel must be setup to publish content to Apple News. To set up a channel, review the <a href=":url">Apple News settings</a>.', [':url' => Url::fromRoute('entity.applenews_template.collection')->toString()]),
+    ];
+    return $element;
+  }
+
+  /**
+   * The Apple News widget when everything is fully configured.
+   *
+   * @param \Drupal\Core\Field\FieldItemListInterface $items
+   *   Array of default values for this field.
+   * @param int $delta
+   *   The order of this item in the array of sub-elements (0, 1, 2, etc.).
+   * @param array $element
+   *   The form array element for the Apple News widget.
+   * @param array $form
+   *   The form structure where widgets are being attached to. This might be a
+   *   full form structure, or a sub-element of a larger form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return array
+   *   Apple News widget element.
+   */
+  protected function formElementFullyConfigured(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
+    $field_name = $items->getName();
+    $default_channels = unserialize($items[$delta]->channels);
+    /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+    $entity = $items->getEntity();
+    $templates = $this->getOptionsFromTemplates($this->templateRepository->getTemplatesForEntity($entity));
+    // @todo Dependency injection.
+    /** @var \Drupal\applenews\Entity\ApplenewsArticle $article */
     $article = ApplenewsManager::getArticle($entity, $field_name);
 
-    if (empty($channels)) {
-      $element['message'] = [
-        '#markup' => $this->t('There are no channels available. To set up a channel, review the <a href=":url">Apple news Settings</a>.', [':url' => Url::fromRoute('entity.applenews_template.collection')->toString()]),
+    $element += [
+      '#element_validate' => [[get_class($this), 'validateFormElement']],
+    ];
+    $element['status'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Publish to Apple News'),
+      '#default_value' => $items->status,
+      '#attributes' => [
+        'class' => ['applenews-publish-flag'],
+      ],
+    ];
+    if ($article) {
+      $element['created'] = [
+        '#type' => 'item',
+        '#title' => $this->t('Apple News post date'),
+        '#markup' => $article->getCreatedFormatted(),
+      ];
+      $element['share_url'] = [
+        '#type' => 'item',
+        '#title' => $this->t('Share URL'),
+        '#markup' => $this->t('<a href=":url">:url</a>', [':url' => $article->getShareUrl()]),
+      ];
+      $delete_url = Url::fromRoute('applenews.remote.article_delete', [
+        'entity_type' => $entity->getEntityTypeId(),
+        'entity' => $entity->id(),
+      ]);
+      $element['delete'] = [
+        '#type' => 'item',
+        '#title' => $this->t('Delete'),
+        '#markup' => $this->t('<a href=":url">Delete</a> this article from Apple News.', [':url' => $delete_url->toString()]),
       ];
       if (extension_loaded('zip') && $templates && $entity->id()) {
         $element['preview'] = [
@@ -65,135 +252,102 @@ class Applenews extends WidgetBase {
         $element['preview']['#markup'] .= '</ul>';
       }
     }
-    elseif (!$templates) {
-      $element['message'] = [
-        '#markup' => $this->t('Add a template to %type type. Check Apple news Template <a href=":url">configuration</a> page.', ['%type' => $entity->bundle(), ':url' => Url::fromRoute('entity.applenews_template.collection')->toString()]),
-      ];
-    }
-    else {
-      $element += [
-        '#element_validate' => [[get_class($this), 'validateFormElement']],
-      ];
-      $element['status'] = [
-        '#type' => 'checkbox',
-        '#title' => t('Publish to Apple News'),
-        '#default_value' => $items->status,
-        '#attributes' => [
-          'class' => ['applenews-publish-flag'],
+    $element['template'] = [
+      '#type' => 'select',
+      '#title' => t('Template'),
+      '#default_value' => $items->template,
+      '#options' => $templates,
+      '#description' => $this->t('Select template to use for Applenews'),
+      '#states' => [
+        'visible' => [
+          ':input[name="' . $items->getName() . '[' . $delta . '][status]"]' => ['checked' => TRUE],
         ],
-      ];
-      if ($article) {
-        $element['article'] = [
-          '#type' => 'value',
-          '#value' => $article,
-        ];
-        $element['created'] = [
-          '#type' => 'item',
-          '#title' => $this->t('Apple News post date'),
-          '#markup' => $article->getCreatedFormatted(),
-        ];
-        $element['share_url'] = [
-          '#type' => 'item',
-          '#title' => $this->t('Share URL'),
-          '#markup' => $this->t('<a href=":url">:url</a>', [':url' => $article->getShareUrl()]),
-        ];
-        $delete_url = Url::fromRoute('applenews.remote.article_delete', ['entity_type' => $entity->getEntityTypeId(), 'entity' => $entity->id()]);
-        $element['delete'] = [
-          '#type' => 'item',
-          '#title' => $this->t('Delete'),
-          '#markup' => $this->t('<a href=":url">Delete</a> this article from Apple News.', [':url' => $delete_url->toString()]),
-        ];
-      }
-      $element['template'] = [
-        '#type' => 'select',
-        '#title' => t('Template'),
-        '#default_value' => $items->template,
-        '#options' => $templates,
-        '#description' => $this->t('Select template to use for Applenews'),
-        '#states' => [
-          'visible' => [
-            ':input[name="' . $items->getName() . '[' . $delta . '][status]"]' => ['checked' => TRUE],
-          ],
+      ],
+    ];
+    $element['channels'] = [
+      '#type' => 'container',
+      '#title' => $this->t('Default channels and sections'),
+      '#group' => 'fieldset',
+      '#states' => [
+        'visible' => [
+          ':input[name="' . $items->getName() . '[' . $delta . '][status]"]' => ['checked' => TRUE],
         ],
-      ];
-      $element['channels'] = [
-        '#type' => 'container',
-        '#title' => $this->t('Default channels and sections'),
-        '#group' => 'fieldset',
-        '#states' => [
-          'visible' => [
-            ':input[name="' . $items->getName() . '[' . $delta . '][status]"]' => ['checked' => TRUE],
-          ],
-        ],
-      ];
+      ],
+    ];
 
-      // $default_channels = $items->get('channels')[0]->getValue();
-      foreach ($this->getChannels() as $channel) {
-        /** @var \Drupal\applenews\Entity\ApplenewsChannel $channel */
-        $channel_key = $channel->getChannelId();
-        $element['channels'][$channel_key] = [
+    foreach ($this->channelRepository->getChannels() as $channel) {
+      $channel_key = $channel->getChannelId();
+      $element['channels'][$channel_key] = [
+        '#type' => 'checkbox',
+        '#title' => $channel->getName(),
+        '#default_value' => isset($default_channels[$channel_key]),
+        '#attributes' => [
+          'data-channel-id' => $channel_key,
+        ],
+        '#states' => [
+          'visible' => [
+            ':input[name="' . $items->getName() . '[' . $delta . '][status]"]' => ['checked' => TRUE],
+          ],
+          'checked' => [
+            ':input[data-section-of="' . $channel_key . '"]' => ['checked' => TRUE],
+          ],
+        ],
+      ];
+      foreach ($channel->getSections() as $section_id => $section_label) {
+        $section_key = $channel_key . '-section-' . $section_id;
+        $element['sections'][$section_key] = [
           '#type' => 'checkbox',
-          '#title' => $channel->getName(),
-          '#default_value' => isset($default_channels[$channel_key]),
+          '#title' => $section_label,
+          '#default_value' => isset($default_channels[$channel_key][$section_id]),
           '#attributes' => [
-            'data-channel-id' => $channel_key,
+            'data-section-of' => $channel_key,
+            'class' => ['applenews-sections'],
           ],
           '#states' => [
             'visible' => [
               ':input[name="' . $items->getName() . '[' . $delta . '][status]"]' => ['checked' => TRUE],
             ],
-            'checked' => [
-              ':input[data-section-of="' . $channel_key . '"]' => ['checked' => TRUE],
-            ],
           ],
         ];
-        foreach ($channel->getSections() as $section_id => $section_label) {
-          $section_key = $channel_key . '-section-' . $section_id;
-          $element['sections'][$section_key] = [
-            '#type' => 'checkbox',
-            '#title' => $section_label,
-            '#default_value' => isset($default_channels[$channel_key][$section_id]),
-            '#attributes' => [
-              'data-section-of' => $channel_key,
-              'class' => ['applenews-sections'],
-            ],
-            '#states' => [
-              'visible' => [
-                ':input[name="' . $items->getName() . '[' . $delta . '][status]"]' => ['checked' => TRUE],
-              ],
-            ],
-          ];
-        }
-      }
-      $element['is_preview'] = [
-        '#title' => $this->t('Preview'),
-        '#type' => 'checkbox',
-        '#default_value' => $items->is_preview,
-        '#description' => $this->t('Flags this article as a preview, only visible to members of your channel. <strong>Note:</strong> If your channel has not been approved, you must publish as a preview.'),
-        '#weight' => 1,
-        '#states' => [
-          'visible' => [
-            ':input[name="' . $items->getName() . '[' . $delta . '][status]"]' => ['checked' => TRUE],
-          ],
-        ],
-      ];
-      if ($article && extension_loaded('zip')) {
-        $url_preview = Url::fromRoute('applenews.preview_download', [
-          'entity_type' => $entity->getEntityTypeId(),
-          'entity' => $entity->id(),
-          'revision_id' => $entity->getLoadedRevisionId(),
-          'template_id' => $items->template,
-        ]);
-        $element['preview'] = [
-          '#type' => 'item',
-          '#title' => $this->t('Preview'),
-
-          // @todo: Fix route, to support other than node.
-          '#markup' => $this->t('<a href=":url">Download</a> the Apple News generated document (use the News Preview app to preview the article).', [':url' => $url_preview->toString()]),
-        ];
-
       }
     }
+    $element['is_preview'] = [
+      '#title' => $this->t('Preview'),
+      '#type' => 'checkbox',
+      '#default_value' => $items->is_preview,
+      '#description' => $this->t('Flags this article as a preview, only visible to members of your channel. <strong>Note:</strong> If your channel has not been approved, you must publish as a preview.'),
+      '#states' => [
+        'visible' => [
+          ':input[name="' . $items->getName() . '[' . $delta . '][status]"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
+    return $element;
+  }
+
+  /**
+   * If the form has an advanced tab-set, move the Apple News widget there.
+   *
+   * @param \Drupal\Core\Field\FieldItemListInterface $items
+   *   Array of default values for this field.
+   * @param int $delta
+   *   The order of this item in the array of sub-elements (0, 1, 2, etc.).
+   * @param array $element
+   *   The form array element for the Apple News widget.
+   * @param array $form
+   *   The form structure where widgets are being attached to. This might be a
+   *   full form structure, or a sub-element of a larger form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return array
+   *   Apple News widget element.
+   */
+  protected function moveToAdvancedSettings(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
+    /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+    $entity = $items->getEntity();
+
     // If the advanced settings tabs-set is available (normally rendered in the
     // second column on wide-resolutions), place the field as a details element
     // in this tab-set.
@@ -208,6 +362,82 @@ class Applenews extends WidgetBase {
           'class' => ['applenews-' . Html::getClass($entity->getEntityTypeId()) . '-settings-form'],
         ],
         '#open' => isset($article) && $items->status,
+      ];
+    }
+
+    return $element;
+  }
+
+  /**
+   * Add download links to the Apple News widget.
+   *
+   * Download the entity in the generated Apple News format.
+   *
+   * @param \Drupal\Core\Field\FieldItemListInterface $items
+   *   Array of default values for this field.
+   * @param int $delta
+   *   The order of this item in the array of sub-elements (0, 1, 2, etc.).
+   * @param array $element
+   *   The form array element for the Apple News widget.
+   * @param array $form
+   *   The form structure where widgets are being attached to. This might be a
+   *   full form structure, or a sub-element of a larger form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return array
+   *   Apple News widget element.
+   */
+  protected function addDownloadLinks(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
+    $channels = $this->channelRepository->getChannels();
+    /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+    $entity = $items->getEntity();
+    $templates = $this->templateRepository->getTemplatesForEntity($entity);
+
+    // Not applicable if the zip extension is not enabled, if no templates have
+    // been configured or if the entity is new.
+    if (!extension_loaded('zip') || empty($templates) || $entity->isNew()) {
+      return $element;
+    }
+
+    if (empty($channels)) {
+      $element['download'] = [
+        '#type' => 'item',
+        '#title' => $this->t('Download'),
+        '#markup' => $this->t('Download the Apple News generated document (use the News Preview app to preview the article):'),
+        'templates' => [
+          '#theme' => 'item_list',
+          '#items' => [],
+        ],
+      ];
+      foreach ($templates as $template) {
+        $url_preview = Url::fromRoute('applenews.preview_download', [
+          'entity_type' => $entity->getEntityTypeId(),
+          'entity' => $entity->id(),
+          'revision_id' => $entity->getLoadedRevisionId(),
+          'template_id' => $template->id(),
+        ]);
+        $element['download']['templates']['#items'][] = [
+          '#type' => 'link',
+          '#url' => $url_preview,
+          '#title' => $template->label(),
+        ];
+      }
+    }
+    else {
+      $first_template = reset($templates);
+      $url_preview = Url::fromRoute('applenews.preview_download', [
+        'entity_type' => $entity->getEntityTypeId(),
+        'entity' => $entity->id(),
+        'revision_id' => $entity->getLoadedRevisionId(),
+        'template_id' => $items->template ?? $first_template->id(),
+      ]);
+      $element['download'] = [
+        '#type' => 'item',
+        '#title' => $this->t('Download'),
+        '#markup' => $this->t('<a href=":url">Download</a> the Apple News generated document (use the News Preview app to preview the article).', [
+          ':url' => $url_preview->toString(),
+        ]),
       ];
     }
 
@@ -268,56 +498,6 @@ class Applenews extends WidgetBase {
   }
 
   /**
-   * Generate channel options.
-   *
-   * @return array
-   *   An array of channel indexed by id.
-   */
-  protected function getChannels() {
-    $channels = [];
-
-    try {
-      $storage = \Drupal::entityTypeManager()->getStorage('applenews_channel');
-      $entity_ids = $storage->getQuery()->execute();
-      $channels = $storage->loadMultiple($entity_ids);
-    }
-    catch (\Exception $e) {
-      $this->logger()->error('Error loading channel: %code : %message', ['%code' => $e->getCode(), $e->getMessage()]);
-    }
-
-    return $channels;
-  }
-
-  /**
-   * Generate template options.
-   *
-   * @param \Drupal\Core\Entity\EntityInterface $entity
-   *   An entity.
-   *
-   * @return array
-   *   An array of templates indexed by id.
-   */
-  protected function getTemplates(EntityInterface $entity) {
-    $templates = [];
-
-    try {
-      $storage = \Drupal::entityTypeManager()->getStorage('applenews_template');
-      $entity_ids = $storage->getQuery()
-        ->condition('node_type', $entity->bundle())
-        ->execute();
-      $entities = $storage->loadMultiple($entity_ids);
-      foreach ($entities as $entity) {
-        $templates[$entity->id()] = $entity->label();
-      }
-    }
-    catch (\Exception $e) {
-      $this->logger()->error('Error loading templates: %code : %message', ['%code' => $e->getCode(), $e->getMessage()]);
-    }
-
-    return $templates;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
@@ -347,13 +527,20 @@ class Applenews extends WidgetBase {
   }
 
   /**
-   * Logger.
+   * Turn an array of Apple News templates into form options.
    *
-   * @return \Psr\Log\LoggerInterface
-   *   Logger object.
+   * @param \Drupal\applenews\Entity\ApplenewsTemplate[] $templates
+   *   Array of Apple News template entities.
+   *
+   * @return array
+   *   Array of template options, keyed by id.
    */
-  protected function logger() {
-    return \Drupal::logger('applenews');
+  protected function getOptionsFromTemplates(array $templates): array {
+    $options = [];
+    foreach ($templates as $template) {
+      $options[$template->id()] = $template->label();
+    }
+    return $options;
   }
 
 }

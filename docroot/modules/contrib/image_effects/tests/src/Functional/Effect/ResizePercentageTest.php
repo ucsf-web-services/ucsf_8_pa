@@ -156,7 +156,7 @@ class ResizePercentageTest extends ImageEffectsTestBase {
         '#width' => $image->getWidth(),
         '#height' => $image->getHeight(),
       ];
-      $this->assertEquals('<img src="' . $derivative_url . '" width="' . $test['expected_width'] . '" height="' . $test['expected_height'] . '" alt="" class="image-style-image-effects-test" />', $this->getImageTag($variables), $test_description);
+      $this->assertRegExp("/\<img src=\"" . preg_quote($derivative_url, '/') . "\" width=\"{$test['expected_width']}\" height=\"{$test['expected_height']}\" alt=\"\" .*class=\"image\-style\-image\-effects\-test\" \/\>/", $this->getImageTag($variables), $test_description);
 
       // Check that ::applyEffect generates image with expected dimensions.
       $this->testImageStyle->createDerivative($original_uri, $derivative_uri);

@@ -2,23 +2,25 @@
 
 namespace Drupal\acquia_contenthub;
 
+use Drupal\acquia_contenthub\Client\ClientManagerInterface;
 use Drupal\acquia_contenthub\QueueItem\ImportQueueItem;
 use Drupal\acquia_contenthub\Session\ContentHubUserSession;
+use Drupal\Component\Uuid\Uuid;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Queue\QueueFactory;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\StringTranslation\TranslationInterface;
+use Drupal\Core\Url;
+use Drupal\diff\DiffEntityComparison;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Component\Uuid\Uuid;
-use Drupal\Core\Database\Connection;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Entity\EntityRepositoryInterface;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\StringTranslation\TranslationInterface;
-use Drupal\diff\DiffEntityComparison;
-use Drupal\acquia_contenthub\Client\ClientManagerInterface;
 
 /**
  * Provides a service for managing imported entities' actions.
@@ -27,6 +29,12 @@ class ImportEntityManager {
 
   use StringTranslationTrait;
 
+
+  /**
+   * Format for the cdf.
+   *
+   * @var string
+   */
   private $format = 'acquia_contenthub_cdf';
 
   /**
@@ -93,10 +101,16 @@ class ImportEntityManager {
   private $queue;
 
   /**
+   * Language Manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $languageManager;
+
+  /**
    * Implements the static interface create method.
    */
   public static function create(ContainerInterface $container) {
-    kint($container->get('queue'));
     return new static(
       $container->get('database'),
       $container->get('logger.factory'),
@@ -107,7 +121,8 @@ class ImportEntityManager {
       $container->get('diff.entity_comparison'),
       $container->get('acquia_contenthub.entity_manager'),
       $container->get('string_translation'),
-      $container->get('queue')
+      $container->get('queue'),
+      $container->get('language_manager')
     );
   }
 
@@ -134,8 +149,10 @@ class ImportEntityManager {
    *   The string translation service.
    * @param \Drupal\Core\Queue\QueueFactory $queue_factory
    *   The Queue Factory.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   *   The Language Manager.
    */
-  public function __construct(Connection $database, LoggerChannelFactoryInterface $logger_factory, SerializerInterface $serializer, EntityRepositoryInterface $entity_repository, ClientManagerInterface $client_manager, ContentHubEntitiesTracking $entities_tracking, DiffEntityComparison $entity_comparison, EntityManager $entity_manager, TranslationInterface $string_translation, QueueFactory $queue_factory) {
+  public function __construct(Connection $database, LoggerChannelFactoryInterface $logger_factory, SerializerInterface $serializer, EntityRepositoryInterface $entity_repository, ClientManagerInterface $client_manager, ContentHubEntitiesTracking $entities_tracking, DiffEntityComparison $entity_comparison, EntityManager $entity_manager, TranslationInterface $string_translation, QueueFactory $queue_factory, LanguageManagerInterface $language_manager) {
     $this->database = $database;
     $this->loggerFactory = $logger_factory;
     $this->serializer = $serializer;
@@ -146,6 +163,7 @@ class ImportEntityManager {
     $this->entityManager = $entity_manager;
     $this->stringTranslation = $string_translation;
     $this->queue = $queue_factory;
+    $this->languageManager = $language_manager;
   }
 
   /**
@@ -470,6 +488,17 @@ class ImportEntityManager {
       return $this->jsonErrorResponseMessage($message, $result, 403);
     }
 
+    // Checking that the entity has a language that is supported by this site.
+    if (!$this->verifyLanguageSupportability($contenthub_entity)) {
+      $args = [
+        '@type' => $contenthub_entity->getRawEntity()->getType(),
+        '@uuid' => $contenthub_entity->getRawEntity()->getUuid(),
+      ];
+      $message = $this->t('Cannot save "@type" entity with uuid="@uuid". The site does not support any of the languages available for this entity.', $args);
+      $this->loggerFactory->get('acquia_contenthub')->warning($message);
+      return $this->jsonErrorResponseMessage($message, FALSE, 403);
+    }
+
     // Collect and flat out all dependencies.
     $dependencies = [];
     if ($include_dependencies) {
@@ -498,6 +527,35 @@ class ImportEntityManager {
   }
 
   /**
+   * Verifies that the sites supports at least a language defined in the entity.
+   *
+   * @param \Drupal\acquia_contenthub\ContentHubEntityDependency $contenthub_entity_dependency
+   *   The Content Hub Entity.
+   *
+   * @return bool
+   *   TRUE if the site supports at least a language defined in the entity,
+   *   FALSE otherwise.
+   */
+  public function verifyLanguageSupportability(ContentHubEntityDependency $contenthub_entity_dependency) {
+    $contenthub_entity = $contenthub_entity_dependency->getRawEntity();
+    $entity_type = $contenthub_entity->getType();
+    $attributes = $contenthub_entity->getAttributes();
+    if ($entity_type === 'file') {
+      $langcodes = array_keys($attributes['url']['value']);
+    }
+    elseif ($langcode = $contenthub_entity->getAttribute('langcode')) {
+      $langcodes = $langcode['value'];
+    }
+    else {
+      $langcodes = array_keys($contenthub_entity->getAttribute('default_langcode')['value'] ?? []);
+    }
+
+    $site_langcodes = array_keys($this->languageManager->getLanguages());
+    $supported_languages = array_intersect($site_langcodes, $langcodes);
+    return !empty($supported_languages);
+  }
+
+  /**
    * Saves the current Drupal Entity and all its dependencies.
    *
    * This method is not to be used alone but to be used from
@@ -512,10 +570,6 @@ class ImportEntityManager {
    *   The Drupal entity being created.
    */
   private function importRemoteEntityDependencies(ContentHubEntityDependency $contenthub_entity, array &$dependencies) {
-    // Un-managed assets are also pre-dependencies for an entity and they would
-    // need to be saved before we can create the current entity.
-    $this->saveUnManagedAssets($contenthub_entity);
-
     // Create pre-dependencies.
     foreach ($contenthub_entity->getDependencyChain() as $uuid) {
       $content_hub_entity_dependency = isset($dependencies[$uuid]) ? $dependencies[$uuid] : FALSE;
@@ -544,13 +598,6 @@ class ImportEntityManager {
       }
     }
     return $response;
-  }
-
-  /**
-   * Saves Unmanaged Assets.
-   */
-  private function saveUnManagedAssets($contenthub_entity) {
-    // @TODO: Implement this function to save unmanaged files.
   }
 
   /**
@@ -608,23 +655,22 @@ class ImportEntityManager {
       // Add synchronization flag.
       $entity->__contenthub_entity_syncing = TRUE;
 
-      if ($entity instanceof ContentEntityInterface && $entity->hasField('path')) {
+      if ($entity instanceof ContentEntityInterface && $entity->hasField('path')  && !$this->pathAliasMovedToSeparateModule()) {
         $languages = $entity->getTranslationLanguages();
-        /** @var \Drupal\Core\Path\AliasManagerInterface $alias_manager */
-        $alias_manager = \Drupal::service('path.alias_manager');
         foreach ($languages as $language) {
           $entity = $entity->getTranslation($language->getId());
           $path = $entity->get('path')->first()->getValue();
           if (!empty($path['pid']) || !isset($path['alias'])) {
             continue;
           }
-          $raw_path = $entity->id() ? '/' . $entity->toUrl()->getInternalPath() : $alias_manager->getPathByAlias($path['alias'], $path['langcode']);
+          $raw_path = $entity->id() ? '/' . $entity->toUrl()->getInternalPath() : $this->getPathByAlias($path['alias'], $path['langcode']);
           if (!$raw_path) {
             continue;
           }
           $query = \Drupal::database()->select('url_alias', 'ua')
             ->fields('ua', ['pid']);
           $query->condition('ua.source', $raw_path);
+          $query->condition('ua.langcode', $language->getId());
           $alias = $query->execute()->fetchObject();
           if (!isset($alias->pid)) {
             continue;
@@ -688,10 +734,12 @@ class ImportEntityManager {
               $entity = $entity->getTranslation($language->getId());
               if ($entity && $entity->hasField('path')) {
                 $path = $entity->get('path')->getValue();
-                if ($path = reset($path)) {
+                if (!$this->pathAliasMovedToSeparateModule() && $path = reset($path)) {
                   $path['source'] = empty($path['source']) ? '/' . $entity->toUrl()->getInternalPath() : $path['source'];
                   $path['language'] = isset($path['langcode']) ? $path['langcode'] : $language->getId();
-                  $alias_storage_helper->save($path);
+                  $existing_alias = $alias_storage_helper->loadBySource($path['source'], $language->getId());
+                  $existing_alias = !empty($existing_alias) ? $existing_alias : NULL;
+                  $alias_storage_helper->save($path, $existing_alias);
                 }
               }
             }
@@ -878,7 +926,44 @@ class ImportEntityManager {
       return $imported_entity;
     }
 
-    return $this->findRootAncestorImportEntity($entity->getParentEntity());
+    return $this->findRootAncestorImportEntity($this->getParentEntity($entity));
+  }
+
+  /**
+   * Returns the parent entity.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The entity to get the parent from.
+   *
+   * @return mixed
+   *   The parent entity.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityMalformedException
+   */
+  private function getParentEntity(EntityInterface $entity) {
+    if ($entity->getEntityTypeId() == 'path_alias') {
+      $route_params = Url::fromUserInput($entity->getPath())
+        ->getRouteParameters();
+      foreach ($route_params as $entity_type_id => $entity_id) {
+        if (!\Drupal::entityTypeManager()->hasDefinition($entity_type_id)) {
+          // Skip in case of unknown entity type.
+          continue;
+        }
+        $entity_from_route = \Drupal::entityTypeManager()
+          ->getStorage($entity_type_id)
+          ->load($entity_id);
+        if ($entity->getPath() !== "/{$entity_from_route->toUrl()->getInternalPath()}") {
+          // Skip mismatched entities.
+          continue;
+        }
+
+        return $entity_from_route;
+      }
+    }
+
+    return $entity->getParentEntity();
   }
 
   /**
@@ -916,10 +1001,45 @@ class ImportEntityManager {
     $queue = $this->queue->get('acquia_contenthub_import_queue');
 
     if ($queue->createItem($item)) {
-      return new JsonResponse(['status' => 200, 'message' => $uuid . ' added to the queue'], 200);
+      return new JsonResponse(
+        ['status' => 200, 'message' => $uuid . ' added to the queue'],
+        200
+      );
     }
 
     return $this->jsonErrorResponseMessage('Unable to add ' . $uuid . ' to the import queue', FALSE);
+  }
+
+  /**
+   * Returns path by alias.
+   *
+   * Since Drupal 8.8.0 the path alias core subsystem has been moved
+   * to the "path_alias" module and "path.alias_manager" marked as deprecated.
+   *
+   * @param string $alias
+   *   Alias string.
+   * @param string|null $langcode
+   *   An optional language code to look up the path in.
+   *
+   * @return string
+   *   Path.
+   */
+  private function getPathByAlias($alias, $langcode = NULL) {
+    $service_id = $this->pathAliasMovedToSeparateModule() ? 'path_alias.manager' : 'path.alias_manager';
+
+    return \Drupal::service($service_id)->getPathByAlias($alias, $langcode);
+  }
+
+  /**
+   * Checks that path alias subsystem has been moved to the separate module.
+   *
+   * @see https://www.drupal.org/node/3092086
+   *
+   * @return bool
+   *   TRUE in the case when Drupal version higher than 8.8.0.
+   */
+  private function pathAliasMovedToSeparateModule() {
+    return version_compare(\Drupal::VERSION, '8.8.0', '>=');
   }
 
 }

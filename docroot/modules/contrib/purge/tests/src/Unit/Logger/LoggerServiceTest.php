@@ -3,11 +3,12 @@
 namespace Drupal\Tests\purge\Unit\Logger;
 
 use Drupal\purge\Logger\LoggerService;
-use Drupal\Tests\UnitTestCase;
 use Drupal\Tests\purge\Unit\FixGetConfigFactoryStubTrait;
+use Drupal\Tests\UnitTestCase;
 
 /**
  * @coversDefaultClass \Drupal\purge\Logger\LoggerService
+ *
  * @group purge
  */
 class LoggerServiceTest extends UnitTestCase {
@@ -41,15 +42,15 @@ class LoggerServiceTest extends UnitTestCase {
    *
    * @var \PHPUnit_Framework_MockObject_MockObject|\Drupal\purge\Logger\LoggerChannelPartFactoryInterface
    */
-  protected $purgeLoggerPartsFactory;
+  protected $loggerChannelPartFactory;
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
-    $this->loggerChannelPartFactory = $this->getMock('\Drupal\purge\Logger\LoggerChannelPartFactoryInterface');
+  protected function setUp(): void {
+    $this->loggerChannelPartFactory = $this->createMock('\Drupal\purge\Logger\LoggerChannelPartFactoryInterface');
     $this->loggerChannelPartFactory->method('create')
-      ->willReturn($this->getMock('\Drupal\purge\Logger\LoggerChannelPartInterface'));
+      ->willReturn($this->createMock('\Drupal\purge\Logger\LoggerChannelPartInterface'));
   }
 
   /**
@@ -57,7 +58,7 @@ class LoggerServiceTest extends UnitTestCase {
    *
    * @dataProvider providerTestDestruct()
    */
-  public function testDestruct($expect_write, $call = NULL, $arguments = []) {
+  public function testDestruct($expect_write, $call = NULL, $arguments = []): void {
     $config_factory = $this->getConfigFactoryStub($this->defaultConfig);
     $config_factory
       ->expects($expect_write ? $this->once() : $this->never())
@@ -73,7 +74,7 @@ class LoggerServiceTest extends UnitTestCase {
   /**
    * Provides test data for testDestruct().
    */
-  public function providerTestDestruct() {
+  public function providerTestDestruct(): array {
     return [
       [FALSE],
       [TRUE, 'get', ['newid']],
@@ -91,7 +92,7 @@ class LoggerServiceTest extends UnitTestCase {
    *
    * @dataProvider providerTestDeleteChannel()
    */
-  public function testDeleteChannel($id, $exists) {
+  public function testDeleteChannel($id, $exists): void {
     $config_factory = $this->getConfigFactoryStub($this->defaultConfig);
     $service = new LoggerService($config_factory, $this->loggerChannelPartFactory);
     $this->assertEquals($exists, $service->hasChannel($id));
@@ -102,7 +103,7 @@ class LoggerServiceTest extends UnitTestCase {
   /**
    * Provides test data for testDeleteChannel().
    */
-  public function providerTestDeleteChannel() {
+  public function providerTestDeleteChannel(): array {
     return [
       ['exists', TRUE],
       ['foobarbaz', TRUE],
@@ -115,7 +116,7 @@ class LoggerServiceTest extends UnitTestCase {
    *
    * @dataProvider providerTestDeleteChannels()
    */
-  public function testDeleteChannels($id_starts_with, $has, $hasnot) {
+  public function testDeleteChannels($id_starts_with, $has, $hasnot): void {
     $config_factory = $this->getConfigFactoryStub($this->defaultConfig);
     $service = new LoggerService($config_factory, $this->loggerChannelPartFactory);
     foreach ($has as $id) {
@@ -136,7 +137,7 @@ class LoggerServiceTest extends UnitTestCase {
   /**
    * Provides test data for testDeleteChannels().
    */
-  public function providerTestDeleteChannels() {
+  public function providerTestDeleteChannels(): array {
     return [
       ['E', ['foo', 'foobar', 'foobarbaz', 'exists'], []],
       ['e', ['foo', 'foobar', 'foobarbaz'], ['exists']],
@@ -162,7 +163,7 @@ class LoggerServiceTest extends UnitTestCase {
    *
    * @dataProvider providerTestGet()
    */
-  public function testGet($id) {
+  public function testGet($id): void {
     $config_factory = $this->getConfigFactoryStub($this->defaultConfig);
     $service = new LoggerService($config_factory, $this->loggerChannelPartFactory);
     $uncached = $service->get($id);
@@ -175,7 +176,7 @@ class LoggerServiceTest extends UnitTestCase {
   /**
    * Provides test data for testGet().
    */
-  public function providerTestGet() {
+  public function providerTestGet(): array {
     return [
       ['exists'],
       ['doesnotexists'],
@@ -185,7 +186,7 @@ class LoggerServiceTest extends UnitTestCase {
   /**
    * @covers ::getChannels
    */
-  public function testGetChannels() {
+  public function testGetChannels(): void {
     $config_factory = $this->getConfigFactoryStub($this->defaultConfig);
     $service = new LoggerService($config_factory, $this->loggerChannelPartFactory);
     $channels_conf = $this->defaultConfig[LoggerService::CONFIG][LoggerService::CKEY];
@@ -200,7 +201,7 @@ class LoggerServiceTest extends UnitTestCase {
    *
    * @dataProvider providerTestHasChannel()
    */
-  public function testHasChannel($id, $shouldexist) {
+  public function testHasChannel($id, $shouldexist): void {
     $config_factory = $this->getConfigFactoryStub($this->defaultConfig);
     $service = new LoggerService($config_factory, $this->loggerChannelPartFactory);
     $this->assertEquals($service->hasChannel($id), $shouldexist);
@@ -209,7 +210,7 @@ class LoggerServiceTest extends UnitTestCase {
   /**
    * Provides test data for testHasChannel().
    */
-  public function providerTestHasChannel() {
+  public function providerTestHasChannel(): array {
     return [
       ['exists', TRUE],
       ['foo', TRUE],
@@ -225,7 +226,7 @@ class LoggerServiceTest extends UnitTestCase {
    *
    * @dataProvider providerTestSetChannel()
    */
-  public function testSetChannel($id, $preexists) {
+  public function testSetChannel($id, $preexists): void {
     $config_factory = $this->getConfigFactoryStub($this->defaultConfig);
     $service = new LoggerService($config_factory, $this->loggerChannelPartFactory);
     $this->assertEquals($preexists, $service->hasChannel($id));
@@ -236,7 +237,7 @@ class LoggerServiceTest extends UnitTestCase {
   /**
    * Provides test data for testSetChannel().
    */
-  public function providerTestSetChannel() {
+  public function providerTestSetChannel(): array {
     return [
       ['exists', TRUE],
       ['foobarbaz', TRUE],
@@ -247,20 +248,20 @@ class LoggerServiceTest extends UnitTestCase {
 
   /**
    * @covers ::setChannel
-   * @expectedException \LogicException
-   * @expectedExceptionMessage The given ID is empty or not a string!
    * @dataProvider providerTestSetChannelIdException()
    */
-  public function testSetChannelIdException($id) {
+  public function testSetChannelIdException($id): void {
     $config_factory = $this->getConfigFactoryStub($this->defaultConfig);
     $service = new LoggerService($config_factory, $this->loggerChannelPartFactory);
+    $this->expectException(\LogicException::class);
+    $this->expectExceptionMessage('The given ID is empty or not a string!');
     $service->setChannel($id);
   }
 
   /**
    * Provides test data for testSetChannelIdException().
    */
-  public function providerTestSetChannelIdException() {
+  public function providerTestSetChannelIdException(): array {
     return [
       [''],
       [1],
@@ -269,20 +270,20 @@ class LoggerServiceTest extends UnitTestCase {
 
   /**
    * @covers ::setChannel
-   * @expectedException \LogicException
-   * @expectedExceptionMessage Passed grant is invalid!
    * @dataProvider providerTestSetChannelGrantsException()
    */
-  public function testSetChannelGrantsException($id, $grants) {
+  public function testSetChannelGrantsException($id, $grants): void {
     $config_factory = $this->getConfigFactoryStub($this->defaultConfig);
     $service = new LoggerService($config_factory, $this->loggerChannelPartFactory);
+    $this->expectException(\LogicException::class);
+    $this->expectExceptionMessage('Passed grant is invalid!');
     $service->setChannel($id, $grants);
   }
 
   /**
    * Provides test data for testSetChannelGrantsException().
    */
-  public function providerTestSetChannelGrantsException() {
+  public function providerTestSetChannelGrantsException(): array {
     return [
       ['id1', [-1]],
       ['id2', [10]],

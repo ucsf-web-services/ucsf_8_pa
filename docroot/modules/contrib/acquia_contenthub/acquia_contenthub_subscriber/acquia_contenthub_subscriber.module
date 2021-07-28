@@ -24,11 +24,11 @@ function acquia_contenthub_subscriber_acquia_contenthub_process_webhook_alter($w
   /* @var \Drupal\acquia_contenthub\ImportEntityManager $import_entity_manager */
   $import_entity_manager = \Drupal::service('acquia_contenthub.import_entity_manager');
 
-  /* @var \Drupal\Core\Entity\EntityManagerInterface $entity_manager */
-  $entity_manager = \Drupal::service('entity.manager');
+  /* @var \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager */
+  $entity_type_manager = \Drupal::entityTypeManager();
 
   // Load all Content Hub Filters.
-  $filters = $entity_manager->getStorage('contenthub_filter')->loadMultiple();
+  $filters = $entity_type_manager->getStorage('contenthub_filter')->loadMultiple();
 
   $assets = $webhook['assets'];
   // Process every asset that comes in the webhook, other than the
@@ -52,11 +52,17 @@ function acquia_contenthub_subscriber_acquia_contenthub_process_webhook_alter($w
       continue;
     }
 
-    // Determine the author UUID for the nodes to be created.
-    // We will use administrator as author in these cases.
-    $uid = 1;
-    $user = \Drupal\user\Entity\User::load($uid);
-    $author = $user->uuid();
+    // Determine the author UUID for the entities to be auto-updated.
+    if ($contenthub_entity_tracking->getEntityType() === 'node' && $entity = $entity_type_manager->getStorage('node')
+      ->load($contenthub_entity_tracking->getEntityId())) {
+      $author = $entity->getOwner()->uuid();
+    }
+    // We will use administrator as author if  there is no author.
+    if (!isset($author)) {
+      $uid = 1;
+      $user = \Drupal\user\Entity\User::load($uid);
+      $author = $user->uuid();
+    }
     $import_entity_manager->import($asset['uuid'], TRUE, $author);
   }
 }

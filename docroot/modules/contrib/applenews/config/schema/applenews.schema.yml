@@ -74,7 +74,7 @@ applenews.applenews_template.*:
       label: 'Label'
     node_type:
       type: string
-      label: 'Node type'
+      label: 'Content type'
     columns:
       type: integer
       label: 'Columns'
@@ -106,9 +106,9 @@ applenews.applenews_component.*:
     component_layout:
       type: applenews.component_layout
     component_data:
-      type: applenews.component_type.[%parent.component_type]
+      type: applenews.component_data.[%parent.id]
 
-applenews.component_type.text:
+applenews.component_data.default_text:*:
   type: mapping
   mapping:
     text:
@@ -117,7 +117,7 @@ applenews.component_type.text:
       type: string
       label: 'Format for included text (none, html, or markdown)'
 
-applenews.component_type.image:
+applenews.component_data.default_image:*:
   type: mapping
   mapping:
     URL:
@@ -125,7 +125,7 @@ applenews.component_type.image:
     caption:
       type: applenews.field_mapping
 
-applenews.component_type.nested:
+applenews.component_data.default_nested:*:
   type: mapping
   mapping:
     components:
@@ -133,7 +133,7 @@ applenews.component_type.nested:
       sequence:
         type: applenews.applenews_component.[%key]
 
-applenews.component_type.divider:
+applenews.component_data.default_divider:
   type: mapping
   mapping:
     stroke_width:
@@ -200,3 +200,20 @@ applenews.settings:
         proxy_port:
           type: string
           label: 'Proxy port'
+
+field.value.applenews_default:
+  type: mapping
+  label: 'Default value'
+  mapping:
+    status:
+      type: boolean
+      label: 'Status'
+    template:
+      type: string
+      label: 'Template'
+    channels:
+      type: string
+      label: 'Channels'
+    is_preview:
+      type: boolean
+      label: 'Is preview'

@@ -2,11 +2,11 @@
 
 namespace Drupal\Tests\acquia_contenthub\Unit;
 
-use Drupal\Tests\UnitTestCase;
+use Drupal\acquia_contenthub\ContentHubEntityDependency;
 use Drupal\acquia_contenthub\ImportEntityManager;
 use Drupal\acquia_contenthub\QueueItem\ImportQueueItem;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
-use Drupal\node\NodeInterface;
+use Drupal\Tests\UnitTestCase;
 
 require_once __DIR__ . '/Polyfill/Drupal.php';
 
@@ -64,6 +64,13 @@ class ImportEntityManagerTest extends UnitTestCase {
   private $importQueue;
 
   /**
+   * The Language Manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $languageManager;
+
+  /**
    * {@inheritdoc}
    */
   public function setUp() {
@@ -72,6 +79,7 @@ class ImportEntityManagerTest extends UnitTestCase {
     $this->database = $this->getMockBuilder('Drupal\Core\Database\Connection')
       ->disableOriginalConstructor()
       ->getMock();
+    $this->languageManager = $this->getMock('Drupal\Core\Language\LanguageManagerInterface');
     $this->loggerFactory = $this->getMockBuilder('Drupal\Core\Logger\LoggerChannelFactoryInterface')
       ->disableOriginalConstructor()
       ->getMock();
@@ -107,7 +115,8 @@ class ImportEntityManagerTest extends UnitTestCase {
       $this->diffEntityComparison,
       $this->entityManager,
       $this->translation_manager,
-      $this->queueFactory
+      $this->queueFactory,
+      $this->languageManager
     );
   }
 
@@ -269,7 +278,7 @@ class ImportEntityManagerTest extends UnitTestCase {
     $parent_paragraph = $this->getMock('\Drupal\paragraphs\ParagraphInterface');
     $paragraph = $this->getMock('\Drupal\paragraphs\ParagraphInterface');
     $paragraph->original = $original_paragraph;
-    $paragraph->expects($this->once())
+    $paragraph->expects($this->exactly(2))
       ->method('getEntityTypeId')
       ->willReturn('paragraph');
     $paragraph->expects($this->once())
@@ -536,6 +545,50 @@ class ImportEntityManagerTest extends UnitTestCase {
     $loggerChannelInterface->expects($this->any())
       ->method('warning');
 
+    $result = $this->importEntityManager->importRemoteEntity($uuid, FALSE);
+    $status_code = json_decode($result->getStatusCode());
+    $this->assertEquals($status_code, 403);
+  }
+
+  /**
+   * Tests the importRemoteEntity() method.
+   *
+   * @covers ::entityPresave
+   */
+  public function testImportRemoteEntitySiteLanguagesDoesNotMatchEntityLanguages() {
+    $uuid = '11111111-1111-1111-1111-111111111111';
+    $site_origin = '11111111-2222-1111-1111-111111111111';
+    $entity_ch = $this->createMultilanguageContentHubEntity([
+      'uuid' => $uuid,
+    ]);
+
+    $this->contentHubEntitiesTracking->expects($this->any())
+      ->method('getSiteOrigin')
+      ->willReturn($site_origin);
+
+    $this->clientManager->expects($this->any())
+      ->method('createRequest')
+      ->with('readEntity', [$uuid])
+      ->willReturn($entity_ch);
+
+    $this->entityManager->expects($this->any())
+      ->method('getAllowedEntityTypes')
+      ->willReturn(['node' => ['article' => 'Test article content type']]);
+
+    $loggerChannelInterface = $this->getMock('\Drupal\Core\Logger\LoggerChannelInterface');
+    $this->loggerFactory->expects($this->once())
+      ->method('get')
+      ->with('acquia_contenthub')
+      ->willReturn($loggerChannelInterface);
+
+    $loggerChannelInterface->expects($this->any())
+      ->method('warning');
+
+    // Site languages are different than entity languages.
+    $this->languageManager->expects($this->at(0))->method('getLanguages')->willReturn([
+      'jp' => 'jp',
+      'ru' => 'ru',
+    ]);
     $result = $this->importEntityManager->importRemoteEntity($uuid, FALSE);
     $status_code = json_decode($result->getStatusCode());
     $this->assertEquals($status_code, 403);
@@ -916,6 +969,33 @@ class ImportEntityManagerTest extends UnitTestCase {
     $this->contentHubEntitiesTracking->expects($this->once())
       ->method('save');
     $this->importEntityManager->entityPresave($node);
+  }
+
+  /**
+   * Verifies Language Supportabilitites.
+   *
+   * @covers ::verifyLanguageSupportability
+   *
+   * @throws \Exception
+   */
+  public function testVerifyLanguageSupportability() {
+    // Content entity with languages: 'en', 'es'.
+    $contenthub_entity = $this->createMultilanguageContentHubEntity();
+    $contenthub_entity_dependency = new ContentHubEntityDependency($contenthub_entity);
+    // Site languages are different than entity languages.
+    $this->languageManager->expects($this->at(0))->method('getLanguages')->willReturn([
+      'jp' => 'jp',
+      'ru' => 'ru',
+    ]);
+    // Site languages include at least one of entity languages.
+    $this->languageManager->expects($this->at(1))->method('getLanguages')->willReturn([
+      'es' => 'es',
+      'ru' => 'ru',
+    ]);
+    $verify = $this->importEntityManager->verifyLanguageSupportability($contenthub_entity_dependency);
+    $this->assertFalse($verify);
+    $verify = $this->importEntityManager->verifyLanguageSupportability($contenthub_entity_dependency);
+    $this->assertTrue($verify);
   }
 
   /**

@@ -32,6 +32,26 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "add-form" = "/admin/config/services/applenews/text-style/add",
  *     "edit-form" = "/admin/config/services/applenews/text-style/{applenews_text_style}",
  *     "delete-form" = "/admin/config/services/applenews/text-style/{applenews_text_style}/delete",
+ *   },
+ *   config_export = {
+ *     "name",
+ *     "label",
+ *     "fontName",
+ *     "fontSize",
+ *     "textColor",
+ *     "textShadow",
+ *     "textTransform",
+ *     "underline",
+ *     "strikethrough",
+ *     "stroke",
+ *     "backgroundColor",
+ *     "verticalAlignment",
+ *     "tracking",
+ *     "textAlignment",
+ *     "lineHeight",
+ *     "dropCapStyle",
+ *     "hyphenation",
+ *     "linkStyle"
  *   }
  * )
  */

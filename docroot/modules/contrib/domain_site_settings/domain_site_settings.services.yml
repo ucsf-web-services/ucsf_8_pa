@@ -1,6 +1,6 @@
 services:
   domain_site_settings.overrider:
-    class: \Drupal\domain_site_settings\Configuration\DomainConfigOverride
-    arguments: ['@domain.negotiator', '@config.factory']
+    class: Drupal\domain_site_settings\Configuration\DomainConfigOverride
+    arguments: ['@config.factory']
     tags:
       - {name: config.factory.override, priority: 5}

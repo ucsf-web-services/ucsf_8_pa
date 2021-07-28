@@ -5,9 +5,7 @@ namespace Drupal\applenews;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 
 /**
- * Interface ApplenewsTemplateInterface.
- *
- * @package Drupal\applenews
+ * Behaviors for Apple News template config entities.
  */
 interface ApplenewsTemplateInterface extends ConfigEntityInterface {
 

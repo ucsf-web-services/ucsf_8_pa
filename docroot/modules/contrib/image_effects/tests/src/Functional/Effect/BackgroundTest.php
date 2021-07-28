@@ -63,7 +63,7 @@ class BackgroundTest extends ImageEffectsTestBase {
       '#width' => $image->getWidth(),
       '#height' => $image->getHeight(),
     ];
-    $this->assertEquals('<img src="' . $derivative_url . '" width="360" height="240" alt="" class="image-style-image-effects-test" />', $this->getImageTag($variables));
+    $this->assertRegExp("/\<img src=\"" . preg_quote($derivative_url, '/') . "\" width=\"360\" height=\"240\" alt=\"\" .*class=\"image\-style\-image\-effects\-test\" \/\>/", $this->getImageTag($variables));
 
     // Check that ::applyEffect generates image with expected canvas.
     $derivative_uri = $this->testImageStyle->buildUri($original_uri);
@@ -73,7 +73,10 @@ class BackgroundTest extends ImageEffectsTestBase {
     $this->assertEquals(240, $image->getHeight());
     $this->assertColorsAreEqual($this->red, $this->getPixelColor($image, 0, 0));
     $this->assertColorsAreEqual($this->green, $this->getPixelColor($image, 39, 0));
-    $this->assertColorsAreEqual([185, 185, 185, 0], $this->getPixelColor($image, 0, 19));
+    $this->assertColorsAreEqual(
+      [185, 185, 185, 0],
+      $this->getPixelColor($image, 0, 19)
+    );
     $this->assertColorsAreEqual($this->blue, $this->getPixelColor($image, 39, 19));
 
     // Remove effect.
@@ -96,10 +99,17 @@ class BackgroundTest extends ImageEffectsTestBase {
         ]);
         // The operation replaced the resource, check that the old one has
         // been destroyed.
-        $new_res = $image->getToolkit()->getResource();
-        $this->assertTrue(is_resource($new_res));
-        $this->assertNotEquals($new_res, $old_res);
-        $this->assertFalse(is_resource($old_res));
+        if (PHP_VERSION_ID < 80000) {
+          $new_res = $image->getToolkit()->getResource();
+          $this->assertTrue(is_resource($new_res));
+          $this->assertNotEquals($new_res, $old_res);
+          $this->assertFalse(is_resource($old_res));
+        }
+        // Save image and compare against original, should differ.
+        $this->assertTrue($image->save($original_uri . '.modified.png'));
+        $image_original = $this->imageFactory->get($original_uri);
+        $image_modified = $this->imageFactory->get($original_uri . '.modified.png');
+        $this->assertImagesAreNotEqual($image_original, $image_modified);
         break;
 
       case 'imagemagick':

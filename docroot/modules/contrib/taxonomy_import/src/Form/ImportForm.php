@@ -82,7 +82,7 @@ function create_taxonomy($voc_name) {
   // You will need to use
   // `\Drupal\core\Database\Database::getConnection()`
   // if you do not yet have access to the container here.
-  $loc = \Drupal::database()->query('SELECT {file_managed.uri} FROM {file_managed} ORDER BY {file_managed.fid} DESC limit 1', []);
+  $loc = \Drupal::database()->query('SELECT file_managed.uri FROM {file_managed} ORDER BY file_managed.fid DESC limit 1', []);
   foreach ($loc as $val) {
     // Get location of the file.
     $location = $val->uri;
@@ -112,6 +112,7 @@ function create_taxonomy($voc_name) {
   if ($mimetype == "text/plain") {
     if (($handle = fopen($location, "r")) !== FALSE) {
       // Read all data including title.
+      $data1 = fgetcsv($handle);
       while (($data = fgetcsv($handle)) !== FALSE) {
         $termid = 0;
         $term_id = 0;
@@ -147,6 +148,7 @@ function create_taxonomy($voc_name) {
             }
           }
         }
+        $target_term = null;
         // Check whether term already exists or not.
         if (empty($term_id)) {
           // Create  new term.
@@ -156,12 +158,36 @@ function create_taxonomy($voc_name) {
             'description' => $data[2],
             'vid' => $vid,
           ])->save();
+          if ($term == 1) {
+            $termid = \Drupal::database()->query('SELECT n.tid FROM {taxonomy_term_field_data} n WHERE n.name  = :uid AND n.vid  = :vid', array(':uid' =>  $data[0], ':vid' => $vid));
+            foreach($termid as $val){
+              $term_id = $val->tid; // get tid
+              $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($term_id);
+              $target_term = $term;
+              break;
+            }
+          }
         }
         // Code to update existing term field(s)
         else {
           $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($term_id);
           $term->parent->setValue($parent);
           $term->Save();
+          $target_term = $term;
+        }
+        if (count($data1) > 2 && !is_null($target_term)) {
+          $i = 2;
+          $update = false;
+          while($i < count($data1)) {
+           if(isset($data[$i]) && !empty($data1[$i])) {
+              $target_term->set($data1[$i],$data[$i]);
+              $update = true;
+            }
+            $i++;
+          }
+          if($update) {
+            $target_term->save();
+          }
         }
       }
       fclose($handle);
@@ -174,7 +200,7 @@ function create_taxonomy($voc_name) {
     }
   }
   // Code for fetch and save xml file.
-  elseif ($mimetype == "text/xml") {
+  elseif (($mimetype == "text/xml") || ($mimetype == "application/xml")) {
     if (file_exists($location)) {
       $feed = file_get_contents($location);
       $items = simplexml_load_string($feed);

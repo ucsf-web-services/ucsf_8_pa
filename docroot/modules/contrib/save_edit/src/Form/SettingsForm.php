@@ -77,36 +77,37 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('hide_default_save'),
     ];
 
-    $form['hide_default_publish'] = array(
+    $form['hide_default_publish'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Hide the Publish button'),
       '#default_value' => $config->get('hide_default_publish'),
       '#description' => $this->t('This will hide the Publish button.'),
-    );
-    $form['hide_default_preview'] = array(
+    ];
+    $form['hide_default_preview'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Hide default Preview button'),
       '#default_value' => $config->get('hide_default_preview'),
       '#description' => $this->t('This will hide the Preview button.'),
-    );
-    $form['hide_default_delete'] = array(
+    ];
+    $form['hide_default_delete'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Hide default Delete button'),
       '#default_value' => $config->get('hide_default_delete'),
       '#description' => $this->t('This will hide the Delete button.'),
-    );
+    ];
 
     $node_types = NodeType::loadMultiple();
     $keyed_node_types = [];
     foreach ($node_types as $content_type) {
       $keyed_node_types[$content_type->id()] = $content_type->label();
     }
+    $default_value_node_types = $config->get('node_types');
     $form['node_types'] = [
       '#type' => 'checkboxes',
       '#options' => $keyed_node_types,
       '#title' => $this->t('Node types'),
       '#description' => $this->t('Set the node types you want to display links for.'),
-      '#default_value' => $config->get('node_types'),
+      '#default_value' => isset($default_value_node_types) ? $default_value_node_types : [],
     ];
 
     return parent::buildForm($form, $form_state);

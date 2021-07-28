@@ -7,6 +7,7 @@
 
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\file\FileInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\core\Url;
 
@@ -50,22 +51,18 @@ function views_rss_core_preprocess_channel_link(&$variables) {
 
 /**
  * Preprocess function for channel <atom:link> element.
- *
- * @todo needs to work in all cases including where view args are changed
  */
 function views_rss_core_preprocess_channel_atom_link(&$variables) {
-  $url_options = array('absolute' => TRUE);
-  $input = $variables['view']->getExposedInput();
-  if ($input) {
-    $url_options['query'] = $input;
-  }
-
-  // Use the Drupal path not the view path here due to possible exposed filters
+  // Use the request path not the view path here due to possible exposed filters
   // changing the effective path for views.
-  $variables['elements'][0]['attributes'] = array(
+  $url = Url::createFromRequest(\Drupal::request())
+    ->setOption('absolute', TRUE)
+    ->setOption('query', \Drupal::request()->query->all())
+    ->toString();
+  $variables['elements'][0]['attributes'] = [
     'rel' => 'self',
-    'href' => $GLOBALS['base_url'] . \Drupal::service('path.current')->getPath(),
-  );
+    'href' => $url,
+  ];
 }
 
 /**
@@ -134,12 +131,12 @@ function views_rss_core_preprocess_channel_image(&$variables) {
 }
 
 /**
- * Preprocess function for channel <pubDate> and <lastBuildDate> elements.
+ * Preprocess function for channel <lastBuildDate> element.
  *
  * It will return values for date element providing that original Views query
  * was modified appropriately by views_rss_core_views_query_alter() by adding
- * new fields to SELECT clause retrieving object creation (for <pubDate>)
- * or modification timestamp (for <lastBuildDate>).
+ * a field to SELECT clause retrieving object modification timestamp (for
+ * <lastBuildDate>).
  */
 function views_rss_core_preprocess_channel_date(&$variables) {
   // @TODO make this function friendly for already formatted dates.
@@ -155,6 +152,13 @@ function views_rss_core_preprocess_channel_date(&$variables) {
       $variables['elements'][0]['value'] = date('r', $max_date);
     }
   }
+}
+
+/**
+ * Preprocess function for channel <lastBuildDate> element.
+ */
+function views_rss_core_preprocess_channel_last_build_date(&$variables) {
+  $variables['elements'][0]['value'] = date('r');
 }
 
 /**
@@ -232,7 +236,7 @@ function views_rss_core_preprocess_item_category(&$variables) {
     // in the taxonomy.
     $values = array();
     // Load parent term objects (this includes original term as well).
-    if ($parents = \Drupal::entityManager()->getStorage('taxonomy_term')->loadAllParents($term->id())) {
+    if ($parents = \Drupal::service('entity_type.manager')->getStorage('taxonomy_term')->loadAllParents($term->id())) {
       foreach ($parents as $parent) {
         $values[] = $parent->label();
       }
@@ -289,11 +293,12 @@ function views_rss_core_preprocess_item_enclosure(&$variables) {
     }
 
     // File entity found.
-    if (!empty($file)) {
+    if (!empty($file) && $file instanceof FileInterface) {
       // Image style is defined, need to link to resized version.
-      if ($image_style_name = $item['rendered']['#image_style']) {
+      if (!empty($item['rendered']['#image_style'])) {
+        $image_style_name = $item['rendered']['#image_style'];
         $image_uri = $file->getFileUri();
-        $image_style = entity_load('image_style', $image_style_name);
+        $image_style = \Drupal::service('entity_type.manager')->getStorage('image_style')->load($image_style_name);
         $image_style_uri = $image_style->buildUri($image_uri);
 
         // If the derivative doesn't exist yet, we won't be able to get its size
@@ -311,7 +316,7 @@ function views_rss_core_preprocess_item_enclosure(&$variables) {
       // Normal image size.
       else {
         $element['attributes'] = array(
-          'url' => $file->url(),
+          'url' => $file->createFileUrl(FALSE),
           'length' => $file->getSize(),
           'type' => $file->getMimeType(),
         );
@@ -325,8 +330,6 @@ function views_rss_core_preprocess_item_enclosure(&$variables) {
       _convert_to_external_file($item['rendered']['#markup'], TRUE);
 
       $original_file = $item['rendered']['#markup'];
-
-      _add_podtrac_redirect($item['rendered']['#markup']);
 
       $element['attributes']['url'] = $item['rendered']['#markup'];
 
@@ -395,9 +398,12 @@ function views_rss_core_preprocess_item_source(&$variables) {
 
   // @todo handle all url situations including exposed input
   $variables['elements'][0]['value'] = strip_tags($title);
-  $variables['elements'][0]['attributes'] = array('url' => $GLOBALS['base_url'] . \Drupal::service('path.current')->getPath(),);
+  $url = Url::createFromRequest(\Drupal::request())
+    ->setOption('absolute', TRUE)
+    ->setOption('query', \Drupal::request()->query->all())
+    ->toString();
+  $variables['elements'][0]['attributes']['url'] = $url;
 }
-
 
 /**
  * Preprocess function for item <dc:creator> element.
@@ -460,14 +466,6 @@ function _convert_to_external_file(&$filename, $force_http = TRUE) {
 
     $filename = $scheme . ":" . $filename;
   }
-}
-
-/**
- * Convert CDN internal name to external name.
- */
-function _add_podtrac_redirect(&$filename) {
-
-  $filename = preg_replace('/^(http[s]?:\/\/)/', '$1dts.podtrac.com/redirect.mp3/', $filename);
 }
 
 /**

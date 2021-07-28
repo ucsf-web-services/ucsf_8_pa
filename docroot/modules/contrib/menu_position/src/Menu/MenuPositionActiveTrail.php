@@ -3,15 +3,17 @@
 namespace Drupal\menu_position\Menu;
 
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\Query\QueryFactory;
-use Drupal\Core\Entity\Query\QueryFactoryInterface;
 use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Menu\MenuActiveTrail;
 use Drupal\Core\Menu\MenuLinkManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
-class MenuPositionActiveTrail extends MenuActiveTrail  {
+/**
+ * Menu Position active trail.
+ */
+class MenuPositionActiveTrail extends MenuActiveTrail {
 
   /**
    * The entity type manager.
@@ -21,6 +23,13 @@ class MenuPositionActiveTrail extends MenuActiveTrail  {
   protected $entityTypeManager;
 
   /**
+   * Menu position settings.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  protected $settings;
+
+  /**
    * Constructs a \Drupal\Core\Menu\MenuActiveTrail object.
    *
    * @param \Drupal\Core\Menu\MenuLinkManagerInterface $menu_link_manager
@@ -28,24 +37,25 @@ class MenuPositionActiveTrail extends MenuActiveTrail  {
    * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
    *   A route match object for finding the active link.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
-   *   The cache backend.
+   *   The cache backend service.
    * @param \Drupal\Core\Lock\LockBackendInterface $lock
-   *   The lock backend.
+   *   The lock backend service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory service.
    */
   public function __construct(
     MenuLinkManagerInterface $menu_link_manager,
     RouteMatchInterface $route_match,
     CacheBackendInterface $cache,
     LockBackendInterface $lock,
-    QueryFactory $entity_query,
-    EntityTypeManagerInterface $entity_type_manager) {
+    EntityTypeManagerInterface $entity_type_manager,
+    ConfigFactoryInterface $config_factory) {
 
     parent::__construct($menu_link_manager, $route_match, $cache, $lock);
-    $this->entity_query = $entity_query;
     $this->entityTypeManager = $entity_type_manager;
-    $this->settings = \Drupal::config('menu_position.settings');
+    $this->settings = $config_factory->get('menu_position.settings');
   }
 
   /**
@@ -53,10 +63,10 @@ class MenuPositionActiveTrail extends MenuActiveTrail  {
    */
   public function getActiveLink($menu_name = NULL) {
     // Get all the rules.
-    $query = $this->entity_query->get('menu_position_rule');
+    $query = $this->entityTypeManager->getStorage('menu_position_rule')->getQuery();
 
     // Filter on the menu name if there is one.
-    if (!is_null($menu_name)) {
+    if (isset($menu_name)) {
       $query->condition('menu_name', $menu_name);
     }
 
@@ -68,22 +78,28 @@ class MenuPositionActiveTrail extends MenuActiveTrail  {
       // This rule is active.
       if ($rule->isActive()) {
         $menu_link = $this->menuLinkManager->createInstance($rule->getMenuLink());
+        $active_menu_link = NULL;
         switch ($this->settings->get('link_display')) {
           case 'child':
             // Set this menu link to active.
-            return $menu_link;
+            $active_menu_link = $menu_link;
             break;
+
           case 'parent':
-            return $this->menuLinkManager->createInstance($menu_link->getParent());
+            $active_menu_link = $this->menuLinkManager->createInstance($menu_link->getParent());
             break;
+
           case 'none':
-            return null;
+            $active_menu_link = NULL;
             break;
         }
+
+        return $active_menu_link;
       }
     }
 
     // Default implementation takes here.
     return parent::getActiveLink($menu_name);
   }
+
 }

@@ -32,12 +32,12 @@ class IgnoreCharacterTest extends UnitTestCase {
    * @param string $expected_value
    *   The expected processed value.
    * @param string[] $character_classes
-   *   The "character_sets" setting to set on the processor.
+   *   The "ignorable_classes" setting to set on the processor.
    *
    * @dataProvider ignoreCharacterSetsDataProvider
    */
   public function testIgnoreCharacterSets($passed_value, $expected_value, array $character_classes) {
-    $this->processor->setConfiguration(['strip' => ['character_sets' => $character_classes]]);
+    $this->processor->setConfiguration(['ignorable_classes' => $character_classes]);
     $this->invokeMethod('process', [&$passed_value, 'text']);
     $this->assertEquals($expected_value, $passed_value);
   }
@@ -116,9 +116,9 @@ class IgnoreCharacterTest extends UnitTestCase {
    * @dataProvider ignorableCharactersDataProvider
    */
   public function testIgnorableCharacters($passed_value, $expected_value, $ignorable) {
-    $this->processor->setConfiguration(['ignorable' => $ignorable, 'strip' => ['character_sets' => []]]);
+    $this->processor->setConfiguration(['ignorable' => $ignorable, 'ignorable_classes' => []]);
     $this->invokeMethod('process', [&$passed_value, 'text']);
-    $this->assertEquals($expected_value, $passed_value);
+    $this->assertSame($expected_value, $passed_value);
   }
 
   /**
@@ -133,6 +133,7 @@ class IgnoreCharacterTest extends UnitTestCase {
       [['abcde', 'abcdef'], ['ace', 'ace'], '[bdf]'],
       ["ab.c'de", "a.'de", '[b-c]'],
       ['foo 13$%& (bar)[93]', 'foo $%& (bar)[]', '\d'],
+      [NULL, NULL, "['¿¡!?,.:;]"],
     ];
   }
 

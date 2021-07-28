@@ -9,8 +9,11 @@ services:
 
   geofield_map.marker_icon:
       class: Drupal\geofield_map\Services\MarkerIconService
-      arguments: ['@config.factory', '@string_translation', '@entity_type.manager', '@module_handler', '@link_generator', '@plugin.manager.element_info']
+      arguments: ['@config.factory', '@string_translation', '@file_system', '@entity_type.manager', '@module_handler', '@link_generator', '@plugin.manager.element_info']
 
   geofield_map.google_maps:
     class: Drupal\geofield_map\Services\GoogleMapsService
     arguments: ['@config.factory', '@language_manager', '@request_stack']
+
+  geofield_map.geocoder:
+    class: Drupal\geofield_map\Services\GeocoderService

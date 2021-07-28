@@ -2,17 +2,12 @@
 
 namespace Drupal\entity_reference_revisions\Plugin\migrate\destination;
 
-use Drupal\Component\Plugin\ConfigurablePluginInterface;
-use Drupal\Component\Utility\NestedArray;
+use Drupal\Component\Plugin\ConfigurableInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityManagerInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Field\FieldTypePluginManagerInterface;
 use Drupal\Core\TypedData\TranslatableInterface;
 use Drupal\migrate\MigrateException;
 use Drupal\migrate\Plugin\migrate\destination\EntityRevision;
 use Drupal\migrate\Plugin\MigrateIdMapInterface;
-use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Row;
 
 /**
@@ -22,30 +17,21 @@ use Drupal\migrate\Row;
  * - new_revisions: (optional) Flag to indicate if a new revision should be
  *   created instead of updating a previous default record. Only applicable when
  *   providing an entity id without a revision_id.
+ * - force_revision: (optional) Flag to ignore other checks and always create a
+ *   revision.
  *
  * @MigrateDestination(
  *   id = "entity_reference_revisions",
  *   deriver = "Drupal\entity_reference_revisions\Plugin\Derivative\MigrateEntityReferenceRevisions"
  * )
  */
-class EntityReferenceRevisions extends EntityRevision implements ConfigurablePluginInterface {
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration, EntityStorageInterface $storage, array $bundles, EntityManagerInterface $entity_manager, FieldTypePluginManagerInterface $field_type_manager) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $migration, $storage, $bundles, $entity_manager, $field_type_manager);
-    $this->setConfiguration($configuration);
-  }
+class EntityReferenceRevisions extends EntityRevision implements ConfigurableInterface {
 
   /**
    * {@inheritdoc}
    */
   public function setConfiguration(array $configuration) {
-    $this->configuration = NestedArray::mergeDeep(
-      $this->defaultConfiguration(),
-      $configuration
-    );
+    $this->configuration = $configuration;
   }
 
   /**
@@ -118,9 +104,15 @@ class EntityReferenceRevisions extends EntityRevision implements ConfigurablePlu
     $entity_id = $oldDestinationIdValues ?
       array_shift($oldDestinationIdValues) :
       $this->getEntityId($row);
-    $revision_id = $oldDestinationIdValues ?
-      array_pop($oldDestinationIdValues) :
-      $row->getDestinationProperty($this->getKey('revision'));
+    $configuration = $this->getConfiguration();
+    if (isset($configuration['force_revision']) && $configuration['force_revision'] == TRUE) {
+      $revision_id = NULL;
+    }
+    else {
+      $revision_id = $oldDestinationIdValues ?
+        array_pop($oldDestinationIdValues) :
+        $row->getDestinationProperty($this->getKey('revision'));
+    }
 
     // If a specific revision_id is supplied and exists, assert the entity_id
     // matches (if supplied), and update the revision.
@@ -135,7 +127,7 @@ class EntityReferenceRevisions extends EntityRevision implements ConfigurablePlu
     // supplied that exists, update it.
     elseif (!empty($entity_id) && ($entity = $this->storage->load($entity_id))) {
       // If so configured, create a new revision while updating.
-      if ($this->getConfiguration()['new_revisions']) {
+      if (!empty($this->configuration['new_revisions'])) {
         $entity->setNewRevision(TRUE);
       }
       $entity = $this->updateEntity($entity, $row) ?: $entity;
@@ -182,8 +174,8 @@ class EntityReferenceRevisions extends EntityRevision implements ConfigurablePlu
     $entity = $this->storage->loadRevision(array_pop($destination_identifiers));
     if ($entity && $entity instanceof TranslatableInterface) {
       if ($key = $this->getKey('langcode')) {
-        if (isset($destination_identifier[$key])) {
-          $langcode = $destination_identifier[$key];
+        if (isset($destination_identifiers[$key])) {
+          $langcode = $destination_identifiers[$key];
           if ($entity->hasTranslation($langcode)) {
             // Make sure we don't remove the default translation.
             $translation = $entity->getTranslation($langcode);

@@ -11,10 +11,10 @@ use Drupal\rules\Core\RulesConditionBase;
  *   id = "scheduler_condition_publishing_is_enabled",
  *   label = @Translation("Node type is enabled for scheduled publishing"),
  *   category = @Translation("Scheduler"),
- *   context = {
+ *   context_definitions = {
  *     "node" = @ContextDefinition("entity:node",
- *       label = @Translation("The node to use for scheduled publishing enabled"),
- *       description = @Translation("Enter 'node' for the node being processed, or use data selection.")
+ *       label = @Translation("Scheduled Node"),
+ *       description = @Translation("The node to check for scheduled publishing enabled. Enter 'node' or use data selection.")
  *     )
  *   }
  * )

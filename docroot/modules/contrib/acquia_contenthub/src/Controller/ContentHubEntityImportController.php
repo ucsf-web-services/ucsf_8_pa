@@ -2,10 +2,10 @@
 
 namespace Drupal\acquia_contenthub\Controller;
 
+use Drupal\acquia_contenthub\ImportEntityManager;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\acquia_contenthub\ImportEntityManager;
 
 /**
  * Controller for Content Hub Imported Entities.

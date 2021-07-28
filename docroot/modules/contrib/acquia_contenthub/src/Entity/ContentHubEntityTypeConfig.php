@@ -2,12 +2,12 @@
 
 namespace Drupal\acquia_contenthub\Entity;
 
-use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\acquia_contenthub\ContentHubEntityTypeConfigInterface;
+use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\image\Entity\ImageStyle;
-use Drupal\Core\Entity\EntityFieldManagerInterface;
 
 /**
  * Defines a ContentHubEntityTypeConfig configuration entity class.

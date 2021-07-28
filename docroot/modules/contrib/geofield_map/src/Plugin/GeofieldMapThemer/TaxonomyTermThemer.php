@@ -22,7 +22,8 @@ use Drupal\Core\Ajax\ReplaceCommand;
  * @MapThemer(
  *   id = "geofieldmap_taxonomy_term",
  *   name = @Translation("Taxonomy Term (geofield_map) - Image Upload (deprecated)"),
- *   description = "This Geofield Map Themer allows the definition of different Marker Icons based on Taxonomy Terms reference field in View.",
+ *   description = "This Geofield Map Themer allows the definition of
+ * different Marker Icons based on Taxonomy Terms reference field in View.",
  *   context = {"ViewStyle"},
  *   weight = 5,
  *   markerIconSelection = {
@@ -47,7 +48,7 @@ class TaxonomyTermThemer extends TaxonomyTermThemerUrl {
     // Get the existing (Default) Element settings.
     $default_element = $this->getDefaultThemerElement($defaults);
 
-    // Get the View Filtered entity bundles.
+    // Get the MapThemer Entity type.
     $entity_type = $geofieldMapView->getViewEntityType();
     $view_fields = $geofieldMapView->getViewFields();
 
@@ -66,8 +67,11 @@ class TaxonomyTermThemer extends TaxonomyTermThemerUrl {
       }
     }
 
+    // Get the MapThemer Entity bundles.
     $entity_bundles = $this->entityTypeBundleInfo->getBundleInfo($entity_type);
-    $view_bundles = !empty($geofieldMapView->getViewFilteredBundles()) ? $geofieldMapView->getViewFilteredBundles() : array_keys($entity_bundles);
+    // Filter the View Bundles based on the View Filtered Bundles,
+    // but only if the MapThemer is working on the View base table entity type.
+    $view_bundles = $this->getMapThemerEntityBundles($geofieldMapView, $entity_type, $entity_bundles);
 
     foreach ($taxonomy_ref_fields as $field_id => $data) {
       $taxonomy_ref_fields[$field_id]['target_bundles'] = [];
@@ -223,7 +227,7 @@ class TaxonomyTermThemer extends TaxonomyTermThemerUrl {
               'value' => isset($default_row) && isset($default_row['image_style']) ? $default_row['image_style'] : 'geofield_map_default_icon_style',
             ],
             'legend_exclude' => [
-              'value' => isset($default_row) && isset($default_row['legend_exclude']) ? $default_row['legend_exclude'] : (count($field['terms']) > 10 ? TRUE : FALSE) ,
+              'value' => isset($default_row) && isset($default_row['legend_exclude']) ? $default_row['legend_exclude'] : (count($field['terms']) > 10 ? TRUE : FALSE),
             ],
             'attributes' => ['class' => ['draggable']],
           ];

@@ -172,7 +172,7 @@ class ContentHubEntityLinkFieldHandler {
    *   The field value item.
    *
    * @return string|null
-   *   If it matches pattern, returns dependent entity type and UUID; otherwise NULL.
+   *   If it matches pattern, returns dependent entity type and UUID; or NULL.
    */
   public function getDependentEntityInfo($item) {
     if (!isset($item['uri'])) {

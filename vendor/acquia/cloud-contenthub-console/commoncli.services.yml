@@ -1,0 +1,103 @@
+services:
+  http_client_factory.acquia_cloud:
+    class: Acquia\Console\Cloud\Client\AcquiaCloudClientFactory
+    public: true
+
+  #  Platforms
+  platform.acquia.cloud:
+    class: Acquia\Console\Cloud\EventSubscriber\Platform\PlatformSubscriberAcquiaCloud
+    tags:
+      - { name: kernel.event_subscriber }
+  platform.acquia.cloud.multi_site:
+    class: Acquia\Console\Cloud\EventSubscriber\Platform\PlatformSubscriberAcquiaCloudMultiSite
+    arguments: ['@http_client_factory.acquia_cloud']
+    tags:
+      - { name: kernel.event_subscriber }
+  platform.config.environment_details:
+    class: Acquia\Console\Cloud\EventSubscriber\Platform\PlatformConfigEnvironmentsDetails
+    arguments: ['@http_client_factory.acquia_cloud']
+    tags:
+      - { name: kernel.event_subscriber }
+  platform.config.app_finder_cloud:
+    class: Acquia\Console\Cloud\EventSubscriber\Platform\PlatformConfigAppFinderCloud
+    arguments: ['@http_client_factory.acquia_cloud']
+    tags:
+      - { name: kernel.event_subscriber }
+  platform.config.ace.site_protocol:
+    class: Acquia\Console\Cloud\EventSubscriber\Platform\PlatformConfigHttpProtocol
+    arguments: ['@http_client_factory.acquia_cloud']
+    tags:
+      - { name: kernel.event_subscriber }
+
+  #  Commands
+  command.ace.database.backup.create:
+    class: Acquia\Console\Cloud\Command\DatabaseBackup\AcquiaCloudDatabaseBackupCreate
+    public: true
+    arguments: ['@event_dispatcher']
+    tags:
+      - { name: common_console_command }
+  command.ace.database.backup.list:
+    class: Acquia\Console\Cloud\Command\DatabaseBackup\AcquiaCloudDatabaseBackupList
+    public: true
+    arguments: ['@event_dispatcher']
+    tags:
+      - { name: common_console_command }
+  command.ace.database.backup.restore:
+    class: Acquia\Console\Cloud\Command\DatabaseBackup\AcquiaCloudDatabaseBackupRestore
+    public: true
+    arguments: ['@event_dispatcher']
+    tags:
+      - { name: common_console_command }
+  command.ace.database.backup.restore.helper:
+    class: Acquia\Console\Cloud\Command\Helpers\AcquiaCloudDbBackupRestoreHelper
+    public: true
+    arguments: ['@event_dispatcher']
+    tags:
+      - { name: common_console_command }
+  command.ace.database.backup.delete.helper:
+    class: Acquia\Console\Cloud\Command\Helpers\AcquiaCloudDbBackupDeleteHelper
+    public: true
+    arguments: [ '@event_dispatcher' ]
+    tags:
+      - { name: common_console_command }
+  command.ace.database.backup.delete:
+    class: Acquia\Console\Cloud\Command\DatabaseBackup\AcquiaCloudDatabaseBackupDelete
+    public: true
+    arguments: ['@event_dispatcher']
+    tags:
+      - { name: common_console_command }
+  command.ace.multisite.database.backup.list:
+    class: Acquia\Console\Cloud\Command\DatabaseBackup\AcquiaCloudMultisiteDatabaseBackupList
+    public: true
+    arguments: [ '@event_dispatcher' ]
+    tags:
+      - { name: common_console_command }
+  command.ace.multisite.database.backup.create:
+    class: Acquia\Console\Cloud\Command\DatabaseBackup\AcquiaCloudMultisiteDatabaseBackupCreate
+    public: true
+    arguments: [ '@event_dispatcher' ]
+    tags:
+      - { name: common_console_command }
+  command.ace.multisite.database.backup.restore:
+    class: Acquia\Console\Cloud\Command\DatabaseBackup\AcquiaCloudMultisiteDatabaseBackupRestore
+    public: true
+    arguments: [ '@event_dispatcher' ]
+    tags:
+      - { name: common_console_command }
+  command.ace.multisite.database.backup.delete:
+    class: Acquia\Console\Cloud\Command\DatabaseBackup\AcquiaCloudMultisiteDatabaseBackupDelete
+    public: true
+    arguments: [ '@event_dispatcher' ]
+    tags:
+      - { name: common_console_command }
+  command.ace.cron_list:
+    class: Acquia\Console\Cloud\Command\AcquiaCloudCronList
+    public: true
+    arguments: ['@event_dispatcher']
+    tags:
+      - { name: common_console_command }
+  command.ace.multi_sites:
+    class: Acquia\Console\Cloud\Command\AcquiaCloudMultiSites
+    public: true
+    tags:
+      - { name: common_console_command }

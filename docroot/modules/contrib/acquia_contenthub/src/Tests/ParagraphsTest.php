@@ -2,9 +2,9 @@
 
 namespace Drupal\acquia_contenthub\Tests;
 
-use Drupal\simpletest\WebTestBase as SimpletestWebTestBase;
-use Drupal\Component\Uuid\Uuid;
 use Drupal\Component\Serialization\Json;
+use Drupal\Component\Uuid\Uuid;
+use Drupal\simpletest\WebTestBase as SimpletestWebTestBase;
 
 /**
  * Tests paragraphs support in Acquia Content Hub module.

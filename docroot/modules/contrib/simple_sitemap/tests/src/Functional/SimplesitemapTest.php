@@ -2,7 +2,10 @@
 
 namespace Drupal\Tests\simple_sitemap\Functional;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
+use Drupal\simple_sitemap\Queue\QueueWorker;
 
 /**
  * Tests Simple XML Sitemap functional integration.
@@ -18,7 +21,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
    * @throws \Behat\Mink\Exception\ExpectationException
    */
   public function testInitialGeneration() {
-    $this->generator->generateSitemap('backend');
+    $this->generator->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('urlset');
     $this->assertSession()->responseContains(
@@ -38,7 +41,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     $this->generator->addCustomLink(
       '/node/' . $this->node->id(),
       ['priority' => 0.2, 'changefreq' => 'monthly']
-    )->generateSitemap('backend');
+    )->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('node/' . $this->node->id());
@@ -55,7 +58,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     $this->generator->addCustomLink(
       '/node/' . $this->node->id(),
       ['changefreq' => 'yearly']
-    )->generateSitemap('backend');
+    )->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet('admin/config/search/simplesitemap/custom');
     $this->assertSession()->pageTextContains(
@@ -72,12 +75,34 @@ class SimplesitemapTest extends SimplesitemapTestBase {
   public function testAddCustomLinkDefaults() {
     $this->generator->removeCustomLinks()
       ->addCustomLink('/node/' . $this->node->id())
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('node/' . $this->node->id());
     $this->assertSession()->responseContains('0.5');
     $this->assertSession()->responseNotContains('changefreq');
+  }
+
+  /**
+   * Tests locks
+   */
+  public function testLocking() {
+    $this->generator->removeCustomLinks()
+      ->addCustomLink('/node/' . $this->node->id())
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
+    $this->drupalLogin($this->createUser(['administer sitemap settings']));
+
+    $this->drupalGet('/admin/config/search/simplesitemap/settings');
+    $this->submitForm(['simple_sitemap_regenerate_now' => TRUE], 'Save configuration');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains('The configuration options have been saved.');
+    $this->assertSession()->pageTextNotContains('Unable to acquire a lock for sitemap generation.');
+
+    \Drupal::lock()->acquire(QueueWorker::LOCK_ID);
+    $this->submitForm(['simple_sitemap_regenerate_now' => TRUE], 'Save configuration');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains('The configuration options have been saved.');
+    $this->assertSession()->pageTextContainsOnce('Unable to acquire a lock for sitemap generation.');
   }
 
   /**
@@ -91,14 +116,14 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     // Test removing one custom path from the sitemap.
     $this->generator->addCustomLink('/node/' . $this->node->id())
       ->removeCustomLinks('/node/' . $this->node->id())
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseNotContains('node/' . $this->node->id());
 
     // Test removing all custom paths from the sitemap.
     $this->generator->removeCustomLinks()
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseNotContains(
@@ -124,7 +149,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
         'priority' => 0.5,
         'changefreq' => 'hourly',
       ])
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('node/' . $this->node->id());
@@ -135,7 +160,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
 
     // Only change bundle priority.
     $this->generator->setBundleSettings('node', 'page', ['priority' => 0.9])
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('node/' . $this->node->id());
@@ -147,7 +172,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
       'node',
       'page',
       ['changefreq' => 'daily']
-    )->generateSitemap('backend');
+    )->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('node/' . $this->node->id());
@@ -156,7 +181,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
 
     // Remove changefreq setting.
     $this->generator->setBundleSettings('node', 'page', ['changefreq' => ''])
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('node/' . $this->node->id());
@@ -169,7 +194,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     $node3 = $this->createNode(['title' => 'Node3', 'type' => 'blog']);
     $this->generator->setBundleSettings('node', 'page', ['index' => TRUE])
       ->setBundleSettings('node', 'blog', ['index' => TRUE])
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('node/' . $this->node->id());
@@ -179,7 +204,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     $this->generator
       ->setBundleSettings('node', 'page', ['index' => FALSE])
       ->setBundleSettings('node', 'blog', ['index' => FALSE])
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
 
@@ -196,12 +221,49 @@ class SimplesitemapTest extends SimplesitemapTestBase {
   public function testSetBundleSettingsDefaults() {
     $this->generator->setBundleSettings('node', 'page')
       ->removeCustomLinks()
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('node/' . $this->node->id());
     $this->assertSession()->responseContains('0.5');
     $this->assertSession()->responseNotContains('changefreq');
+  }
+
+  /**
+   * Test link count.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testLinkCount() {
+    $this->generator->setBundleSettings('node', 'page')
+      ->removeCustomLinks()
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
+
+    $this->drupalLogin($this->createUser(['administer sitemap settings']));
+    $this->drupalGet('admin/config/search/simplesitemap');
+    $link_count_elements = $this->xpath('//*[@id="simple-sitemap-sitemaps-form"]//table/tbody/tr/td[3]');
+    $this->assertSame('2', $link_count_elements[0]->getText());
+
+    $this->createNode(['title' => 'Another node', 'type' => 'page']);
+    $this->generator->setBundleSettings('node', 'page')
+      ->removeCustomLinks()
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
+    $this->drupalLogin($this->createUser(['administer sitemap settings']));
+    $this->drupalGet('admin/config/search/simplesitemap');
+    $link_count_elements = $this->xpath('//*[@id="simple-sitemap-sitemaps-form"]//table/tbody/tr/td[3]');
+    $this->assertSame('3', $link_count_elements[0]->getText());
+
+    // Pretend that we've just run the simple_sitemap_update_8305() update on a
+    // site with existing sitemaps.
+    \Drupal::database()->update('simple_sitemap')
+      ->fields(['link_count' => 0])
+      ->execute();
+    $this->drupalGet('admin/config/search/simplesitemap');
+    $link_count_elements = $this->xpath('//*[@id="simple-sitemap-sitemaps-form"]//table/tbody/tr/td[3]');
+    $this->assertSame('unavailable', $link_count_elements[0]->getText());
   }
 
   /**
@@ -214,7 +276,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     // Entity links should have 'lastmod'.
     $this->generator->setBundleSettings('node', 'page')
       ->removeCustomLinks()
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('lastmod');
@@ -222,7 +284,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     // Entity custom links should have 'lastmod'.
     $this->generator->setBundleSettings('node', 'page', ['index' => FALSE])
       ->addCustomLink('/node/' . $this->node->id())
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('lastmod');
@@ -230,7 +292,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     // Non-entity custom links should not have 'lastmod'.
     $this->generator->removeCustomLinks()
       ->addCustomLink('/')
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseNotContains('lastmod');
@@ -245,13 +307,13 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     $this->generator->setBundleSettings('node', 'page')
       ->addCustomLink('/node/1')
       ->saveSetting('remove_duplicates', TRUE)
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertUniqueTextWorkaround('node/' . $this->node->id());
 
     $this->generator->saveSetting('remove_duplicates', FALSE)
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertNoUniqueTextWorkaround('node/' . $this->node->id());
@@ -267,7 +329,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     $this->generator->setBundleSettings('node', 'page')
       ->saveSetting('max_links', 1)
       ->removeCustomLinks()
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('sitemap.xml?page=1');
@@ -297,14 +359,14 @@ class SimplesitemapTest extends SimplesitemapTestBase {
   public function testBaseUrlSetting() {
     $this->generator->setBundleSettings('node', 'page')
       ->saveSetting('base_url', 'http://base_url_test')
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('http://base_url_test');
 
     // Set base URL in the sitemap index.
     $this->generator->saveSetting('max_links', 1)
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('http://base_url_test/sitemap.xml?page=1');
@@ -323,7 +385,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
       ->removeCustomLinks()
       ->setEntityInstanceSettings('node', $this->node->id(), ['priority' => 0.1, 'changefreq' => 'never'])
       ->setEntityInstanceSettings('node', $this->node2->id(), ['index' => FALSE])
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     // Test sitemap result.
     $this->drupalGet($this->defaultSitemapUrl);
@@ -341,16 +403,10 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     $this->assertSession()->responseContains('<option value="never" selected="selected">never</option>');
 
     // Test database changes.
-    $result = $this->database->select('simple_sitemap_entity_overrides', 'o')
-      ->fields('o', ['inclusion_settings'])
-      ->condition('o.entity_type', 'node')
-      ->condition('o.entity_id', $this->node->id())
-      ->execute()
-      ->fetchField();
-    $this->assertFalse(empty($result));
+    $this->assertEquals(1, $this->getOverridesCount('node', $this->node->id()));
 
     $this->generator->setBundleSettings('node', 'page', ['priority' => 0.1, 'changefreq' => 'never'])
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     // Test sitemap result.
     $this->drupalGet($this->defaultSitemapUrl);
@@ -367,13 +423,61 @@ class SimplesitemapTest extends SimplesitemapTestBase {
 
     // Test if entity override has been removed from database after its equal to
     // its bundle settings.
-    $result = $this->database->select('simple_sitemap_entity_overrides', 'o')
+    $this->assertEquals(0, $this->getOverridesCount('node', $this->node->id()));
+
+    // Assert that creating a new content type doesn't remove the overrides.
+    $this->drupalGet('node/' . $this->node->id() . '/edit');
+    $this->submitForm(['index_default_node_settings' => 0], 'Save');
+    $this->assertEquals(1, $this->getOverridesCount('node', $this->node->id()));
+    // Create a new content type.
+    $this->drupalGet('admin/structure/types/add');
+    $this->submitForm([
+      'name' => 'simple_sitemap_type',
+      'type' => 'simple_sitemap_type',
+      'index_default_node_settings' => 0,
+    ], 'Save content type');
+    // The entity override from the other content type should not be affected.
+    $this->assertEquals(1, $this->getOverridesCount('node', $this->node->id()));
+
+    // Assert that removing the other content type doesn't remove the overrides.
+    $this->drupalGet('admin/structure/types/manage/simple_sitemap_type/delete');
+    $this->submitForm([], 'Delete');
+    $this->assertEquals(1, $this->getOverridesCount('node', $this->node->id()));
+  }
+
+  /**
+   * Returns the number of entity overrides for the given entity type/ID.
+   *
+   * @param string $entity_type_id
+   *   The entity type ID.
+   * @param string $entity_id
+   *   The entity ID.
+   *
+   * @return int
+   *   The number of overrides for the given entity type ID and entity ID.
+   */
+  protected function getOverridesCount($entity_type_id, $entity_id) {
+    return $this->database->select('simple_sitemap_entity_overrides', 'o')
       ->fields('o', ['inclusion_settings'])
-      ->condition('o.entity_type', 'node')
-      ->condition('o.entity_id', $this->node->id())
+      ->condition('o.entity_type', $entity_type_id)
+      ->condition('o.entity_id', $entity_id)
+      ->countQuery()
       ->execute()
       ->fetchField();
-    $this->assertTrue(empty($result));
+  }
+
+  /**
+   * Tests that a page does not break if an entity has its id set.
+   */
+  public function testNewEntityWithIdSet() {
+    $new_node = Node::create([
+      'nid' => mt_rand(5, 10),
+      'type' => 'page',
+    ]);
+    // Assert that the form does not break if an entity has an id but is not
+    // saved.
+    // @see https://www.drupal.org/project/simple_sitemap/issues/3079897
+    \Drupal::service('entity.form_builder')->getForm($new_node);
   }
 
   /**
@@ -382,7 +486,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
   public function testAtomicEntityIndexation() {
     $user_id = $this->privilegedUser->id();
     $this->generator->setBundleSettings('user')
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseNotContains('user/' . $user_id);
@@ -390,7 +494,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     user_role_grant_permissions('anonymous', ['access user profiles']);
     drupal_flush_all_caches(); //todo Not pretty.
 
-    $this->generator->generateSitemap('backend');
+    $this->generator->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('user/' . $user_id);
@@ -418,7 +522,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     $this->drupalGet('admin/structure/types/manage/page');
     $this->assertSession()->pageTextNotContains('Simple XML Sitemap');
 
-    $this->generator->generateSitemap('backend');
+    $this->generator->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseNotContains('node/' . $this->node->id());
@@ -443,7 +547,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     $this->drupalGet('admin/structure/types/manage/page');
     $this->assertSession()->pageTextContains('Simple XML Sitemap');
 
-    $this->generator->generateSitemap('backend');
+    $this->generator->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('node/' . $this->node->id());
@@ -468,10 +572,10 @@ class SimplesitemapTest extends SimplesitemapTestBase {
 
     $this->generator
       ->setBundleSettings('node', 'page')
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     $variants = $this->generator->getSitemapManager()->getSitemapVariants();
-    $this->assertTrue(isset($variants['test']));
+    $this->assertArrayHasKey('test', $variants);
 
     $this->drupalGet($this->defaultSitemapUrl);
     $this->assertSession()->responseContains('node/' . $this->node->id());
@@ -483,7 +587,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     $this->generator
       ->setVariants('test')
       ->setBundleSettings('node', 'page')
-      ->generateSitemap('backend');
+      ->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
 
     // Test if bundle settings have been set for correct variant.
     $this->drupalGet($this->defaultSitemapUrl);
@@ -492,7 +596,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     $this->generator->getSitemapManager()->removeSitemapVariants('test');
 
     $variants = $this->generator->getSitemapManager()->getSitemapVariants();
-    $this->assertFalse(isset($variants['test']));
+    $this->assertArrayNotHasKey('test', $variants);
 
     // Test if sitemap has been removed along with the variant.
     $this->drupalGet('test/sitemap.xml');
@@ -542,7 +646,7 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     $generate_count = 0;
     while ($queue->generationInProgress()) {
       $generate_count++;
-      $this->generator->generateSitemap('backend');
+      $this->generator->generateSitemap(QueueWorker::GENERATE_TYPE_BACKEND);
     }
 
     // Test if sitemap generation has been resumed when time limit is very low.
@@ -552,12 +656,29 @@ class SimplesitemapTest extends SimplesitemapTestBase {
     $chunks = $this->database->query('SELECT id FROM {simple_sitemap} WHERE delta != 0 AND status = 1');
     $chunks->allowRowCount = TRUE;
     $chunk_count = $chunks->rowCount();
-    $this->assertTrue($chunk_count === $expected_sitemap_count);
+    $this->assertSame($chunk_count, $expected_sitemap_count);
 
     // Test if index has been created when necessary.
     $index = $this->database->query('SELECT id FROM {simple_sitemap} WHERE delta = 0 AND status = 1')
       ->fetchField();
     $this->assertTrue($chunk_count > 1 ? (FALSE !== $index) : !$index);
+  }
+
+  /**
+   * Test the removal of hreflang tags in HTML.
+   */
+  public function testHrefLangRemoval() {
+    // Test the nodes markup contains hreflang with default settings.
+    $this->generator->saveSetting('disable_language_hreflang', FALSE);
+    $this->drupalGet('node/' . $this->node->id());
+    $this->assertNotEmpty($this->xpath("//link[@hreflang]"));
+
+    Cache::invalidateTags($this->node->getCacheTags());
+
+    // Test the hreflang markup gets removed.
+    $this->generator->saveSetting('disable_language_hreflang', TRUE);
+    $this->drupalGet('node/' . $this->node->id());
+    $this->assertEmpty($this->xpath("//link[@hreflang]"));
   }
 
 }

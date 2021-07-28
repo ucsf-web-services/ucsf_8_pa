@@ -45,7 +45,7 @@ class GaussianBlurTest extends ImageEffectsTestBase {
     $this->assertColorsAreEqual($this->red, $this->getPixelColor($image, 50, 50));
     // The upper-left corner of the inner red square has been blurred.
     // For fully opaque, we check an actual color.
-    $this->assertColorsAreEqual([94, 161, 0, 0], $this->getPixelColor($image, 25, 25));
+    $this->assertColorsAreClose([94, 161, 0, 0], $this->getPixelColor($image, 25, 25), 5);
 
     // 2. Test blurring red on transparent.
     $original_uri = $this->getTestImageCopyUri('/tests/images/red-on-transparent.png', 'image_effects');

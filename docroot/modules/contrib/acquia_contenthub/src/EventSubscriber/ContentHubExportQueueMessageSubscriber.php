@@ -2,10 +2,10 @@
 
 namespace Drupal\acquia_contenthub\EventSubscriber;
 
-use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\Event;
 use Drupal\acquia_contenthub\Controller\ContentHubExportQueueController;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class ContentHubExportQueueMessageSubscriber.

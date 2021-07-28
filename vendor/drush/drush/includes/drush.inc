@@ -975,6 +975,7 @@ function drush_file_is_tarball($path) {
   $supported = array(
     'application/x-bzip2',
     'application/x-gzip',
+    'application/gzip',
     'application/x-tar',
     'application/x-zip',
     'application/zip',
@@ -1453,6 +1454,9 @@ function _drush_log_drupal_messages() {
           // This is a special case. PHP logs sql errors as 'User Warnings', not errors.
           drush_set_error('DRUSH_DRUPAL_ERROR_MESSAGE', preg_replace('/^user warning: /i', '', $error));
         }
+        elseif (preg_match('/^deprecated function:/i', $error)) {
+          drush_log(preg_replace('/^deprecated function: /i', '', $error), LogLevel::WARNING);
+        }
         else {
           drush_set_error('DRUSH_DRUPAL_ERROR_MESSAGE', $error);
         }
@@ -1844,7 +1848,7 @@ function drush_value_format($value, $format) {
       break;
 
     case 'yaml':
-      $value = \Symfony\Component\Yaml\Yaml::parse($value, FALSE, TRUE);
+      $value = \Drush\Internal\Symfony\Yaml\Yaml::parse($value, FALSE, TRUE);
       break;
   }
   return $value;

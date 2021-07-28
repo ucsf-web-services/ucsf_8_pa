@@ -3,7 +3,7 @@
 The tests run automatically on each commit on TravisCI. Status for the
 master branch is:
 
-[![Build Status](https://secure.travis-ci.org/lsolesen/pel.png?branch=master)](http://travis-ci.org/lsolesen/pel)
+[![Build Status](https://secure.travis-ci.org/pel/pel.png?branch=master)](http://travis-ci.org/pel/pel)
 
 
 ## PEL Test Suite
@@ -37,11 +37,9 @@ phpunit
 
 ## Failing Tests
 
-Should one or more of the tests fail, then first ensure that
-SimpleTest is placed correctly so that run-tests.php can find it. If
-everything seems correct, then please report the error to the PEL
-developers:
+Should one or more of the tests fail, please report the error to 
+the PEL developers:
 
-  https://github.com/lsolesen/pel/issues
+  https://github.com/pel/pel/issues
 
 Remember to include all the output in your bug report.

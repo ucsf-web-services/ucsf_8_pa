@@ -7,9 +7,7 @@ use Drupal\Core\Site\Settings;
 use Drush\Commands\DrushCommands;
 
 /**
- * Class ApplenewsCommands.
- *
- * @package Drupal\applenews\Commands
+ * Apple News related Drush commands.
  */
 class ApplenewsCommands extends DrushCommands {
   /**

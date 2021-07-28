@@ -63,8 +63,7 @@ class MemoryLimitDatabaseQueue extends DatabaseQueue {
       $manager->getStorage($id)->resetCache();
     }
 
-    // @TODO: explore resetting the container.
-
+    // @todo explore resetting the container.
     // Run garbage collector to further reduce memory.
     gc_collect_cycles();
 

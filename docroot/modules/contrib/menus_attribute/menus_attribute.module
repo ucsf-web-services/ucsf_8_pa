@@ -15,11 +15,12 @@ function menus_attribute_form_alter(array &$form, FormStateInterface $form_state
   if ($form['#form_id'] == 'menu_link_content_menu_link_content_form' || $form['#form_id'] == 'menu_link_edit') {
     $instance = StorageHelper::instance();
     $data = NULL;
+    $plugin_id = NULL;
     $get_path = explode("/", \Drupal::service('path.current')->getPath());
     if ($get_path[6] == 'edit') {
       if ($form['#form_id'] == 'menu_link_content_menu_link_content_form') {
         $id = $get_path[5];
-        $plugin_id = \Drupal::entityManager()->getStorage('menu_link_content')->load($id)->getPluginId();
+        $plugin_id = \Drupal::entityTypeManager()->getStorage('menu_link_content')->load($id)->getPluginId();
       }
       if ($form['#form_id'] == 'menu_link_edit') {
         $plugin_id = $get_path[5];
@@ -123,7 +124,7 @@ function _menus_attribute_form_submit_handler(&$form, &$form_state) {
   if ($get_path[6] == 'edit') {
     if ($form['#form_id'] == 'menu_link_content_menu_link_content_form') {
       $id = $get_path[5];
-      $plugin_id = \Drupal::entityManager()->getStorage('menu_link_content')->load($id)->getPluginId();
+      $plugin_id = \Drupal::entityTypeManager()->getStorage('menu_link_content')->load($id)->getPluginId();
     }
     if ($form['#form_id'] == 'menu_link_edit') {
       $plugin_id = $get_path[5];

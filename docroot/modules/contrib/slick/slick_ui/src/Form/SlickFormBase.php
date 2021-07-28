@@ -87,7 +87,7 @@ abstract class SlickFormBase extends EntityForm {
     $slick     = $this->entity;
     $path      = drupal_get_path('module', 'slick');
     $tooltip   = ['class' => ['is-tooltip']];
-    $readme    = Url::fromUri('base:' . $path . '/README.txt')->toString();
+    $readme    = Url::fromUri('base:' . $path . '/README.md')->toString();
     $admin_css = $this->manager->configLoad('admin_css', 'blazy.settings');
 
     $form['#attributes']['class'][] = 'form--slick';

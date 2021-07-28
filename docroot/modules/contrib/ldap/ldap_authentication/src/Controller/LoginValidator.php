@@ -4,7 +4,7 @@ namespace Drupal\ldap_authentication\Controller;
 
 use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -70,7 +70,7 @@ final class LoginValidator implements LdapUserAttributesInterface {
   /**
    * Constructor.
    */
-  public function __construct(ConfigFactoryInterface $configFactory, LdapDetailLog $detailLog, LoggerChannelInterface $logger, EntityTypeManager $entity_type_manager, ModuleHandler $module_handler) {
+  public function __construct(ConfigFactoryInterface $configFactory, LdapDetailLog $detailLog, LoggerChannelInterface $logger, EntityTypeManagerInterface $entity_type_manager, ModuleHandler $module_handler) {
     $this->configFactory = $configFactory;
     $this->config = $configFactory->get('ldap_authentication.settings');
     $this->detailLog = $detailLog;

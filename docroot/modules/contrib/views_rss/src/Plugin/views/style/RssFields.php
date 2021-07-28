@@ -2,6 +2,7 @@
 
 namespace Drupal\views_rss\Plugin\views\style;
 
+use Drupal\Core\Link;
 use Drupal\views\Plugin\views\style\StylePluginBase;
 use Drupal\Core\Url;
 use Drupal\Component\Utility\Xss;
@@ -175,7 +176,7 @@ class RssFields extends StylePluginBase {
             }
             // Add help link if provided.
             if (!empty($definition['help'])) {
-              $form_item['#description'] .= ' ' . \Drupal::l('[?]', Url::fromUri($definition['help']), array('attributes' => array('title' => t('Need more information?'))));
+              $form_item['#description'] .= ' ' . Link::fromTextAndUrl('[?]', Url::fromUri($definition['help']), array('attributes' => array('title' => t('Need more information?'))))->toString();
             }
             // Check if element should be displayed in a subgroup.
             if (!empty($definition['group'])) {
@@ -352,17 +353,20 @@ class RssFields extends StylePluginBase {
         }
 
         foreach ($rss_elements as $rss_element) {
-          // Keep certain elements from rendering in channel_elements
-          // array. These have placeholders in the twig file.
+          // Keep certain elements from rendering in channel_elements array.
+          // These have placeholders in the twig file.
           // @todo find a better way of setting and passing these where they don't pass through rendering.
           $key = $rss_element['key'];
           if (in_array($key, array('title', 'description', 'link', 'language'))) {
-            $elements[] = $rss_element;
-            continue;
+            $render_element = [
+              '#type' => 'markup',
+              '#markup' => $rss_element['value'],
+              '#printed' => TRUE,
+            ];
+            $elements[] = $render_element;
           }
-
           // Build render arrays for the other channel_elements.
-          if (!empty($rss_element['value']) || !empty($rss_element['attributes'])) {
+          elseif (!empty($rss_element['value']) || !empty($rss_element['attributes'])) {
             $render_element = [
               '#type' => 'html_tag',
               '#tag' => $rss_element['key'],

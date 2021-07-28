@@ -2,6 +2,7 @@
 
 namespace Drupal\blazy;
 
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\EntityInterface;
 
@@ -20,18 +21,11 @@ class BlazyManager extends BlazyManagerBase {
    */
   public function cleanUpBreakpoints(array &$settings = []) {
     if (!empty($settings['breakpoints'])) {
-      foreach ($settings['breakpoints'] as $key => &$breakpoint) {
-        $breakpoint = array_filter($breakpoint);
+      $breakpoints = array_filter(array_map('array_filter', $settings['breakpoints']));
 
-        if (empty($breakpoint['width']) && empty($breakpoint['image_style'])) {
-          unset($settings['breakpoints'][$key]);
-        }
-      }
-    }
-
-    // Identify that Blazy can be activated only by breakpoints.
-    if (empty($settings['blazy'])) {
-      $settings['blazy'] = !empty($settings['breakpoints']);
+      $settings['breakpoints'] = NestedArray::filter($breakpoints, function ($breakpoint) {
+        return !(is_array($breakpoint) && (empty($breakpoint['width']) || empty($breakpoint['image_style'])));
+      });
     }
   }
 
@@ -235,25 +229,20 @@ class BlazyManager extends BlazyManagerBase {
    * @return array
    *   The alterable and renderable array of enforced content, or theme_blazy().
    */
-  public function getImage(array $build = []) {
-    if (empty($build['item'])) {
-      return [];
+  public function getBlazy(array $build = []) {
+    foreach (BlazyDefault::themeProperties() as $key) {
+      $build[$key] = isset($build[$key]) ? $build[$key] : [];
     }
 
-    /** @var Drupal\image\Plugin\Field\FieldType\ImageItem $item */
-    $item                    = $build['item'];
-    $uri                     = ($entity = $item->entity) && empty($item->uri) ? $entity->getFileUri() : $item->uri;
-    $settings                = &$build['settings'];
-    $settings['delta']       = isset($settings['delta']) ? $settings['delta'] : 0;
-    $settings['image_style'] = isset($settings['image_style']) ? $settings['image_style'] : '';
-    $settings['uri']         = empty($settings['uri']) ? $uri : $settings['uri'];
+    $settings  = &$build['settings'];
+    $settings += BlazyDefault::itemSettings();
 
     // Respects content not handled by theme_blazy(), but passed through.
     if (empty($build['content'])) {
       $image = [
-        '#theme'       => empty($settings['theme_hook_image']) ?'blazy' : $settings['theme_hook_image'],
+        '#theme'       => $settings['theme_hook_image'] ?: 'blazy',
         '#delta'       => $settings['delta'],
-        '#item'        => isset($settings['entity_type_id']) && $settings['entity_type_id'] == 'user' ? $item : [],
+        '#item'        => $settings['entity_type_id'] == 'user' ? $build['item'] : [],
         '#image_style' => $settings['image_style'],
         '#build'       => $build,
         '#pre_render'  => [[$this, 'preRenderImage']],
@@ -279,38 +268,32 @@ class BlazyManager extends BlazyManagerBase {
    */
   public function preRenderImage(array $element) {
     $build = $element['#build'];
-    $item  = $build['item'];
     unset($element['#build']);
 
+    $item = $build['item'];
     $settings = $build['settings'];
-    if (empty($item)) {
-      return [];
+
+    if (empty($settings['uri']) && is_object($item)) {
+      $settings['uri'] = ($entity = $item->entity) && empty($item->uri) ? $entity->getFileUri() : $item->uri;
     }
 
     // Extract field item attributes for the theme function, and unset them
     // from the $item so that the field template does not re-render them.
     $item_attributes = [];
-    if (isset($item->_attributes)) {
+    if ($item && isset($item->_attributes)) {
       $item_attributes = $item->_attributes;
       unset($item->_attributes);
     }
 
     // Responsive image integration.
-    $settings['responsive_image_style_id'] = '';
-    if (!empty($settings['resimage']) && !empty($settings['responsive_image_style'])) {
-      $responsive_image_style = $this->entityLoad($settings['responsive_image_style'], 'responsive_image_style');
-      $settings['lazy'] = '';
-      if (!empty($responsive_image_style)) {
-        $settings['responsive_image_style_id'] = $responsive_image_style->id();
-        if ($this->configLoad('responsive_image')) {
-          $item_attributes['data-srcset'] = TRUE;
-          $settings['lazy'] = 'responsive';
-        }
-        $element['#cache']['tags'] = $this->getResponsiveImageCacheTags($responsive_image_style);
-      }
+    if (!empty($settings['resimage'])) {
+      $settings['responsive_image_style_id'] = $settings['resimage']->id();
+      $item_attributes['data-b-lazy'] = $settings['one_pixel'];
+      $settings['lazy'] = 'responsive';
+      $element['#cache']['tags'] = $this->getResponsiveImageCacheTags($settings['resimage']);
     }
     else {
-      if (!isset($settings['_no_cache'])) {
+      if (empty($settings['_no_cache'])) {
         $file_tags = isset($settings['file_tags']) ? $settings['file_tags'] : [];
         $settings['cache_tags'] = empty($settings['cache_tags']) ? $file_tags : Cache::mergeTags($settings['cache_tags'], $file_tags);
 
@@ -334,7 +317,7 @@ class BlazyManager extends BlazyManagerBase {
       }
     }
 
-    if (!empty($settings['media_switch']) && $settings['media_switch'] != 'media') {
+    if (!empty($settings['media_switch'])) {
       if ($settings['media_switch'] == 'content' && !empty($settings['content_url'])) {
         $element['#url'] = $settings['content_url'];
       }
@@ -404,6 +387,13 @@ class BlazyManager extends BlazyManagerBase {
       $cache_tags = Cache::mergeTags($cache_tags, $image_style->getCacheTags());
     }
     return $cache_tags;
+  }
+
+  /**
+   * Backported few cross-module methods to minimize mismatched branch issues.
+   */
+  public function getImage(array $build = []) {
+    return $this->getBlazy($build);
   }
 
 }

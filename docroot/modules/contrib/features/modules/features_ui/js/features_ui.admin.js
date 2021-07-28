@@ -1,9 +1,9 @@
 /**
- * jQuery.fn.sortElements
- * --------------
+ * @file
+ * JQuery.fn.sortElements
+ * --------------.
  * @param Function comparator:
  *   Exactly the same behaviour as [1,2,3].sort(comparator)
- *
  * @param Function getSortable
  *   A function that should return the element that is
  *   to be sorted. The comparator will run on the
@@ -19,8 +19,8 @@
  *   of the <td> itself.
  *
  * Credit: http://james.padolsey.com/javascript/sorting-elements-with-jquery/
- *
  */
+
 jQuery.fn.sortElements = (function () {
 
   "use strict";
@@ -76,39 +76,37 @@ jQuery.fn.sortElements = (function () {
   Drupal.behaviors.features = {
     attach: function (context) {
 
-      // mark any conflicts with a class
+      // Mark any conflicts with a class.
       if ((typeof drupalSettings.features !== 'undefined') && (typeof drupalSettings.features.conflicts !== 'undefined')) {
-      //  for (var configType in drupalSettings.features.conflicts) {
+      // For (var configType in drupalSettings.features.conflicts) {.
           if (drupalSettings.features.conflicts) {
             var configConflicts = drupalSettings.features.conflicts;
-            $('#features-export-wrapper input[type=checkbox]', context).each(function () {
-              if (!$(this).hasClass('features-checkall')) {
-                var key = $(this).attr('name');
-                var matches = key.match(/^([^\[]+)(\[.+\])?\[(.+)\]\[(.+)\]$/);
-                var component = matches[1];
-                var item = matches[4];
-                if ((component in configConflicts) && (item in configConflicts[component])) {
-                  $(this).parent().addClass('component-conflict');
-                }
+            $('.js-features-export-wrapper input[type=checkbox]:not(.js-features-checkall)', context).each(function () {
+              var key = $(this).attr('name');
+              var matches = key.match(/^([^\[]+)(\[.+\])?\[(.+)\]\[(.+)\]$/);
+              var component = matches[1];
+              var item = matches[4];
+              if ((component in configConflicts) && (item in configConflicts[component])) {
+                $(this).parent().addClass('component-conflict');
               }
             });
           }
-        //}
+        // }
       }
 
       function _checkAll(value) {
         if (value) {
-          $('#features-export-wrapper .component-select input[type=checkbox]:visible', context).each(function () {
+          $('.js-components-select input[type=checkbox]:visible', context).each(function () {
             var move_id = $(this).attr('id');
             $(this).click();
-            $('#'+ move_id).prop('checked', true);
+            $('#' + move_id).prop('checked', true);
           });
         }
         else {
-          $('#features-export-wrapper .component-added input[type=checkbox]:visible', context).each(function () {
+          $('.js-components-added input[type=checkbox]:visible', context).each(function () {
             var move_id = $(this).attr('id');
             $(this).click();
-            $('#'+ move_id).prop('checked', false);
+            $('#' + move_id).prop('checked', false);
           });
         }
       }
@@ -118,16 +116,17 @@ jQuery.fn.sortElements = (function () {
 
         switch (section) {
           case 'select':
-            parent = $(item).closest('.features-export-list').siblings('.features-export-component');
-            $('.component-count', parent).text(function (index, text) {
+            parent = $(item).closest('.js-features-export-list').siblings('.js-features-export-component');
+            $('.js-component-count', parent).text(function (index, text) {
                 return +text + 1;
               }
             );
             break;
+
           case 'added':
           case 'detected':
-            parent = $(item).closest('.features-export-component');
-            $('.component-count', parent).text(function (index, text) {
+            parent = $(item).closest('.js-features-export-component');
+            $('.js-component-count', parent).text(function (index, text) {
               return text - 1;
             });
         }
@@ -136,13 +135,13 @@ jQuery.fn.sortElements = (function () {
       function moveCheckbox(item, section, value) {
         updateComponentCountInfo(item, section);
         var curParent = item;
-        if ($(item).hasClass('form-type-checkbox')) {
+        if ($(item).hasClass('js-form-type-checkbox')) {
           item = $(item).children('input[type=checkbox]');
         }
         else {
-          curParent = $(item).parents('.form-type-checkbox');
+          curParent = $(item).parents('.js-form-type-checkbox');
         }
-        var newParent = $(curParent).parents('.features-export-parent').find('.component-'+section+' .form-checkboxes');
+        var newParent = $(curParent).parents('.js-features-export-parent').find('.js-components-' + section + ' .form-checkboxes');
         $(curParent).detach();
         $(curParent).appendTo(newParent);
         var list = ['select', 'added', 'detected', 'included'];
@@ -152,17 +151,17 @@ jQuery.fn.sortElements = (function () {
             $(item).removeClass('component-' + list[i]);
           }
         }
-        $(curParent).addClass('component-'+section);
-        $(item).addClass('component-'+section);
+        $(curParent).addClass('component-' + section);
+        $(item).addClass('component-' + section);
         if (value) {
           $(item).attr('checked', 'checked');
         }
         else {
           $(item).removeAttr('checked');
         }
-        $(newParent).parents('.component-list').removeClass('features-export-empty');
+        $(newParent).parents('.js-features-export-list').removeClass('features-export-empty');
 
-        // re-sort new list of checkboxes based on labels
+        // re-sort new list of checkboxes based on labels.
         $(newParent).find('label').sortElements(
           function (a, b) {
             return $(a).text() > $(b).text() ? 1 : -1;
@@ -173,7 +172,7 @@ jQuery.fn.sortElements = (function () {
         );
       }
 
-      // provide timer for auto-refresh trigger
+      // Provide timer for auto-refresh trigger.
       var timeoutID = 0;
       var inTimeout = 0;
       function _triggerTimeout() {
@@ -182,28 +181,30 @@ jQuery.fn.sortElements = (function () {
       }
       function _resetTimeout() {
         inTimeout++;
-        // if timeout is already active, reset it
+        // If timeout is already active, reset it.
         if (timeoutID !== 0) {
           window.clearTimeout(timeoutID);
-          if (inTimeout > 0) { inTimeout--; }
+          if (inTimeout > 0) {
+            inTimeout--;
+          }
         }
         timeoutID = window.setTimeout(_triggerTimeout, 500);
       }
 
       function _updateDetected() {
-        if (!drupalSettings.features.autodetect) { return; }
-        // query the server for a list of components/items in the feature and update
-        // the auto-detected items
-        var items = [];  // will contain a list of selected items exported to feature
-        var components = {};  // contains object of component names that have checked items
-        $('#features-export-wrapper input[type=checkbox]:checked', context).each(function () {
-          if (!$(this).hasClass('features-checkall')) {
-            var key = $(this).attr('name');
-            var matches = key.match(/^([^\[]+)(\[.+\])?\[(.+)\]\[(.+)\]$/);
-            components[matches[1]] = matches[1];
-            if (!$(this).hasClass('component-detected')) {
-              items.push(key);
-            }
+        if (!drupalSettings.features.autodetect) {
+          return;
+        }
+        // Query the server for a list of components/items in the feature and update
+        // the auto-detected items.
+        var items = [];  // Will contain a list of selected items exported to feature.
+        var components = {};  // Contains object of component names that have checked items.
+        $('.js-features-export-wrapper input[type=checkbox]:not(.js-features-checkall):checked', context).each(function () {
+          var key = $(this).attr('name');
+          var matches = key.match(/^([^\[]+)(\[.+\])?\[(.+)\]\[(.+)\]$/);
+          components[matches[1]] = matches[1];
+          if (!$(this).hasClass('component-detected')) {
+            items.push(key);
           }
         });
         var featureName = $('#edit-machine-name').val();
@@ -216,44 +217,47 @@ jQuery.fn.sortElements = (function () {
         var required = drupalSettings.features.required;
         var postData = {'items': items, 'excluded': excluded, 'required': required};
         jQuery.post(url, postData, function (data) {
-          if (inTimeout > 0) { inTimeout--; }
-          // if we have triggered another timeout then don't update with old results
+          if (inTimeout > 0) {
+inTimeout--; }
+          // If we have triggered another timeout then don't update with old results.
           if (inTimeout === 0) {
-            // data is an object keyed by component listing the exports of the feature
+            // Data is an object keyed by component listing the exports of the feature.
             for (var component in data) {
               if (data[component]) {
                 var itemList = data[component];
-                $('#features-export-wrapper .component-' + component + ' input[type=checkbox]', context).each(function () {
+                $('.js-component--name-' + component + ' input[type=checkbox]', context).each(function () {
                   var key = $(this).attr('value');
-                  // first remove any auto-detected items that are no longer in component
+                  // First remove any auto-detected items that are no longer in component.
                   if ($(this).hasClass('component-detected')) {
                     if (!(key in itemList)) {
                       moveCheckbox(this, 'select', false);
                     }
                   }
-                  // next, add any new auto-detected items
+                  // Next, add any new auto-detected items.
                   else if ($(this).hasClass('component-select')) {
                     if (key in itemList) {
                       moveCheckbox(this, 'detected', itemList[key]);
                       $(this).prop('checked', true);
-                      $(this).parent().show(); // make sure it's not hidden from filter
+                      $(this).parent().show(); // Make sure it's not hidden from filter.
                     }
                   }
                 });
               }
             }
-            // loop over all selected components and check for any that have been completely removed
+            // Loop over all selected components and check for any that have been completely removed.
             for (var selectedComponent in components) {
               if ((data == null) || !(selectedComponent in data)) {
-                $('#features-export-wrapper .component-' + selectedComponent + ' input[type=checkbox].component-detected', context).each(moveCheckbox(this, 'select', false));
+                $('.js-component--name-' + selectedComponent + ' input[type=checkbox].component-detected', context).each(function () {
+                  moveCheckbox(this, 'select', false);
+                });
               }
             }
           }
         }, "json");
       }
 
-      // Handle component selection UI
-      $('#features-export-wrapper input[type=checkbox]', context).click(function () {
+      // Handle component selection UI.
+      $('.js-features-export-wrapper input[type=checkbox]', context).click(function () {
         _resetTimeout();
         if ($(this).hasClass('component-select')) {
           moveCheckbox(this, 'added', true);
@@ -271,8 +275,8 @@ jQuery.fn.sortElements = (function () {
         }
       });
 
-      // Handle select/unselect all
-      $('#features-filter .features-checkall.form-checkbox', context).click(function () {
+      // Handle select/unselect all.
+      $('.js-features-checkall', context).click(function () {
         if ($(this).prop('checked')) {
           _checkAll(true);
           $(this).next().html(Drupal.t('Deselect all'));
@@ -284,16 +288,15 @@ jQuery.fn.sortElements = (function () {
         _resetTimeout();
       });
 
-      // Handle filtering
-
-      // provide timer for auto-refresh trigger
+      // Handle filtering.
+      // Provide timer for auto-refresh trigger.
       var filterTimeoutID = 0;
       function _triggerFilterTimeout() {
         filterTimeoutID = 0;
         _updateFilter();
       }
       function _resetFilterTimeout() {
-        // if timeout is already active, reset it
+        // If timeout is already active, reset it.
         if (filterTimeoutID !== 0) {
           window.clearTimeout(filterTimeoutID);
           filterTimeoutID = null;
@@ -301,13 +304,13 @@ jQuery.fn.sortElements = (function () {
         filterTimeoutID = window.setTimeout(_triggerFilterTimeout, 200);
       }
       function _updateFilter() {
-        var filter = $('#features-filter input').val();
+        var filter = $('.js-features-filter-input').val();
         var regex = new RegExp(filter, 'i');
-        // collapse fieldsets
+        // Collapse fieldsets.
         var newState = {};
         var currentState = {};
-        $('#features-export-wrapper details.features-export-component', context).each(function () {
-          // expand parent fieldset
+        $('.js-features-export-component', context).each(function () {
+          // Expand parent fieldset.
           var section = $(this).attr('id');
           var details = $(this);
 
@@ -318,7 +321,7 @@ jQuery.fn.sortElements = (function () {
 
           details.find('.form-checkboxes label').each(function () {
             if (filter === '') {
-              // collapse the section, but make checkbox visible
+              // Collapse the section, but make checkbox visible.
               if (currentState[section]) {
                 details.prop('open', false);
                 currentState[section] = false;
@@ -337,29 +340,29 @@ jQuery.fn.sortElements = (function () {
         for (var section in newState) {
           if (currentState[section] !== newState[section]) {
             if (newState[section]) {
-              $('#'+section).prop('open', true);
+              $('#' + section).prop('open', true);
             }
             else {
-              $('#'+section).prop('open', false);
+              $('#' + section).prop('open', false);
             }
           }
         }
       }
-      $('#features-filter input', context).bind("input", function () {
+      $('.js-features-filter-input', context).bind("input", function () {
         _resetFilterTimeout();
       });
-      $('#features-filter .features-filter-clear', context).click(function () {
-        $('#features-filter input').val('');
+      $('.js-features-filter-clear', context).click(function () {
+        $('.js-features-filter-input').val('');
         _updateFilter();
       });
 
-      // show the filter bar
-      $('#features-filter', context).removeClass('element-invisible');
+      // Show the filter bar.
+      $('.js-features-filter', context).removeClass('visually-hidden');
 
-      // handle Package selection checkboxes in the Differences page
+      // Handle Package selection checkboxes in the Differences page.
       $('.features-diff-listing .features-diff-header input.form-checkbox', context).click(function () {
         var value = $(this).prop('checked');
-        $('.features-diff-listing .diff-'+$(this).prop('value')+' input.form-checkbox', context).each(function () {
+        $('.features-diff-listing .diff-' + $(this).prop('value') + ' input.form-checkbox', context).each(function () {
           $(this).prop('checked', value);
           if (value) {
             $(this).parents('tr').addClass('selected');
@@ -370,7 +373,7 @@ jQuery.fn.sortElements = (function () {
         });
       });
 
-      // handle special theming of headers in tableselect
+      // Handle special theming of headers in tableselect.
       $('td.features-export-header-row', context).each(function () {
         var row = $(this).parent('tr');
         row.addClass('features-export-header-row');
@@ -380,7 +383,7 @@ jQuery.fn.sortElements = (function () {
         }
       });
 
-      // handle clicking anywhere in row on Differences page
+      // Handle clicking anywhere in row on Differences page.
       $('.features-diff-listing tr td:nth-child(2)', context).click(function () {
         var checkbox = $(this).parent().find('td input:checkbox');
         checkbox.prop('checked', !checkbox.prop('checked')).triggerHandler('click');

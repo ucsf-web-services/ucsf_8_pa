@@ -3,7 +3,7 @@
 namespace Drupal\acquia_contenthub\QueueItem;
 
 /**
- * Class ImportQueueItem.
+ * Class for import queue items.
  *
  * @package Drupal\acquia_contenthub\QueueItem
  */

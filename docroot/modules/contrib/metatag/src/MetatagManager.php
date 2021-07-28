@@ -7,6 +7,8 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\views\ViewEntityInterface;
 
 /**
@@ -15,6 +17,8 @@ use Drupal\views\ViewEntityInterface;
  * @package Drupal\metatag
  */
 class MetatagManager implements MetatagManagerInterface {
+
+  use StringTranslationTrait;
 
   /**
    * The group plugin manager.
@@ -52,6 +56,13 @@ class MetatagManager implements MetatagManagerInterface {
   protected $logger;
 
   /**
+   * Caches processed strings, keyed by tag name.
+   *
+   * @var array
+   */
+  protected $processedTokenCache = [];
+
+  /**
    * Constructor for MetatagManager.
    *
    * @param \Drupal\metatag\MetatagGroupPluginManager $groupPluginManager
@@ -66,10 +77,11 @@ class MetatagManager implements MetatagManagerInterface {
    *   The EntityTypeManagerInterface object.
    */
   public function __construct(MetatagGroupPluginManager $groupPluginManager,
-      MetatagTagPluginManager $tagPluginManager,
-      MetatagToken $token,
-      LoggerChannelFactoryInterface $channelFactory,
-      EntityTypeManagerInterface $entityTypeManager) {
+    MetatagTagPluginManager $tagPluginManager,
+    MetatagToken $token,
+    LoggerChannelFactoryInterface $channelFactory,
+    EntityTypeManagerInterface $entityTypeManager
+  ) {
     $this->groupPluginManager = $groupPluginManager;
     $this->tagPluginManager = $tagPluginManager;
     $this->tokenService = $token;
@@ -125,17 +137,19 @@ class MetatagManager implements MetatagManagerInterface {
   public function defaultTagsFromEntity(ContentEntityInterface $entity) {
     /** @var \Drupal\metatag\Entity\MetatagDefaults $metatags */
     $metatags = $this->metatagDefaults->load('global');
-    if (!$metatags) {
-      return NULL;
+    if (!$metatags || !$metatags->status()) {
+      return [];
     }
     // Add/overwrite with tags set on the entity type.
+    /** @var \Drupal\metatag\Entity\MetatagDefaults $entity_type_tags */
     $entity_type_tags = $this->metatagDefaults->load($entity->getEntityTypeId());
-    if (!is_null($entity_type_tags)) {
+    if (!is_null($entity_type_tags) && $entity_type_tags->status()) {
       $metatags->overwriteTags($entity_type_tags->get('tags'));
     }
     // Add/overwrite with tags set on the entity bundle.
+    /** @var \Drupal\metatag\Entity\MetatagDefaults $bundle_metatags */
     $bundle_metatags = $this->metatagDefaults->load($entity->getEntityTypeId() . '__' . $entity->bundle());
-    if (!is_null($bundle_metatags)) {
+    if (!is_null($bundle_metatags) && $bundle_metatags->status()) {
       $metatags->overwriteTags($bundle_metatags->get('tags'));
     }
     return $metatags->get('tags');
@@ -243,13 +257,19 @@ class MetatagManager implements MetatagManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function form(array $values, array $element, array $token_types = [], array $included_groups = NULL, array $included_tags = NULL) {
+  public function form(array $values, array $element, array $token_types = [], array $included_groups = NULL, array $included_tags = NULL, $verbose_help = FALSE) {
     // Add the outer fieldset.
     $element += [
       '#type' => 'details',
     ];
 
-    $element += $this->tokenService->tokenBrowser($token_types);
+    // Add a title to the form.
+    $element['preamble'] = [
+      '#markup' => '<p><strong>' . $this->t('Configure the meta tags below.') . '</strong></p>',
+      '#weight' => -11,
+    ];
+
+    $element += $this->tokenService->tokenBrowser($token_types, $verbose_help);
 
     $groups_and_tags = $this->sortedGroupsWithTags();
 
@@ -393,17 +413,18 @@ class MetatagManager implements MetatagManagerInterface {
   /**
    * Returns global meta tags.
    *
-   * @return array
-   *   The global meta tags.
+   * @return \Drupal\metatag\Entity\MetatagDefaults|null
+   *   The global meta tags or NULL.
    */
   public function getGlobalMetatags() {
-    return $this->metatagDefaults->load('global');
+    $metatags = $this->metatagDefaults->load('global');
+    return (!empty($metatags) && $metatags->status()) ? $metatags : NULL;
   }
 
   /**
    * Returns special meta tags.
    *
-   * @return array
+   * @return \Drupal\metatag\Entity\MetatagDefaults|null
    *   The defaults for this page, if it's a special page.
    */
   public function getSpecialMetatags() {
@@ -419,6 +440,11 @@ class MetatagManager implements MetatagManagerInterface {
       $metatags = $this->metatagDefaults->load('404');
     }
 
+    if ($metatags && !$metatags->status()) {
+      // Do not return disabled special metatags.
+      return NULL;
+    }
+
     return $metatags;
   }
 
@@ -432,16 +458,18 @@ class MetatagManager implements MetatagManagerInterface {
    *   The appropriate default meta tags.
    */
   public function getEntityDefaultMetatags(ContentEntityInterface $entity) {
+    /** @var \Drupal\metatag\Entity\MetatagDefaults $entity_metatags */
     $entity_metatags = $this->metatagDefaults->load($entity->getEntityTypeId());
     $metatags = [];
-    if ($entity_metatags != NULL) {
+    if ($entity_metatags != NULL && $entity_metatags->status()) {
       // Merge with global defaults.
       $metatags = array_merge($metatags, $entity_metatags->get('tags'));
     }
 
     // Finally, check if we should apply bundle overrides.
+    /** @var \Drupal\metatag\Entity\MetatagDefaults $bundle_metatags */
     $bundle_metatags = $this->metatagDefaults->load($entity->getEntityTypeId() . '__' . $entity->bundle());
-    if ($bundle_metatags != NULL) {
+    if ($bundle_metatags != NULL && $bundle_metatags->status()) {
       // Merge with existing defaults.
       $metatags = array_merge($metatags, $bundle_metatags->get('tags'));
     }
@@ -483,59 +511,70 @@ class MetatagManager implements MetatagManagerInterface {
    *   The array of tags as plugin_id => value.
    * @param object $entity
    *   Optional entity object to use for token replacements.
+   * @param \Drupal\Core\Render\BubbleableMetadata|null $cache
+   *   (optional) Cacheability metadata.
    *
    * @return array
    *   Render array with tag elements.
    */
-  public function generateRawElements(array $tags, $entity = NULL) {
+  public function generateRawElements(array $tags, $entity = NULL, BubbleableMetadata $cache = NULL) {
     // Ignore the update.php path.
     $request = \Drupal::request();
     if ($request->getBaseUrl() == '/update.php') {
       return [];
     }
 
+    // Prepare any tokens that might exist.
+    $token_replacements = [];
+    if ($entity) {
+      // @todo This needs a better way of discovering the context.
+      if ($entity instanceof ViewEntityInterface) {
+        // Views tokens require the ViewExecutable, not the config entity.
+        // @todo Can we move this into metatag_views somehow?
+        $token_replacements = ['view' => $entity->getExecutable()];
+      }
+      elseif ($entity instanceof ContentEntityInterface) {
+        $token_replacements = [$entity->getEntityTypeId() => $entity];
+      }
+    }
+
+    // Ge the current language code.
+    $langcode = \Drupal::languageManager()
+      ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
+      ->getId();
+
     $rawTags = [];
 
     $metatag_tags = $this->tagPluginManager->getDefinitions();
 
-    // Order the elements by weight first, as some systems like Facebook care.
-    uksort($tags, function ($tag_name_a, $tag_name_b) use ($metatag_tags) {
-      $weight_a = isset($metatag_tags[$tag_name_a]['weight']) ? $metatag_tags[$tag_name_a]['weight'] : 0;
-      $weight_b = isset($metatag_tags[$tag_name_b]['weight']) ? $metatag_tags[$tag_name_b]['weight'] : 0;
+    // Order metatags based on the group and weight.
+    $group = array_column($metatag_tags, 'group');
+    $weight = array_column($metatag_tags, 'weight');
+    array_multisort($group, SORT_ASC, $weight, SORT_ASC, $metatag_tags);
 
-      return ($weight_a < $weight_b) ? -1 : 1;
-    });
+    $ordered_tags = [];
+    foreach ($metatag_tags as $id => $metatag) {
+      if (isset($tags[$id])) {
+        $ordered_tags[$id] = $tags[$id];
+      }
+    }
 
     // Each element of the $values array is a tag with the tag plugin name as
     // the key.
-    foreach ($tags as $tag_name => $value) {
+    foreach ($ordered_tags as $tag_name => $value) {
       // Check to ensure there is a matching plugin.
       if (isset($metatag_tags[$tag_name])) {
         // Get an instance of the plugin.
         $tag = $this->tagPluginManager->createInstance($tag_name);
-
-        // Render any tokens in the value.
-        $token_replacements = [];
-        if ($entity) {
-          // @todo This needs a better way of discovering the context.
-          if ($entity instanceof ViewEntityInterface) {
-            // Views tokens require the ViewExecutable, not the config entity.
-            // @todo Can we move this into metatag_views somehow?
-            $token_replacements = ['view' => $entity->getExecutable()];
-          }
-          elseif ($entity instanceof ContentEntityInterface) {
-            $token_replacements = [$entity->getEntityTypeId() => $entity];
-          }
-        }
 
         // Set the value as sometimes the data needs massaging, such as when
         // field defaults are used for the Robots field, which come as an array
         // that needs to be filtered and converted to a string.
         // @see Robots::setValue()
         $tag->setValue($value);
-        $langcode = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
 
-        $processed_value = PlainTextOutput::renderFromHtml(htmlspecialchars_decode($this->tokenService->replace($tag->value(), $token_replacements, ['langcode' => $langcode])));
+        // Obtain the processed value.
+        $processed_value = htmlspecialchars_decode($this->tokenService->replace($tag->value(), $token_replacements, ['langcode' => $langcode], $cache));
 
         // Now store the value with processed tokens back into the plugin.
         $tag->setValue($processed_value);
@@ -578,6 +617,69 @@ class MetatagManager implements MetatagManagerInterface {
     }
 
     return $rawTags;
+  }
+
+  /**
+   * Generate the actual meta tag values for use as tokens.
+   *
+   * @param array $tags
+   *   The array of tags as plugin_id => value.
+   * @param object $entity
+   *   Optional entity object to use for token replacements.
+   *
+   * @return array
+   *   Array of MetatagTag plugin instances.
+   */
+  public function generateTokenValues(array $tags, $entity = NULL) {
+    // Ignore the update.php path.
+    $request = \Drupal::request();
+    if ($request->getBaseUrl() == '/update.php') {
+      return [];
+    }
+
+    $entity_identifier = '_none';
+    if ($entity) {
+      $entity_identifier = $entity->getEntityTypeId() . ':' . ($entity->uuid() ?: $entity->id());
+    }
+
+    if (!isset($this->processedTokenCache[$entity_identifier])) {
+      $metatag_tags = $this->tagPluginManager->getDefinitions();
+
+      // Each element of the $values array is a tag with the tag plugin name as
+      // the key.
+      foreach ($tags as $tag_name => $value) {
+        // Check to ensure there is a matching plugin.
+        if (isset($metatag_tags[$tag_name])) {
+          // Get an instance of the plugin.
+          $tag = $this->tagPluginManager->createInstance($tag_name);
+
+          // Render any tokens in the value.
+          $token_replacements = [];
+          if ($entity) {
+            // @todo This needs a better way of discovering the context.
+            if ($entity instanceof ViewEntityInterface) {
+              // Views tokens require the ViewExecutable, not the config entity.
+              // @todo Can we move this into metatag_views somehow?
+              $token_replacements = ['view' => $entity->getExecutable()];
+            }
+            elseif ($entity instanceof ContentEntityInterface) {
+              $token_replacements = [$entity->getEntityTypeId() => $entity];
+            }
+          }
+
+          // Set the value as sometimes the data needs massaging, such as when
+          // field defaults are used for the Robots field, which come as an
+          // array that needs to be filtered and converted to a string.
+          // @see Robots::setValue()
+          $tag->setValue($value);
+          $langcode = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+          $value = PlainTextOutput::renderFromHtml(htmlspecialchars_decode($this->tokenService->replace($value, $token_replacements, ['langcode' => $langcode])));
+          $this->processedTokenCache[$entity_identifier][$tag_name] = $tag->multiple() ? explode(',', $value) : $value;
+        }
+      }
+    }
+
+    return $this->processedTokenCache[$entity_identifier];
   }
 
   /**

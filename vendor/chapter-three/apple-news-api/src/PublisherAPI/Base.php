@@ -287,8 +287,6 @@ abstract class Base {
     $trace = $debug_backtrace[0];
     trigger_error($message . ' in ' . $trace['file'] . ' on line ' .
       $trace['line'], $message_type);
-    \Drupal::logger('Applenews')->notice($message . ' in ' . $trace['file'] . ' on line ' .
-      $trace['line'], $trace);
   }
 
 }

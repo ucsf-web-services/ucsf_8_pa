@@ -3,7 +3,7 @@
 namespace Drupal\acquia_contenthub\QueueItem;
 
 /**
- * Class ContentHubQueueItemBase.
+ * Base class for the Content Hub Queue Items.
  *
  * @package Drupal\acquia_contenthub\QueueItem
  */

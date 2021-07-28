@@ -4,8 +4,18 @@ namespace Drupal\acquia_contenthub\Middleware;
 
 use Acquia\ContentHubClient\Middleware\MiddlewareHmacInterface;
 
-class MiddlewareCollector implements MiddlewareCollectorInterface{
+/**
+ * Collector for the HMAC Middleware.
+ *
+ * @package Drupal\acquia_contenthub\Middleware
+ */
+class MiddlewareCollector implements MiddlewareCollectorInterface {
 
+  /**
+   * Middlewares for HMAC.
+   *
+   * @var middlewares
+   */
   protected $middlewares;
 
   /**
@@ -21,4 +31,5 @@ class MiddlewareCollector implements MiddlewareCollectorInterface{
   public function getMiddlewares() {
     return $this->middlewares;
   }
+
 }

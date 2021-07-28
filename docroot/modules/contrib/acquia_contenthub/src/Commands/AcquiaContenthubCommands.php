@@ -1,13 +1,14 @@
 <?php
 
+// @codingStandardsIgnoreFile
+
 namespace Drupal\acquia_contenthub\Commands;
 
-use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 use Drupal\acquia_contenthub\ContentHubEntitiesTracking;
-use Drush\Commands\DrushCommands;
 use Drupal\Component\Uuid\Uuid;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Url;
+use Drush\Commands\DrushCommands;
 use Drush\Log\LogLevel;
 
 /**
@@ -465,117 +466,6 @@ class AcquiaContenthubCommands extends DrushCommands {
   }
 
   /**
-   * View Historic entity logs from Content Hub.
-   *
-   * @param $api
-   *   API Key
-   * @param $secret
-   *   Secret Key
-   * @param array $options
-   *
-   * @throws \Exception
-   *
-   * @internal param array $request_options An associative array of options
-   *   whose values come from cli, aliases, config, etc.
-   *
-   * @option query
-   *   The Elastic Search Query to search for logs.
-   * @option size
-   *   The number of log entries to be listed.
-   * @option from
-   *   The offset to start listing the log entries (Useful for pagination).
-   *
-   * @command acquia:contenthub-logs
-   * @field-labels
-   *   timestamp: Timestamp
-   *   type: Type
-   *   client: Client ID
-   *   entity_uuid: Entity UUID
-   *   status: Status
-   *   request_id: Request ID
-   *   id: ID
-   *   message: Message
-   * @aliases ach-logs,acquia-contenthub-logs
-   *
-   * @return \Consolidation\OutputFormatters\StructuredData\RowsOfFields
-   */
-  public function contenthubLogs($api, $secret, array $options = ['query' => NULL, 'size' => NULL, 'from' => NULL]) {
-    /** @var \Drupal\acquia_contenthub\Client\ClientManager $client_manager */
-    $client_manager = \Drupal::service('acquia_contenthub.client_manager');
-
-    // If API/Secret Keys have been given, reset the connection to use those
-    // keys instead of the ones set in the configuration.
-    if (!empty($api) && !empty($secret)) {
-      $client_manager->resetConnection([
-        'api' => $api,
-        'secret' => $secret,
-      ]);
-    }
-
-    $request_options = [];
-    // Obtaining the limit.
-    $size = $options["size"];
-    if (isset($size)) {
-      $size = (int) $size;
-      if ($size < 1 || $size > 1000) {
-        throw new \Exception(dt("The size has to be an integer from 1 to 1000."));
-      }
-      else {
-        $request_options['size'] = $size;
-      }
-    }
-
-    // Obtaining the offset.
-    $from = $options["from"];
-    if (isset($from)) {
-      if (!is_numeric($from)) {
-        throw new \Exception(dt("The start offset has to be numeric starting from 0."));
-      }
-      else {
-        $request_options['from'] = $from;
-      }
-    }
-
-    // Obtaining the query.
-    $query = $options["query"];
-    $query = !empty($query) ? $query : '';
-
-    // Execute the 'history' command.
-    if ($client_manager->isConnected()) {
-      $logs = $client_manager->createRequest('logs', [$query, $request_options]);
-    }
-    else {
-      throw new \Exception(dt('Error trying to connect to the Content Hub. Make sure this site is registered to Content hub.'));
-    }
-    if ($logs) {
-      $rows = [];
-      if (isset($logs['hits']['hits'])) {
-        foreach ($logs['hits']['hits'] as $log) {
-          $rows[] = [
-            'timestamp' => $log['_source']['timestamp'],
-            'type' => strtoupper($log['_source']['type']),
-            'client' => $log['_source']['client'],
-            'entity_uuid' => $log['_source']['entity'],
-            'status' => strtoupper($log['_source']['status']),
-            'request_id' => $log['_source']['request_id'],
-            'id' => $log['_source']['id'],
-            'message' => $log['_source']['message'],
-          ];
-        }
-      }
-
-      // Sort results DESC by 'timestamp' before presenting.
-      usort($rows, function ($a, $b) {
-        return strcmp($b["timestamp"], $a["timestamp"]);
-      });
-      return new RowsOfFields($rows);
-    }
-    else {
-      throw new \Exception(dt("Error trying to print the entity logs."));
-    }
-  }
-
-  /**
    * Shows Elastic Search field mappings from Content Hub.
    *
    * @command acquia:contenthub-mapping
@@ -670,7 +560,7 @@ class AcquiaContenthubCommands extends DrushCommands {
    * @option client_name
    *   The client name for this site.
    */
-  public function contenthubConnectSite(array $options = ['hostname' => null, 'api_key' => null, 'secret' => null, 'client_name' => null]) {
+  public function contenthubConnectSite(array $options = ['hostname' => NULL, 'api_key' => NULL, 'secret' => NULL, 'client_name' => NULL]) {
     $config_factory = \Drupal::configFactory();
     $uuid_service = \Drupal::service('uuid');
 

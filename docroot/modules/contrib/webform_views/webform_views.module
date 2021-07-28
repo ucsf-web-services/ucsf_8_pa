@@ -49,6 +49,12 @@ function webform_views_webform_delete(\Drupal\webform\Entity\Webform $entity) {
  */
 function webform_views_webform_element_info_alter(array &$elements) {
   foreach ($elements as $k => $v) {
+    // If the webform element provides its own views handler, let's respect
+    // that.
+    if (isset($elements[$k]['webform_views_handler'])) {
+      continue;
+    }
+
     $views_handler = FALSE;
 
     // All file-based webform elements have special views handler by default.
@@ -67,22 +73,17 @@ function webform_views_webform_element_info_alter(array &$elements) {
     elseif (is_subclass_of($v['class'], \Drupal\webform\Plugin\WebformElement\WebformComputedBase::class)) {
       $views_handler = \Drupal\webform_views\WebformElementViews\WebformComputed::class;
     }
+    elseif (is_subclass_of($v['class'], \Drupal\webform\Plugin\WebformElement\OptionsBase::class)) {
+      $views_handler = \Drupal\webform_views\WebformElementViews\WebformSelectViews::class;
+    }
 
     switch ($k) {
-      case 'select':
-        $views_handler = \Drupal\webform_views\WebformElementViews\WebformSelectViews::class;
-        break;
-
       case 'checkbox':
         $views_handler = \Drupal\webform_views\WebformElementViews\WebformCheckboxViews::class;
         break;
 
       case 'checkboxes':
         $views_handler = \Drupal\webform_views\WebformElementViews\WebformCheckboxesViews::class;
-        break;
-
-      case 'radios':
-        $views_handler = \Drupal\webform_views\WebformElementViews\WebformRadiosViews::class;
         break;
 
       case 'date':

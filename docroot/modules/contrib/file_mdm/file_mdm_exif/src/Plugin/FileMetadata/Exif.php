@@ -332,7 +332,18 @@ class Exif extends FileMetadataPluginBase {
           unset($ifd[$tag]);
         }
         else {
-          $c->setValue($input_entry->getValue());
+          if ($this->getFile() instanceof PelJpeg) {
+            $c->setValue($input_entry->getValue());
+          }
+          else {
+            $v = $input_entry->getValue();
+            if (is_array($v)) {
+              $c->setValueArray($v);
+            }
+            else {
+              $c->setValue($v);
+            }
+          }
         }
       }
       else {
@@ -377,7 +388,12 @@ class Exif extends FileMetadataPluginBase {
       return TRUE;
     }
     elseif (isset($this->metadata[$ifd_tag['ifd']][$ifd_tag['tag']])) {
-      $this->metadata[$ifd_tag['ifd']][$ifd_tag['tag']]->setValue($value);
+      if (is_array($value)) {
+        $this->metadata[$ifd_tag['ifd']][$ifd_tag['tag']]->setValueArray($value);
+      }
+      else {
+        $this->metadata[$ifd_tag['ifd']][$ifd_tag['tag']]->setValue($value);
+      }
       return TRUE;
     }
     return FALSE;

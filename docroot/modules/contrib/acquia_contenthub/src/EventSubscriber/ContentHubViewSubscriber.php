@@ -4,13 +4,13 @@ namespace Drupal\acquia_contenthub\EventSubscriber;
 
 use Drupal\acquia_contenthub\Session\ContentHubUserSession;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountSwitcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 
 /**
  * View subscriber rendering main content render arrays into responses.

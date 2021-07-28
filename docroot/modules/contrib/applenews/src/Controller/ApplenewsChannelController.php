@@ -9,9 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * Class ApplenewsChannelController.
- *
- * @package Drupal\applenews\Controller
+ * Refresh Apple News channel information.
  */
 class ApplenewsChannelController extends ControllerBase {
 
@@ -59,7 +57,7 @@ class ApplenewsChannelController extends ControllerBase {
       $this->messenger()->addError($this->t('Error while trying to refreshed the %label channel details.', ['%label' => $applenews_channel->label()]));
     }
 
-    return new RedirectResponse($applenews_channel->urlInfo('collection')->toString());
+    return new RedirectResponse($applenews_channel->toUrl('collection')->toString());
   }
 
 }

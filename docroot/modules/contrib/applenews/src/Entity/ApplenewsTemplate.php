@@ -30,10 +30,21 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *    "add-form" = "/admin/config/services/applenews/template/add",
  *    "edit-form" = "/admin/config/services/applenews/template/{applenews_template}",
  *    "delete-form" = "/admin/config/services/applenews/template/{applenews_template}/delete"
+ *   },
+ *   config_export = {
+ *     "id",
+ *     "label",
+ *     "node_type",
+ *     "columns",
+ *     "width",
+ *     "margin",
+ *     "gutter",
+ *     "components",
  *  }
  * )
  */
 class ApplenewsTemplate extends ConfigEntityBase implements ApplenewsTemplateInterface {
+
   /**
    * The Applenews Template ID.
    *
@@ -49,6 +60,41 @@ class ApplenewsTemplate extends ConfigEntityBase implements ApplenewsTemplateInt
   public $label;
 
   /**
+   * The Applenews Template node type.
+   *
+   * @var string
+   */
+  public $node_type;
+
+  /**
+   * The Applenews Template layout columns.
+   *
+   * @var string
+   */
+  public $columns;
+
+  /**
+   * The Applenews Template layout width.
+   *
+   * @var string
+   */
+  public $width;
+
+  /**
+   * The Applenews Template layout gutter.
+   *
+   * @var string
+   */
+  public $gutter;
+
+  /**
+   * The Applenews Template layout margin.
+   *
+   * @var string
+   */
+  public $margin;
+
+  /**
    * Components.
    *
    * @var array
@@ -57,13 +103,6 @@ class ApplenewsTemplate extends ConfigEntityBase implements ApplenewsTemplateInt
    * @todo make this a list of value objects
    */
   protected $components = [];
-
-  /**
-   * The Applenews Template node type.
-   *
-   * @var string
-   */
-  public $node_type;
 
   /**
    * {@inheritdoc}
@@ -128,9 +167,7 @@ class ApplenewsTemplate extends ConfigEntityBase implements ApplenewsTemplateInt
       if ($id == $component_id) {
         return $component;
       }
-      if (!empty($component['component_data']['components']) &&
-        $found = $this->getNestedComponent($component['component_data']['components'], $id)
-      ) {
+      if ($found = $this->getNestedComponent($component['component_data']['components'], $id)) {
         return $found;
       }
     }

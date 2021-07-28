@@ -64,6 +64,10 @@ function image_effects_theme() {
     'image_effects_opacity_summary' => [
       'variables' => ['data' => NULL, 'effect' => []],
     ],
+    // Relative crop image effect - summary.
+    'image_effects_relative_crop_summary' => [
+      'variables' => ['data' => NULL, 'effect' => []],
+    ],
     // Resize percentage image effect - summary.
     'image_effects_resize_percentage_summary' => [
       'variables' => ['data' => NULL, 'effect' => []],
@@ -139,8 +143,8 @@ function image_effects_image_effects_text_overlay_text_alter(&$text, Configurabl
     $method_map = [
       'upper' => 'mb_strtoupper',
       'lower' => 'mb_strtolower',
-      'ucwords' => 'Unicode::ucwords',
-      'ucfirst' => 'Unicode::ucfirst',
+      'ucwords' => 'Drupal\Component\Utility\Unicode::ucwords',
+      'ucfirst' => 'Drupal\Component\Utility\Unicode::ucfirst',
     ];
     $text = $method_map[$effect_data['text']['case_format']]($text);
   }

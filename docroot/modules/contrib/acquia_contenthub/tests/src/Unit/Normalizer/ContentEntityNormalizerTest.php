@@ -110,7 +110,7 @@ class ContentEntityNormalizerTest extends UnitTestCase {
   /**
    * Entity type repository.
    *
-   * @var \Drupal\Core\Entity\EntityTypeRepositoryInterface|/PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Core\Entity\EntityTypeRepositoryInterface|PHPUnit_Framework_MockObject_MockObject
    */
   protected $entityTypeRepository;
 
@@ -370,8 +370,8 @@ class ContentEntityNormalizerTest extends UnitTestCase {
     $this->assertEquals($normalized_entity->getCreated(), date('c', 1458811508));
     // Check if there was a modified date set.
     // We assure that the date set will be the one when the CDF was modified
-    // and sent to Content Hub, not when the drupal entity was las modified.
-    $this->assertEquals($normalized_entity->getModified(), date('c'));
+    // and sent to Content Hub, not when the drupal entity was last modified.
+    $this->assertNotEquals($normalized_entity->getModified(), date('c', 1458811509));
     // Check if field_1 has the correct values.
     $this->assertEquals($normalized_entity->getAttribute('field_1')->getValues(), ['en' => ['test']]);
     // Field created should not be part of the normalizer.

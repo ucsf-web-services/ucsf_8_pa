@@ -5,13 +5,13 @@ namespace Drupal\acquia_contenthub\Controller;
 use Drupal\acquia_contenthub\EntityManager;
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Render\RenderContext;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\rest\RequestHandler;
 use Drupal\rest\RestResourceConfigInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
-use Drupal\Core\Render\RendererInterface;
 
 /**
  * Decorates the REST module's RequestHandler.
@@ -101,7 +101,7 @@ class ContentHubEntityRequestHandler extends RequestHandler {
   /**
    * {@inheritdoc}
    */
-  public function handle(RouteMatchInterface $route_match, Request $request, RestResourceConfigInterface $_rest_resource_config = null) {
+  public function handle(RouteMatchInterface $route_match, Request $request, RestResourceConfigInterface $_rest_resource_config = NULL) {
     // We only support one method, one format, and use one of the derivatives of
     // only one resource plugin. (We receive the exact plugin ID via the route
     // defaults).
@@ -121,14 +121,13 @@ class ContentHubEntityRequestHandler extends RequestHandler {
     $parameters = [];
     // Filter out all internal parameters starting with "_".
     foreach ($route_parameters as $key => $parameter) {
-      if ($key{0} !== '_') {
+      if ($key[0] !== '_') {
         $parameters[] = $parameter;
       }
     }
 
     // Invoke the operation on the resource plugin.
-    $unserialized = NULL;
-    $response = call_user_func_array([$resource, $method], array_merge($parameters, [$unserialized, $request]));
+    $response = call_user_func_array([$resource, $method], array_merge($parameters, [$request]));
 
     // Render response.
     $data = $response->getResponseData();

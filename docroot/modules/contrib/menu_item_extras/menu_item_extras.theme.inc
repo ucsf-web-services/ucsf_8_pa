@@ -6,6 +6,7 @@
  */
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Render\Element;
 
 /**
  * Prepares variables for menu link content templates.
@@ -25,10 +26,6 @@ function template_preprocess_menu_link_content(array &$variables) {
   unset($variables['elements']['#pre_render']);
   // Helpful $content variable for templates.
   $variables['content'] = $variables['elements'];
-  if (isset($variables['content']['children'])) {
-    $variables['content']['children']['#theme'] = 'menu_levels';
-    $variables['content']['children']['#menu_name'] = $menu_link_content->getMenuName();
-  }
 
   $variables['attributes']['class'][] = 'menu_link_content';
   $variables['attributes']['class'][] = Html::getClass('menu_link_content' . $menu_link_content->getMenuName());
@@ -41,4 +38,21 @@ function template_preprocess_menu_link_content(array &$variables) {
   }
 
   $variables['show_item_link'] = $show_item_link;
+}
+
+/**
+ * @param array $variables
+ */
+function template_preprocess_menu_levels(array &$variables) {
+  $variables += ['items' => []];
+
+  if (!empty($variables['element']['#items'])) {
+    $items = $variables['element']['#items'];
+    $variables['menu_name'] = $variables['element']['#menu_name'];
+    $variables['menu_level'] = $variables['element']['#menu_level'];
+
+    foreach (Element::children($items) as $key) {
+      $variables['items'][$key] = $items[$key];
+    }
+  }
 }

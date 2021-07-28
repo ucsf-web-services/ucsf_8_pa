@@ -46,7 +46,7 @@ class ConfirmClearMenuForm extends EntityConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->menuLinkContentHelper->clearMenuData($this->entity->id());
-    drupal_set_message($this->t('Extra data for %label was deleted.', [
+    $this->messenger()->addStatus($this->t('Extra data for %label was deleted.', [
       '%label' => $this->entity->label(),
     ]));
     $form_state->setRedirectUrl($this->getCancelUrl());

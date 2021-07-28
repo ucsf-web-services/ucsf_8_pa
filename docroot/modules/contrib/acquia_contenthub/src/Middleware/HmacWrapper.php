@@ -2,10 +2,15 @@
 
 namespace Drupal\acquia_contenthub\Middleware;
 
-use Acquia\ContentHubClient\Middleware\MiddlewareHmacInterface;
 use Acquia\ContentHubClient\Middleware\MiddlewareHmacBase;
+use Acquia\ContentHubClient\Middleware\MiddlewareHmacInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 
+/**
+ * Wrapper for HMAC.
+ *
+ * @package Drupal\acquia_contenthub\Middleware
+ */
 class HmacWrapper extends MiddlewareHmacBase implements MiddlewareHmacInterface {
 
   /**
@@ -15,6 +20,12 @@ class HmacWrapper extends MiddlewareHmacBase implements MiddlewareHmacInterface 
    */
   protected $config;
 
+  /**
+   * HmacWrapper constructor.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory.
+   */
   public function __construct(ConfigFactoryInterface $config_factory) {
 
     $configFactory = $config_factory;
@@ -31,11 +42,14 @@ class HmacWrapper extends MiddlewareHmacBase implements MiddlewareHmacInterface 
   }
 
   /**
+   * Gets the middleware.
+   *
    * @return mixed
+   *   The middleware.
    */
   public function getMiddleware() {
     // When HMAC V2 is supported, grab the configured version below.
-    // $version = $config->get('hmac_version');
+    // $version = $config->get('hmac_version');.
     $version = 'V1';
     $class = "\Acquia\ContentHubClient\Middleware\MiddlewareHmac" . $version;
     $middleware = new $class($this->apiKey, $this->secretKey, $version);

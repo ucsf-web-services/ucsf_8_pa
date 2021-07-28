@@ -15,7 +15,7 @@ class TextOverlayTest extends ImageEffectsTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     static::$modules = array_merge(static::$modules, [
       'file_mdm',
       'file_mdm_font',
@@ -135,7 +135,7 @@ class TextOverlayTest extends ImageEffectsTestBase {
         '#width' => $image->getWidth(),
         '#height' => $image->getHeight(),
       ];
-      $this->assertEquals('<img src="' . $derivative_url . '" width="' . $derivative_image->getWidth() . '" height="' . $derivative_image->getHeight() . '" alt="" class="image-style-image-effects-test" />', $this->getImageTag($variables));
+      $this->assertRegExp("/\<img src=\"" . preg_quote($derivative_url, '/') . "\" width=\"{$derivative_image->getWidth()}\" height=\"{$derivative_image->getHeight()}\" alt=\"\" .*class=\"image\-style\-image\-effects\-test\" \/\>/", $this->getImageTag($variables));
     }
   }
 
@@ -181,6 +181,21 @@ class TextOverlayTest extends ImageEffectsTestBase {
     $uuid = $this->addEffectToTestStyle($effect_config);
     $effect = $this->testImageStyle->getEffect($uuid);
     $this->assertEquals('THE QUICK…', $effect->getAlteredText($effect->getConfiguration()['data']['text_string']));
+
+    // Test converting to each word starting uppercase.
+    $this->removeEffectFromTestStyle($uuid);
+    $effect_config['data']['text][case_format'] = 'ucwords';
+    $effect_config['data']['text][maximum_chars'] = '';
+    $uuid = $this->addEffectToTestStyle($effect_config);
+    $effect = $this->testImageStyle->getEffect($uuid);
+    $this->assertEquals('The Quick Brown Fox Jumps Over The Lazy Dog', $effect->getAlteredText($effect->getConfiguration()['data']['text_string']));
+
+    // Test converting to starting uppercase.
+    $this->removeEffectFromTestStyle($uuid);
+    $effect_config['data']['text][case_format'] = 'ucfirst';
+    $uuid = $this->addEffectToTestStyle($effect_config);
+    $effect = $this->testImageStyle->getEffect($uuid);
+    $this->assertEquals('The quick brown fox jumps over the lazy dog', $effect->getAlteredText($effect->getConfiguration()['data']['text_string']));
   }
 
 }

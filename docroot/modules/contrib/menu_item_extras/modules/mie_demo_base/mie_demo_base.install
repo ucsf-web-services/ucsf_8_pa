@@ -148,7 +148,9 @@ function mie_demo_base_install() {
         'block' => $block->id(),
       ]
     );
-    drupal_set_message(t(
+    /** @var \Drupal\Core\Messenger\MessengerInterface $messenger */
+    $messenger = \Drupal::service('messenger');
+    $messenger->addStatus(t(
       'There is no <b>%region</b> region in the current theme. Please go to the %link to correctly set block placement configuration.',
       [
         '%link' => $link->toString(),

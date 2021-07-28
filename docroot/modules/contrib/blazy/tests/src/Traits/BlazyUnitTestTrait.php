@@ -3,7 +3,7 @@
 namespace Drupal\Tests\blazy\Traits;
 
 use Drupal\Core\Cache\Cache;
-use Drupal\blazy\Dejavu\BlazyDefault;
+use Drupal\blazy\BlazyDefault;
 
 /**
  * A Trait common for Blazy Unit tests.
@@ -316,7 +316,7 @@ trait BlazyUnitTestTrait {
    * Setup the unit images.
    */
   protected function setUpMockImage() {
-    $entity = $this->getMock('\Drupal\Core\Entity\ContentEntityInterface');
+    $entity = $this->createMock('\Drupal\Core\Entity\ContentEntityInterface');
     $entity->expects($this->any())
       ->method('label')
       ->willReturn($this->randomMachineName());
@@ -324,7 +324,7 @@ trait BlazyUnitTestTrait {
       ->method('getEntityTypeId')
       ->will($this->returnValue('node'));
 
-    $item = $this->getMock('\Drupal\Core\Field\FieldItemListInterface');
+    $item = $this->createMock('\Drupal\Core\Field\FieldItemListInterface');
     $item->expects($this->any())
       ->method('getEntity')
       ->willReturn($entity);
@@ -334,6 +334,19 @@ trait BlazyUnitTestTrait {
     $this->testItem = $item;
     $this->data['item'] = $item;
     $item->entity = $entity;
+  }
+
+}
+
+namespace Drupal\blazy;
+
+if (!function_exists('blazy_alterable_settings')) {
+
+  /**
+   * Dummy function.
+   */
+  function blazy_alterable_settings() {
+    // Empty block to satisfy coder.
   }
 
 }

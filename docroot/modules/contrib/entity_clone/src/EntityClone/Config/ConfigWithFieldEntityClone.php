@@ -20,16 +20,16 @@ class ConfigWithFieldEntityClone extends ConfigEntityCloneBase {
       $this->cloneFields($entity->id(), $cloned_entity->id(), $bundle_of);
     }
 
-    $view_displays = \Drupal::service('entity_display.repository')->getViewModes($bundle_of);
-    $view_displays = array_merge($view_displays, ['default' => 'default']);
-    if (!empty($view_displays)) {
-      $this->cloneDisplays('view', $entity->id(), $cloned_entity->id(), $view_displays, $bundle_of);
-    }
-
     $view_displays = \Drupal::service('entity_display.repository')->getFormModes($bundle_of);
     $view_displays = array_merge($view_displays, ['default' => 'default']);
     if (!empty($view_displays)) {
       $this->cloneDisplays('form', $entity->id(), $cloned_entity->id(), $view_displays, $bundle_of);
+    }
+
+    $view_displays = \Drupal::service('entity_display.repository')->getViewModes($bundle_of);
+    $view_displays = array_merge($view_displays, ['default' => 'default']);
+    if (!empty($view_displays)) {
+      $this->cloneDisplays('view', $entity->id(), $cloned_entity->id(), $view_displays, $bundle_of);
     }
 
     return $cloned_entity;

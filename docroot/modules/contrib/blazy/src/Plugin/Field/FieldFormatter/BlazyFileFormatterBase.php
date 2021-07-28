@@ -10,7 +10,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\field\FieldConfigInterface;
 use Drupal\file\Plugin\Field\FieldFormatter\FileFormatterBase;
 use Drupal\blazy\BlazyFormatterManager;
-use Drupal\blazy\Dejavu\BlazyDefault;
+use Drupal\blazy\BlazyDefault;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

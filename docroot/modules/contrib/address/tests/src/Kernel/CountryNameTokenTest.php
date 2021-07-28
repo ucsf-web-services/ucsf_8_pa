@@ -8,7 +8,7 @@ use Drupal\filter\Entity\FilterFormat;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
-use Drupal\Tests\taxonomy\Functional\TaxonomyTestTrait;
+use Drupal\Tests\taxonomy\Traits\TaxonomyTestTrait;
 use Drupal\Tests\token\Kernel\KernelTestBase;
 
 /**
@@ -50,6 +50,9 @@ class CountryNameTokenTest extends KernelTestBase {
   public function setUp() {
     parent::setUp();
 
+    if (\Drupal::entityTypeManager()->hasDefinition('path_alias')) {
+      $this->installEntitySchema('path_alias');
+    }
     $this->installEntitySchema('node');
     $this->installEntitySchema('taxonomy_term');
     $this->installEntitySchema('user');
@@ -185,7 +188,7 @@ class CountryNameTokenTest extends KernelTestBase {
    * Tests [entity:country_name] tokens.
    */
   public function testEntityCountryNameTokens() {
-    // Create a node with a value in its fields and test its country_name tokens.
+    // Create a node with address fields and test its country_name tokens.
     $entity = Node::create([
       'title' => 'Test node title',
       'type' => 'article',

@@ -22,6 +22,7 @@ abstract class BasicTestCaseBase extends BrowserTestBase {
   public static $modules = [
     'amp',
     'node',
+    'metatag',
     'schema_metatag',
     'token',
     'views',

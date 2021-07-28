@@ -13,7 +13,7 @@ class HtmlDiffConfig
     protected $specialCaseTags = array('strong', 'b', 'i', 'big', 'small', 'u', 'sub', 'sup', 'strike', 's', 'p');
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $specialCaseChars = array('.', ',', '(', ')', '\'');
 
@@ -81,6 +81,11 @@ class HtmlDiffConfig
     protected $cacheProvider;
 
     /**
+     * @var bool
+     */
+    protected $purifierEnabled = true;
+
+    /**
      * @var null|string
      */
     protected $purifierCacheLocation = null;
@@ -121,18 +126,12 @@ class HtmlDiffConfig
         return $this;
     }
 
-    /**
-     * @param array $chars
-     */
     public function setSpecialCaseChars(array $chars)
     {
         $this->specialCaseChars = $chars;
     }
 
-    /**
-     * @return array|null
-     */
-    public function getSpecialCaseChars()
+    public function getSpecialCaseChars() : array
     {
         return $this->specialCaseChars;
     }
@@ -466,6 +465,18 @@ class HtmlDiffConfig
     public function getCacheProvider()
     {
         return $this->cacheProvider;
+    }
+
+    public function isPurifierEnabled(): bool
+    {
+        return $this->purifierEnabled;
+    }
+
+    public function setPurifierEnabled(bool $purifierEnabled = true): self
+    {
+        $this->purifierEnabled = $purifierEnabled;
+
+        return $this;
     }
 
     /**

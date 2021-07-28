@@ -2,12 +2,12 @@
 
 namespace Drupal\simple_sitemap;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\ContentEntityTypeInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Database\Connection;
 use Drupal\Core\Url;
 
 /**
@@ -25,27 +25,25 @@ class EntityHelper {
   protected $entityTypeManager;
 
   /**
-   * The current active database's master connection.
-   *
-   * @var \Drupal\Core\Database\Connection
-   */
-  protected $db;
-
-  /**
    * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
    */
   protected $entityTypeBundleInfo;
 
   /**
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
    * EntityHelper constructor.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   * @param \Drupal\Core\Database\Connection $database
    * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, Connection $database, EntityTypeBundleInfoInterface $entity_type_bundle_info) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info, ConfigFactoryInterface $configFactory) {
     $this->entityTypeManager = $entity_type_manager;
-    $this->db = $database;
     $this->entityTypeBundleInfo = $entity_type_bundle_info;
+    $this->configFactory = $configFactory;
   }
 
   /**
@@ -112,6 +110,7 @@ class EntityHelper {
   /**
    * Determines if an entity type is supported or not.
    *
+   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
    * @return bool
    *   TRUE if entity type supported by Simple Sitemap, FALSE if not.
    */
@@ -163,12 +162,22 @@ class EntityHelper {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function getEntityFromUrlObject(Url $url_object) {
-    return $url_object->isRouted()
-    && !empty($route_parameters = $url_object->getRouteParameters())
-    && $this->entityTypeManager->getDefinition($entity_type_id = key($route_parameters), FALSE)
-      ? $this->entityTypeManager->getStorage($entity_type_id)
-        ->load($route_parameters[$entity_type_id])
-      : NULL;
+    if ($url_object->isRouted()) {
+
+      // Fix for the homepage, see
+      // https://www.drupal.org/project/simple_sitemap/issues/3194130.
+      if ($url_object->getRouteName() === '<front>' &&
+        !empty($uri = $this->configFactory->get('system.site')->get('page.front'))) {
+        $url_object = Url::fromUri('internal:' . $uri);
+      }
+
+      if (!empty($route_parameters = $url_object->getRouteParameters())
+        && $this->entityTypeManager->getDefinition($entity_type_id = key($route_parameters), FALSE)) {
+          return $this->entityTypeManager->getStorage($entity_type_id)->load($route_parameters[$entity_type_id]);
+      }
+    }
+
+    return NULL;
   }
 
   /**

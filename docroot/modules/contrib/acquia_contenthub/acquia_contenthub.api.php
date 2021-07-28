@@ -5,8 +5,8 @@
  * Hooks provided by the Acquia Content Hub module.
  */
 
-use Drupal\Core\Entity\ContentEntityInterface;
 use Acquia\ContentHubClient\Entity as ContentHubEntity;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 
 /**

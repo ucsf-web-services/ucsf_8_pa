@@ -179,12 +179,23 @@ class ServerForm extends EntityForm {
       $form['backend'] += $descriptions;
     }
     else {
-      $url = 'https://www.drupal.org/node/1254698';
+      $url = 'https://www.drupal.org/docs/8/modules/search-api/getting-started/server-backends-and-features';
       $args[':url'] = Url::fromUri($url)->toString();
       $error = $this->t('There are no backend plugins available for the Search API. Please install a <a href=":url">module that provides a backend plugin</a> to proceed.', $args);
       $this->messenger->addError($error);
       $form = [];
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function actions(array $form, FormStateInterface $form_state) {
+    if ($form === []) {
+      return [];
+    }
+
+    return parent::actions($form, $form_state);
   }
 
   /**
@@ -266,7 +277,7 @@ class ServerForm extends EntityForm {
       // be discarded.
       $input = &$form_state->getUserInput();
       $input['backend_config'] = [];
-      $new_backend = $this->backendPluginManager->createInstance($form_state->getValues()['backend']);
+      $new_backend = $this->backendPluginManager->createInstance($form_state->getValue('backend'));
       if ($new_backend instanceof PluginFormInterface) {
         $form_state->setRebuild();
       }

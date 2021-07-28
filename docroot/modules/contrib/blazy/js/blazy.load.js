@@ -15,7 +15,6 @@
   Drupal.blazy = Drupal.blazy || {
     init: null,
     windowWidth: 0,
-    done: false,
     globals: function () {
       var me = this;
       var settings = drupalSettings.blazy || {};
@@ -112,23 +111,16 @@
     // Initializes Blazy instance.
     me.init = new Blazy(opts);
 
-    // Reacts on resizing.
-    if (!me.done) {
+    // Reacts on resizing per 200ms, and the magic () also does it on page load.
+    _db.resize(function () {
+      me.windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+      if (loopRatio) {
+        _db.forEach(ratios, updateRatio, elm);
+      }
+
       me.init.revalidate();
-
-      _db.resize(function () {
-        me.windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-
-        if (loopRatio) {
-          _db.forEach(ratios, updateRatio, elm);
-        }
-
-        // Dispatch resizing event.
-        _db.trigger(elm, 'resizing', {windowWidth: me.windowWidth});
-      })();
-
-      me.done = true;
-    }
+    })();
 
     elm.className += ' blazy--on';
   }
@@ -141,7 +133,7 @@
   Drupal.behaviors.blazy = {
     attach: function (context) {
       var me = Drupal.blazy;
-      var el = context.querySelector('[data-blazy]');
+      var el = document.querySelector('[data-blazy]');
 
       // Runs basic Blazy if no [data-blazy] found, probably a single image.
       // Cannot use .contains(), as IE11 doesn't support method 'contains'.
@@ -151,7 +143,7 @@
       }
 
       // Runs Blazy with multi-serving images, and aspect ratio supports.
-      var blazies = context.querySelectorAll('.blazy:not(.blazy--on)');
+      var blazies = document.querySelectorAll('.blazy:not(.blazy--on)');
       _db.once(_db.forEach(blazies, doBlazy));
     }
   };

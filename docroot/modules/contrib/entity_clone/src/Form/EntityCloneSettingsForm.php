@@ -111,6 +111,13 @@ class EntityCloneSettingsForm extends ConfigFormBase implements ContainerInjecti
       ];
     }
 
+    $form['take_ownership'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Take ownership'),
+      '#description' => $this->t('Whether the "Take ownership" option should be checked by default on the entity clone form.'),
+      '#default_value' => $this->entityCloneSettingsManager->getTakeOwnershipSetting(),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -119,6 +126,7 @@ class EntityCloneSettingsForm extends ConfigFormBase implements ContainerInjecti
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->entityCloneSettingsManager->setFormSettings($form_state->getValue('form_settings'));
+    $this->entityCloneSettingsManager->setTakeOwnershipSettings($form_state->getValue('take_ownership'));
     parent::submitForm($form, $form_state);
   }
 

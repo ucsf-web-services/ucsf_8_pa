@@ -21,33 +21,17 @@ class WebformSubmissionWebformCategory extends StringFilter {
   protected $entityTypeManager;
 
   /**
-   * WebformSubmissionWebformCategory constructor.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-
-    $this->entityTypeManager = $entity_type_manager;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
+    $instance = parent::create(
+      $container,
       $configuration,
       $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager')
+      $plugin_definition
     );
+    $instance->setEntityTypeManager($container->get('entity_type.manager'));
+    return $instance;
   }
 
   /**
@@ -87,7 +71,16 @@ class WebformSubmissionWebformCategory extends StringFilter {
       $this->ensureMyTable();
       $this->query->addWhere($this->options['group'], "$this->tableAlias.$this->realField", $webform_ids, 'IN');
     }
+  }
 
+  /**
+   * Setter for entity type manager.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   Entity type manager service to inject.
+   */
+  public function setEntityTypeManager(EntityTypeManagerInterface $entity_type_manager) {
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**

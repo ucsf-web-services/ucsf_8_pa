@@ -124,7 +124,7 @@ function views_rss_rewrite_relative_paths(&$variables) {
         }
         // Value is a string, so just process it.
         else {
-          $pattern = '/(src|href)=(\'|")[^\/]' . preg_quote($base_path, '/') . '/';
+          $pattern = '/(data-src|srcset|src|href)=(\'|")' . preg_quote($base_path, '/') . '(?!\/)/';
           $replacement = '$1=$2' . $GLOBALS['base_url'] . '/';
           $variables['elements'][$delta]['value'] = preg_replace($pattern, $replacement, $element['value']);
         }

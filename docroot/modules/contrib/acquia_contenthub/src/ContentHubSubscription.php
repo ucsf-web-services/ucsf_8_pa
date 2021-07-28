@@ -2,13 +2,13 @@
 
 namespace Drupal\acquia_contenthub;
 
-use Drupal\Component\Render\FormattableMarkup;
 use Drupal\acquia_contenthub\Client\ClientManagerInterface;
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\State\StateInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Handles operations on the Acquia Content Hub Subscription.
@@ -331,7 +331,10 @@ class ContentHubSubscription {
   public function unregisterWebhook($webhook_url) {
     if ($settings = $this->clientManager->createRequest('getSettings')) {
       if ($webhook = $settings->getWebhook($webhook_url)) {
-        if ($response = $this->clientManager->createRequest('deleteWebhook', [$webhook['uuid'], $webhook['url']])) {
+        if ($response = $this->clientManager->createRequest(
+          'deleteWebhook',
+          [$webhook['uuid'], $webhook['url']]
+        )) {
           $success = json_decode($response->getBody(), TRUE);
           if (isset($success['success']) && $success['success'] == TRUE) {
             drupal_set_message(t('Webhooks have been <b>disabled</b>. This site will no longer receive updates from Content Hub.', [
@@ -367,7 +370,7 @@ class ContentHubSubscription {
     $this->config->delete();
 
     // Clear the cache for suggested client name after disconnecting the client.
-    // @TODO: Use dependency injection for accessing the cache.
+    // @todo Use dependency injection for accessing the cache.
     $cache = \Drupal::cache('acquia_contenthub');
     $cache->delete("suggested_client_name");
     return FALSE;

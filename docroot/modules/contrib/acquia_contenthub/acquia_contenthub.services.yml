@@ -5,7 +5,7 @@ services:
 
   acquia_contenthub.import_entity_manager:
     class: Drupal\acquia_contenthub\ImportEntityManager
-    arguments: ['@database', '@logger.factory', '@serializer', '@entity.repository', '@acquia_contenthub.client_manager', '@acquia_contenthub.acquia_contenthub_entities_tracking', '@diff.entity_comparison', '@acquia_contenthub.entity_manager', '@string_translation', '@queue']
+    arguments: ['@database', '@logger.factory', '@serializer', '@entity.repository', '@acquia_contenthub.client_manager', '@acquia_contenthub.acquia_contenthub_entities_tracking', '@diff.entity_comparison', '@acquia_contenthub.entity_manager', '@string_translation', '@queue', '@language_manager']
 
   acquia_contenthub.acquia_contenthub_cdf.import_entity:
     class: Drupal\acquia_contenthub\Controller\ContentHubEntityImportController
@@ -64,12 +64,12 @@ services:
     class: Drupal\acquia_contenthub\Normalizer\NormalizerWrapper
     arguments: ['@acquia_contenthub.normalizer.entity.acquia_contenthub_cdf']
     tags:
-    - { name: normalizer, priority: 10, format: acquia_contenthub_cdf }
+      - { name: normalizer, priority: 10, format: acquia_contenthub_cdf }
 
   serializer.encoder.acquia_contenthub_cdf.acquia_contenthub:
     class: Drupal\acquia_contenthub\Encoder\ContentHubCdfEncoder
     tags:
-    - { name: encoder, priority: 10, format: acquia_contenthub_cdf }
+      - { name: encoder, priority: 10, format: acquia_contenthub_cdf }
 
   acquia_contenthub.normalizer.content_entity_view_modes_extractor:
     class: Drupal\acquia_contenthub\Normalizer\ContentEntityViewModesExtractor
@@ -101,6 +101,12 @@ services:
   acquia_contenthub.page_display_variant_subscriber:
     class: Drupal\acquia_contenthub\EventSubscriber\ContentHubPageDisplayVariantSubscriber
     arguments: ['@current_route_match']
+    tags:
+      - { name: event_subscriber }
+
+  acquia_contenthub.page.theme_wrapper.view_subscriber:
+    class: Drupal\acquia_contenthub\EventSubscriber\View\RemovePageThemeWrapperSubscriber
+    arguments: ['@class_resolver', '@current_route_match', '%main_content_renderers%']
     tags:
       - { name: event_subscriber }
 

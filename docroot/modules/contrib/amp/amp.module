@@ -1,12 +1,15 @@
 <?php
 
+/**
+ * @file
+ * Provides functionality for handling AMP.
+ */
+
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Template\Attribute;
-use Drupal\file\Entity\File;
 use Drupal\node\NodeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -27,8 +30,8 @@ function amp_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
-* Implements hook_preprocess_html().
-*/
+ * Implements hook_preprocess_html().
+ */
 function amp_preprocess_html(&$variables) {
   $amp_context = \Drupal::service('router.amp_context');
   if ($amp_context->isAmpRoute()) {
@@ -46,7 +49,7 @@ function amp_preprocess_html(&$variables) {
     }
 
     // Remove RDF and Metatag properties incompatible with AMP specification.
-    $attribute_list= [
+    $attribute_list = [
       'prefix',
       'xmlns:dc',
       'xmlns:og',
@@ -56,10 +59,10 @@ function amp_preprocess_html(&$variables) {
       'xmlns:profile',
       'xmlns:video',
       'itemtype',
-      'itemscope'
+      'itemscope',
     ];
     if (isset($variables['html_attributes'])) {
-      foreach($attribute_list as $attribute_item) {
+      foreach ($attribute_list as $attribute_item) {
         if (isset($variables['html_attributes'][$attribute_item])) {
           unset($variables['html_attributes'][$attribute_item]);
         }
@@ -80,10 +83,10 @@ function amp_page_attachments(array &$attachments) {
   if ($ampService->isDevPage()) {
     $tag = [
       '#tag' => 'base',
-      '#attributes' =>  [
+      '#attributes' => [
         'name' => 'invalid-do-not-cache',
         'content' => 'invalid-do-not-cache',
-      ]
+      ],
     ];
     $attachments['#attached']['html_head'][] = [$tag, 'no-cache'];
 
@@ -93,7 +96,7 @@ function amp_page_attachments(array &$attachments) {
 /**
  * Implements hook_amp_rules_alter().
  *
- * @see Drupal\amp\Service\DrupalParsedValidatorRules::updatedRules().
+ * @see Drupal\amp\Service\DrupalParsedValidatorRules::updatedRules()
  */
 function amp_amp_rules_alter(&$rules) {
   foreach ($rules->tags as $delta => $tag) {
@@ -122,7 +125,12 @@ function amp_entity_view_mode_alter(&$view_mode, EntityInterface $entity, $conte
  */
 function amp_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
   // Check if entity is a non-new node in either full or AMP view mode.
-  /** @var NodeInterface $entity */
+  $canonical_links = ['canonical', 'canonical_url'];
+  $protected_links = $canonical_links + ['shortlink'];
+
+  /**
+   * @var NodeInterface $entity
+   */
   if ($entity instanceof NodeInterface && !$entity->isNew() && in_array($build['#view_mode'], ['full', 'amp'])) {
     // Get a list of available view modes for the current entity.
     $view_modes = \Drupal::service('entity_display.repository')->getViewModeOptionsByBundle('node', $entity->bundle());
@@ -132,23 +140,14 @@ function amp_entity_view_alter(array &$build, EntityInterface $entity, EntityVie
       $absolute_canonical = $entity->toUrl('canonical', ['absolute' => TRUE])->toString();
 
       if (!empty($build['#attached']['html_head_link'])) {
-        $canonical_href = '';
         foreach ($build['#attached']['html_head_link'] as $key => $config) {
           if ($build['#view_mode'] === 'amp') {
-            if ($config[0]['rel'] != 'canonical' && $config[0]['rel'] != 'shortlink') {
+            if (!in_array($config[0]['rel'], $protected_links)) {
               unset($build['#attached']['html_head_link'][$key]);
-            }
-            elseif ($config[0]['rel'] == 'canonical') {
-              // Replace the canonical link with an absolute version, this is
-              // required for AMP pages and recommended for others.
-              // @todo Remove this when https://www.drupal.org/node/2738373 is
-              //   fixed.
-              $build['#attached']['html_head_link'][$key][0]['href'] = $absolute_canonical;
-              $build['#cache']['contexts'][] = 'url.site';
             }
           }
           elseif ($build['#view_mode'] === 'full') {
-            if ($config[0]['rel'] == 'canonical' && !empty($config[0]['href'])) {
+            if (in_array($config[0]['rel'], $canonical_links) && !empty($config[0]['href'])) {
               // Check if the canonical link is absolute and external. Do not
               // expose AMP for those.
               $current_canonical = $config[0]['href'];
@@ -181,18 +180,18 @@ function amp_theme() {
   $theme = [
     'amp_iframe' => [
       'variables' => [
-        'iframe' => NULL
+        'iframe' => NULL,
       ],
     ],
     'amp_ad' => [
       'variables' => [
-        'type' => NULL, 'attributes' => []
+        'type' => NULL, 'attributes' => [],
       ],
     ],
     'amp_analytics' => [
       'variables' => [
         'account' => NULL,
-        'attributes' => []
+        'attributes' => [],
       ],
     ],
     'block__amp_system_branding_block' => [
@@ -329,7 +328,7 @@ function amp_theme_registry_alter(&$theme_registry) {
 }
 
 /**
- * Implements hook_page_bottom for page bottom.
+ * Implements hook_page_bottom() for page bottom.
  */
 function amp_page_bottom(array &$page_bottom) {
 
@@ -342,9 +341,9 @@ function amp_page_bottom(array &$page_bottom) {
       $amp_analytics = [
         '#type' => 'amp_analytics',
         '#attributes' => [
-          'type' => 'googleanalytics'
+          'type' => 'googleanalytics',
         ],
-        '#account' => $google_analytics_id
+        '#account' => $google_analytics_id,
       ];
       $page_bottom['amp_analytics'] = $amp_analytics;
     }
@@ -370,15 +369,15 @@ function amp_page_bottom(array &$page_bottom) {
 
         $subs = [
           'RANDOM' => [
-            'active' => $subs_random ? TRUE : FALSE
-          ]
+            'active' => $subs_random ? TRUE : FALSE,
+          ],
         ];
 
         $amp_pixel = [
           '#theme' => 'amp_pixel',
           '#domain' => $domain,
           '#query_string' => $query_string,
-          '#subs' => $subs
+          '#subs' => $subs,
         ];
 
         $page_bottom['amp_pixel'] = $amp_pixel;
@@ -390,8 +389,8 @@ function amp_page_bottom(array &$page_bottom) {
 }
 
 /**
-* Implements hook_form_BASE_FORM_ID_alter().
-*/
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
 function amp_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Check if the content is AMP enabled.
   $amp_entity_type_service = \Drupal::service('amp.entity_type');
@@ -420,8 +419,8 @@ function amp_form_node_form_alter(&$form, FormStateInterface $form_state, $form_
 }
 
 /**
-* Submit handler for viewing the AMP page.
-*/
+ * Submit handler for viewing the AMP page.
+ */
 function amp_node_form_submit(&$form, FormStateInterface $form_state) {
   $path = $form_state->getValue('path');
   // Redirect to the alias if it exists, otherwise use the node URL.
@@ -495,4 +494,3 @@ function amp_preprocess_block(&$variables) {
   }
 
 }
-

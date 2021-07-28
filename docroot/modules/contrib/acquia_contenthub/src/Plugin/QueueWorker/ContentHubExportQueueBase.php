@@ -2,18 +2,18 @@
 
 namespace Drupal\acquia_contenthub\Plugin\QueueWorker;
 
-use Drupal\acquia_contenthub\EntityManager;
 use Drupal\acquia_contenthub\Controller\ContentHubEntityExportController;
 use Drupal\acquia_contenthub\Controller\ContentHubExportQueueController;
+use Drupal\acquia_contenthub\EntityManager;
+use Drupal\acquia_contenthub\Normalizer\ContentEntityCdfNormalizer;
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\Core\Queue\RequeueException;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Component\Serialization\Json;
-use Drupal\acquia_contenthub\Normalizer\ContentEntityCdfNormalizer;
-use Drupal\Core\Queue\RequeueException;
 
 /**
  * Provides base functionality for the Content Hub Export Queue.

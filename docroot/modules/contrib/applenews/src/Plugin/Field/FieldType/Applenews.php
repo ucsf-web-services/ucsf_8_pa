@@ -38,18 +38,6 @@ class Applenews extends FieldItemBase {
   /**
    * {@inheritdoc}
    */
-  public static function defaultFieldSettings() {
-    return [
-      'status' => 0,
-      'template' => NULL,
-      'channels' => NULL,
-      'is_preview' => 1,
-    ] + parent::defaultFieldSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
     return [
       'columns' => [

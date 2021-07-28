@@ -3,7 +3,7 @@
 namespace Drupal\Tests\media_entity_instagram\Functional;
 
 use Drupal\Tests\BrowserTestBase;
-use Drupal\Tests\media\Functional\MediaFunctionalTestCreateMediaTypeTrait;
+use Drupal\Tests\media\Traits\MediaTypeCreationTrait;
 
 /**
  * Tests for Instagram embed formatter.
@@ -12,7 +12,7 @@ use Drupal\Tests\media\Functional\MediaFunctionalTestCreateMediaTypeTrait;
  */
 class InstagramEmbedFormatterTest extends BrowserTestBase {
 
-  use MediaFunctionalTestCreateMediaTypeTrait;
+  use MediaTypeCreationTrait;
 
   /**
    * {@inheritdoc}
@@ -36,10 +36,19 @@ class InstagramEmbedFormatterTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
+  protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp() {
     parent::setUp();
-
-    $this->testBundle = $this->createMediaType(['bundle' => 'instagram'], 'instagram');
+    \Drupal::configFactory()
+      ->getEditable('media.settings')
+      ->set('standalone_url', TRUE)
+      ->save(TRUE);
+    \Drupal::service('router.builder')->rebuild();
+    $this->testBundle = $this->createMediaType('instagram', ['id' => 'instagram']);
     $this->drupalPlaceBlock('local_actions_block');
     $account = $this->drupalCreateUser([
       'administer media',
@@ -77,7 +86,7 @@ class InstagramEmbedFormatterTest extends BrowserTestBase {
     $assert->buttonExists('Save')->press();
     $assert->pageTextContains('The media type ' . $bundle->label() . ' has been updated.');
 
-    entity_get_display('media', $bundle->id(), 'default')
+    \Drupal::service('entity_display.repository')->getViewDisplay('media', $bundle->id(), 'default')
       ->setComponent('field_media_instagram', [
         'label' => 'above',
         'type' => 'instagram_embed',
@@ -96,7 +105,7 @@ class InstagramEmbedFormatterTest extends BrowserTestBase {
 
     $assert->fieldExists('Name')->setValue('My test instagram');
     // Example instagram from https://www.instagram.com/developer/embedding
-    $assert->fieldExists('Instagram')->setValue('https://www.instagram.com/p/bNd86MSFv6/');
+    $assert->fieldExists('Instagram')->setValue('https://www.instagram.com/p/B2huuS8AQVq/');
     $assert->buttonExists('Save')->press();
 
     // Assert that the media has been successfully saved.

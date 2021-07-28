@@ -2,17 +2,17 @@
 
 namespace Drupal\acquia_contenthub_subscriber\Controller;
 
+use Drupal\acquia_contenthub\EntityManager;
 use Drupal\Core\Access\CsrfTokenGenerator;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Render\Markup;
-use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\Request;
-use Drupal\Core\Language\LanguageInterface;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\acquia_contenthub\EntityManager;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\State\StateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller for Content Hub Discovery page.
@@ -60,6 +60,11 @@ class ContentHubSubscriberController extends ControllerBase {
    * @var \Drupal\Core\State\StateInterface
    */
   protected $state;
+
+  /**
+   * The version of content hub module.
+   */
+  const CH_VERSION = '1';
 
   /**
    * ContentHubSubscriberController constructor.
@@ -195,6 +200,7 @@ class ContentHubSubscriberController extends ControllerBase {
     $form["#attached"]['drupalSettings']['acquia_contenthub_subscriber']['cookie'] = $cookie_header;
     $form["#attached"]['drupalSettings']['acquia_contenthub_subscriber']['languages_supported_by_subscriber'] = $languages_supported;
     $form["#attached"]['drupalSettings']['acquia_contenthub_subscriber']['entity_types_bundles_supported_by_subscriber'] = $entity_types_bundles;
+    $form["#attached"]['drupalSettings']['acquia_contenthub_subscriber']['ch_version'] = static::CH_VERSION;
 
     if (empty($config->get('origin'))) {
       drupal_set_message($this->t('Acquia Content Hub must be configured to view any content. Please contact your administrator.'), 'warning');

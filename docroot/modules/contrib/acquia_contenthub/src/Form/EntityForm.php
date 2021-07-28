@@ -2,15 +2,18 @@
 
 namespace Drupal\acquia_contenthub\Form;
 
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\acquia_contenthub\ContentHubEntitiesTracking;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Defines a form that alters entity form to add a Content Hub form.
  */
 class EntityForm {
+
+  use StringTranslationTrait;
 
   /**
    * The current user.
@@ -63,7 +66,7 @@ class EntityForm {
 
     $form = [
       '#type' => 'details',
-      '#title' => t('Acquia Content Hub settings'),
+      '#title' => $this->t('Acquia Content Hub settings'),
       '#access' => $this->currentUser->hasPermission('administer acquia content hub'),
       '#group' => 'advanced',
       '#tree' => TRUE,
@@ -72,17 +75,17 @@ class EntityForm {
     $has_local_change = $imported_entity->hasLocalChange();
     $form['auto_update_label'] = [
       '#type' => 'markup',
-      '#markup' => $has_local_change ? t('This syndicated content has been modified locally, therefore it is no longer automatically synchronized to its original content.') : t('This is a syndicated content. What happens if its original content is updated?'),
+      '#markup' => $has_local_change ? $this->t('This syndicated content has been modified locally, therefore it is no longer automatically synchronized to its original content.') : $this->t('This is a syndicated content. What happens if its original content is updated?'),
     ];
     $form['auto_update'] = [
       '#type' => 'checkbox',
-      '#title' => t('Enable this syndicated content to receive the same updates of its original content'),
+      '#title' => $this->t('Enable this syndicated content to receive the same updates of its original content'),
       '#default_value' => $imported_entity->isAutoUpdate(),
     ];
     if ($has_local_change) {
       $form['auto_update_local_changes_label'] = [
         '#type' => 'markup',
-        '#markup' => '<div>' . t('Check to enable synchronization with any future updates of content from Content Hub.') . '</div><div><strong>' . t("Any edits that were made to your site's instance of this content will be overwritten by the Content Hub version.") . '</strong></div>',
+        '#markup' => '<div>' . $this->t('Check to enable synchronization with any future updates of content from Content Hub.') . '</div><div><strong>' . $this->t("Any edits that were made to your site's instance of this content will be overwritten by the Content Hub version.") . '</strong></div>',
       ];
     }
 

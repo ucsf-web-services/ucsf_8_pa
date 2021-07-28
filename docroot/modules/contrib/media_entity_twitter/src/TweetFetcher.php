@@ -59,7 +59,7 @@ class TweetFetcher implements TweetFetcherInterface {
 
     // Query Twitter's API.
     $response = $this->twitter
-      ->setGetfield('?id=' . $id)
+      ->setGetfield('?id=' . $id . '&tweet_mode=extended')
       ->buildOAuth('https://api.twitter.com/1.1/statuses/show.json', 'GET')
       ->performRequest();
 

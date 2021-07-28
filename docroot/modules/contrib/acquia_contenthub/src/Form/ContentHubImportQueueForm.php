@@ -9,7 +9,7 @@ use Drupal\Core\Queue\QueueFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class ContentHubImportQueueForm.
+ * Form for the Content Hub Import Queue.
  *
  * @package Drupal\acquia_contenthub\Form
  */

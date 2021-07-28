@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\acquia_contenthub\Unit\Form;
 
-use Drupal\Tests\UnitTestCase;
 use Drupal\acquia_contenthub\Form\EntityForm;
+use Drupal\Tests\UnitTestCase;
 
 require_once __DIR__ . '/../Polyfill/Drupal.php';
 
@@ -130,6 +130,8 @@ class EntityFormTest extends UnitTestCase {
     $this->contentHubEntitiesTracking->expects($this->once())
       ->method('isAutoUpdate')
       ->willReturn($is_auto_update);
+
+    $this->entityForm->setStringTranslation($this->getStringTranslationStub());
 
     $form = $this->entityForm->getForm($node);
     $this->assertEquals($has_local_change_text, $form['auto_update_label']['#markup']);

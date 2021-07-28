@@ -44,7 +44,7 @@ class TextStyleForm extends EntityForm {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity.manager')->getStorage('applenews_text_style')
+      $container->get('entity_type.manager')->getStorage('applenews_text_style')
     );
   }
 
@@ -81,7 +81,7 @@ class TextStyleForm extends EntityForm {
       '#default_value' => $entity->get('fontSize'),
       '#description' => $this->t('The size of the font, in points. As a best practice, try not to go below 16 points for body text.'),
     ];
-    // @todo: Dymanically update per font Family from $this->getFontData()
+    // @todo Dynamically update per font Family from $this->getFontData().
     $form['fontWidth'] = [
       '#type' => 'number',
       '#title' => $this->t('Font width'),
@@ -272,9 +272,9 @@ class TextStyleForm extends EntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    // @todo: make sure to avoid saving default values.
+    // @todo Make sure to avoid saving default values.
     parent::save($form, $form_state);
-    $form_state->setRedirectUrl($this->entity->urlInfo('collection'));
+    $form_state->setRedirectUrl($this->entity->toUrl('collection'));
   }
 
 }

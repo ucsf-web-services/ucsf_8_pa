@@ -2,15 +2,15 @@
 
 namespace Drupal\Tests\acquia_contenthub\Unit\Controller;
 
+use Acquia\ContentHubClient\Attribute;
+use Acquia\ContentHubClient\Entity;
+use Drupal\acquia_contenthub\ContentHubEntitiesTracking;
+use Drupal\acquia_contenthub\ContentHubEntityDependency;
 use Drupal\acquia_contenthub\Controller\ContentHubEntityExportController;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Tests\UnitTestCase;
-use Acquia\ContentHubClient\Entity;
-use Acquia\ContentHubClient\Attribute;
-use Drupal\acquia_contenthub\ContentHubEntityDependency;
-use Drupal\acquia_contenthub\ContentHubEntitiesTracking;
 
 /**
  * Unit test for ContentHubEntityExportController class.
@@ -474,7 +474,7 @@ class ContentHubEntityExportControllerTest extends UnitTestCase {
   /**
    * Returns sample ContentHub entity object.
    *
-   * @return \stdClass
+   * @return object
    *   ContentHub object.
    */
   private function getSampleContentHubEntity() {

@@ -36,9 +36,36 @@ INSTALLATION
 CONFIGURATION
 ----------------
 
+Basic Field Configuration
+
 1. Add "Svg Image" field to your content type or taxonomy vocabulary.
 2. Go to the 'Manage display' => formatter settings and set image dimensions
  if you want and enable or disable attributes.
+
+Media Entity Configuration (Requires Drupal >=8.7)
+
+1. Enable Media and Media Library modules from Drupal core.
+2. Go to /admin/structure/media and click the "Add Media Type" button.
+3. For the Media Type Name, specify "SVG".
+4. For the Media source, select SVG from the dropdown.
+5. In the field mappings map Name to Name (the only option in the dropdown).
+6. Click save. Then proceed to 'Manage form display' and 'Manage display' to
+   configure the Default and Media Library view modes at:
+
+   * /admin/structure/media/manage/svg/form-display
+   * /admin/structure/media/manage/svg/display
+
+   You'll most likely want to just enable the "SVG" field, and disable the
+   rest of the fields. Optionally, you may wish to choose the "inline SVG"
+   option for the default display.
+7. Add a Media reference (Entity reference) field to your node type(s) and
+   configure it to allow the SVG bundle type.
+
+   Optionally, you may enable other bundle types as well such as the standard
+   Image media type if you want to allow both images and SVGs in the same slot.
+8. Go create a node, and click the "Add media" link. Notice that the Media
+   Library loads with a vertical tab for each kind of media type bundle you
+   enabled in step 7 on your node configuration screen.
 
 AUTHOR
 ------

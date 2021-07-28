@@ -2,13 +2,16 @@
 
 namespace Drupal\xmlsitemap\Controller;
 
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\State\StateInterface;
 use Drupal\xmlsitemap\Entity\XmlSitemap;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\State\StateInterface;
-use Drupal\Core\Template\TwigEnvironment;
 
 /**
  * Class for Xml Sitemap Controller.
@@ -26,23 +29,23 @@ class XmlSitemapController extends ControllerBase {
   protected $state;
 
   /**
-   * The twig loader object.
+   * The configuration factory.
    *
-   * @var \Drupal\Core\Template\TwigEnvironment
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
-  protected $twig;
+  protected $configFactory;
 
   /**
    * Constructs a new XmlSitemapController object.
    *
    * @param \Drupal\Core\State\StateInterface $state
    *   The state service.
-   * @param Drupal\Core\Template\TwigEnvironment $twig
-   *   Twig environment for Drupal.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The configuration factory.
    */
-  public function __construct(StateInterface $state, TwigEnvironment $twig) {
+  public function __construct(StateInterface $state, ConfigFactoryInterface $config_factory) {
     $this->state = $state;
-    $this->twig = $twig;
+    $this->configFactory = $config_factory;
   }
 
   /**
@@ -51,42 +54,101 @@ class XmlSitemapController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('state'),
-      $container->get('twig')
+      $container->get('config.factory')
     );
   }
 
   /**
    * Provides the sitemap in XML format.
    *
-   * @throws NotFoundHttpException
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request object.
    *
-   * @return \Symfony\Component\HttpFoundation\Response
+   * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
    *   The sitemap in XML format or plain text if xmlsitemap_developer_mode flag
    *   is set.
+   *
+   * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+   *   If the sitemap is not found or the sitemap file is not readable.
    */
-  public function renderSitemapXml() {
+  public function renderSitemapXml(Request $request) {
+    $headers = [];
+
+    if ($this->state->get('xmlsitemap_developer_mode')) {
+      $headers['X-XmlSitemap-Current-Context'] = Json::encode(xmlsitemap_get_current_context());
+      $headers['X-XmlSitemap'] = 'NOT FOUND';
+    }
+
     $sitemap = XmlSitemap::loadByContext();
     if (!$sitemap) {
-      throw new NotFoundHttpException();
+      $exception = new NotFoundHttpException();
+      $exception->setHeaders($headers);
+      throw $exception;
     }
-    $chunk = xmlsitemap_get_current_chunk($sitemap);
+
+    $chunk = xmlsitemap_get_current_chunk($sitemap, $request);
     $file = xmlsitemap_sitemap_get_file($sitemap, $chunk);
 
-    // Provide debugging information if enabled.
+    // Provide debugging information via headers.
     if ($this->state->get('xmlsitemap_developer_mode')) {
-      $module_path = drupal_get_path('module', 'xmlsitemap');
-      $template = $this->twig->loadTemplate($module_path . '/templates/sitemap-developer-mode.html.twig');
-      $elements = [
-        'current_context' => print_r(xmlsitemap_get_current_context(), TRUE),
-        'sitemap' => print_r($sitemap, TRUE),
-        'chunk' => $chunk,
-        'cache_file_location' => $file,
-        'cache_file_exists' => file_exists($file) ? 'Yes' : 'No',
-      ];
-      return new Response($template->render($elements));
+      $headers['X-XmlSitemap'] = Json::encode($sitemap->toArray());
+      $headers['X-XmlSitemap-Cache-File'] = $file;
+      $headers['X-XmlSitemap-Cache-Hit'] = file_exists($file) ? 'HIT' : 'MISS';
     }
-    $response = new Response();
-    return xmlsitemap_output_file($response, $file);
+
+    return $this->getSitemapResponse($file, $request, $headers);
+  }
+
+  /**
+   * Creates a response object that will output the sitemap file.
+   *
+   * @param string $file
+   *   File uri.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request.
+   * @param array $headers
+   *   An array of response headers
+   *
+   * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+   *   The sitemap response object.
+   *
+   * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+   *   If the sitemap is not found or the sitemap file is not readable.
+   */
+  public function getSitemapResponse($file, Request $request, array $headers = []) {
+    if (!is_file($file) || !is_readable($file)) {
+      $exception = new NotFoundHttpException();
+      $exception->setHeaders($headers);
+      throw $exception;
+    }
+
+    $headers += [
+      'Content-Type' => 'text/xml; charset=utf-8',
+      'X-Robots-Tag' => 'noindex, follow',
+    ];
+
+    $lifetime = $this->configFactory->get('xmlsitemap.settings')->get('minimum_lifetime');
+
+    $response = new BinaryFileResponse($file, 200, $headers);
+    $response->setPrivate();
+    $response->headers->addCacheControlDirective('must-revalidate');
+
+    //if ($lifetime) {
+    //  $response->headers->addCacheControlDirective('max-age', $lifetime);
+    //}
+
+    // Manually set the etag value instead of hashing the contents of the file.
+    $last_modified = $response->getFile()->getMTime();
+    $response->setEtag(md5($last_modified));
+
+    // Set expiration using the minimum lifetime.
+    $response->setExpires(new \DateTime('@' . ($last_modified + $lifetime)));
+
+    // Because we do not want this page to be cached, we manually check the
+    // modified headers.
+    $response->isNotModified($request);
+
+    return $response;
   }
 
   /**
@@ -102,16 +164,16 @@ class XmlSitemapController extends ControllerBase {
 
     // Make sure the strings in the XSL content are translated properly.
     $replacements = [
-      'Sitemap file' => t('Sitemap file'),
-      'Generated by the <a href="https://www.drupal.org/project/xmlsitemap">Drupal XML sitemap module</a>.' => t('Generated by the <a href="@link-xmlsitemap">Drupal XML sitemap module</a>.', ['@link-xmlsitemap' => 'https://www.drupal.org/project/xmlsitemap']),
-      'Number of sitemaps in this index' => t('Number of sitemaps in this index'),
-      'Click on the table headers to change sorting.' => t('Click on the table headers to change sorting.'),
-      'Sitemap URL' => t('Sitemap URL'),
-      'Last modification date' => t('Last modification date'),
-      'Number of URLs in this sitemap' => t('Number of URLs in this sitemap'),
-      'URL location' => t('URL location'),
-      'Change frequency' => t('Change frequency'),
-      'Priority' => t('Priority'),
+      'Sitemap file' => $this->t('Sitemap file'),
+      'Generated by the <a href="https://www.drupal.org/project/xmlsitemap">Drupal XML sitemap module</a>.' => $this->t('Generated by the <a href="@link-xmlsitemap">Drupal XML sitemap module</a>.', ['@link-xmlsitemap' => 'https://www.drupal.org/project/xmlsitemap']),
+      'Number of sitemaps in this index' => $this->t('Number of sitemaps in this index'),
+      'Click on the table headers to change sorting.' => $this->t('Click on the table headers to change sorting.'),
+      'Sitemap URL' => $this->t('Sitemap URL'),
+      'Last modification date' => $this->t('Last modification date'),
+      'Number of URLs in this sitemap' => $this->t('Number of URLs in this sitemap'),
+      'URL location' => $this->t('URL location'),
+      'Change frequency' => $this->t('Change frequency'),
+      'Priority' => $this->t('Priority'),
       '[jquery]' => base_path() . 'core/assets/vendor/jquery/jquery.js',
       '[jquery-tablesort]' => base_path() . $module_path . '/xsl/jquery.tablesorter.min.js',
       '[xsl-js]' => base_path() . $module_path . '/xsl/xmlsitemap.xsl.js',
@@ -120,10 +182,10 @@ class XmlSitemapController extends ControllerBase {
     $xsl_content = strtr($xsl_content, $replacements);
 
     // Output the XSL content.
-    $response = new Response($xsl_content);
-    $response->headers->set('Content-type', 'application/xml; charset=utf-8');
-    $response->headers->set('X-Robots-Tag', 'noindex, follow');
-    return $response;
+    return new Response($xsl_content, 200, [
+      'Content-Type' => 'application/xml; charset=utf-8',
+      'X-Robots-Tag' => 'noindex, nofollow',
+    ]);
   }
 
 }

@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\acquia_contenthub\Unit;
 
+use Acquia\ContentHubClient\Attribute;
 use Drupal\acquia_contenthub\ContentHubEntityDependency;
 use Drupal\Tests\UnitTestCase;
-use Acquia\ContentHubClient\Attribute;
 
 /**
  * PHPUnit for the ContentHubEntityDependency class.

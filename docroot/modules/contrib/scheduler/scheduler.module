@@ -33,7 +33,7 @@ function scheduler_help($route_name, RouteMatchInterface $route_match) {
       break;
 
     case 'scheduler.admin_form':
-      $output = '<p>' . t('Some Scheduler options are set for each different content type, and are accessed via the <a href="@link">admin content type</a> list.', ['@link' => Url::fromRoute('entity.node_type.collection')->toString()]) . '</br>';
+      $output = '<p>' . t('Most of the Scheduler options are set for each different content type, and are accessed via the <a href="@link">admin content type</a> list.', ['@link' => Url::fromRoute('entity.node_type.collection')->toString()]) . '</br>';
       $output .= t('The options and settings below are common to all content types.') . '</p>';
       break;
 
@@ -77,7 +77,7 @@ function scheduler_form_node_form_alter(&$form, FormStateInterface $form_state) 
   $publishing_displayed = !empty($display->getComponent('publish_on'));
   $unpublishing_displayed = !empty($display->getComponent('unpublish_on'));
 
-  /* @var $node \Drupal\node\NodeInterface */
+  /** @var \Drupal\node\NodeInterface $node */
   $node = $form_state->getFormObject()->getEntity();
 
   // Invoke all implementations of hook_scheduler_hide_publish_on_field() to
@@ -108,22 +108,26 @@ function scheduler_form_node_form_alter(&$form, FormStateInterface $form_state) 
     return;
   }
 
-  $date_only_allowed = $config->get('allow_date_only');
+  $allow_date_only = $config->get('allow_date_only');
 
   // A publish_on date is required if the content type option is set and the
-  // node is being created or it currently has a scheduled publishing date.
-  $publishing_required = $type->getThirdPartySetting('scheduler', 'publish_required', $config->get('default_publish_required'))
+  // node is being created or it is currently not published but has a
+  // scheduled publishing date.
+  $publishing_required = $publishing_enabled
+    && $type->getThirdPartySetting('scheduler', 'publish_required', $config->get('default_publish_required'))
     && ($node->isNew() || (!$node->isPublished() && !empty($node->publish_on->value)));
 
   // An unpublish_on date is required if the content type option is set and the
   // node is being created or the current status is published or the node is
   // scheduled to be published.
-  $unpublishing_required = $type->getThirdPartySetting('scheduler', 'unpublish_required', $config->get('default_unpublish_required')) && ($node->isNew() || $node->isPublished() || !empty($node->publish_on->value));
+  $unpublishing_required = $unpublishing_enabled
+    && $type->getThirdPartySetting('scheduler', 'unpublish_required', $config->get('default_unpublish_required'))
+    && ($node->isNew() || $node->isPublished() || !empty($node->publish_on->value));
 
   // Create a 'details' field group to wrap the scheduling fields, and expand it
   // if publishing or unpublishing is required, if a date already exists or the
   // fieldset is configured to be always expanded.
-  $has_data = !empty($node->publish_on->value) || !empty($node->unpublish_on->value);
+  $has_data = isset($node->publish_on->value) || isset($node->unpublish_on->value);
   $always_expand = $type->getThirdPartySetting('scheduler', 'expand_fieldset', $config->get('default_expand_fieldset')) === 'always';
   $expand_details = $publishing_required || $unpublishing_required || $has_data || $always_expand;
 
@@ -151,16 +155,21 @@ function scheduler_form_node_form_alter(&$form, FormStateInterface $form_state) 
   }
 
   // Define the descriptions depending on whether the time can be skipped.
-  $date_formatter = \Drupal::service('date.formatter');
   $descriptions = [];
-  if ($date_only_allowed) {
+  if ($allow_date_only) {
     $descriptions['format'] = t('Enter a date. The time part is optional.');
     // Show the default time so users know what they will get if they do not
     // enter a time.
-    $default_time = strtotime($config->get('default_time'));
     $descriptions['default'] = t('The default time is @default_time.', [
-      '@default_time' => $date_formatter->format($default_time, 'custom', 'H:i:s'),
+      '@default_time' => $config->get('default_time'),
     ]);
+
+    // Use javascript to pre-fill the time parts if the dates are required.
+    // See js/scheduler_default_time.js for more details.
+    if ($publishing_required || $unpublishing_required) {
+      $form['scheduler_settings']['#attached']['library'][] = 'scheduler/default-time';
+      $form['scheduler_settings']['#attached']['drupalSettings']['schedulerDefaultTime'] = $config->get('default_time');
+    }
   }
   else {
     $descriptions['format'] = t('Enter a date and time.');
@@ -185,6 +194,22 @@ function scheduler_form_node_form_alter(&$form, FormStateInterface $form_state) 
   $form['unpublish_on']['widget'][0]['value']['#required'] = $unpublishing_required;
   $form['unpublish_on']['widget'][0]['value']['#description'] = Xss::filter(implode(' ', $descriptions));
 
+  // When hiding the seconds on time input, we need to remove the seconds from
+  // the form value, as some browsers HTML5 rendering still show the seconds.
+  // We can use the same jQuery drupal behaviors file as for default time.
+  if ($config->get('hide_seconds')) {
+    // If there is a publish_on time, then use jQuery to remove the seconds.
+    if (isset($node->publish_on->value)) {
+      $form['scheduler_settings']['#attached']['library'][] = 'scheduler/default-time';
+      $form['scheduler_settings']['#attached']['drupalSettings']['schedulerHideSecondsPublishOn'] = date('H:i', $node->publish_on->value);
+    }
+    // Likewise for the unpublish_on time.
+    if (isset($node->unpublish_on->value)) {
+      $form['scheduler_settings']['#attached']['library'][] = 'scheduler/default-time';
+      $form['scheduler_settings']['#attached']['drupalSettings']['schedulerHideSecondsUnpublishOn'] = date('H:i', $node->unpublish_on->value);
+    }
+  }
+
   if (!\Drupal::currentUser()->hasPermission('schedule publishing of nodes')) {
     // Do not show the scheduler fields for users who do not have permission.
     // Setting #access to FALSE for 'scheduler_settings' is enough to hide the
@@ -206,6 +231,7 @@ function scheduler_form_node_form_alter(&$form, FormStateInterface $form_state) 
   // Check which widget type is set for the scheduler fields, and give a warning
   // if the wrong one has been set and provide a hint and link to fix it.
   $pluginDefinitions = $display->get('pluginManager')->getDefinitions();
+  $fields_to_check = [];
   if ($publishing_enabled && $publishing_displayed) {
     $fields_to_check[] = 'publish_on';
   }
@@ -284,9 +310,54 @@ function scheduler_form_devel_generate_form_content_alter(array &$form, FormStat
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter() for language_content_settings_form.
+ */
+function scheduler_form_language_content_settings_form_alter(array &$form, FormStateInterface $form_state) {
+  // Add our validation function for the translation field settings form at
+  // admin/config/regional/content-language.
+  $form['#validate'][] = '_scheduler_translation_validate';
+}
+
+/**
+ * Validation handler for language_content_settings_form.
+ *
+ * If the content type is translatable and the field is enabled for Scheduler
+ * but the translation setting for the publish_on / unpublish_on field does not
+ * match the 'published status' field setting then throw a validation error.
+ *
+ * @see https://www.drupal.org/project/scheduler/issues/2871164
+ */
+function _scheduler_translation_validate($form, FormStateInterface $form_state) {
+  $content_types = $form_state->getValues()['settings']['node'];
+  $publishing_enabled_types = array_keys(_scheduler_get_scheduler_enabled_node_types('publish'));
+  $unpublishing_enabled_types = array_keys(_scheduler_get_scheduler_enabled_node_types('unpublish'));
+  $enabled = [];
+  foreach ($content_types as $name => $settings) {
+    $enabled['publish_on'] = in_array($name, $publishing_enabled_types);
+    $enabled['unpublish_on'] = in_array($name, $unpublishing_enabled_types);
+    if ($settings['translatable'] && ($enabled['publish_on'] || $enabled['unpublish_on'])) {
+      $params = [
+        '@type' => $form['settings']['node'][$name]['settings']['#label'],
+        '@status' => $form['settings']['node'][$name]['fields']['status']['#label'],
+      ];
+      foreach (['publish_on', 'unpublish_on'] as $var) {
+        $mismatch = $enabled[$var] && ($settings['fields'][$var] <> $settings['fields']['status']);
+        if ($mismatch) {
+          $params['@scheduler_field'] = $form['settings']['node'][$name]['fields'][$var]['#label'];
+          $message = t("Content type '@type' - Translatable settings for status field '@status' and Scheduler field '@scheduler_field' should match, either both on or both off", $params);
+          $form_state->setErrorByName("settings][node][$name][fields][status", $message);
+          $form_state->setErrorByName("settings][node][$name][fields][$var", $message);
+        }
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_entity_base_field_info().
  */
 function scheduler_entity_base_field_info(EntityTypeInterface $entity_type) {
+  $fields = [];
   if ($entity_type->id() === 'node') {
     $fields['publish_on'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Publish on'))
@@ -315,6 +386,19 @@ function scheduler_entity_base_field_info(EntityTypeInterface $entity_type) {
 }
 
 /**
+ * Implements hook_views_data_alter().
+ */
+function scheduler_views_data_alter(array &$data) {
+  // By default the 'is null' and 'is not null' operators are only added to the
+  // list of filter options if the view contains a relationship. We want them to
+  // be always available for the scheduler date fields.
+  $data['node_field_data']['publish_on']['filter']['allow empty'] = TRUE;
+  $data['node_field_data']['unpublish_on']['filter']['allow empty'] = TRUE;
+  $data['node_field_revision']['publish_on']['filter']['allow empty'] = TRUE;
+  $data['node_field_revision']['unpublish_on']['filter']['allow empty'] = TRUE;
+}
+
+/**
  * Implements hook_ENTITY_TYPE_view() for node entities.
  */
 function scheduler_node_view(array &$build, EntityInterface $node, EntityViewDisplayInterface $display, $view_mode) {
@@ -333,8 +417,11 @@ function scheduler_node_view(array &$build, EntityInterface $node, EntityViewDis
  */
 function scheduler_node_presave(EntityInterface $node) {
   $config = \Drupal::config('scheduler.settings');
+  $scheduler_manager = \Drupal::service('scheduler.manager');
   $entity = $node->type->entity;
   $request_time = \Drupal::time()->getRequestTime();
+  $publish_message = FALSE;
+  $unpublish_message = FALSE;
 
   // If there is no entity object or the class is incorrect then stop here. This
   // should not really happen but it has been observed, so better to be safe.
@@ -355,8 +442,9 @@ function scheduler_node_presave(EntityInterface $node) {
     if (!isset($publishing_enabled_types)) {
       $publishing_enabled_types = array_keys(_scheduler_get_scheduler_enabled_node_types('publish'));
       $unpublishing_enabled_types = array_keys(_scheduler_get_scheduler_enabled_node_types('unpublish'));
-      $publishing_percent = $node->devel_generate['scheduler_publishing'];
-      $unpublishing_percent = $node->devel_generate['scheduler_unpublishing'];
+      // The values may not be set if calling via drush, so default to zero.
+      $publishing_percent = @$node->devel_generate['scheduler_publishing'] ?: 0;
+      $unpublishing_percent = @$node->devel_generate['scheduler_unpublishing'] ?: 0;
       // Reuse the selected 'node creation' time range for our future date span.
       $time_range = $node->devel_generate['time_range'];
     }
@@ -381,7 +469,7 @@ function scheduler_node_presave(EntityInterface $node) {
   // published immediately.
   if ($entity->getThirdPartySetting('scheduler', 'publish_enable', $config->get('default_publish_enable')) && !empty($node->publish_on->value)) {
     // Check that other modules allow the action on this node.
-    $publication_allowed = \Drupal::service('scheduler.manager')->isAllowed($node, 'publish');
+    $publication_allowed = $scheduler_manager->isAllowed($node, 'publish');
 
     // Publish the node immediately if the publication date is in the past.
     $publish_immediately = $entity->getThirdPartySetting('scheduler', 'publish_past_date', $config->get('default_publish_past_date')) == 'publish';
@@ -390,7 +478,7 @@ function scheduler_node_presave(EntityInterface $node) {
       // Trigger the PRE_PUBLISH_INMEDIATELY event so that modules can react
       // before the node has been published.
       $event = new SchedulerEvent($node);
-      \Drupal::service('event_dispatcher')->dispatch(SchedulerEvents::PRE_PUBLISH_IMMEDIATELY, $event);
+      $scheduler_manager->dispatch($event, SchedulerEvents::PRE_PUBLISH_IMMEDIATELY);
       $node = $event->getNode();
 
       // Set the 'changed' timestamp to match what would have been done had this
@@ -407,7 +495,7 @@ function scheduler_node_presave(EntityInterface $node) {
       // Trigger the PUBLISH_IMMEDIATELY event so that modules can react after
       // the node has been published.
       $event = new SchedulerEvent($node);
-      \Drupal::service('event_dispatcher')->dispatch(SchedulerEvents::PUBLISH_IMMEDIATELY, $event);
+      $scheduler_manager->dispatch($event, SchedulerEvents::PUBLISH_IMMEDIATELY);
       $node = $event->getNode();
     }
     else {
@@ -417,12 +505,7 @@ function scheduler_node_presave(EntityInterface $node) {
       // Only inform the user that the node is scheduled if publication has not
       // been prevented by other modules. Those modules have to display a
       // message themselves explaining why publication is denied.
-      if ($publication_allowed) {
-        $date_formatter = \Drupal::service('date.formatter');
-        \Drupal::messenger()->addMessage(t('This post is unpublished and will be published @publish_time.', [
-          '@publish_time' => $date_formatter->format($node->publish_on->value, 'long'),
-        ]), 'status', FALSE);
-      }
+      $publish_message = ($publication_allowed && $entity->getThirdPartySetting('scheduler', 'show_message_after_update', $config->get('default_show_message_after_update')));
     }
   }
 
@@ -430,7 +513,32 @@ function scheduler_node_presave(EntityInterface $node) {
     // Scheduler does not do the same 'immediate' processing for unpublishing.
     // However, the api hook should still be called during presave as there may
     // be messages to be displayed if the unpublishing will be disallowed later.
-    \Drupal::service('scheduler.manager')->isAllowed($node, 'unpublish');
+    $unpublication_allowed = $scheduler_manager->isAllowed($node, 'unpublish');
+    $unpublish_message = ($unpublication_allowed && $entity->getThirdPartySetting('scheduler', 'show_message_after_update', $config->get('default_show_message_after_update')));
+  }
+
+  // Give one message, which will include the publish_on date, the unpublish_on
+  // date or both dates. Cannot make the title into a link here when the node
+  // is being created. But the node module gives the link in the next message.
+  $date_formatter = \Drupal::service('date.formatter');
+  if ($publish_message && $unpublish_message) {
+    \Drupal::messenger()->addMessage(t('%title is scheduled to be published @publish_time and unpublished @unpublish_time.', [
+      '%title' => $node->getTitle(),
+      '@publish_time' => $date_formatter->format($node->publish_on->value, 'long'),
+      '@unpublish_time' => $date_formatter->format($node->unpublish_on->value, 'long'),
+    ]), 'status', FALSE);
+  }
+  elseif ($publish_message) {
+    \Drupal::messenger()->addMessage(t('%title is scheduled to be published @publish_time.', [
+      '%title' => $node->getTitle(),
+      '@publish_time' => $date_formatter->format($node->publish_on->value, 'long'),
+    ]), 'status', FALSE);
+  }
+  elseif ($unpublish_message) {
+    \Drupal::messenger()->addMessage(t('%title is scheduled to be unpublished @unpublish_time.', [
+      '%title' => $node->getTitle(),
+      '@unpublish_time' => $date_formatter->format($node->unpublish_on->value, 'long'),
+    ]), 'status', FALSE);
   }
 }
 
@@ -439,7 +547,7 @@ function scheduler_node_presave(EntityInterface $node) {
  */
 function scheduler_node_insert(EntityInterface $node) {
   // Removed RULES code but keep the function. There may be code to add here.
-  // @TODO remove this comment when done. JSS Sep 2016.
+  // @todo remove this comment when done. JSS Sep 2016.
 }
 
 /**
@@ -449,7 +557,7 @@ function scheduler_node_update(EntityInterface $node) {
   // Removed RULES code but keep the function. There may be code to add here.
   // This function is currently called by actions SetPublishingDate and
   // SetUnpublishingDate.
-  // @TODO remove this comment when done. JSS Sep 2016.
+  // @todo remove this comment when done. JSS Sep 2016.
 }
 
 /**
@@ -528,7 +636,7 @@ function scheduler_entity_extra_field_info() {
  */
 function scheduler_preprocess_node(&$variables) {
   $date_formatter = \Drupal::service('date.formatter');
-  /* @var $node \Drupal\node\NodeInterface */
+  /** @var \Drupal\node\NodeInterface $node */
   $node = $variables['node'];
   if (!empty($node->publish_on->value) && $node->publish_on->value && is_numeric($node->publish_on->value)) {
     $variables['publish_on'] = $date_formatter->format($node->publish_on->value, 'long');
@@ -589,14 +697,9 @@ function scheduler_feeds_set_target($source, $entity, $target, $value, $mapping)
   // then strtotime() must not be used, otherwise it returns the current time.
   if (!empty($value) && !is_numeric($value)) {
     if (!$timestamp = strtotime($value)) {
-      throw new FeedsValidationException(
-        // Throw an exception if the date format was not recognized.
-        t('Value %value for @source could not be converted to a valid %target date.', [
-          '@source' => $mapping['source'],
-          '%value' => $value,
-          '%target' => $target,
-        ])
-      );
+      // Throw an exception if the date format was not recognized.
+      $mapping_source = $mapping['source'];
+      throw new FeedsValidationException("Value '$value' for '$mapping_source' could not be converted to a valid '$target' date.");
     }
   }
   else {
@@ -622,7 +725,7 @@ function _scheduler_get_scheduler_enabled_node_types($action) {
   $config = \Drupal::config('scheduler.settings');
   $node_types = NodeType::loadMultiple();
   return array_filter($node_types, function ($bundle) use ($action, $config) {
-    /* @var \Drupal\node\NodeTypeInterface $bundle */
+    /** @var \Drupal\node\NodeTypeInterface $bundle */
     return $bundle->getThirdPartySetting('scheduler', $action . '_enable', $config->get('default_' . $action . '_enable'));
   });
 }

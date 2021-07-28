@@ -3,9 +3,9 @@
 namespace Drupal\Tests\acquia_contenthub\Unit\QueueItem;
 
 use Drupal\acquia_contenthub\ImportEntityManager;
+use Drupal\acquia_contenthub\QueueItem\ImportQueueItem;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Tests\UnitTestCase;
-use Drupal\acquia_contenthub\QueueItem\ImportQueueItem;
 
 /**
  * PHPUnit test for the ImportQueueItem.

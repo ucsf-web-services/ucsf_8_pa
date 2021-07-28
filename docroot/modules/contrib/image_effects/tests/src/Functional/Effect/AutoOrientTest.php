@@ -14,7 +14,7 @@ class AutoOrientTest extends ImageEffectsTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     static::$modules = array_merge(static::$modules, ['file_mdm', 'file_mdm_exif']);
     parent::setUp();
   }
@@ -100,7 +100,7 @@ class AutoOrientTest extends ImageEffectsTestBase {
         '#width' => $image->getWidth(),
         '#height' => $image->getHeight(),
       ];
-      $this->assertEquals('<img src="' . $derivative_url . '" width="' . $data['derivative_width'] . '" height="' . $data['derivative_height'] . '" alt="" class="image-style-image-effects-test" />', $this->getImageTag($variables));
+      $this->assertRegExp("/\<img src=\"" . preg_quote($derivative_url, '/') . "\" width=\"{$data['derivative_width']}\" height=\"{$data['derivative_height']}\" alt=\"\" .*class=\"image\-style\-image\-effects\-test\" \/\>/", $this->getImageTag($variables));
 
       // Check that ::applyEffect generates image with expected dimensions.
       $derivative_uri = $this->testImageStyle->buildUri($original_uri);

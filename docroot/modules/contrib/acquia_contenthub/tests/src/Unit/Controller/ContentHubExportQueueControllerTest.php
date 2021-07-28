@@ -3,8 +3,8 @@
 namespace Drupal\Tests\acquia_contenthub\Unit\Controller;
 
 use Drupal\acquia_contenthub\Controller\ContentHubExportQueueController;
-use Drupal\Tests\UnitTestCase;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Tests\UnitTestCase;
 
 /**
  * PHPUnit test for the ContentHubExportQueueController class.

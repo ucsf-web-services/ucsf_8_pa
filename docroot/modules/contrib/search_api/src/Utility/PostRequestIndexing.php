@@ -25,6 +25,15 @@ class PostRequestIndexing implements PostRequestIndexingInterface, DestructableI
   protected $operations = [];
 
   /**
+   * Keeps track of how often destruct() was called recursively.
+   *
+   * This is used to avoid infinite recursions.
+   *
+   * @var int
+   */
+  protected $recursion = 0;
+
+  /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -49,9 +58,8 @@ class PostRequestIndexing implements PostRequestIndexingInterface, DestructableI
       try {
         $storage = $this->entityTypeManager->getStorage('search_api_index');
       }
-      // @todo @todo Replace with multi-catch for
-      //   InvalidPluginDefinitionException and PluginNotFoundException once we
-      //   depend on PHP 7.1+.
+      // @todo Replace with multi-catch for InvalidPluginDefinitionException and
+      //   PluginNotFoundException once we depend on PHP 7.1+.
       catch (\Exception $e) {
         // It might be possible that the module got uninstalled during the rest
         // of the page request, or something else happened. To be on the safe
@@ -68,9 +76,21 @@ class PostRequestIndexing implements PostRequestIndexingInterface, DestructableI
       }
 
       try {
-        $items = $index->loadItemsMultiple($item_ids);
-        if ($items) {
-          $index->indexSpecificItems($items);
+        // In case there are lots of items to index, take care to not load/index
+        // all of them at once, so we don't run out of memory. Using the index's
+        // cron batch size should always be safe.
+        $batch_size = $index->getOption('cron_limit', 50) ?: 50;
+        if ($batch_size > 0) {
+          $item_ids_batches = array_chunk($item_ids, $batch_size);
+        }
+        else {
+          $item_ids_batches = [$item_ids];
+        }
+        foreach ($item_ids_batches as $item_ids_batch) {
+          $items = $index->loadItemsMultiple($item_ids_batch);
+          if ($items) {
+            $index->indexSpecificItems($items);
+          }
         }
       }
       catch (SearchApiException $e) {
@@ -81,6 +101,13 @@ class PostRequestIndexing implements PostRequestIndexingInterface, DestructableI
       // We usually shouldn't be called twice in a page request, but no harm in
       // being too careful: Remove the operation once it was executed correctly.
       unset($this->operations[$index_id]);
+    }
+
+    // Make sure that no new items were added while processing the previous
+    // ones. Otherwise, call this method again to index those as well. (But also
+    // guard against infinite recursion.)
+    if ($this->operations && ++$this->recursion <= 5) {
+      $this->destruct();
     }
   }
 

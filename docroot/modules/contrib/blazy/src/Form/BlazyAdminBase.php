@@ -245,7 +245,7 @@ abstract class BlazyAdminBase implements BlazyAdminInterface {
       foreach ($elements as $key => $element) {
         $form['breakpoints'][$breakpoint][$key] = $element;
 
-        if (isset($definition['vanilla'])) {
+        if (!empty($definition['vanilla'])) {
           $form['breakpoints'][$breakpoint][$key]['#states']['enabled'][$vanilla] = ['checked' => FALSE];
         }
         $value = isset($settings['breakpoints'][$breakpoint][$key]) ? $settings['breakpoints'][$breakpoint][$key] : '';
@@ -577,7 +577,7 @@ abstract class BlazyAdminBase implements BlazyAdminInterface {
   public function finalizeForm(array &$form, $definition = []) {
     $namespace = isset($definition['namespace']) ? $definition['namespace'] : 'slick';
     $settings = isset($definition['settings']) ? $definition['settings'] : [];
-    $vanilla = isset($definition['vanilla']) ? ' form--vanilla' : '';
+    $vanilla = !empty($definition['vanilla']) ? ' form--vanilla' : '';
     $captions = empty($definition['captions']) ? 0 : count($definition['captions']);
     $wide = $captions > 2 ? ' form--wide form--caption-' . $captions : ' form--caption-' . $captions;
     $fallback = $namespace == 'slick' ? 'form--slick' : 'form--' . $namespace . ' form--slick';
@@ -640,7 +640,7 @@ abstract class BlazyAdminBase implements BlazyAdminInterface {
           }
         }
 
-        if (!isset($form[$key]['#enforced']) && isset($definition['vanilla']) && isset($form[$key]['#type'])) {
+        if (!isset($form[$key]['#enforced']) && !empty($definition['vanilla']) && isset($form[$key]['#type'])) {
           $states['visible'][':input[name*="[vanilla]"]'] = ['checked' => FALSE];
           if (isset($form[$key]['#states'])) {
             $form[$key]['#states']['visible'][':input[name*="[vanilla]"]'] = ['checked' => FALSE];
@@ -721,11 +721,13 @@ abstract class BlazyAdminBase implements BlazyAdminInterface {
    *
    * @param string $state
    *   The state to get that matches one of the state class constants.
+   * @param array $definition
+   *   The foem definitions or settings.
    *
    * @return array
    *   A corresponding form API state.
    */
-  protected function getState($state, $definition = []) {
+  protected function getState($state, array $definition = []) {
     $lightboxes = [];
 
     foreach ($this->blazyManager->getLightboxes() as $key => $lightbox) {

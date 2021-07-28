@@ -11,9 +11,7 @@ use Drupal\Core\Render\RendererInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class ApplenewsTemplateForm.
- *
- * @package Drupal\applenews\Form
+ * Apple News template entity create / edit form.
  */
 class ApplenewsTemplateForm extends EntityForm {
 
@@ -102,8 +100,8 @@ class ApplenewsTemplateForm extends EntityForm {
 
     $form['node_type'] = [
       '#type' => 'select',
-      '#title' => $this->t('Node Type'),
-      '#description' => $this->t('The node type to which this template should apply.'),
+      '#title' => $this->t('Content type'),
+      '#description' => $this->t('The content type to which this template should apply.'),
       '#options' => $node_type_options,
       '#default_value' => $template->getNodeType(),
       '#required' => TRUE,
@@ -393,7 +391,7 @@ class ApplenewsTemplateForm extends EntityForm {
     }
 
     $this->entity->save();
-    drupal_set_message('Component added successfully.');
+    $this->messenger()->addStatus('Component added successfully.');
     $form_state->setRebuild();
   }
 
@@ -465,7 +463,7 @@ class ApplenewsTemplateForm extends EntityForm {
     else {
       $this->saveComponentOrder($form_state);
     }
-    drupal_set_message('Component deleted.');
+    $this->messenger()->addStatus('Component deleted.');
     $form_state->setRebuild();
   }
 
@@ -592,7 +590,10 @@ class ApplenewsTemplateForm extends EntityForm {
       // Find all nested components and sort their children.
       foreach ($components as $id => $component) {
         if (isset($component['component_data']['components'])) {
-          uasort($component['component_data']['components'], [$this->entity, 'sortHelper']);
+          uasort($component['component_data']['components'], [
+            $this->entity,
+            'sortHelper',
+          ]);
         }
       }
 

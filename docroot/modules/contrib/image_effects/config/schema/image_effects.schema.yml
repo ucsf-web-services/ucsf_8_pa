@@ -223,6 +223,31 @@ image.effect.image_effects_opacity:
       type: integer
       label: 'Opacity % of the source image'
 
+image.effect.image_effects_relative_crop:
+  type: mapping
+  label: 'Relative crop'
+  mapping:
+    width:
+      type: integer
+      label: 'Ratio width'
+    height:
+      type: integer
+      label: 'Ratio height'
+    anchor:
+      type: mapping
+      label: 'Anchor'
+      mapping:
+        width:
+          type: string
+          label: 'Width anchor'
+          constraints:
+            AllowedValues: ['left', 'center', 'right']
+        height:
+          type: string
+          label: 'Height anchor'
+          constraints:
+            AllowedValues: ['top', 'center', 'bottom']
+
 image.effect.image_effects_resize_percentage:
   type: mapping
   label: 'Resize based on percentage'

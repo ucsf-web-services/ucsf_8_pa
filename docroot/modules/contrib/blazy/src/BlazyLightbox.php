@@ -3,6 +3,7 @@
 namespace Drupal\blazy;
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\Xss;
 use Drupal\image\Entity\ImageStyle;
 
 /**
@@ -17,27 +18,25 @@ class BlazyLightbox {
    *   The element being modified.
    */
   public static function build(array &$element = []) {
-    $item     = $element['#item'];
-    $settings = &$element['#settings'];
-    $type     = empty($settings['type']) ? 'image' : $settings['type'];
-    $uri      = $settings['uri'];
-    $switch   = $settings['media_switch'];
-    $multiple = !empty($settings['count']) && $settings['count'] > 1;
+    $item       = $element['#item'];
+    $settings   = &$element['#settings'];
+    $type       = empty($settings['type']) ? 'image' : $settings['type'];
+    $uri        = $settings['uri'];
+    $switch     = $settings['media_switch'];
+    $switch_css = str_replace('_', '-', $switch);
+    $multiple   = !empty($settings['count']) && $settings['count'] > 1;
 
     // Provide relevant URL if it is a lightbox.
     $url_attributes = [];
-    $url_attributes['class'] = ['blazy__' . $switch, 'litebox'];
-    $url_attributes['data-' . $switch . '-trigger'] = TRUE;
+    $url_attributes['class'] = ['blazy__' . $switch_css, 'litebox'];
+    $url_attributes['data-' . $switch_css . '-trigger'] = TRUE;
 
     // If it is a video/audio, otherwise image to image.
     $settings['box_url']    = file_create_url($uri);
     $settings['icon']       = empty($settings['icon']) ? ['#markup' => '<span class="media__icon media__icon--litebox"></span>'] : $settings['icon'];
     $settings['lightbox']   = $switch;
-    $settings['box_width']  = isset($item->width) ? $item->width : NULL;
-    $settings['box_height'] = isset($item->height) ? $item->height : NULL;
-
-    $settings['box_width']  = isset($settings['box_width']) ? $settings['box_width'] : $settings['width'];
-    $settings['box_height'] = isset($settings['box_height']) ? $settings['box_height'] : $settings['height'];
+    $settings['box_width']  = isset($item->width) ? $item->width : (empty($settings['width']) ? NULL : $settings['width']);
+    $settings['box_height'] = isset($item->height) ? $item->height : (empty($settings['height']) ? NULL : $settings['height']);
 
     $dimensions = ['width' => $settings['box_width'], 'height' => $settings['box_height']];
     if (!empty($settings['box_style'])) {
@@ -169,7 +168,7 @@ class BlazyLightbox {
         break;
     }
 
-    return empty($caption) ? [] : ['#markup' => $caption];
+    return empty($caption) ? [] : ['#markup' => Xss::filter($caption, BlazyDefault::TAGS)];
   }
 
 }

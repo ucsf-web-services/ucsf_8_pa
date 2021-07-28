@@ -41,7 +41,7 @@ class TwigExtension extends \Twig_Extension {
         $attributes['link']['name'] = $data->link_name;
       }
       if ($data->link_title) {
-        $attributes['link']['title'] = $data->link_name;
+        $attributes['link']['title'] = $data->link_title;
       }
       if ($data->link_rel) {
         $attributes['link']['rel'] = $data->link_rel;

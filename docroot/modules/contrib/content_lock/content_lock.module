@@ -204,6 +204,16 @@ function content_lock_entity_predelete(EntityInterface $entity) {
 }
 
 /**
+ * Implements hook_user_delete().
+ *
+ * Delete content locks entries when a user gets deleted.
+ */
+function content_lock_user_delete($account) {
+  $lock_service = \Drupal::service('content_lock');
+  $lock_service->releaseAllUserLocks($account->id());
+}
+
+/**
  * Implements hook_views_data().
  */
 function content_lock_views_data() {

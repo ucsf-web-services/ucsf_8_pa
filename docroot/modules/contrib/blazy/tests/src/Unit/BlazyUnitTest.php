@@ -4,7 +4,7 @@ namespace Drupal\Tests\blazy\Unit;
 
 use Drupal\Tests\UnitTestCase;
 use Drupal\blazy\Blazy;
-use Drupal\blazy\Dejavu\BlazyDefault;
+use Drupal\blazy\BlazyDefault;
 use Drupal\Tests\blazy\Traits\BlazyUnitTestTrait;
 use Drupal\Tests\blazy\Traits\BlazyManagerUnitTestTrait;
 
@@ -117,8 +117,6 @@ class BlazyUnitTest extends UnitTestCase {
    *
    * @param array $settings
    *   The settings being tested.
-   * @param object $item
-   *   Whether to provide image item, or not.
    * @param bool $expected_image
    *   Whether to expect an image, or not.
    * @param bool $expected_iframe
@@ -130,11 +128,10 @@ class BlazyUnitTest extends UnitTestCase {
    * @covers \Drupal\blazy\Dejavu\BlazyDefault::entitySettings
    * @dataProvider providerBuildAttributes
    */
-  public function testBuildAttributes(array $settings, $item, $expected_image, $expected_iframe) {
-    $content   = [];
+  public function testBuildAttributes(array $settings, $expected_image, $expected_iframe) {
     $variables = ['attributes' => []];
     $build     = $this->data;
-    $settings  = array_merge($build['settings'], $settings);
+    $settings  = array_merge($build['settings'], $settings) + BlazyDefault::itemSettings();
 
     $settings['breakpoints']     = [];
     $settings['blazy']           = TRUE;
@@ -146,7 +143,7 @@ class BlazyUnitTest extends UnitTestCase {
       $settings = array_merge(BlazyDefault::entitySettings(), $settings);
     }
 
-    $variables['element']['#item'] = $item == TRUE ? $this->testItem : NULL;
+    $variables['element']['#item'] = $this->testItem;
     $variables['element']['#settings'] = $settings;
 
     Blazy::buildAttributes($variables);
@@ -164,7 +161,6 @@ class BlazyUnitTest extends UnitTestCase {
    * Provider for ::testBuildAttributes.
    */
   public function providerBuildAttributes() {
-    $breakpoints = $this->getDataBreakpoints();
     $uri = 'public://example.jpg';
 
     $data[] = [
@@ -172,7 +168,6 @@ class BlazyUnitTest extends UnitTestCase {
         'background' => FALSE,
         'uri' => '',
       ],
-      TRUE,
       FALSE,
       FALSE,
     ];
@@ -183,7 +178,6 @@ class BlazyUnitTest extends UnitTestCase {
         'uri' => $uri,
       ],
       TRUE,
-      TRUE,
       FALSE,
     ];
     $data[] = [
@@ -191,7 +185,6 @@ class BlazyUnitTest extends UnitTestCase {
         'background' => TRUE,
         'uri' => $uri,
       ],
-      TRUE,
       FALSE,
       FALSE,
     ];
@@ -204,7 +197,6 @@ class BlazyUnitTest extends UnitTestCase {
         'height' => 360,
         'uri' => $uri,
       ],
-      TRUE,
       TRUE,
       FALSE,
     ];
@@ -219,7 +211,6 @@ class BlazyUnitTest extends UnitTestCase {
         'type' => 'video',
         'uri' => $uri,
       ],
-      TRUE,
       TRUE,
       TRUE,
     ];
@@ -242,11 +233,13 @@ class BlazyUnitTest extends UnitTestCase {
    */
   public function testPreRenderImageLightbox(array $settings = []) {
     $build                       = $this->data;
+    $settings                   += BlazyDefault::itemSettings();
     $settings['count']           = $this->maxItems;
     $settings['uri']             = $this->uri;
     $settings['box_style']       = '';
     $settings['box_media_style'] = '';
     $build['settings']           = array_merge($build['settings'], $settings);
+    $switch_css                  = str_replace('_', '-', $settings['media_switch']);
 
     foreach (['caption', 'media', 'wrapper'] as $key) {
       $build['settings'][$key . '_attributes']['class'][] = $key . '-test';
@@ -259,7 +252,7 @@ class BlazyUnitTest extends UnitTestCase {
       $this->assertArrayHasKey('#url', $element);
     }
     else {
-      $this->assertArrayHasKey('data-' . $settings['media_switch'] . '-trigger', $element['#url_attributes']);
+      $this->assertArrayHasKey('data-' . $switch_css . '-trigger', $element['#url_attributes']);
       $this->assertArrayHasKey('#url', $element);
     }
   }
@@ -355,6 +348,17 @@ if (!function_exists('file_create_url')) {
    * Dummy function.
    */
   function file_create_url() {
+    // Empty block to satisfy coder.
+  }
+
+}
+
+if (!function_exists('file_url_transform_relative')) {
+
+  /**
+   * Dummy function.
+   */
+  function file_url_transform_relative() {
     // Empty block to satisfy coder.
   }
 

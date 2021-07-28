@@ -2,12 +2,11 @@
 
 namespace Drupal\Tests\features\Kernel;
 
-use Drupal\Core\Config\StorageInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\features\FeaturesBundleInterface;
 use Drupal\KernelTests\KernelTestBase;
 
 /**
+ * The Feature assigner test.
+ *
  * @group features
  */
 class FeaturesAssignerTest extends KernelTestBase {
@@ -58,7 +57,7 @@ class FeaturesAssignerTest extends KernelTestBase {
       ->getStorage('features_bundle');
     $bundle = $bundle_storage->load('test');
     $this->assertNotNull($bundle, "Features bundle doesn't exist");
-    $this->assertContains(
+    $this->assertStringContainsString(
       'Auto-generated bundle',
       $bundle->getDescription(),
       "Features bundle not auto-created");

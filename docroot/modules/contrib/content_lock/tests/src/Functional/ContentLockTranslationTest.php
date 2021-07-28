@@ -26,7 +26,7 @@ class ContentLockTranslationTest extends ContentLockTestBase {
   /**
    * Test translation integration.
    */
-  public function testTranlatedContent() {
+  public function testTranslatedContent() {
     $translation = $this->entity->addTranslation('de', ['name' => 'entity1 german']);
     $this->entity->save();
 

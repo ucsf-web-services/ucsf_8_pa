@@ -21,19 +21,14 @@
 function hook_xmlsitemap_link_info() {
   return [
     'mymodule' => [
-      'label' => 'My module',
-      'base table' => 'mymodule',
-      'entity keys' => [
-        // Primary ID key on {base table}.
-        'id' => 'myid',
-        // Subtype key on {base table}.
-        'bundle' => 'mysubtype',
-      ],
-      'path callback' => 'mymodule_path',
+      'label' => 'My module items',
+      // If your items can be grouped into unique "bundles", add the following
+      // information.
       'bundle label' => t('Subtype name'),
       'bundles' => [
         'mysubtype1' => [
           'label' => t('My subtype 1'),
+          // If your bundles have an administrative UI, list it.
           'admin' => [
             'real path' => 'admin/settings/mymodule/mysubtype1/edit',
             'access arguments' => ['administer mymodule'],
@@ -47,11 +42,11 @@ function hook_xmlsitemap_link_info() {
       'xmlsitemap' => [
         // Callback function to take an array of IDs and save them as sitemap
         // links.
-        'process callback' => '',
+        'process callback' => 'mymodule_xmlsitemap_process_links',
         // Callback function used in batch API for rebuilding all links.
-        'rebuild callback' => '',
+        'rebuild callback' => 'mymodule_xmlsitemap_rebuild_links',
         // Callback function called from the XML sitemap settings page.
-        'settings callback' => '',
+        'settings callback' => 'mymodule_xmlsitemap_settings',
       ],
     ],
   ];
@@ -260,12 +255,12 @@ function hook_xmlsitemap_root_attributes_alter(array &$attributes, \Drupal\xmlsi
 function hook_query_xmlsitemap_generate_alter(QueryAlterableInterface $query) {
   $sitemap = $query->getMetaData('sitemap');
   if (!empty($sitemap->context['vocabulary'])) {
-    $node_condition = db_and();
+    $node_condition = $query->andConditionGroup();
     $node_condition->condition('type', 'taxonomy_term');
     $node_condition->condition('subtype', $sitemap->context['vocabulary']);
-    $normal_condition = db_and();
+    $normal_condition = $query->andConditionGroup();
     $normal_condition->condition('type', 'taxonomy_term', '<>');
-    $condition = db_or();
+    $condition = $query->orConditionGroup();
     $condition->condition($node_condition);
     $condition->condition($normal_condition);
     $query->condition($condition);
@@ -289,7 +284,7 @@ function hook_xmlsitemap_sitemap_operations() {
  *   The XML sitemap object that was deleted.
  */
 function hook_xmlsitemap_sitemap_delete(\Drupal\xmlsitemap\XmlSitemapInterface $sitemap) {
-  db_query("DELETE FROM {mytable} WHERE smid = '%s'", $sitemap->smid);
+  \Drupal::database()->query("DELETE FROM {mytable} WHERE smid = '%s'", $sitemap->smid);
 }
 
 /**

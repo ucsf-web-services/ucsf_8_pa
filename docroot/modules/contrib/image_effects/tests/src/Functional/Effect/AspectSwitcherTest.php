@@ -43,7 +43,7 @@ class AspectSwitcherTest extends ImageEffectsTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
 
     // Create 2 test image styles, one for landscape and one for portrait and
@@ -126,7 +126,7 @@ class AspectSwitcherTest extends ImageEffectsTestBase {
       '#width' => $original_landscape_image->getWidth(),
       '#height' => $original_landscape_image->getHeight(),
     ];
-    $this->assertEquals('<img src="' . $derivative_landscape_url . '" width="' . $this->effects['landscape']['data']['width'] . '" height="' . $this->effects['landscape']['data']['height'] . '" alt="" class="image-style-image-effects-test" />', $this->getImageTag($variables));
+    $this->assertRegExp("/\<img src=\"" . preg_quote($derivative_landscape_url, '/') . "\" width=\"{$this->effects['landscape']['data']['width']}\" height=\"{$this->effects['landscape']['data']['height']}\" alt=\"\" .*class=\"image\-style\-image\-effects\-test\" \/\>/", $this->getImageTag($variables));
     // Check that ::applyEffect returns expected dimensions.
     $dest_uri = $image_style->buildUri($original_landscape_uri);
     $this->assertTrue($image_style->createDerivative($original_landscape_uri, $dest_uri));
@@ -146,7 +146,7 @@ class AspectSwitcherTest extends ImageEffectsTestBase {
       '#width' => $original_portrait_image->getWidth(),
       '#height' => $original_portrait_image->getHeight(),
     ];
-    $this->assertEquals('<img src="' . $derivative_portrait_url . '" width="' . $this->effects['portrait']['data']['width'] . '" height="' . $this->effects['portrait']['data']['height'] . '" alt="" class="image-style-image-effects-test" />', $this->getImageTag($variables));
+    $this->assertRegExp("/\<img src=\"" . preg_quote($derivative_portrait_url, '/') . "\" width=\"{$this->effects['portrait']['data']['width']}\" height=\"{$this->effects['portrait']['data']['height']}\" alt=\"\" .*class=\"image\-style\-image\-effects\-test\" \/\>/", $this->getImageTag($variables));
     // Check that ::applyEffect returns expected dimensions.
     $dest_uri = $image_style->buildUri($original_portrait_uri);
     $image_style->createDerivative($original_portrait_uri, $dest_uri);
@@ -198,7 +198,7 @@ class AspectSwitcherTest extends ImageEffectsTestBase {
       '#width' => $original_portrait_image->getWidth(),
       '#height' => $original_portrait_image->getHeight(),
     ];
-    $this->assertEquals('<img src="' . $derivative_portrait_url . '" width="20" height="40" alt="" class="image-style-image-effects-test" />', $this->getImageTag($variables));
+    $this->assertRegExp("/\<img src=\"" . preg_quote($derivative_portrait_url, '/') . "\" width=\"20\" height=\"40\" alt=\"\" .*class=\"image\-style\-image\-effects\-test\" \/\>/", $this->getImageTag($variables));
     // Check that ::applyEffect returns expected dimensions.
     $dest_uri = $image_style->buildUri($original_portrait_uri);
     $image_style->createDerivative($original_portrait_uri, $dest_uri);

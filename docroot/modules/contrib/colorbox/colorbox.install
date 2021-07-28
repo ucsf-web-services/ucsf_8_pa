@@ -6,11 +6,18 @@
  */
 
 /**
+ * Implements hook_install().
+ */
+function colorbox_install() {
+  \Drupal::messenger()->addMessage(t('Thanks for installing Colorbox'));
+}
+
+/**
  * Implements hook_requirements().
  */
 function colorbox_requirements($phase) {
   if ($phase != 'runtime') {
-    return array();
+    return [];
   }
 
   $library = \Drupal::service('library.discovery')->getLibraryByName('colorbox', 'colorbox');

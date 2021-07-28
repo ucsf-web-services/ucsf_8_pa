@@ -42,6 +42,7 @@ class AggregatedFieldProperty extends ConfigurablePropertyBase {
     $form['type'] = [
       '#type' => 'radios',
       '#title' => $this->t('Aggregation type'),
+      '#description' => $this->t('Apart from the @union type, all types will result in just a single value.', ['@union' => $this->t('Union')]),
       '#options' => $this->getTypes(),
       '#default_value' => $configuration['type'],
       '#required' => TRUE,
@@ -88,6 +89,21 @@ class AggregatedFieldProperty extends ConfigurablePropertyBase {
     $selected = array_flip($configuration['fields']);
     $form['fields']['#options'] = array_intersect_key($field_options, $selected);
     $form['fields']['#options'] += array_diff_key($field_options, $selected);
+
+    // Make sure we do not remove nested fields (which can be added via config
+    // but won't be present in the UI).
+    $missing_properties = array_diff($configuration['fields'], array_keys($properties));
+    if ($missing_properties) {
+      foreach ($missing_properties as $combined_id) {
+        list(, $property_path) = Utility::splitCombinedId($combined_id);
+        if (strpos($property_path, ':')) {
+          $form['fields'][$combined_id] = [
+            '#type' => 'value',
+            '#value' => $combined_id,
+          ];
+        }
+      }
+    }
 
     return $form;
   }
@@ -151,6 +167,7 @@ class AggregatedFieldProperty extends ConfigurablePropertyBase {
           'min' => $this->t('Minimum'),
           'first' => $this->t('First'),
           'last' => $this->t('Last'),
+          'first_char' => $this->t('First letter'),
         ];
 
       case 'description':
@@ -163,6 +180,7 @@ class AggregatedFieldProperty extends ConfigurablePropertyBase {
           'min' => $this->t('The Minimum aggregation computes the numerically smallest contained field value.'),
           'first' => $this->t('The First aggregation will simply keep the first encountered field value.'),
           'last' => $this->t('The Last aggregation will keep the last encountered field value.'),
+          'first_char' => $this->t('The “First letter” aggregation uses just the first letter of the first encountered field value as the aggregated value. This can, for example, be used to build a Glossary view.'),
         ];
 
     }

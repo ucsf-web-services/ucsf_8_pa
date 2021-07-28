@@ -18,6 +18,7 @@ class AmpAdSense extends BasicTestCaseBase {
     'adsense',
     'amp',
     'node',
+    'metatag',
     'schema_metatag',
     'token',
     'views',

@@ -2,18 +2,18 @@
 
 namespace Drupal\acquia_contenthub\Controller;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Acquia\ContentHubClient\hmacv1\ResponseSigner;
-use Drupal\Component\Render\FormattableMarkup;
-use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\Response;
-use Drupal\Component\Serialization\Json;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\acquia_contenthub\Client\ClientManagerInterface;
 use Drupal\acquia_contenthub\ContentHubSubscription;
+use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Controller for Content Hub Imported Entities.
@@ -151,7 +151,7 @@ class ContentHubWebhookController extends ControllerBase {
     if ($webhook = Json::decode($webhook)) {
       $log_msg .= '(Request ID: @request_id - Entity: @uuid.) ';
       $context += [
-        '@request_id' => $webhook['requestid'],
+        '@request_id' => $webhook['requestid'] ?? 'NOT_FOUND',
         '@uuid' => $webhook['uuid'],
       ];
 

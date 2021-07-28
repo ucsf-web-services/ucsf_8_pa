@@ -3,8 +3,8 @@
 namespace Drupal\acquia_contenthub_subscriber\Form;
 
 use Drupal\Core\Entity\EntityConfirmFormBase;
-use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 
 /**
  * Builds the form to delete a ContentHubFilter.

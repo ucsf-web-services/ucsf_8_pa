@@ -22,24 +22,28 @@
  * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA 02110-1301 USA
  */
+namespace Pel\Test;
 
+use Exception;
 use lsolesen\pel\PelJpeg;
 use lsolesen\pel\PelExif;
 use lsolesen\pel\PelTiff;
 use lsolesen\pel\PelIfd;
 use lsolesen\pel\PelTag;
 use lsolesen\pel\PelEntryAscii;
+use PHPUnit\Framework\TestCase;
 
-class Bug3017880Test extends \PHPUnit_Framework_TestCase
+class Bug3017880Test extends TestCase
 {
-    function testThisDoesNotWorkAsExpected()
+
+    public function testThisDoesNotWorkAsExpected()
     {
         $filename = dirname(__FILE__) . '/images/bug3017880.jpg';
         try {
             $exif = null;
-            $success = 1; // return true by default, as this function may not resave the file, but it's still success
             $resave_file = 0;
             $jpeg = new PelJpeg($filename);
+            $this->assertInstanceOf('\lsolesen\pel\PelJpeg', $jpeg);
 
             // should all exif data on photo be cleared (gd and iu will always strip it anyway, so only
             // force strip if you know the image you're branding is an original)

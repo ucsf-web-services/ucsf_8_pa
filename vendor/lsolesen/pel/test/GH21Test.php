@@ -21,50 +21,47 @@
  * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA 02110-1301 USA
  */
+namespace Pel\Test;
 
 use lsolesen\pel\PelJpeg;
+use PHPUnit\Framework\TestCase;
 
-class GH21Test extends \PHPUnit_Framework_TestCase
+class GH21Test extends TestCase
 {
+
     protected $file;
 
-    function setUp()
+    public function setUp(): void
     {
         $this->file = dirname(__FILE__) . '/images/gh-21-tmp.jpg';
         $file = dirname(__FILE__) . '/images/gh-21.jpg';
         copy($file, $this->file);
     }
 
-    function tearDown()
+    public function tearDown(): void
     {
         unlink($this->file);
     }
 
-    function testThisDoesNotWorkAsExpected()
+    public function testThisDoesNotWorkAsExpected()
     {
         $scale = 0.75;
         $input_jpeg = new PelJpeg($this->file);
 
         $original = ImageCreateFromString($input_jpeg->getBytes());
+
+        $this->assertNotFalse($original, 'New image must not be false');
+
         $original_w = ImagesX($original);
         $original_h = ImagesY($original);
 
-        $scaled_w = $original_w * $scale;
-        $scaled_h = $original_h * $scale;
+        $scaled_w = (int) ($original_w * $scale);
+        $scaled_h = (int) ($original_h * $scale);
 
         $scaled = ImageCreateTrueColor($scaled_w, $scaled_h);
-        ImageCopyResampled(
-            $scaled,
-            $original,
-            0,
-            0, /* dst (x,y) */
-            0,
-            0, /* src (x,y) */
-            $scaled_w,
-            $scaled_h,
-            $original_w,
-            $original_h
-        );
+        $this->assertNotFalse($scaled, 'Resized image must not be false');
+
+        ImageCopyResampled($scaled, $original, 0, 0, 0, 0, $scaled_w, $scaled_h, $original_w, $original_h);
 
         $output_jpeg = new PelJpeg($scaled);
 

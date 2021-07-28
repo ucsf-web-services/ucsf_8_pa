@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Utility\LinkGeneratorInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\Component\Utility\Environment;
 
 /**
  * Implements the GeofieldMapSettingsForm controller.
@@ -61,13 +62,13 @@ class GeofieldMapSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#default_value' => $config->get('gmap_api_key'),
       '#title' => $this->t('Gmap Api Key (@gmap_api_link)', [
-        '@gmap_api_link' => $this->link->generate(t('Get a Key/Authentication for Google Maps Javascript Library'), Url::fromUri('https://developers.google.com/maps/documentation/javascript/get-api-key', [
+        '@gmap_api_link' => $this->link->generate($this->t('Get a Key/Authentication for Google Maps Javascript Library'), Url::fromUri('https://developers.google.com/maps/documentation/javascript/get-api-key', [
           'absolute' => TRUE,
           'attributes' => ['target' => 'blank'],
         ])),
       ]),
       '#description' => $this->t('A unique Gmap Api Key is required for both Google Mapping and Geocoding operations, all performed client-side by js.<br>@gmap_api_restrictions_link.', [
-        '@gmap_api_restrictions_link' => $this->link->generate(t('It might/should be restricted using the Website Domain / HTTP referrers method'), Url::fromUri('https://developers.google.com/maps/documentation/javascript/get-api-key#key-restrictions', [
+        '@gmap_api_restrictions_link' => $this->link->generate($this->t('It might/should be restricted using the Website Domain / HTTP referrers method'), Url::fromUri('https://developers.google.com/maps/documentation/javascript/get-api-key#key-restrictions', [
           'absolute' => TRUE,
           'attributes' => ['target' => 'blank'],
         ])),
@@ -78,10 +79,11 @@ class GeofieldMapSettingsForm extends ConfigFormBase {
     $form['gmap_api_localization'] = [
       '#type' => 'select',
       '#default_value' => $config->get('gmap_api_localization') ?: 'default',
+      '#placeholder' => $this->t('Input a valid Gmap API Key'),
       '#title' => $this->t('Gmap Api Localization'),
       '#options' => [
-        'default' => t('Default - Normal international Google Maps API load'),
-        'china' => t('Chinese - API Load for specific use in China'),
+        'default' => $this->t('Default - Normal international Google Maps API load'),
+        'china' => $this->t('Chinese - API Load for specific use in China'),
       ],
       '#description' => $this->t('Possible alternative logic for Google Maps Api load, in specific countries (i.e: China).'),
     ];
@@ -91,9 +93,17 @@ class GeofieldMapSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Geofield Map Theming Settings'),
     ];
 
+    $markers_location_description = $this->t("This location will reside under public or private directories and is where the files available for custom Marker Theming will be stored and searched by the Geofield Map Theming system.<br><u>Don't use any start / end trailing slash.</u><br>
+Hint: To accomplish configuration sync management among your different deploy environments, <u>you might force this for Git versioning with the following rules lines in your .gitignore file</u> (in case of Geofield Map default config values public:://geofieldmap_icons):<br>
+<br><code># Ignore Drupal\'s file directory<br>
+[path_to_drupal_root]/sites/*/files/*<br>
+# but allow versioning of geofieldmap_icons contents<br>
+![path_to_drupal_root]/sites/default/files/geofieldmap_icons/</code>");
+
     $form['theming']['markers_location'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Markers Icons Storage location'),
+      '#description' => $markers_location_description,
       '#attributes' => [
         'class' => ['markers-location'],
       ],
@@ -115,8 +125,16 @@ class GeofieldMapSettingsForm extends ConfigFormBase {
     $form['theming']['markers_location']['rel_path'] = [
       '#type' => 'textfield',
       '#title' => $this->t('- Relative Path'),
-      '#default_value' => !empty($config->get('theming.markers_location.rel_path')) ? $config->get('theming.markers_location.rel_path') : 'geofieldmap_markers',
-      '#placeholder' => $this->t("Don't use any start / end trailing slash"),
+      '#default_value' => !empty($config->get('theming.markers_location.rel_path')) ? $config->get('theming.markers_location.rel_path') : 'geofieldmap_icons',
+      '#placeholder' => 'geofieldmap_icons',
+    ];
+
+    $form['theming']['additional_markers_location'] = [
+      '#field_prefix' => Url::fromUri('base:', ['absolute' => TRUE])->toString(),
+      '#type' => 'textfield',
+      '#title' => $this->t('Additional Markers Icons Storage location'),
+      '#default_value' => !empty($config->get('theming.additional_markers_location')) ? $config->get('theming.additional_markers_location') : '',
+      '#description' => $this->t("Additional location where Markers Icon might be stored and would be found by the Geofield Map Theming system.<br><u>Note:</u>To accomplish configuration sync management, might point to a versioned folder into your code base."),
     ];
 
     $form['theming']['markers_extensions'] = [
@@ -130,7 +148,7 @@ class GeofieldMapSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Maximum file size'),
       '#default_value' => !empty($config->get('theming.markers_filesize')) ? $config->get('theming.markers_filesize') : '250 KB',
-      '#description' => t('Enter a value like "512" (bytes), "80 KB" (kilobytes) or "50 MB" (megabytes) in order to restrict the allowed file size. If left empty the file sizes will be limited only by PHP\'s maximum post and file upload sizes (current limit <strong>%limit</strong>).', ['%limit' => format_size(file_upload_max_size())]),
+      '#description' => $this->t('Enter a value like "512" (bytes), "80 KB" (kilobytes) or "50 MB" (megabytes) in order to restrict the allowed file size. If left empty the file sizes will be limited only by PHP\'s maximum post and file upload sizes (current limit <strong>%limit</strong>).', ['%limit' => format_size(Environment::getUploadMaxSize())]),
       '#size' => 10,
       '#element_validate' => ['\Drupal\file\Plugin\Field\FieldType\FileItem::validateMaxFilesize'],
     ];
@@ -156,7 +174,7 @@ class GeofieldMapSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Client Side WebStorage'),
       '#default_value' => !empty($config->get('geocoder.caching.clientside')) ? $config->get('geocoder.caching.clientside') : 'session_storage',
       '#description' => $this->t('The following option will activate caching of geocoding results on the client side, as far as possible at the moment (only Reverse Geocoding results).<br>This can highly reduce the amount of payload calls against the Google Maps Geocoder and Google Places webservices used by the module.<br>Please refer to official documentation on @html5_web_storage browsers capabilities and specifications.', [
-        '@html5_web_storage' => $this->link->generate(t('HTML5 Web Storage'), Url::fromUri('https://www.w3schools.com/htmL/html5_webstorage.asp', [
+        '@html5_web_storage' => $this->link->generate($this->t('HTML5 Web Storage'), Url::fromUri('https://www.w3schools.com/htmL/html5_webstorage.asp', [
           'absolute' => TRUE,
           'attributes' => ['target' => 'blank'],
         ])),
@@ -194,7 +212,7 @@ class GeofieldMapSettingsForm extends ConfigFormBase {
     $config->save();
 
     // Confirmation on form submission.
-    drupal_set_message($this->t('The Geofield Map configurations have been saved.'));
+    $this->messenger()->addMessage($this->t('The Geofield Map configurations have been saved.'));
   }
 
 }

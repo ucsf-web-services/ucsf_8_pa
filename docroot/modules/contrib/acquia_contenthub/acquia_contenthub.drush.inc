@@ -5,11 +5,11 @@
  * ContentHub Drush Commands.
  */
 
+use Drupal\acquia_contenthub\ContentHubEntitiesTracking;
 use Drupal\Component\Uuid\Uuid;
+use Drupal\Core\Form\FormState;
 use Drupal\Core\Url;
 use Drush\Log\LogLevel;
-use Drupal\Core\Form\FormState;
-use Drupal\acquia_contenthub\ContentHubEntitiesTracking;
 
 /**
  * Implements hook_drush_command().
@@ -139,54 +139,6 @@ function acquia_contenthub_drush_command() {
     'arguments' => [
       'api' => 'API Key',
       'secret' => 'Secret Key',
-    ],
-  ];
-
-  $items['acquia-contenthub-logs'] = [
-    'description' => 'View Historic entity logs from Content Hub',
-    'aliases' => ['ach-logs'],
-    'outputformat' => [
-      'default' => 'table',
-      'pipe-format' => 'list',
-      'field-default' => [
-        'timestamp',
-        'type',
-        'client',
-        'entity_uuid',
-        'status',
-        'request_id',
-        'id',
-        'message',
-      ],
-      'field-labels' => [
-        'timestamp' => dt('Timestamp'),
-        'type' => dt('Type'),
-        'client' => dt('Client'),
-        'entity_uuid' => dt('Entity UUID'),
-        'status' => dt('Status'),
-        'request_id' => dt('Request ID'),
-        'id' => dt('ID'),
-        'message' => dt('Message'),
-      ],
-      'output-data-type' => 'format-table',
-    ],
-    'arguments' => [
-      'api' => 'API Key',
-      'secret' => 'Secret Key',
-    ],
-    'options' => [
-      'query' => [
-        'description' => 'The Elastic Search Query to search for logs.',
-        'example_value' => '{"query": {"match_all": {}}}',
-      ],
-      'size' => [
-        'description' => 'The number of log entries to be listed.',
-        'example_value' => '5',
-      ],
-      'from' => [
-        'description' => 'The offset to start listing the log entries (Useful for pagination).',
-        'example_value' => '5',
-      ],
     ],
   ];
 
@@ -708,96 +660,6 @@ function drush_acquia_contenthub_reindex($api = NULL, $secret = NULL) {
   }
   else {
     return drush_user_abort();
-  }
-}
-
-/**
- * Obtains the Entity history logs for the Content Hub Subscription.
- *
- * These are log entries for entity-related requests executed by clients to
- * the content hub subscription and their status.
- *
- * @param string|null $api
- *   API Key.
- * @param string|null $secret
- *   Secret Key.
- *
- * @return mixed|false
- *   Drush Output.
- */
-function drush_acquia_contenthub_logs($api = NULL, $secret = NULL) {
-  /** @var \Drupal\acquia_contenthub\Client\ClientManager $client_manager */
-  $client_manager = \Drupal::service('acquia_contenthub.client_manager');
-
-  // If API/Secret Keys have been given, reset the connection to use those
-  // keys instead of the ones set in the configuration.
-  if (!empty($api) && !empty($secret)) {
-    $client_manager->resetConnection([
-      'api' => $api,
-      'secret' => $secret,
-    ]);
-  }
-
-  $options = [];
-  // Obtaining the limit.
-  $size = drush_get_option("size");
-  if (isset($size)) {
-    $size = (int) $size;
-    if ($size < 1 || $size > 1000) {
-      return drush_set_error(dt("The size has to be an integer from 1 to 1000."));
-    }
-    else {
-      $options['size'] = $size;
-    }
-  }
-
-  // Obtaining the offset.
-  $from = drush_get_option("from");
-  if (isset($from)) {
-    if (!is_numeric($from)) {
-      return drush_set_error(dt("The start offset has to be numeric starting from 0."));
-    }
-    else {
-      $options['from'] = $from;
-    }
-  }
-
-  // Obtaining the query.
-  $query = drush_get_option("query");
-  $query = !empty($query) ? $query : '';
-
-  // Execute the 'history' command.
-  if ($client_manager->isConnected()) {
-    $logs = $client_manager->createRequest('logs', [$query, $options]);
-  }
-  else {
-    return drush_set_error(dt('Error trying to connect to the Content Hub. Make sure this site is registered to Content hub.'));
-  }
-  if ($logs) {
-    $rows = [];
-    if (isset($logs['hits']['hits'])) {
-      foreach ($logs['hits']['hits'] as $log) {
-        $rows[] = [
-          'timestamp' => $log['_source']['timestamp'],
-          'type' => strtoupper($log['_source']['type']),
-          'client' => $log['_source']['client'],
-          'entity_uuid' => $log['_source']['entity'],
-          'status' => strtoupper($log['_source']['status']),
-          'request_id' => $log['_source']['request_id'],
-          'id' => $log['_source']['id'],
-          'message' => $log['_source']['message'],
-        ];
-      }
-    }
-
-    // Sort results DESC by 'timestamp' before presenting.
-    usort($rows, function ($a, $b) {
-      return strcmp($b["timestamp"], $a["timestamp"]);
-    });
-    return $rows;
-  }
-  else {
-    return drush_set_error(dt("Error trying to print the entity logs."));
   }
 }
 

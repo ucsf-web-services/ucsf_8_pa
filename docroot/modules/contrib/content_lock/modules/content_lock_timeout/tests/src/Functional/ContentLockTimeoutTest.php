@@ -59,7 +59,7 @@ class ContentLockTimeoutTest extends BrowserTestBase {
   protected $permissions2;
 
   /**
-   * User with permission to administer entites.
+   * User with permission to administer entities.
    *
    * @var \Drupal\user\UserInterface
    */

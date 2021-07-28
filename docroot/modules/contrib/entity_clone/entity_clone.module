@@ -15,11 +15,14 @@ use Drupal\entity_clone\EntityClone\Config\ConfigEntityCloneBase;
 use Drupal\entity_clone\EntityClone\Config\ConfigEntityCloneFormBase;
 use Drupal\entity_clone\EntityClone\Config\ConfigWithFieldEntityClone;
 use Drupal\entity_clone\EntityClone\Config\FieldConfigEntityClone;
+use Drupal\entity_clone\EntityClone\Config\MenuEntityClone;
+use Drupal\entity_clone\EntityClone\Config\MenuEntityCloneForm;
 use Drupal\entity_clone\EntityClone\Content\ContentEntityCloneBase;
 use Drupal\entity_clone\EntityClone\Content\ContentEntityCloneFormBase;
 use Drupal\entity_clone\EntityClone\Content\FileEntityClone;
 use Drupal\entity_clone\EntityClone\Content\TaxonomyTermEntityClone;
 use Drupal\entity_clone\EntityClone\Content\UserEntityClone;
+use Drupal\entity_clone\EntityClone\Config\LayoutBuilderEntityClone;
 
 /**
  * Implements hook_help().
@@ -68,6 +71,16 @@ function entity_clone_entity_type_build(array &$entity_types) {
     'taxonomy_term' => [
       'entity_clone' => TaxonomyTermEntityClone::class,
     ],
+    'menu' => [
+      'entity_clone_form' => MenuEntityCloneForm::class,
+      'entity_clone' => MenuEntityClone::class,
+    ],
+    'taxonomy_vocabulary' => [
+      'entity_clone' => ConfigWithFieldEntityClone::class,
+    ],
+    'entity_view_display' => [
+      'entity_clone' => \Drupal::moduleHandler()->moduleExists('layout_builder') ? LayoutBuilderEntityClone::class : NULL,
+    ],
   ];
 
   /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
@@ -113,7 +126,8 @@ function entity_clone_entity_operation(EntityInterface $entity) {
       'clone' => [
         'title' => t('Clone'),
         'weight' => 50,
-        'url' => $entity->toUrl('clone-form'),
+        'url' => $entity->toUrl('clone-form')
+          ->mergeOptions(['query' => \Drupal::destination()->getAsArray()]),
       ],
     ];
   }

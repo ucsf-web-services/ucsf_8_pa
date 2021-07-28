@@ -73,6 +73,8 @@ interface SlickInterface extends ConfigEntityInterface {
    *
    * @param string $setting_name
    *   The setting name.
+   * @param string $value
+   *   The setting value.
    *
    * @return $this
    *   The class instance that this method is called on.

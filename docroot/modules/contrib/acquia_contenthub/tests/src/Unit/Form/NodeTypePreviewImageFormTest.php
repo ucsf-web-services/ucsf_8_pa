@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\acquia_contenthub\Unit\Form;
 
+use Drupal\acquia_contenthub\Form\NodeTypePreviewImageForm;
 use Drupal\Component\DependencyInjection\Container;
 use Drupal\Tests\UnitTestCase;
-use Drupal\acquia_contenthub\Form\NodeTypePreviewImageForm;
 
 require_once __DIR__ . '/../Polyfill/Drupal.php';
 
@@ -81,6 +81,7 @@ class NodeTypePreviewImageFormTest extends UnitTestCase {
       ->method('getFieldDefinitions')
       ->with('node', 'article')
       ->willReturn([]);
+    $preview_image_form->setStringTranslation($this->getStringTranslationStub());
 
     $form = $preview_image_form->getForm('article');
     $this->assertRegexp('/no image field/', $form['no_image_field']['#markup']);
@@ -93,6 +94,8 @@ class NodeTypePreviewImageFormTest extends UnitTestCase {
    */
   public function testGetFormWithNoStyle() {
     $preview_image_form = new NodeTypePreviewImageForm($this->contenthubEntityManager, $this->entityTypeManager, $this->entityFieldManager);
+    $preview_image_form->setStringTranslation($this->getStringTranslationStub());
+
     $field_definitions = [
       'field_description' => $this->getFieldDefinition('description'),
       'field_image' => $this->getFieldDefinition('image'),
@@ -117,6 +120,8 @@ class NodeTypePreviewImageFormTest extends UnitTestCase {
    */
   public function testGetFormWithDefaultStyle() {
     $preview_image_form = new NodeTypePreviewImageForm($this->contenthubEntityManager, $this->entityTypeManager, $this->entityFieldManager);
+    $preview_image_form->setStringTranslation($this->getStringTranslationStub());
+
     $field_definitions = [
       'field_description' => $this->getFieldDefinition('description'),
       'field_image' => $this->getFieldDefinition('image'),
@@ -145,6 +150,8 @@ class NodeTypePreviewImageFormTest extends UnitTestCase {
    */
   public function testGetFormWithFieldAndStyle() {
     $preview_image_form = new NodeTypePreviewImageForm($this->contenthubEntityManager, $this->entityTypeManager, $this->entityFieldManager);
+    $preview_image_form->setStringTranslation($this->getStringTranslationStub());
+
     $field_image_definition = $this->getFieldDefinition('image');
     $field_definitions = [
       'field_description' => $this->getFieldDefinition('description'),
@@ -279,6 +286,7 @@ class NodeTypePreviewImageFormTest extends UnitTestCase {
       ->method('save');
 
     $preview_image_form = new NodeTypePreviewImageForm($this->contenthubEntityManager, $this->entityTypeManager, $this->entityFieldManager);
+    $preview_image_form->setStringTranslation($this->getStringTranslationStub());
     $preview_image_form->saveSettings('article', ['field' => 'some_field', 'style' => NodeTypePreviewImageForm::PREVIEW_IMAGE_ADD_DEFAULT_KEY]);
   }
 

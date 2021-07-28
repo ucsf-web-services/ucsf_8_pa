@@ -3,13 +3,13 @@
 namespace Drupal\acquia_contenthub\Form;
 
 use Drupal\acquia_contenthub\Client\ClientManagerInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Form\ConfigFormBase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\acquia_contenthub\ContentHubSubscription;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Component\Uuid\Uuid;
-use Drupal\acquia_contenthub\ContentHubSubscription;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines the form to configure the Content Hub connection settings.
@@ -131,7 +131,7 @@ class ContentHubSettingsForm extends ConfigFormBase {
       '#default' => 'V1',
       '#description' => 'Choose which HMAC version your subscribers and publisher talk. Version 1 Is the only supported option, Version 2 is coming soon.',
       '#attributes' => [
-        'disabled' => TRUE
+        'disabled' => TRUE,
       ],
     ];
 

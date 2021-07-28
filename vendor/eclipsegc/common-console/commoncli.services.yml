@@ -1,0 +1,129 @@
+services:
+  event_dispatcher:
+    class: Symfony\Component\EventDispatcher\EventDispatcher
+    public: true
+  file_system:
+    class: Symfony\Component\Filesystem\Filesystem
+    public: true
+  common_console_application:
+    class: Symfony\Component\Console\Application
+    factory: ['EclipseGc\CommonConsole\IoFactory', 'createApplication']
+    arguments: ['@event_dispatcher']
+    public: true
+  console.input:
+    class: Symfony\Component\Console\Input\ArgvInput
+    public: true
+  console.output:
+    class: Symfony\Component\Console\Output\ConsoleOutput
+    factory: ['EclipseGc\CommonConsole\IoFactory', 'createOutput']
+    arguments: ['@event_dispatcher', '@console.input']
+    public: true
+  console.logger:
+    class: Symfony\Component\Console\Logger\ConsoleLogger
+    public: true
+    arguments: ['@console.output']
+  question.finder:
+    class: EclipseGc\CommonConsole\QuestionFactory
+    arguments: ['@service_container']
+  process.runner:
+    class: EclipseGc\CommonConsole\ProcessRunner
+    arguments: ['@console.input']
+  platform.storage:
+    class: EclipseGc\CommonConsole\Platform\PlatformStorage
+    arguments: ['@file_system', '@event_dispatcher', '@platform.factory', '@console.logger']
+  platform.factory:
+    class: EclipseGc\CommonConsole\Platform\PlatformFactory
+    arguments: ['@event_dispatcher', '@process.runner', '@service_container']
+  config.storage:
+    class: EclipseGc\CommonConsole\Config\ConfigStorage
+    arguments: ['@file_system']
+    public: true
+  alias.finder:
+    class: EclipseGc\CommonConsole\EventSubscriber\ConsoleCommand\AliasFinder
+    arguments: ['@event_dispatcher']
+    tags:
+      - { name: kernel.event_subscriber }
+  platform.bootstrapper:
+    class: EclipseGc\CommonConsole\EventSubscriber\ConsoleCommand\Bootstrapper
+    tags:
+      - { name: kernel.event_subscriber }
+  finder.default:
+    class: EclipseGc\CommonConsole\EventSubscriber\FindAlias\DefaultFinder
+    arguments: ['@platform.storage']
+    tags:
+      - { name: kernel.event_subscriber }
+
+  # Input definition.
+  input.definition.alias:
+    class: EclipseGc\CommonConsole\EventSubscriber\InputDefinition\AliasArgument
+    tags:
+      - { name: kernel.event_subscriber }
+  input.definition.uri:
+    class: EclipseGc\CommonConsole\EventSubscriber\InputDefinition\UriOption
+    tags:
+      - { name: kernel.event_subscriber }
+  input.definition.bare:
+    class: EclipseGc\CommonConsole\EventSubscriber\InputDefinition\BareOutputOption
+    tags:
+      - { name: kernel.event_subscriber }
+
+  # Output formatting.
+  formatting.output.default:
+    class: EclipseGc\CommonConsole\EventSubscriber\OutputFormatterStyle\DefaultOutputFormatterStyle
+    tags:
+      - { name: kernel.event_subscriber }
+
+  # Platform definitions.
+  platform.defaults:
+    class: EclipseGc\CommonConsole\EventSubscriber\Platform\PlatformSubscriberDefaults
+    tags:
+      - { name: kernel.event_subscriber }
+
+  # Platform Bootstraps
+  bootstrap.drupal:
+    class: EclipseGc\CommonConsole\EventSubscriber\Bootstrap\Drupal
+    arguments: ['%autoloader%']
+    tags:
+      - { name: kernel.event_subscriber }
+
+  # Add Platform to Command expectation validation
+  validate.platform.any:
+    class: EclipseGc\CommonConsole\EventSubscriber\AddPlatform\AnyPlatform
+    tags:
+      - { name: kernel.event_subscriber }
+  validate.platform.id:
+    class: EclipseGc\CommonConsole\EventSubscriber\AddPlatform\PlatformIdMatch
+    tags:
+      - { name: kernel.event_subscriber }
+  validate.platform.instanceof:
+    class: EclipseGc\CommonConsole\EventSubscriber\AddPlatform\PlatformIsInstanceOf
+    tags:
+      - { name: kernel.event_subscriber }
+
+  # Commands
+  command.platform.create:
+    class: EclipseGc\CommonConsole\Command\PlatformCreate
+    arguments: ['@event_dispatcher', '@platform.storage', '@platform.factory', '@question.finder']
+    tags:
+      - { name: common_console_command }
+  command.platform.describe:
+    class: EclipseGc\CommonConsole\Command\PlatformDescribe
+    arguments: ['@platform.storage']
+    tags:
+      - { name: common_console_command }
+  command.platform.list:
+    class: EclipseGc\CommonConsole\Command\PlatformList
+    arguments: ['@platform.storage']
+    tags:
+      - { name: common_console_command }
+  command.platform.delete:
+    class: EclipseGc\CommonConsole\Command\PlatformDelete
+    arguments: ['@platform.storage']
+    tags:
+      - { name: common_console_command }
+  command.platform.sites:
+    class: EclipseGc\CommonConsole\Command\PlatformSites
+    public: true
+    arguments: ['@event_dispatcher']
+    tags:
+      - { name: common_console_command }

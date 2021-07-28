@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 
 namespace {
 
@@ -20,24 +21,6 @@ namespace {
 
   }
 
-  if (!function_exists('t')) {
-
-    /**
-     * Mock Drupal's t function.
-     *
-     * @param string $string
-     *   String to be translated.
-     * @param array $args
-     *   An array in the form ['from' => 'to', ...].
-     *
-     * @return string
-     *   Return value.
-     */
-    function t($string, array $args = []) {
-      return strtr($string, $args);
-    }
-
-  }
 
   if (!function_exists('image_style_options')) {
 

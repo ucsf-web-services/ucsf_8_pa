@@ -37,18 +37,15 @@ xmlsitemap.settings:
     clean_url:
       type: integer
       label: 'Insert clean urls into sitemap'
-    cron_threshold_error:
-      type: integer
-      label: 'Threshold error for cron job'
-    cron_threshold_warning:
-      type: integer
-      label: 'Threshold warning for cron job'
     disable_cron_regeneration:
       type: boolean
       label: 'Disable cron generation of sitemap files'
     i18n_selection_mode:
       type: string
       label: 'Language selection mode'
+    metatag_exclude_noindex:
+      type: boolean
+      label: 'Exclude individual content that has the Robots meta tag with <em>Prevents search engines from indexing this page</em>.'
 
 xmlsitemap.settings.*.*:
   type: config_object
@@ -64,7 +61,7 @@ xmlsitemap.settings.*.*:
       type: integer
       label: 'Change frequency of the bundle'
 
-xmlsitemap.*:
+xmlsitemap.xmlsitemap.*:
   type: config_entity
   label: 'Sitemap'
   mapping:

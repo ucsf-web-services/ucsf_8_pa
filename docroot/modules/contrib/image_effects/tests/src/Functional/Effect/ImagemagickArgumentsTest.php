@@ -63,7 +63,7 @@ class ImagemagickArgumentsTest extends ImageEffectsTestBase {
       '#width' => $image->getWidth(),
       '#height' => $image->getHeight(),
     ];
-    $this->assertEquals('<img src="' . $derivative_url . '" width="640" height="480" alt="" class="image-style-image-effects-test" />', $this->getImageTag($variables));
+    $this->assertRegExp("/\<img src=\"" . preg_quote($derivative_url, '/') . "\" width=\"640\" height=\"480\" alt=\"\" .*class=\"image\-style\-image\-effects\-test\" \/\>/", $this->getImageTag($variables));
 
     // Create derivative image.
     $this->testImageStyle->createDerivative($original_uri, $derivative_uri);
@@ -99,7 +99,7 @@ class ImagemagickArgumentsTest extends ImageEffectsTestBase {
       '#width' => $image->getWidth(),
       '#height' => $image->getHeight(),
     ];
-    $this->assertEquals('<img src="' . $derivative_url . '" alt="" class="image-style-image-effects-test" />', $this->getImageTag($variables));
+    $this->assertRegExp("/\<img src=\"" . preg_quote($derivative_url, '/') . "\" alt=\"\" .*class=\"image\-style\-image\-effects\-test\" \/\>/", $this->getImageTag($variables));
 
     // Create derivative image.
     $this->testImageStyle->createDerivative($original_uri, $derivative_uri);
@@ -137,7 +137,7 @@ class ImagemagickArgumentsTest extends ImageEffectsTestBase {
       '#width' => $image->getWidth(),
       '#height' => $image->getHeight(),
     ];
-    $this->assertEquals('<img src="' . $derivative_url . '" width="320" height="120" alt="" class="image-style-image-effects-test" />', $this->getImageTag($variables));
+    $this->assertRegExp("/\<img src=\"" . preg_quote($derivative_url, '/') . "\" width=\"320\" height=\"120\" alt=\"\" .*class=\"image\-style\-image\-effects\-test\" \/\>/", $this->getImageTag($variables));
 
     // Remove effect.
     $this->removeEffectFromTestStyle($uuid);
@@ -166,7 +166,7 @@ class ImagemagickArgumentsTest extends ImageEffectsTestBase {
       '#width' => $image->getWidth(),
       '#height' => $image->getHeight(),
     ];
-    $this->assertEquals('<img src="' . $derivative_url . '" width="64" height="48" alt="" class="image-style-image-effects-test" />', $this->getImageTag($variables));
+    $this->assertRegExp("/\<img src=\"" . preg_quote($derivative_url, '/') . "\" width=\"64\" height=\"48\" alt=\"\" .*class=\"image\-style\-image\-effects\-test\" \/\>/", $this->getImageTag($variables));
 
     // Remove effect.
     $this->removeEffectFromTestStyle($uuid);

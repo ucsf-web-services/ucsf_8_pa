@@ -2,6 +2,7 @@
 
 namespace Drupal\views_rss\Plugin\views\row;
 
+use Drupal\Core\Link;
 use Drupal\views\Plugin\views\row\RowPluginBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
@@ -99,7 +100,7 @@ class RssFields extends RowPluginBase {
             }
             // Add help link if provided.
             if (isset($definition['help']) && $definition['help']) {
-              $form_item['#description'] .= ' ' . \Drupal::l('[?]', Url::fromUri($definition['help']), array('attributes' => array('title' => t('Need more information?'))));
+              $form_item['#description'] .= ' ' . Link::fromTextAndUrl('[?]', Url::fromUri($definition['help']), array('attributes' => array('title' => t('Need more information?'))))->toString();
             }
             // Check if element should be displayed in a subgroup.
             if (isset($definition['group']) && $definition['group']) {
@@ -156,7 +157,7 @@ class RssFields extends RowPluginBase {
     if (!empty($field_ids)) {
       foreach ($field_ids as $field_id) {
         // Render the final field value.
-        $rendered_fields[$field_id] = $this->view->field[$field_id]->theme($row);
+        $rendered_fields[$field_id] = $this->getField($row->index, $field_id);
         // Also let's keep raw value for further processing.
         $raw_fields[$field_id] = array();
         if (method_exists($this->view->field[$field_id], 'getItems')) {
@@ -289,9 +290,20 @@ class RssFields extends RowPluginBase {
         // Special processing for title, description and link elements, as these
         // are hardcoded both in template_preprocess_views_view_row_rss() and in
         // views-view-row-rss.html.twig, and we try to keep the compatibility.
-        if ($element == 'title' || $element == 'description' || $element == 'link') {
+        if ($element === 'title' || $element === 'link') {
           $rss_element = reset($rss_elements);
           $item->$element = $rss_element['value'];
+        }
+        // template_preprocess_views_view_row_rss() expects the description to
+        // be a renderable array.
+        elseif ($element === 'description') {
+          $rss_element = reset($rss_elements);
+          if (is_string($rss_element['value'])) {
+            $item->$element = ['#markup' => $rss_element['value']];
+          }
+          else {
+            $item->$element = $rss_element['value'];
+          }
         }
         // All other elements are custom and should go into $item->elements.
         else {

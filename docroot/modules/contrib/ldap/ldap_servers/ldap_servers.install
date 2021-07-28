@@ -119,3 +119,11 @@ function ldap_servers_update_8304() {
   }
   return t('All server configuration attributes are forced to lowercase. Note that exporting this state can contain configuration overrides. Please review.');
 }
+
+
+/**
+ * Removal of double-escaping.
+ */
+function ldap_servers_update_8305() {
+  return t('Escaping of field data now relies solely on Twig auto-escaping. If you have created custom code make sure it takes this into account. See https://www.drupal.org/project/ldap/issues/2969097 for details.');
+}

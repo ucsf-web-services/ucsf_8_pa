@@ -21,36 +21,41 @@
  * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA 02110-1301 USA
  */
+namespace Pel\Test;
 
+use PHPUnit\Framework\TestCase;
 use lsolesen\pel\PelDataWindow;
-use lsolesen\pel\PelJpeg;
 use lsolesen\pel\PelEntryWindowsString;
+use lsolesen\pel\PelExif;
+use lsolesen\pel\PelIfd;
+use lsolesen\pel\PelJpeg;
 use lsolesen\pel\PelTag;
+use lsolesen\pel\PelTiff;
 
-class GH16Test extends \PHPUnit_Framework_TestCase
+class GH16Test extends TestCase
 {
+
     protected $file;
 
-    function setUp()
+    protected function setUp(): void
     {
         $this->file = dirname(__FILE__) . '/images/gh-16-tmp.jpg';
         $file = dirname(__FILE__) . '/images/gh-16.jpg';
         copy($file, $this->file);
     }
 
-    function tearDown()
+    public function tearDown(): void
     {
         unlink($this->file);
     }
 
-    function testThisDoesNotWorkAsExpected()
+    public function testThisDoesNotWorkAsExpected()
     {
         $subject = "Превед, медвед!";
 
         $data = new PelDataWindow(file_get_contents($this->file));
 
         if (PelJpeg::isValid($data)) {
-
             $jpeg = new PelJpeg();
             $jpeg->load($data);
             $exif = $jpeg->getExif();

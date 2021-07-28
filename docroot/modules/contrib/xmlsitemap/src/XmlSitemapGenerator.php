@@ -2,12 +2,20 @@
 
 namespace Drupal\xmlsitemap;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Utility\Bytes;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Database\Connection;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\File\Exception\DirectoryNotReadyException;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Site\Settings;
 use Drupal\Core\State\StateInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Psr\Log\LoggerInterface;
 
@@ -18,6 +26,8 @@ use Psr\Log\LoggerInterface;
  *   and start using the 'xmlsitemap_generator' service.
  */
 class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
+
+  use StringTranslationTrait;
 
   /**
    * Aliases for links.
@@ -30,24 +40,20 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
    * Last used language.
    *
    * @var string
-   *
-   * @codingStandardsIgnoreStart
    */
-  public static $last_language;
+  public static $lastLanguage;
 
   /**
    * Memory used before generation process.
    *
    * @var int
    */
-  public static $memory_start;
+  public static $memoryStart;
 
   /**
    * The xmlsitemap.settings config object.
    *
    * @var \Drupal\Core\Config\Config
-   *
-   * @codingStandardsIgnoreEnd
    */
   protected $config;
 
@@ -80,6 +86,41 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
   protected $moduleHandler;
 
   /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * The database connection.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $connection;
+
+  /**
+   * The messenger service.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
+   * The file system.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
+
+  /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $time;
+
+  /**
    * Constructs a XmlSitemapGenerator object.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -92,34 +133,49 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
    *   A logger instance.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
    *   The module handler.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   * @param \Drupal\Core\Database\Connection $connection
+   *   The database connection.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The messenger service.
+   * @param \Drupal\Core\File\FileSystemInterface $file_system
+   *   The file system.
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   The time service.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, StateInterface $state, LanguageManagerInterface $language_manager, LoggerInterface $logger, ModuleHandlerInterface $module_handler) {
+  public function __construct(ConfigFactoryInterface $config_factory, StateInterface $state, LanguageManagerInterface $language_manager, LoggerInterface $logger, ModuleHandlerInterface $module_handler, EntityTypeManagerInterface $entity_type_manager, Connection $connection, MessengerInterface $messenger, FileSystemInterface $file_system, TimeInterface $time) {
     $this->config = $config_factory->getEditable('xmlsitemap.settings');
     $this->state = $state;
     $this->languageManager = $language_manager;
     $this->logger = $logger;
     $this->moduleHandler = $module_handler;
+    $this->entityTypeManager = $entity_type_manager;
+    $this->connection = $connection;
+    $this->messenger = $messenger;
+    $this->fileSystem = $file_system;
+    $this->time = $time;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getPathAlias($path, $language) {
-    $query = db_select('url_alias', 'u');
-    $query->fields('u', ['source', 'alias']);
+    $query = $this->connection->select('path_alias', 'u');
+    $query->fields('u', ['path', 'alias']);
     if (!isset(static::$aliases)) {
       $query->condition('langcode', LanguageInterface::LANGCODE_NOT_SPECIFIED, '=');
       static::$aliases[LanguageInterface::LANGCODE_NOT_SPECIFIED] = $query->execute()->fetchAllKeyed();
     }
-    if ($language != LanguageInterface::LANGCODE_NOT_SPECIFIED && static::$last_language != $language) {
-      unset(static::$aliases[static::$last_language]);
+    if ($language !== LanguageInterface::LANGCODE_NOT_SPECIFIED && static::$lastLanguage != $language) {
+      unset(static::$aliases[static::$lastLanguage]);
       $query->condition('langcode', $language, '=');
-      $query->orderBy('pid');
+      $query->orderBy('id');
       static::$aliases[$language] = $query->execute()->fetchAllKeyed();
-      static::$last_language = $language;
+      static::$lastLanguage = $language;
     }
 
-    if ($language != LanguageInterface::LANGCODE_NOT_SPECIFIED && isset(static::$aliases[$language][$path])) {
+    if ($language !== LanguageInterface::LANGCODE_NOT_SPECIFIED && isset(static::$aliases[$language][$path])) {
       return static::$aliases[$language][$path];
     }
     elseif (isset(static::$aliases[LanguageInterface::LANGCODE_NOT_SPECIFIED][$path])) {
@@ -139,9 +195,7 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
 
     if ($this->state->get('xmlsitemap_developer_mode')) {
       $this->logger->notice('Starting XML sitemap generation. Memory usage: @memory-peak.', [
-        [
-          '@memory-peak' => format_size(memory_get_peak_usage(TRUE)),
-        ],
+        '@memory-peak' => format_size(memory_get_peak_usage(TRUE)),
       ]);
     }
   }
@@ -151,10 +205,10 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
    */
   public function getMemoryUsage($start = FALSE) {
     $current = memory_get_peak_usage(TRUE);
-    if (!isset(self::$memory_start) || $start) {
-      self::$memory_start = $current;
+    if (!isset(self::$memoryStart) || $start) {
+      self::$memoryStart = $current;
     }
-    return $current - self::$memory_start;
+    return $current - self::$memoryStart;
   }
 
   /**
@@ -171,7 +225,7 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
 
       // Add memory for storing the url aliases.
       if ($this->config->get('prefetch_aliases')) {
-        $aliases = db_query("SELECT COUNT(pid) FROM {url_alias}")->fetchField();
+        $aliases = $this->connection->query("SELECT COUNT(id) FROM {path_alias}")->fetchField();
         $optimal_limit += $aliases * 250;
       }
     }
@@ -197,17 +251,10 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
    * {@inheritdoc}
    */
   public function generatePage(XmlSitemapInterface $sitemap, $page) {
-    try {
-      $writer = new XmlSitemapWriter($sitemap, $page);
-      $writer->startDocument();
-      $writer->generateXML();
-      $writer->endDocument();
-    }
-    catch (Exception $e) {
-      $this->logger->error($e);
-      throw $e;
-    }
-
+    $writer = new XmlSitemapWriter($sitemap, $page);
+    $writer->startDocument();
+    $this->generateChunk($sitemap, $writer, $page);
+    $writer->endDocument();
     return $writer->getSitemapElementCount();
   }
 
@@ -220,7 +267,7 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
     $url_options = $sitemap->uri['options'];
     $url_options += [
       'absolute' => TRUE,
-      'base_url' => rtrim($this->state->get('xmlsitemap_base_url'), '/'),
+      'base_url' => rtrim(Settings::get('xmlsitemap_base_url', $this->state->get('xmlsitemap_base_url')), '/'),
       'language' => $this->languageManager->getDefaultLanguage(),
       // @todo Figure out a way to bring back the alias preloading optimization.
       // 'alias' => $this->config->get('prefetch_aliases'),
@@ -230,9 +277,9 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
     $last_url = '';
     $link_count = 0;
 
-    $query = db_select('xmlsitemap', 'x');
+    $query = $this->connection->select('xmlsitemap', 'x');
     $query->fields('x', [
-      'loc', 'type', 'subtype', 'lastmod', 'changefreq', 'changecount', 'priority', 'language', 'access', 'status',
+      'loc', 'type', 'subtype', 'id', 'lastmod', 'changefreq', 'changecount', 'priority', 'language', 'access', 'status',
     ]);
     $query->condition('x.access', 1);
     $query->condition('x.status', 1);
@@ -247,14 +294,24 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
     $links = $query->execute();
 
     while ($link = $links->fetchAssoc()) {
+      // Preserve the language code for hook_xmlsitemap_element_alter().
+      $link['langcode'] = $link['language'];
+
       $link['language'] = $link['language'] != LanguageInterface::LANGCODE_NOT_SPECIFIED ? xmlsitemap_language_load($link['language']) : $url_options['language'];
       $link_options = [
         'language' => $link['language'],
         'xmlsitemap_link' => $link,
         'xmlsitemap_sitemap' => $sitemap,
       ];
+
+      // Ensure every link starts with a slash.
+      // @see \Drupal\Core\Url::fromInternalUri()
+      if ($link['loc'][0] !== '/') {
+        trigger_error("The XML sitemap link path {$link['loc']} for {$link['type']} {$link['id']} is invalid because it does not start with a slash.", E_USER_ERROR);
+        $link['loc'] = '/' . $link['loc'];
+      }
+
       // @todo Add a separate hook_xmlsitemap_link_url_alter() here?
-      $link['loc'] = empty($link['loc']) ? '/' : $link['loc'];
       $link_url = Url::fromUri('internal:' . $link['loc'], $link_options + $url_options)->toString();
 
       // Skip this link if it was a duplicate of the last one.
@@ -276,8 +333,8 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
         // If the link has a lastmod value, update the changefreq so that links
         // with a short changefreq but updated two years ago show decay.
         // We use abs() here just incase items were created on this same cron
-        // run because lastmod would be greater than REQUEST_TIME.
-        $link['changefreq'] = (abs(REQUEST_TIME - $link['lastmod']) + $link['changefreq']) / 2;
+        // run because lastmod would be greater than the request time.
+        $link['changefreq'] = (abs($this->time->getRequestTime() - $link['lastmod']) + $link['changefreq']) / 2;
       }
       if ($link['changefreq']) {
         $element['changefreq'] = xmlsitemap_get_changefreq($link['changefreq']);
@@ -292,7 +349,7 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
       // @todo Should this be moved to XMLSitemapWriter::writeSitemapElement()?
       $this->moduleHandler->alter('xmlsitemap_element', $element, $link, $sitemap);
 
-      $writer->writeSitemapElement('url', $element);
+      $writer->writeElement('url', $element);
     }
 
     return $link_count;
@@ -301,43 +358,73 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
   /**
    * {@inheritdoc}
    */
-  public function generateIndex(XmlSitemapInterface $sitemap) {
-    try {
-      $writer = new XmlSitemapIndexWriter($sitemap);
-      $writer->startDocument();
-      $writer->generateXML();
-      $writer->endDocument();
-    }
-    catch (Exception $e) {
-      $this->logger->error($e);
-      throw $e;
+  public function generateIndex(XmlSitemapInterface $sitemap, $pages = NULL) {
+    $writer = new XmlSitemapWriter($sitemap, 'index');
+    $writer->startDocument();
+
+    $lastmod_format = $this->config->get('lastmod_format');
+
+    $url_options = $sitemap->uri['options'];
+    $url_options += [
+      'absolute' => TRUE,
+      'xmlsitemap_base_url' => $this->state->get('xmlsitemap_base_url'),
+      'language' => $this->languageManager->getDefaultLanguage(),
+      'alias' => TRUE,
+    ];
+
+    if (!isset($pages)) {
+      $pages = $sitemap->getChunks();
     }
 
+    for ($current_page = 1; $current_page <= $pages; $current_page++) {
+      $url_options['query']['page'] = $current_page;
+      $element = [
+        'loc' => Url::fromRoute('xmlsitemap.sitemap_xml', [], $url_options)->toString(),
+        // @todo Use the actual lastmod value of the chunk file.
+        'lastmod' => gmdate($lastmod_format, $this->time->getRequestTime()),
+      ];
+
+      // @todo Should the element be altered?
+      $writer->writeElement('sitemap', $element);
+    }
+
+    $writer->endDocument();
     return $writer->getSitemapElementCount();
   }
 
   /**
    * {@inheritdoc}
    */
-  public function regenerateBatchGenerate($smid, array &$context) {
+  public function regenerateBatchGenerate($smid, &$context) {
     if (!isset($context['sandbox']['sitemap'])) {
-      $sitemap = xmlsitemap_sitemap_load($smid);
-      $context['sandbox']['sitemap'] = $sitemap;
+      $context['sandbox']['sitemap'] = $this->entityTypeManager->getStorage('xmlsitemap')->load($smid);
       $context['sandbox']['sitemap']->setChunks(1);
       $context['sandbox']['sitemap']->setLinks(0);
       $context['sandbox']['max'] = XMLSITEMAP_MAX_SITEMAP_LINKS;
 
       // Clear the cache directory for this sitemap before generating any files.
-      xmlsitemap_check_directory($context['sandbox']['sitemap']);
+      if (!xmlsitemap_check_directory($context['sandbox']['sitemap'])) {
+        throw new DirectoryNotReadyException("The sitemap directory could not be created or is not writable.");
+      }
       xmlsitemap_clear_directory($context['sandbox']['sitemap']);
     }
-    $sitemap = &$context['sandbox']['sitemap'];
-    $links = $this->generatePage($sitemap, $sitemap->getChunks());
-    $context['message'] = t('Now generating %sitemap-url.', [
-      '%sitemap-url' => Url::fromRoute('xmlsitemap.sitemap_xml', [], $sitemap->uri['options'] + ['query' => ['page' => $sitemap->getChunks()]])->toString(),
-    ]);
 
-    if ($links) {
+    /** @var \Drupal\xmlsitemap\XmlSitemapInterface $sitemap */
+    $sitemap = &$context['sandbox']['sitemap'];
+
+    try {
+      $links = $this->generatePage($sitemap, $sitemap->getChunks());
+    }
+    catch (\Exception $e) {
+      // @todo Should this use watchdog_exception()?
+      $this->logger->error($e);
+    }
+
+    if (!empty($links)) {
+      $context['message'] = $this->t('Generated %sitemap-url with @count links.', [
+        '%sitemap-url' => Url::fromRoute('xmlsitemap.sitemap_xml', [], $sitemap->uri['options'] + ['query' => ['page' => $sitemap->getChunks()]])->toString(),
+        '@count' => $links,
+      ]);
       $sitemap->setLinks($sitemap->getLinks() + $links);
       $sitemap->setChunks($sitemap->getChunks() + 1);
     }
@@ -345,18 +432,21 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
       // Cleanup the 'extra' empty file.
       $file = xmlsitemap_sitemap_get_file($sitemap, $sitemap->getChunks());
       if (file_exists($file) && $sitemap->getChunks() > 1) {
-        file_unmanaged_delete($file);
+        $this->fileSystem->delete($file);
       }
       $sitemap->setChunks($sitemap->getChunks() - 1);
 
       // Save the updated chunks and links values.
       $context['sandbox']['max'] = $sitemap->getChunks();
-      $sitemap->setUpdated(REQUEST_TIME);
+      $sitemap->setUpdated($this->time->getRequestTime());
       xmlsitemap_sitemap_get_max_filesize($sitemap);
       xmlsitemap_sitemap_save($sitemap);
+
+      $context['finished'] = 1;
+      return;
     }
 
-    if ($sitemap->getChunks() != $context['sandbox']['max']) {
+    if ($sitemap->getChunks() < $context['sandbox']['max']) {
       $context['finished'] = $sitemap->getChunks() / $context['sandbox']['max'];
     }
   }
@@ -364,11 +454,17 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
   /**
    * {@inheritdoc}
    */
-  public function regenerateBatchGenerateIndex($smid, array &$context) {
+  public function regenerateBatchGenerateIndex($smid, &$context) {
     $sitemap = xmlsitemap_sitemap_load($smid);
     if ($sitemap != NULL && $sitemap->getChunks() > 1) {
-      $this->generateIndex($sitemap);
-      $context['message'] = t('Now generating sitemap index %sitemap-url.', [
+      try {
+        $this->generateIndex($sitemap);
+      }
+      catch (\Exception $e) {
+        // @todo Should this use watchdog_exception()?
+        $this->logger->error($e);
+      }
+      $context['message'] = $this->t('Generated sitemap index %sitemap-url.', [
         '%sitemap-url' => Url::fromRoute('xmlsitemap.sitemap_xml', [], $sitemap->uri['options'])->toString(),
       ]);
     }
@@ -377,16 +473,16 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
   /**
    * {@inheritdoc}
    */
-  public function regenerateBatchFinished($success, $results, $operations, $elapsed) {
+  public function regenerateBatchFinished($success, array $results, array $operations, $elapsed) {
     if ($success && $this->state->get('xmlsitemap_regenerate_needed') == FALSE) {
-      $this->state->set('xmlsitemap_generated_last', REQUEST_TIME);
-      drupal_set_message(t('The sitemaps were regenerated.'));
+      $this->state->set('xmlsitemap_generated_last', $this->time->getRequestTime());
+      $this->messenger->addStatus($this->t('The sitemaps were regenerated.'));
 
       // Show a watchdog message that the sitemap was regenerated.
       $this->logger->notice('Finished XML sitemap generation in @elapsed. Memory usage: @memory-peak.', ['@elapsed' => $elapsed, '@memory-peak' => format_size(memory_get_peak_usage(TRUE))]);
     }
     else {
-      drupal_set_message(t('The sitemaps were not successfully regenerated.'), 'error');
+      $this->messenger->addError($this->t('The sitemaps were not successfully regenerated.'));
     }
   }
 
@@ -398,7 +494,7 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
       // Let other modules respond to the rebuild clearing.
       $this->moduleHandler->invokeAll('xmlsitemap_rebuild_clear', [$entity_type_ids, $save_custom]);
 
-      $query = db_delete('xmlsitemap');
+      $query = $this->connection->delete('xmlsitemap');
       $query->condition('type', $entity_type_ids, 'IN');
 
       // If we want to save the custom data, make sure to exclude any links
@@ -411,7 +507,7 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
       $query->execute();
     }
 
-    $context['message'] = t('Purging links.');
+    $context['message'] = $this->t('Links cleared');
   }
 
   /**
@@ -430,17 +526,18 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
     }
 
     $info = $context['sandbox']['info'];
-    $entity_type = \Drupal::entityTypeManager()->getDefinition($entity_type_id);
 
-    $query = \Drupal::entityQuery($entity_type_id);
-    $query->condition($entity_type->getKey('id'), $context['sandbox']['last_id'], '>');
-    if ($entity_type->hasKey('bundle')) {
-      $query->condition($entity_type->getKey('bundle'), $context['sandbox']['bundles'], 'IN');
+    $query = $this->entityTypeManager->getStorage($entity_type_id)->getQuery();
+    $query->condition($info['entity keys']['id'], $context['sandbox']['last_id'], '>');
+    if (!empty($info['entity keys']['bundle'])) {
+      $query->condition($info['entity keys']['bundle'], $context['sandbox']['bundles'], 'IN');
     }
-    $query->addTag('xmlsitemap_link_bundle_access');
+
+    // Access for entities is checked individually for the anonymous user
+    // when each item is processed. We can skip the access check for the
+    // query.
+    $query->accessCheck(FALSE);
     $query->addTag('xmlsitemap_rebuild');
-    $query->addMetaData('entity_type_id', $entity_type_id);
-    $query->addMetaData('entity_info', $info);
 
     if (!isset($context['sandbox']['max'])) {
       $count_query = clone $query;
@@ -453,7 +550,7 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
     }
 
     // PostgreSQL cannot have the ORDERED BY in the count query.
-    $query->sort($entity_type->getKey('id'));
+    $query->sort($info['entity keys']['id']);
 
     // Get batch limit.
     $limit = $this->config->get('batch_limit');
@@ -464,7 +561,7 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
     $info['xmlsitemap']['process callback']($entity_type_id, $result);
     $context['sandbox']['last_id'] = end($result);
     $context['sandbox']['progress'] += count($result);
-    $context['message'] = t('Now processing %entity_type_id @last_id (@progress of @count).', [
+    $context['message'] = $this->t('Processed %entity_type_id @last_id (@progress of @count).', [
       '%entity_type_id' => $entity_type_id,
       '@last_id' => $context['sandbox']['last_id'],
       '@progress' => $context['sandbox']['progress'],
@@ -482,12 +579,12 @@ class XmlSitemapGenerator implements XmlSitemapGeneratorInterface {
   /**
    * {@inheritdoc}
    */
-  public function rebuildBatchFinished($success, $results, $operations, $elapsed) {
-    if ($success && !\Drupal::state()->get('xmlsitemap_rebuild_needed', FALSE)) {
-      drupal_set_message(t('The sitemap links were rebuilt.'));
+  public function rebuildBatchFinished($success, array $results, array $operations, $elapsed) {
+    if ($success && !$this->state->get('xmlsitemap_rebuild_needed', FALSE)) {
+      $this->messenger->addStatus($this->t('The sitemap links were rebuilt.'));
     }
     else {
-      drupal_set_message(t('The sitemap links were not successfully rebuilt.'), 'error');
+      $this->messenger->addError($this->t('The sitemap links were not successfully rebuilt.'));
     }
   }
 

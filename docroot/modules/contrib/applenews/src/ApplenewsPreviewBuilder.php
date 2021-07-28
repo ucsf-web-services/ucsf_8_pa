@@ -3,7 +3,8 @@
 namespace Drupal\applenews;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\File\FileSystem;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\StreamWrapper\StreamWrapperManagerInterface;
 
 /**
  * Class ApplenewsPreviewBuilder.
@@ -102,21 +103,31 @@ class ApplenewsPreviewBuilder {
   /**
    * File system.
    *
-   * @var \Drupal\Core\File\FileSystem
+   * @var \Drupal\Core\File\FileSystemInterface
    */
   protected $fileSystem;
+
+  /**
+   * Stream wrapper.
+   *
+   * @var \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface
+   */
+  protected $streamWrapperManager;
 
   /**
    * ApplenewsPreviewBuilder constructor.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   Config factory.
-   * @param \Drupal\Core\File\FileSystem $file_system
+   * @param \Drupal\Core\File\FileSystemInterface $file_system
    *   File system.
+   * @param \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface $stream_wrapper_manager
+   *   Stream wrapper.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, FileSystem $file_system) {
+  public function __construct(ConfigFactoryInterface $config_factory, FileSystemInterface $file_system, StreamWrapperManagerInterface $stream_wrapper_manager) {
     $this->config = $config_factory->get('applenews.settings');
     $this->fileSystem = $file_system;
+    $this->streamWrapperManager = $stream_wrapper_manager;
   }
 
   /**
@@ -157,7 +168,7 @@ class ApplenewsPreviewBuilder {
       if ($entity_archive) {
         $this->removeDirectories([$this->entityId]);
       }
-      file_prepare_directory($drupal_entity_directory, FILE_CREATE_DIRECTORY);
+      $this->fileSystem->prepareDirectory($drupal_entity_directory, FileSystemInterface::CREATE_DIRECTORY);
     }
     return $this;
 
@@ -174,7 +185,7 @@ class ApplenewsPreviewBuilder {
       foreach ($this->scanDirectory($this->archiveRealPath) as $file) {
         $dir = $this->archiveRealPath . '/' . $file;
         if (is_dir($dir) && in_array($file, $entity_ids)) {
-          file_unmanaged_delete_recursive($dir);
+          $this->fileSystem->deleteRecursive($dir);
         }
       }
     }
@@ -188,7 +199,7 @@ class ApplenewsPreviewBuilder {
    */
   public function entityArchiveDelete($entity_id) {
     $archiveFile = $this->archiveRealPath . '/' . $entity_id . '.zip';
-    file_unmanaged_delete_recursive($archiveFile);
+    $this->fileSystem->deleteRecursive($archiveFile);
   }
 
   /**
@@ -245,7 +256,7 @@ class ApplenewsPreviewBuilder {
    */
   protected function fileBuildUri($path) {
     $uri = 'temporary://' . $path;
-    return file_stream_wrapper_uri_normalize($uri);
+    return $this->streamWrapperManager->normalizeUri($uri);
   }
 
   /**
@@ -297,7 +308,7 @@ class ApplenewsPreviewBuilder {
    * Save JSON string into article.json file.
    */
   private function saveArticleJson() {
-    file_unmanaged_save_data($this->articleJson, $this->entityDirectory . '/article.json');
+    $this->fileSystem->saveData($this->articleJson, $this->entityDirectory . '/article.json');
   }
 
   /**
@@ -306,7 +317,7 @@ class ApplenewsPreviewBuilder {
   private function saveArticleAssets() {
     foreach ($this->files as $url => $path) {
       $contents = file_get_contents($path);
-      file_unmanaged_save_data($contents, $this->entityDirectory . '/' . basename($url));
+      $this->fileSystem->saveData($contents, $this->entityDirectory . '/' . basename($url));
     }
   }
 
@@ -349,7 +360,7 @@ class ApplenewsPreviewBuilder {
 
       // Make sure to remove archive file first.
       if (file_exists($entity_archive)) {
-        file_unmanaged_delete($entity_archive);
+        $this->fileSystem->delete($entity_archive);
       }
 
       // Open archive.

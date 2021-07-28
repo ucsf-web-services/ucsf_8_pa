@@ -124,7 +124,8 @@ trait GDOperationTrait {
       // @todo when #2583041 is committed, add a check for memory
       // availability before creating the resource.
       $cut = imagecreatetruecolor($src_w, $src_h);
-      if (!is_resource($cut)) {
+      // @todo remove the is_resource check when PHP 8.0 is minimum version.
+      if (!is_object($cut) && !is_resource($cut)) {
         return FALSE;
       }
 
@@ -356,7 +357,7 @@ trait GDOperationTrait {
     // @todo when #2583041 is committed, add a check for memory
     // availability before creating the resource.
     $result = imagecreatetruecolor($w, $h);
-    imagealphablending($result, FALSE);;
+    imagealphablending($result, FALSE);
     if ($result) {
       GdGaussianBlur::applyCoeffs($tmp, $result, $coeffs, $radius, 'VERTICAL');
     }

@@ -1,24 +1,23 @@
 <?php
 
-namespace Drupal\acquia_contenthub_subscriber\Plugin\rest\resource;
+namespace Drupal\acquia_contenthub_subscriber\Plugin\rest\resource; // @codingStandardsIgnoreLine
 
-use Drupal\Core\Session\AccountProxyInterface;
-use Drupal\rest\Plugin\ResourceBase;
-use Drupal\rest\ResourceResponse;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Psr\Log\LoggerInterface;
+use Drupal\acquia_contenthub_subscriber\ContentHubFilterInterface;
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Uuid\Uuid;
 use Drupal\Core\Entity\EntityManagerInterface;
-use Drupal\acquia_contenthub_subscriber\ContentHubFilterInterface;
-use DateTime;
 use Drupal\Core\Entity\EntityStorageException;
-use Drupal\Component\Render\FormattableMarkup;
-use Symfony\Component\HttpFoundation\Request;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\rest\ModifiedResourceResponse;
+use Drupal\rest\Plugin\ResourceBase;
+use Drupal\rest\ResourceResponse;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Provides a resource to perform CRUD operations on Content Hub Filters.
@@ -118,7 +117,7 @@ class ContentHubFilterResource extends ResourceBase {
       if (preg_match("/^[a-zA-Z0-9_]*$/", $contenthub_filter->id(), $matches) !== 1) {
         $messages[] = t('The "id" field has to be a "machine_name" (Only small letters, numbers and underscore allowed).');
       }
-      // @TODO: Check that the ID is unique making a query to the database.
+      // @todo Check that the ID is unique making a query to the database.
     }
     if (!isset($contenthub_filter->name)) {
       $messages[] = t('The filter has to have a "name" field.');
@@ -130,17 +129,17 @@ class ContentHubFilterResource extends ResourceBase {
 
     // Validating Date fields.
     if (!empty($contenthub_filter->from_date)) {
-      if (DateTime::createFromFormat('m-d-Y', $contenthub_filter->from_date) === FALSE) {
+      if (\DateTime::createFromFormat('m-d-Y', $contenthub_filter->from_date) === FALSE) {
         $messages[] = t('Invalid "from_date" field. Valid format is "m-d-Y".');
       }
     }
     if (!empty($contenthub_filter->to_date)) {
-      if (DateTime::createFromFormat('m-d-Y', $contenthub_filter->to_date) === FALSE) {
+      if (\DateTime::createFromFormat('m-d-Y', $contenthub_filter->to_date) === FALSE) {
         $messages[] = t('Invalid "to_date" field. Valid format is "m-d-Y".');
       }
     }
 
-    // @TODO: Validate other fields.
+    // @todo Validate other fields.
     if (count($messages) > 0) {
       $message = implode("\n", $messages);
       throw new HttpException(422, $message);
@@ -236,7 +235,12 @@ class ContentHubFilterResource extends ResourceBase {
     // Validation has passed, now try to save the entity.
     try {
       $contenthub_filter->save();
-      $this->logger->notice('Created entity %type with ID %id.', ['%type' => $contenthub_filter->getEntityTypeId(), '%id' => $contenthub_filter->id()]);
+      $this->logger->notice(
+        'Created entity %type with ID %id.', [
+          '%type' => $contenthub_filter->getEntityTypeId(),
+          '%id' => $contenthub_filter->id(),
+        ]
+      );
 
       // Convert back the Dates to format "m-d-Y".
       $contenthub_filter->changeDateFormatYearMonthDay2MonthDayYear();
@@ -299,7 +303,12 @@ class ContentHubFilterResource extends ResourceBase {
     // Validation has passed, now try to save the original updated entity.
     try {
       $contenthub_filter_updated->save();
-      $this->logger->notice('Updated entity %type with ID %id.', ['%type' => $contenthub_filter_updated->getEntityTypeId(), '%id' => $contenthub_filter_updated->id()]);
+      $this->logger->notice(
+        'Updated entity %type with ID %id.', [
+          '%type' => $contenthub_filter_updated->getEntityTypeId(),
+          '%id' => $contenthub_filter_updated->id(),
+        ]
+      );
 
       // Convert back the Dates to format "m-d-Y".
       $contenthub_filter_updated->changeDateFormatYearMonthDay2MonthDayYear();

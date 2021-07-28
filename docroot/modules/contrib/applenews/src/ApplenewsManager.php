@@ -4,6 +4,7 @@ namespace Drupal\applenews;
 
 use ChapterThree\AppleNewsAPI\Document\Components\Text;
 use Drupal\applenews\Entity\ApplenewsArticle;
+use Drupal\applenews\Exception\ApplenewsInvalidResponseException;
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -16,7 +17,9 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
+use GuzzleHttp\Psr7\Uri;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\Serializer;
 
 /**
@@ -75,6 +78,13 @@ class ApplenewsManager {
   protected $messenger;
 
   /**
+   * Current request.
+   *
+   * @var \Symfony\Component\HttpFoundation\Request|null
+   */
+  protected $request;
+
+  /**
    * ApplenewsManager constructor.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -93,8 +103,10 @@ class ApplenewsManager {
    *   Logger.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   Messenger service for showing messages to the user.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   Request stack.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, ConfigFactoryInterface $config_factory, TranslationInterface $string_translation, Serializer $serializer, PublisherInterface $publisher, LoggerInterface $logger, MessengerInterface $messenger) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, ConfigFactoryInterface $config_factory, TranslationInterface $string_translation, Serializer $serializer, PublisherInterface $publisher, LoggerInterface $logger, MessengerInterface $messenger, RequestStack $request_stack) {
     $this->entityTypeManager = $entity_type_manager;
     $this->entityFieldManager = $entity_field_manager;
     $this->config = $config_factory->get('applenews.settings');
@@ -103,6 +115,7 @@ class ApplenewsManager {
     $this->publisher = $publisher;
     $this->logger = $logger;
     $this->messenger = $messenger;
+    $this->request = $request_stack->getCurrentRequest();
   }
 
   /**
@@ -172,7 +185,7 @@ class ApplenewsManager {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    *   When the given entity type id does not exist.
    */
-  public function getFields($entity_type_id, EntityInterface $entity = null) {
+  public function getFields($entity_type_id, EntityInterface $entity = NULL) {
     $entity_type = $this->entityTypeManager->getDefinition($entity_type_id);
     if (!$entity_type->entityClassImplements(FieldableEntityInterface::class)) {
       return [];
@@ -227,6 +240,7 @@ class ApplenewsManager {
     /** @var \Drupal\Core\Entity\ContentEntityInterface $entity $fields */
     foreach (array_keys($fields) as $field_name) {
       $field = $entity->get($field_name);
+      $article = self::getArticle($entity, $field->getName());
       if ($field->status) {
         // Check if we are going from Live to Preview. Apple doesn't support
         // updating a Live article to Preview, so we have to first delete the
@@ -234,13 +248,12 @@ class ApplenewsManager {
         // @see https://developer.apple.com/documentation/apple_news/update_an_article
         if (isset($entity->original) && ($field_original = $entity->original->get($field_name)) && !$field_original->is_preview && $field->is_preview) {
           $this->deleteByField($entity, $field);
-          unset($field->article);
         }
 
         // Post the article to Apple News.
         $this->saveToAppleNews($entity, $field);
       }
-      elseif ($field->article) {
+      elseif ($article) {
         // Delete the article from Apple News.
         $this->deleteByField($entity, $field);
       }
@@ -262,9 +275,10 @@ class ApplenewsManager {
     $data = [
       'json' => $document,
     ];
+    $article = self::getArticle($entity, $field->getName());
     foreach ($channels as $channel_id => $sections) {
       // Publish for the first time.
-      if (!$field->article) {
+      if (!$article) {
         $data['metadata'] = $this->getMetaData($sections, NULL, $field->is_preview);
         $response = $this->doPost($channel_id, $data);
         $article = ApplenewsArticle::create([
@@ -272,16 +286,13 @@ class ApplenewsManager {
           'entity_type' => $entity->getEntityType()->id(),
           'field_name' => $field->getName(),
         ]);
-        $article->updateFromResponse($response)->save();
       }
       else {
-        /** @var \Drupal\applenews\Entity\ApplenewsArticle $article */
-        $article = $field->article;
         // hook_entity_update get called on ->save(). Avoid multiple calls.
         $data['metadata'] = $this->getMetaData($sections, $article->getRevision(), $field->is_preview);
         $response = $this->doUpdate($article->getArticleId(), $data);
-        $article->updateFromResponse($response)->save();
       }
+      $article->updateFromResponse($response)->save();
     }
   }
 
@@ -300,7 +311,9 @@ class ApplenewsManager {
    */
   protected function getMetadata(array $sections, $revision_id = NULL, $is_preview = FALSE) {
     foreach ($sections as $section_id => $flag) {
-      $section_urls[] = $this->config->get('endpoint') . '/sections/' . $section_id;
+      $section_url = new Uri($this->config->get('endpoint'));
+      $section_url = $section_url->withPath('/sections/' . $section_id);
+      $section_urls[] = (string) $section_url;
     }
     $data = [
       'links' => [
@@ -354,20 +367,15 @@ class ApplenewsManager {
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   Entity associated with AppleNews.
-   *
-   * @return object
-   *   Response object.
    */
   public function delete(EntityInterface $entity) {
     $fields = $this->getFields($entity->getEntityTypeId(), $entity);
 
     foreach (array_keys($fields) as $field_name) {
       $article = self::getArticle($entity, $field_name);
-      if ($article) {
+      if ($article instanceof ApplenewsArticle) {
         // Delete article from remote.
-        $this->doDelete($article->getArticleId());
-        // Delete corresponding applenews_article entity.
-        $article->delete();
+        $this->doDelete($article);
       }
     }
   }
@@ -381,27 +389,37 @@ class ApplenewsManager {
    *   The Apple News field to delete the article for.
    */
   public function deleteByField(EntityInterface $entity, FieldItemListInterface $field) {
-    /** @var \Drupal\applenews\Entity\ApplenewsArticle $article */
     $article = self::getArticle($entity, $field->getName());
-    if ($article) {
+    if ($article instanceof ApplenewsArticle) {
       // Delete article from remote.
-      $this->doDelete($article->getArticleId());
-      // Delete corresponding applenews_article entity.
-      $article->delete();
+      $this->doDelete($article);
     }
   }
 
   /**
    * Delete an article.
    *
-   * @param string $article_id
-   *   String article UUID.
+   * @param \Drupal\applenews\Entity\ApplenewsArticle $article
+   *   Apple news article entity.
    *
    * @return object
    *   Response object.
    */
-  protected function doDelete($article_id) {
-    return $this->publisher->deleteArticle($article_id);
+  protected function doDelete(ApplenewsArticle $article) {
+    try {
+      $this->publisher->deleteArticle($article->getArticleId());
+      $article->delete();
+    }
+    catch (ApplenewsInvalidResponseException $e) {
+      if ($e->getMessage() === 'NOT_FOUND') {
+        // Article was already deleted upstream. Delete corresponding
+        // applenews_article entity.
+        $article->delete();
+      }
+      else {
+        $this->logger->error(sprintf('Error while trying to remove an article in Apple News: %s', $e->getMessage()));
+      }
+    }
   }
 
   /**
@@ -414,6 +432,8 @@ class ApplenewsManager {
    *
    * @return object
    *   Response object.
+   *
+   * @throws \Drupal\applenews\Exception\ApplenewsInvalidResponseException
    */
   protected function doUpdate($article_id, array $data) {
     return $this->publisher->updateArticle($article_id, $data);
@@ -446,7 +466,6 @@ class ApplenewsManager {
    *   JSON string document.
    */
   public function getDocumentDataFromEntity(EntityInterface $entity, $template) {
-    global $base_url;
     $context['template_id'] = $template;
     /** @var \ChapterThree\AppleNewsAPI\Document $document */
     $document = $this->serializer->normalize($entity, 'applenews', $context);
@@ -457,7 +476,7 @@ class ApplenewsManager {
         if (!$component instanceof Text) {
           continue;
         }
-        $component->setText(Html::transformRootRelativeUrlsToAbsolute($component->getText(), $base_url));
+        $component->setText(Html::transformRootRelativeUrlsToAbsolute($component->getText(), $this->request->getSchemeAndHttpHost()));
       }
     }
     return Json::encode($document);

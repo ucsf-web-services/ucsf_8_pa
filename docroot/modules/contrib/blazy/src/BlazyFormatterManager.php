@@ -8,6 +8,13 @@ namespace Drupal\blazy;
 class BlazyFormatterManager extends BlazyManager {
 
   /**
+   * The first image item found.
+   *
+   * @var object
+   */
+  protected $firstItem = NULL;
+
+  /**
    * Returns the field formatter settings inherited by child elements.
    *
    * @param array $build
@@ -17,6 +24,7 @@ class BlazyFormatterManager extends BlazyManager {
    */
   public function buildSettings(array &$build, $items) {
     $settings       = &$build['settings'];
+    $settings      += $this->getCommonSettings();
     $count          = $items->count();
     $field          = $items->getFieldDefinition();
     $entity         = $items->getEntity();
@@ -44,9 +52,9 @@ class BlazyFormatterManager extends BlazyManager {
       }
     }
 
-    $settings['breakpoints']    = isset($settings['breakpoints']) && empty($settings['responsive_image_style']) ? $settings['breakpoints'] : [];
     $settings['bundle']         = $bundle;
     $settings['cache_metadata'] = ['keys' => [$id, $count]];
+    $settings['cache_tags'][]   = $entity_type_id . ':' . $entity_id;
     $settings['content_url']    = $settings['absolute_path'] = $absolute_path;
     $settings['count']          = $count;
     $settings['entity_id']      = $entity_id;
@@ -56,30 +64,25 @@ class BlazyFormatterManager extends BlazyManager {
     $settings['id']             = $id;
     $settings['internal_path']  = $internal_path;
     $settings['lightbox']       = ($switch && in_array($switch, $this->getLightboxes())) ? $switch : FALSE;
-    $settings['resimage']       = function_exists('responsive_image_get_image_dimensions');
     $settings['target_type']    = $target_type;
 
-    unset($entity, $field);
-
-    // @todo: Enable after proper checks.
-    // $settings = array_filter($settings);
+    // Bail out if vanilla is requested.
     if (!empty($settings['vanilla'])) {
       $settings = array_filter($settings);
       return;
     }
 
+    $settings['breakpoints'] = isset($settings['breakpoints']) && empty($settings['responsive_image_style']) ? $settings['breakpoints'] : [];
     if (!empty($settings['breakpoints'])) {
       $this->cleanUpBreakpoints($settings);
     }
 
     $settings['caption']    = empty($settings['caption']) ? [] : array_filter($settings['caption']);
     $settings['background'] = empty($settings['responsive_image_style']) && !empty($settings['background']);
-    $resimage_lazy          = $this->configLoad('responsive_image') && !empty($settings['responsive_image_style']);
-    $settings['blazy']      = $resimage_lazy || !empty($settings['blazy']);
-
-    if (!empty($settings['blazy'])) {
-      $settings['lazy'] = 'blazy';
-    }
+    $settings['resimage']   = function_exists('responsive_image_get_image_dimensions') && !empty($settings['responsive_image']) && !empty($settings['responsive_image_style']);
+    $settings['resimage']   = $settings['resimage'] ? $this->entityLoad($settings['responsive_image_style'], 'responsive_image_style') : FALSE;
+    $settings['blazy']      = !empty($settings['blazy']) || $settings['background'] || !empty($settings['resimage']) || !empty($settings['breakpoints']);
+    $settings['lazy']       = $settings['blazy'] ? 'blazy' : (isset($settings['lazy']) ? $settings['lazy'] : '');
 
     // Aspect ratio isn't working with Responsive image, yet.
     // However allows custom work to get going with an enforced.
@@ -95,10 +98,10 @@ class BlazyFormatterManager extends BlazyManager {
 
     // Sets dimensions once, if cropped, to reduce costs with ton of images.
     // This is less expensive than re-defining dimensions per image.
-    if (!empty($settings['image_style']) && !$resimage_lazy) {
-      if ($field_type == 'image' && $items[0]) {
-        $settings['item'] = $items[0];
-        $settings['uri']  = ($file = $items[0]->entity) && empty($items[0]->uri) ? $file->getFileUri() : $items[0]->uri;
+    if (!empty($settings['image_style']) && empty($settings['resimage'])) {
+      if ($field_type == 'image' && $item = $items[0]) {
+        $settings['item'] = $item;
+        $settings['uri']  = ($file = $item->entity) && empty($item->uri) ? $file->getFileUri() : $item->uri;
       }
 
       if (!empty($settings['uri'])) {
@@ -106,10 +109,22 @@ class BlazyFormatterManager extends BlazyManager {
       }
     }
 
-    // Add the entity to formatter cache tags.
-    $settings['cache_tags'][] = $settings['entity_type_id'] . ':' . $settings['entity_id'];
-
     $this->getModuleHandler()->alter($namespace . '_settings', $build, $items);
+  }
+
+  /**
+   * Backported few cross-module methods to minimize mismatched branch issues.
+   */
+  public function preBuildElements(array &$build, $items, array $entities = []) {
+    $this->buildSettings($build, $items);
+  }
+
+  /**
+   * Backported few cross-module methods to minimize mismatched branch issues.
+   */
+  public function postBuildElements(array &$build, $items, array $entities = []) {
+    // Rebuild the first item to build colorbox/zoom-like gallery.
+    $build['settings']['first_item'] = $this->firstItem;
   }
 
 }

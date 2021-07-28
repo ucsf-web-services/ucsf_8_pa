@@ -7,7 +7,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Url;
 
 /**
- * Class DomainSiteSettingsController.
+ * Lists all domains for which we can edit the settings.
  *
  * @package Drupal\domain_site_settings\Controller
  */
@@ -27,7 +27,7 @@ class DomainSiteSettingsController extends ControllerBase {
       $row = [
         $domain->label(),
         $domain->getCanonical(),
-        Link::fromTextAndUrl($this->t('Edit'), Url::fromRoute('domain_site_settings.config_form', ['domain_id' => $domain->id()])),
+        Link::fromTextAndUrl($this->t('Edit'), Url::fromRoute('domain_site_settings.config_form', ['domain' => $domain->id()])),
       ];
       $rows[] = $row;
     }

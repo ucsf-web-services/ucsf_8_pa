@@ -5,7 +5,7 @@ namespace Drupal\Tests\metatag\Functional;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Verify that enabling Devel don't cause the site to blow up.
+ * Verify that enabling Devel won't cause the site to blow up.
  *
  * @group metatag
  */
@@ -13,6 +13,11 @@ class EnsureDevelWorks extends BrowserTestBase {
 
   // Contains helper methods.
   use MetatagHelperTrait;
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
 
   /**
    * {@inheritdoc}

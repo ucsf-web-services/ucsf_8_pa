@@ -2,13 +2,13 @@
 
 namespace Drupal\acquia_contenthub\Controller;
 
-use Drupal\Core\Controller\ControllerBase;
 use Drupal\acquia_contenthub\Client\ClientManagerInterface;
 use Drupal\acquia_contenthub\ContentHubEntitiesTracking;
+use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class ContentHubReindex.
+ * Class for reindexing Content Hub content.
  *
  * @package Drupal\acquia_contenthub\Controller
  */
@@ -340,7 +340,9 @@ class ContentHubReindex extends ControllerBase {
       'title' => $this->t("Process Content Hub Export Queue"),
       'file' => drupal_get_path('module', 'acquia_contenthub') . '/acquia_contenthub.drush.inc',
       'operations' => [
-        ['\Drupal\acquia_contenthub\Controller\ContentHubReindex::reExportEntities', [$batch_size]],
+        ['\Drupal\acquia_contenthub\Controller\ContentHubReindex::reExportEntities',
+          [$batch_size],
+        ],
       ],
       'finished' => 'acquia_contenthub_reexport_finished',
     ];

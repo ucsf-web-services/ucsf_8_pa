@@ -15,7 +15,6 @@ use Drupal\Core\Session\AccountProxyInterface;
 class FormHelper {
   use StringTranslationTrait;
 
-  const PRIORITY_DEFAULT = 0.5;
   const PRIORITY_HIGHEST = 10;
   const PRIORITY_DIVIDER = 10;
 
@@ -127,8 +126,10 @@ class FormHelper {
   public function processForm(FormStateInterface $form_state) {
     $this->formState = $form_state;
     $this->cleanUpFormInfo();
-    $this->getEntityDataFromFormEntity();
-    $this->negotiateSettings();
+
+    if ($this->getEntityDataFromFormEntity()) {
+      $this->negotiateSettings();
+    }
 
     return $this->supports();
   }
@@ -205,22 +206,29 @@ class FormHelper {
    */
   protected function supports() {
 
+    // Do not alter the form if it is irrelevant to sitemap generation.
+    if (empty($this->getEntityCategory())) {
+      return FALSE;
+    }
+
     // Do not alter the form if user lacks certain permissions.
     if (!$this->currentUser->hasPermission('administer sitemap settings')) {
       return FALSE;
     }
 
-    // Do not alter the form if it is irrelevant to sitemap generation.
-    elseif (empty($this->getEntityCategory())) {
-      return FALSE;
-    }
-
     // Do not alter the form if entity is not enabled in sitemap settings.
-    elseif (!$this->generator->entityTypeIsEnabled($this->getEntityTypeId())) {
+    if (!$this->generator->entityTypeIsEnabled($this->getEntityTypeId())) {
       return FALSE;
     }
 
     return TRUE;
+  }
+
+  /**
+   * @return bool
+   */
+  public function entityIsNew() {
+    return !empty($entity = $this->getFormEntity()) ? $entity->isNew() : TRUE;
   }
 
   /**
@@ -334,7 +342,7 @@ class FormHelper {
         '#description' => $this->getEntityCategory() === 'instance'
           ? $this->t('The frequency with which this <em>@bundle</em> entity changes. Search engine bots may take this as an indication of how often to index it.', ['@bundle' => $bundle_name])
           : $this->t('The frequency with which entities of this type change. Search engine bots may take this as an indication of how often to index them.'),
-        '#default_value' => $this->settings[$variant]['changefreq'],
+        '#default_value' => isset($this->settings[$variant]['changefreq']) ? $this->settings[$variant]['changefreq'] : NULL,
         '#options' => $this->getChangefreqSelectValues(),
         '#states' => [
           'visible' => [':input[name="index_' . $variant . '_' . $this->getEntityTypeId() . '_settings"]' => ['value' => 1]],
@@ -352,7 +360,7 @@ class FormHelper {
         '#description' => $this->getEntityCategory() === 'instance'
           ? $this->t('Determines if images referenced by this <em>@bundle</em> entity should be included in the sitemap.', ['@bundle' => $bundle_name])
           : $this->t('Determines if images referenced by entities of this type should be included in the sitemap.'),
-        '#default_value' => (int) $this->settings[$variant]['include_images'],
+        '#default_value' => isset($this->settings[$variant]['include_images']) ? (int) $this->settings[$variant]['include_images'] : 0,
         '#options' => [$this->t('No'), $this->t('Yes')],
         '#states' => [
           'visible' => [':input[name="index_' . $variant . '_' . $this->getEntityTypeId() . '_settings"]' => ['value' => 1]],
@@ -395,7 +403,11 @@ class FormHelper {
     }
 
     // Menu fix.
-    $this->setEntityCategory(NULL === $this->getEntityCategory() && $entity_type_id === 'menu' ? 'bundle' : $this->getEntityCategory());
+    $this->setEntityCategory(
+      NULL === $this->getEntityCategory() && $entity_type_id === 'menu'
+        ? 'bundle'
+        : $this->getEntityCategory()
+    );
 
     switch ($this->getEntityCategory()) {
       case 'bundle':
@@ -408,7 +420,7 @@ class FormHelper {
         $this->setEntityTypeId($entity_type_id);
         $this->setBundleName($this->entityHelper->getEntityInstanceBundleName($form_entity));
         // New menu link's id is '' instead of NULL, hence checking for empty.
-        $this->setInstanceId(!empty($form_entity->id()) ? $form_entity->id() : NULL);
+        $this->setInstanceId(!$this->entityIsNew() ? $form_entity->id() : NULL);
         break;
 
       default:
@@ -420,7 +432,7 @@ class FormHelper {
   /**
    * Gets the object entity of the form if available.
    *
-   * @return \Drupal\Core\Entity\Entity|false
+   * @return \Drupal\Core\Entity\EntityBase|false
    *   Entity or FALSE if non-existent or if form operation is
    *   'delete'.
    */
@@ -432,6 +444,7 @@ class FormHelper {
       && in_array($form_object->getOperation(), self::$allowedFormOperations)) {
       return $form_object->getEntity();
     }
+
     return FALSE;
   }
 
@@ -454,17 +467,6 @@ class FormHelper {
   }
 
   /**
-   * Gets new entity Id after entity creation.
-   * To be used in an entity form submit.
-   *
-   * @return int
-   *   Entity ID.
-   */
-  public function getFormEntityId() {
-    return $this->formState->getFormObject()->getEntity()->id();
-  }
-
-  /**
    * Checks if simple_sitemap values have been changed after submitting the form.
    * To be used in an entity form submit.
    *
@@ -473,6 +475,8 @@ class FormHelper {
    *
    * @return bool
    *   TRUE if simple_sitemap form values have been altered by the user.
+   *
+   * @todo Make it work with variants.
    */
   public function valuesChanged($form, array $values) {
 //    foreach (self::$valuesToCheck as $field_name) {
@@ -484,7 +488,6 @@ class FormHelper {
 //
 //    return FALSE;
 
-    //todo
     return TRUE;
   }
 

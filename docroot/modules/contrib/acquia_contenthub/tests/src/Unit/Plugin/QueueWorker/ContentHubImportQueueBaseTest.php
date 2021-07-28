@@ -8,7 +8,7 @@ use Drupal\acquia_contenthub\QueueItem\ImportQueueItem;
 use Drupal\Tests\UnitTestCase;
 
 /**
- * Class ContentHubImportQueueBaseTest.
+ * Test for Content Hub Import Queue Base.
  *
  * @coversDefaultClass \Drupal\acquia_contenthub\Plugin\QueueWorker\ContentHubImportQueueBase
  *

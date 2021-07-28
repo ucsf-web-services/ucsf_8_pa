@@ -22,7 +22,6 @@
  * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA 02110-1301 USA
  */
-namespace lsolesen\pel;
 
 /**
  * Classes for dealing with Exif entries.
@@ -46,6 +45,8 @@ namespace lsolesen\pel;
  * @package PEL
  * @subpackage Exception
  */
+namespace lsolesen\pel;
+
 class PelEntryException extends PelException
 {
 
@@ -59,7 +60,7 @@ class PelEntryException extends PelException
     /**
      * The tag of the entry (if known).
      *
-     * @var PelTag
+     * @var int
      */
     protected $tag;
 
@@ -78,7 +79,7 @@ class PelEntryException extends PelException
     /**
      * Get the tag associated with the exception.
      *
-     * @return PelTag the tag. If no tag is set, null is returned.
+     * @return int the tag. If no tag is set, null is returned.
      */
     public function getTag()
     {

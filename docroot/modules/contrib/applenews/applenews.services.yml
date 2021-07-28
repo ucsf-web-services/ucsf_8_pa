@@ -4,7 +4,7 @@ services:
     parent: default_plugin_manager
   serializer.applenews.content_entity:
     class: Drupal\applenews\Normalizer\ApplenewsContentEntityNormalizer
-    arguments: ['@entity_type.manager']
+    arguments: ['@entity_type.manager', '@language_manager', '@applenews.template_repository', '@event_dispatcher']
     tags:
       - { name: normalizer, priority: 10 }
   serializer.applenews.text.component:
@@ -36,10 +36,25 @@ services:
     arguments: ['applenews']
   applenews.manager:
     class: Drupal\applenews\ApplenewsManager
-    arguments: ['@entity_type.manager','@entity_field.manager', '@config.factory', '@string_translation', '@serializer', '@applenews.publisher', '@logger.channel.applenews', '@messenger']
+    arguments:
+      - '@entity_type.manager'
+      - '@entity_field.manager'
+      - '@config.factory'
+      - '@string_translation'
+      - '@serializer'
+      - '@applenews.publisher'
+      - '@logger.channel.applenews'
+      - '@messenger'
+      - '@request_stack'
   applenews.publisher:
     class: Drupal\applenews\Publisher
     arguments: ['@config.factory']
   applenews.preview_builder:
     class: Drupal\applenews\ApplenewsPreviewBuilder
-    arguments: ['@config.factory', '@file_system']
+    arguments: ['@config.factory', '@file_system', '@stream_wrapper_manager']
+  applenews.channel_repository:
+    class: Drupal\applenews\Repository\ApplenewsChannelRepository
+    arguments: ['@entity_type.manager', '@logger.channel.applenews']
+  applenews.template_repository:
+    class: Drupal\applenews\Repository\ApplenewsTemplateRepository
+    arguments: [ '@entity_type.manager', '@logger.channel.applenews' ]

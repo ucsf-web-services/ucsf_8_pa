@@ -13,7 +13,7 @@
    * @type {Drupal~behavior}
    *
    * @prop {Drupal~behaviorAttach} attach
-   *   Attaches the contnet lock settings form behavior.
+   *   Attaches the content lock settings form behavior.
    */
   Drupal.behaviors.contentLockSettings = {
     attach: function (context, settings) {

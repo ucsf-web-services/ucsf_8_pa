@@ -6,12 +6,13 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Path\AliasManagerInterface;
+use Drupal\path_alias\AliasManagerInterface;
 use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Routing\RequestContext;
+use Drupal\domain\DomainInterface;
 
 /**
- * Class DomainConfigSettingsForm.
+ * Save domain config settings.
  *
  * @package Drupal\domain_site_settings\Form
  */
@@ -43,7 +44,7 @@ class DomainConfigSettingsForm extends ConfigFormBase {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
-   * @param \Drupal\Core\Path\AliasManagerInterface $alias_manager
+   * @param \Drupal\path_alias\AliasManagerInterface $alias_manager
    *   The path alias manager.
    * @param \Drupal\Core\Path\PathValidatorInterface $path_validator
    *   The path validator.
@@ -63,7 +64,7 @@ class DomainConfigSettingsForm extends ConfigFormBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-        $container->get('config.factory'), $container->get('path.alias_manager'), $container->get('path.validator'), $container->get('router.request_context')
+        $container->get('config.factory'), $container->get('path_alias.manager'), $container->get('path.validator'), $container->get('router.request_context')
     );
   }
 
@@ -86,9 +87,9 @@ class DomainConfigSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state, DomainInterface $domain = NULL) {
     $config = $this->config('domain_site_settings.domainconfigsettings');
-    $domain_id = $this->getRequest()->get('domain_id');
+    $domain_id = $domain->id();
     $site_config = $this->config('system.site');
     $site_mail = $site_config->get('mail');
     if (empty($site_mail)) {

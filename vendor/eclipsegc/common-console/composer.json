@@ -1,0 +1,35 @@
+{
+  "name": "eclipsegc/common-console",
+  "description": "A Common Console base application.",
+  "type": "project",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "consolidation/config": "^1.0@dev",
+    "symfony/config": "^3.4 || ^4.3@dev",
+    "symfony/console": "^3.4 || ^4.2",
+    "symfony/dependency-injection": "^3.4 || ^4.3@dev",
+    "symfony/event-dispatcher": "^3.4 || ^4.3@dev",
+    "symfony/filesystem": "^3.4 || ^4.3@dev",
+    "symfony/process": "^3.4 || ^4.3@dev",
+    "symfony/yaml": "^3.4 || ^4.2",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.3@dev",
+    "phpspec/prophecy-phpunit": "^2.0@dev"
+  },
+  "bin": [
+    "bin/commoncli"
+  ],
+  "autoload": {
+    "psr-4": {
+      "EclipseGc\\CommonConsole\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "EclipseGc\\CommonConsole\\Tests\\": "tests"
+    }
+  },
+  "minimum-stability": "dev"
+}

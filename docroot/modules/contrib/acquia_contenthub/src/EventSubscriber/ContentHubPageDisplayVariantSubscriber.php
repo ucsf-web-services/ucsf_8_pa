@@ -47,7 +47,8 @@ class ContentHubPageDisplayVariantSubscriber implements EventSubscriberInterface
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
-    $events[RenderEvents::SELECT_PAGE_DISPLAY_VARIANT][] = ['onSelectPageDisplayVariant', -1];
+    $events[RenderEvents::SELECT_PAGE_DISPLAY_VARIANT][] =
+      ['onSelectPageDisplayVariant', -1];
     return $events;
   }
 

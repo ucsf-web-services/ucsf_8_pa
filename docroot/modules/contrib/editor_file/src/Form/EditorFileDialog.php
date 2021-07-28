@@ -14,6 +14,7 @@ use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\editor\Ajax\EditorDialogSave;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Component\Utility\Environment;
 
 /**
  * Provides a link dialog for text editors.
@@ -112,7 +113,7 @@ class EditorFileDialog extends FormBase implements BaseFormIdInterface {
     // Load dialog settings.
     $editor = editor_load($filter_format->id());
     $file_upload = $editor->getThirdPartySettings('editor_file');
-    $max_filesize = isset($file_upload['max_size']) ? min(Bytes::toInt($file_upload['max_size']), file_upload_max_size()) : file_upload_max_size();
+    $max_filesize = isset($file_upload['max_size']) ? min(Bytes::toInt($file_upload['max_size']), Environment::getUploadMaxSize()) : Environment::getUploadMaxSize();
 
     $existing_file = isset($file_element['data-entity-uuid']) ? $this->entityRepository->loadEntityByUuid('file', $file_element['data-entity-uuid']) : NULL;
     $fid = $existing_file ? $existing_file->id() : NULL;
@@ -191,6 +192,11 @@ class EditorFileDialog extends FormBase implements BaseFormIdInterface {
         // Add a more general class for groups of well known MIME types.
         'file--' . file_icon_class($mime_type),
       ];
+      // Merge with existing classes (eg: those added w/ Editor Advanced Link).
+      if (!empty($form_state->getValue('attributes')['class'])) {
+        $existing_classes = preg_split('/\s+/', $form_state->getValue('attributes')['class']);
+        $classes = array_unique(array_merge($existing_classes, $classes));
+      }
       $form_state->setValue(['attributes', 'class'], implode(' ', $classes));
     }
 

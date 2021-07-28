@@ -2,8 +2,6 @@
 
 namespace Drupal\Tests\scheduler\Functional;
 
-use Drupal\Component\Utility\Html;
-
 /**
  * Tests the permissions of the Scheduler module.
  *
@@ -29,15 +27,8 @@ class SchedulerPermissionsTest extends SchedulerBrowserTestBase {
 
     // Check that neither of the fields are displayed when creating a node.
     $this->drupalGet('node/add/' . $this->type);
-    $this->assertNoFieldByName('publish_on[0][value][date]', NULL, 'The Publish-on field is not shown for users who do not have permission to schedule content');
-    $this->assertNoFieldByName('unpublish_on[0][value][date]', NULL, 'The Unpublish-on field is not shown for users who do not have permission to schedule content');
-
-    // At core 8.4 an enhancement will be committed to change the 'save and ...'
-    // button into a 'save' with a corresponding status checkbox. This test has
-    // to pass at 8.3 but the core change will not be backported. Hence derive
-    // the button text and whether we need a 'status'field.
-    // @see https://www.drupal.org/node/2873108
-    $checkbox = $this->xpath('//input[@type="checkbox" and @id="edit-status-value"]');
+    $this->assertSession()->fieldNotExists('publish_on[0][value][date]');
+    $this->assertSession()->fieldNotExists('unpublish_on[0][value][date]');
 
     // Initially run tests when publishing and unpublishing are not required.
     $this->nodetype->setThirdPartySetting('scheduler', 'publish_required', FALSE)
@@ -46,22 +37,16 @@ class SchedulerPermissionsTest extends SchedulerBrowserTestBase {
 
     // Check that a new node can be saved and published.
     $title = $this->randomString(15);
-    $edit = ['title[0][value]' => $title];
-    if ($checkbox) {
-      $edit['status[value]'] = TRUE;
-    }
-    $this->drupalPostForm('node/add/' . $this->type, $edit, $checkbox ? 'Save' : 'Save and publish');
-    $this->assertText(sprintf('%s %s has been created.', $this->typeName, Html::escape($title)), 'A node can be created and published when the user does not have scheduler permissions.');
+    $edit = ['title[0][value]' => $title, 'status[value]' => TRUE];
+    $this->drupalPostForm('node/add/' . $this->type, $edit, 'Save');
+    $this->assertSession()->pageTextContains(sprintf('%s %s has been created.', $this->typeName, $title));
     $this->assertTrue($this->drupalGetNodeByTitle($title)->isPublished(), 'The new node is published');
 
     // Check that a new node can be saved as unpublished.
     $title = $this->randomString(15);
-    $edit = ['title[0][value]' => $title];
-    if ($checkbox) {
-      $edit['status[value]'] = FALSE;
-    }
-    $this->drupalPostForm('node/add/' . $this->type, $edit, $checkbox ? 'Save' : 'Save as unpublished');
-    $this->assertText(sprintf('%s %s has been created.', $this->typeName, Html::escape($title)), 'A node can be created and saved as unpublished when the user does not have scheduler permissions.');
+    $edit = ['title[0][value]' => $title, 'status[value]' => FALSE];
+    $this->drupalPostForm('node/add/' . $this->type, $edit, 'Save');
+    $this->assertSession()->pageTextContains(sprintf('%s %s has been created.', $this->typeName, $title));
     $this->assertFalse($this->drupalGetNodeByTitle($title)->isPublished(), 'The new node is unpublished');
 
     // Set publishing and unpublishing to required, to make it a stronger test.
@@ -69,7 +54,7 @@ class SchedulerPermissionsTest extends SchedulerBrowserTestBase {
       ->setThirdPartySetting('scheduler', 'unpublish_required', TRUE)
       ->save();
 
-    // @TODO Add tests when scheduled publishing and unpublishing are required.
+    // @todo Add tests when scheduled publishing and unpublishing are required.
     // Cannot be done until we make a decision on what 'required'  means.
     // @see https://www.drupal.org/node/2707411
     // "Conflict between 'required publishing' and not having scheduler
@@ -108,7 +93,7 @@ class SchedulerPermissionsTest extends SchedulerBrowserTestBase {
     ]);
 
     // Verify that the publish_on date is stored as expected before editing.
-    $this->assertEqual($unpublished_node->publish_on->value, $publish_time, 'The publish_on value is stored correctly before edit.');
+    $this->assertEquals($publish_time, $unpublished_node->publish_on->value, 'The publish_on value is stored correctly before edit.');
 
     // Edit the unpublished node and save.
     $title = 'For Publishing ' . $this->randomString(10);
@@ -116,14 +101,14 @@ class SchedulerPermissionsTest extends SchedulerBrowserTestBase {
 
     // Check the updated title, to verify that edit and save was sucessful.
     $unpublished_node = $this->nodeStorage->load($unpublished_node->id());
-    $this->assertEqual($unpublished_node->title->value, $title, 'The unpublished node title has been updated correctly after edit.');
+    $this->assertEquals($title, $unpublished_node->title->value, 'The unpublished node title has been updated correctly after edit.');
 
     // Test that the publish_on date is still stored and is unchanged.
-    $this->assertEqual($unpublished_node->publish_on->value, $publish_time, 'The node publish_on value is still stored correctly after edit.');
+    $this->assertEquals($publish_time, $unpublished_node->publish_on->value, 'The node publish_on value is still stored correctly after edit.');
 
     // Do the same for unpublishing.
     // Verify that the unpublish_on date is stored as expected before editing.
-    $this->assertEqual($published_node->unpublish_on->value, $unpublish_time, 'The unpublish_on value is stored correctly before edit.');
+    $this->assertEquals($unpublish_time, $published_node->unpublish_on->value, 'The unpublish_on value is stored correctly before edit.');
 
     // Edit the published node and save.
     $title = 'For Unpublishing ' . $this->randomString(10);
@@ -131,10 +116,10 @@ class SchedulerPermissionsTest extends SchedulerBrowserTestBase {
 
     // Check the updated title, to verify that edit and save was sucessful.
     $published_node = $this->nodeStorage->load($published_node->id());
-    $this->assertEqual($published_node->title->value, $title, 'The published node title has been updated correctly after edit.');
+    $this->assertEquals($title, $published_node->title->value, 'The published node title has been updated correctly after edit.');
 
     // Test that the unpublish_on date is still stored and is unchanged.
-    $this->assertEqual($published_node->unpublish_on->value, $unpublish_time, 'The node unpublish_on value is still stored correctly after edit.');
+    $this->assertEquals($unpublish_time, $published_node->unpublish_on->value, 'The node unpublish_on value is still stored correctly after edit.');
 
   }
 

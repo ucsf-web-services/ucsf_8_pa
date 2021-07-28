@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\migrate\MigrateSkipRowException;
 use Drupal\migrate\Plugin\MigrateSourceInterface;
@@ -20,7 +21,7 @@ function applenews_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.applenews':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Apple News module provides an easy way to get your Drupal site\'s content into Apple News.') . '</p>';
+      $output .= '<p>' . t("Apple News module provides an easy way to get your Drupal site's content into Apple News.") . '</p>';
       $output .= '<h3>' . t('Key features') . '</h3>';
       $output .= '<ul>';
       $output .= '<li>' . t('Build custom Apple News layout.') . '</li>';
@@ -42,6 +43,10 @@ function applenews_help($route_name, RouteMatchInterface $route_match) {
  * Implements hook_entity_presave().
  */
 function applenews_entity_presave(EntityInterface $entity) {
+  if (!$entity instanceof FieldableEntityInterface) {
+    return;
+  }
+
   /** @var \Drupal\applenews\ApplenewsManager $manager */
   $manager = \Drupal::service('applenews.manager');
   $manager->entityPreSave($entity);
@@ -51,6 +56,10 @@ function applenews_entity_presave(EntityInterface $entity) {
  * Implements hook_entity_insert().
  */
 function applenews_entity_insert(EntityInterface $entity) {
+  if (!$entity instanceof FieldableEntityInterface) {
+    return;
+  }
+
   /** @var \Drupal\applenews\ApplenewsManager $manager */
   $manager = \Drupal::service('applenews.manager');
   $manager->entitySave($entity);
@@ -60,6 +69,10 @@ function applenews_entity_insert(EntityInterface $entity) {
  * Implements hook_entity_update().
  */
 function applenews_entity_update(EntityInterface $entity) {
+  if (!$entity instanceof FieldableEntityInterface) {
+    return;
+  }
+
   /** @var \Drupal\applenews\ApplenewsManager $manager */
   $manager = \Drupal::service('applenews.manager');
   $manager->entitySave($entity);
@@ -69,6 +82,9 @@ function applenews_entity_update(EntityInterface $entity) {
  * Implements hook_entity_delete().
  */
 function applenews_entity_delete(EntityInterface $entity) {
+  if (!$entity instanceof FieldableEntityInterface) {
+    return;
+  }
 
   try {
     /** @var \Drupal\applenews\ApplenewsManager $manager */
@@ -119,7 +135,10 @@ function applenews_migrate_prepare_row(
   MigrationInterface $migration
 ) {
   if ($source->getPluginId() == 'd7_node') {
-    $data = $source->getDatabase()->query('select data from {applenews_entity_settings} where entity_type = :type and entity_id = :entity_id', [':type' => 'node', ':entity_id' => $row->getSourceProperty('nid')])->fetchField();
+    $data = $source->getDatabase()->query('select data from {applenews_entity_settings} where entity_type = :type and entity_id = :entity_id', [
+      ':type' => 'node',
+      ':entity_id' => $row->getSourceProperty('nid',
+    )])->fetchField();
     if (!empty($data)) {
       // Extract channels and is_preview from the data field.
       $data = unserialize($data);

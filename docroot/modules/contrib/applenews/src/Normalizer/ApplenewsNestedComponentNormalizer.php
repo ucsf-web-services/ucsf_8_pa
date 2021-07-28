@@ -7,6 +7,9 @@ namespace Drupal\applenews\Normalizer;
  */
 class ApplenewsNestedComponentNormalizer extends ApplenewsComponentNormalizerBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected $componentType = 'nested';
 
   /**

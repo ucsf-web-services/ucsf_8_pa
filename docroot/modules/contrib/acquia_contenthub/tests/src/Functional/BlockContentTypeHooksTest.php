@@ -50,6 +50,7 @@ class BlockContentTypeHooksTest extends BlockContentTypeTest {
     <div data-content-barrier-exclude="true"></div></body></html>
 HTML;
     $this->assertRaw($expected, 'Altered block have no extra markup.');
+    $this->assertOffCanvasWrapperRemoved();
   }
 
 }

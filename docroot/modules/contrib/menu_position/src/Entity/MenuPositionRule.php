@@ -54,7 +54,7 @@ class MenuPositionRule extends ConfigEntityBase implements MenuPositionRuleInter
   /**
    * Whether the rule is enabled or not.
    *
-   * @var boolean
+   * @var bool
    */
   protected $enabled;
 
@@ -89,7 +89,7 @@ class MenuPositionRule extends ConfigEntityBase implements MenuPositionRuleInter
   /**
    * The weight of this rule.
    *
-   * @var integer
+   * @var int
    */
   protected $weight;
 
@@ -172,6 +172,7 @@ class MenuPositionRule extends ConfigEntityBase implements MenuPositionRuleInter
   public function getMenuName() {
     return $this->menu_name;
   }
+
   /**
    * {@inheritdoc}
    */
@@ -203,7 +204,7 @@ class MenuPositionRule extends ConfigEntityBase implements MenuPositionRuleInter
   /**
    * {@inheritdoc}
    */
-  public function setConditions($conditions, $plugin) {
+  public function setConditions(array $conditions, $plugin) {
     $this->conditions = $conditions;
   }
 
@@ -244,10 +245,13 @@ class MenuPositionRule extends ConfigEntityBase implements MenuPositionRuleInter
     ];
   }
 
+  /**
+   * Get the menu link plugin.
+   */
   public function getMenuLinkPlugin() {
     $menu_link = $this->getMenuLink();
     if (!$menu_link || !$this->menuLinkManager()->hasDefinition($menu_link)) {
-      return null;
+      return NULL;
     }
     return $this->menuLinkManager()->createInstance($menu_link);
   }
@@ -256,12 +260,13 @@ class MenuPositionRule extends ConfigEntityBase implements MenuPositionRuleInter
    * Evaluates all conditions attached to this rule and determines if this rule
    * is "active" or not.
    *
-   * @return boolean Whether or not this rule is active.
+   * @return bool
+   *   Whether or not this rule is active.
    */
   public function isActive() {
     // Must be enabled.
     if (!$this->getEnabled()) {
-      return false;
+      return FALSE;
     }
 
     // Rules are good unless told otherwise by the conditions.
@@ -279,22 +284,22 @@ class MenuPositionRule extends ConfigEntityBase implements MenuPositionRuleInter
           if (isset($runtime_contexts[$context])
             && $runtime_contexts[$context]->hasContextValue()) {
             $condition->setContext($name, $runtime_contexts[$context]);
-
+          }
           // Does not have context but is required means this rule is inactive.
-          } else if ($condition_contexts[$name]->isRequired()) {
-            return false;
+          elseif ($condition_contexts[$name]->isRequired()) {
+            return FALSE;
           }
         }
       }
 
       // If this condition evaluates to false, rule is inactive.
       if (!$condition->execute()) {
-        return false;
+        return FALSE;
       }
     }
 
     // No objections, rule is active.
-    return true;
+    return TRUE;
   }
 
   /**
@@ -351,7 +356,6 @@ class MenuPositionRule extends ConfigEntityBase implements MenuPositionRuleInter
   }
 
   /**
-   *
    * Rebuild routes to create menu links.
    */
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {

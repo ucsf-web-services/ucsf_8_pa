@@ -2,14 +2,15 @@
 
 namespace Drupal\acquia_contenthub\Controller;
 
-use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\acquia_contenthub\ContentHubEntityDependency;
+use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Queue\QueueWorkerManagerInterface;
 use Drupal\Core\Queue\QueueFactory;
+use Drupal\Core\Queue\QueueWorkerManagerInterface;
 use Drupal\Core\Queue\SuspendQueueException;
-use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Implements an Export Queue Controller for Content Hub.
@@ -77,6 +78,11 @@ class ContentHubExportQueueController extends ControllerBase {
     $exported_entities = [];
     foreach ($candidate_entities as $candidate_entity) {
       $entity_type = $candidate_entity->getEntityTypeId();
+      // Do not enqueue post-dependent entities like paragraphs.
+      $post_dependency_types = ContentHubEntityDependency::getPostDependencyEntityTypes();
+      if (in_array($entity_type, $post_dependency_types)) {
+        continue;
+      }
       $entity_id = $candidate_entity->id();
       $entity_uuid = $candidate_entity->uuid();
       $exported_entities[] = [
@@ -176,7 +182,11 @@ class ContentHubExportQueueController extends ControllerBase {
     $batch_size = $batch_size ?: 1;
     for ($i = 0; $i < ceil($number_of_items / $batch_size); $i++) {
       // Create batch operations.
-      $batch['operations'][] = ['\Drupal\acquia_contenthub\Controller\ContentHubExportQueueController::batchProcess', [$number_of_items]];
+      $batch['operations'][] =
+        [
+          '\Drupal\acquia_contenthub\Controller\ContentHubExportQueueController::batchProcess',
+          [$number_of_items],
+        ];
     }
 
     // Adds the batch sets.

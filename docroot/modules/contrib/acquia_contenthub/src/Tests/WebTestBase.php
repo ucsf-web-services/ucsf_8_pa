@@ -2,9 +2,9 @@
 
 namespace Drupal\acquia_contenthub\Tests;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\simpletest\WebTestBase as SimpletestWebTestBase;
-use Drupal\Component\Serialization\Json;
 
 /**
  * Provides the base class for web tests for Search API.
@@ -199,6 +199,41 @@ abstract class WebTestBase extends SimpletestWebTestBase {
    */
   protected function drupalGetCdf($path, array $options = [], array $headers = []) {
     return Json::decode($this->drupalGetWithFormat($path, 'acquia_contenthub_cdf', $options, $headers));
+  }
+
+  /**
+   * Enables a view mode to be rendered in CDF.
+   *
+   * @param string $entity_type
+   *   The entity type.
+   * @param string $bundle
+   *   The bundle.
+   * @param string|array $view_mode
+   *   The view mode(s) to enable.
+   *
+   * @throws \Exception
+   */
+  public function enableViewModeFor($entity_type, $bundle, $view_mode) {
+    $this->drupalGet('admin/config/services/acquia-contenthub/configuration');
+    $this->assertResponse(200);
+
+    $edit = [
+      'entities[' . $entity_type . '][' . $bundle . '][enable_viewmodes]' => TRUE,
+    ];
+    if (is_array($view_mode)) {
+      foreach ($view_mode as $value) {
+        $edit['entities[' . $entity_type . '][' . $bundle . '][rendering][]'][$value] = $value;
+      }
+    }
+    else {
+      $edit['entities[' . $entity_type . '][' . $bundle . '][rendering][]'] = [$view_mode];
+    }
+
+    $this->drupalPostForm(NULL, $edit, $this->t('Save configuration'));
+    $this->assertResponse(200);
+
+    $this->drupalGet('admin/config/services/acquia-contenthub/configuration');
+    $this->assertResponse(200);
   }
 
 }

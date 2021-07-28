@@ -29,7 +29,7 @@ geofield_map_widget:
     component:
       css/geofield_map_widget.css: {}
   js:
-    js/geofield_map.js: {}
+    js/geofield_map_widget.js: {}
   dependencies:
       - core/underscore
       - core/jquery
@@ -44,24 +44,18 @@ geofield_map_view_display_settings:
     component:
       css/geofield_map_view_display_settings.css: {}
 
-geofield_map_legend:
-  version: 1.x
-  css:
-    component:
-      css/geofield_map_legend.css: {}
-
 geolocation:
   version: 1.x
   js:
     js/geolocation.js: {}
 
-geofield_gmap:
+geofield_google_map:
   version: 1.x
   css:
     component:
-      css/geofield_google_map.css: {}
+      css/geofield_map_gmap_formatter.css: {}
   js:
-    js/geofield_google_map.js: {}
+    js/geofield_map_gmap_formatter.js: {}
   dependencies:
       - core/underscore
       - core/jquery
@@ -69,22 +63,33 @@ geofield_gmap:
       - core/drupal
       - core/drupalSettings
 
+geocoder:
+  version: 1.x
+  css:
+    component:
+      css/geofield_map_geocoder.css: {}
+  js:
+    js/geofield_map.geocoder.js: {}
+  dependencies:
+    - core/drupal.autocomplete
+
 geojson:
   version: 1.x
   js:
     js/geojson.js: {}
 
-
 # External Marker Clusterer
 marker_cluster:
-  remote: https://googlemaps.github.io/js-marker-clusterer/
+  remote: https://cdnjs.com/libraries/js-marker-clusterer
   version: 1.0.0
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0
     gpl-compatible: true
   js:
-    https://googlemaps.github.io/js-marker-clusterer/src/markerclusterer.js: { type: external }
+    https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer_compiled.js: { type: external }
+  dependencies:
+    - geofield_map/geofield_map_gmap_formatter
 
 # External OverlappingMarkerSpiderfier
 overlappingmarkerspiderfier:
@@ -96,3 +101,16 @@ overlappingmarkerspiderfier:
     gpl-compatible: true
   js:
     https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js: { type: external }
+  dependencies:
+    - geofield_map/geofield_map_gmap_formatter
+
+# External IntersectionObserver polyfill
+intersection_observer:
+  remote: https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver
+  version: 1.x
+  license:
+    name: MIT license
+    url: https://choosealicense.com/licenses/mit/
+    gpl-compatible: true
+  js:
+    https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver: { type: external }

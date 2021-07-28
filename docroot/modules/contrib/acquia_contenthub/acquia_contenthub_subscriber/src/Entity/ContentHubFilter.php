@@ -2,10 +2,9 @@
 
 namespace Drupal\acquia_contenthub_subscriber\Entity;
 
-use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\acquia_contenthub_subscriber\ContentHubFilterInterface;
+use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\user\Entity\User;
-use DateTime;
 
 /**
  * Defines the ContentHubFilter entity.
@@ -236,12 +235,12 @@ class ContentHubFilter extends ConfigEntityBase implements ContentHubFilterInter
    */
   public function changeDateFormatMonthDayYear2YearMonthDay() {
     if (!empty($this->from_date)) {
-      if ($from_date = DateTime::createFromFormat('m-d-Y', $this->from_date)) {
+      if ($from_date = \DateTime::createFromFormat('m-d-Y', $this->from_date)) {
         $this->from_date = $from_date->format('Y-m-d');
       }
     }
     if (!empty($this->to_date)) {
-      if ($to_date = DateTime::createFromFormat('m-d-Y', $this->to_date)) {
+      if ($to_date = \DateTime::createFromFormat('m-d-Y', $this->to_date)) {
         $this->to_date = $to_date->format('Y-m-d');
       }
     }
@@ -253,12 +252,12 @@ class ContentHubFilter extends ConfigEntityBase implements ContentHubFilterInter
    */
   public function changeDateFormatYearMonthDay2MonthDayYear() {
     if (!empty($this->from_date)) {
-      if ($from_date = DateTime::createFromFormat('Y-m-d', $this->from_date)) {
+      if ($from_date = \DateTime::createFromFormat('Y-m-d', $this->from_date)) {
         $this->from_date = $from_date->format('m-d-Y');
       }
     }
     if (!empty($this->to_date)) {
-      if ($to_date = DateTime::createFromFormat('Y-m-d', $this->to_date)) {
+      if ($to_date = \DateTime::createFromFormat('Y-m-d', $this->to_date)) {
         $this->to_date = $to_date->format('m-d-Y');
       }
     }

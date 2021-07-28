@@ -5,7 +5,7 @@ namespace Drupal\applenews;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 
 /**
- * Interface ApplenewsTextStyleInterface.
+ * Behaviors for Apple News text style config entities.
  *
  * @code
  *  "fontName": "DINAlternate-Bold",

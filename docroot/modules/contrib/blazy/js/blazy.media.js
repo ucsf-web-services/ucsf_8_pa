@@ -106,6 +106,36 @@
   }
 
   /**
+   * Theme function for a dynamic inline video.
+   *
+   * @param {Object} settings
+   *   An object containing the link element which triggers the lightbox.
+   *   This link must have [data-media] attribute containing video metadata.
+   *
+   * @return {HTMLElement}
+   *   Returns a HTMLElement object.
+   */
+  Drupal.theme.blazyMedia = function (settings) {
+    var elm = settings.el;
+    var media = elm.getAttribute('data-media') ? _db.parse(elm.getAttribute('data-media')) : {};
+    var img = elm.querySelector('img');
+    var alt = img !== null ? img.getAttribute('alt') : 'Video preview';
+    var pad = media ? Math.round(((media.height / media.width) * 100), 2) : 100;
+    var boxUrl = elm.getAttribute('data-box-url');
+    var embedUrl = elm.getAttribute('href');
+    var html;
+
+    html = '<div class="media-wrapper media-wrapper--inline" style="width:' + media.width + 'px">';
+    html += '<div class="media media--switch media--player media--ratio media--ratio--fluid" style="padding-bottom: ' + pad + '%">';
+    html += '<img src="' + boxUrl + '" class="media__image media__element" alt="' + Drupal.t(alt) + '"/>';
+    html += '<span class="media__icon media__icon--close"></span>';
+    html += '<span class="media__icon media__icon--play" data-url="' + embedUrl + '" data-autoplay="' + embedUrl + '"></span>';
+    html += '</div></div>';
+
+    return html;
+  };
+
+  /**
    * Attaches Blazy media behavior to HTML element.
    *
    * @type {Drupal~behavior}

@@ -99,7 +99,8 @@ class ContentHubImportQueue extends ControllerBase {
 
     $queue = $queue_factory->get('acquia_contenthub_import_queue');
     $worker = $queue_manager->createInstance('acquia_contenthub_import_queue');
-    $batch_size = $queue->numberOfItems() < $config->get('import_queue_batch_size') ? $queue->numberOfItems() : $config->get('import_queue_batch_size');
+    $queue_batch_size = $config->get('import_queue_batch_size');
+    $batch_size = ($queue_batch_size === 'all' || $queue->numberOfItems() < $queue_batch_size) ? $queue->numberOfItems() : $queue_batch_size;
 
     for ($i = 0; $i < $batch_size; $i++) {
       if ($item = $queue->claimItem()) {

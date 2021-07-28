@@ -47,15 +47,16 @@ trait BlazyVideoTrait {
    * @param array $settings
    *   An array of settings to be passed into theme_blazy().
    * @param string $external_url
-   *   A video URL.
+   *   A deprecated video URL for $settings['input_url'].
    */
   public function buildVideo(array &$settings = [], $external_url = '') {
+    $settings['input_url'] = empty($settings['input_url']) ? $external_url : $settings['input_url'];
     /** @var \Drupal\video_embed_field\ProviderManagerInterface $video */
     if (!($video = self::videoEmbedMediaManager())) {
       return;
     }
 
-    if (!($provider = $video->loadProviderFromInput($external_url))) {
+    if (!($provider = $video->loadProviderFromInput($settings['input_url']))) {
       return;
     }
 
@@ -71,9 +72,9 @@ trait BlazyVideoTrait {
     // Prevents complication with multiple videos by now.
     unset($query['autoplay'], $query['auto_play']);
 
-    $settings['video_id']  = $provider::getIdFromInput($external_url);
+    $settings['video_id']  = $provider::getIdFromInput($settings['input_url']);
     $settings['embed_url'] = Url::fromUri($embed_url, ['query' => $query])->toString();
-    $settings['scheme']    = $video->loadDefinitionFromInput($external_url)['id'];
+    $settings['scheme']    = $video->loadDefinitionFromInput($settings['input_url'])['id'];
     $settings['uri']       = $provider->getLocalThumbnailUri();
     $settings['type']      = 'video';
 
@@ -169,41 +170,41 @@ trait BlazyVideoTrait {
       return;
     }
 
+    $item   = NULL;
     $bundle = $media->bundle();
-    $fields = $media->getFields();
     $config = method_exists($media, 'getSource') ? $media->getSource()->getConfiguration() : $media->getType()->getConfiguration();
     $source = isset($config['source_url_field']) ? $config['source_url_field'] : '';
 
     $source_field[$bundle]    = isset($config['source_field']) ? $config['source_field'] : $source;
     $settings['bundle']       = $bundle;
     $settings['source_field'] = $source_field[$bundle];
-    $settings['media_url']    = $media->url();
+    $settings['media_url']    = $media->toUrl()->toString();
     $settings['media_id']     = $media->id();
     $settings['view_mode']    = empty($settings['view_mode']) ? 'default' : $settings['view_mode'];
 
     // If Media entity has a defined thumbnail, add it to data item.
-    if (isset($fields['thumbnail'])) {
-      $data['item'] = $fields['thumbnail']->get(0);
-      $settings['file_tags'] = ['file:' . $data['item']->target_id];
+    if ($media->hasField('thumbnail')) {
+      $item = $media->get('thumbnail')->first();
+      $settings['file_tags'] = ['file:' . $item->target_id];
 
       // Provides thumbnail URI for EB selection with various Media entities.
       if (empty($settings['uri'])) {
-        $settings['uri'] = File::load($data['item']->target_id)->getFileUri();
+        $settings['uri'] = ($entity = $item->entity) && empty($item->uri) ? $entity->getFileUri() : $item->uri;
       }
     }
 
-    $source = empty($settings['source_field']) ? '' : $settings['source_field'];
-    if ($source && isset($media->{$source})) {
-      $value     = $media->{$source}->getValue();
+    $content = [];
+    if ($settings['source_field'] && $media->hasField($settings['source_field'])) {
+      $value     = $media->{$settings['source_field']}->getValue();
       $input_url = isset($value[0]['uri']) ? $value[0]['uri'] : (isset($value[0]['value']) ? $value[0]['value'] : '');
-      $input_url = strip_tags($input_url);
+      $input_url = trim(strip_tags($input_url));
 
       if ($input_url) {
         $settings['input_url'] = $input_url;
 
         // Soundcloud has different source_field name: source_url_field.
         if (strpos($input_url, 'soundcloud') === FALSE) {
-          $this->buildVideo($settings, $input_url);
+          $this->buildVideo($settings);
         }
       }
       elseif (isset($value[0]['alt']) || is_null($value[0]['alt'])) {
@@ -212,14 +213,15 @@ trait BlazyVideoTrait {
 
       // Do not proceed if it has type, already managed by theme_blazy().
       // Supports other Media entities: Facebook, Instagram, Twitter, etc.
-      if (empty($settings['type'])) {
-        if ($build = BlazyMedia::build($media, $settings)) {
-          $data['content'][] = $build;
-        }
+      if (empty($settings['type']) && ($build = BlazyMedia::build($media, $settings))) {
+        $content[] = $build;
       }
     }
 
+    // Collect what's needed for clarity.
+    $data['item'] = $item;
     $data['settings'] = $settings;
+    $data['content'] = $content;
   }
 
 }

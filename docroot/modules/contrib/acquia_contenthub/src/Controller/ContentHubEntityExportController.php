@@ -2,26 +2,31 @@
 
 namespace Drupal\acquia_contenthub\Controller;
 
-use Drupal\acquia_contenthub\ContentHubInternalRequest;
-use Drupal\Core\Controller\ControllerBase;
 use Drupal\acquia_contenthub\Client\ClientManagerInterface;
+use Drupal\acquia_contenthub\ContentHubEntitiesTracking;
+use Drupal\acquia_contenthub\ContentHubInternalRequest;
+use Drupal\acquia_contenthub\EntityManager;
+use Drupal\acquia_contenthub\Normalizer\ContentEntityCdfNormalizer;
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\acquia_contenthub\Normalizer\ContentEntityCdfNormalizer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Drupal\acquia_contenthub\ContentHubEntitiesTracking;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\acquia_contenthub\EntityManager;
-use Drupal\Component\Serialization\Json;
 
 /**
  * Controller for Content Hub Export Entities using bulk upload.
  */
 class ContentHubEntityExportController extends ControllerBase {
 
+  /**
+   * Format for the cdf.
+   *
+   * @var string
+   */
   protected $format = 'acquia_contenthub_cdf';
 
   /**
@@ -163,8 +168,8 @@ class ContentHubEntityExportController extends ControllerBase {
       // Dependencies are not exported if they have an entry in the tracking
       // table that says that they have been previously "exported".
       $queued_entities = $this->exportQueueController->enqueueExportEntities($candidate_entities);
-      foreach ($queued_entities as $queued_entity) {
-        $this->queueExportedEntity($queued_entity);
+      foreach ($candidate_entities as $candidate_entity) {
+        $this->queueExportedEntity($candidate_entity);
       }
       return TRUE;
     }
@@ -222,8 +227,9 @@ class ContentHubEntityExportController extends ControllerBase {
     $normalized_entities = [];
     $entities = $_GET;
     foreach ($entities as $entity => $entity_ids) {
-      $ids = explode(', ', $entity_ids);
+      $ids = explode(',', $entity_ids);
       foreach ($ids as $id) {
+        $id = trim($id);
         try {
           $bulk_cdf = $this->internalRequest->getEntityCDFByInternalRequest($entity, $id);
           $bulk_cdf = array_pop($bulk_cdf);
@@ -234,13 +240,13 @@ class ContentHubEntityExportController extends ControllerBase {
           }
         }
         catch (\Exception $e) {
-          // Do nothing, route does not exist, but report it..
+          // Do nothing, route does not exist, but report it.
           $args = [
-            '!type' => $entity,
-            '!id' => $id,
-            '!msg' => $e->getMessage(),
+            '@type' => $entity,
+            '@id' => $id,
+            '@msg' => $e->getMessage(),
           ];
-          $this->loggerFactory->get('acquia_contenthub')->error('Could not obtain the CDF for entity (!type, !id) : !msg', $args);
+          $this->loggerFactory->get('acquia_contenthub')->error('Could not obtain the CDF for entity (@type, @id) : @msg', $args);
         }
       }
     }
@@ -298,10 +304,9 @@ class ContentHubEntityExportController extends ControllerBase {
       if ($set_exported) {
         $exported_entity->setExported();
       }
-      $this
+      return $this
         ->contentHubEntitiesTracking
         ->save();
-      return;
     }
 
     $entity = $this
@@ -317,7 +322,7 @@ class ContentHubEntityExportController extends ControllerBase {
             '@type' => $cdf['type'],
           ]);
 
-      return;
+      return FALSE;
     }
 
     // Add a new tracking record with exported status set, and
@@ -339,7 +344,7 @@ class ContentHubEntityExportController extends ControllerBase {
             '@uuid' => $entity->uuid(),
             '@backtrack' => __FUNCTION__,
           ]);
-      return;
+      return FALSE;
     }
 
     if ($set_exported) {

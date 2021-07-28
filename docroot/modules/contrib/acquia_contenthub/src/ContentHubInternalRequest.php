@@ -2,16 +2,16 @@
 
 namespace Drupal\acquia_contenthub;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\acquia_contenthub\Session\ContentHubUserSession;
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Session\AccountSwitcherInterface;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Drupal\Component\Serialization\Json;
-use Drupal\Core\Session\AccountSwitcherInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\acquia_contenthub\Session\ContentHubUserSession;
 
 /**
  * Provides a method to do internal sub-requests to obtain an entity CDF.

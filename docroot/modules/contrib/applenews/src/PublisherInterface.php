@@ -18,6 +18,8 @@ interface PublisherInterface {
    * @return mixed
    *   Channel details.
    *
+   * @throws \Drupal\applenews\Exception\ApplenewsInvalidResponseException
+   *
    * @see vendor/chapter-three/apple-news-api/examples/PublisherAPI/GetChannel.php
    */
   public function getChannel($channel_id);
@@ -31,6 +33,8 @@ interface PublisherInterface {
    * @return mixed
    *   An article object.
    *
+   * @throws \Drupal\applenews\Exception\ApplenewsInvalidResponseException
+   *
    * @see vendor/chapter-three/apple-news-api/examples/PublisherAPI/GetArticle.php
    */
   public function getArticle($article_id);
@@ -42,7 +46,9 @@ interface PublisherInterface {
    *   Unique section UUID.
    *
    * @return mixed
-   *   Section details, if avaiable. NULL otherwise.
+   *   Section details, if available. NULL otherwise.
+   *
+   * @throws \Drupal\applenews\Exception\ApplenewsInvalidResponseException
    *
    * @see vendor/chapter-three/apple-news-api/examples/PublisherAPI/GetSection.php
    */
@@ -56,6 +62,8 @@ interface PublisherInterface {
    *
    * @return mixed
    *   Sections.
+   *
+   * @throws \Drupal\applenews\Exception\ApplenewsInvalidResponseException
    *
    * @see vendor/chapter-three/apple-news-api/examples/PublisherAPI/GetSections.php
    */
@@ -72,6 +80,8 @@ interface PublisherInterface {
    * @return object
    *   Response object if successful. NULL otherwise.
    *
+   * @throws \Drupal\applenews\Exception\ApplenewsInvalidResponseException
+   *
    * @see vendor/chapter-three/apple-news-api/examples/PublisherAPI/PostArticle.php
    */
   public function postArticle($channel_id, array $data);
@@ -85,7 +95,9 @@ interface PublisherInterface {
    *   An array of article data.
    *
    * @return mixed
-   *   Response object if update succefull. NULL otherwise.
+   *   Response object if update successful. NULL otherwise.
+   *
+   * @throws \Drupal\applenews\Exception\ApplenewsInvalidResponseException
    *
    * @see vendor/chapter-three/apple-news-api/examples/PublisherAPI/UpdateArticle.php
    */
@@ -99,6 +111,8 @@ interface PublisherInterface {
    *
    * @return mixed
    *   Mixed deleted status.
+   *
+   * @throws \Drupal\applenews\Exception\ApplenewsInvalidResponseException
    *
    * @see vendor/chapter-three/apple-news-api/examples/PublisherAPI/UeleteArticle.php
    */

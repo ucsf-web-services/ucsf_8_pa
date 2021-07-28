@@ -3,7 +3,7 @@
 namespace Drupal\acquia_contenthub\QueueItem;
 
 /**
- * Interface ContentHubQueueItemInterface.
+ * Interface for Content Hub Queue Items.
  *
  * @package Drupal\acquia_contenthub\QueueItem
  */

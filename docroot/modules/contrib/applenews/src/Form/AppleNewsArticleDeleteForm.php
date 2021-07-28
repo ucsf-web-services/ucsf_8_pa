@@ -14,6 +14,8 @@ use Drupal\Core\Form\FormStateInterface;
 class AppleNewsArticleDeleteForm extends ConfirmFormBase {
 
   /**
+   * Entity associated with the Apple News article being deleted.
+   *
    * @var \Drupal\Core\Entity\ContentEntityInterface
    */
   protected $entity;

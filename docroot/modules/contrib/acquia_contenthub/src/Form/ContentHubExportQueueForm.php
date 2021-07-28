@@ -2,11 +2,11 @@
 
 namespace Drupal\acquia_contenthub\Form;
 
+use Drupal\acquia_contenthub\Controller\ContentHubExportQueueController;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\acquia_contenthub\Controller\ContentHubExportQueueController;
 
 /**
  * Implements a form to Process items from the Content Hub Export Queue.
@@ -210,10 +210,12 @@ class ContentHubExportQueueForm extends ConfigFormBase {
           drupal_set_message($this->t('You cannot run the export queue because it is empty.'), 'warning');
         }
         break;
+
       case 'purge_export_queue':
         $this->exportQueueController->purgeQueue();
         drupal_set_message($this->t("Purged all contenthub export queues."));
         break;
+
       default:
         $config = $this->configFactory->getEditable('acquia_contenthub.entity_config');
         $export_with_queue = $form_state->getValue('export_with_queue');
@@ -228,4 +230,5 @@ class ContentHubExportQueueForm extends ConfigFormBase {
         break;
     }
   }
+
 }

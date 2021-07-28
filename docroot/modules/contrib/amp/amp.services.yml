@@ -26,7 +26,7 @@ services:
     class: \Drupal\amp\Asset\AmpCssCollectionRenderer
     decorates: asset.css.collection_renderer
     decoration_inner_name: amp.css.collection_renderer.original
-    arguments: ['@amp.css.collection_renderer.original', '@state', '@amp.utilities', '@renderer', '@asset.css.optimizer']
+    arguments: ['@amp.css.collection_renderer.original', '@state', '@amp.utilities', '@renderer', '@config.factory']
   main_content_renderer.amp:
     class: Drupal\amp\Render\AmpHtmlRenderer
     arguments: ['@title_resolver', '@plugin.manager.display_variant', '@event_dispatcher', '@module_handler', '@renderer', '@render_cache', '%renderer.config%', '@amp.utilities', '@config.factory']

@@ -7,6 +7,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\webform\Plugin\WebformElementEntityReferenceInterface;
 use Drupal\webform\Plugin\WebformElementInterface;
 use Drupal\webform\Plugin\WebformElementManagerInterface;
+use Drupal\webform\WebformInterface;
 
 /**
  * Webform views handler for entity reference webform elements.
@@ -32,6 +33,37 @@ class WebformEntityReferenceViews extends WebformDefaultViews {
     parent::__construct($entity_type_manager, $webform_element_manager);
 
     $this->entityTypeManager = $entity_type_manager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getViewsData($element, WebformInterface $webform) {
+    $views_data = parent::getViewsData($element, $webform);
+
+    // Add reverse relationship from referenced entity to webform submission via
+    // this entity reference element.
+    $target_entity_type = $this->getTargetEntityType($this->webformElementManager->getElementInstance($element), $element);
+    if ($target_entity_type instanceof ContentEntityTypeInterface) {
+      $views_data[$target_entity_type->getDataTable() ?: $target_entity_type->getBaseTable()]['webform_submission'] = [
+        'title' => $this->t('Webform submission'),
+        'help' => $this->t('Webform submission(-s) that reference the @entity_label via %element_title element.', [
+          '@entity_label' => $target_entity_type->getLabel(),
+          '%element_title' => $element['#title'],
+        ]),
+        'relationship' => [
+          'left_field' => $target_entity_type->getKey('id'),
+          'base' => $this->entityType->getBaseTable(),
+          'base field' => $this->entityType->getKey('id'),
+          'id' => 'webform_views_entity_reverse',
+          'label' => $this->t('Webform submission'),
+          'webform element' => $element['#webform_key'],
+          'webform' => $webform->id(),
+        ],
+      ];
+    }
+
+    return $views_data;
   }
 
   /**

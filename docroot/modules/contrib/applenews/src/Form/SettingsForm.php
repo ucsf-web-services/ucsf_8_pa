@@ -2,6 +2,7 @@
 
 namespace Drupal\applenews\Form;
 
+use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
@@ -63,29 +64,31 @@ class SettingsForm extends ConfigFormBase {
 
     $form['credentials'] = [
       '#type' => 'fieldset',
-      '#title' => t('Apple News Credentials'),
+      '#title' => t('Apple News credentials'),
       '#description' => t('You can find your connection information in News Publisher. Go to Channel Info tab to view your API Key and Channel ID.'),
     ];
 
     $form['credentials']['endpoint'] = [
-      '#type' => 'textfield',
-      '#title' => t('API Endpoint URL'),
+      '#type' => 'url',
+      '#title' => t('API endpoint URL'),
       '#default_value' => $config->get('endpoint'),
       '#description' => t('Publisher API endpoint URL'),
+      '#required' => TRUE,
     ];
 
     $form['credentials']['api_key'] = [
       '#type' => 'textfield',
-      '#title' => t('API Key ID'),
+      '#title' => t('API key'),
       '#default_value' => $config->get('api_key'),
-      '#description' => t('Publisher API Key ID'),
+      '#description' => t('Publisher API key.'),
+      '#required' => TRUE,
     ];
 
     $form['credentials']['api_secret'] = [
       '#type' => 'password',
-      '#title' => t('API Secret Key'),
+      '#title' => t('API secret'),
       '#default_value' => $config->get('api_secret'),
-      '#description' => t('Publisher API Secret Key'),
+      '#description' => t('Publisher API secret key. This can be blank if the secret is set through settings.php.'),
     ];
 
     $form['advanced'] = [
@@ -117,14 +120,6 @@ class SettingsForm extends ConfigFormBase {
       '#description' => t('Proxy server port number.'),
     ];
 
-    $form['advanced']['api_debug'] = [
-      '#type' => 'select',
-      '#title' => t('Debug API'),
-      '#description' => t('Log all interaction with the Apple News API.'),
-      '#options' => ['' => t('Disabled'), 1 => t('Enabled')],
-      '#default_value' => FALSE,
-    ];
-
     // Show delete button only when all the fields are prepopulated.
     if (!empty($endpoint) && !empty($api_key) && !empty($api_secret)) {
       $form['delete_config'] = [
@@ -138,11 +133,29 @@ class SettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    parent::validateForm($form, $form_state);
+    $endpoint = $form_state->getValue('endpoint');
+    if (UrlHelper::isValid($endpoint, TRUE)) {
+      // Trim any trailing '/' for consistency.
+      $endpoint = preg_replace('~/$~', '', $endpoint);
+      $form_state->setValue('endpoint', $endpoint);
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->config('applenews.settings')
+    $config = $this->config('applenews.settings');
+    // Only save the secret if there is one set.
+    $secret = trim($form_state->getValue('api_secret'));
+    if (!empty($secret)) {
+      $config->set('api_secret', $secret);
+    }
+    $config
       ->set('endpoint', $form_state->getValue('endpoint'))
       ->set('api_key', $form_state->getValue('api_key'))
-      ->set('api_secret', $form_state->getValue('api_secret'))
       ->set('curl_options.ssl', $form_state->getValue('ssl'))
       ->set('curl_options.proxy', $form_state->getValue('proxy'))
       ->set('curl_options.proxy_port', $form_state->getValue('proxy_port'))

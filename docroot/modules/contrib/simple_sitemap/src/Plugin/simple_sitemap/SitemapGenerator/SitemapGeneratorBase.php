@@ -95,8 +95,6 @@ abstract class SitemapGeneratorBase extends SimplesitemapPluginBase implements S
     $this->languageManager = $language_manager;
     $this->time = $time;
     $this->writer = $sitemap_writer;
-    $this->sitemapVariant = $this->settings['default_variant'];
-
   }
 
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -118,6 +116,7 @@ abstract class SitemapGeneratorBase extends SimplesitemapPluginBase implements S
    */
   public function setSitemapVariant($sitemap_variant) {
     $this->sitemapVariant = $sitemap_variant;
+
     return $this;
   }
 
@@ -238,6 +237,7 @@ abstract class SitemapGeneratorBase extends SimplesitemapPluginBase implements S
       'sitemap_string' => $this->getXml($links),
       'sitemap_created' => $this->time->getRequestTime(),
       'status' => 0,
+      'link_count' => count($links),
     ])->execute();
 
     return $this;
@@ -343,6 +343,44 @@ abstract class SitemapGeneratorBase extends SimplesitemapPluginBase implements S
       );
 
     return $url->toString();
+  }
+
+  /**
+   * Determines if the sitemap is to be a multilingual sitemap based on several
+   * factors.
+   *
+   * A hreflang/multilingual sitemap is only wanted if there are indexable
+   * languages available and if there is a language negotiation method enabled
+   * that is based on URL discovery. Any other language negotiation methods
+   * should be irrelevant, as a sitemap can only use URLs to guide to the
+   * correct language.
+   *
+   * @see https://www.drupal.org/project/simple_sitemap/issues/3154570#comment-13730522
+   *
+   * @return bool
+   */
+  public static function isMultilingualSitemap() {
+    if (!\Drupal::moduleHandler()->moduleExists('language')) {
+      return FALSE;
+    }
+
+    /** @var \Drupal\language\LanguageNegotiatorInterface $language_negotiator */
+    $language_negotiator = \Drupal::service('language_negotiator');
+
+    $url_negotiation_method_enabled = FALSE;
+    foreach ($language_negotiator->getNegotiationMethods(LanguageInterface::TYPE_URL) as $method) {
+      if ($language_negotiator->isNegotiationMethodEnabled($method['id'])) {
+        $url_negotiation_method_enabled = TRUE;
+        break;
+      }
+    }
+
+    $has_multiple_indexable_languages = count(
+        array_diff_key(\Drupal::languageManager()->getLanguages(),
+          \Drupal::service('simple_sitemap.generator')->getSetting('excluded_languages', []))
+      ) > 1;
+
+    return $url_negotiation_method_enabled && $has_multiple_indexable_languages;
   }
 
 }

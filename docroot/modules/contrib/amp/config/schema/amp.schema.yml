@@ -42,6 +42,26 @@ field.formatter.settings.amp_image:
       type: integer
       label: 'Height'
 
+field.formatter.settings.amp_media:
+  type: mapping
+  label: 'AMP media field formatter settings'
+  mapping:
+    image_style:
+      type: string
+      label: 'Image style'
+    image_link:
+      type: string
+      label: 'Link image to'
+    layout:
+      type: string
+      label: 'AMP layout'
+    width:
+      type: integer
+      label: 'Width'
+    height:
+      type: integer
+      label: 'Height'
+
 field.formatter.settings.amp_image_carousel:
   type: mapping
   label: 'AMP image carousel formatter settings'
@@ -146,8 +166,21 @@ field.formatter.settings.amp_social_post_formatter:
       type: string
       label: 'Align center'
     provider:
-      type: string
+      type: mapping
       label: 'Provider'
+      mapping:
+        facebook:
+          type: string
+          label: 'facebook'
+        twitter:
+          type: string
+          label: 'twitter'
+        pinterest:
+          type: string
+          label: 'pinterest'
+        instagram:
+          type: string
+          label: 'instagram'
     placeholder:
       type: string
       label: 'Placeholder'

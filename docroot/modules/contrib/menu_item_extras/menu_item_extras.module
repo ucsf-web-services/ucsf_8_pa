@@ -92,32 +92,6 @@ function menu_item_extras_entity_base_field_info(EntityTypeInterface $entity_typ
 }
 
 /**
- * Implements hook_entity_base_field_info_alter().
- *
- * As mentioned in the description of this hook
- * the functionality can be changed.
- *
- * @TODO: We should follow possible changes.
- *
- * @see hook_entity_base_field_info_alter()
- * @see https://www.drupal.org/node/2346329
- */
-function menu_item_extras_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
-  /** @var \Drupal\Core\Field\BaseFieldDefinition[] $fields */
-  if ($entity_type->id() === 'menu_link_content' && isset($fields['weight'])) {
-    $options = $fields["weight"]->getDisplayOptions('view');
-    // Lets check if field definition is buggy.
-    if ($options['type'] === 'integer') {
-      // Yep, this is single reason why view display can't be set. Let's fix it.
-      $options['type'] = 'number_integer';
-      // @TODO: It is fixed for >= 8.4.x.
-      /* @see https://www.drupal.org/node/2903161 */
-      $fields['weight']->setDisplayOptions('view', $options);
-    }
-  }
-}
-
-/**
  * Implements hook_ENTITY_TYPE_presave().
  */
 function menu_item_extras_menu_link_content_presave(EntityInterface $entity) {
@@ -145,7 +119,9 @@ function menu_item_extras_theme() {
     'template' => 'menu-link-content',
   ];
   $theme['menu_levels'] = [
-    'render element' => 'items',
+    'render element' => 'element',
+    'file' => 'menu_item_extras.theme.inc',
+    'template' => 'menu-levels',
   ];
   return $theme;
 }
@@ -157,7 +133,12 @@ function menu_item_extras_preprocess_block(&$variables) {
   // Menus are built with #theme 'menu__MENU_NAME' form the the MenuLinkTree
   // class. We need to build menus supported by menu_item_extras with the
   // default #theme menu, to be able to add suggestions in the good order.
-  if (isset($variables['content']['#menu_name'])) {
+  if (
+    isset($variables['content']['#theme'], $variables['content']['#menu_name'])
+    && (strpos($variables['content']['#theme'], 'menu__') === 0 || $variables['content']['#theme'] === 'menu')
+    && Utility::checkBundleHasExtraFieldsThanEntity('menu_link_content', $variables['content']['#menu_name'])
+  ) {
+
     $variables['content']['#theme'] = 'menu';
     // Pass region name to the suggestions_menu_alter for
     // the region suggestion.
@@ -211,11 +192,9 @@ function menu_item_extras_theme_suggestions_menu_levels(array $variables) {
   /** @var \Drupal\menu_item_extras\Utility\Utility $utility */
   $utility = \Drupal::service('menu_item_extras.utility');
 
-  $menu_name = $utility::sanitizeMachineName($variables['items']['#menu_name']);
-  $children = Element::children($variables['items']);
-  if (isset($variables['items'][$children[0]]['menu_level'])) {
-    $level = 'level_' . $variables['items'][$children[0]]['menu_level'];
-  }
+  $menu_name = $utility::sanitizeMachineName($variables['element']['#menu_name']);
+  $level = 'level_' . $variables['element']['#menu_level'];
+
 
   if (isset($level)) {
     $suggestions[] = $utility::suggestion($suggestion_prefix, $level);
@@ -262,7 +241,7 @@ function menu_item_extras_preprocess_menu(&$variables) {
   // We preprocess only menus that has additional fields.
   if (!empty($variables['menu_name']) && Utility::checkBundleHasExtraFieldsThanEntity('menu_link_content', $variables['menu_name'])) {
     $variables['items'] = \Drupal::service('menu_item_extras.menu_link_tree_handler')
-      ->processMenuLinkTree($variables['items']);
+      ->processMenuLinkTree($variables['items'], $variables['menu_name']);
   }
 }
 
@@ -274,7 +253,7 @@ function menu_item_extras_form_menu_link_content_form_alter(array &$form, FormSt
   $form_object = $form_state->getBuildInfo()['callback_object'];
   /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $entity */
   $entity = $form_object->getEntity();
-  $bundle = $entity->get('menu_name')->getString();
+  $bundle = $entity->bundle();
   foreach ($form['menu_parent']['#options'] as $option_id => $option) {
     if (strpos($option_id, $bundle) !== 0) {
       unset($form['menu_parent']['#options'][$option_id]);
@@ -300,6 +279,7 @@ function menu_item_extras_form_menu_edit_form_alter(array &$form, FormStateInter
     '#url' => Url::fromRoute('entity.menu.clear_extra_data', ['menu' => $menu]),
     '#button_type' => 'danger',
     '#attributes' => ['class' => ['button', 'button--danger']],
+    '#access' => \Drupal::currentUser()->hasPermission('administer menu'),
   ];
 }
 

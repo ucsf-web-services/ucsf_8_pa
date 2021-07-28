@@ -22,7 +22,7 @@ class GdImageAnalysisTest extends TestCase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
 
     // Create a test image with 3 red, 3 green, and 3 blue pixels.

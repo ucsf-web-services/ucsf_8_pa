@@ -2,20 +2,20 @@
 
 namespace Drupal\Tests\acquia_contenthub\Unit;
 
+use Drupal\acquia_contenthub\ContentHubInternalRequest;
 use Drupal\acquia_contenthub\ContentHubSubscription;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Drupal\Core\Session\AccountSwitcherInterface;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Session\AccountInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Drupal\Tests\UnitTestCase;
+use Drupal\Core\Session\AccountSwitcherInterface;
 use Drupal\Core\State\StateInterface;
-use Drupal\acquia_contenthub\ContentHubInternalRequest;
+use Drupal\Tests\UnitTestCase;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * PHPUnit for the ContentHubInternalRequest class.

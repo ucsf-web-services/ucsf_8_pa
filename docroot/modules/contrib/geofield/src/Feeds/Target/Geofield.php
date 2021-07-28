@@ -3,6 +3,9 @@
 namespace Drupal\geofield\Feeds\Target;
 
 use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\feeds\Exception\EmptyFeedException;
 use Drupal\feeds\FieldTargetDefinition;
 use Drupal\feeds\Plugin\Type\Target\FieldTargetBase;
@@ -15,69 +18,118 @@ use Drupal\feeds\Plugin\Type\Target\FieldTargetBase;
  *   field_types = {"geofield"}
  * )
  */
-class Geofield extends FieldTargetBase {
+class Geofield extends FieldTargetBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The Settings object or array.
+   *
+   * @var mixed
+   */
+  protected $settings;
+
+  /**
+   * The messenger.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
+   * Constructs a Geofield FeedsTarget object.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param array $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The messenger.
+   */
+  public function __construct(array $configuration, $plugin_id, array $plugin_definition, MessengerInterface $messenger) {
+    $this->targetDefinition = $configuration['target_definition'];
+    $this->settings = $this->targetDefinition->getFieldDefinition()->getSettings();
+    $this->messenger = $messenger;
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('messenger')
+    );
+  }
 
   /**
    * {@inheritdoc}
    */
   protected static function prepareTarget(FieldDefinitionInterface $field_definition) {
-    $definition = FieldTargetDefinition::createFromFieldDefinition($field_definition)
+    return FieldTargetDefinition::createFromFieldDefinition($field_definition)
       ->addProperty('lat')
-      ->addProperty('lon');
-    return $definition;
+      ->addProperty('lon')
+      ->addProperty('value');
   }
 
   /**
    * {@inheritdoc}
    */
   protected function prepareValues(array $values) {
-    $return = array();
-    $coordinates = array();
-    $coordinates_counter = 0;
+    $results = [];
+    $coordinates = [];
 
     foreach ($values as $delta => $columns) {
       try {
         $this->prepareValue($delta, $columns);
+        foreach ($columns as $column => $value) {
 
-        foreach ($columns as $key => $items) {
-          foreach ($items as $item) {
-            $coordinates[$coordinates_counter][$key][] = $item;
+          // Add Lat/Lon Coordinates.
+          if (in_array($column, ['lat', 'lon'])) {
+            foreach ($value as $item) {
+              $coordinates[$column][] = $item;
+            }
           }
-          $coordinates_counter = 0;
-        }
 
+          // Raw Geometry value (i.e. WKT or GeoJson).
+          if ($column == 'value') {
+            $results[]['value'] = $value;
+          }
+        }
       }
       catch (EmptyFeedException $e) {
-        drupal_set_message($e->getMessage(), 'error');
-
+        $this->messenger->addError($e->getMessage());
         return FALSE;
-      };
-
-    }
-    if (isset($coordinates)) {
-      foreach ($coordinates as $coordinate) {
-        $count_of_coordinates = count($coordinate['lat']);
-
-        for ($i = 0; $i < $count_of_coordinates; $i++) {
-          $return[]['value'] = "POINT (" . $coordinate['lon'][$i] . " " . $coordinate['lat'][$i] . ")";
-        }
       }
     }
 
-    return $return;
+    // Transform Lat/Lon Coordinates couples into WKT Points.
+    if (!empty($coordinates)) {
+      $count_of_coordinates = count($coordinates['lat']);
+      for ($i = 0; $i < $count_of_coordinates; $i++) {
+        $results[]['value'] = "POINT (" . $coordinates['lon'][$i] . " " . $coordinates['lat'][$i] . ")";
+      }
+    }
+    return $results;
   }
 
   /**
    * {@inheritdoc}
    */
   protected function prepareValue($delta, array &$values) {
-    // Here is been preparing values for coordinates.
-    foreach ($values as $column => $value) {
-      $separated_coordinates = explode(" ", $value);
-      $values[$column] = array();
 
-      foreach ($separated_coordinates as $coordinate) {
-        $values[$column][] = (float) $coordinate;
+    // Here is been preparing values for Lat/Lon coordinates.
+    foreach ($values as $column => $value) {
+      if (in_array($column, ['lat', 'lon'])) {
+        $separated_coordinates = explode(" ", $value);
+        $values[$column] = [];
+
+        foreach ($separated_coordinates as $coordinate) {
+          $values[$column][] = (float) $coordinate;
+        }
       }
     }
 

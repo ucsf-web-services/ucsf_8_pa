@@ -8,6 +8,19 @@ use Drupal\Tests\BrowserTestBase;
  * Setup users and configurations.
  */
 abstract class ApplenewsTestBase extends BrowserTestBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
+   * Modules to enable.
+   *
+   * @var array
+   */
+  protected static $modules = ['applenews', 'serialization', 'block', 'field'];
+
   /**
    * A user with permission to bypass access content.
    *
@@ -23,16 +36,9 @@ abstract class ApplenewsTestBase extends BrowserTestBase {
   protected $baseUser;
 
   /**
-   * Modules to enable.
-   *
-   * @var array
-   */
-  public static $modules = ['applenews', 'serialization', 'block', 'field'];
-
-  /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->adminUser = $this->drupalCreateUser([

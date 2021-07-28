@@ -2,6 +2,7 @@
 
 namespace Drupal\entity_clone\EntityClone\Content;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\EntityHandlerInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -10,6 +11,7 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\entity_clone\EntityClone\EntityCloneInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -33,16 +35,36 @@ class ContentEntityCloneBase implements EntityHandlerInterface, EntityCloneInter
   protected $entityTypeId;
 
   /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected $currentUser;
+
+  /**
+   * A service for obtaining the system's time.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $timeService;
+
+  /**
    * Constructs a new ContentEntityCloneBase.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    * @param string $entity_type_id
    *   The entity type ID.
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
+   *  The current user.
+   * @param \Drupal\Component\Datetime\TimeInterface $time_service
+   *   A service for obtaining the system's time.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, $entity_type_id) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, $entity_type_id, TimeInterface $time_service, AccountProxyInterface $currentUser) {
     $this->entityTypeManager = $entity_type_manager;
     $this->entityTypeId = $entity_type_id;
+    $this->timeService = $time_service;
+    $this->currentUser = $currentUser;
   }
 
   /**
@@ -51,7 +73,9 @@ class ContentEntityCloneBase implements EntityHandlerInterface, EntityCloneInter
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
     return new static(
       $container->get('entity_type.manager'),
-      $entity_type->id()
+      $entity_type->id(),
+      $container->get('datetime.time'),
+      $container->get('current_user')
     );
   }
 
@@ -59,6 +83,9 @@ class ContentEntityCloneBase implements EntityHandlerInterface, EntityCloneInter
    * {@inheritdoc}
    */
   public function cloneEntity(EntityInterface $entity, EntityInterface $cloned_entity, array $properties = [], array &$already_cloned = []) {
+    if (isset($properties['take_ownership']) && $properties['take_ownership'] === 1) {
+      $cloned_entity->setOwnerId($this->currentUser->id());
+    }
     // Clone referenced entities.
     $cloned_entity->save();
     $already_cloned[$entity->getEntityTypeId()][$entity->id()] = $cloned_entity;
@@ -75,6 +102,16 @@ class ContentEntityCloneBase implements EntityHandlerInterface, EntityCloneInter
     }
 
     $this->setClonedEntityLabel($entity, $cloned_entity);
+
+    // For now, check that the cloned entity has a 'setCreatedTime' method, and
+    // if so, try to call it. This condition can be replaced with a more-robust
+    // check whether $cloned_entity is an instance of
+    // Drupal\Core\Entity\EntityCreatedInterface once
+    // https://www.drupal.org/project/drupal/issues/2833378 lands.
+    if (method_exists($cloned_entity, 'setCreatedTime')) {
+      $cloned_entity->setCreatedTime($this->timeService->getRequestTime());
+    }
+
     $cloned_entity->save();
     return $cloned_entity;
   }
@@ -86,7 +123,7 @@ class ContentEntityCloneBase implements EntityHandlerInterface, EntityCloneInter
    *   The field definition.
    *
    * @return bool
-   *   TRUE if th field is clonable; FALSE otherwise.
+   *   TRUE if the field is clonable; FALSE otherwise.
    */
   protected function fieldIsClonable(FieldDefinitionInterface $field_definition) {
     $clonable_field_types = [
@@ -117,7 +154,7 @@ class ContentEntityCloneBase implements EntityHandlerInterface, EntityCloneInter
   }
 
   /**
-   * Clone referenced entities.
+   * Clones referenced entities.
    *
    * @param \Drupal\Core\Field\FieldItemListInterface $field
    *   The field item.
@@ -154,6 +191,9 @@ class ContentEntityCloneBase implements EntityHandlerInterface, EntityCloneInter
       elseif (!empty($child_properties['is_circular'])) {
         if (!empty($already_cloned[$referenced_entity->getEntityTypeId()][$referenced_entity->id()])) {
           $referenced_entities[] = $already_cloned[$referenced_entity->getEntityTypeId()][$referenced_entity->id()];
+        }
+        else {
+          $referenced_entities[] = $referenced_entity;
         }
       }
       else {

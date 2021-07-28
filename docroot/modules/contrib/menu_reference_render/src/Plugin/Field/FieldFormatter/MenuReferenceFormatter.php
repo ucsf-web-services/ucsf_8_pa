@@ -6,6 +6,8 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
 use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Menu\MenuTreeParameters;
 
 /**
  * Plugin implementation of the 'menu_reference_render' formatter.
@@ -29,9 +31,17 @@ class MenuReferenceFormatter extends EntityReferenceFormatterBase {
     foreach ($this->getEntitiesToView($items, $langcode) as $entity) {
       $menu_name = $entity->get('id');
       $menu_tree = \Drupal::menuTree();
+      $menu_active_trail = \Drupal::service('menu.active_trail');
 
       // Build the typical default set of menu tree parameters.
-      $parameters = $menu_tree->getCurrentRouteMenuTreeParameters($menu_name);
+      if ($this->getSetting('expand_all_items')) {
+        $parameters = new MenuTreeParameters();
+        $active_trail = $menu_active_trail->getActiveTrailIds($menu_name);
+        $parameters->setActiveTrail($active_trail);
+      }
+      else {
+        $parameters = $menu_tree->getCurrentRouteMenuTreeParameters($menu_name);
+      }
 
       // Load the tree based on this set of parameters.
       $tree = $menu_tree->load($menu_name, $parameters);
@@ -47,6 +57,42 @@ class MenuReferenceFormatter extends EntityReferenceFormatterBase {
     }
 
     return $elements;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function defaultSettings() {
+    $settings = parent::defaultSettings();
+    $settings['expand_all_items'] = FALSE;
+    return $settings;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    $form = parent::settingsForm($form, $form_state);
+
+    $form['expand_all_items'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Expand all menu items'),
+      '#default_value' => $this->getSetting('expand_all_items'),
+      '#description' => $this->t('Override the option found on each menu link used for expanding children and instead display the whole menu tree as expanded.'),
+    ];
+
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsSummary() {
+    $summary = parent::settingsSummary();
+    if ($this->getSetting('expand_all_items')) {
+      $summary[] = $this->t('All menu items expanded');
+    }
+    return $summary;
   }
 
   /**

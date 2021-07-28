@@ -2,8 +2,8 @@
 
 namespace Drupal\acquia_contenthub\Routing;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\acquia_contenthub\EntityManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 

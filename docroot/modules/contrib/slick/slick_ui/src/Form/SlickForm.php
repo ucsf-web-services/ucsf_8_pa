@@ -310,7 +310,7 @@ class SlickForm extends SlickFormBase {
       $elements['asNavFor'] = [
         'type'        => 'textfield',
         'title'       => $this->t('asNavFor target'),
-        'description' => $this->t('Leave empty if using sub-modules to have it auto-matched. Set the slider to be the navigation of other slider (Class or ID Name). Use selector identifier ("." or "#") accordingly. See HTML structure section at README.txt for more info. Overriden by field formatter, or Views style.'),
+        'description' => $this->t('Leave empty if using sub-modules to have it auto-matched. Set the slider to be the navigation of other slider (Class or ID Name). Use selector identifier ("." or "#") accordingly. See HTML structure section at README.md for more info. Overriden by field formatter, or Views style.'),
       ];
 
       $elements['accessibility'] = [
@@ -652,9 +652,6 @@ class SlickForm extends SlickFormBase {
       'appendArrows',
       'appendDots',
       'asNavFor',
-      'cssEase',
-      'cssEaseBezier',
-      'cssEaseOverride',
       'dotsClass',
       'downArrow',
       'downArrowTarget',

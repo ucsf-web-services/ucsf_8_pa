@@ -35,6 +35,7 @@ Invert                   | Replace each pixel with its complementary color.     
 Mask                     | Apply a mask to the image.                                                                   | X          | IM only             |
 Mirror                   | Mirror the image horizontally and/or vertically.                                             | X          | X                   |
 Opacity                  | Change overall image transparency level.                                                     | X          | IM only             |
+Relative crop            | Resize the image to match a ratio, for example 4:3 or 16:9.                                  | X          | X                   |
 Resize percentage        | Resize the image by percentage of its width/height.                                          | X          | X                   |
 Scale and Smart Crop     | Similar to Scale and Crop, but preserves the portion of the image with the most entropy.     | X          | X                |
 Set canvas               | Places the source image over a colored or a transparent background of a defined size.        | X          | IM only             |
@@ -80,11 +81,10 @@ information.
 
 ## Installing
 
-__Versions 8.x-1.x:__ Install as usual, see the [official documentation](https://www.drupal.org/documentation/install/modules-themes/modules-8)
-for further information.
-
-__Versions 8.x-2.x:__ The module requires [using Composer to manage Drupal site dependencies](https://www.drupal.org/node/2718229). Require the module via
-```composer require drupal/image_effects:~2.0```, then enable the module as usual.
+The module requires
+[using Composer to manage Drupal site dependencies](https://www.drupal.org/node/2718229).
+Require the module via ```composer require drupal/image_effects:^3```, then
+enable the module as usual.
 
 
 ## Configuration
@@ -116,6 +116,16 @@ __Versions 8.x-2.x:__ The module requires [using Composer to manage Drupal site 
 - Define image styles at _Manage > Configuration > Media > Image styles_ and add
   one or more effects defined by this module.
 - Use the image styles via e.g. the formatters of image fields.
+
+
+## Related modules
+
+- Use the [_Entity Clone_](https://www.drupal.org/project/entity_clone) module
+  to make clones of image style configurations.
+- Install the
+  [_JQuery Colorpicker_](https://www.drupal.org/project/jquery_colorpicker)
+  module to allow using the JQuery Colorpicker widget to select colors in the
+  image effects' configuration UI.
 
 
 ## Support

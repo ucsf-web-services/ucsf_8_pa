@@ -146,4 +146,21 @@ class EntityCloneSettingsManager {
     return FALSE;
   }
 
+  /**
+   * Set the take ownership setting.
+   *
+   * @param int $setting
+   *   The settings from the form.
+   */
+  public function setTakeOwnershipSettings(int $setting) {
+    $this->editableConfig->set('take_ownership', $setting)->save();
+  }
+
+  /**
+   * Get the take ownership settings.
+   */
+  public function getTakeOwnershipSetting() {
+    return $this->config->get('take_ownership') ?? FALSE;
+  }
+
 }

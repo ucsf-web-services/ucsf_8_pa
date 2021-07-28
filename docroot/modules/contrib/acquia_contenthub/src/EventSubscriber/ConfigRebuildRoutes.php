@@ -4,8 +4,8 @@ namespace Drupal\acquia_contenthub\EventSubscriber;
 
 use Drupal\Core\Config\ConfigCrudEvent;
 use Drupal\Core\Config\ConfigEvents;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\Core\Routing\RouteBuilderInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * A subscriber to rebuild routes whenever there is a change in configuration.
@@ -16,6 +16,11 @@ use Drupal\Core\Routing\RouteBuilderInterface;
  */
 class ConfigRebuildRoutes implements EventSubscriberInterface {
 
+  /**
+   * The Route Builder.
+   *
+   * @var \Drupal\Core\Routing\RouteBuilderInterface
+   */
   protected $routeBuilder;
 
   /**

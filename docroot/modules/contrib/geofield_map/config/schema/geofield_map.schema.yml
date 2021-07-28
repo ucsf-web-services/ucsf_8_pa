@@ -22,6 +22,9 @@ geofield_map.settings:
             rel_path:
               type: string
               label: 'Relative Path'
+        additional_markers_location:
+          type: string
+          label: 'Additional Markers Location'
         markers_extensions:
           type: string
           label: 'Markers Allowed file extensions'
@@ -40,31 +43,126 @@ geofield_map.settings:
               type: string
               label: 'Type of Client Side Storage (None, Local or Session Storage)'
 
-field.formatter.settings.geofield_static_map:
-  type: mapping
-  label: 'Geofield Static Map formatter settings'
+field.widget.settings.geofield_map:
+  type: field.widget.settings.geofield_latlon
+  label: Geofield Map widget settings
   mapping:
-    width:
-      type: integer
-      label: 'Width of the map'
-    height:
-      type: integer
-      label: 'Height of the map'
-    scale:
+    default_value:
+      type: mapping
+      label: Default value
+      mapping:
+        lat:
+          type: float
+          label: Latitude
+        lon:
+          type: float
+          label: Longitude
+    map_library:
       type: string
-      label: 'Scale to be used when requesting image dimensions'
+      label: Map library
+    map_google_api_key:
+      type: string
+      label: Gmap Api Key
+    map_google_places:
+      type: mapping
+      label: Google Places settings
+      mapping:
+        places_control:
+          type: boolean
+          label: Enable Address Geocoding
+        places_additional_options:
+          type: string
+          label: Additional Options
+    map_dimensions:
+      type: mapping
+      label: Map Dimensions
+      mapping:
+        width:
+          type: string
+          label: Width
+        height:
+          type: string
+          label: Height
+    map_type_google:
+      type: string
+      label: Google Map Type
+    map_type_leaflet:
+      type: string
+      label: Leaflet Map Type
+    map_type_selector:
+      type: boolean
+      label: Provide a Map type Selector on the Map
+    zoom_level:
+      type: integer
+      label: Zoom Level
     zoom:
-      type: string
-      label: 'Zoom level to use on the map'
-    langcode:
-      type: string
-      label: 'The two-letter langcode to use'
-    static_map_type:
-      type: string
-      label: 'The static map to use, such as roadmap, satellite, etc.'
-    marker_color:
-      type: string
-      label: 'The Marker color'
-    marker_size:
-      type: string
-      label: 'The Marker size'
+      type: mapping
+      label: Zoom Settings
+      mapping:
+        start:
+          type: integer
+          label: Start Zoom Level
+        focus:
+          type: integer
+          label: Focus Zoom Level
+        min:
+          type: integer
+          label: Min Zoom Level
+        max:
+          type: integer
+          label: Max Zoom Level
+    click_to_find_marker:
+      type: boolean
+      label: Click to Find Marker
+    click_to_place_marker:
+      type: boolean
+      label: Click to Place Marker
+    hide_coordinates:
+      type: boolean
+      label: Hide Lat/Lon Coordinates Input
+    geoaddress_field:
+      type: mapping
+      label: Geoaddressed Field Settings
+      mapping:
+        field:
+          type: string
+          label: Field Name
+        hidden:
+          type: boolean
+          label: Hide the Field in Content Edit Form
+        disabled:
+          type: boolean
+          label: Disable the Field in Content Edit Form
+    map_geocoder:
+      type: mapping
+      label: Geocoder map integration
+      mapping:
+        control:
+          type: integer
+          label: Geocoder map control
+        settings:
+          type: mapping
+          label: Gecoder settings
+          mapping:
+            providers:
+              type: sequence
+              label: Providers
+              sequence:
+                type: mapping
+                label: Provider
+                mapping:
+                  weight:
+                    type: integer
+                    label: Weight
+                  checked:
+                    type: boolean
+                    label: Checked
+            min_terms:
+              type: integer
+              label: Minimum terms
+            delay:
+              type: integer
+              label: Delay
+            options:
+              type: string
+              label: Options

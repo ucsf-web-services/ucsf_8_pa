@@ -139,7 +139,6 @@ abstract class ApplenewsComponentTypeBase extends PluginBase implements Applenew
     ];
 
     // @todo add more component layout form elements
-
     return $element;
   }
 
@@ -267,7 +266,7 @@ abstract class ApplenewsComponentTypeBase extends PluginBase implements Applenew
 
     $element['field_name'] = [
       '#type' => 'select',
-      '#title' => $this->t($label),
+      '#title' => $label,
       '#options' => $this->getFieldOptions($node_type),
       '#ajax' => [
         'callback' => [$this, 'ajaxGetFieldPropertySelectionElement'],
@@ -277,7 +276,7 @@ abstract class ApplenewsComponentTypeBase extends PluginBase implements Applenew
     ];
 
     if ($default_field_config && !$default_field_config->getFieldStorageDefinition()->isBaseField()) {
-      $element['field_property'] = $this->getFieldPropertySelectionElement($default_field_config->getFieldStorageDefinition());;
+      $element['field_property'] = $this->getFieldPropertySelectionElement($default_field_config->getFieldStorageDefinition());
     }
     else {
       // Base fields do not have properties, so set a value we can check for.
@@ -317,7 +316,7 @@ abstract class ApplenewsComponentTypeBase extends PluginBase implements Applenew
 
     return [
       '#type' => 'select',
-      '#title' => $this->t($field_name . ' Property'),
+      '#title' => $this->t('@field_name Property', ['@field_name' => $field_name]),
       '#options' => $property_options,
     ];
   }

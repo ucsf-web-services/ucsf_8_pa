@@ -5,12 +5,16 @@ namespace Drupal\acquia_contenthub\Form;
 use Drupal\acquia_contenthub\EntityManager;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\image\Entity\ImageStyle;
 
 /**
  * Defines a form that alters node type form to add a preview image form.
  */
 class NodeTypePreviewImageForm {
+
+  use StringTranslationTrait;
+
   const PREVIEW_IMAGE_DEFAULT_KEY = 'acquia_contenthub_preview_image';
   const PREVIEW_IMAGE_ADD_DEFAULT_KEY = 'acquia_contenthub_preview_image_add';
 
@@ -89,7 +93,7 @@ class NodeTypePreviewImageForm {
    */
   public function getForm($node_type) {
     $form = [
-      '#title' => t('Acquia Content Hub'),
+      '#title' => $this->t('Acquia Content Hub'),
       '#type' => 'details',
       '#tree' => TRUE,
       '#group' => 'additional_settings',
@@ -100,7 +104,7 @@ class NodeTypePreviewImageForm {
     if (empty($this->imageFields)) {
       $form['no_image_field'] = [
         '#type' => 'markup',
-        '#markup' => '<div>' . t('This content type has no image field yet.') . '</div>',
+        '#markup' => '<div>' . $this->t('This content type has no image field yet.') . '</div>',
       ];
       return $form;
     }
@@ -111,7 +115,7 @@ class NodeTypePreviewImageForm {
     // If the default option is not in the system, offer to create and use the
     // Acquia Content Hub default style.
     if (!isset($image_styles[self::PREVIEW_IMAGE_DEFAULT_KEY])) {
-      $image_styles = [self::PREVIEW_IMAGE_ADD_DEFAULT_KEY => t('Acquia Content Hub Preview Image (150×150)')] + $image_styles;
+      $image_styles = [self::PREVIEW_IMAGE_ADD_DEFAULT_KEY => $this->t('Acquia Content Hub Preview Image (150×150)')] + $image_styles;
     }
 
     // Obtaining preview image field and style from the configuration entity.
@@ -121,18 +125,18 @@ class NodeTypePreviewImageForm {
     // Building the form.
     $form['field'] = [
       '#type' => 'select',
-      '#title' => t("Select content type's preview image."),
+      '#title' => $this->t("Select content type's preview image."),
       '#options' => $this->imageFields,
       '#default_value' => (isset($preview_image_field) ? $preview_image_field : ''),
-      '#empty_option' => t('None'),
+      '#empty_option' => $this->t('None'),
       '#empty_value' => '',
     ];
     $form['style'] = [
       '#type' => 'select',
-      '#title' => t("Select the preview image's style."),
+      '#title' => $this->t("Select the preview image's style."),
       '#options' => $image_styles,
       '#default_value' => (isset($preview_image_style) ? $preview_image_style : ''),
-      '#empty_option' => t('None'),
+      '#empty_option' => $this->t('None'),
       '#empty_value' => '',
       '#states' => [
         'visible' => [
@@ -199,10 +203,14 @@ class NodeTypePreviewImageForm {
    *
    * @param string $node_type
    *   Node Type.
-   * @param array $settings
+   * @param array|null $settings
    *   Settings.
    */
-  public function saveSettings($node_type, array $settings) {
+  public function saveSettings($node_type, ?array $settings) {
+    if (NULL === $settings || !isset($settings['field'], $settings['style'])) {
+      return;
+    }
+
     if ($settings['style'] === self::PREVIEW_IMAGE_ADD_DEFAULT_KEY) {
       $this->createDefaultImageStyle();
       $settings['style'] = self::PREVIEW_IMAGE_DEFAULT_KEY;
@@ -220,7 +228,7 @@ class NodeTypePreviewImageForm {
   public function createDefaultImageStyle() {
     $image_style = ImageStyle::create([
       'name' => self::PREVIEW_IMAGE_DEFAULT_KEY,
-      'label' => t('Acquia Content Hub Preview Image (150×150)'),
+      'label' => $this->t('Acquia Content Hub Preview Image (150×150)'),
     ]);
     $image_style->addImageEffect([
       'id' => 'image_scale_and_crop',

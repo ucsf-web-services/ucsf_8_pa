@@ -24,6 +24,7 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\geofield_map\Services\GoogleMapsService;
 use Drupal\Core\Render\Markup;
 use Drupal\geofield_map\Services\MarkerIconService;
+use Drupal\Core\Utility\Token;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 
@@ -53,6 +54,13 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
     '1' => 'Custom Message',
     '2' => 'Empty Map Centered at the Default Center',
   ];
+
+  /**
+   * The Default Settings.
+   *
+   * @var array
+   */
+  protected $defaultSettings;
 
   /**
    * The config factory service.
@@ -112,6 +120,13 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
   protected $moduleHandler;
 
   /**
+   * The token service.
+   *
+   * @var \Drupal\core\Utility\Token
+   */
+  protected $token;
+
+  /**
    * The geofieldMapGoogleMaps service.
    *
    * @var \Drupal\geofield_map\Services\GoogleMapsService
@@ -160,6 +175,8 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
    *   The Renderer service.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
    *   The module handler.
+   * @param \Drupal\core\Utility\Token $token
+   *   The token service.
    * @param \Drupal\geofield_map\Services\GoogleMapsService $google_maps_service
    *   The Google Maps service.
    * @param \Drupal\geofield_map\Services\MarkerIconService $marker_icon_service
@@ -182,10 +199,12 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
     GeoPHPInterface $geophp_wrapper,
     RendererInterface $renderer,
     ModuleHandlerInterface $module_handler,
+    Token $token,
     GoogleMapsService $google_maps_service,
     MarkerIconService $marker_icon_service
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+    $this->defaultSettings = self::getDefaultSettings();
     $this->config = $config_factory;
     $this->link = $link_generator;
     $this->entityTypeManager = $entity_type_manager;
@@ -194,6 +213,7 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
     $this->geoPhpWrapper = $geophp_wrapper;
     $this->renderer = $renderer;
     $this->moduleHandler = $module_handler;
+    $this->token = $token;
     $this->googleMapsService = $google_maps_service;
     $this->markerIcon = $marker_icon_service;
   }
@@ -219,6 +239,7 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
       $container->get('geofield.geophp'),
       $container->get('renderer'),
       $container->get('module_handler'),
+      $container->get('token'),
       $container->get('geofield_map.google_maps'),
       $container->get('geofield_map.marker_icon')
     );
@@ -234,23 +255,36 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
   /**
    * {@inheritdoc}
    */
-  public function getSettings() {
-    // Merge defaults before returning the array.
-    if (!$this->defaultSettingsMerged) {
-      $this->mergeDefaults();
-    }
-    return $this->settings;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function settingsForm(array $form, FormStateInterface $form_state) {
 
     $default_settings = self::defaultSettings();
     $settings = $this->getSettings();
 
-    $elements = $this->generateGMapSettingsForm($form, $form_state, $settings, $default_settings);
+    $elements = [];
+    if ($this->moduleHandler->moduleExists('token')) {
+
+      $elements['replacement_patterns'] = [
+        '#type' => 'details',
+        '#title' => 'Replacement patterns',
+        '#description' => $this->t('The following replacement tokens are available for the "Icon Image Path" and the "Map Geometries Options" options'),
+      ];
+
+      $elements['replacement_patterns']['token_help'] = [
+        '#theme' => 'token_tree_link',
+        '#token_types' => [$this->fieldDefinition->getTargetEntityTypeId()],
+      ];
+    }
+    else {
+      $elements['replacement_patterns']['#description'] = $this->t('The @token_link is needed to browse and use @entity_type entity token replacements.', [
+        '@token_link' => $this->link->generate($this->t('Token module'), Url::fromUri('https://www.drupal.org/project/token', [
+          'absolute' => TRUE,
+          'attributes' => ['target' => 'blank'],
+        ])),
+        '@entity_type' => $this->fieldDefinition->getTargetEntityTypeId(),
+      ]);
+    }
+
+    $elements += $this->generateGMapSettingsForm($form, $form_state, $settings, $default_settings);
 
     $elements['#attached'] = [
       'library' => [
@@ -277,8 +311,8 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
       '#title' => $this->t('Custom Icon definition mode'),
       '#type' => 'select',
       '#options' => [
-        'icon_file' => 'Icon File',
-        'icon_image_path' => 'Icon Image Path',
+        'icon_file' => $this->t('Icon File'),
+        'icon_image_path' => $this->t('Icon Image Path'),
       ],
       '#default_value' => $selected_icon_image_mode,
       '#description' => [
@@ -308,7 +342,7 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
       'icon_file' => $this->markerIcon->getIconFileManagedElement($fid),
       'image_style' => [
         '#type' => 'select',
-        '#title' => t('Image style'),
+        '#title' => $this->t('Image style'),
         '#options' => $this->markerIcon->getImageStyleOptions(),
         '#default_value' => isset($settings['map_marker_and_infowindow']['icon_file_wrapper']['image_style']) ? $settings['map_marker_and_infowindow']['icon_file_wrapper']['image_style'] : 'geofield_map_default_icon_style',
         '#states' => [
@@ -375,34 +409,6 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
     // Define a specific default_icon_image_mode that consider icon_image_path
     // eventually set previously to its select introduction.
     $default_icon_image_mode = !empty($settings['map_marker_and_infowindow']['icon_image_path']) ? 'icon_image_path' : $default_settings['map_marker_and_infowindow']['icon_image_mode'];
-
-    $gmap_api_key = $this->getGmapApiKey();
-
-    // Define the Google Maps API Key value message string.
-    if (!empty($gmap_api_key)) {
-      $state = $this->link->generate($gmap_api_key, Url::fromRoute('geofield_map.settings', [], [
-        'query' => [
-          'destination' => Url::fromRoute('<current>')
-            ->toString(),
-        ],
-      ]));
-    }
-    else {
-      $state = $this->t("<span class='geofield-map-warning'>missing - @settings_page_link<br>Google Maps functionalities not available.</span>", [
-        '@settings_page_link' => $this->link->generate($this->t('Set it in the Geofield Map Configuration Page'), Url::fromRoute('geofield_map.settings', [], [
-          'query' => [
-            'destination' => Url::fromRoute('<current>')
-              ->toString(),
-          ],
-        ])),
-      ]);
-    }
-
-    $map_gmap_api_key = [
-      '#markup' => $this->t('Google Maps API Key: @state', [
-        '@state' => $state,
-      ]),
-    ];
 
     $map_dimensions = [
       '#markup' => $this->t('Map Dimensions: Width: @width - Height: @height', ['@width' => $settings['map_dimensions']['width'], '@height' => $settings['map_dimensions']['height']]),
@@ -548,10 +554,16 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
         '#value' => $this->t('Marker Infowindow @state', ['@state' => !empty($settings['map_marker_and_infowindow']['infowindow_field']) ? 'from: ' . $settings['map_marker_and_infowindow']['infowindow_field'] : $this->t('disabled')]),
         '#weight' => 2,
       ],
+      'tooltip_field' => [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#value' => $this->t('Marker Tooltip @state', ['@state' => !empty($settings['map_marker_and_infowindow']['tooltip_field']) ? 'from: ' . $settings['map_marker_and_infowindow']['tooltip_field'] : $this->t('disabled')]),
+        '#weight' => 2,
+      ],
       'force_open' => [
         '#type' => 'html_tag',
         '#tag' => 'div',
-        '#value' => $this->t('Open Infowindow on Load: @state', ['@state' => $settings['map_marker_and_infowindow']['force_open'] ? $this->t('Yes') : $this->t('No')]),
+        '#value' => $this->t('Open Infowindow on Load: @state', ['@state' => !empty($settings['map_marker_and_infowindow']['force_open']) ? $this->t('Yes') : $this->t('No')]),
         '#weight' => 3,
       ],
     ];
@@ -604,7 +616,7 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
       'markercluster_control' => [
         '#type' => 'html_tag',
         '#tag' => 'div',
-        '#value' => $this->t('Marker Cluster Enabled: @state', ['@state' => $settings['map_markercluster']['markercluster_control'] ? $this->t('Yes') : $this->t('No')]),
+        '#value' => $this->t('Marker Cluster Enabled: @state', ['@state' => isset($settings['map_markercluster']['markercluster_control']) && $settings['map_markercluster']['markercluster_control'] ? $this->t('Yes') : $this->t('No')]),
       ],
     ];
 
@@ -616,7 +628,7 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
         'value' => [
           '#type' => 'html_tag',
           '#tag' => 'div',
-          '#value' => $settings['map_markercluster']['markercluster_additional_options'],
+          '#value' => isset($settings['map_markercluster']['markercluster_additional_options']) ? $settings['map_markercluster']['markercluster_additional_options'] : [],
         ],
       ];
     }
@@ -640,8 +652,14 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
       ];
     }
 
+    $map_lazy_load = [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#value' => $this->t('Lazy load map: @state', ['@state' => $settings['map_lazy_load']['lazy_load'] ? $this->t('Yes') : $this->t('No')]),
+    ];
+
     $summary = [
-      'map_gmap_api_key' => $map_gmap_api_key,
+      'map_google_api_key' => $this->setMapGoogleApiKeyElement(),
       'map_dimensions' => $map_dimensions,
       'map_empty' => $map_empty,
       'map_center' => $map_center,
@@ -652,6 +670,7 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
       'map_oms' => $map_oms,
       'map_markercluster' => $map_markercluster,
       'custom_style_map' => $custom_style_map,
+      'map_lazy_load' => $map_lazy_load,
     ];
 
     // Attach Geofield Map Library.
@@ -703,6 +722,15 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
       'data' => [],
     ];
 
+    // Get and set the Geofield cardinality.
+    $js_settings['map_settings']['geofield_cardinality'] = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
+
+    // Get token context.
+    $token_context = [
+      'field' => $items,
+      $this->fieldDefinition->getTargetEntityTypeId() => $items->getEntity(),
+    ];
+
     $description = [];
     $description_field = isset($map_settings['map_marker_and_infowindow']['infowindow_field']) ? $map_settings['map_marker_and_infowindow']['infowindow_field'] : NULL;
     /* @var \Drupal\Core\Field\FieldItemList $description_field_entity */
@@ -729,18 +757,49 @@ class GeofieldGoogleMapFormatter extends FormatterBase implements ContainerFacto
       }
     }
 
-    $geojson_data = $this->getGeoJsonData($items, $description);
+    // Define a Tooltip for the Feature.
+    $tooltip = isset($map_settings['map_marker_and_infowindow']['tooltip_field']) && $map_settings['map_marker_and_infowindow']['tooltip_field'] == 'title' ? $entity->label() : '';
 
-    // Add Custom Icon File, if set.
+    $geojson_data = $this->getGeoJsonData($items, $entity->id(), $description, $tooltip);
+
+    // Add Custom Icon, if set.
     if (isset($map_settings['map_marker_and_infowindow']['icon_image_mode'])
-      && $map_settings['map_marker_and_infowindow']['icon_image_mode'] == 'icon_file'
-    ) {
-      $image_style = isset($map_settings['map_marker_and_infowindow']['icon_file_wrapper']['image_style']) ? $map_settings['map_marker_and_infowindow']['icon_file_wrapper']['image_style'] : 'none';
-      $fid = (integer) !empty($map_settings['map_marker_and_infowindow']['icon_file_wrapper']['icon_file']['fids']) ? $map_settings['map_marker_and_infowindow']['icon_file_wrapper']['icon_file']['fids'] : NULL;
+      && $map_settings['map_marker_and_infowindow']['icon_image_mode'] === 'icon_file') {
+      $image_style = 'none';
+      $fid = NULL;
+
+      if (isset($map_settings['map_marker_and_infowindow']['icon_file_wrapper']['image_style'])) {
+        $image_style = $map_settings['map_marker_and_infowindow']['icon_file_wrapper']['image_style'];
+      }
+
+      if ((integer) !empty($map_settings['map_marker_and_infowindow']['icon_file_wrapper']['icon_file']['fids'])) {
+        $fid = $map_settings['map_marker_and_infowindow']['icon_file_wrapper']['icon_file']['fids'];
+      }
+
       foreach ($geojson_data as $k => $datum) {
-        $geojson_data[$k]['properties']['icon'] = $this->markerIcon->getFileManagedUrl($fid, $image_style);
-        // Flag the data with theming, for later rendering logic.
-        $geojson_data[$k]['properties']['theming'] = TRUE;
+        if ($datum['geometry']->type === 'Point') {
+          $geojson_data[$k]['properties']['icon'] = $this->markerIcon->getFileManagedUrl($fid, $image_style);
+          // Flag the data with theming, for later rendering logic.
+          $geojson_data[$k]['properties']['theming'] = TRUE;
+        }
+      }
+    }
+    elseif (isset($map_settings['map_marker_and_infowindow']['icon_image_mode'])
+      && $map_settings['map_marker_and_infowindow']['icon_image_mode'] === 'icon_image_path') {
+      foreach ($geojson_data as $k => $datum) {
+        if ($datum['geometry']->type === 'Point') {
+          $geojson_data[$k]['properties']['icon'] = !empty($map_settings['map_marker_and_infowindow']['icon_image_path']) ? $this->token->replace($map_settings['map_marker_and_infowindow']['icon_image_path'], $token_context) : '';
+          // Flag the data with theming, for later rendering logic.
+          $geojson_data[$k]['properties']['theming'] = TRUE;
+        }
+      }
+    }
+
+    // Associate dynamic path properties (token based) to the feature,
+    // in case of not point.
+    foreach ($geojson_data as $k => $datum) {
+      if ($datum['geometry']->type !== 'Point') {
+        $geojson_data[$k]['properties']['path_options'] = !empty($map_settings['map_geometries_options']) ? str_replace(["\n", "\r"], "", $this->token->replace($map_settings['map_geometries_options'], $token_context)) : '';
       }
     }
 

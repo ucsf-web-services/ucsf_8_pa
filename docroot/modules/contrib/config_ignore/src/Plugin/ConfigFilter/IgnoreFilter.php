@@ -52,7 +52,7 @@ class IgnoreFilter extends ConfigFilterBase implements ContainerFactoryPluginInt
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     // Get the list of ignored config.
-    $ignored = $container->get('config.factory')->get('config_ignore.settings')->get('ignored_config_entities');
+    $ignored = (array) $container->get('config.factory')->get('config_ignore.settings')->get('ignored_config_entities');
     // Allow hooks to alter the list.
     $container->get('module_handler')->invokeAll('config_ignore_settings_alter', [&$ignored]);
     // Set the list in the plugin configuration.
@@ -89,8 +89,8 @@ class IgnoreFilter extends ConfigFilterBase implements ContainerFactoryPluginInt
 
     foreach ($this->configuration['ignored'] as $config_ignore_setting) {
       // Split the ignore settings so that we can ignore individual keys.
-      $ignore = explode(':', $config_ignore_setting);
-      if (fnmatch($ignore[0], $config_name)) {
+      $ignore = explode(':', $config_ignore_setting, 2);
+      if (self::wildcardMatch($ignore[0], $config_name)) {
         return TRUE;
       }
     }
@@ -118,8 +118,8 @@ class IgnoreFilter extends ConfigFilterBase implements ContainerFactoryPluginInt
     $keys = [];
     foreach ($this->configuration['ignored'] as $ignored) {
       // Split the ignore settings so that we can ignore individual keys.
-      $ignored = explode(':', $ignored);
-      if (fnmatch($ignored[0], $name)) {
+      $ignored = explode(':', $ignored, 2);
+      if (self::wildcardMatch($ignored[0], $name)) {
         if (count($ignored) == 1) {
           // If one of the definitions does not have keys ignore the
           // whole config.
@@ -134,6 +134,9 @@ class IgnoreFilter extends ConfigFilterBase implements ContainerFactoryPluginInt
     }
 
     $active = $this->active->read($name);
+    if (!$active || !$data) {
+      return $data;
+    }
     foreach ($keys as $key) {
       $parts = explode('.', $key);
 
@@ -168,10 +171,13 @@ class IgnoreFilter extends ConfigFilterBase implements ContainerFactoryPluginInt
   protected function activeReadMultiple(array $names, array $data) {
     $filtered_data = [];
     foreach ($names as $name) {
+      if (!array_key_exists($name, $data)) {
+        $data[$name] = [];
+      }
       $filtered_data[$name] = $this->activeRead($name, $data[$name]);
     }
 
-    return $filtered_data;
+    return array_filter($filtered_data);
   }
 
   /**
@@ -231,6 +237,23 @@ class IgnoreFilter extends ConfigFilterBase implements ContainerFactoryPluginInt
   public function filterGetAllCollectionNames(array $collections) {
     // Add active collection names as there could be ignored config in them.
     return array_merge($collections, $this->active->getAllCollectionNames());
+  }
+
+  /**
+   * Checks if a string matches a given wildcard pattern.
+   *
+   * @param string $pattern
+   *   The wildcard pattern to me matched.
+   * @param string $string
+   *   The string to be checked.
+   *
+   * @return bool
+   *   TRUE if $string string matches the $pattern pattern.
+   */
+  protected static function wildcardMatch($pattern, $string) {
+    $pattern = '/^' . preg_quote($pattern, '/') . '$/';
+    $pattern = str_replace('\*', '.*', $pattern);
+    return (bool) preg_match($pattern, $string);
   }
 
 }

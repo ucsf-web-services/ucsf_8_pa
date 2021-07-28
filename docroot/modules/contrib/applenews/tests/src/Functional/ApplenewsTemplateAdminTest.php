@@ -12,11 +12,18 @@ use Drupal\node\Entity\NodeType;
 class ApplenewsTemplateAdminTest extends ApplenewsTestBase {
 
   /**
+   * Modules to enable.
+   *
+   * @var array
+   */
+  protected static $modules = ['node'];
+
+  /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
-    \Drupal::service('module_installer')->install(['node']);
+
     NodeType::create([
       'type' => 'page',
       'name' => 'Basic page',
@@ -50,7 +57,7 @@ class ApplenewsTemplateAdminTest extends ApplenewsTestBase {
     $assert_session->statusCodeEquals(200);
 
     $assert_session->pageTextContains('Label');
-    $assert_session->pageTextContains('Node type');
+    $assert_session->pageTextContains('Content type');
     $fields = [
       'label',
       'id',
@@ -63,12 +70,12 @@ class ApplenewsTemplateAdminTest extends ApplenewsTestBase {
     foreach ($fields as $field) {
       $assert_session->fieldExists($field);
     }
-    $this->drupalPostForm(NULL, [], 'Save');
+    $this->submitForm([], 'Save');
 
     // Validation.
     $assert_session->pageTextContains('Label field is required.');
     $assert_session->pageTextContains('Machine-readable name field is required.');
-    $assert_session->pageTextContains('Node Type field is required.');
+    $assert_session->pageTextContains('Content type field is required.');
 
     // Submission.
     $edit = [
@@ -80,9 +87,15 @@ class ApplenewsTemplateAdminTest extends ApplenewsTestBase {
       'gutter' => 20,
       'margin' => 20,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $assert_session->statusCodeEquals(200);
     $assert_session->responseContains(t('Saved the %label Template.', ['%label' => $edit['label']]));
+
+    // Verify we saved what we thought we saved.
+    $this->clickLink('Edit');
+    foreach ($edit as $field => $value) {
+      $assert_session->fieldValueEquals($field, $value);
+    }
   }
 
 }

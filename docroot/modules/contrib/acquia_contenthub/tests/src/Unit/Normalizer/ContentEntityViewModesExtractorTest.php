@@ -2,13 +2,12 @@
 
 namespace Drupal\Tests\acquia_contenthub\Unit\Normalizer;
 
-use Drupal\Core\DependencyInjection\Container;
+use Drupal\acquia_contenthub\Normalizer\ContentEntityViewModesExtractor;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Render\HtmlResponse;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\UnitTestCase;
-use Drupal\acquia_contenthub\Normalizer\ContentEntityViewModesExtractor;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -270,7 +269,7 @@ class ContentEntityViewModesExtractorTest extends UnitTestCase {
     $entity_storage = $this->getMock('Drupal\Core\Entity\EntityStorageInterface');
     $this->entityTypeRepository = $this->getMock('Drupal\Core\Entity\EntityTypeRepositoryInterface');
 
-    //$container = $this->getMock('Drupal\Core\DependencyInjection\Container');
+    // $container = $this->getMock('Drupal\Core\DependencyInjection\Container');
     $image_style = $this->getMockBuilder('Drupal\image\Entity\ImageStyle')
       ->disableOriginalConstructor()
       ->getMock();
@@ -311,22 +310,13 @@ class ContentEntityViewModesExtractorTest extends UnitTestCase {
         return $request;
       });
 
-    $request = new Request();
-    // Set cookies and server variables to the main request that are expected
-    // to be carried over to internal subrequests.
-    $request->cookies->set('test', 'cookie_test_value');
-    $request->server->set('test', 'server_test_value');
-    $this->requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
-
     // Creating response obtained from the internal sub-request. Check that the
     // cookies and server variables are passed to the sub-request.
     $this->kernel->expects($this->once())
       ->method('handle')
       ->willReturnCallback(function (Request $request, $type) {
-        $cookie_value = $request->cookies->get('test');
-        $server_value = $request->server->get('test');
         $authorization_header = $request->headers->get('Authorization');
-        $output = "<html>{$type}|{$cookie_value}|{$server_value}|{$authorization_header}</html>";
+        $output = "<html>{$type}|{$authorization_header}</html>";
         $response = new HtmlResponse();
         $response->setContent($output);
         return $response;
@@ -342,7 +332,7 @@ class ContentEntityViewModesExtractorTest extends UnitTestCase {
         'preview_image' => 'file_create_url:a_style_decorated_file_uri',
         'label' => 'view_mode_2 label',
         'url' => '/a_generated_url',
-        'html' => '<html>' . HttpKernelInterface::SUB_REQUEST . '|cookie_test_value|server_test_value|Acquia ContentHub:testSignature</html>',
+        'html' => '<html>' . HttpKernelInterface::SUB_REQUEST . '|Acquia ContentHub:testSignature</html>',
       ],
     ];
 

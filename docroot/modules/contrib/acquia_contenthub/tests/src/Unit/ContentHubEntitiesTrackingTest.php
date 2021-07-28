@@ -1,9 +1,10 @@
 <?php
+// @codingStandardsIgnoreFile
 
 namespace Drupal\Tests\acquia_contenthub\Unit;
 
-use Drupal\Tests\UnitTestCase;
 use Drupal\acquia_contenthub\ContentHubEntitiesTracking;
+use Drupal\Tests\UnitTestCase;
 
 /**
  * PHPUnit tests for the ContentHubEntitiesTracking class.

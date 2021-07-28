@@ -2,10 +2,10 @@
 
 namespace Drupal\acquia_contenthub_subscriber\Tests;
 
-use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\simpletest\WebTestBase as SimpletestWebTestBase;
 use Drupal\Core\Config\Entity\ConfigEntityType;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\simpletest\WebTestBase as SimpletestWebTestBase;
 
 /**
  * Provides the base class for web tests for Search API.

@@ -109,8 +109,17 @@ class WebformSubmissionField extends FieldPluginBase {
    * {@inheritdoc}
    */
   public function query() {
-    // Since we will render the field off webform_submission entity, there is no
-    // need to join any table nor include any fields in the select.
+    parent::query();
+
+    // Webform submission might have multiple values stored for the webform
+    // element we are operating on. Let's make sure we are not introducing
+    // duplicate rows in the resultset by enforcing just the first delta.
+    if (!empty($this->query->getTableInfo($this->tableAlias)['join']->extra)) {
+      $this->query->getTableInfo($this->tableAlias)['join']->extra[] = [
+        'field' => 'delta',
+        'value' => 0,
+      ];
+    }
   }
 
   /**

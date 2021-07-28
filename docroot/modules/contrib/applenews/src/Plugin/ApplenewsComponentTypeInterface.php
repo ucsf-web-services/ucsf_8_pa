@@ -8,9 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 
 /**
- * Interface ApplenewsComponentTypeInterface.
- *
- * @package Drupal\applenews\Plugin
+ * Apple News component type plugin interface.
  */
 interface ApplenewsComponentTypeInterface extends PluginInspectionInterface, DerivativeInspectionInterface, ContainerFactoryPluginInterface {
 

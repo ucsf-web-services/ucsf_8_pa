@@ -11,10 +11,10 @@ use Drupal\rules\Core\RulesConditionBase;
  *   id = "scheduler_condition_node_scheduled_for_unpublishing",
  *   label = @Translation("Node is scheduled for unpublishing"),
  *   category = @Translation("Scheduler"),
- *   context = {
+ *   context_definitions = {
  *     "node" = @ContextDefinition("entity:node",
- *       label = @Translation("The node to test for having a scheduled unpublishing date."),
- *       description = @Translation("Enter 'node' for the node being processed, or use data selection.")
+ *       label = @Translation("Scheduled Node"),
+ *       description = @Translation("The node to test for having a scheduled unpublishing date. Enter 'node' or use data selection.")
  *     )
  *   }
  * )

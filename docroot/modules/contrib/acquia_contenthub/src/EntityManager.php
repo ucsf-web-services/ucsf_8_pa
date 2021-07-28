@@ -2,29 +2,30 @@
 
 namespace Drupal\acquia_contenthub;
 
-use Drupal\Component\Serialization\Json;
-use Drupal\Core\Entity\RevisionableInterface;
-use Drupal\file\FileInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\acquia_contenthub\Client\ClientManagerInterface;
-use Drupal\Core\Entity\ContentEntityTypeInterface;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Url;
+use Drupal\acquia_contenthub\Session\ContentHubUserSession;
+use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\ContentEntityTypeInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
-use Drupal\Component\Utility\UrlHelper;
-use GuzzleHttp\Exception\RequestException;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\RevisionableInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Url;
+use Drupal\file\FileInterface;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
-use Drupal\Core\Entity\ContentEntityInterface;
+use GuzzleHttp\Exception\RequestException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a service for managing entity actions for Content Hub.
  *
- * @TODO To be renamed to "ExportEntityManager".
+ * @todo To be renamed to "ExportEntityManager".
  */
 class EntityManager {
 
@@ -219,7 +220,7 @@ class EntityManager {
    */
   private function enqueueQualifiedEntities(array $entities, $do_export) {
     foreach ($entities as $entity) {
-      // TODO: Paragraphs' handling is hardcoded in Export Entity Manager right
+      // @todo Paragraphs' handling is hardcoded in Export Entity Manager right
       // now, but need to be refactored out of this class in the future.
       if (!$entity instanceof ParagraphInterface) {
         continue;
@@ -300,7 +301,7 @@ class EntityManager {
   /**
    * PUT entities for update to Content Hub, without site callback.
    *
-   * @param array $entities
+   * @param mixed $entities
    *   An array of entities.
    *
    * @return bool
@@ -520,6 +521,15 @@ class EntityManager {
     // exported. Only content entities can be exported to Content Hub.
     if ($entity instanceof ConfigEntityInterface) {
       return FALSE;
+    }
+
+    // If access to the entity is not allowed, then it is not eligible.
+    if ($entity instanceof FileInterface) {
+      $account = new ContentHubUserSession(\Drupal::config('acquia_contenthub.entity_config')->get('user_role'));
+      $entity_access = $entity->access('view', $account, TRUE);
+      if (!$entity_access->isAllowed()) {
+        return FALSE;
+      }
     }
 
     $entity_type_id = $entity->getEntityTypeId();

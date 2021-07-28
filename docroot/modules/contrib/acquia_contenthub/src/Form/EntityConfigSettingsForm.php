@@ -7,10 +7,10 @@ use Drupal\Core\Entity\ContentEntityType;
 use Drupal\Core\Entity\EntityDisplayRepository;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\ConfigFormBase;
-use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\user\PermissionHandlerInterface;
 use Drupal\user\RoleStorageInterface;
@@ -180,7 +180,12 @@ class EntityConfigSettingsForm extends ConfigFormBase {
       $entity_type_label = $this->entityTypeManager->getDefinition($type)->getLabel();
       $form[$bundle_id] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('%entity_type_label » %bundle_name', ['%entity_type_label' => $entity_type_label, '%bundle_name' => $bundle_name]),
+        '#title' => $this->t(
+          '%entity_type_label » %bundle_name', [
+            '%entity_type_label' => $entity_type_label,
+            '%bundle_name' => $bundle_name,
+          ]
+        ),
         '#collapsible' => TRUE,
       ];
       $enable_viewmodes = FALSE;
@@ -254,7 +259,10 @@ class EntityConfigSettingsForm extends ConfigFormBase {
    */
   private function getContentTypePreviewImageLink($bundle_id) {
     $link_text = $this->t('preview image');
-    $link_attributes = ['attributes' => ['target' => '_blank'], 'fragment' => 'edit-acquia-contenthub'];
+    $link_attributes = [
+      'attributes' => ['target' => '_blank'],
+      'fragment' => 'edit-acquia-contenthub',
+    ];
     $url = Url::fromRoute('entity.node_type.edit_form', ['node_type' => $bundle_id], $link_attributes);
     $link = Link::fromTextAndUrl($link_text, $url)->toString();
     return $link;

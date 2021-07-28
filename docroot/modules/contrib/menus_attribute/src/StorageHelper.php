@@ -2,6 +2,8 @@
 
 namespace Drupal\menus_attribute;
 
+use Drupal\Core\Database\Database;
+
 /**
  * Helper Class for database interaction.
  */
@@ -24,7 +26,7 @@ class StorageHelper {
    * Constructor of storage helper class.
    */
   public function __construct() {
-    $this->db = \Drupal::database();
+    $this->db = Database::getConnection();
   }
 
   /**

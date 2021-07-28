@@ -2,9 +2,9 @@
 
 namespace Drupal\acquia_contenthub\Tests;
 
-use Drupal\Tests\image\Kernel\ImageFieldCreationTrait;
 use Drupal\Component\Serialization\Json;
 use Drupal\file\Entity\File;
+use Drupal\Tests\image\Kernel\ImageFieldCreationTrait;
 
 /**
  * Test that Acquia Content Hub produces a correct CDF of node with image file.

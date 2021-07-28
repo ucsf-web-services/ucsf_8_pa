@@ -19,7 +19,6 @@ class RouteSubscriber extends RouteSubscriberBase {
   protected function alterRoutes(RouteCollection $collection) {
     $route = $collection->get('entity.menu.add_link_form');
     if ($route) {
-      // @todo: Deprecate this after https://www.drupal.org/project/drupal/issues/2923429
       $route->setDefault('_controller', MenuController::class . '::addLink');
     }
   }

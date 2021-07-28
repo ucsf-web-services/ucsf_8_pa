@@ -13,6 +13,8 @@ services:
       - '@date.formatter'
       - '@datetime.time'
       - '@simple_sitemap.queue_worker'
+      - '@lock'
+      - '@simple_sitemap.logger'
 
   simple_sitemap.manager:
     class: Drupal\simple_sitemap\SimplesitemapManager
@@ -40,6 +42,8 @@ services:
     - '@state'
     - '@simple_sitemap.queue'
     - '@simple_sitemap.logger'
+    - '@module_handler'
+    - '@lock'
 
   simple_sitemap.queue:
     class: Drupal\simple_sitemap\Queue\SimplesitemapQueue
@@ -47,18 +51,21 @@ services:
     arguments:
     - 'simple_sitemap_elements'
     - '@database'
+    - '@datetime.time'
 
   simple_sitemap.sitemap_writer:
     class: Drupal\simple_sitemap\Plugin\simple_sitemap\SitemapGenerator\SitemapWriter
     public: true
+    arguments:
+      - '@router.route_provider'
 
   simple_sitemap.entity_helper:
     class: Drupal\simple_sitemap\EntityHelper
     public: true
     arguments:
       - '@entity_type.manager'
-      - '@database'
       - '@entity_type.bundle.info'
+      - '@config.factory'
 
   simple_sitemap.form_helper:
     class: Drupal\simple_sitemap\Form\FormHelper

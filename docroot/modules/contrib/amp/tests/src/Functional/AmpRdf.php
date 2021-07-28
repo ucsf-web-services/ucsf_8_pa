@@ -19,6 +19,7 @@ class AmpRdf extends BasicTestCaseBase {
     'amp',
     'amp_rdf',
     'node',
+    'metatag',
     'schema_metatag',
     'token',
     'views',

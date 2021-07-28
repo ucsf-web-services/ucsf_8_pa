@@ -27,7 +27,7 @@ class AmpSocialPostFormatter extends FormatterBase {
   use AmpFormTrait;
 
   /**
-   * AMP layouts
+   * AMP layouts.
    *
    * Expected by AmpFormTrait.
    *
@@ -42,7 +42,7 @@ class AmpSocialPostFormatter extends FormatterBase {
   }
 
   /**
-   * AMP libraries
+   * AMP libraries.
    *
    * Expected by AmpFormTrait.
    *
@@ -53,7 +53,7 @@ class AmpSocialPostFormatter extends FormatterBase {
     return AmpSocialPost::getLibraries();
   }
 
- /**
+  /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
@@ -61,7 +61,7 @@ class AmpSocialPostFormatter extends FormatterBase {
       'layout' => 'responsive',
       'width' => '',
       'height' => '',
-      'provider' => '',
+      'provider' => [],
       'data-embed-as' => 'post',
       'data-align-center' => '',
       'placeholder' => '',
@@ -88,27 +88,45 @@ class AmpSocialPostFormatter extends FormatterBase {
       '#options' => ['post' => $this->t('Post'), 'video' => $this->t('Video')],
       '#title' => $this->t('Facebook: Embed as'),
       '#default_value' => $this->getSetting('data-embed-as'),
-      '#states' => ['visible' => [
-        [$provider_selector => ['value' => 'facebook']],
-      ]],
+      '#states' => [
+        'visible' => [
+          [
+            $provider_selector => [
+              'value' => 'facebook',
+            ],
+          ],
+        ],
+      ],
     ];
     $form['data-align-center'] = [
       '#type' => 'select',
       '#options' => ['' => $this->t('False'), 'true' => $this->t('True')],
       '#title' => $this->t('Facebook: Center'),
       '#default_value' => $this->getSetting('data-align-center'),
-      '#states' => ['visible' => [
-        [$provider_selector => ['value' => 'facebook']],
-      ]],
+      '#states' => [
+        'visible' => [
+          [
+            $provider_selector => [
+              'value' => 'facebook',
+            ],
+          ],
+        ],
+      ],
     ];
     $form['placeholder'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Twitter: Placeholder'),
       '#default_value' => $this->getSetting('placeholder'),
       '#description' => $this->t('Placeholder text to appear until the Tweet is retrieved.'),
-      '#states' => ['visible' => [
-        [$provider_selector => ['value' => 'twitter']],
-      ]],
+      '#states' => [
+        'visible' => [
+          [
+            $provider_selector => [
+              'value' => 'facebook',
+            ],
+          ],
+        ],
+      ],
     ];
 
     $form['layout'] = $this->layoutElement();
@@ -125,7 +143,9 @@ class AmpSocialPostFormatter extends FormatterBase {
    */
   public function settingsSummary() {
     $summary = parent::settingsSummary();
-    $summary[] = $this->t('Provider: ') . implode(', ', $this->getSetting('provider'));
+    $summary[] = $this->t('Provider: :provider', [
+      ':provider' => implode(', ', $this->getSetting('provider')),
+    ]);
     $settings = [
       'data-align-center' => $this->t('Facebook centered'),
       'data-embed-as' => $this->t('Facebook embed as'),
@@ -136,7 +156,9 @@ class AmpSocialPostFormatter extends FormatterBase {
         $summary[] = $label . $this->t(': :value', [':value' => $value]);
       }
     }
-    $summary[] = $this->t('Twitter placeholder') . ':' . (!empty($this->getSetting('placeholder')) ? $this->t('Yes') : $this->t('No'));
+    $summary[] = $this->t('Twitter placeholder: :placeholder', [
+      ':placeholder' => !empty($this->getSetting('placeholder')) ? $this->t('Yes') : $this->t('No'),
+    ]);
     $summary = $this->addToSummary($summary);
     return [implode('; ', $summary)];
   }
@@ -157,10 +179,10 @@ class AmpSocialPostFormatter extends FormatterBase {
       $elements[$delta]['#url'] = !empty($item->value) ? $item->value : $item->uri;;
       $elements[$delta]['#placeholder'] = $placeholder;
       $elements[$delta]['#attributes']['layout'] = $layout;
-      $elements[$delta]['#attributes']['width'] = $width;
-      $elements[$delta]['#attributes']['height'] = $height;
       $elements[$delta]['#attributes']['data-embed-as'] = $data_embed_as;
       $elements[$delta]['#attributes']['data-align-center'] = $data_align_center;
+      $elements[$delta]['#attributes']['height'] = $height;
+      $elements[$delta]['#attributes']['width'] = $width;
     }
     return $elements;
   }

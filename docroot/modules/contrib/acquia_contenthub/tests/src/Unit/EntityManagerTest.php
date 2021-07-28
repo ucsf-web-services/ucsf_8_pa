@@ -3,8 +3,9 @@
 namespace Drupal\Tests\acquia_contenthub\Unit;
 
 use Drupal\acquia_contenthub\Entity\ContentHubEntityTypeConfig;
-use Drupal\Tests\UnitTestCase;
 use Drupal\acquia_contenthub\EntityManager;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Tests\UnitTestCase;
 
 /**
  * PHPUnit for the EntityManager class.
@@ -431,14 +432,29 @@ class EntityManagerTest extends UnitTestCase {
    */
   public function testIsEligibleDependency() {
     // Initializing Container.
-    $module_handler = $this->getMock('\Drupal\Core\Extension\ModuleHandlerInterface');
-    $module_handler->expects($this->any())->method('invokeAll')->willReturn([]);
     $container = $this->getMock('Drupal\Core\DependencyInjection\Container');
     \Drupal::setContainer($container);
-    $container->expects($this->any())
-      ->method('get')
-      ->with('module_handler')
-      ->willReturn($module_handler);
+    $container->method('get')->willReturnCallback(function ($argument) {
+      $module_handler = $this->getMock('\Drupal\Core\Extension\ModuleHandlerInterface');
+      $module_handler->expects($this->any())->method('invokeAll')->willReturn([]);
+      $config1 = $this->getMockBuilder('Drupal\Core\Config\ImmutableConfig')
+        ->disableOriginalConstructor()
+        ->setMethods(['get'])
+        ->getMock();
+      $config2 = $this->getMockBuilder('Drupal\Core\Config\ImmutableConfig')
+        ->disableOriginalConstructor()
+        ->setMethods(['get'])
+        ->getMock();
+      $config2->method('get')->with('user_role')->willReturn(AccountInterface::ANONYMOUS_ROLE);
+      $config1->method('get')->with('acquia_contenthub.entity_config')->willReturn($config2);
+      switch ($argument) {
+        case 'config.factory':
+          return $config1;
+
+        case 'module_handler':
+          return $module_handler;
+      }
+    });
 
     // Defining configuration entities.
     $node_config_entity = $this->getContentHubEntityTypeConfigEntityId('node');
@@ -454,9 +470,13 @@ class EntityManagerTest extends UnitTestCase {
     $entity_manager = new EntityManager($this->loggerFactory, $this->configFactory, $this->clientManager, $this->contentHubEntitiesTracking, $this->entityTypeManager, $this->entityTypeBundleInfoManager, $this->kernel);
 
     // Testing a Node that has been already synchronized.
+    $access = $this->getMock('\Drupal\Core\Access\AccessResultInterface');
+    $access->expects($this->any())->method('isAllowed')->willReturn(TRUE);
     $node = $this->getMock('\Drupal\node\NodeInterface');
     $node->method('id')->willReturn(1);
     $node->expects($this->any())->method('getEntityTypeId')->willReturn('node');
+    $node->expects($this->any())->method('bundle')->willReturn('article');
+    $node->expects($this->any())->method('access')->withAnyParameters()->willReturn($access);
     $node->__contenthub_entity_syncing = TRUE;
     $result = $entity_manager->isEligibleDependency($node);
     $this->assertFalse($result);
@@ -470,8 +490,12 @@ class EntityManagerTest extends UnitTestCase {
     // Testing an qualified entity that was not previously imported or exported.
     $type = $this->getMock('\Drupal\Core\Entity\EntityTypeInterface');
 
-    $type->expects($this->any())->method('hasKey')->willReturnMap([['status', TRUE], ['revision', TRUE]]);
-    $type->expects($this->any())->method('getKey')->willReturnMap([['status', 'status'], ['revision', 'vid']]);
+    $type->expects($this->any())
+      ->method('hasKey')
+      ->willReturnMap([['status', TRUE], ['revision', TRUE]]);
+    $type->expects($this->any())
+      ->method('getKey')
+      ->willReturnMap([['status', 'status'], ['revision', 'vid']]);
     $field_storage = $this->getMock('\Drupal\Core\Field\FieldStorageDefinitionInterface');
     $field_storage->expects($this->any())->method('getMainPropertyName')->willReturn('value');
     $field_definition = $this->getMock('\Drupal\Core\Field\FieldDefinitionInterface');
@@ -489,19 +513,25 @@ class EntityManagerTest extends UnitTestCase {
     $this->assertTrue($result);
 
     // Testing a file entity with status = TEMPORARY.
+    $entity_type = $this->getMock('Drupal\Core\Entity\EntityTypeInterface');
+    $entity_type->method('hasKey')->willReturn(FALSE);
     $file = $this->getMock('\Drupal\file\FileInterface');
     $file->method('id')->willReturn(1);
     $file->expects($this->any())->method('getEntityTypeId')->willReturn('file');
     $file->expects($this->any())->method('bundle')->willReturn('image');
-    $file->expects($this->at(2))->method('isTemporary')->willReturn(TRUE);
-    $file->expects($this->at(3))->method('isTemporary')->willReturn(FALSE);
+    $file->expects($this->any())->method('access')->withAnyParameters()->willReturn($access);
+    $file->expects($this->any())->method('getEntityType')->willReturn($entity_type);
+    $file->expects($this->at(3))->method('isTemporary')->willReturn(TRUE);
+    $file->expects($this->at(4))->method('isTemporary')->willReturn(FALSE);
     $result = $entity_manager->isEligibleDependency($file);
     $this->assertFalse($result);
 
     // Testing a file entity with status = PERMANENT.
     // Testing an qualified entity that was not previously imported or exported.
     $type = $this->getMock('\Drupal\Core\Entity\EntityTypeInterface');
-    $type->expects($this->any())->method('hasKey')->willReturnMap([['status', FALSE], ['revision', FALSE]]);
+    $type->expects($this->any())
+      ->method('hasKey')
+      ->willReturnMap([['status', FALSE], ['revision', FALSE]]);
     $file->expects($this->any())->method('getEntityType')->willReturn($type);
     $result = $entity_manager->isEligibleDependency($file);
     $this->assertTrue($result);

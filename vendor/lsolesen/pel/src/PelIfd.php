@@ -87,6 +87,370 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
     const INTEROPERABILITY = 4;
 
     /**
+     * Canon Maker Notes IFD.
+     *
+     * Pass this to the constructor when creating an IFD which will be
+     * the canon maker notes sub-IFD.
+     */
+    const CANON_MAKER_NOTES = 5;
+
+    /**
+     * Canon Camera Settings IFD.
+     *
+     * Pass this to the constructor when creating an IFD which will be
+     * the canon maker notes sub-IFD.
+     */
+    const CANON_CAMERA_SETTINGS = 6;
+
+    /**
+     * Canon Shot Info IFD.
+     *
+     * Pass this to the constructor when creating an IFD which will be
+     * the canon maker notes sub-IFD.
+     */
+    const CANON_SHOT_INFO = 7;
+
+    /**
+     * Canon Shot Info IFD.
+     *
+     * Pass this to the constructor when creating an IFD which will be
+     * the canon maker notes sub-IFD.
+     */
+    const CANON_PANORAMA = 8;
+
+    /**
+     * Canon Shot Info IFD.
+     *
+     * Pass this to the constructor when creating an IFD which will be
+     * the canon maker notes sub-IFD.
+     */
+    const CANON_PICTURE_INFO = 9;
+
+    /**
+     * Canon Shot Info IFD.
+     *
+     * Pass this to the constructor when creating an IFD which will be
+     * the canon maker notes sub-IFD.
+     */
+    const CANON_FILE_INFO = 10;
+
+    /**
+     * Canon Shot Info IFD.
+     *
+     * Pass this to the constructor when creating an IFD which will be
+     * the canon maker notes sub-IFD.
+     */
+    const CANON_CUSTOM_FUNCTIONS = 11;
+
+    private const TYPE_NAMES = [
+        self::IFD0 => '0',
+        self::IFD1 => '1',
+        self::EXIF => 'Exif',
+        self::GPS => 'GPS',
+        self::INTEROPERABILITY => 'Interoperability',
+        self::CANON_MAKER_NOTES => 'Canon Maker Notes',
+        self::CANON_CAMERA_SETTINGS => 'Canon Camera Settings',
+        self::CANON_SHOT_INFO => 'Canon Shot Information',
+        self::CANON_PANORAMA => 'Canon Panorama Information',
+        self::CANON_PICTURE_INFO => 'Canon Picture Information',
+        self::CANON_FILE_INFO => 'Canon File Information',
+        self::CANON_CUSTOM_FUNCTIONS => 'Canon Custom Functions'
+    ];
+
+    private const VALID_TAGS = [
+        self::IFD0 => [
+            PelTag::IMAGE_WIDTH,
+            PelTag::IMAGE_LENGTH,
+            PelTag::BITS_PER_SAMPLE,
+            PelTag::COMPRESSION,
+            PelTag::PHOTOMETRIC_INTERPRETATION,
+            PelTag::DOCUMENT_NAME,
+            PelTag::IMAGE_DESCRIPTION,
+            PelTag::MAKE,
+            PelTag::MODEL,
+            PelTag::STRIP_OFFSETS,
+            PelTag::ORIENTATION,
+            PelTag::SAMPLES_PER_PIXEL,
+            PelTag::ROWS_PER_STRIP,
+            PelTag::STRIP_BYTE_COUNTS,
+            PelTag::X_RESOLUTION,
+            PelTag::Y_RESOLUTION,
+            PelTag::PLANAR_CONFIGURATION,
+            PelTag::RESOLUTION_UNIT,
+            PelTag::TRANSFER_FUNCTION,
+            PelTag::SOFTWARE,
+            PelTag::DATE_TIME,
+            PelTag::ARTIST,
+            PelTag::PREDICTOR,
+            PelTag::WHITE_POINT,
+            PelTag::PRIMARY_CHROMATICITIES,
+            PelTag::EXTRA_SAMPLES,
+            PelTag::SAMPLE_FORMAT,
+            PelTag::JPEG_INTERCHANGE_FORMAT,
+            PelTag::JPEG_INTERCHANGE_FORMAT_LENGTH,
+            PelTag::YCBCR_COEFFICIENTS,
+            PelTag::YCBCR_SUB_SAMPLING,
+            PelTag::YCBCR_POSITIONING,
+            PelTag::REFERENCE_BLACK_WHITE,
+            PelTag::COPYRIGHT,
+            PelTag::EXIF_IFD_POINTER,
+            PelTag::GPS_INFO_IFD_POINTER,
+            PelTag::PRINT_IM,
+            PelTag::XP_TITLE,
+            PelTag::XP_COMMENT,
+            PelTag::XP_AUTHOR,
+            PelTag::XP_KEYWORDS,
+            PelTag::XP_SUBJECT,
+            PelTag::RATING,
+            PelTag::RATING_PERCENT,
+            PelTag::APPLICATION_NOTES
+        ],
+        self::EXIF => [
+            PelTag::EXPOSURE_TIME,
+            PelTag::FNUMBER,
+            PelTag::EXPOSURE_PROGRAM,
+            PelTag::SPECTRAL_SENSITIVITY,
+            PelTag::ISO_SPEED_RATINGS,
+            PelTag::OECF,
+            PelTag::EXIF_VERSION,
+            PelTag::DATE_TIME_ORIGINAL,
+            PelTag::DATE_TIME_DIGITIZED,
+            PelTag::OFFSET_TIME,
+            PelTag::OFFSET_TIME_ORIGINAL,
+            PelTag::OFFSET_TIME_DIGITIZED,
+            PelTag::COMPONENTS_CONFIGURATION,
+            PelTag::COMPRESSED_BITS_PER_PIXEL,
+            PelTag::SHUTTER_SPEED_VALUE,
+            PelTag::APERTURE_VALUE,
+            PelTag::BRIGHTNESS_VALUE,
+            PelTag::EXPOSURE_BIAS_VALUE,
+            PelTag::MAX_APERTURE_VALUE,
+            PelTag::SUBJECT_DISTANCE,
+            PelTag::METERING_MODE,
+            PelTag::LIGHT_SOURCE,
+            PelTag::FLASH,
+            PelTag::FOCAL_LENGTH,
+            PelTag::MAKER_NOTE,
+            PelTag::USER_COMMENT,
+            PelTag::SUB_SEC_TIME,
+            PelTag::SUB_SEC_TIME_ORIGINAL,
+            PelTag::SUB_SEC_TIME_DIGITIZED,
+            PelTag::FLASH_PIX_VERSION,
+            PelTag::COLOR_SPACE,
+            PelTag::PIXEL_X_DIMENSION,
+            PelTag::PIXEL_Y_DIMENSION,
+            PelTag::RELATED_SOUND_FILE,
+            PelTag::FLASH_ENERGY,
+            PelTag::SPATIAL_FREQUENCY_RESPONSE,
+            PelTag::FOCAL_PLANE_X_RESOLUTION,
+            PelTag::FOCAL_PLANE_Y_RESOLUTION,
+            PelTag::FOCAL_PLANE_RESOLUTION_UNIT,
+            PelTag::SUBJECT_LOCATION,
+            PelTag::EXPOSURE_INDEX,
+            PelTag::SENSING_METHOD,
+            PelTag::FILE_SOURCE,
+            PelTag::SCENE_TYPE,
+            PelTag::CFA_PATTERN,
+            PelTag::CUSTOM_RENDERED,
+            PelTag::EXPOSURE_MODE,
+            PelTag::WHITE_BALANCE,
+            PelTag::DIGITAL_ZOOM_RATIO,
+            PelTag::FOCAL_LENGTH_IN_35MM_FILM,
+            PelTag::SCENE_CAPTURE_TYPE,
+            PelTag::GAIN_CONTROL,
+            PelTag::CONTRAST,
+            PelTag::SATURATION,
+            PelTag::SHARPNESS,
+            PelTag::DEVICE_SETTING_DESCRIPTION,
+            PelTag::SUBJECT_DISTANCE_RANGE,
+            PelTag::IMAGE_UNIQUE_ID,
+            PelTag::INTEROPERABILITY_IFD_POINTER,
+            PelTag::GAMMA
+        ],
+        self::GPS => [
+            PelTag::GPS_VERSION_ID,
+            PelTag::GPS_LATITUDE_REF,
+            PelTag::GPS_LATITUDE,
+            PelTag::GPS_LONGITUDE_REF,
+            PelTag::GPS_LONGITUDE,
+            PelTag::GPS_ALTITUDE_REF,
+            PelTag::GPS_ALTITUDE,
+            PelTag::GPS_TIME_STAMP,
+            PelTag::GPS_SATELLITES,
+            PelTag::GPS_STATUS,
+            PelTag::GPS_MEASURE_MODE,
+            PelTag::GPS_DOP,
+            PelTag::GPS_SPEED_REF,
+            PelTag::GPS_SPEED,
+            PelTag::GPS_TRACK_REF,
+            PelTag::GPS_TRACK,
+            PelTag::GPS_IMG_DIRECTION_REF,
+            PelTag::GPS_IMG_DIRECTION,
+            PelTag::GPS_MAP_DATUM,
+            PelTag::GPS_DEST_LATITUDE_REF,
+            PelTag::GPS_DEST_LATITUDE,
+            PelTag::GPS_DEST_LONGITUDE_REF,
+            PelTag::GPS_DEST_LONGITUDE,
+            PelTag::GPS_DEST_BEARING_REF,
+            PelTag::GPS_DEST_BEARING,
+            PelTag::GPS_DEST_DISTANCE_REF,
+            PelTag::GPS_DEST_DISTANCE,
+            PelTag::GPS_PROCESSING_METHOD,
+            PelTag::GPS_AREA_INFORMATION,
+            PelTag::GPS_DATE_STAMP,
+            PelTag::GPS_DIFFERENTIAL
+        ],
+        self::INTEROPERABILITY => [
+            PelTag::INTEROPERABILITY_INDEX,
+            PelTag::INTEROPERABILITY_VERSION,
+            PelTag::RELATED_IMAGE_FILE_FORMAT,
+            PelTag::RELATED_IMAGE_WIDTH,
+            PelTag::RELATED_IMAGE_LENGTH
+        ],
+        self::CANON_MAKER_NOTES => [
+            PelTag::CANON_CAMERA_SETTINGS,
+            PelTag::CANON_FOCAL_LENGTH,
+            PelTag::CANON_SHOT_INFO,
+            PelTag::CANON_PANORAMA,
+            PelTag::CANON_IMAGE_TYPE,
+            PelTag::CANON_FIRMWARE_VERSION,
+            PelTag::CANON_FILE_NUMBER,
+            PelTag::CANON_OWNER_NAME,
+            PelTag::CANON_SERIAL_NUMBER,
+            PelTag::CANON_CAMERA_INFO,
+            PelTag::CANON_CUSTOM_FUNCTIONS,
+            PelTag::CANON_MODEL_ID,
+            PelTag::CANON_PICTURE_INFO,
+            PelTag::CANON_THUMBNAIL_IMAGE_VALID_AREA,
+            PelTag::CANON_SERIAL_NUMBER_FORMAT,
+            PelTag::CANON_SUPER_MACRO,
+            PelTag::CANON_FIRMWARE_REVISION,
+            PelTag::CANON_AF_INFO,
+            PelTag::CANON_ORIGINAL_DECISION_DATA_OFFSET,
+            PelTag::CANON_WHITE_BALANCE_TABLE,
+            PelTag::CANON_LENS_MODEL,
+            PelTag::CANON_INTERNAL_SERIAL_NUMBER,
+            PelTag::CANON_DUST_REMOVAL_DATA,
+            PelTag::CANON_CUSTOM_FUNCTIONS_2,
+            PelTag::CANON_PROCESSING_INFO,
+            PelTag::CANON_MEASURED_COLOR,
+            PelTag::CANON_COLOR_SPACE,
+            PelTag::CANON_VRD_OFFSET,
+            PelTag::CANON_SENSOR_INFO,
+            PelTag::CANON_COLOR_DATA
+        ],
+        self::CANON_CAMERA_SETTINGS => [
+            PelTag::CANON_CS_MACRO,
+            PelTag::CANON_CS_SELF_TIMER,
+            PelTag::CANON_CS_QUALITY,
+            PelTag::CANON_CS_FLASH_MODE,
+            PelTag::CANON_CS_DRIVE_MODE,
+            PelTag::CANON_CS_FOCUS_MODE,
+            PelTag::CANON_CS_RECORD_MODE,
+            PelTag::CANON_CS_IMAGE_SIZE,
+            PelTag::CANON_CS_EASY_MODE,
+            PelTag::CANON_CS_DIGITAL_ZOOM,
+            PelTag::CANON_CS_CONTRAST,
+            PelTag::CANON_CS_SATURATION,
+            PelTag::CANON_CS_SHARPNESS,
+            PelTag::CANON_CS_ISO_SPEED,
+            PelTag::CANON_CS_METERING_MODE,
+            PelTag::CANON_CS_FOCUS_TYPE,
+            PelTag::CANON_CS_AF_POINT,
+            PelTag::CANON_CS_EXPOSURE_PROGRAM,
+            PelTag::CANON_CS_LENS_TYPE,
+            PelTag::CANON_CS_LENS,
+            PelTag::CANON_CS_SHORT_FOCAL,
+            PelTag::CANON_CS_FOCAL_UNITS,
+            PelTag::CANON_CS_MAX_APERTURE,
+            PelTag::CANON_CS_MIN_APERTURE,
+            PelTag::CANON_CS_FLASH_ACTIVITY,
+            PelTag::CANON_CS_FLASH_DETAILS,
+            PelTag::CANON_CS_FOCUS_CONTINUOUS,
+            PelTag::CANON_CS_AE_SETTING,
+            PelTag::CANON_CS_IMAGE_STABILIZATION,
+            PelTag::CANON_CS_DISPLAY_APERTURE,
+            PelTag::CANON_CS_ZOOM_SOURCE_WIDTH,
+            PelTag::CANON_CS_ZOOM_TARGET_WIDTH,
+            PelTag::CANON_CS_SPOT_METERING_MODE,
+            PelTag::CANON_CS_PHOTO_EFFECT,
+            PelTag::CANON_CS_MANUAL_FLASH_OUTPUT,
+            PelTag::CANON_CS_COLOR_TONE,
+            PelTag::CANON_CS_SRAW_QUALITY
+        ],
+        self::CANON_SHOT_INFO => [
+            PelTag::CANON_SI_ISO_SPEED,
+            PelTag::CANON_SI_MEASURED_EV,
+            PelTag::CANON_SI_TARGET_APERTURE,
+            PelTag::CANON_SI_TARGET_SHUTTER_SPEED,
+            PelTag::CANON_SI_WHITE_BALANCE,
+            PelTag::CANON_SI_SLOW_SHUTTER,
+            PelTag::CANON_SI_SEQUENCE,
+            PelTag::CANON_SI_AF_POINT_USED,
+            PelTag::CANON_SI_FLASH_BIAS,
+            PelTag::CANON_SI_AUTO_EXPOSURE_BRACKETING,
+            PelTag::CANON_SI_SUBJECT_DISTANCE,
+            PelTag::CANON_SI_APERTURE_VALUE,
+            PelTag::CANON_SI_SHUTTER_SPEED_VALUE,
+            PelTag::CANON_SI_MEASURED_EV2,
+            PelTag::CANON_SI_CAMERA_TYPE,
+            PelTag::CANON_SI_AUTO_ROTATE,
+            PelTag::CANON_SI_ND_FILTER
+        ],
+        self::CANON_PANORAMA => [
+            PelTag::CANON_PA_PANORAMA_FRAME,
+            PelTag::CANON_PA_PANORAMA_DIRECTION
+        ],
+        self::CANON_PICTURE_INFO => [
+            PelTag::CANON_PI_IMAGE_WIDTH,
+            PelTag::CANON_PI_IMAGE_HEIGHT,
+            PelTag::CANON_PI_IMAGE_WIDTH_AS_SHOT,
+            PelTag::CANON_PI_IMAGE_HEIGHT_AS_SHOT,
+            PelTag::CANON_PI_AF_POINTS_USED,
+            PelTag::CANON_PI_AF_POINTS_USED_20D
+        ],
+        self::CANON_FILE_INFO => [
+            PelTag::CANON_FI_FILE_NUMBER,
+            PelTag::CANON_FI_BRACKET_MODE,
+            PelTag::CANON_FI_BRACKET_VALUE,
+            PelTag::CANON_FI_BRACKET_SHOT_NUMBER,
+            PelTag::CANON_FI_RAW_JPG_QUALITY,
+            PelTag::CANON_FI_RAW_JPG_SIZE,
+            PelTag::CANON_FI_NOISE_REDUCTION,
+            PelTag::CANON_FI_WB_BRACKET_MODE,
+            PelTag::CANON_FI_WB_BRACKET_VALUE_AB,
+            PelTag::CANON_FI_WB_BRACKET_VALUE_GM,
+            PelTag::CANON_FI_FILTER_EFFECT,
+            PelTag::CANON_FI_TONING_EFFECT,
+            PelTag::CANON_FI_MACRO_MAGNIFICATION,
+            PelTag::CANON_FI_LIVE_VIEW_SHOOTING,
+            PelTag::CANON_FI_FOCUS_DISTANCE_UPPER,
+            PelTag::CANON_FI_FOCUS_DISTANCE_LOWER,
+            PelTag::CANON_FI_FLASH_EXPOSURE_LOCK
+        ]
+        /*
+     * TODO: Where do these tags belong?
+     * PelTag::FILL_ORDER,
+     * PelTag::TRANSFER_RANGE,
+     * PelTag::JPEG_PROC,
+     * PelTag::BATTERY_LEVEL,
+     * PelTag::IPTC_NAA,
+     * PelTag::INTER_COLOR_PROFILE,
+     * PelTag::CFA_REPEAT_PATTERN_DIM,
+     */
+    ];
+
+    /**
+     * The maker notes held by this directory.
+     *
+     * Stores information of the MakerNotes IFD.
+     * Available and required keys are: parent, data, components and offset
+     *
+     * @var array
+     */
+    private $maker_notes = [];
+
+    /**
      * The entries held by this directory.
      *
      * Each tag in the directory is represented by a {@link PelEntry}
@@ -94,7 +458,7 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      *
      * @var array
      */
-    private $entries = array();
+    private $entries = [];
 
     /**
      * The type of this directory.
@@ -124,7 +488,7 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      *
      * @var array
      */
-    private $sub = array();
+    private $sub = [];
 
     /**
      * The thumbnail data.
@@ -135,6 +499,7 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      * @var PelDataWindow
      */
     private $thumb_data = null;
+
     // TODO: use this format to choose between the
     // JPEG_INTERCHANGE_FORMAT and STRIP_OFFSETS tags.
     // private $thumb_format;
@@ -146,20 +511,52 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      * an {@link PelEntry}. Use the {@link setNext()} method to link
      * this IFD to another.
      *
-     * @param
-     *            int type the type of this IFD. Must be one of {@link
+     * @param integer $type
+     *            the type of this IFD. Must be one of {@link
      *            IFD0}, {@link IFD1}, {@link EXIF}, {@link GPS}, or {@link
      *            INTEROPERABILITY}. An {@link PelIfdException} will be thrown
      *            otherwise.
+     * @throws PelIfdException
      */
     public function __construct($type)
     {
-        if ($type != PelIfd::IFD0 && $type != PelIfd::IFD1 && $type != PelIfd::EXIF && $type != PelIfd::GPS &&
-             $type != PelIfd::INTEROPERABILITY) {
+        if (! array_key_exists($type, self::TYPE_NAMES)) {
             throw new PelIfdException('Unknown IFD type: %d', $type);
         }
-
         $this->type = $type;
+    }
+
+    /**
+     * Stores Maker Notes data for an IFD (Probably PelIfd::EXIF only).
+     *
+     * @param PelIfd $parent
+     *            the parent PelIfd of the current PelIfd
+     * @param PelDataWindow $data
+     *            the data window that will provide the data.
+     * @param PelIfd $parent
+     *            the components in the entry.
+     * @param integer $offset
+     *            the offset within the window where the directory will
+     *            be found.
+     */
+    public function setMakerNotes($parent, $data, $components, $offset)
+    {
+        $this->maker_notes = [
+            'parent' => $parent,
+            'data' => $data,
+            'components' => $components,
+            'offset' => $offset
+        ];
+    }
+
+    /**
+     * Returns the Maker Notes data for an IFD (Probably PelIfd::EXIF only).
+     *
+     * @return array The maker_notes of IDF
+     */
+    public function getMakerNotes()
+    {
+        return $this->maker_notes;
     }
 
     /**
@@ -167,13 +564,18 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      *
      * @param PelDataWindow $d
      *            the data window that will provide the data.
-     *
-     * @param int $offset
+     * @param integer $offset
      *            the offset within the window where the directory will
      *            be found.
+     * @throws PelException
+     * @throws PelEntryUndefined
+     * @throws PelUnexpectedFormatException
+     * @throws PelWrongComponentCountException
      */
     public function load(PelDataWindow $d, $offset)
     {
+        $starting_offset = $offset;
+
         $thumb_offset = 0;
         $thumb_length = 0;
 
@@ -194,17 +596,15 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
         for ($i = 0; $i < $n; $i ++) {
             // TODO: increment window start instead of using offsets.
             $tag = $d->getShort($offset + 12 * $i);
-            Pel::debug(
-                'Loading entry with tag 0x%04X: %s (%d of %d)...',
-                $tag,
-                PelTag::getName($this->type, $tag),
-                $i + 1,
-                $n);
+            Pel::debug('Loading entry with tag 0x%04X: %s (%d of %d)...', $tag, PelTag::getName($this->type, $tag), $i + 1, $n);
 
             switch ($tag) {
                 case PelTag::EXIF_IFD_POINTER:
                 case PelTag::GPS_INFO_IFD_POINTER:
                 case PelTag::INTEROPERABILITY_IFD_POINTER:
+                case PelTag::MAKER_NOTE:
+                    $type = null;
+                    $components = $d->getLong($offset + 12 * $i + 4);
                     $o = $d->getLong($offset + 12 * $i + 8);
                     Pel::debug('Found sub IFD at offset %d', $o);
 
@@ -215,10 +615,27 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
                         $type = PelIfd::GPS;
                     } elseif ($tag == PelTag::INTEROPERABILITY_IFD_POINTER) {
                         $type = PelIfd::INTEROPERABILITY;
+                    } elseif ($tag == PelTag::MAKER_NOTE) {
+                        // Store maker notes infos, because we need PelTag::MAKE of PelIfd::IFD0 for MakerNotes
+                        // Thus MakerNotes will be loaded at the end of loading PelIfd::IFD0
+                        $this->setMakerNotes($this, $d, $components, $o);
+                        $this->loadSingleValue($d, $offset, $i, $tag);
+                        break;
                     }
 
-                    $this->sub[$type] = new PelIfd($type);
-                    $this->sub[$type]->load($d, $o);
+                    if ($type === null) {
+                        Pel::maybeThrow(new PelIfdException('Type not detected for Tag: %d.', $tag));
+                    } elseif ($starting_offset == $o) {
+                        Pel::maybeThrow(new PelIfdException('Bogus offset to next IFD: %d, same as offset being loaded from.', $o));
+                    } else {
+                        $ifd = new PelIfd($type);
+                        try {
+                            $ifd->load($d, $o);
+                            $this->sub[$type] = $ifd;
+                        } catch (PelDataWindowOffsetException $e) {
+                            Pel::maybeThrow(new PelIfdException($e->getMessage()));
+                        }
+                    }
                     break;
                 case PelTag::JPEG_INTERCHANGE_FORMAT:
                     $thumb_offset = $d->getLong($offset + 12 * $i + 8);
@@ -229,47 +646,13 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
                     $this->safeSetThumbnail($d, $thumb_offset, $thumb_length);
                     break;
                 default:
-                    $format = $d->getShort($offset + 12 * $i + 2);
-                    $components = $d->getLong($offset + 12 * $i + 4);
-
-                    /*
-                     * The data size. If bigger than 4 bytes, the actual data is
-                     * not in the entry but somewhere else, with the offset stored
-                     * in the entry.
-                     */
-                    $s = PelFormat::getSize($format) * $components;
-                    if ($s > 0) {
-                        $doff = $offset + 12 * $i + 8;
-                        if ($s > 4) {
-                            $doff = $d->getLong($doff);
-                        }
-                        $data = $d->getClone($doff, $s);
-                    } else {
-                        $data = new PelDataWindow();
-                    }
-
-                    try {
-                        $entry = $this->newEntryFromData($tag, $format, $components, $data);
-                        $this->addEntry($entry);
-                    } catch (PelException $e) {
-                        /*
-                         * Throw the exception when running in strict mode, store
-                         * otherwise.
-                         */
-                        Pel::maybeThrow($e);
-                    }
-
-                    /* The format of the thumbnail is stored in this tag. */
-                    // TODO: handle TIFF thumbnail.
-                    // if ($tag == PelTag::COMPRESSION) {
-                    // $this->thumb_format = $data->getShort();
-                    // }
+                    $this->loadSingleValue($d, $offset, $i, $tag);
                     break;
             }
         }
 
         /* Offset to next IFD */
-        $o = $d->getLong($offset + 12 * $n);
+        $o = $d->getLong((int) ($offset + 12 * $n));
         Pel::debug('Current offset is %d, link at %d points to %d.', $offset, $offset + 12 * $n, $o);
 
         if ($o > 0) {
@@ -287,6 +670,146 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
         } else {
             Pel::debug('Last IFD.');
         }
+
+        // Check if we finished loading IFD0 and EXIF IFD is set (EXIF IFD holds the MakerNotes)
+        if ($this->type == PelIfd::IFD0 && isset($this->sub[PelIfd::EXIF])) {
+            // Get MakerNotes from EXIF IFD and check if they are set
+            $mk = $this->sub[PelIfd::EXIF]->getMakerNotes();
+            if (! empty($mk) && count($mk) > 0) {
+                // get Make tag and load maker notes if tag is valid
+                $manufacturer = $this->getEntry(PelTag::MAKE);
+                if ($manufacturer !== null) {
+                    $manufacturer = $manufacturer->getValue();
+                    $mkNotes = PelMakerNotes::createMakerNotesFromManufacturer($manufacturer, $mk['parent'], $mk['data'], $mk['components'], $mk['offset']);
+                    if ($mkNotes !== null) {
+                        // remove pre-loaded undefined MakerNotes
+                        $mk['parent']->offsetUnset(PelTag::MAKER_NOTE);
+                        $mkNotes->load();
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Load a single value which didn't match any special {@link PelTag}.
+     *
+     * This method will add a single value given by the {@link PelDataWindow} and it's offset ($offset) and element counter ($i).
+     *
+     * Please note that the data you pass to this method should come
+     * from an image, that is, it should be raw bytes. If instead you
+     * want to create an entry for holding, say, an short integer, then
+     * create a {@link PelEntryShort} object directly and load the data
+     * into it.
+     *
+     * @param PelDataWindow $d
+     *            the data window that will provide the data.
+     * @param integer $offset
+     *            the offset within the window where the directory will
+     *            be found.
+     * @param integer $i
+     *            the element's position in the {@link PelDataWindow} $d.
+     * @param integer $tag
+     *            the tag of the entry as defined in {@link PelTag}.
+     * @throws PelException
+     * @throws PelEntryUndefined
+     * @throws PelUnexpectedFormatException
+     * @throws PelWrongComponentCountException
+     */
+    public function loadSingleValue($d, $offset, $i, $tag)
+    {
+        $format = $d->getShort($offset + 12 * $i + 2);
+        $components = $d->getLong($offset + 12 * $i + 4);
+        $size = PelFormat::getSize($format);
+        if (is_string($size)) {
+            Pel::maybeThrow(new PelException('Invalid format %s', $format));
+            return;
+        }
+
+        try {
+            /*
+             * The data size. If bigger than 4 bytes, the actual data is
+             * not in the entry but somewhere else, with the offset stored
+             * in the entry.
+             */
+            $s = $size * $components;
+            if ($s > 0) {
+                $doff = $offset + 12 * $i + 8;
+                if ($s > 4) {
+                    $doff = $d->getLong($doff);
+                }
+                $data = $d->getClone($doff, $s);
+            } else {
+                $data = new PelDataWindow();
+            }
+
+            $entry = $this->newEntryFromData($tag, $format, $components, $data);
+            $this->addEntry($entry);
+        } catch (PelException $e) {
+            /*
+             * Throw the exception when running in strict mode, store
+             * otherwise.
+             */
+            Pel::maybeThrow($e);
+        }
+
+        /* The format of the thumbnail is stored in this tag. */
+        // TODO: handle TIFF thumbnail.
+        // if ($tag == PelTag::COMPRESSION) {
+        // $this->thumb_format = $data->getShort();
+        // }
+    }
+
+    /**
+     * Load a single value which didn't match any special {@link PelTag}.
+     *
+     * This method will add a single value given by the {@link PelDataWindow} and it's offset ($offset) and element counter ($i).
+     *
+     * Please note that the data you pass to this method should come
+     * from an image, that is, it should be raw bytes. If instead you
+     * want to create an entry for holding, say, an short integer, then
+     * create a {@link PelEntryShort} object directly and load the data
+     * into it.
+     *
+     * @param integer $type
+     *            the type of the ifd
+     * @param PelDataWindow $data
+     *            the data window that will provide the data.
+     * @param integer $offset
+     *            the offset within the window where the directory will
+     *            be found.
+     * @param integer $size
+     *            the size in bytes of the maker notes section
+     * @param integer $i
+     *            the element's position in the {@link PelDataWindow} $data.
+     * @param integer $format
+     *            the format {@link PelFormat} of the entry.
+     * @throws PelException
+     * @throws PelDataWindowWindowException
+     * @throws PelInvalidArgumentException
+     */
+    public function loadSingleMakerNotesValue($type, PelDataWindow $data, $offset, $size, $i, $format)
+    {
+        $elemSize = PelFormat::getSize($format);
+        if ($size > 0) {
+            $subdata = $data->getClone($offset + $i * $elemSize, $elemSize);
+        } else {
+            $subdata = new PelDataWindow();
+        }
+
+        try {
+            $entry = $this->newEntryFromData($i + 1, $format, 1, $subdata);
+            $this->addEntry($entry);
+        } catch (PelException $e) {
+            // Throw the exception when running in strict mode, store otherwise.
+            Pel::maybeThrow($e);
+        }
+
+        /* The format of the thumbnail is stored in this tag. */
+        // TODO: handle TIFF thumbnail.
+        // if ($tag == PelTag::COMPRESSION) {
+        // $this->thumb_format = $data->getShort();
+        // }
     }
 
     /**
@@ -311,18 +834,18 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      *
      * @param integer $tag
      *            the tag of the entry as defined in {@link PelTag}.
-     *
      * @param integer $format
      *            the format of the entry as defined in {@link PelFormat}.
-     *
-     * @param int $components
+     * @param integer $components
      *            the components in the entry.
-     *
      * @param PelDataWindow $data
      *            the data which will be used to construct the
      *            entry.
-     *
      * @return PelEntry a newly created entry, holding the data given.
+     * @throws PelException
+     * @throws PelEntryUndefined
+     * @throws PelUnexpectedFormatException
+     * @throws PelWrongComponentCountException
      */
     public function newEntryFromData($tag, $format, $components, PelDataWindow $data)
     {
@@ -367,7 +890,7 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
                         if ($format != PelFormat::UNDEFINED) {
                             throw new PelUnexpectedFormatException($this->type, $tag, $format, PelFormat::UNDEFINED);
                         }
-                        return new PelEntryVersion($tag, $data->getBytes() / 100);
+                        return new PelEntryVersion($tag, (float) $data->getBytes() / 100);
 
                     case PelTag::USER_COMMENT:
                         if ($format != PelFormat::UNDEFINED) {
@@ -387,22 +910,7 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
                         if ($format != PelFormat::BYTE) {
                             throw new PelUnexpectedFormatException($this->type, $tag, $format, PelFormat::BYTE);
                         }
-                        $v = '';
-                        for ($i = 0; $i < $components; $i ++) {
-                            $b = $data->getByte($i);
-                            /*
-                             * Convert the byte to a character if it is non-null ---
-                             * information about the character encoding of these entries
-                             * would be very nice to have! So far my tests have shown
-                             * that characters in the Latin-1 character set are stored in
-                             * a single byte followed by a NULL byte.
-                             */
-                            if ($b != 0) {
-                                $v .= chr($b);
-                            }
-                        }
-
-                        return new PelEntryWindowsString($tag, $v);
+                        return new PelEntryWindowsString($tag, $data->getBytes(), true);
                 }
             // This point can be reached! Continue with default.
             case self::GPS:
@@ -424,7 +932,13 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
                         return $v;
 
                     case PelFormat::ASCII:
-                        return new PelEntryAscii($tag, rtrim($data->getBytes(0), "\0"));
+                        // cut off string after the first nul byte
+                        $canonicalString = strstr($data->getBytes(0), "\0", true);
+                        if ($canonicalString !== false) {
+                            return new PelEntryAscii($tag, $canonicalString);
+                        }
+                        // TODO throw exception if string isn't nul-terminated
+                        return new PelEntryAscii($tag, $data->getBytes(0));
 
                     case PelFormat::SHORT:
                         $v = new PelEntryShort($tag);
@@ -491,12 +1005,12 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      * @param PelDataWindow $d
      *            the data from which the thumbnail will be
      *            extracted.
-     *
-     * @param int $offset
+     * @param integer $offset
      *            the offset into the data.
-     *
-     * @param int $length
+     * @param integer $length
      *            the length of the thumbnail.
+     * @throws PelIfdException
+     * @throws PelDataWindowWindowException
      */
     private function safeSetThumbnail(PelDataWindow $d, $offset, $length)
     {
@@ -510,16 +1024,16 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
              * check the length before we store the thumbnail.
              */
             if ($offset + $length > $d->getSize()) {
-                Pel::maybeThrow(
-                    new PelIfdException(
-                        'Thumbnail length %d bytes ' . 'adjusted to %d bytes.',
-                        $length,
-                        $d->getSize() - $offset));
+                Pel::maybeThrow(new PelIfdException('Thumbnail length %d bytes ' . 'adjusted to %d bytes.', $length, $d->getSize() - $offset));
                 $length = $d->getSize() - $offset;
             }
 
             /* Now set the thumbnail normally. */
-            $this->setThumbnail($d->getClone($offset, $length));
+            try {
+                $this->setThumbnail($d->getClone($offset, $length));
+            } catch (PelDataWindowWindowException $e) {
+                Pel::maybeThrow(new PelIfdException($e->getMessage()));
+            }
         }
     }
 
@@ -534,6 +1048,7 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      *
      * @param PelDataWindow $d
      *            the thumbnail data.
+     * @throws PelIfdException
      */
     public function setThumbnail(PelDataWindow $d)
     {
@@ -572,12 +1087,10 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      * treated as private tags and will be allowed everywhere (use this
      * for testing or for implementing your own types of tags).
      *
-     * @param PelTag $tag
+     * @param integer $tag
      *            the tag.
-     *
      * @return boolean true if the tag is considered valid in this IFD,
      *         false otherwise.
-     *
      * @see getValidTags()
      */
     public function isValidTag($tag)
@@ -593,196 +1106,31 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      */
     public function getValidTags()
     {
-        switch ($this->type) {
-            case PelIfd::IFD0:
-            case PelIfd::IFD1:
-                return array(
-                    PelTag::IMAGE_WIDTH,
-                    PelTag::IMAGE_LENGTH,
-                    PelTag::BITS_PER_SAMPLE,
-                    PelTag::COMPRESSION,
-                    PelTag::PHOTOMETRIC_INTERPRETATION,
-                    PelTag::DOCUMENT_NAME,
-                    PelTag::IMAGE_DESCRIPTION,
-                    PelTag::MAKE,
-                    PelTag::MODEL,
-                    PelTag::STRIP_OFFSETS,
-                    PelTag::ORIENTATION,
-                    PelTag::SAMPLES_PER_PIXEL,
-                    PelTag::ROWS_PER_STRIP,
-                    PelTag::STRIP_BYTE_COUNTS,
-                    PelTag::X_RESOLUTION,
-                    PelTag::Y_RESOLUTION,
-                    PelTag::PLANAR_CONFIGURATION,
-                    PelTag::RESOLUTION_UNIT,
-                    PelTag::TRANSFER_FUNCTION,
-                    PelTag::SOFTWARE,
-                    PelTag::DATE_TIME,
-                    PelTag::ARTIST,
-                    PelTag::WHITE_POINT,
-                    PelTag::PRIMARY_CHROMATICITIES,
-                    PelTag::JPEG_INTERCHANGE_FORMAT,
-                    PelTag::JPEG_INTERCHANGE_FORMAT_LENGTH,
-                    PelTag::YCBCR_COEFFICIENTS,
-                    PelTag::YCBCR_SUB_SAMPLING,
-                    PelTag::YCBCR_POSITIONING,
-                    PelTag::REFERENCE_BLACK_WHITE,
-                    PelTag::COPYRIGHT,
-                    PelTag::EXIF_IFD_POINTER,
-                    PelTag::GPS_INFO_IFD_POINTER,
-                    PelTag::PRINT_IM,
-                    PelTag::XP_TITLE,
-                    PelTag::XP_COMMENT,
-                    PelTag::XP_AUTHOR,
-                    PelTag::XP_KEYWORDS,
-                    PelTag::XP_SUBJECT,
-                    PelTag::RATING
-                );
-
-            case PelIfd::EXIF:
-                return array(
-                    PelTag::EXPOSURE_TIME,
-                    PelTag::FNUMBER,
-                    PelTag::EXPOSURE_PROGRAM,
-                    PelTag::SPECTRAL_SENSITIVITY,
-                    PelTag::ISO_SPEED_RATINGS,
-                    PelTag::OECF,
-                    PelTag::EXIF_VERSION,
-                    PelTag::DATE_TIME_ORIGINAL,
-                    PelTag::DATE_TIME_DIGITIZED,
-                    PelTag::COMPONENTS_CONFIGURATION,
-                    PelTag::COMPRESSED_BITS_PER_PIXEL,
-                    PelTag::SHUTTER_SPEED_VALUE,
-                    PelTag::APERTURE_VALUE,
-                    PelTag::BRIGHTNESS_VALUE,
-                    PelTag::EXPOSURE_BIAS_VALUE,
-                    PelTag::MAX_APERTURE_VALUE,
-                    PelTag::SUBJECT_DISTANCE,
-                    PelTag::METERING_MODE,
-                    PelTag::LIGHT_SOURCE,
-                    PelTag::FLASH,
-                    PelTag::FOCAL_LENGTH,
-                    PelTag::MAKER_NOTE,
-                    PelTag::USER_COMMENT,
-                    PelTag::SUB_SEC_TIME,
-                    PelTag::SUB_SEC_TIME_ORIGINAL,
-                    PelTag::SUB_SEC_TIME_DIGITIZED,
-                    PelTag::FLASH_PIX_VERSION,
-                    PelTag::COLOR_SPACE,
-                    PelTag::PIXEL_X_DIMENSION,
-                    PelTag::PIXEL_Y_DIMENSION,
-                    PelTag::RELATED_SOUND_FILE,
-                    PelTag::FLASH_ENERGY,
-                    PelTag::SPATIAL_FREQUENCY_RESPONSE,
-                    PelTag::FOCAL_PLANE_X_RESOLUTION,
-                    PelTag::FOCAL_PLANE_Y_RESOLUTION,
-                    PelTag::FOCAL_PLANE_RESOLUTION_UNIT,
-                    PelTag::SUBJECT_LOCATION,
-                    PelTag::EXPOSURE_INDEX,
-                    PelTag::SENSING_METHOD,
-                    PelTag::FILE_SOURCE,
-                    PelTag::SCENE_TYPE,
-                    PelTag::CFA_PATTERN,
-                    PelTag::CUSTOM_RENDERED,
-                    PelTag::EXPOSURE_MODE,
-                    PelTag::WHITE_BALANCE,
-                    PelTag::DIGITAL_ZOOM_RATIO,
-                    PelTag::FOCAL_LENGTH_IN_35MM_FILM,
-                    PelTag::SCENE_CAPTURE_TYPE,
-                    PelTag::GAIN_CONTROL,
-                    PelTag::CONTRAST,
-                    PelTag::SATURATION,
-                    PelTag::SHARPNESS,
-                    PelTag::DEVICE_SETTING_DESCRIPTION,
-                    PelTag::SUBJECT_DISTANCE_RANGE,
-                    PelTag::IMAGE_UNIQUE_ID,
-                    PelTag::INTEROPERABILITY_IFD_POINTER,
-                    PelTag::GAMMA
-                );
-
-            case PelIfd::GPS:
-                return array(
-                    PelTag::GPS_VERSION_ID,
-                    PelTag::GPS_LATITUDE_REF,
-                    PelTag::GPS_LATITUDE,
-                    PelTag::GPS_LONGITUDE_REF,
-                    PelTag::GPS_LONGITUDE,
-                    PelTag::GPS_ALTITUDE_REF,
-                    PelTag::GPS_ALTITUDE,
-                    PelTag::GPS_TIME_STAMP,
-                    PelTag::GPS_SATELLITES,
-                    PelTag::GPS_STATUS,
-                    PelTag::GPS_MEASURE_MODE,
-                    PelTag::GPS_DOP,
-                    PelTag::GPS_SPEED_REF,
-                    PelTag::GPS_SPEED,
-                    PelTag::GPS_TRACK_REF,
-                    PelTag::GPS_TRACK,
-                    PelTag::GPS_IMG_DIRECTION_REF,
-                    PelTag::GPS_IMG_DIRECTION,
-                    PelTag::GPS_MAP_DATUM,
-                    PelTag::GPS_DEST_LATITUDE_REF,
-                    PelTag::GPS_DEST_LATITUDE,
-                    PelTag::GPS_DEST_LONGITUDE_REF,
-                    PelTag::GPS_DEST_LONGITUDE,
-                    PelTag::GPS_DEST_BEARING_REF,
-                    PelTag::GPS_DEST_BEARING,
-                    PelTag::GPS_DEST_DISTANCE_REF,
-                    PelTag::GPS_DEST_DISTANCE,
-                    PelTag::GPS_PROCESSING_METHOD,
-                    PelTag::GPS_AREA_INFORMATION,
-                    PelTag::GPS_DATE_STAMP,
-                    PelTag::GPS_DIFFERENTIAL
-                );
-
-            case PelIfd::INTEROPERABILITY:
-                return array(
-                    PelTag::INTEROPERABILITY_INDEX,
-                    PelTag::INTEROPERABILITY_VERSION,
-                    PelTag::RELATED_IMAGE_FILE_FORMAT,
-                    PelTag::RELATED_IMAGE_WIDTH,
-                    PelTag::RELATED_IMAGE_LENGTH
-                );
-
-            /*
-             * TODO: Where do these tags belong?
-             * PelTag::FILL_ORDER,
-             * PelTag::TRANSFER_RANGE,
-             * PelTag::JPEG_PROC,
-             * PelTag::BATTERY_LEVEL,
-             * PelTag::IPTC_NAA,
-             * PelTag::INTER_COLOR_PROFILE,
-             * PelTag::CFA_REPEAT_PATTERN_DIM,
-             */
+        $tp = $this->type;
+        if ($tp === self::IFD1) {
+            // return the same for IFD0 and IFD1
+            $tp = self::IFD0;
+        }
+        if (array_key_exists($tp, self::VALID_TAGS)) {
+            return self::VALID_TAGS[$tp];
         }
     }
 
     /**
      * Get the name of an IFD type.
      *
-     * @param int $type
+     * @param integer $type
      *            one of {@link PelIfd::IFD0}, {@link PelIfd::IFD1},
      *            {@link PelIfd::EXIF}, {@link PelIfd::GPS}, or {@link
      *            PelIfd::INTEROPERABILITY}.
-     *
      * @return string the name of type.
      */
     public static function getTypeName($type)
     {
-        switch ($type) {
-            case self::IFD0:
-                return '0';
-            case self::IFD1:
-                return '1';
-            case self::EXIF:
-                return 'Exif';
-            case self::GPS:
-                return 'GPS';
-            case self::INTEROPERABILITY:
-                return 'Interoperability';
-            default:
-                throw new PelIfdException('Unknown IFD type: %d', $type);
+        if (array_key_exists($type, self::TYPE_NAMES)) {
+            return self::TYPE_NAMES[$type];
         }
+        throw new PelIfdException('Unknown IFD type: %d', $type);
     }
 
     /**
@@ -802,7 +1150,6 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      *            the entry that will be added. If the entry is not
      *            valid in this IFD (as per {@link isValidTag()}) an
      *            {@link PelInvalidDataException} is thrown.
-     *
      * @todo The entry will be identified with its tag, so each
      *       directory can only contain one entry with each tag. Is this a
      *       bug?
@@ -829,9 +1176,8 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      * // ... do something with the F-number.
      * </code>
      *
-     * @param PelTag $tag
+     * @param integer $tag
      *            the offset to check.
-     *
      * @return boolean whether the tag exists.
      */
     public function offsetExists($tag)
@@ -850,11 +1196,10 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      * $entry = $ifd[PelTag::FNUMBER];
      * </code>
      *
-     * @param PelTag $tag
+     * @param integer $tag
      *            the tag to return. It is an error to ask for a tag
      *            which is not in the IFD, just like asking for a non-existant
      *            array entry.
-     *
      * @return PelEntry the entry.
      */
     public function offsetGet($tag)
@@ -876,11 +1221,11 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      * Note that the actual array index passed is ignored! Instead the
      * {@link PelTag} from the entry is used.
      *
-     * @param PelTag $tag
-     *            the offset to update.
-     *
+     * @param integer $tag
+     *            unused.
      * @param PelEntry $e
      *            the new value.
+     * @throws PelInvalidArgumentException
      */
     public function offsetSet($tag, $e)
     {
@@ -903,7 +1248,7 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      * unset($ifd[PelTag::EXPOSURE_BIAS_VALUE])
      * </code>
      *
-     * @param PelTag $tag
+     * @param integer $tag
      *            the offset to delete.
      */
     public function offsetUnset($tag)
@@ -914,9 +1259,8 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
     /**
      * Retrieve an entry.
      *
-     * @param PelTag $tag
+     * @param integer $tag
      *            the tag identifying the entry.
-     *
      * @return PelEntry the entry associated with the tag, or null if no
      *         such entry exists.
      */
@@ -935,9 +1279,8 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      * @return array an array of {@link PelEntry} objects, or rather
      *         descendant classes. The array has {@link PelTag}s as keys
      *         and the entries as values.
-     *
-     * @see getEntry
-     * @see getIterator
+     * @see PelIfd::getEntry
+     * @see PelIfd::getIterator
      */
     public function getEntries()
     {
@@ -955,7 +1298,7 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      * }
      * </code>
      *
-     * @return Iterator an iterator using the {@link PelTag tags} as
+     * @return \ArrayIterator an iterator using the {@link PelTag tags} as
      *         keys and the entries as values.
      */
     public function getIterator()
@@ -969,9 +1312,8 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      * @return string the bytes in the thumbnail, if any. If the IFD
      *         does not contain any thumbnail data, the empty string is
      *         returned.
-     *
+     * @throws PelDataWindowOffsetException
      * @todo Throw an exception instead when no data is available?
-     *
      * @todo Return the $this->thumb_data object instead of the bytes?
      */
     public function getThumbnailData()
@@ -1034,11 +1376,10 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
     /**
      * Return a sub IFD.
      *
-     * @param int $type
+     * @param integer $type
      *            the type of the sub IFD. This must be one of {@link
      *            PelIfd::EXIF}, {@link PelIfd::GPS}, or {@link
      *            PelIfd::INTEROPERABILITY}.
-     *
      * @return PelIfd the IFD associated with the type, or null if that
      *         sub IFD does not exist.
      */
@@ -1069,10 +1410,9 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
      * specified byte order. The offsets will be calculated from the
      * offset given.
      *
-     * @param int $offset
+     * @param integer $offset
      *            the offset of the first byte of this directory.
-     *
-     * @param PelByteOrder $order
+     * @param boolean $order
      *            the byte order that should be used when
      *            turning integers into bytes. This should be one of {@link
      *            PelConvert::LITTLE_ENDIAN} and {@link PelConvert::BIG_ENDIAN}.
@@ -1210,7 +1550,7 @@ class PelIfd implements \IteratorAggregate, \ArrayAccess
         }
         $str .= Pel::fmt("Dumping %d sub IFDs...\n", count($this->sub));
 
-        foreach ($this->sub as $type => $ifd) {
+        foreach ($this->sub as $ifd) {
             $str .= $ifd->__toString();
         }
         if ($this->next !== null) {

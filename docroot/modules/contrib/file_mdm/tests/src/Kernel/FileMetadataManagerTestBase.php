@@ -20,7 +20,7 @@ abstract class FileMetadataManagerTestBase extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->fileSystem = \Drupal::service('file_system');
     $this->installConfig(['file_mdm']);

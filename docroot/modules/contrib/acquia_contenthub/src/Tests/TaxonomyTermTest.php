@@ -2,9 +2,8 @@
 
 namespace Drupal\acquia_contenthub\Tests;
 
-use Drupal\taxonomy\Entity\Vocabulary;
-use Drupal\taxonomy\Tests\TaxonomyTestTrait;
 use Drupal\field\Tests\EntityReference\EntityReferenceTestTrait;
+use Drupal\taxonomy\Tests\TaxonomyTestTrait;
 
 /**
  * Test that Acquia Content Hub respects Taxonomy Term.

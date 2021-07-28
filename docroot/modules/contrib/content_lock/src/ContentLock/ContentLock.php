@@ -13,7 +13,7 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Link;
 use Drupal\Core\Datetime\DateFormatter;
-use Drupal\Core\Session\AccountProxy;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -69,7 +69,7 @@ class ContentLock extends ServiceProviderBase {
   /**
    * The current_user service.
    *
-   * @var \Drupal\Core\Session\AccountProxy
+   * @var \Drupal\Core\Session\AccountProxyInterface
    *   The current_user service.
    */
   protected $currentUser;
@@ -114,7 +114,7 @@ class ContentLock extends ServiceProviderBase {
    *   The module Handler service.
    * @param \Drupal\Core\Datetime\DateFormatter $dateFormatter
    *   The date.formatter service.
-   * @param \Drupal\Core\Session\AccountProxy $currentUser
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
    *   The current_user service.
    * @param \Drupal\Core\Config\ConfigFactory $configFactory
    *   The config.factory service.
@@ -127,7 +127,7 @@ class ContentLock extends ServiceProviderBase {
    * @param \Drupal\Component\Datetime\TimeInterface $time
    *   The time service.
    */
-  public function __construct(Connection $database, ModuleHandler $moduleHandler, DateFormatter $dateFormatter, AccountProxy $currentUser, ConfigFactory $configFactory, RequestStack $requestStack, EntityTypeManagerInterface $entityTypeManager, MessengerInterface $messenger, TimeInterface $time) {
+  public function __construct(Connection $database, ModuleHandler $moduleHandler, DateFormatter $dateFormatter, AccountProxyInterface $currentUser, ConfigFactory $configFactory, RequestStack $requestStack, EntityTypeManagerInterface $entityTypeManager, MessengerInterface $messenger, TimeInterface $time) {
     $this->database = $database;
     $this->moduleHandler = $moduleHandler;
     $this->dateFormatter = $dateFormatter;

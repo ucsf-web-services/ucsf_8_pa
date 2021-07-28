@@ -2,20 +2,19 @@
 
 namespace Drupal\acquia_contenthub\Client;
 
-use Exception;
 use Acquia\ContentHubClient\ContentHub;
 use Drupal\acquia_contenthub\Middleware\MiddlewareCollector;
-use GuzzleHttp\Exception\ConnectException as ConnectException;
-use GuzzleHttp\Exception\RequestException as RequestException;
-use GuzzleHttp\Exception\ServerException as ServerException;
-use GuzzleHttp\Exception\ClientException as ClientException;
-use GuzzleHttp\Exception\BadResponseException as BadResponseException;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Component\Uuid\Uuid;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Component\Render\FormattableMarkup;
-use Symfony\Component\HttpFoundation\Request as Request;
-use Drupal\Component\Uuid\Uuid;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Provides a service for managing pending server tasks.
@@ -160,7 +159,8 @@ class ClientManager implements ClientManagerInterface {
   public function resetConnection(array $variables, array $config = []) {
     // Manually pass in the api/secret keys to the middlewares.
     $api = isset($variables['api']) ? $variables['api'] : '';
-    $secret = isset($variables['secret']) ? $variables['secret'] : '';;
+    $secret = isset($variables['secret']) ? $variables['secret'] : '';
+    ;
     foreach ($this->collector->getMiddlewares() as $middleware) {
       $middleware->setApiKey($api);
       $middleware->setSecretKey($secret);
@@ -280,7 +280,7 @@ class ClientManager implements ClientManagerInterface {
       // Check that we have a valid connection.
       if (empty($this->getConnection())) {
         $error = t('This client is NOT registered to Content Hub. Please register first');
-        throw new Exception($error);
+        throw new \Exception($error);
       }
 
       // Process each individual request.
@@ -321,7 +321,7 @@ class ClientManager implements ClientManagerInterface {
               '%request' => $request,
               '%num' => 1,
             ]);
-            throw new Exception($error);
+            throw new \Exception($error);
           }
           return $this->client->$request($args[0]);
 
@@ -333,7 +333,7 @@ class ClientManager implements ClientManagerInterface {
               '%request' => $request,
               '%num' => 2,
             ]);
-            throw new Exception($error);
+            throw new \Exception($error);
           }
           return $this->client->$request($args[0], $args[1]);
       }
@@ -360,7 +360,7 @@ class ClientManager implements ClientManagerInterface {
       $response = json_decode($ex->getResponse()->getBody(), TRUE);
       $msg = $this->getExceptionMessage($request, $args, $ex, $exception_messages, $response);
     }
-    catch (Exception $ex) {
+    catch (\Exception $ex) {
       $msg = $this->getExceptionMessage($request, $args, $ex, $exception_messages);
     }
 

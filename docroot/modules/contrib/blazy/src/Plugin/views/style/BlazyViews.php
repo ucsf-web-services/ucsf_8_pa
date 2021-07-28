@@ -5,7 +5,7 @@ namespace Drupal\blazy\Plugin\views\style;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\style\StylePluginBase;
 use Drupal\blazy\BlazyManagerInterface;
-use Drupal\blazy\Dejavu\BlazyDefault;
+use Drupal\blazy\BlazyDefault;
 use Drupal\blazy\BlazyGrid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

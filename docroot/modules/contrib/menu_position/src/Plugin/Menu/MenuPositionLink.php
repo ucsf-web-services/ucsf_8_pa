@@ -2,10 +2,16 @@
 
 namespace Drupal\menu_position\Plugin\Menu;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Controller\TitleResolverInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Menu\MenuLinkBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Routing\AdminContext;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Defines menu links provided by menu position rules.
@@ -15,11 +21,53 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class MenuPositionLink extends MenuLinkBase implements ContainerFactoryPluginInterface {
 
   /**
+   * The route admin context to determine whether a route is an admin one.
+   *
+   * @var \Drupal\Core\Routing\AdminContext
+   */
+  protected $adminContext;
+
+  /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
+
+  /**
+   * The renderer service.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
+   * The request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected $requestStack;
+
+  /**
+   * The route match service.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  protected $routeMatch;
+
+  /**
+   * The title resolver service.
+   *
+   * @var \Drupal\Core\Controller\TitleResolverInterface
+   */
+  protected $titleResolver;
+
+  /**
+   * Menu position settings.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  protected $settings;
 
   /**
    * Constructs a Drupal\Component\Plugin\PluginBase object.
@@ -32,13 +80,39 @@ class MenuPositionLink extends MenuLinkBase implements ContainerFactoryPluginInt
    *   The plugin implementation definition.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory service.
+   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
+   *   The route match service.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The request stack.
+   * @param \Drupal\Core\Routing\AdminContext $admin_context
+   *   The admin context.
+   * @param \Drupal\Core\Controller\TitleResolverInterface $title_resolver
+   *   The title resolver service.
+   * @param \Drupal\Core\Render\RendererInterface $renderer
+   *   The renderer service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(array $configuration,
+  $plugin_id,
+  $plugin_definition,
+  EntityTypeManagerInterface $entity_type_manager,
+                              ConfigFactoryInterface $config_factory,
+  RouteMatchInterface $route_match,
+  RequestStack $request_stack,
+                              AdminContext $admin_context,
+  TitleResolverInterface $title_resolver,
+  RendererInterface $renderer) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
     $this->entityTypeManager = $entity_type_manager;
-    $this->settings = \Drupal::config('menu_position.settings');
+    $this->settings = $config_factory->get('menu_position.settings');
 
+    $this->routeMatch = $route_match;
+    $this->requestStack = $request_stack;
+    $this->adminContext = $admin_context;
+    $this->titleResolver = $title_resolver;
+    $this->renderer = $renderer;
   }
 
   /**
@@ -49,7 +123,13 @@ class MenuPositionLink extends MenuLinkBase implements ContainerFactoryPluginInt
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('config.factory'),
+      $container->get('current_route_match'),
+      $container->get('request_stack'),
+      $container->get('router.admin_context'),
+      $container->get('title_resolver'),
+      $container->get('renderer')
     );
   }
 
@@ -69,16 +149,14 @@ class MenuPositionLink extends MenuLinkBase implements ContainerFactoryPluginInt
     // position rule.
     // @todo Ensure this translates properly when using configuration
     //   translation.
-    if (\Drupal::service('router.admin_context')->isAdminRoute()) {
+    if ($this->adminContext->isAdminRoute()) {
       return $this->pluginDefinition['title'];
     }
     // When we're on a non-admin route we want to display the page title.
     else {
-      $request = \Drupal::request();
-      $route_match = \Drupal::routeMatch();
-      $title = \Drupal::service('title_resolver')->getTitle($request, $route_match->getRouteObject());
+      $title = $this->titleResolver->getTitle($this->requestStack->getCurrentRequest(), $this->routeMatch->getRouteObject());
       if (is_array($title)) {
-        $title = \Drupal::service('renderer')->renderPlain($title);
+        $title = $this->renderer->renderPlain($title);
       }
       return $title;
     }
@@ -110,6 +188,9 @@ class MenuPositionLink extends MenuLinkBase implements ContainerFactoryPluginInt
     return TRUE;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function isEnabled() {
     return (bool) ($this->settings->get('link_display') === 'child');
   }
@@ -118,7 +199,7 @@ class MenuPositionLink extends MenuLinkBase implements ContainerFactoryPluginInt
    * {@inheritdoc}
    */
   public function deleteLink() {
-    // noop
+    // Noop.
   }
 
   /**
@@ -132,4 +213,3 @@ class MenuPositionLink extends MenuLinkBase implements ContainerFactoryPluginInt
   }
 
 }
-

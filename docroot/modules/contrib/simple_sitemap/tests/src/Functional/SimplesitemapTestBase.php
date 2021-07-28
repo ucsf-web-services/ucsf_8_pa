@@ -18,7 +18,7 @@ abstract class SimplesitemapTestBase extends BrowserTestBase {
    *
    * @var string[]
    */
-  public static $modules = [
+  protected static $modules = [
     'simple_sitemap',
     'node',
     'content_translation',
@@ -60,6 +60,20 @@ abstract class SimplesitemapTestBase extends BrowserTestBase {
   protected $node2;
 
   protected $defaultSitemapUrl = 'sitemap.xml';
+
+  /**
+   * Use the testing profile.
+   *
+   * @var string
+   */
+  protected $profile = 'testing';
+
+  /**
+   * Use the classy theme.
+   *
+   * @var string
+   */
+  protected $defaultTheme = 'classy';
 
   /**
    * {@inheritdoc}

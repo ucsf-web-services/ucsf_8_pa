@@ -44,7 +44,9 @@ class MenuController extends ControllerBase {
    * @param \Drupal\system\MenuInterface $menu
    *   An entity representing a custom menu.
    *
-   * @todo: Deprecate this method after https://www.drupal.org/project/drupal/issues/2923429
+   * @deprecated in 2.11 and is removed from 3.0.0. https://www.drupal.org/project/drupal/issues/2923429.
+   *
+   * @see https://www.drupal.org/project/drupal/issues/2923429
    *
    * @return array
    *   Returns the menu link creation form.
@@ -62,13 +64,10 @@ class MenuController extends ControllerBase {
 
   /**
    * Provides removing extra data action.
-   *
-   * @return array
-   *   Returns redirect to the uninstall page.
    */
   public function removeExtraData() {
     $this->menuLinkContentHelper->clearMenuData('all');
-    drupal_set_message($this->t('Extra data for all menus were deleted.'), 'status');
+    $this->messenger()->addStatus($this->t('Extra data for all menus were deleted.'), 'status');
     return $this->redirect('system.modules_uninstall');
   }
 

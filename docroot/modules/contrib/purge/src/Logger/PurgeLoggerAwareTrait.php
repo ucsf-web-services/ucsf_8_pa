@@ -2,13 +2,20 @@
 
 namespace Drupal\purge\Logger;
 
-use \Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * Provides logging services for purge components.
  */
 trait PurgeLoggerAwareTrait {
   use LoggerAwareTrait;
+
+  /**
+   * Channel logger.
+   *
+   * @var null|\Drupal\purge\Logger\LoggerChannelPartInterface
+   */
+  protected $logger;
 
   /**
    * {@inheritdoc}

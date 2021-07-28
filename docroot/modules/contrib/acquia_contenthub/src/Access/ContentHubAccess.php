@@ -2,14 +2,14 @@
 
 namespace Drupal\acquia_contenthub\Access;
 
-use Drupal\Core\Routing\Access\AccessInterface;
-use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Session\AccountInterface;
-use Symfony\Component\Routing\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\acquia_contenthub\Client\ClientManagerInterface;
 use Drupal\acquia_contenthub\ContentHubSubscription;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Routing\Access\AccessInterface;
+use Drupal\Core\Session\AccountInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Route;
 
 /**
  * Implements permission to prevent unauthorized access to Entity CDF.

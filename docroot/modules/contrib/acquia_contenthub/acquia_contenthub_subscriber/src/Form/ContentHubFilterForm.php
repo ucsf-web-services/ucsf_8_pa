@@ -3,11 +3,11 @@
 namespace Drupal\acquia_contenthub_subscriber\Form;
 
 use Drupal\Core\Entity\EntityForm;
-use Drupal\Core\Session\AccountProxyInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Session\AccountProxyInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Prepares the form for input Content Hub Filters.

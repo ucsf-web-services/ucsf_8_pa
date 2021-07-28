@@ -14,6 +14,7 @@ use Drupal\editor\Entity\Editor;
  * )
  */
 class FakeObjects extends CKEditorPluginBase {
+
   /**
    * {@inheritdoc}
    */
@@ -34,4 +35,5 @@ class FakeObjects extends CKEditorPluginBase {
   public function getButtons() {
     return [];
   }
+
 }

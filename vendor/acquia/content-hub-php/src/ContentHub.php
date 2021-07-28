@@ -2,18 +2,27 @@
 
 namespace Acquia\ContentHubClient;
 
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use Acquia\ContentHubClient\Data\Adapter;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+
 
 class ContentHub extends Client
 {
     // Override VERSION inherited from GuzzleHttp::ClientInterface
-    const VERSION = '1.3.1';
+    const VERSION = '1.3.3';
     const LIBRARYNAME = 'AcquiaContentHubPHPLib';
-
+    const FEATURE_DEPRECATED_RESPONSE = [
+      'success' => FALSE,
+      'error' => [
+        'code' => SymfonyResponse::HTTP_GONE,
+        'message' => 'This feature is deprecated',
+      ],
+    ];
     private $adapter;
 
     /**
@@ -386,15 +395,13 @@ class ContentHub extends Client
      */
     public function logs($query, $options = [])
     {
-        $options = $options + [
-            'size' => 20,
-            'from' => 0,
-            'sort' => 'timestamp:desc'
-        ];
-        $query = empty($query) ? '{"query": {"match_all": {}}}' : $query;
-        $endpoint = "/{$this->api_version}/history?size={$options['size']}&from={$options['from']}&sort={$options['sort']}";
-        $request = new Request('POST', $endpoint, [], $query);
-        return $this->getResponseJson($request);
+      return new Response(
+        self::FEATURE_DEPRECATED_RESPONSE['error']['code'],
+        [],
+        json_encode(self::FEATURE_DEPRECATED_RESPONSE),
+        '1.1',
+        self::FEATURE_DEPRECATED_RESPONSE['error']['message']
+      );
     }
 
     /**
@@ -530,6 +537,18 @@ class ContentHub extends Client
         return $this->getResponseJson($request);
     }
 
+  /**
+   * Returns status information for all webhooks.
+   * 
+   * @return array
+   */
+    public function getWebhookStatus()
+    {
+      $endpoint = "/{$this->api_version}/settings/webhooks/status";
+      $request = new Request('GET', $endpoint);
+      return $this->getResponseJson($request);
+    }
+
     /**
      * Deletes a webhook from the active subscription.
      *
@@ -575,5 +594,71 @@ class ContentHub extends Client
         $response = $this->send($request);
         $body = (string) $response->getBody();
         return json_decode($body, TRUE);
+    }
+
+    /**
+     * Fetch snapshots.
+     *
+     * @return mixed
+     *   Response.
+     *
+     * @throws \Exception
+     */
+    public function getSnapshots()
+    {
+      $endpoint = "/v2/snapshots";
+      $request = new Request('GET', $endpoint);
+      return self::getResponseJson($request);
+    }
+
+    /**
+     * Create a snapshot.
+     *
+     * @return mixed
+     *   Response.
+     *
+     * @throws \Exception
+     */
+    public function createSnapshot()
+    {
+      $endpoint = "/v2/snapshots";
+      $request = new Request('POST', $endpoint, []);
+      return self::getResponseJson($request);
+    }
+
+    /**
+     * Deletes a snapshot.
+     *
+     * @param string $name
+     *   The name of the snapshot.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     *   Response.
+     *
+     * @throws \GuzzleHttp\Exception\RequestException
+     */
+    public function deleteSnapshot($name)
+    {
+      $endpoint = "/v2/snapshots/$name";
+      $request = new Request('DELETE', $endpoint, []);
+      return self::getResponseJson($request);
+    }
+
+    /**
+     * Restore a snapshot.
+     *
+     * @param string $name
+     *   The name of the snapshot.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     *   Response.
+     *
+     * @throws \GuzzleHttp\Exception\RequestException
+     */
+    public function restoreSnapshot($name)
+    {
+      $endpoint = "/v2/snapshots/$name/restore";
+      $request = new Request('PUT', $endpoint, []);
+      return self::getResponseJson($request);
     }
 }

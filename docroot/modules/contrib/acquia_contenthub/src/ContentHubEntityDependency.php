@@ -2,9 +2,9 @@
 
 namespace Drupal\acquia_contenthub;
 
+use Acquia\ContentHubClient\Attribute;
 use Acquia\ContentHubClient\Entity;
 use Drupal\Component\Uuid\Uuid;
-use Acquia\ContentHubClient\Attribute;
 
 /**
  * Content Hub Dependency Class.
@@ -89,6 +89,7 @@ class ContentHubEntityDependency {
     $post_dependencies = [
       'field_collection_item' => 'field_collection_item',
       'paragraph' => 'paragraph',
+      'path_alias' => 'path_alias',
     ];
 
     return $post_dependencies;

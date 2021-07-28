@@ -3,6 +3,8 @@
 namespace Drupal\scheduler;
 
 use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
+use Drupal\Component\EventDispatcher\Event;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -14,7 +16,6 @@ use Drupal\node\NodeInterface;
 use Drupal\scheduler\Exception\SchedulerMissingDateException;
 use Drupal\scheduler\Exception\SchedulerNodeTypeNotEnabledException;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Defines a scheduler manager.
@@ -61,7 +62,7 @@ class SchedulerManager {
   /**
    * The event dispatcher.
    *
-   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+   * @var \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher
    */
   protected $eventDispatcher;
 
@@ -75,7 +76,7 @@ class SchedulerManager {
   /**
    * Constructs a SchedulerManager object.
    */
-  public function __construct(DateFormatterInterface $dateFormatter, LoggerInterface $logger, ModuleHandlerInterface $moduleHandler, EntityTypeManagerInterface $entityTypeManager, ConfigFactoryInterface $configFactory, EventDispatcherInterface $eventDispatcher, TimeInterface $time) {
+  public function __construct(DateFormatterInterface $dateFormatter, LoggerInterface $logger, ModuleHandlerInterface $moduleHandler, EntityTypeManagerInterface $entityTypeManager, ConfigFactoryInterface $configFactory, ContainerAwareEventDispatcher $eventDispatcher, TimeInterface $time) {
     $this->dateFormatter = $dateFormatter;
     $this->logger = $logger;
     $this->moduleHandler = $moduleHandler;
@@ -83,6 +84,39 @@ class SchedulerManager {
     $this->configFactory = $configFactory;
     $this->eventDispatcher = $eventDispatcher;
     $this->time = $time;
+  }
+
+  /**
+   * Dispatch a Scheduler event.
+   *
+   * All Scheduler events should be dispatched through this common function.
+   *
+   * Drupal 8.8 and 8.9 use Symfony 3.4 and from Drupal 9.0 the Symfony version
+   * is 4.4. Starting with Symfony 4.3 the signature of the event dispatcher
+   * function has the parameters swapped round, the event object is first,
+   * followed by the event name string. At 9.0 the existing signature has to be
+   * used but from 9.1 the parameters must be switched.
+   *
+   * @param \Drupal\Component\EventDispatcher\Event $event
+   *   The event object.
+   * @param string $event_name
+   *   The text name for the event.
+   *
+   * @see https://www.drupal.org/project/scheduler/issues/3166688
+   */
+  public function dispatch(Event $event, string $event_name) {
+    // \Symfony\Component\HttpKernel\Kernel::VERSION will give the symfony
+    // version. However, testing this does not give the required outcome, we
+    // need to test the Drupal core version.
+    // @todo Remove the check when Core 9.1 is the lowest supported version.
+    if (version_compare(\Drupal::VERSION, '9.1', '>=')) {
+      // The new way, with $event first.
+      $this->eventDispatcher->dispatch($event, $event_name);
+    }
+    else {
+      // Replicate the existing dispatch signature.
+      $this->eventDispatcher->dispatch($event_name, $event);
+    }
   }
 
   /**
@@ -157,7 +191,7 @@ class SchedulerManager {
         // $node->setChangedTime($publish_on) will fail badly if an API call has
         // removed the date. Trap this as an exception here and give a
         // meaningful message.
-        // @TODO This will now never be thrown due to the empty(publish_on)
+        // @todo This will now never be thrown due to the empty(publish_on)
         // check above to cater for translations. Remove this exception?
         if (empty($node->publish_on->value)) {
           $field_definitions = $this->entityTypeManager->getFieldDefinitions('node', $node->getType());
@@ -168,7 +202,7 @@ class SchedulerManager {
         // Trigger the PRE_PUBLISH event so that modules can react before the
         // node is published.
         $event = new SchedulerEvent($node);
-        $this->eventDispatcher->dispatch(SchedulerEvents::PRE_PUBLISH, $event);
+        $this->dispatch($event, SchedulerEvents::PRE_PUBLISH);
         $node = $event->getNode();
 
         // Update 'changed' timestamp.
@@ -236,10 +270,9 @@ class SchedulerManager {
         }
         else {
           // None of the above hook calls processed the node and there were no
-          // errors detected so fall back to the standard actions system to
-          // publish the node.
+          // errors detected so set the node to published.
           $this->logger->notice('@type: scheduled publishing of %title.', $logger_variables);
-          $this->entityTypeManager->getStorage('action')->load('node_publish_action')->getPlugin()->execute($node);
+          $node->setPublished();
         }
 
         // Invoke the event to tell Rules that Scheduler has published the node.
@@ -250,8 +283,16 @@ class SchedulerManager {
         // Trigger the PUBLISH event so that modules can react after the node is
         // published.
         $event = new SchedulerEvent($node);
-        $this->eventDispatcher->dispatch(SchedulerEvents::PUBLISH, $event);
-        $event->getNode()->save();
+        $this->dispatch($event, SchedulerEvents::PUBLISH);
+
+        // Use the standard actions system to publish and save the node.
+        $node = $event->getNode();
+        $action_id = 'node_publish_action';
+        if ($this->moduleHandler->moduleExists('workbench_moderation_actions')) {
+          // workbench_moderation_actions module uses a custom action instead.
+          $action_id = 'state_change__node__published';
+        }
+        $this->entityTypeManager->getStorage('action')->load($action_id)->getPlugin()->execute($node);
 
         $result = TRUE;
       }
@@ -335,7 +376,7 @@ class SchedulerManager {
         // $node->setChangedTime($unpublish_on) will fail badly if an API call
         // has removed the date. Trap this as an exception here and give a
         // meaningful message.
-        // @TODO This will now never be thrown due to the empty(unpublish_on)
+        // @todo This will now never be thrown due to the empty(unpublish_on)
         // check above to cater for translations. Remove this exception?
         if (empty($unpublish_on)) {
           $field_definitions = $this->entityTypeManager->getFieldDefinitions('node', $node->getType());
@@ -346,7 +387,7 @@ class SchedulerManager {
         // Trigger the PRE_UNPUBLISH event so that modules can react before the
         // node is unpublished.
         $event = new SchedulerEvent($node);
-        $this->eventDispatcher->dispatch(SchedulerEvents::PRE_UNPUBLISH, $event);
+        $this->dispatch($event, SchedulerEvents::PRE_UNPUBLISH);
         $node = $event->getNode();
 
         // Update 'changed' timestamp.
@@ -404,10 +445,9 @@ class SchedulerManager {
         }
         else {
           // None of the above hook calls processed the node and there were no
-          // errors detected so fall back to the standard actions system to
-          // unpublish the node.
+          // errors detected so set the node to unpublished.
           $this->logger->notice('@type: scheduled unpublishing of %title.', $logger_variables);
-          $this->entityTypeManager->getStorage('action')->load('node_unpublish_action')->getPlugin()->execute($node);
+          $node->setUnpublished();
         }
 
         // Invoke event to tell Rules that Scheduler has unpublished this node.
@@ -418,8 +458,16 @@ class SchedulerManager {
         // Trigger the UNPUBLISH event so that modules can react after the node
         // is unpublished.
         $event = new SchedulerEvent($node);
-        $this->eventDispatcher->dispatch(SchedulerEvents::UNPUBLISH, $event);
-        $event->getNode()->save();
+        $this->dispatch($event, SchedulerEvents::UNPUBLISH);
+
+        // Use the standard actions system to unpublish and save the node.
+        $node = $event->getNode();
+        $action_id = 'node_unpublish_action';
+        if ($this->moduleHandler->moduleExists('workbench_moderation_actions')) {
+          // workbench_moderation_actions module uses a custom action instead.
+          $action_id = 'state_change__node__archived';
+        }
+        $this->entityTypeManager->getStorage('action')->load($action_id)->getPlugin()->execute($node);
 
         $result = TRUE;
       }

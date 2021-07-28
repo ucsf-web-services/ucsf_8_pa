@@ -91,14 +91,14 @@ class BlazyVideoFormatter extends BlazyVideoBase implements ContainerFactoryPlug
     $settings = $build['settings'];
 
     foreach ($items as $delta => $item) {
-      $media_url = strip_tags($item->value);
+      $settings['input_url'] = trim(strip_tags($item->value));
 
       $settings['delta'] = $delta;
-      if (empty($media_url)) {
+      if (empty($settings['input_url'])) {
         continue;
       }
 
-      $this->buildVideo($settings, $media_url);
+      $this->buildVideo($settings);
 
       $box = ['item' => $item, 'settings' => $settings];
 

@@ -2,6 +2,9 @@
 
 namespace Drupal\acquia_contenthub\Normalizer;
 
+use Drupal\acquia_contenthub\ContentHubSubscription;
+use Drupal\acquia_contenthub\Session\ContentHubUserSession;
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
@@ -13,11 +16,8 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Session\AccountSwitcherInterface;
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Drupal\acquia_contenthub\ContentHubSubscription;
-use Drupal\acquia_contenthub\Session\ContentHubUserSession;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Drupal\Component\Render\FormattableMarkup;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * Extracts the rendered view modes from a given ContentEntity Object.
@@ -238,8 +238,7 @@ class ContentEntityViewModesExtractor implements ContentEntityViewModesExtractor
       ])->getInternalPath();
 
       $url = '/' . $url;
-      $master_request = $this->requestStack->getCurrentRequest();
-      $request = Request::create($url, 'GET', [], $master_request->cookies->all(), [], $master_request->server->all());
+      $request = Request::create($url, 'GET');
       $request = $this->contentHubSubscription->setHmacAuthorization($request, TRUE);
 
       /** @var \Drupal\Core\Render\HtmlResponse $response */

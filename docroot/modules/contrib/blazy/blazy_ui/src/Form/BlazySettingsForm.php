@@ -96,6 +96,13 @@ class BlazySettingsForm extends ConfigFormBase {
       '#size'          => 10,
     ];
 
+    $form['blazy']['container'] = [
+      '#type'          => 'textfield',
+      '#title'         => $this->t('Scrolling container'),
+      '#default_value' => $config->get('blazy.container'),
+      '#description'   => $this->t('If you put Blazy within a scrolling container, provide valid comma separated CSS selectors, e.g.: <code>#drupal-modal, .another-scrolling-container</code>. A known scrolling container is <code>#drupal-modal</code> like seen at Media library. A scrolling modal with an iframe like Entity Browser has no issue since the scrolling container is the entire DOM. Must know <code>.blazy</code> parent container which has CSS rules containing <code>overflow</code> with values anything but <code>hidden</code> such as <code>auto or scroll</code>. Press F12 at any browser to inspect elements'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -111,12 +118,13 @@ class BlazySettingsForm extends ConfigFormBase {
       ->set('blazy.offset', $form_state->getValue(['blazy', 'offset']))
       ->set('blazy.saveViewportOffsetDelay', $form_state->getValue(['blazy', 'saveViewportOffsetDelay']))
       ->set('blazy.validateDelay', $form_state->getValue(['blazy', 'validateDelay']))
+      ->set('blazy.container', $form_state->getValue(['blazy', 'container']))
       ->save();
 
     // Invalidate the library discovery cache to update the responsive image.
     \Drupal::service('library.discovery')->clearCachedDefinitions();
 
-    drupal_set_message($this->t('Be sure to <a href=":clear_cache">clear the cache</a> if trouble to see the updated settings', [':clear_cache' => Url::fromRoute('system.performance_settings')->toString()]));
+    $this->messenger()->addMessage($this->t('Be sure to <a href=":clear_cache">clear the cache</a> if trouble to see the updated settings', [':clear_cache' => Url::fromRoute('system.performance_settings')->toString()]));
 
     parent::submitForm($form, $form_state);
   }

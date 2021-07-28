@@ -2,10 +2,10 @@
 
 namespace Drupal\acquia_contenthub\Form;
 
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Form\FormBase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\acquia_contenthub\Controller\ContentHubReindex;
+use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines the form to register the webhooks.

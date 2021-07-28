@@ -4,7 +4,6 @@ namespace Drupal\applenews\Controller;
 
 use Drupal\applenews\ApplenewsManager;
 use Drupal\applenews\ApplenewsPreviewBuilder;
-use Drupal\Component\Serialization\Json;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityInterface;
 use Psr\Log\LoggerInterface;
@@ -13,9 +12,9 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Serializer\Serializer;
 
 /**
- * Class ApplenewsPreviewController.
+ * Apple news preview controller.
  *
- * @package Drupal\applenews\Controller
+ * Facilitates downloading entities in the Apple News format.
  */
 class ApplenewsPreviewController extends ControllerBase {
 
@@ -104,7 +103,11 @@ class ApplenewsPreviewController extends ControllerBase {
     $archive = $archive_path . '.zip';
 
     $headers = ['Content-Type' => 'application/zip'];
-    $filename = implode('-', ['applenews-preview', $entity_type, $entity_id]) . '.zip';
+    $filename = implode('-', [
+      'applenews-preview',
+      $entity_type,
+      $entity_id,
+    ]) . '.zip';
     $response = new BinaryFileResponse($archive, 200, $headers, FALSE);
     $response->setContentDisposition('attachment', $filename);
 
@@ -151,14 +154,14 @@ class ApplenewsPreviewController extends ControllerBase {
 
     $file_url = $preview->getArchiveFilePath();
     $preview->toFile();
-      try {
-        $preview->archive([$entity_id]);
-      }
-      catch (\Exception $e) {
-        $this->logger->error('Could not create archive: @err', ['@err' => $e->getMessage()]);
-        return NULL;
-      }
-      return $file_url;
+    try {
+      $preview->archive([$entity_id]);
+    }
+    catch (\Exception $e) {
+      $this->logger->error('Could not create archive: @err', ['@err' => $e->getMessage()]);
+      return NULL;
+    }
+    return $file_url;
   }
 
   /**

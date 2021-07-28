@@ -35,36 +35,52 @@ class ApplenewsAdminTest extends ApplenewsTestBase {
 
   /**
    * Tests settings form submit.
-   *
-   * @throws \Behat\Mink\Exception\ExpectationException
-   * @throws \Behat\Mink\Exception\ResponseTextException
    */
   public function testAdminFormSubmit() {
     $assert_session = $this->assertSession();
     $this->drupalLogin($this->adminUser);
-    $endpoint = $this->randomString();
     $api_key = $this->randomString();
     $api_secret = $this->randomString();
     $proxy = $this->randomString();
     $proxy_port = $this->randomString(5);
 
     $edit = [
-      'endpoint' => $endpoint,
+      'endpoint' => 'https://example.com',
       'api_key' => $api_key,
       'api_secret' => $api_secret,
       'proxy' => $proxy,
       'proxy_port' => $proxy_port,
     ];
-    $this->drupalPostForm('/admin/config/services/applenews/settings', $edit, 'Save configuration');
+    $this->drupalGet('/admin/config/services/applenews/settings');
+    $this->submitForm($edit, 'Save configuration');
     $assert_session->pageTextContains('The configuration options have been saved.');
     foreach ($edit as $field => $value) {
-      if ($field == 'api_secret') {
+      if ($field === 'api_secret') {
         $assert_session->fieldValueNotEquals($field, $value);
       }
       else {
         $assert_session->fieldValueEquals($field, $value);
       }
     }
+
+    // Test that the trailing slash is trimmed off.
+    $edit['endpoint'] = 'https://example.com/';
+    $this->submitForm($edit, 'Save configuration');
+    $assert_session->pageTextContains('The configuration options have been saved.');
+    $assert_session->fieldValueEquals('endpoint', 'https://example.com');
+
+    // Test that an error is thrown for invalid URL.
+    $edit['endpoint'] = 'derp';
+    $this->submitForm($edit, 'Save configuration');
+    $assert_session->pageTextContains('The URL derp is not valid');
+
+    // Submit the form with an empty API secret, ensure that the API secret
+    // does not get replaced.
+    $edit['endpoint'] = 'https://example.com';
+    $edit['api_secret'] = '';
+    $this->submitForm($edit, 'Save configuration');
+    $assert_session->pageTextContains('The configuration options have been saved.');
+    $this->assertEqual(\Drupal::config('applenews.settings')->get('api_secret'), $api_secret);
   }
 
 }
