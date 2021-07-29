@@ -1702,7 +1702,7 @@ class WebformHelpManager implements WebformHelpManagerInterface {
       'content' => $this->t('The <strong>Options configuration</strong> page lists reusable predefined options/values available for select menus, radio buttons, checkboxes and Likert elements.'),
       'video_id' => 'configuration',
       'routes' => [
-        // @see /admin/structure/webform/config/options
+        // @see /admin/structure/webform/options
         'entity.webform_options.collection',
       ],
     ];
@@ -1800,7 +1800,7 @@ class WebformHelpManager implements WebformHelpManagerInterface {
         '<li>' . $this->t('Generate a composer.json file using <code>drush @webform-libraries-composer</code>.', $t_args) . '</li>' .
         '<li>' . $this->t('Execute <code>drush @webform-libraries-download</code>, to download third-party libraries required by the Webform module. (OSX/Linux)', $t_args) . '</li>' .
         '<li>' . $this->t("Execute <code>drush @webform-composer-update</code>, to update your Drupal installation's composer.json to include the Webform module's selected libraries as repositories.", $t_args) . '</li>' .
-        '<li>' . $this->t('Download and extract a <a href=":href">zipped archive containing all webform libraries</a> and extract the directories and files to /libraries or /web/libraries', [':href' => 'https://git.drupalcode.org/sandbox/jrockowitz-2941983/raw/8.x-5.x/libraries.zip']) . '</li>' .
+        '<li>' . $this->t('Download and extract a <a href=":href">zipped archive containing all webform libraries</a> and extract the directories and files to /libraries or /web/libraries', [':href' => 'https://git.drupalcode.org/sandbox/jrockowitz-2941983/raw/6.x/libraries.zip']) . '</li>' .
         '</ul>',
       'message_type' => 'info',
       'message_close' => TRUE,

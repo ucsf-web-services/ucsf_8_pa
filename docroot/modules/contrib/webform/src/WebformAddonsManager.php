@@ -1377,7 +1377,7 @@ class WebformAddonsManager implements WebformAddonsManagerInterface {
     // Submissions: Webform Views Integration.
     $projects['webform_views'] = [
       'title' => $this->t('Webform Views'),
-      'description' => $this->t('Integrates Webform 8.x-5.x and Views modules.'),
+      'description' => $this->t('Integrates Webform 8.x-5.x/6.x and Views modules.'),
       'url' => Url::fromUri('https://www.drupal.org/project/webform_views'),
       'category' => 'submission',
       'recommended' => TRUE,
