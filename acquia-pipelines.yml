@@ -18,7 +18,7 @@ events:
             - echo "STARTING BUILD"
             - composer validate --no-check-all --ansi
             - composer install
-            - mysql -u root -proot "CREATE DATABASE drupal"
+            - mysql -u root -proot -e "CREATE DATABASE ucsfpa8"
             - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ]; then echo "pull request made"; fi
             - echo "FINISHED BUILD"
   post-deploy:
