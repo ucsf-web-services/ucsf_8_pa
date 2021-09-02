@@ -1,14 +1,17 @@
 {% set classes = ['main'] %}
 {% set layout = term.field_banner_layout.value %}
 {% set no_page_title = no_page_title ? no_page_title : '' %}
-<div class="magazine-topic-issue-page magazine-topic-page">
+{% set taxonomy_page = 'topic-page' %}
+
+<div class="magazine-topic-issue-page magazine-{{taxonomy_page}}">
 	<main {{ attributes.addClass(classes) }}>
 		<a id="main-content" tabindex="-1"></a>
-		<div class="magazine-topic-page">
-			<header class="magazine-topic-page__heade mag-basic-header">
+		<div class="magazine-{{taxonomy_page}}">
+			<header class="magazine-{{taxonomy_page}}__heade mag-basic-header">
+
 				{% if no_page_title != true %}
-					<h1 class="magazine-topic-page__header-title">UCSF Magazine
-						<span class="magazine-topic-page__header-subtitle">{{ name }}</span>
+					<h1 class="magazine-{{taxonomy_page}}__header-title">UCSF Magazine
+						<span class="magazine-{{taxonomy_page}}__header-subtitle">{{ name }}</span>
 					</h1>
 				{% else %}
 					<h1 class="mag-basic-header__title">{{ name }}</h1>
@@ -26,7 +29,8 @@
 
 			{% endif %}
 
-			<div class="topic-page-wrapper magazine-topics-latest">
+			<div class="{{taxonomy_page}}-wrapper magazine-topics-latest">
+
 				<h2 class="magazine-topics-latest__title">The Latest</h2>
 
 				<div class="news-list">
