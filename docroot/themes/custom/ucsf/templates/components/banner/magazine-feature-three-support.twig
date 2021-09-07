@@ -1,8 +1,8 @@
+{# var taxonomy_page is provided by the twig file that includes this partial #}
+<div class="magazine-feature-support magazine-feature-three-support magazine-feature-support--{{taxonomy_page}}">
+	{{ drupal_entity('paragraph', term.field_feature_article.0.target_id, 'magazine_feature_article_alt') }}
 
-<div class="magazine-feature-three-support">
-  {{ drupal_entity('paragraph', term.field_feature_article.0.target_id, 'magazine_feature_article_alt') }}
-
-  <div class="magazine-feature-support layout-columns__3 bg-white">
-  {{ content.field_supporting_feature_article }}
-  </div>
+	<div class="magazine-feature-support__articles layout-columns__3 bg-white">
+		{{ content.field_supporting_feature_article }}
+	</div>
 </div>

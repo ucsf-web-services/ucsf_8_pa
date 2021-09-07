@@ -15,7 +15,7 @@ body.page-node-type-magazine-article,
   }
 
   .recommended-articles .news-card__copy .article-affiliation:before {
-    &::before  {
+    &::before {
       background-color: $magazine-gray-blue;
     }
   }
@@ -49,14 +49,12 @@ body.page-node-type-magazine-article,
     margin-right: 0;
   }
 
-
   .news-card__copy {
     @include breakpoint($new-small) {
       margin-top: 0;
       padding-left: 0;
     }
   }
-
 
   .article-affiliation {
     // force whole line of text to shift down if screen size is too small
@@ -67,7 +65,6 @@ body.page-node-type-magazine-article,
   .recommended-article__bg {
     display: none;
   }
-
 
   .link--cta {
     @include link-bg-image-hover();
@@ -101,10 +98,10 @@ body.page-node-type-magazine-article,
     margin-bottom: $space-five;
     border-bottom: 1px solid $c-gray-lighter;
 
-    .magazine-feature-support {
+    .magazine-feature-support__articles {
       .field-supporting-feature-article {
         & > .field__item {
-          &:nth-of-type(3){
+          &:nth-of-type(3) {
             display: none;
           }
         }
@@ -114,12 +111,12 @@ body.page-node-type-magazine-article,
     @include breakpoint($new-medium) {
       margin-bottom: $space-ten;
 
-      .magazine-feature-support {
+      .magazine-feature-support__articles {
         .field-supporting-feature-article {
           & > .field__item {
             width: 48%;
 
-            &:nth-of-type(2){
+            &:nth-of-type(2) {
               margin-right: 0;
               margin-left: 2%;
             }
@@ -143,7 +140,7 @@ body.page-node-type-magazine-article,
         }
       }
 
-      .magazine-feature-support {
+      .magazine-feature-support__articles {
         padding: 0;
         grid-column: 9/-1;
         padding-right: 15%;
@@ -189,7 +186,8 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
   }
 
   .small-text {
-    em, strong {
+    em,
+    strong {
       font-family: $font-helvetica-neue-roman;
     }
   }
@@ -354,7 +352,7 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
   [data-primary-area^="pa-"] + .article-header__date,
   .article-header__date,
   .article-header__byline .article-affiliation {
-    &::before  {
+    &::before {
       background-color: $magazine-gray-blue;
     }
   }
@@ -385,7 +383,7 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
 
     .article-twocol-header {
       background: $c-black;
-      width:100%;
+      width: 100%;
 
       h1,
       .field-sub-title,
@@ -425,12 +423,24 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
     }
   }
 
-  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .field-sub-title,
-  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-header__author,
-  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-topic-area,
-  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-affiliation,
-  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-issue,
-  .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-art-credit {
+  .article-feature-overlay-banner.featureoverlaydark
+    .article-feature-overlay-header
+    .field-sub-title,
+  .article-feature-overlay-banner.featureoverlaydark
+    .article-feature-overlay-header
+    .article-header__author,
+  .article-feature-overlay-banner.featureoverlaydark
+    .article-feature-overlay-header
+    .article-topic-area,
+  .article-feature-overlay-banner.featureoverlaydark
+    .article-feature-overlay-header
+    .article-affiliation,
+  .article-feature-overlay-banner.featureoverlaydark
+    .article-feature-overlay-header
+    .article-issue,
+  .article-feature-overlay-banner.featureoverlaydark
+    .article-feature-overlay-header
+    .article-art-credit {
     @include breakpoint($new-large) {
       color: $c-white;
     }
@@ -648,7 +658,6 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
         width: 100%;
       }
     }
-
   }
 
   .blockquote.blockquote-full-width {
