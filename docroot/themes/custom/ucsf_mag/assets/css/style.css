@@ -496,62 +496,6 @@ html {
     .menu-item--expanded .mag-menu__no-link::after {
       width: 100%; } }
 
-.mag-menu__link--alt .ext {
-  background-size: 15px;
-  width: 15px;
-  height: 15px; }
-
-.mag-menu__link--alt:hover .ext {
-  background-size: 15px; }
-
-.mag-submenu__link .ext {
-  background-size: 14px;
-  width: 14px;
-  height: 14px;
-  padding-right: 25px;
-  -webkit-filter: brightness(0) saturate(100%) invert(38%) sepia(39%) saturate(379%) hue-rotate(177deg) brightness(90%) contrast(89%);
-          filter: brightness(0) saturate(100%) invert(38%) sepia(39%) saturate(379%) hue-rotate(177deg) brightness(90%) contrast(89%); }
-
-.mag-submenu__link:hover .ext {
-  background-size: 14px;
-  -webkit-filter: none;
-          filter: none; }
-
-@media (min-width: 600px) {
-  .mag-nav__ucsf-news .ext {
-    display: block;
-    width: 1rem;
-    height: auto; } }
-
-@media (min-width: 850px) {
-  .mag-nav__ucsf-news .ext {
-    width: 10px;
-    background-size: 14px 14px;
-    margin-left: .5rem;
-    padding-right: 20px;
-    -webkit-filter: brightness(0) invert(1);
-            filter: brightness(0) invert(1); } }
-
-@media (min-width: 850px) {
-  .mag-nav__ucsf .mag-nav__ucsf-news:hover .ext {
-    background-size: 14px 14px; } }
-
-.mag-nav__ucsf-news--menu .ext {
-  display: block;
-  width: 2rem;
-  height: 2rem;
-  background-size: 25px 25px;
-  padding-right: 45px;
-  -ms-flex-item-align: center;
-      align-self: center; }
-
-.mag-nav__ucsf-news--menu:hover .ext {
-  -webkit-filter: brightness(0) saturate(100%) invert(25%) sepia(94%) saturate(1577%) hue-rotate(179deg) brightness(99%) contrast(101%);
-          filter: brightness(0) saturate(100%) invert(25%) sepia(94%) saturate(1577%) hue-rotate(179deg) brightness(99%) contrast(101%);
-  width: 2rem;
-  height: 2rem;
-  background-size: 25px 25px; }
-
 .mag-nav__ucsf-news--menu {
   font-size: 1.125rem;
   font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
@@ -561,10 +505,40 @@ html {
   display: flex;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
-          justify-content: space-between; }
+          justify-content: space-between;
+  position: relative; }
+  .mag-nav__ucsf-news--menu[href*="http"]::after {
+    content: '';
+    width: 14px;
+    top: 0.15em;
+    position: absolute;
+    height: 14px;
+    padding-right: 11px;
+    background-color: transparent;
+    background-position-x: right;
+    background-position-y: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-image: url("/themes/custom/ucsf/assets/images/external-link.svg");
+    background-size: 14px;
+    background-origin: padding-box;
+    background-clip: border-box; }
+  .mag-nav__ucsf-news--menu[href*="http"]:hover::after {
+    background-image: url("/themes/custom/ucsf/assets/images/external-link-hover.svg");
+    -webkit-filter: none;
+            filter: none; }
   @media (min-width: 970px) {
     .mag-nav__ucsf-news--menu {
       display: none; } }
+  .mag-nav__ucsf-news--menu[href*="http"]::after {
+    width: 2rem;
+    height: 2rem;
+    background-size: 25px 25px;
+    top: 29%;
+    right: 0; }
+    @media (min-width: 970px) {
+      .mag-nav__ucsf-news--menu[href*="http"]::after {
+        display: none; } }
   .mag-menu__menu .mag-nav__ucsf-news--menu {
     color: #121a31; }
     .mag-menu__menu .mag-nav__ucsf-news--menu:hover {
@@ -616,7 +590,8 @@ html {
 
 .mag-submenu__link {
   font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-  font-size: 0.9rem; }
+  font-size: 0.9rem;
+  position: relative; }
   .mag-submenu .mag-submenu__link {
     color: #344160; }
     .mag-submenu .mag-submenu__link:hover {
@@ -643,6 +618,49 @@ html {
   .latest-issue a img {
     margin-top: 24px;
     margin-bottom: 13px; }
+
+.mag-submenu__link[href*="http"]::after,
+.mag-menu__link--alt[href*="http"]::after {
+  content: '';
+  width: 14px;
+  top: 0.15em;
+  position: absolute;
+  height: 14px;
+  padding-right: 11px;
+  background-color: transparent;
+  background-position-x: right;
+  background-position-y: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-image: url("/themes/custom/ucsf/assets/images/external-link.svg");
+  background-size: 14px;
+  background-origin: padding-box;
+  background-clip: border-box; }
+
+.mag-submenu__link[href*="http"]:hover::after,
+.mag-menu__link--alt[href*="http"]:hover::after {
+  background-image: url("/themes/custom/ucsf/assets/images/external-link-hover.svg");
+  -webkit-filter: none;
+          filter: none; }
+
+.mag-submenu__link[href*="http"],
+.mag-menu__link--alt[href*="http"] {
+  display: inline-block; }
+  .mag-submenu__link[href*="http"]::after,
+  .mag-menu__link--alt[href*="http"]::after {
+    display: inline-block;
+    -webkit-filter: brightness(0) saturate(100%) invert(38%) sepia(39%) saturate(379%) hue-rotate(177deg) brightness(90%) contrast(89%);
+            filter: brightness(0) saturate(100%) invert(38%) sepia(39%) saturate(379%) hue-rotate(177deg) brightness(90%) contrast(89%); }
+  .mag-submenu__link[href*="http"][href*="//magazine"],
+  .mag-menu__link--alt[href*="http"][href*="//magazine"] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+    .mag-submenu__link[href*="http"][href*="//magazine"]::after,
+    .mag-menu__link--alt[href*="http"][href*="//magazine"]::after {
+      display: none;
+      -webkit-filter: none;
+              filter: none; }
 
 [block="block-ucsf-mag-main-menu"] {
   display: none; }
@@ -906,13 +924,45 @@ html {
   -webkit-transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) color;
   transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) color;
   display: none; }
-  @media (min-width: 970px) {
+  @media (min-width: 850px) {
     .mag-nav__ucsf-news {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
-      margin-right: 2rem;
-      padding: 8px 0; } }
+      margin-right: 3.75rem;
+      padding: 8px 0;
+      position: relative; }
+      .mag-nav__ucsf-news[href*="http"]::after {
+        content: '';
+        width: 14px;
+        top: 0.15em;
+        position: absolute;
+        height: 14px;
+        padding-right: 11px;
+        background-color: transparent;
+        background-position-x: right;
+        background-position-y: center;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-image: url("/themes/custom/ucsf/assets/images/external-link.svg");
+        background-size: 14px;
+        background-origin: padding-box;
+        background-clip: border-box; }
+      .mag-nav__ucsf-news[href*="http"]:hover::after {
+        background-image: url("/themes/custom/ucsf/assets/images/external-link-hover.svg");
+        -webkit-filter: none;
+                filter: none; } }
+  @media (min-width: 850px) {
+    .mag-nav__ucsf-news[href*="http"]::after {
+      top: 0.9rem;
+      right: -1.75rem;
+      width: 10px;
+      background-size: 14px 14px;
+      -webkit-filter: brightness(0) invert(1);
+              filter: brightness(0) invert(1); } }
+  .mag-nav__ucsf-news[href*="http"]:hover::after {
+    -webkit-filter: brightness(0) invert(1);
+            filter: brightness(0) invert(1); }
   @media (min-width: 600px) {
     .universal-header-mag .mag-nav__ucsf .mag-nav__ucsf-news {
       color: #121a31; } }
