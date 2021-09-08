@@ -1,8 +1,11 @@
-version: 1.2.0
+version: 1.3.0
 services:
   - mysql
   - php:
         version: 7.3
+  - memcached
+  - composer:
+      version: 2
 variables:
   global:
 cde-databases:
@@ -11,32 +14,41 @@ events:
   build:
     steps:
       - setup:
-          type: script
           script:
-            - echo "completed"
+            - echo "STARTING BUILD"
+            - composer validate --no-check-all --ansi
+            - composer install
+            - mysql -u root -proot -e "CREATE DATABASE ucsfpa8"
             - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ]; then echo "pull request made"; fi
+            - echo "FINISHED BUILD"
   post-deploy:
     steps:
       # Deploy the build artifact to a Cloud on-demand environment.
       - deploy:
           # Build on Pull Request only but not for the dev branch (vcs master) since it already has its own Sand environment.
           script:
+            - echo "PIPELINES DEPLOY"
             - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ] && [ "$SOURCE_VCS_PATH" != "master" ]; then
             - echo "Create/Update a new On Demand Environment for $PIPELINE_DEPLOY_VCS_PATH"
             - pipelines-deploy
             - pipelines-sync-dbs ucsfpa8
             - fi
-
+            - echo "PIPELINES DEPLOY FINISHED"
   # When a GitHub pull request is merged, this deletes the corresponding ODE.
   pr-merged:
     steps:
       - deploy:
           script:
             - pipelines-deploy
-
   # When a GitHub pull request is closed, this deletes the corresponding ODE.
   pr-closed:
     steps:
       - deploy:
           script:
             - pipelines-deploy
+fail-on-build:
+    steps:
+      - runonfailure:
+          type: script
+          script:
+            - echo "FAIL-ON-BUILD OCCURRED"
