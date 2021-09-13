@@ -2,20 +2,22 @@
 /docroot/sites/*/*settings*.php
 
 # don't add Drupal core in the event that composer sticks it in as a dependency
-#/docroot/core/
+/docroot/core/
 
 # Ignore paths that contain generated content.
 /docroot/files/
-/docroot/sites/*/files
-/docroot/sites/*/files-private
-/docroot/.htaccess
+/docroot/sites/**/files
+/docroot/sites/**/files-private
+
 
 # Ignore contrib modules, themes, and libraries
-#/docroot/modules/contrib
-#/docroot/profiles/contrib
-#/docroot/themes/contrib
-#/docroot/themes/**/bower_components
+/docroot/modules/contrib
+/docroot/profiles/contrib
+/docroot/themes/contrib
+/docroot/themes/**/bower_components
 /docroot/themes/**/.sass-cache
+
+
 
 # Ignore default text files
 /docroot/CHANGELOG.txt
@@ -37,12 +39,14 @@ Ignore the bin directory
 # Ignore the node modules folder
 node_modules/
 /**/node_modules
+node_modules
 
 # Ignore Sass map files since they only work locally anyway
 *.css.map
 
 # Composer dependencies
 /docroot/vendor/
+vendor/*
 
 # PhpUnit code coverage generated files
 /docroot/tests/coverage/
@@ -63,13 +67,7 @@ docroot/.idea/*
 composer.lock
 /**/services.yml
 
-docroot/libraries/chosen-js
-docroot/libraries/slick-carousel
-docroot/libraries/jquery-colorbox
-docroot/sites/default/development.services.yml
-docroot/sites/development.services.yml
 
-docroot/sites/default/files-private/*
 docroot/sites/default/local.settings.inc
 local.services.yml
 
