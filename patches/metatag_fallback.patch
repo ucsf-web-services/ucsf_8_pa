@@ -1,16 +1,16 @@
 diff --git a/metatag_open_graph/src/Plugin/metatag/Tag/OgDescription.php b/metatag_open_graph/src/Plugin/metatag/Tag/OgDescription.php
-index 8cad733..570b999 100644
+index a3b01ff..f142d5a 100644
 --- a/metatag_open_graph/src/Plugin/metatag/Tag/OgDescription.php
 +++ b/metatag_open_graph/src/Plugin/metatag/Tag/OgDescription.php
 @@ -16,7 +16,7 @@ use Drupal\metatag\Plugin\metatag\Tag\MetaPropertyBase;
   *   weight = 6,
   *   type = "label",
   *   secure = FALSE,
-- *   multiple = FALSE
-+ *   multiple = TRUE
+- *   multiple = FALSE,
++ *   multiple = TRUE,
+  *   long = TRUE,
   * )
   */
- class OgDescription extends MetaPropertyBase {
 diff --git a/metatag_open_graph/src/Plugin/metatag/Tag/OgTitle.php b/metatag_open_graph/src/Plugin/metatag/Tag/OgTitle.php
 index 8929887..4ffc36b 100644
 --- a/metatag_open_graph/src/Plugin/metatag/Tag/OgTitle.php
@@ -38,7 +38,7 @@ index eb3cdbb..0d5d67e 100644
   */
  class TwitterCardsDescription extends MetaNameBase {
 diff --git a/metatag_twitter_cards/src/Plugin/metatag/Tag/TwitterCardsImage.php b/metatag_twitter_cards/src/Plugin/metatag/Tag/TwitterCardsImage.php
-index 4fa71b7..c364541 100644
+index bcb307c..f916e82 100644
 --- a/metatag_twitter_cards/src/Plugin/metatag/Tag/TwitterCardsImage.php
 +++ b/metatag_twitter_cards/src/Plugin/metatag/Tag/TwitterCardsImage.php
 @@ -16,7 +16,7 @@ use Drupal\metatag\Plugin\metatag\Tag\MetaNameBase;
@@ -64,12 +64,12 @@ index 268dfa4..45be445 100644
   */
  class TwitterCardsTitle extends MetaNameBase {
 diff --git a/src/MetatagManager.php b/src/MetatagManager.php
-index 57c4ca2..9b44eab 100644
+index 18cac19..168829c 100644
 --- a/src/MetatagManager.php
 +++ b/src/MetatagManager.php
-@@ -552,8 +552,25 @@ class MetatagManager implements MetatagManagerInterface {
+@@ -591,8 +591,25 @@ class MetatagManager implements MetatagManagerInterface {
            }
- 
+
            foreach ($output as $index => $element) {
 -            // Add index to tag name as suffix to avoid having same key.
 -            $index_tag_name = $tag->multiple() ? $tag_name . '_' . $index : $tag_name;
@@ -138,13 +138,13 @@ index 449ce2f..7300958 100644
        $element['#tag'] = 'link';
        $element['#attributes'] = [
 diff --git a/src/Plugin/metatag/Tag/MetaNameBase.php b/src/Plugin/metatag/Tag/MetaNameBase.php
-index 9212571..ac32bcb 100644
+index da00613..3652e1c 100644
 --- a/src/Plugin/metatag/Tag/MetaNameBase.php
 +++ b/src/Plugin/metatag/Tag/MetaNameBase.php
-@@ -321,10 +321,14 @@ abstract class MetaNameBase extends PluginBase {
- 
-     // Parse out the image URL, if needed.
-     $value = $this->parseImageUrl();
+@@ -346,10 +346,14 @@ abstract class MetaNameBase extends PluginBase {
+       $value = PlainTextOutput::renderFromHtml($this->value);
+     }
+
 -    $values = $this->multiple() ? explode(',', $value) : [$value];
 +    $values = $this->multiple() ? explode('||', $value) : [$value];
      $elements = [];
