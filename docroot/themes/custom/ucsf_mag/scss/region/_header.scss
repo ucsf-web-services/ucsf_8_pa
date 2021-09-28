@@ -359,11 +359,30 @@
     transition: 0.15s $transition-type color;
     display: none;
 
-
-    @include breakpoint($bp-medium-plus) {
+    @include breakpoint($bp-large) {
+      @include external-link-icon();
       display: flex;
-      margin-right: 2rem;
+      margin-right: 3.75rem;
       padding: 8px 0;
+      position: relative;
+
+    }
+
+    // Modify external link icon for UCSF News link on small screen.
+    &[href*="http"] {
+      &::after {
+        @include breakpoint($bp-large) {
+          top: 0.9rem;
+          right: -1.75rem;
+          width: 10px;
+          background-size: 14px 14px;
+          filter: brightness(0) invert(1);
+        }
+      }
+
+      &:hover::after {
+        filter: brightness(0) invert(1);
+      }
     }
 
     // Specificity

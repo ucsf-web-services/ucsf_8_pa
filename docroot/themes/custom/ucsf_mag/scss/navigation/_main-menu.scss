@@ -324,6 +324,7 @@
     &.ext {
       display: inline-block;
     }
+
   }
 
   &__no-link {
@@ -369,86 +370,31 @@
   }
 }
 
-// External link
-.ext {
-  .mag-menu__link--alt & {
-    background-size: 15px;
-    width: 15px;
-    height: 15px;
-  }
-
-  .mag-menu__link--alt:hover & {
-    background-size: 15px;
-  }
-
-  .mag-submenu__link & {
-    background-size: 14px;
-    width: 14px;
-    height: 14px;
-    padding-right: 25px;
-    filter: $filter-c-gulf-blue;
-  }
-
-  .mag-submenu__link:hover & {
-    background-size: 14px;
-    filter: none;
-  }
-
-  // Visit UCSF News Center link - Start
-  // link inside the header
-  .mag-nav__ucsf-news & {
-    @include breakpoint($bp-medium) {
-      display: block;
-      width: 1rem;
-      height: auto;
-    }
-
-    @include breakpoint($bp-large) {
-      width: 10px;
-      background-size: 14px 14px;
-      margin-left: .5rem;
-      padding-right: 20px;
-      filter: brightness(0) invert(1);
-    }
-  }
-
-  // Needed more specificity
-  .mag-nav__ucsf .mag-nav__ucsf-news:hover & {
-    @include breakpoint($bp-large) {
-      background-size: 14px 14px;
-    }
-  }
-
-  // link inside menu panel
-  .mag-nav__ucsf-news--menu & {
-    display: block;
-    width: 2rem;
-    height: 2rem;
-    background-size: 25px 25px;
-    padding-right: 45px;
-    align-self: center;
-  }
-
-  .mag-nav__ucsf-news--menu:hover & {
-    filter: $filter-c-blue-link;
-    width: 2rem;
-    height: 2rem;
-    background-size: 25px 25px;
-  }
-
- // Visit UCSF News Center link - End
-}
-
 // Visit UCSF News Center ( mobile/tablet ).
 .mag-nav__ucsf-news--menu {
+  @include external-link-icon();
   font-size: 1.125rem;
   font-family: $font-helvetica-neue-medium;
   line-height: 77px;
   display: flex;
   justify-content: space-between;
+  position: relative;
 
   @include breakpoint($bp-medium-plus) {
     display: none;
+  }
+
+  // Modify external link icon for UCSF News link on small screen.
+  &[href*="http"]::after {
+    width: 2rem;
+    height: 2rem;
+    background-size: 25px 25px;
+    top: 29%;
+    right: 0;
+
+    @include breakpoint($bp-medium-plus) {
+      display: none;
+    }
   }
 
   // Needed more specificity
@@ -527,6 +473,7 @@
   &__link {
     font-family: $font-helvetica-neue-roman;
     font-size: 0.9rem;
+    position: relative;
 
     // specificity modification
     #{$block} & {
@@ -570,3 +517,27 @@
   }
 }
 
+// Add external link icon to submenu items with external url,
+.mag-submenu__link,
+.mag-menu__link--alt {
+  @include external-link-icon();
+
+  &[href*="http"] {
+    display: inline-block;
+
+    &::after {
+      display: inline-block;
+      filter: $filter-c-gulf-blue;
+    }
+
+    // Remove icon from the links that have full url but are local.
+    &[href*="//magazine"] {
+      display: flex;
+      &::after {
+        display: none;
+        filter: none;
+      }
+    }
+  }
+}
+// External link icon - End

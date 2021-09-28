@@ -1,17 +1,17 @@
 diff --git a/js/plugins/drupalentity/plugin.js b/js/plugins/drupalentity/plugin.js
-index b8a5090c9..ac420b640 100644
+index ad4b5a4..2e57d30 100644
 --- a/js/plugins/drupalentity/plugin.js
 +++ b/js/plugins/drupalentity/plugin.js
-@@ -62,7 +62,11 @@
-             var entityElement = editor.document.createElement('drupal-entity');
-             var attributes = values.attributes;
-             for (var key in attributes) {
--              entityElement.setAttribute(key, attributes[key]);
-+              if (typeof attributes[key] === 'object') {
-+                entityElement.setAttribute(key, attributes[key].value);
-+              } else {
-+                entityElement.setAttribute(key, attributes[key]);
-+              }
+@@ -133,7 +133,11 @@
+               var entityElement = editor.document.createElement('drupal-entity');
+               var attributes = values.attributes;
+               for (var key in attributes) {
+-                entityElement.setAttribute(key, attributes[key]);
++                if (typeof attributes[key] === "object") {
++									entityElement.setAttribute(key, attributes[key].value);
++								} else {
++									entityElement.setAttribute(key, attributes[key]);
++								}
+               }
+               editor.insertHtml(entityElement.getOuterHtml());
              }
- 
-             editor.insertHtml(entityElement.getOuterHtml());
