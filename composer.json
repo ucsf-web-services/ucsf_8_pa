@@ -320,14 +320,12 @@
     "remove-core-gzip": "find ./docroot/core -name '*.gz' | xargs rm -f",
     "restore-htaccess" : "cp -a patches/htaccess_rewrite_rules.txt docroot/.htaccess",
     "post-install-cmd": [
-      "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
       "@renamelibraries",
       "@remove-git-submodules",
       "@remove-core-gzip",
       "@restore-htaccess"
     ],
     "post-update-cmd": [
-      "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
       "@renamelibraries",
       "@remove-git-submodules",
       "@remove-core-gzip",

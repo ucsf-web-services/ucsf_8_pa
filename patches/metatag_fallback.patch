@@ -69,7 +69,7 @@ index 18cac19..168829c 100644
 +++ b/src/MetatagManager.php
 @@ -591,8 +591,25 @@ class MetatagManager implements MetatagManagerInterface {
            }
- 
+
            foreach ($output as $index => $element) {
 -            // Add index to tag name as suffix to avoid having same key.
 -            $index_tag_name = $tag->multiple() ? $tag_name . '_' . $index : $tag_name;
@@ -144,7 +144,7 @@ index da00613..3652e1c 100644
 @@ -346,10 +346,14 @@ abstract class MetaNameBase extends PluginBase {
        $value = PlainTextOutput::renderFromHtml($this->value);
      }
- 
+
 -    $values = $this->multiple() ? explode(',', $value) : [$value];
 +    $values = $this->multiple() ? explode('||', $value) : [$value];
      $elements = [];
