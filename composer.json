@@ -46,9 +46,14 @@
       "type": "vcs",
       "url": "https://github.com/ucsf-web-services/sitefarm_seed"
     },
-    "1": {
+    "assets": {
       "type": "composer",
-      "url": "https://asset-packagist.org"
+      "url": "https://asset-packagist.org",
+      "options": {
+        "ssl": {
+          "verify_peer": false
+        }
+      }
     }
   },
   "require": {
@@ -144,7 +149,6 @@
     "drupal/applenews": "1.x-dev@dev",
     "drupal/better_normalizers": "^1.0",
     "drupal/video_embed_media": "^2.0",
-    "sebastian/version": "^2.0",
     "drupal-pattern-lab/unified-twig-extensions": "^0.1.0",
     "drupal/ldap": "^3.0@beta",
     "drupal/entity_clone": "^1.0@beta",
@@ -204,10 +208,10 @@
     "drupal/iframe": "^2.0",
     "drupal/config_filter": "^1.8",
     "typhonius/acquia-php-sdk-v2": "^2.0",
-    "drupal/upgrade_status": "^3.11"
-  },
-  "require-dev": {
-    "drupal/devel": "2.0"
+    "drupal/upgrade_status": "^3.11",
+    "drupal/devel": "2.0",
+    "palantirnet/drupal-rector": "^0.11.3",
+    "phpunit/phpunit": "^7.5"
   },
   "extra": {
     "installer-types": [
