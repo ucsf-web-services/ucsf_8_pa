@@ -61,7 +61,7 @@ class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormali
 
     $metadata = new Metadata();
     if ($data instanceof Node) {
-      $info = system_get_info('module', 'applenews');
+      $info = \Drupal::service('extension.list.module')->getExtensionInfo('applenews');
       $version = $info['core'] ?? '';
       if (!empty($info['version'])) {
         $version .= '-' . $info['version'];

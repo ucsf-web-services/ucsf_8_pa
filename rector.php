@@ -5,6 +5,7 @@ declare(strict_types=1);
 use DrupalFinder\DrupalFinder;
 use Rector\Core\Configuration\Option;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Rector\Core\ValueObject\PhpVersion;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     // @todo find out how to only load the relevant rector rules.
@@ -29,6 +30,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
     $parameters->set(Option::IMPORT_SHORT_CLASSES, false);
     $parameters->set(Option::IMPORT_DOC_BLOCKS, false);
+
+    // is your PHP version different from the one your refactor to? [default: your PHP version], uses PHP_VERSION_ID format
+    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_74);
 
     $parameters->set('drupal_rector_notices_as_comments', true);
 };
