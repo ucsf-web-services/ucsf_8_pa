@@ -262,9 +262,8 @@ $databases['default']['default'] = array (
  *   );
  * @endcode
  */
-$config_directories = array(
- 'sync' => dirname(DRUPAL_ROOT) . '/config/' . basename($site_path)
-);
+ 
+$settings['config_sync_directory'] = dirname(DRUPAL_ROOT) . '/config/' . basename($site_path) . '/sync'; 
 
 /**
  * Settings:
@@ -291,7 +290,7 @@ $config_directories = array(
  *   service requires the install profile use the 'install_profile' container
  *   parameter. Functional code can use \Drupal::installProfile().
  */
-$settings['install_profile'] = 'sitefarm_seed';
+#  $settings['install_profile'] = 'sitefarm_seed';
 
 /**
  * Salt for one-time login links, cancel links, form tokens, etc.
@@ -812,8 +811,8 @@ if (file_exists('/var/www/site-php')) {
   require '/var/www/site-php/ucsfpa1/ucsfpa8-settings.inc';
 }
 
-$config_directories['vcs'] = $app_root . '/../config/' . basename($site_path) . '/sync';
-$config_directories['sync'] = $app_root . '/sites/default/files/sync';
+#$config_directories['vcs'] = $app_root . '/../config/' . basename($site_path) . '/sync';
+#$config_directories['sync'] = $app_root . '/sites/default/files/sync';
 
 
 /**
