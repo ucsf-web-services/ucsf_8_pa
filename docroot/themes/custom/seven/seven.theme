@@ -204,7 +204,7 @@ function seven_editor_link_dialog_form_alter(&$form, FormStateInterface $form_st
 /**
  * Hook into the entity_embed_dialog
  * Allow additional styles over left, right, center.
- * Allow the caption to support the WYSIWYG
+ * Add checkbox for whether to use a caption.
  * Filter the Image Style options based on the Image Styles Options patch.
  * https://www.drupal.org/files/issues/2018-09-19/2061377-328.patch
  * @param $form
@@ -243,13 +243,38 @@ function seven_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_s
 
   //change the caption to CkEditor, remove all options but Simple HTML and Plain Text.
   if (isset($form['attributes']['data-caption'])) {
-    $form['attributes']['data-caption']['#type'] = 'text_format';
-    $form['attributes']['data-caption']['#allowed_formats'] = ['super_basic_html' => 'super_basic_html','plain_text'=>'plain_text'];
-    $form['attributes']['data-caption']['#format'] = 'super_basic_html';
+    $form['attributes']['data-caption']['#type'] = 'hidden';
   }
 
+  $form['show_caption'] = [
+    '#type' => 'checkbox',
+    '#title' => 'Show a caption',
+    '#description' => 'Warning, unchecking this box will delete any current caption.',
+    '#default_value' => !!$form['attributes']['data-caption']['#default_value'],
+  ];
 
-
+  array_unshift($form['#submit'], 'seven_form_entity_embed_dialog_submit');
 }
 
+function seven_form_entity_embed_dialog_submit(&$form, FormStateInterface $form_state) {
+  // If caption should not be visible.
+  $show_caption = $form_state->getValue('show_caption');
+  if (!$show_caption) {
+    // Clear previous caption.
+    $form_state->setValue(['attributes', 'data-caption'], '');
+    return;
+  }
 
+  // // Store the value of actual caption.
+  $current_caption = $form_state->getValue(['attributes', 'data-caption']);
+  // Strip all html off.
+  $caption_no_html = strip_tags(html_entity_decode($current_caption));
+  // Remove any leftover whitespace or non breaking space "%C2%A0".
+  $caption_trimmed = trim($caption_no_html, " \t\n\r\0\x0B\xc2\xa0");
+
+  // If caption should be visible, but there is no text, add placeholder text.
+  if (empty($caption_trimmed)) {
+    $form_state->setValue(['attributes', 'data-caption'], 'Add a caption here.');
+  }
+
+}
