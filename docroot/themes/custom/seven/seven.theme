@@ -241,17 +241,17 @@ function seven_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_s
     $form['attributes']['data-align']['#type'] = 'select';
   }
 
-  //change the caption to CkEditor, remove all options but Simple HTML and Plain Text.
+  // Hide caption textarea, add checkbox for adding caption through WYSIWYG.
   if (isset($form['attributes']['data-caption'])) {
     $form['attributes']['data-caption']['#type'] = 'hidden';
-  }
 
-  $form['show_caption'] = [
-    '#type' => 'checkbox',
-    '#title' => 'Show a caption',
-    '#description' => 'Warning, unchecking this box will delete any current caption.',
-    '#default_value' => !!$form['attributes']['data-caption']['#default_value'],
-  ];
+    $form['show_caption'] = [
+      '#type' => 'checkbox',
+      '#title' => 'Show a caption',
+      '#description' => 'Warning, unchecking this box will delete any current caption.',
+      '#default_value' => !!$form['attributes']['data-caption']['#default_value'],
+    ];
+  }
 
   array_unshift($form['#submit'], 'seven_form_entity_embed_dialog_submit');
 }
