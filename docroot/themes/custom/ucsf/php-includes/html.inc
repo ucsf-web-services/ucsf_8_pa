@@ -4,7 +4,7 @@ function ucsf_preprocess_html(&$variables) {
 
   // Add path alias as body class.
   $current_path = \Drupal::service('path.current')->getPath();
-  $path_alias = \Drupal::service('path.alias_manager')
+  $path_alias = \Drupal::service('path_alias.manager')
     ->getAliasByPath($current_path);
   $path_alias = ltrim($path_alias, '/');
 
