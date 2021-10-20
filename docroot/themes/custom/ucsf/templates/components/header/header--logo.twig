@@ -1,10 +1,11 @@
 {% set logo = logo ?: directory ~ '/logo.svg' %}
 {% set link = link ?: path('<front>') %}
-
+{% set width = width ?: 83 %}
+{% set height = height ?: 41 %}
 <figure class="header--logo logo">
   <a class="logo__link" href="{{ link }}" title="{{ 'Home'|t }}" rel="home">
     <picture class="logo__image">
-      <img class="logo__img" src="/{{ logo }}" alt="{{ 'Home'|t }}" height="41" width="83">
+      <img class="logo__img" src="/{{ logo }}" alt="{{ 'Home'|t }}" height="{{ height }}" width="{{ width }}">
     </picture>
   </a>
 </figure>
