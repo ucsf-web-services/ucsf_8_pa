@@ -42,10 +42,6 @@
       "type": "composer",
       "url": "https://packages.drupal.org/8"
     },
-    "ucdavis": {
-      "type": "vcs",
-      "url": "https://github.com/ucsf-web-services/sitefarm_seed"
-    },
     "assets": {
       "type": "composer",
       "url": "https://asset-packagist.org",
@@ -61,7 +57,6 @@
     "wikimedia/composer-merge-plugin": "^2.0.1",
     "cweagans/composer-patches": "^1.7.1",
     "drupal/core": "~8.9.18",
-    "ucdavis/sitefarm_seed": "dev-ucsf",
     "drupal/acquia_connector": "^3.0",
     "drupal/acquia_contenthub": "^1.25",
     "drupal/address": "^1.9",
@@ -137,7 +132,7 @@
     "npm-asset/jquery.easing": "^1.4",
     "npm-asset/slick-carousel": "^1.8",
     "drupal/applenews": "1.x-dev@dev",
-    "drupal/better_normalizers": "^1.0",
+    "drupal/better_normalizers": "^1.0-beta4",
     "drupal/video_embed_media": "^2.0",
     "drupal/entity_clone": "^1.0@beta",
     "drupal/allowed_formats": "^1.1",
@@ -200,7 +195,9 @@
     "palantirnet/drupal-rector": "^0.11.3",
     "phpunit/phpunit": "^7.5",
     "drupal/photoswipe": "^3.0",
-    "drupal/memcache": "^2.3"
+    "drupal/memcache": "^2.3",
+    "drupal/honeypot": "^2.0",
+    "drupal/masquerade": "^2.0@beta"
   },
   "extra": {
     "installer-types": [
@@ -238,25 +235,7 @@
         "type:drupal-library"
       ]
     },
-    "merge-plugin": {
-      "include": [
-        "docroot/profiles/contrib/sitefarm_seed/composer.json"
-      ],
-      "replace": false,
-      "merge-extra": true,
-      "merge-extra-deep": false,
-      "merge-scripts": true
-    },
     "enable-patching": true,
-    "patches-ignore": {
-      "ucdavis/sitefarm_seed": {
-        "drupal/core": {
-          "datetime-range views enhancements": "https://www.drupal.org/files/issues/the_views_integration-2786577-202.patch",
-          "multiple image upload dimension fix": "https://www.drupal.org/files/issues/2018-04-28/2644468-91.patch",
-          "Profile Inheritance": "https://www.drupal.org/files/issues/2018-10-23/1356276-549-8.6.x.patch"
-        }
-      }
-    },
     "patches": {
       "drupal/core": {
         "2061377 - Allow image style to be selected in Text Editor's image dialog" : "https://www.drupal.org/files/issues/2020-01-28/2061377-356.patch",
