@@ -1,0 +1,141 @@
+diff --git a/src/Plugin/Block/TweetsBlock.php b/src/Plugin/Block/TweetsBlock.php
+index a88d5fa..f0c4008 100644
+--- a/src/Plugin/Block/TweetsBlock.php
++++ b/src/Plugin/Block/TweetsBlock.php
+@@ -16,7 +16,7 @@ use Drupal\twitter_tweets\twitter_api\TwitterAPIExchange;
+   *   admin_label = @Translation("Twitter Tweets")
+   * )
+   */
+-class TweetsBlock extends BlockBase implements ContainerFactoryPluginInterface {  
++class TweetsBlock extends BlockBase implements ContainerFactoryPluginInterface {
+ 
+  /**
+    * Builds and returns the renderable array for this block plugin.
+@@ -27,7 +27,7 @@ class TweetsBlock extends BlockBase implements ContainerFactoryPluginInterface {
+    * @see \Drupal\block\BlockViewBuilder
+    */
+   protected $configFactory;
+-  
++
+   /**
+    * @param array $configuration.
+    * @param string $plugin_id.
+@@ -39,27 +39,27 @@ class TweetsBlock extends BlockBase implements ContainerFactoryPluginInterface {
+     parent::__construct($configuration, $plugin_id, $plugin_definition);
+     $this->configFactory = $config_factory;
+   }
+-  
++
+   /**
+    * @param array $configuration.
+    * @param string $plugin_id.
+    * @param mixed $plugin_definition.
+    */
+-   
++
+   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+     return new static(
+         $configuration,
+         $plugin_id,
+         $plugin_definition,
+-        $container->get('config.factory') 
++        $container->get('config.factory')
+       );
+     }
+-   
++
+   /**
+    * Accessing Twitter Configuration Settings Fields to Fetch Tweets
+    *
+    */
+-   
++
+   public function build() {
+     $config = $this->configFactory->get('twitter_tweets.credentials');
+     $settings = [];
+@@ -70,15 +70,76 @@ class TweetsBlock extends BlockBase implements ContainerFactoryPluginInterface {
+     $screen_name = $config->get('screen_name');
+     $tweet_count = $config->get('tweet_count');
+     $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+-    $getfield = '?screen_name='.$screen_name.'&count=' . $tweet_count;
++    $getfield = '?screen_name='.$screen_name.'&count=' . $tweet_count . '&tweet_mode=extended';
+     $requestMethod = 'GET';
+     $twitter = new TwitterAPIExchange($settings);
+     $tweets = $twitter->setGetfield($getfield) ->buildOauth($url, $requestMethod)->performRequest();
+ 
+     $tweets = json_decode($tweets);
++
++    $reg_Url = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
++    //$reg_Url = "/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/";
++    //http://twitter.com/' + username
++    $reg_User = "/([@]+[A-Za-z0-9-_]+)/i";
++    // http://search.twitter.com/search?q= + tag
++    $reg_Hash = "/[#]+[A-Za-z0-9-_]+/i";
++
+     foreach($tweets as $tweet) {
+       // print_r($tweet);
+-      $tweet->text = check_markup($tweet->text, 'full_html');
++      // $tweet->text = check_markup($tweet->text, 'full_html');
++      $tweet->full_text = preg_replace('~[\r\n]~', ' ', $tweet->full_text);
++      if(isset($tweet->retweeted_status) && $tweet->retweeted_status!=null) {
++        $retweet_urls = $tweet->retweeted_status->entities->urls;
++        foreach ($retweet_urls as $retweet_url) {
++          $pattern = $retweet_url->url;
++          $pattern = preg_replace("/https:\/\/t\.co\//", "", $pattern);
++          $pattern = "/https:\/\/t\.co\/$pattern/i";
++          if (preg_match($pattern, $tweet->retweeted_status->full_text, $url)) {
++            $tweet->retweeted_status->full_text = preg_replace($pattern, "<a href=\"{$url[0]}\">{$url[0]}</a>", $tweet->retweeted_status->full_text);
++          }
++        }
++        if (isset($tweet->retweeted_status->entities->media)) {
++          $retweet_media = $tweet->retweeted_status->entities->media;
++          if ($retweet_media) {
++            $pattern = $retweet_media[0]->url;
++            $pattern = preg_replace("/https:\/\/t\.co\//", "", $pattern);
++            $pattern = "/https:\/\/t\.co\/$pattern/i";
++            if (preg_match($pattern, $tweet->retweeted_status->full_text, $url)) {
++              $tweet->retweeted_status->full_text = preg_replace($pattern, "<a href=\"{$url[0]}\">{$url[0]}</a>", $tweet->retweeted_status->full_text);
++            }
++          }
++        }
++      }
++      if(preg_match($reg_Url, $tweet->full_text, $url)) {
++        $tweet->full_text =  preg_replace($reg_Url, "<a href=\"{$url[0]}\">{$url[0]}</a>", $tweet->full_text);
++      }
++
++      if(isset($tweet->retweeted_status) &&  $tweet->retweeted_status!=null){
++        if(preg_match_all($reg_User, $tweet->retweeted_status->full_text, $url)) {
++          foreach($url[0] as $user){
++            $tweet->retweeted_status->full_text =  preg_replace("/$user /", "<a href=\"http://twitter.com/{$user}\">{$user} </a>", $tweet->retweeted_status->full_text);
++          }
++        }
++      }
++      if(preg_match_all($reg_User, $tweet->full_text, $url)) {
++        foreach($url[0] as $user){
++          $tweet->full_text =  preg_replace("/$user /", "<a href=\"http://twitter.com/{$user}\">{$user} </a>", $tweet->full_text);
++        }
++      }
++      if(isset($tweet->retweeted_status) &&  $tweet->retweeted_status!=null){
++        if(preg_match_all($reg_Hash, $tweet->retweeted_status->full_text, $url)) {
++           foreach($url[0] as $hash){
++             $tag = substr($hash,1);
++             $tweet->retweeted_status->full_text =  preg_replace("/$hash /", "<a href=\"https://twitter.com/hashtag/{$tag}?src=hash\">{$hash} </a>", $tweet->retweeted_status->full_text);
++           }
++        }
++      }
++      if(preg_match_all($reg_Hash, $tweet->full_text, $url)) {
++        foreach($url[0] as $hash){
++          $tag = substr($hash,1);
++          $tweet->full_text =  preg_replace("/$hash /", "<a href=\"https://twitter.com/hashtag/{$tag}?src=hash\">{$hash} </a>", $tweet->full_text);
++        }
++      }
+       $cleanTweets[] = $tweet;
+     }
+ 
+@@ -86,5 +147,5 @@ class TweetsBlock extends BlockBase implements ContainerFactoryPluginInterface {
+     $tweet_template = ['#theme' => 'twitter_tweets_tweet_listing', '#params' => $params];
+     return $tweet_template;
+   }
+-  
++
+ }
