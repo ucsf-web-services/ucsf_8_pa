@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * Youtube Gallery theme implementation to display a list of youtube channel video listing.
+ *
+ * Available variables:
+ * - youtube_content: An array returns values of youtube data.
+ *
+ */
+#}
+{% set classes = ['youtube-list__videos'] %}
+{{ attach_library('ucsf/slick_youtube') }}
+<ul{{attributes.addClass(classes)}}>
+  {% for key, youtube in youtube_content %}
+    <li class="video-item__youtube">
+      <a class="video_preview" href="{{ youtube["url"] }}" target="_blank">
+        <img src={{ youtube["thumbnail"] }} alt="" width="263" height="148"/>
+        <h3 class="video_preview__title">{{ youtube["video_title"] }}</h3>
+      </a>
+    </li>
+  {% endfor %}
+</ul>
