@@ -3,7 +3,7 @@ namespace Drupal\conditional_styles\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Drupal\Core\Url;
 //use Drupal\user\Entity\User;
@@ -17,9 +17,9 @@ class ConditionalStylesSubscriber implements EventSubscriberInterface {
 
   /**
   * Redirect pattern based url
-  * @param GetResponseEvent $event
+  * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
   */
-  public function customRedirection(GetResponseEvent $event) {
+  public function customRedirection(RequestEvent $event) {
 
     $node = \Drupal::routeMatch()->getParameter('node');
     $userRoles = \Drupal::currentUser()->getRoles();
@@ -61,7 +61,7 @@ class ConditionalStylesSubscriber implements EventSubscriberInterface {
   * @return array Event names to listen to (key) and methods to call (value)
   */
   public static function getSubscribedEvents() {
-    $events[KernelEvents::REQUEST][] = array('customRedirection');
+    $events[KernelEvents::REQUEST][] = ['customRedirection'];
     return $events;
   }
 
