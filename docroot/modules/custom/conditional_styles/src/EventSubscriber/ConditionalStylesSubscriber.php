@@ -17,7 +17,7 @@ class ConditionalStylesSubscriber implements EventSubscriberInterface {
 
   /**
   * Redirect pattern based url
-  * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
+  * @param \Symfony\Component\HttpKernel\Event\Re t $event
   */
   public function customRedirection(RequestEvent $event) {
 
