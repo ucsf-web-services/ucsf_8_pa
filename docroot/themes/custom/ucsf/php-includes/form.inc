@@ -3,13 +3,18 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Pager\PagerManagerInterface;
 
 function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-
   if ($form['#id'] == 'views-exposed-form-news-filter-page-1') {
-
     // Set globals.
     global $pager_total_items;
+    // https://www.drupal.org/node/2779457
+    /** @var \Drupal\Core\Pager\Pager $pager */
+    $pager = \Drupal::service('pager.manager')->getPager();
+    if ($pager) {
+      $total_items = $pager->getTotalItems();
+    }
 
     // Attach library.
     $form['#attached']['library'][] = 'ucsf/search_news';
@@ -47,7 +52,7 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     ];
 
     // Top Container - Result Count.
-    $result_count = $pager_total_items[0] ? Html::escape($pager_total_items[0]) : '0';
+    $result_count = $total_items ? Html::escape($total_items) : '0';
     $form['top']['count'] = [
       '#type' => 'container',
       'count_markup' => ['#markup' => $result_count . ' Results <span class="desktop-results">in the UCSF News Center<span>'],
