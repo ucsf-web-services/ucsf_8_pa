@@ -8,7 +8,6 @@ use Drupal\Core\Pager\PagerManagerInterface;
 function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form['#id'] == 'views-exposed-form-news-filter-page-1') {
     // Set globals.
-    global $pager_total_items;
     // https://www.drupal.org/node/2779457
     /** @var \Drupal\Core\Pager\Pager $pager */
     $pager = \Drupal::service('pager.manager')->getPager();
@@ -52,16 +51,18 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
     ];
 
     // Top Container - Result Count.
-    $result_count = $total_items ? Html::escape($total_items) : '0';
-    $form['top']['count'] = [
-      '#type' => 'container',
-      'count_markup' => ['#markup' => $result_count . ' Results <span class="desktop-results">in the UCSF News Center<span>'],
-      '#attributes' => [
-        'class' => [
-          'count'
+    if ($pager) {
+      $result_count = $total_items ? Html::escape($total_items) : '0';
+      $form['top']['count'] = [
+        '#type' => 'container',
+        'count_markup' => ['#markup' => $result_count . ' Results <span class="desktop-results">in the UCSF News Center<span>'],
+        '#attributes' => [
+          'class' => [
+            'count'
+          ]
         ]
-      ]
-    ];
+      ];
+    }
 
     // Create dropdown container.
     $form['dropdown'] = [
