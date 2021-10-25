@@ -606,7 +606,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
                   if (@$mimetype[0] == 'image' &&
                     in_array(@$mimetype[1], ['jpeg', 'gif', 'png'])
                   ) {
-                    $component = new Photo($file->url());
+                    $component = new Photo($file->createFileUrl());
                     if ($element->hasAttribute('data-caption')) {
                       $caption = $this->textValue($element->getAttribute('data-caption'));
                       if ($caption) {
