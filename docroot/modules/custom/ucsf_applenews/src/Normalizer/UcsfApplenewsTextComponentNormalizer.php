@@ -200,7 +200,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             $media = $video_paragraph->get('field_gallery_image')->entity;
             /** @var \Drupal\file\Entity\File $file */
             $file = $media->get('field_media_image')->entity;
-            $component = new GalleryItem($file->url());
+            $component = new GalleryItem($file->createFileUrl());
             /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $caption */
             if ($caption = $video_paragraph->get('field_gallery_caption')->get(0)) {
               /** @var string $caption */
