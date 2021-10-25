@@ -44,7 +44,7 @@ class UcsfApplenewsImageComponentNormalizer extends ApplenewsImageComponentNorma
     }
     /** @var \Drupal\file\Entity\File $file */
     $file = $media->get('field_media_image')->entity;
-    $component = new Photo($file->url());
+    $component = new Photo($file->createFileUrl());
 
     $field_name = $data['component_data']['caption']['field_name'];
     $context['field_property'] = $data['component_data']['caption']['field_property'];
