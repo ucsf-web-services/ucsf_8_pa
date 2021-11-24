@@ -1,0 +1,42 @@
+From a1e8d42064b3c732232b456c365b4d81bc8d74ec Mon Sep 17 00:00:00 2001
+From: florenttorregrosa <florenttorregrosa@2388214.no-reply.drupal.org>
+Date: Thu, 2 Sep 2021 10:47:49 +0200
+Subject: [PATCH] Issue #3231016: Access level must be protected
+
+---
+ src/Rector/Deprecation/AssertNoUniqueTextRector.php          | 5 -----
+ src/Rector/Deprecation/UiHelperTraitDrupalPostFormRector.php | 5 -----
+ 2 files changed, 10 deletions(-)
+
+diff --git a/src/Rector/Deprecation/AssertNoUniqueTextRector.php b/src/Rector/Deprecation/AssertNoUniqueTextRector.php
+index b9b46b6..2910e6a 100644
+--- a/src/Rector/Deprecation/AssertNoUniqueTextRector.php
++++ b/src/Rector/Deprecation/AssertNoUniqueTextRector.php
+@@ -17,11 +17,6 @@ final class AssertNoUniqueTextRector extends AbstractRector
+ 
+     use GetDeclaringSourceTrait;
+ 
+-    /**
+-     * @todo remove when property is no longer private in AbstractRector.
+-     */
+-    private $nodesToAddCollector;
+-
+     public function __construct(
+         NodesToAddCollector $nodesToAddCollector
+     ) {
+diff --git a/src/Rector/Deprecation/UiHelperTraitDrupalPostFormRector.php b/src/Rector/Deprecation/UiHelperTraitDrupalPostFormRector.php
+index d0ff0a1..b338953 100644
+--- a/src/Rector/Deprecation/UiHelperTraitDrupalPostFormRector.php
++++ b/src/Rector/Deprecation/UiHelperTraitDrupalPostFormRector.php
+@@ -12,11 +12,6 @@
+ final class UiHelperTraitDrupalPostFormRector extends AbstractRector
+ {
+ 
+-    /**
+-     * @todo remove when property is no longer private in AbstractRector.
+-     */
+-    private $nodesToAddCollector;
+-
+     public function __construct(
+         NodesToAddCollector $nodesToAddCollector
+     ) {

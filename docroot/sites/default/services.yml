@@ -178,9 +178,9 @@ services:
     parent: default_plugin_manager
   serializer.applenews.content_entity:
     class: Drupal\ucsf_applenews\Normalizer\UcsfApplenewsContentEntityNormalizer
-    arguments: ['@entity_type.manager']
+    arguments: ['@entity_type.manager', '@language_manager', '@applenews.template_repository', '@event_dispatcher']
     tags:
-      - { name: normalizer, priority: 1 }
+      - { name: normalizer, priority: 10 }
   serializer.applenews.text.component:
     class: \Drupal\ucsf_applenews\Normalizer\UcsfApplenewsTextComponentNormalizer
     arguments: ['@plugin.manager.applenews_component_type']

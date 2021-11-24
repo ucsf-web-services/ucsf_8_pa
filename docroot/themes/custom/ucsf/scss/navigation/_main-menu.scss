@@ -137,6 +137,34 @@ $label-width: 48px;
       }
     }
 
+    a[href*="http"] {
+      &::after {
+      content: '';
+      display: block;
+      width: 100%;
+      position: absolute;
+      height: 32px;
+      // padding-right: 20px;
+      // background: url("/themes/custom/ucsf/assets/images/external-link.svg") right center no-repeat transparent;
+      top: 20%;
+      background-color: transparent;
+      background-position-x: right;
+      background-position-y: center;
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+      background-image: url("/themes/custom/ucsf/assets/images/external-link.svg");
+      background-size: auto;
+      background-origin: padding-box;
+      background-clip: border-box;
+
+      }
+
+
+      &:hover::after {
+        background-image: url("/themes/custom/ucsf/assets/images/external-link-hover.svg");
+      }
+    }
+
     .menu-item--expanded {
       // Icon angle right
       .fa-angle-right {
@@ -171,6 +199,8 @@ $label-width: 48px;
       right: 0;
       top: 20%;
     }
+
+
   }
 
   // left and right column labels

@@ -90,17 +90,6 @@
  */
 $databases = array();
 
-$databases['default']['default'] = array (
-  'database' => 'ucsfpa8',
-  'username' => 'root',
-  'password' => 'root',
-  'host' => 'localhost',
-  'port' => '3306',
-  'driver' => 'mysql',
-  'prefix' => '',
-  'collation' => 'utf8mb4_general_ci',
-);
-
 /**
  * Customizing database settings.
  *
@@ -262,9 +251,8 @@ $databases['default']['default'] = array (
  *   );
  * @endcode
  */
-$config_directories = array(
- 'sync' => dirname(DRUPAL_ROOT) . '/config/' . basename($site_path)
-);
+ 
+$settings['config_sync_directory'] = dirname(DRUPAL_ROOT) . '/config/' . basename($site_path) . '/sync'; 
 
 /**
  * Settings:
@@ -291,7 +279,7 @@ $config_directories = array(
  *   service requires the install profile use the 'install_profile' container
  *   parameter. Functional code can use \Drupal::installProfile().
  */
-$settings['install_profile'] = 'sitefarm_seed';
+#  $settings['install_profile'] = 'sitefarm_seed';
 
 /**
  * Salt for one-time login links, cancel links, form tokens, etc.
@@ -810,11 +798,11 @@ $config['image.settings']['allow_insecure_derivatives'] = TRUE;
  */
 if (file_exists('/var/www/site-php')) {
   require '/var/www/site-php/ucsfpa1/ucsfpa8-settings.inc';
+  // Memcached settings for Acquia Hosting
+  if (file_exists(DRUPAL_ROOT . '/sites/default/cloud-memcache-d8.php')) {
+    require(DRUPAL_ROOT . '/sites/default/cloud-memcache-d8.php');
+ }
 }
-
-$config_directories['vcs'] = $app_root . '/../config/' . basename($site_path) . '/sync';
-$config_directories['sync'] = $app_root . '/sites/default/files/sync';
-
 
 /**
  * Load local development override configuration, if available.

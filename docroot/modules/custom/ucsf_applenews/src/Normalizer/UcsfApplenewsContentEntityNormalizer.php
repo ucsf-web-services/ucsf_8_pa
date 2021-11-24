@@ -54,14 +54,14 @@ class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormali
 
     if (!empty($media)) {
       $file = $media->get('field_media_image')->entity;
-      $thumbnail = $file->url();
+      $thumbnail = $file->createFileUrl();
     } else {
       $thumbnail = 'https://www.ucsf.edu/sites/default/files/2019-04/ucsf_tapestry_portal_full_1230.jpg';
     }
 
     $metadata = new Metadata();
     if ($data instanceof Node) {
-      $info = system_get_info('module', 'applenews');
+      $info = \Drupal::service('extension.list.module')->getExtensionInfo('applenews');
       $version = $info['core'] ?? '';
       if (!empty($info['version'])) {
         $version .= '-' . $info['version'];

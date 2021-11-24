@@ -1293,15 +1293,26 @@ a.icon-transit {
 .ui-accordion.ui-helper-reset * {
   line-height: 32px; }
 
-.ui-accordion-content {
+.ui-accordion .ui-accordion-content {
   padding: 30px 20px;
   height: auto !important;
   border-bottom: 1px solid #d1d3d3; }
-  .vertical-tab-alt .ui-accordion-content {
+  .vertical-tab-alt .ui-accordion .ui-accordion-content {
     background: #f2f4f6; }
-  .ui-accordion-content .field-tab-content > :first-child {
+  .ui-accordion .ui-accordion-content .field-tab-content > :first-child {
     margin-top: 0;
     padding-top: 0; }
+
+.ui-tabs .ui-tabs-nav li {
+  white-space: normal;
+  display: block; }
+
+.ui-tabs .ui-tabs-nav .ui-tabs-tab {
+  float: none; }
+
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+  float: none;
+  padding: 16px 32px; }
 
 .element-fade {
   opacity: 0; }
@@ -3786,6 +3797,24 @@ figure figure[class="image"] {
             animation: none; }
     .main-submenu--1 .main-submenu__menu .menu-item {
       margin-left: 80px; }
+  .main-submenu__menu a[href*="http"]::after {
+    content: '';
+    display: block;
+    width: 100%;
+    position: absolute;
+    height: 32px;
+    top: 20%;
+    background-color: transparent;
+    background-position-x: right;
+    background-position-y: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-image: url("/themes/custom/ucsf/assets/images/external-link.svg");
+    background-size: auto;
+    background-origin: padding-box;
+    background-clip: border-box; }
+  .main-submenu__menu a[href*="http"]:hover::after {
+    background-image: url("/themes/custom/ucsf/assets/images/external-link-hover.svg"); }
   .main-submenu__menu .menu-item--expanded .fa-angle-right {
     display: inline-block;
     line-height: 32px;
@@ -10910,6 +10939,8 @@ a[href*="http"] .remove-ext-url .article-header__date {
       -webkit-columns: 2;
          -moz-columns: 2;
               columns: 2; } }
+  .sitemap-main .menu-item span:first-of-type {
+    display: none; }
 
 .page-node-type-map .infobox, .page-node-type-map .poi-info-window .view-link a, .page-node-type-map .poi-info-window .address-line {
   font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
@@ -13529,7 +13560,8 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
     body.page-node-type-magazine-article #block-ucsf-content .paragraph-text-block,
     body.page-node-type-magazine-article #block-ucsf-mag-content .page_narrow,
     body.page-node-type-magazine-article #block-ucsf-mag-content .paragraph-text-block {
-      grid-column: 2 / -2; } }
+      grid-column: 2 / -2;
+      width: 100%; } }
   @media (min-width: 1280px) {
     body.page-node-type-magazine-article #block-ucsf-content .page_narrow,
     body.page-node-type-magazine-article #block-ucsf-content .paragraph-text-block,
