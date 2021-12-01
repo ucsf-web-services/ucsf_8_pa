@@ -442,7 +442,9 @@ a.button-reverse:visited,
   border-top: 1px solid #ddd;
   margin-bottom: 40px; }
   .cta--list a,
-  .ext--list a {
+  .cta--list button,
+  .ext--list a,
+  .ext--list button {
     display: block;
     color: #0071ad;
     text-decoration: none;
@@ -458,8 +460,12 @@ a.button-reverse:visited,
     transition: 0.3s cubic-bezier(0.33, 0.66, 0.66, 1) background-color, 0.3s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
     background-position: 97% center; }
     .cta--list a:hover, .cta--list a:focus,
+    .cta--list button:hover,
+    .cta--list button:focus,
     .ext--list a:hover,
-    .ext--list a:focus {
+    .ext--list a:focus,
+    .ext--list button:hover,
+    .ext--list button:focus {
       background-repeat: no-repeat;
       background-position: 98% center;
       background-color: #e8f4fa; }
@@ -11091,20 +11097,28 @@ a[href*="http"] .remove-ext-url .article-header__date {
         text-transform: none;
         font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
         font-size: 18px; } }
-  .page-node-type-map #locations-list a {
+  .page-node-type-map #locations-list button {
+    outline: none;
+    border-left: none;
+    border-right: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     color: #052049;
+    text-align: left;
+    width: 100%;
     background-image: none;
     border-bottom: 1px solid #052049;
     cursor: pointer; }
-    .page-node-type-map #locations-list a:first-of-type {
+    .page-node-type-map #locations-list button:first-of-type {
       border-top: 1px solid #052049; }
     @media (min-width: 769px) {
-      .page-node-type-map #locations-list a {
+      .page-node-type-map #locations-list button {
         background-image: url("/themes/custom/ucsf/assets/images/cta-arrow-navy.svg");
         border-bottom: 1px solid #ddd;
         padding-right: 28px; }
-        .page-node-type-map #locations-list a:first-of-type {
+        .page-node-type-map #locations-list button:first-of-type {
           border-top: 1px solid #ddd; } }
 
 .page-node-type-map .locations-label {
@@ -13624,7 +13638,7 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
     body.page-node-type-magazine-article #block-ucsf-mag-content .page_narrow,
     body.page-node-type-magazine-article #block-ucsf-mag-content .paragraph-text-block {
       grid-column: 2 / -2;
-      margin: initial; } }
+      width: 100%; } }
   @media (min-width: 1280px) {
     body.page-node-type-magazine-article #block-ucsf-content .page_narrow,
     body.page-node-type-magazine-article #block-ucsf-content .paragraph-text-block,
