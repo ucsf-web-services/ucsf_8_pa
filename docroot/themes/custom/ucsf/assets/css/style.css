@@ -8847,10 +8847,17 @@ body.loading .quicklinks {
     margin: 0; }
   .home-banner-support__links a {
     color: #0071ad;
-    text-decoration: underline;
-    text-underline-position: under; }
+    background-color: transparent;
+    text-decoration: none;
+    -webkit-transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
+    transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
+    border-bottom: 1px solid #0071ad;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    word-wrap: break-word; }
     .home-banner-support__links a:hover {
-      text-decoration: underline; }
+      background-color: #e8f4fa;
+      border-bottom: 1px solid #e8f4fa; }
   @media (min-width: 769px) {
     .home-banner-support__links {
       padding: 0 40px; }
