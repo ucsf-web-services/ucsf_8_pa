@@ -238,6 +238,26 @@
   }
 }
 
+@mixin link-rollover($color: $c-blue-link, $hover-background: $c-blue-link-rollover, $hover-color: false) {
+  color: $color;
+  background-color: transparent;
+  text-decoration: none;
+  transition: background-color 0.15s cubic-bezier(0.33,0.66,0.66,1);
+  border-bottom: 1px solid $color;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  word-wrap: break-word;
+
+  &:hover {
+    background-color: $hover-background;
+    border-bottom: 1px solid $hover-background;
+
+    @if $hover-color {
+      color: $hover-color;
+    }
+  }
+}
+
 @mixin tables {
   .table-wrapper-responsive {
     overflow: scroll;
