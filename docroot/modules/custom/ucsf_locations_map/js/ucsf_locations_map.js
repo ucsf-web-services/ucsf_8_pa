@@ -55,7 +55,7 @@
             }
             // Generate a list item for location type,
             // inside the list item display building's type (example: campus, main building...).
-            locations[locationType].list.push("<li><a id='loc-" + index + "'>" + location.field_title + "</a></li>");
+            locations[locationType].list.push("<li><button id='loc-" + index + "'>" + location.field_title + "</button></li>");
             locations[locationType].indexes.push(index);
             var icon = '';
 
@@ -122,7 +122,7 @@
           var markup = '';
           // Checkbox to show / hide the list of locations by type.
           $.each(locations, function(type, item) {
-            markup += '<div><input id="' + type + '" type="checkbox" checked="checked" /><label class="locations-label" for="' + type + '"><h3>' + type + '</h3></label><ul class="cta--list">' + item.list.join('') + '</ul></div>'
+            markup += '<div><input id="' + type + '" type="checkbox" checked="checked" /><label class="locations-label" for="' + type + '"><h3 tabindex="0">' + type + '</h3></label><ul class="cta--list">' + item.list.join('') + '</ul></div>'
             // Event handler to capture the click hide / show list items for the checked checkbox category.
             $('body').on('click', "label[for='" + type + "']", function (){
               var input = $('input#' + type);
@@ -203,7 +203,8 @@
   function scrollToTop() {
     window.scrollTo({top: 0, behavior: 'smooth'});
     // Show the header in case it was hidden when scrolling down.
-    header.classList.remove('fixed-nav--hidden').add('fixed-nav--visible');
+    header.classList.remove('fixed-nav--hidden');
+    header.classList.add('fixed-nav--visible');
   }
 
 })(jQuery, Drupal, drupalSettings, window);
