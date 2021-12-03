@@ -238,7 +238,11 @@
   }
 }
 
-@mixin link-rollover($color: $c-blue-link, $hover-background: $c-blue-link-rollover, $hover-color: false) {
+// None of the parameters are required.
+// $color - initial color of the link,
+// $hover-background - optional to overwrite default, border-bottom on hover will use this value as well
+// $hover-color - optional parameter, for when link color needs to change on hover.
+@mixin link-rollover($color: $c-blue-link, $hover-background: false, $hover-color: false) {
   color: $color;
   background-color: transparent;
   text-decoration: none;
@@ -249,8 +253,15 @@
   word-wrap: break-word;
 
   &:hover {
-    background-color: $hover-background;
-    border-bottom: 1px solid $hover-background;
+    $hover-default: $c-blue-link-rollover;
+
+    background-color: $hover-default;
+    border-bottom: 1px solid $hover-default;
+
+    @if $hover-background {
+      background-color: $hover-background;
+      border-bottom: 1px solid $hover-background;
+    }
 
     @if $hover-color {
       color: $hover-color;
