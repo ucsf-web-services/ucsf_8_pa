@@ -200,7 +200,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
             $media = $video_paragraph->get('field_gallery_image')->entity;
             /** @var \Drupal\file\Entity\File $file */
             $file = $media->get('field_media_image')->entity;
-            $component = new GalleryItem($file->createFileUrl());
+            $component = new GalleryItem($file->createFileUrl(FALSE));
             /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $caption */
             if ($caption = $video_paragraph->get('field_gallery_caption')->get(0)) {
               /** @var string $caption */
@@ -609,7 +609,7 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
                   if (@$mimetype[0] == 'image' &&
                     in_array(@$mimetype[1], ['jpeg', 'gif', 'png'])
                   ) {
-                    $component = new Photo($file->createFileUrl());
+                    $component = new Photo($file->createFileUrl(FALSE));
                     if ($element->hasAttribute('data-caption')) {
                       $caption = $this->textValue($element->getAttribute('data-caption'));
                       if ($caption) {
