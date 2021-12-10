@@ -29,6 +29,23 @@
 
 .topic-page {
   background: $white;
+
+  a:not([class]) {
+    @include link-rollover();
+  }
+
+  .pager__item a {
+    transition: none;
+    border-bottom: none;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+  
+  .pager__item.is-active a {
+    color: #121a31;
+  }
 }
 
 .topic-page-wrapper {

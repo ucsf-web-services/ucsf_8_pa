@@ -258,13 +258,7 @@
           color: $c-white;
 
           a {
-            color: $c-white;
-            border-bottom: 1px solid $c-white;
-
-            &:hover {
-              background: transparent;
-              border-bottom: none;
-            }
+            @include link-rollover($c-white, rgba(255, 255, 255, 0.3));
           }
         }
 
@@ -377,13 +371,7 @@
           color: $c-white;
 
           a {
-            color: $c-white;
-            border-bottom: 1px solid $c-white;
-
-            &:hover {
-              background: transparent;
-              border-bottom: none;
-            }
+            @include link-rollover($c-white, rgba(0, 0, 0, 0.45));
           }
 
           .article-art-credit {
@@ -427,13 +415,7 @@
           color: $c-navy;
 
           a {
-            color: $c-navy;
-            border-bottom: 1px solid $c-navy;
-
-            &:hover {
-              background: transparent;
-              border-bottom: none;
-            }
+            @include link-rollover($c-navy, rgba(255, 255, 255, 0.65));
           }
         }
 
@@ -566,11 +548,7 @@
   }
 
   a {
-    color: $gray-blue;
-
-    &:hover {
-      text-decoration: none;
-    }
+    @include link-rollover($gray-blue);
   }
 }
 

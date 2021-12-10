@@ -2,7 +2,11 @@
 
 <header class="full-width-news-package-banner">
   <div class="full-width-news-package-banner__image">
-    {{ content.field_banner_image }}
+    {% if content.field_video_banner|render %}
+      {{ content.field_video_banner }}
+    {% else %}
+      {{ content.field_banner_image }}
+    {% endif %}
   </div>
 
   <div class="full-width-news-package-banner_gradient"></div>
