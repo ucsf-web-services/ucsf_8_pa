@@ -340,6 +340,9 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
   protected function normalizeMarkup($data, $html) {
     $components = [];
 
+    // Remove <style> tags
+    $html = preg_replace('/<\s*style.+?<\s*\/\s*style.*?>/si', '', $html);
+
     // Toss out tags we don't care about.
     $html = $this->htmlValue($html, self::ALLOWED_HTML_ELEMENTS .
       '<blockquote><h1><h2><h3><h4><h5><h6><img><drupal-entity><iframe><div><figure><figcaption>');
