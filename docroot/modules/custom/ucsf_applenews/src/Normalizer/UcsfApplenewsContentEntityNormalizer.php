@@ -6,9 +6,13 @@ use Drupal\applenews\Normalizer\ApplenewsContentEntityNormalizer;
 use ChapterThree\AppleNewsAPI\Document\Layouts\Layout;
 use ChapterThree\AppleNewsAPI\Document;
 use ChapterThree\AppleNewsAPI\Document\Metadata;
+use ChapterThree\AppleNewsAPI\Document\Markdown;
 use Drupal\Core\Language\LanguageInterface;
 use ChapterThree\AppleNewsAPI\Document\Components\Component;
 use ChapterThree\AppleNewsAPI\Document\Components\Title;
+use ChapterThree\AppleNewsAPI\Document\Components\Header;
+use ChapterThree\AppleNewsAPI\Document\Components\Photo;
+use ChapterThree\AppleNewsAPI\Document\Components\EmbedWebVideo;
 use Drupal\node\Entity\Node;
 
 /**
@@ -78,6 +82,10 @@ class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormali
 
     $document->setMetadata($metadata);
 
+    if ($header = $this->articleHeader($data, $format, $context)) {
+      $document->addComponent($header);
+    }
+
     $component = new Title($title);
     $component->setTextStyle(_ucsf_applenews_title_component_text_style());
     $component->setLayout(_ucsf_applenews_title_component_layout());
@@ -108,6 +116,44 @@ class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormali
       $document->addTextStyle($text_style->id(), $text_style->toObject());
     }
     return $document->jsonSerialize();
+  }
+
+  /**
+   * Article header.
+   */
+  protected function articleHeader($entity, $format, $context) {
+    // Only add header when banner layout is: Medium, Feature, Feature Overlay Dark, and Feature Overlay Light.
+    if (!in_array($entity->get('field_banner_layout')->value, ['medium', 'feature', 'featureoverlaydark', 'featureoverlaylight'])) {
+      return NULL;
+    }
+
+    $header = new Header('header-' . $entity->id());
+
+    if ($banner_image = $this->getReferencedEntity('field_banner_image', $entity)) {
+      if ($file = $this->getReferencedEntity('field_media_image', $banner_image)) {
+        $banner = new Photo($file->createFileUrl(FALSE), 'photo-' . $entity->id());
+        $banner->setCaption((new Markdown())->convert($banner_image->get('field_caption')->value));
+      }
+    }
+    else if ($banner_video = $this->getReferencedEntity('field_video_banner', $entity)) {
+      $banner = new EmbedWebVideo($banner_video->get('field_media_video_embed_field')->value, 'video-embed-' . $entity->id());
+    }
+
+    if ($banner) {
+      $banner->setLayout(_ucsf_applenews_banner_component_layout());
+      $header->addComponent($banner);//$this->serializer->normalize($banner, $format, $context));
+      $header->setLayout(_ucsf_applenews_main_header_component_layout());
+      return $header;
+    }
+  }
+
+  /**
+   * Get product reference.
+   */
+  public function getReferencedEntity($field_name, $entity) {
+    if (!$entity->get($field_name)->isEmpty()) {
+      return $entity->get($field_name)->first()->get('entity')->getValue();
+    }
   }
 
 }
