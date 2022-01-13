@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "253cb386e171b8dfea226f2e40c43248",
+    "content-hash": "8e5caaca48293af469ac432c11087702",
     "packages": [
         {
             "name": "acquia/acsf-contenthub-console",
@@ -406,10 +406,6 @@
                 "news",
                 "push"
             ],
-            "support": {
-                "issues": "https://github.com/chapter-three/AppleNewsAPI/issues",
-                "source": "https://github.com/chapter-three/AppleNewsAPI/tree/0.3.11"
-            },
             "time": "2020-12-21T17:19:11+00:00"
         },
         {
@@ -3255,11 +3251,17 @@
         },
         {
             "name": "drupal/applenews",
-            "version": "dev-1.x",
+            "version": "1.0.0-beta3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/applenews.git",
-                "reference": "9b2bf0e2fbd35e27dde6f6f3873cc6a070df8c0a"
+                "reference": "8.x-1.0-beta3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/applenews-8.x-1.0-beta3.zip",
+                "reference": "8.x-1.0-beta3",
+                "shasum": "b3d24ff89c1880d9bb3bf686dd6213c681b091ca"
             },
             "require": {
                 "chapter-three/apple-news-api": "^0.3.11",
@@ -3267,16 +3269,17 @@
             },
             "type": "drupal-module",
             "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev"
-                },
                 "drupal": {
-                    "version": "8.x-1.0-beta1+39-dev",
-                    "datestamp": "1620926649",
+                    "version": "8.x-1.0-beta3",
+                    "datestamp": "1639267394",
                     "security-coverage": {
                         "status": "not-covered",
-                        "message": "Dev releases are not covered by Drupal security advisories."
+                        "message": "Beta releases are not covered by Drupal security advisories."
                     }
+                },
+                "patches_applied": {
+                    "3029632 - Add preview link when no channels are configured": "https://www.drupal.org/files/issues/2019-02-05/applenews-preview-with-no-api-3029632-4.patch",
+                    "11333241 - Limit tags in html": "https://www.drupal.org/files/issues/2019-02-05/applenews-limit_tags_in_html-11333241-2.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -4884,6 +4887,16 @@
                         "[web-root]/profiles/README.txt": "assets/scaffold/files/profiles.README.txt",
                         "[web-root]/themes/README.txt": "assets/scaffold/files/themes.README.txt"
                     }
+                },
+                "patches_applied": {
+                    "2061377 - Allow image style to be selected in Text Editor's image dialog https://drupal.org/i/2061377": "https://www.drupal.org/files/issues/2021-10-15/2061377-403.patch",
+                    "UCSF FilterAlign - remove aggressive removal of classes": "./patches/core-filteralign.patch",
+                    "2973706 - Styles dropdown configuration permit multiple tags": "https://www.drupal.org/files/issues/2021-09-08/allow-multiple-elements-2973706-19.patch",
+                    "UCSF FilterCaption - Fix decode entities on FilterCaption": "./patches/core-filtercaption.patch",
+                    "3200283 - Acquia Connector - add missing SVG images": "https://www.drupal.org/files/issues/2021-03-24/check-svg-and-error-svg-not-found-3200283-5.patch",
+                    "3192234 - Responsive Image - Get width and height from fallback responsive image style": "https://www.drupal.org/files/issues/2021-02-12/3192234-10.patch",
+                    "2511878 - Support enclosure field in Views RssFields row plugin": "https://www.drupal.org/files/issues/2020-07-24/views-rss-fields-enclosure-2511878-30.patch",
+                    "2918784 - Views RSS row plugin incorrectly assumes links are relative. Using custom patch due to conflict with 2511878": "./patches/views-rss-fields-enclosure-2511878-custom.patch"
                 }
             },
             "autoload": {
@@ -6012,6 +6025,10 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "UCSF Entity Embed Caption Fix - Allows the HTML tags to come through from the WYSIWYG": "./patches/entity_embed_caption_fix.patch",
+                    "2838729 - Allow interaction of CKEditor Dialog on top of Drupal Dialog": "./patches/entity_embed_allowinteraction.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -6072,6 +6089,11 @@
                 "drupal/core": "^8.8 || ^9.0"
             },
             "type": "drupal-module",
+            "extra": {
+                "patches_applied": {
+                    "Prevent Entity Embed Link from overriding entity_embed_container.html.yml file in the theme": "./patches/entity_embed_link.patch"
+                }
+            },
             "license": [
                 "GPL-2.0-or-later"
             ],
@@ -6597,6 +6619,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "2652642 - Allow to position the group in the advanced sidebar column": "https://www.drupal.org/files/issues/2018-07-26/2652642-57.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -8800,6 +8825,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "Fallback options for various metatag fields, only display the first valid option": "./patches/metatag_fallback.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -10252,6 +10280,9 @@
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."
                     }
+                },
+                "patches_applied": {
+                    "WSOD with Route 'view.taxonomy_term.feed_1' does not exist https://drupal.org/i/3191218": "https://git.drupalcode.org/project/sitemap/-/merge_requests/3.diff"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -10891,8 +10922,12 @@
                 "url": "https://git.drupalcode.org/issue/twitter_tweets-3129736.git",
                 "reference": "e140f3b2937e833235428fc0705d61bc5d4bcaaa"
             },
-            "default-branch": true,
             "type": "drupal-module",
+            "extra": {
+                "patches_applied": {
+                    "Allow full_text and links to display in tweet body": "./patches/twitter_tweets-3129736_full_text.patch"
+                }
+            },
             "license": [
                 "GPL-2.0+"
             ],
@@ -11090,6 +11125,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "UCSF Video Embed Patch - Allow background param": "./patches/video_embed_field__allow_background_param.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -11418,6 +11456,9 @@
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
                     }
+                },
+                "patches_applied": {
+                    "Call to undefined method Drupal-taxonomy-Entity-Term::url() https://www.drupal.org/project/views_rss/issues/3241646": "https://www.drupal.org/files/issues/2021-10-08/undefined_method-3241646-3.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -11734,7 +11775,13 @@
                 "url": "https://git.drupalcode.org/issue/youtube_gallery-3245012.git",
                 "reference": "df60414ef999830bf2b95d6c7d18f0679d546766"
             },
-            "type": "drupal-module"
+            "type": "drupal-module",
+            "extra": {
+                "patches_applied": {
+                    "don't ask to download libraries in drush_hook_post_pm_enable()": "https://www.drupal.org/files/issues/2019-03-24/youtube_gallery-no_post_enable-3042898-2.patch",
+                    "Fix deprecated code": "./patches/youtube_gallery_fix_deprecated_code.patch"
+                }
+            }
         },
         {
             "name": "drush/drush",
@@ -14657,10 +14704,6 @@
                 "web service",
                 "xml"
             ],
-            "support": {
-                "issues": "https://github.com/php-curl-class/php-curl-class/issues",
-                "source": "https://github.com/php-curl-class/php-curl-class/tree/master"
-            },
             "time": "2016-07-25T19:31:39+00:00"
         },
         {
@@ -19392,6 +19435,7 @@
                 "issues": "https://github.com/webmozart/path-util/issues",
                 "source": "https://github.com/webmozart/path-util/tree/2.3.0"
             },
+            "abandoned": "symfony/filesystem",
             "time": "2015-12-17T08:42:14+00:00"
         },
         {
@@ -23529,7 +23573,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "drupal/applenews": 20,
+        "drupal/applenews": 10,
         "drupal/authorization": 20,
         "drupal/blazy": 5,
         "drupal/cloudflare": 15,
@@ -23560,5 +23604,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "1.1.0"
 }
