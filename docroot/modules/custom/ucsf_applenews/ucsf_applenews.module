@@ -60,8 +60,43 @@ function _ucsf_applenews_photo_component_layout() {
     ->setTop(FALSE);
   $layout = new ComponentLayout();
   $layout
+    ->setColumnStart(0)
     ->setColumnSpan(9)
     ->setMargin(new Margin(15, 15))
+    ->setContentInset($inset)
+    ->setIgnoreDocumentMargin('both')
+    ->setIgnoreDocumentGutter('both');
+  return $layout;
+}
+
+/**
+ * Generates layout for banner components.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Layouts\ComponentLayout
+ */
+function _ucsf_applenews_banner_component_layout() {
+  $layout = _ucsf_applenews_photo_component_layout();
+  $layout->setMargin(new Margin(0, 0));
+  return $layout;
+}
+
+/**
+ * Generates layout for header component.
+ *
+ * @return \ChapterThree\AppleNewsAPI\Document\Layouts\ComponentLayout
+ */
+function _ucsf_applenews_main_header_component_layout() {
+  $inset = new ContentInset();
+  $inset
+    ->setBottom(FALSE)
+    ->setLeft(FALSE)
+    ->setRight(FALSE)
+    ->setTop(FALSE);
+  $layout = new ComponentLayout();
+  $layout
+    ->setColumnStart(0)
+    ->setColumnSpan(9)
+    ->setMargin(new Margin(0, 15))
     ->setContentInset($inset)
     ->setIgnoreDocumentMargin('both')
     ->setIgnoreDocumentGutter('both');
@@ -103,6 +138,7 @@ function _ucsf_applenews_title_component_layout() {
     ->setTop(FALSE);
   $layout = new ComponentLayout();
   $layout
+    ->setColumnStart(0)
     ->setColumnSpan(7)
     ->setMargin(new Margin(15, 8))
     ->setContentInset($inset)
@@ -125,6 +161,7 @@ function _ucsf_applenews_video_component_layout() {
     ->setTop(FALSE);
   $layout = new ComponentLayout();
   $layout
+    ->setColumnStart(0)
     ->setColumnSpan(9)
     ->setMargin(new Margin(15, 15))
     ->setContentInset($inset)
@@ -149,7 +186,7 @@ function _ucsf_applenews_base_component_link_style() {
   $link_style
     ->setFontName('HelveticaNeue-Medium')
     ->setFontSize(18)
-    ->setTextColor('#0071AD')
+    ->setTextColor('#006BE9')
     ->setUnderline(FALSE);
   return $link_style;
 }
@@ -204,7 +241,7 @@ function _ucsf_applenews_body_component_text_style($dropcap = TRUE) {
     $dropcap_style
       ->setNumberOfCharacters(1)
       ->setFontName('HelveticaNeue-Light')
-      ->setTextColor('#0071AD');
+      ->setTextColor('#006BE9');
     $style->setDropCapStyle($dropcap_style);
   }
   return $style;
@@ -283,12 +320,12 @@ function _ucsf_applenews_title_component_text_style() {
 "fontSize": 11,
 "textAlignment": "left",
 "lineHeight": 16,
-"textColor": "#0071AD",
+"textColor": "#006BE9",
 "hyphenation": false,
 "linkStyle": {
 "fontName": "HelveticaNeue-Light",
 "fontSize": 11,
-"textColor": "#0071AD",
+"textColor": "#006BE9",
 "underline": false
  */
 
@@ -301,10 +338,10 @@ function _ucsf_applenews_title_component_text_style() {
 function _ucsf_applenews_quote_component_text_style() {
   $style = _ucsf_applenews_base_component_text_style();
   $style
-    ->setFontName('HelveticaNeue-Light')
+    ->setFontName('HelveticaNeue-Medium')
     ->setFontSize(24)
     ->setLineHeight(36)
-    ->setTextColor('#0071AD')
+    ->setTextColor('#006BE9')
     ->setTextAlignment('center');
   return $style;
 }
@@ -339,6 +376,7 @@ function _ucsf_applenews_text_caption_layout() {
     ->setTop(FALSE);
   $layout = new ComponentLayout();
   $layout
+    ->setColumnStart(0)
     ->setColumnSpan(7)
     ->setMargin(new Margin(10, 15))
     ->setContentInset($inset);
