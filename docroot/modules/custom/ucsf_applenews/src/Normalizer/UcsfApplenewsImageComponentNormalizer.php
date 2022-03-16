@@ -42,9 +42,15 @@ class UcsfApplenewsImageComponentNormalizer extends ApplenewsImageComponentNorma
     if (empty($media)) {
       return NULL;
     }
+    
+    // Only add header when banner layout is not: Medium, Feature, Feature Overlay Dark, and Feature Overlay Light.
+    if (in_array($entity->get('field_banner_layout')->value, ['medium', 'feature', 'featureoverlaydark', 'featureoverlaylight'])) {
+      return NULL;
+    }
+
     /** @var \Drupal\file\Entity\File $file */
     $file = $media->get('field_media_image')->entity;
-    $component = new Photo($file->url());
+    $component = new Photo($file->createFileUrl(FALSE));
 
     $field_name = $data['component_data']['caption']['field_name'];
     $context['field_property'] = $data['component_data']['caption']['field_property'];

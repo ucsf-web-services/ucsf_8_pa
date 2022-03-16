@@ -24,29 +24,20 @@
 #}
 
 <div class="page-node-type-narrow-page">
-  <main class="sitemap-main bg-white">
-  <a id="main-content" tabindex="-1"></a>
-  <h1>Site Map</h1>
-    {% if message %}
-      <div class="sitemap-message">
-        {{ message }}
-      </div>
-    {% endif %}
-
-
-    {% if sitemap_items %}
-      {% for item in sitemap_items %}
-        {% if item.content is not empty %}
-          <div {{ item.attributes.addClass('sitemap-box') }}>
-            {% if item.options.show_titles %}
-              <h2 class="layout__heading">{{ item.title }}</h2>
-            {% endif %}
-            <div class="cta--list">
-              {{ item.content }}
-            </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-  </main>
+	<main class="sitemap-main bg-white">
+		<a id="main-content" tabindex="-1"></a>
+		<h1>Site Map</h1>
+		<div class="sitemap sitemap-box-menu sitemap-box">
+			{% if message %}
+				<div class="sitemap-message">
+					{{ message }}
+				</div>
+			{% endif %}
+			{% if sitemap_items %}
+				{% for item in sitemap_items %}
+					{{ item }}
+				{% endfor %}
+			{% endif %}
+		</div>
+	</main>
 </div>

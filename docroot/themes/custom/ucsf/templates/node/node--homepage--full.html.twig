@@ -7,7 +7,7 @@
 {% endif %}
 
 <nav class="quicklinks" aria-labelledby="quicklinks-main-title">
-  <button class="quicklinks-trigger" aria-expanded="{{expanded}}" aria-controls="slide-quicklinks" aria-labeledby="quicklinks-main-title">
+  <button class="quicklinks-trigger" aria-expanded="{{expanded}}" aria-controls="slide-quicklinks" aria-labelledby="quicklinks-main-title">
     {# added inline style to fix chrome bug https://stackoverflow.com/questions/43278142/chrome-does-not-support-writing-mode-for-button-tag #}
     <p class="quicklinks__main-title" id="quicklinks-main-title" style="writing-mode:vertical-lr;">{{ "Quick Links"|t }}<span class="fas fa-caret-right"></span></p>
 
@@ -45,7 +45,7 @@
   {% include '@theme/search/search-homepage.twig' %}
 
   <div class="home-talking-about">
-    <h2 class="home-talking-about__title">{{ "What We're Talking About"|t }}</h2>
+    <h2 class="home-talking-about__title">{{ "What We’re Talking About"|t }}</h2>
     <p class="home-talking-about__description">{{ "Browse our top stories, interesting events, and other highlights."|t }}</p>
     <ul class="card-three-up">
       {{ content.field_featured_content }}

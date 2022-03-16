@@ -5,6 +5,7 @@ namespace Drupal\ucsf_search\Controller;
 use GuzzleHttp\Client;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\File\FileSystemInterface;
 use Symfony\Component\HttpFoundation\Request as GetReq;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 //use Symfony\Component\Cache;
@@ -145,9 +146,10 @@ class UcsfsearchController extends ControllerBase {
     }
 
     //make sure file system is available for the Cache Adapter
-    $path = \Drupal::service('file_system')->realpath(file_default_scheme() . "://");
+    $path = \Drupal::service('file_system')->realpath(\Drupal::config('system.file')->get('default_scheme') . "://");
     $path .= '/cache';
-    if (file_prepare_directory($path, FILE_CREATE_DIRECTORY)) {
+    $file_system_interface = \Drupal::service('file_system');
+    if ($file_system_interface->prepareDirectory($path, FileSystemInterface::CREATE_DIRECTORY)) {
       $cache = new FilesystemAdapter('', 86400, $path);
     } else {
       $messenger = \Drupal::messenger();
@@ -213,9 +215,10 @@ class UcsfsearchController extends ControllerBase {
     }
 
     //make sure file system is available for the Cache Adapter
-    $path = \Drupal::service('file_system')->realpath(file_default_scheme() . "://");
+    $path = \Drupal::service('file_system')->realpath(\Drupal::config('system.file')->get('default_scheme') . "://");
     $path .= '/cache';
-    if (file_prepare_directory($path, FILE_CREATE_DIRECTORY)) {
+    $file_system_interface = \Drupal::service('file_system');
+    if ($file_system_interface->prepareDirectory($path, FileSystemInterface::CREATE_DIRECTORY)) {
       $cache = new FilesystemAdapter('', 86400, $path);
     } else {
       $messenger = \Drupal::messenger();

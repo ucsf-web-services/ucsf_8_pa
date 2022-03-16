@@ -1,0 +1,142 @@
+diff --git a/src/Controller/UploadVideo.php b/src/Controller/UploadVideo.php
+index de462c1..4ee37c7 100644
+--- a/src/Controller/UploadVideo.php
++++ b/src/Controller/UploadVideo.php
+@@ -5,6 +5,7 @@ namespace Drupal\youtube_gallery\Controller;
+ use Drupal\Core\Controller\ControllerBase;
+ use Drupal\Core\Render\Markup;
+ use Symfony\Component\HttpFoundation\RedirectResponse;
++use Drupal\Core\Messenger\MessengerInterface;
+ 
+ /**
+  * Upload video processing.
+@@ -21,7 +22,7 @@ class UploadVideo extends ControllerBase {
+   public function youtubeUpload($title, $desc, $tags, $category, $video) {
+ 
+     $lib = 'libraries/google-api-php-client/vendor/autoload.php';
+-    $path = drupal_realpath($lib);
++    $path = \Drupal::service('file_system')->realpath($lib);
+ 
+     require_once $path;
+ 
+@@ -50,7 +51,7 @@ class UploadVideo extends ControllerBase {
+ 
+       if (strval($_SESSION['state']) !== strval($_GET['state'])) {
+ 
+-        drupal_set_message($this->t('Your session has been lost please try again !'), 'error');
++        $this->messenger()->addError($this->t('Your session has been lost please try again !'));
+       }
+ 
+       $this->client->authenticate($_GET['code']);
+@@ -140,17 +141,17 @@ class UploadVideo extends ControllerBase {
+         // set setDefer back to false.
+         $this->client->setDefer(FALSE);
+ 
+-        drupal_set_message($this->t('Video uploaded successfully'), 'status');
++        $this->messenger()->addStatus($this->t('Video uploaded successfully'));
+ 
+       }
+       catch (\Google_Service_Exception $e) {
+ 
+-        drupal_set_message($this->t('Service error occurred: Invalid Authentication.') . $e->getMessage(), 'error');
++        $this->messenger()->addError($this->t('Service error occurred: Invalid Authentication.') . $e->getMessage());
+ 
+       }
+       catch (\Google_Exception $e) {
+ 
+-        drupal_set_message($this->t('Client Authentication error occured') . $e->getMessage(), 'error');
++        $this->messenger()->addError($this->t('Client Authentication error occured') . $e->getMessage());
+ 
+       }
+ 
+@@ -159,7 +160,7 @@ class UploadVideo extends ControllerBase {
+     }
+     elseif ($this->clientId == '') {
+ 
+-      drupal_set_message($this->t('Client credential required'), 'error');
++      $this->messenger()->addError($this->t('Client credential required'));
+ 
+     }
+     else {
+@@ -172,7 +173,7 @@ class UploadVideo extends ControllerBase {
+       $authUrl = $this->client->createAuthUrl();
+ 
+       $messageWithHtml = Markup::Create('<b>Authorization Required:</b> <a href=' . $authUrl . '> authorize access </a> before proceeding');
+-      drupal_set_message($messageWithHtml, 'error');
++      $this->messenger()->addError($messageWithHtml);
+ 
+     }
+ 
+diff --git a/src/Form/UploadVideoForm.php b/src/Form/UploadVideoForm.php
+index 2d318bd..6a16d4f 100644
+--- a/src/Form/UploadVideoForm.php
++++ b/src/Form/UploadVideoForm.php
+@@ -32,7 +32,7 @@ class UploadVideoForm extends FormBase {
+ 
+     return new static(
+       $container->get('youtube_gallery.do_upload'),
+-      $container->get('entity.manager')->getStorage('file')
++      $container->get('entity_type.manager')->getStorage('file')
+     );
+ 
+   }
+@@ -54,7 +54,7 @@ class UploadVideoForm extends FormBase {
+    */
+   public function buildForm(array $form, FormStateInterface $form_state) {
+ 
+-    $path = drupal_realpath('libraries/google-api-php-client/vendor/autoload.php');
++    $path = \Drupal::service('file_system')->realpath('libraries/google-api-php-client/vendor/autoload.php');
+ 
+     $error = "";
+ 
+diff --git a/youtube_gallery.drush.inc b/youtube_gallery.drush.inc
+index ec05dac..6c0ea2e 100644
+--- a/youtube_gallery.drush.inc
++++ b/youtube_gallery.drush.inc
+@@ -5,6 +5,8 @@
+  * Drush integration for Youtube Uploader.
+  */
+ 
++use Symfony\Component\Filesystem\Filesystem;
++
+ /**
+  * The Youtube Uploader plugin URI.
+  */
+@@ -65,9 +67,9 @@ function drush_youtube_gallery_plugins() {
+ 
+   // Create the path if it does not exist.
+   if (!is_dir($init_path)) {
+-    drush_log($init_path, 'ok');
++    \Drupal::logger($init_path, 'ok');
+     drush_op('mkdir', $init_path, '0755', TRUE);
+-    drush_log(dt('Directory @path was created', ['@path' => $init_path]), 'notice');
++    \Drupal::logger(dt('Directory @path was created', ['@path' => $init_path]), 'notice');
+   }
+ 
+   // Set the directory to the download location.
+@@ -81,9 +83,9 @@ function drush_youtube_gallery_plugins() {
+ 
+     // Remove any existing google-api-php-client library directory.
+     if (is_dir($dirname) || is_dir('google-api-php-client')) {
+-      drush_delete_dir($dirname, TRUE);
+-      drush_delete_dir('google-api-php-client', TRUE);
+-      drush_log(dt('A existing google-api-php-client library was deleted from @path', ['@path' => $init_path]), 'notice');
++      Filesystem::remove($dirname, TRUE);
++      Filesystem::remove('google-api-php-client', TRUE);
++      \Drupal::logger(dt('A existing google-api-php-client library was deleted from @path', ['@path' => $init_path]), 'notice');
+     }
+ 
+     // Decompress the archive.
+@@ -93,10 +95,10 @@ function drush_youtube_gallery_plugins() {
+   }
+ 
+   if (is_dir($dirname)) {
+-    drush_log(dt('google-api-php-client library has been installed in @path', ['@path' => $init_path]), 'success');
++    \Drupal::logger(dt('google-api-php-client library has been installed in @path', ['@path' => $init_path]), 'success');
+   }
+   else {
+-    drush_log(dt('Drush was unable to install the google-api-php-client library to @path', ['@path' => $init_path]), 'error');
++    \Drupal::logger(dt('Drush was unable to install the google-api-php-client library to @path', ['@path' => $init_path]), 'error');
+   }
+   chdir($olddir);
+ 

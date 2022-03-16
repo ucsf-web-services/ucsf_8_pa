@@ -32,188 +32,210 @@
   "prefer-stable": true,
   "minimum-stability": "dev",
   "config": {
+    "sort-packages": true,
     "preferred-install": "dist",
     "platform": {
-      "php": "7.3"
+      "php": "7.4"
     }
   },
   "repositories": {
     "drupal": {
       "type": "composer",
-      "url": "https://packages.drupal.org/8"
+      "url": "https://packages.drupal.org/8",
+      "exclude": [
+        "drupal/twitter_tweets",
+        "drupal/entity_embed_link",
+        "drupal/youtube_gallery"
+      ]
     },
-    "ucdavis": {
-      "type": "vcs",
-      "url": "https://github.com/ucsf-web-services/sitefarm_seed"
+    "drupal/youtube_gallery": {
+      "type": "package",
+      "package": {
+        "name": "drupal/youtube_gallery",
+        "version": "dev-custom",
+        "type": "drupal-module",
+        "source": {
+          "type": "git",
+            "url": "https://git.drupalcode.org/issue/youtube_gallery-3245012.git",
+            "reference": "3245012-drupal-9-readiness"
+        }
+      }
     },
-    "1": {
+    "drupal/twitter_tweets": {
+      "type": "git",
+      "url": "https://git.drupalcode.org/issue/twitter_tweets-3129736.git"
+    },
+    "drupal/entity_embed_link": {
+      "type": "git",
+      "url": "https://git.drupalcode.org/issue/entity_embed_link-3147324.git"
+    },
+    "assets": {
       "type": "composer",
-      "url": "https://asset-packagist.org"
+      "url": "https://asset-packagist.org",
+      "options": {
+        "ssl": {
+          "verify_peer": false
+        }
+      }
     }
+  },
+  "require-dev": {
+    "drupal/console": "^1.9.7",
+    "drupal/core-dev": "^9",
+    "palantirnet/drupal-rector": "^0.11.3"
   },
   "require": {
     "composer/installers": "^1.11",
-    "wikimedia/composer-merge-plugin": "^2.0.1",
     "cweagans/composer-patches": "^1.7.1",
-    "drupal/core": "~8.9.18",
-    "ucdavis/sitefarm_seed": "dev-ucsf",
-    "drupal/acquia_lift": "~3.0",
     "drupal/acquia_connector": "^3.0",
     "drupal/acquia_contenthub": "^1.25",
+    "drupal/acquia_purge": "^1.0",
     "drupal/address": "^1.9",
     "drupal/admin_toolbar": "^2.0",
-    "drupal/block_style_plugins": "^1.0",
-    "drupal/block_class": "~1.0",
-    "drupal/blazy": "^1.0@RC",
-    "drupal/better_exposed_filters": "^5.0",
-    "drupal/conditional_fields": "^4.0@alpha",
-    "drupal/ctools": "^3.6",
-    "drupal/chosen": "^2.1",
-    "drupal/colorbox": "^1.4",
-    "drupal/config_update": "^1.5",
-    "drupal/ckeditor_liststyle": "^1.3",
-    "drush/drush": "^8.2.0",
-    "drupal/entity_block": "^1.0",
-    "drupal/entity_embed": "^1.1",
-    "drupal/entity_reference_revisions": "^1.4",
-    "drupal/fieldblock": "^2.0@alpha",
-    "drupal/field_group": "^3.0",
-    "drupal/google_analytics": "^2.5",
-    "drupal/geofield": "^1.0@beta",
-    "drupal/geofield_map": "^2.5",
-    "drupal/geocoder": "^2.0@beta",
-    "drupal/google_tag": "~1.0",
-    "drupal/layout_plugin": "^1.0",
-    "drupal/linkit": "^5.0",
-    "drupal/twig_tweak": "^2.8",
-    "drupal/features": "^3.7",
-    "drupal/honeypot": "^1.2",
-    "drupal/menu_block": "^1.4",
-    "drupal/menu_breadcrumb": "^1.5",
-    "drupal/menu_position": "~1.0",
-    "drupal/menu_item_extras": "~2.0",
-    "drupal/menus_attribute": "^1.2",
-    "drupal/media_entity": "^2.0",
-    "drupal/media_entity_instagram": "~2.0",
-    "drupal/media_entity_twitter": "~2.0",
-    "drupal/metatag": "^1.16",
-    "drupal/module_filter": "^3.1",
-    "drupal/notification": "^1.0",
-    "drupal/redirect": "^1.0",
-    "drupal/roleassign": "^1.0",
-    "drupal/url_embed": "^1.0",
-    "drupal/webform": "^6.0",
-    "drupal/webform_views": "^5.0",
-    "drupal/token": "^1.3",
-    "drupal/views_infinite_scroll": "^1.5",
-    "drupal/ckeditor_widgets": "1.x-dev",
-    "drupal/paragraphs": "^1.9",
-    "drupal/pathauto": "~1.8.0",
-    "drupal/subpathauto": "~1.0",
-    "drupal/migrate_plus": "^5.1",
-    "drupal/migrate_tools": "^5.0",
-    "drupal/node_class": "~1.0",
-    "drupal/video_embed_field": "^2.0",
-    "drupal/migrate_source_csv": "^2.0",
-    "drupal/components": "^1.0",
-    "drupal/image_url_formatter": "~1.0",
-    "drupal/wbm2cm": "^2.0",
-    "drupal/stage_file_proxy": "1.0",
-    "drupal/viewfield": "^3.0@alpha",
-    "drupal/gathercontent": "~4.0",
-    "drupal/ckeditor_iframe": "~2.0",
-    "drupal/scheduled_updates": "^1.0",
-    "drupal/auto_entitylabel": "^3.0",
-    "drupal/scheduler": "^1.1",
-    "drupal/slick": "^1.0",
-    "drupal/slick_media": "^2.0",
-    "drupal/slick_paragraphs": "1.0-rc1",
-    "drupal/sitemap": "^1.5",
-    "drupal/search_api": "^1.5",
-    "drupal/search_api_solr": "^1.0",
-    "drupal/simple_sitemap": "^3.3",
-    "drupal/social_media_links": "^2.6",
-    "drupal/smart_trim": "^1.2",
-    "drupal/taxonomy_import": "^2.0",
-    "drupal/entity_browser": "^2.0",
-    "drupal/inline_entity_form": "^1.0",
-    "drupal/menu_reference_render": "^2.0@alpha",
-    "npm-asset/blazy": "^1.8",
-    "npm-asset/chosen-js": "^1.8",
-    "npm-asset/jquery-colorbox": "^1.6",
-    "npm-asset/dropzone": "^5.5",
-    "npm-asset/jquery.easing": "^1.4",
-    "npm-asset/slick-carousel": "^1.8",
-    "drupal/config_installer": "^1.8",
-    "drupal/media_entity_image": "^1.3",
-    "drupal/applenews": "1.x-dev",
-    "drupal/better_normalizers": "^1.0",
-    "drupal/video_embed_media": "^2.0",
-    "sebastian/version": "^2.0",
-    "drupal-pattern-lab/unified-twig-extensions": "^0.1.0",
-    "drupal/ldap": "^3.0@beta",
-    "drupal/entity_clone": "^1.0@beta",
-    "drupal/allowed_formats": "^1.1",
-    "drupal/extlink": "^1.1",
-    "drupal/authorization": "1.x-dev",
-    "drupal/config_split": "^1.7",
-    "drupal/views_bulk_operations": "^4.0",
-    "drupal/views_bulk_edit": "^2.2",
-    "drupal/media_responsive_thumbnail": "^1.0",
-    "symfony/cache": "^3.4",
-    "drupal/xmlsitemap": "^1.0@alpha",
-    "drupal/save_edit": "^1.1",
-    "drupal/image_widget_crop": "^2.2",
-    "drupal/crop": "^2.1",
-    "twig/extensions": "^1.5",
-    "drupal/twig_extensions": "2.x-dev@dev",
-    "drupal/image_effects": "^3.0",
-    "drupal/editor_advanced_link": "^1.4",
-    "drupal/entity_embed_link": "^1.0",
-    "drupal/youtube_gallery": "^1.0",
-    "drupal/anchor_link": "^2.5",
-    "drupal/config_ignore": "^2.3",
-    "drupal/token_conditions": "1.x-dev",
-    "drupal/views_rss": "2.x-dev",
-    "drupal/path_redirect_import": "^1.0@beta",
-    "drupal/acquia_purge": "^1.0",
-    "drupal/cloudflare": "^1.0@alpha",
-    "drupal/content_lock": "^2.1",
-    "drupal/scheduler_content_moderation_integration": "^1.0",
-    "drupal/svg_image_field": "^2.0",
-    "espresso-dev/instagram-basic-display-php": "^1.1",
-    "drupal/embed": "^1.4",
-    "drupal/schema_metatag": "^1.6",
-    "drupal/amp": "^3.4",
     "drupal/advagg": "^4.1",
-    "drupal/entity": "^1.2",
-    "drupal/seckit": "^2.0",
-    "drupal/simple_instagram_feed": "^3.6",
-    "drupal/rabbit_hole": "^1.0@beta",
-    "drupal/paragraphs_edit": "^2.0@alpha",
-    "drupal/domain_theme_switch": "^1.5",
+    "drupal/allowed_formats": "^1.1",
+    "drupal/amp": "^3.4",
+    "drupal/anchor_link": "^2.5",
+    "drupal/applenews": "^1.0@beta",
+    "drupal/authorization": "1.x-dev",
+    "drupal/auto_entitylabel": "^3.0",
+    "drupal/better_exposed_filters": "^5.0",
+    "drupal/better_normalizers": "^1.0-beta4",
+    "drupal/blazy": "^1.0@RC",
+    "drupal/block_class": "~1.0",
+    "drupal/block_style_plugins": "^1.0",
+    "drupal/chosen": "^2.1",
+    "drupal/ckeditor_iframe": "~2.0",
+    "drupal/ckeditor_liststyle": "^1.3",
+    "drupal/cloudflare": "^1.0@alpha",
+    "drupal/colorbox": "^1.4",
+    "drupal/components": "^2.0",
+    "drupal/conditional_fields": "^4.0@alpha",
+    "drupal/config_filter": "^1.8",
+    "drupal/config_ignore": "^2.3",
+    "drupal/config_split": "^1.7",
+    "drupal/config_update": "^1.5",
+    "drupal/content_lock": "^2.1",
+    "drupal/core-composer-scaffold": "^9",
+    "drupal/core-project-message": "^9",
+    "drupal/core-recommended": "^9",
+    "drupal/crop": "^2.1",
+    "drupal/ctools": "^3.6",
+    "drupal/devel": "^4.1",
     "drupal/domain_site_settings": "^1.4",
+    "drupal/domain_theme_switch": "^1.5",
+    "drupal/editor_advanced_link": "^1.4",
+    "drupal/embed": "^1.4",
+    "drupal/entity": "^1.2",
+    "drupal/entity_block": "^1.0",
+    "drupal/entity_browser": "^2.0",
+    "drupal/entity_clone": "^1.0@beta",
+    "drupal/entity_embed": "^1.2",
+    "drupal/entity_embed_link": "dev-3147324-d9-upgrade",
+    "drupal/entity_reference_revisions": "^1.4",
+    "drupal/extlink": "^1.1",
+    "drupal/fakeobjects": "^1.1",
+    "drupal/fancy_file_delete": "^2.0",
+    "drupal/features": "^3.7",
     "drupal/feeds": "^3.0@alpha",
     "drupal/feeds_tamper": "^2.0@beta",
-    "drupal/imageapi_optimize_resmushit": "^2.0@beta",
+    "drupal/field_group": "^3.0",
+    "drupal/fieldblock": "^2.0@alpha",
     "drupal/focal_point": "^1.5",
-    "drupal/conditional_styles": "^1.0",
-    "drupal/twitter_tweets": "^1.5",
+    "drupal/geocoder": "^3.2",
+    "drupal/geofield": "^1.1",
+    "drupal/geofield_map": "^2.7",
+    "drupal/google_analytics": "^2.5",
+    "drupal/google_tag": "~1.0",
+    "drupal/honeypot": "^2.0",
+    "drupal/iframe": "^2.0",
+    "drupal/image_effects": "^3.0",
+    "drupal/image_url_formatter": "~1.0",
+    "drupal/image_widget_crop": "^2.2",
+    "drupal/imageapi_optimize_resmushit": "^2.0@beta",
+    "drupal/inline_entity_form": "^1.0",
     "drupal/jquery_ui": "^1.4",
     "drupal/jquery_ui_accordion": "^1.1",
     "drupal/jquery_ui_slider": "^1.1",
     "drupal/jquery_ui_tabs": "^1.1",
+    "drupal/linkit": "^5.0",
+    "drupal/masquerade": "^2.0@beta",
+    "drupal/media_entity_instagram": "~2.0",
+    "drupal/media_entity_twitter": "~2.0",
+    "drupal/media_responsive_thumbnail": "^1.0",
+    "drupal/memcache": "^2.3",
+    "drupal/menu_block": "^1.4",
+    "drupal/menu_breadcrumb": "^1.5",
+    "drupal/menu_item_extras": "~2.0",
+    "drupal/menu_position": "~1.0",
+    "drupal/menu_reference_render": "^2.0@alpha",
+    "drupal/menus_attribute": "^1.2",
+    "drupal/metatag": "^1.16",
+    "drupal/migrate_plus": "^5.1",
+    "drupal/migrate_tools": "^5.0",
+    "drupal/module_filter": "^3.1",
+    "drupal/notification": "^1.0",
+    "drupal/paragraphs": "^1.9",
+    "drupal/paragraphs_edit": "^2.0@alpha",
+    "drupal/path_redirect_import": "^1.0@beta",
+    "drupal/pathauto": "^1.9",
+    "drupal/photoswipe": "^3.0",
+    "drupal/rabbit_hole": "^1.0@beta",
+    "drupal/redirect": "^1.0",
+    "drupal/roleassign": "^1.0",
+    "drupal/save_edit": "^1.1",
+    "drupal/scheduler": "^1.1",
+    "drupal/scheduler_content_moderation_integration": "^1.0",
+    "drupal/schema_metatag": "^1.6",
+    "drupal/search_api": "^1.5",
+    "drupal/search_api_solr": "^1.0",
+    "drupal/seckit": "^2.0",
+    "drupal/simple_instagram_feed": "^3.6",
+    "drupal/simple_sitemap": "^3.3",
+    "drupal/sitemap": "^2.0",
+    "drupal/smart_trim": "^1.2",
+    "drupal/social_media_links": "^2.6",
+    "drupal/stage_file_proxy": "^1.1",
+    "drupal/subpathauto": "~1.0",
+    "drupal/svg_image_field": "^2.1",
+    "drupal/taxonomy_import": "^2.0",
+    "drupal/token": "^1.9",
+    "drupal/twig_extensions": "2.x-dev@dev",
+    "drupal/twig_tweak": "^2.8",
+    "drupal/twitter_tweets": "dev-8.x-1.x",
+    "drupal/upgrade_status": "^3.11",
+    "drupal/url_embed": "^1.0",
+    "drupal/video_embed_field": "^2.0",
+    "drupal/video_embed_media": "^2.0",
+    "drupal/viewfield": "^3.0@alpha",
+    "drupal/views_bulk_edit": "^2.2",
+    "drupal/views_bulk_operations": "^4.0",
+    "drupal/views_infinite_scroll": "^1.5",
+    "drupal/views_rss": "2.x-dev",
+    "drupal/webform": "^6.1",
+    "drupal/webform_views": "^5.0",
+    "drupal/xmlsitemap": "^1.0@alpha",
+    "drupal/youtube_gallery": "dev-custom#df60414ef999830bf2b95d6c7d18f0679d546766",
+    "drush/drush": "^10.6",
+    "espresso-dev/instagram-basic-display-php": "^1.1",
+    "npm-asset/blazy": "^1.8",
+    "npm-asset/chosen-js": "^1.8",
+    "npm-asset/dropzone": "^5.5",
+    "npm-asset/jquery-colorbox": "^1.6",
+    "npm-asset/jquery.easing": "^1.4",
+    "npm-asset/slick-carousel": "^1.8",
     "oomphinc/composer-installers-extender": "^2.0",
-    "drupal/console": "^1.9.4",
-    "drupal/fakeobjects": "^1.1",
-    "drupal/iframe": "^2.0",
-    "drupal/config_filter": "^1.8",
-    "fourkitchens/emulsify": "^3.1"
-  },
-  "require-dev": {
-    "drupal/devel": "2.0"
+    "symfony/cache": "^3.4",
+    "twig/extensions": "^1.5",
+    "typhonius/acquia-php-sdk-v2": "^2.0",
+    "wikimedia/composer-merge-plugin": "^2.0.1"
   },
   "extra": {
+    "drupal-scaffold": {
+      "locations": {
+        "web-root": "./docroot"
+      }
+    },
     "installer-types": [
       "bower-asset",
       "npm-asset"
@@ -249,35 +271,18 @@
         "type:drupal-library"
       ]
     },
-    "merge-plugin": {
-      "include": [
-        "docroot/profiles/contrib/sitefarm_seed/composer.json"
-      ],
-      "replace": false,
-      "merge-extra": true,
-      "merge-extra-deep": false,
-      "merge-scripts": true
-    },
     "enable-patching": true,
-    "patches-ignore": {
-      "ucdavis/sitefarm_seed": {
-        "drupal/core": {
-          "datetime-range views enhancements": "https://www.drupal.org/files/issues/the_views_integration-2786577-202.patch",
-          "multiple image upload dimension fix": "https://www.drupal.org/files/issues/2018-04-28/2644468-91.patch",
-          "Profile Inheritance": "https://www.drupal.org/files/issues/2018-10-23/1356276-549-8.6.x.patch"
-        }
-      }
-    },
     "patches": {
       "drupal/core": {
-        "2061377 - Allow image style to be selected in Text Editor's image dialog" : "https://www.drupal.org/files/issues/2020-01-28/2061377-356.patch",
+        "2061377 - Allow image style to be selected in Text Editor's image dialog https://drupal.org/i/2061377" : "https://www.drupal.org/files/issues/2021-10-15/2061377-403.patch",
         "UCSF FilterAlign - remove aggressive removal of classes" : "./patches/core-filteralign.patch",
-        "2973706 - Styles dropdown configuration permit multiple tags" : "https://www.drupal.org/files/issues/2020-07-14/allow-multiple-elements-2973706-12.patch",
+        "2973706 - Styles dropdown configuration permit multiple tags" : "https://www.drupal.org/files/issues/2022-01-14/allow-multiple-elements-2973706-21.patch",
         "UCSF FilterCaption - Fix decode entities on FilterCaption" : "./patches/core-filtercaption.patch",
         "3200283 - Acquia Connector - add missing SVG images" : "https://www.drupal.org/files/issues/2021-03-24/check-svg-and-error-svg-not-found-3200283-5.patch",
-        "3192234 - Responsive Image - Get width and height from fallback responsive image style" : "https://www.drupal.org/files/issues/2021-02-12/3192234-10.patch",
+        "3192234 - Responsive Image - Get width and height from fallback responsive image style" : "https://www.drupal.org/files/issues/2021-11-18/3192234-116.patch",
         "2511878 - Support enclosure field in Views RssFields row plugin" : "https://www.drupal.org/files/issues/2020-07-24/views-rss-fields-enclosure-2511878-30.patch",
-        "2918784 - Views RSS row plugin incorrectly assumes links are relative. Using custom patch due to conflict with 2511878": "./patches/views-rss-fields-enclosure-2511878-custom.patch"
+        "2918784 - Views RSS row plugin incorrectly assumes links are relative. Using custom patch due to conflict with 2511878": "./patches/views-rss-fields-enclosure-2511878-custom.patch",
+        "2949017 - There is no way to delete or update file entities of other users" : "https://www.drupal.org/files/issues/2021-12-01/2949017-85.patch"
       },
       "drupal/field_group": {
         "2652642 - Allow to position the group in the advanced sidebar column": "https://www.drupal.org/files/issues/2018-07-26/2652642-57.patch"
@@ -290,25 +295,27 @@
         "3029632 - Add preview link when no channels are configured": "https://www.drupal.org/files/issues/2019-02-05/applenews-preview-with-no-api-3029632-4.patch",
         "11333241 - Limit tags in html": "https://www.drupal.org/files/issues/2019-02-05/applenews-limit_tags_in_html-11333241-2.patch"
       },
-      "drupal/conditional_styles": {
-        "Drupal 9 compatibility fix": "https://www.drupal.org/files/issues/2021-03-17/d9_support.patch"
-      },
       "drupal/entity_embed_link": {
-        "Prevent Entity Embed Link from overriding entity_embed_container.html.yml file in the theme" : "./patches/entity_embed_link.patch",
-        "Drupal 9 compatibility fix": "https://www.drupal.org/files/issues/2020-06-06/entity_embed_link.1.0.rector.patch"
+        "Prevent Entity Embed Link from overriding entity_embed_container.html.yml file in the theme" : "./patches/entity_embed_link.patch"
       },
       "drupal/twitter_tweets": {
-        "Drupal 9 compatibility fix": "https://www.drupal.org/files/issues/2020-06-06/twitter_tweets.1.5.rector.patch"
+        "Allow full_text and links to display in tweet body" : "./patches/twitter_tweets-3129736_full_text.patch"
       },
       "drupal/youtube_gallery": {
-        "Changes the module so it correctly calls the template file" : "./patches/youtube_gallery.patch",
-        "don't ask to download libraries in drush_hook_post_pm_enable()": "https://www.drupal.org/files/issues/2019-03-24/youtube_gallery-no_post_enable-3042898-2.patch"
+        "don't ask to download libraries in drush_hook_post_pm_enable()": "https://www.drupal.org/files/issues/2019-03-24/youtube_gallery-no_post_enable-3042898-2.patch",
+        "Fix deprecated code" : "./patches/youtube_gallery_fix_deprecated_code.patch"
       },
       "drupal/metatag" : {
         "Fallback options for various metatag fields, only display the first valid option" : "./patches/metatag_fallback.patch"
       },
       "drupal/video_embed_field" : {
         "UCSF Video Embed Patch - Allow background param" : "./patches/video_embed_field__allow_background_param.patch"
+      },
+      "drupal/sitemap" : {
+        "WSOD with Route 'view.taxonomy_term.feed_1' does not exist https://drupal.org/i/3191218" : "https://git.drupalcode.org/project/sitemap/-/merge_requests/3.diff"
+      },
+      "drupal/views_rss" : {
+        "Call to undefined method Drupal-taxonomy-Entity-Term::url() https://www.drupal.org/project/views_rss/issues/3241646" : "https://www.drupal.org/files/issues/2021-10-08/undefined_method-3241646-3.patch"
       }
     },
     "patchLevel": {
