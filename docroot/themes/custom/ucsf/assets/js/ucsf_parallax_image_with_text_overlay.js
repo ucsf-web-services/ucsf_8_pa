@@ -70,12 +70,35 @@ function stepExit(response) {
   }
 }
 
-// Set the initial gallery width:
-setGalleryWidth();
-window.addEventListener('resize', setGalleryWidth);
+// Use MatchMedia to ensure that collision events are only happening in Desktop
+var mql = matchMedia('(min-width: 1050px)');
+// On page load, check if desktop and listen to scroll event.
+if (mql.matches) {
 
-// setup the instance, pass callback functions
-scroller.setup({
-  step: '.scrolly-gallery__step'
-}).onStepEnter(stepEnter).onStepExit(stepExit);
+  // Set the initial gallery width:
+  setGalleryWidth();
+  window.addEventListener('resize', setGalleryWidth);
+
+  // setup the instance, pass callback functions
+  scroller.setup({
+    step: '.scrolly-gallery__step'
+  }).onStepEnter(stepEnter).onStepExit(stepExit);
+}
+
+// When screen size changes, add or remove the scroll listener.
+mql.addListener(function (event) {
+  if (event.matches) {
+    // Set the initial gallery width:
+    setGalleryWidth();
+    window.addEventListener('resize', setGalleryWidth);
+
+    // setup the instance, pass callback functions
+    scroller.setup({
+      step: '.scrolly-gallery__step'
+    }).onStepEnter(stepEnter).onStepExit(stepExit);
+  } else {
+    window.removeEventListener('resize', setGalleryWidth);
+    scrollama.destroy();
+  }
+});
 //# sourceMappingURL=ucsf_parallax_image_with_text_overlay.js.map

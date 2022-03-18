@@ -14,19 +14,20 @@
   *,
   .eyebrow-title,
   .eyebrow-title::after {
-    color: $white;
+    // @include breakpoint($new-large) {
+      color: $white;
+    // }
   }
 
   // Reset links and buttons.
   a {
-    border-bottom: 1px solid;
-    border-bottom-color: $white;
+    // @include breakpoint($new-large) {
+      border-bottom: 1px solid;
+      border-bottom-color: $white;
+    // }
   }
 
   .button {
-    color: $white;
-    border-color: $white;
-    background-color: transparent;
     font-size: 25px;
     padding: 18px 27px;
     margin-left: auto;
@@ -34,16 +35,25 @@
     width: max-content;
     display: block;
     border: 2px solid;
+    // @include breakpoint($new-large) {
+      color: $white;
+      border-color: $white;
+      background-color: transparent;
+    // }
   }
 
   @each $name, $color in $color-map {
     .background-#{$name}  + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #{$color};
-      border-bottom-color: #{$color};
+      // @include breakpoint($new-large) {
+        background-color: #{$color};
+        border-bottom-color: #{$color};
+      // }
     }
     .background-#{$name}  + .scrolly-gallery__text-inner .button:hover {
-      background-color: #{$color};
-      border-color: #{$color};
+      // @include breakpoint($new-large) {
+        background-color: #{$color};
+        border-color: #{$color};
+      // }
     }
 
   }
@@ -56,35 +66,71 @@
 
   &__item {
     position: relative;
-    width: var(--scrolly-gallery-width, 100%);
-    min-height: calc(var(--scrolly-gallery-height, 100vh) * 3);
+
+    @include breakpoint($new-large) {
+      width: var(--scrolly-gallery-width, 100%);
+      min-height: calc(var(--scrolly-gallery-height, 100vh) * 3);
+    }
 
     > * {
-      height: var(--scrolly-gallery-height, 100vh);
+      @include breakpoint($new-large) {
+        height: var(--scrolly-gallery-height, 100vh);
+      }
     }
   }
 
   &__bg {
-    position: sticky;
-    top: 0;
     margin: 0;
+    border-top: 2px solid var(--color, var(--c-navy));
+    border-bottom: 2px solid var(--color, var(--c-navy));
+
+    @include breakpoint($new-large) {
+      position: sticky;
+      top: 0;
+      border: none;
+    }
   }
 
   &__bg-image,
   & img {
-    height:var(--scrolly-gallery-height, 100vh);
-    width: var(--scrolly-gallery-width, 100%);
     object-fit: cover;
-    filter: grayscale(0);
-    transition: filter .5s ease-in-out;
+
+    @include breakpoint($new-large) {
+      height:var(--scrolly-gallery-height, 100vh);
+      width: var(--scrolly-gallery-width, 100%);
+      transition: filter .5s ease-in-out;
+      filter: grayscale(0);
+    }
   }
 
   .grayscale img {
-    filter: grayscale(100%);
+    @include breakpoint($new-large) {
+      filter: grayscale(100%);
+    }
+  }
+
+  &__flexbox-wrapper {
+    *:first-child {
+      @include breakpoint($new-large-max) {
+        margin-top: 0;
+      }
+    }
+
+    *:last-child {
+      @include breakpoint($new-large-max) {
+        margin-bottom: 0;
+      }
+    }
   }
 
   &__text {
-    visibility: hidden;
+    @include breakpoint($new-large-max) {
+      position: relative;
+    }
+
+    @include breakpoint($new-large) {
+      visibility: hidden;
+    }
 
     .scrolly-gallery__item--current & {
       visibility: visible;
@@ -93,13 +139,16 @@
 
   &__text-inner,
   &__text-overlay {
-    position: fixed;
     z-index: 2;
     top: 0;
-    height: var(--scrolly-gallery-height, 100vh);
-    width: var(--scrolly-gallery-width, 100%);
-    color: $white;
-    opacity: 0;
+
+    @include breakpoint($new-large) {
+      position: fixed;
+      height: var(--scrolly-gallery-height, 100vh);
+      width: var(--scrolly-gallery-width, 100%);
+      color: $white;
+      opacity: 0;
+    }
 
     .scrolly-gallery__text--active & {
       opacity: 1;
@@ -107,39 +156,75 @@
   }
 
   &__text-overlay {
-    background-color: var(--background-color, #000);
-    transition: opacity .5s;
-
+    @include breakpoint ($new-large-max) {
+      display: block;
+      width: 100%;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      opacity: .85;
+    }
     .scrolly-gallery__text--active & {
+      background-color: var(--color, var(--c-navy));
+      transition: opacity .5s;
       opacity: .75;
     }
   }
 
   &__text-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 2rem;
+
+    @include breakpoint ($new-small) {
+      padding-left: 11%;
+      padding-right: 11%;
+    }
+
+    @include breakpoint ($new-large-max) {
+      position: relative;
+      z-index: 2;
+    }
+
+    @include breakpoint($new-large) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 0;
+      padding-bottom: 0;
+      font-size: 40px;
+      margin-bottom: 0;
+    }
 
     .scrolly-gallery__text--active & {
-      animation: scrolly-gallery-slide-in .5s ease-out;
+      @include breakpoint($new-large) {
+        animation: scrolly-gallery-slide-in .5s ease-out;
+      }
 
       [data-scrolly-gallery-direction="up"] & {
-        animation: scrolly-gallery-slide-in-up .5s ease-out;
+        @include breakpoint($new-large) {
+          animation: scrolly-gallery-slide-in-up .5s ease-out;
+        }
       }
     }
 
     .scrolly-gallery__text--out & {
       opacity: 1;
-      transform: translateY(-1000vh);
-      animation: scrolly-gallery-slide-out .5s ease-in;
+      @include breakpoint($new-large) {
+        transform: translateY(-1000vh);
+        animation: scrolly-gallery-slide-out .5s ease-in;
+      }
 
       [data-scrolly-gallery-direction="up"] & {
-        animation: scrolly-gallery-slide-out-up .5s ease-out;
+        @include breakpoint($new-large) {
+          animation: scrolly-gallery-slide-out-up .5s ease-out;
+        }
       }
     }
+
   }
 }
 
