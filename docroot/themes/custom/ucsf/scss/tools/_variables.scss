@@ -35,7 +35,27 @@ $bp-main-menu-medium: 43em;
 
 // Colors
 //------------------------------------------------------------------------------
+:root {
+  --black: #000;
+  --c-navy: #052049;
+  --c-blue: #007cbe;
+  --c-print-blue: #178ccb;
+  --c-blue-dark: #064260;
+  --c-gray-blue: #506380;
+  --c-green-cool: #00483A;
+  --c-green-warm: #006400;
+  --c-print-green: #90bd31;
+  --c-teal: #058488;
+  --c-teal-dark: #0E5258;
+  --c-purple: #716fb2;
+  --c-purple-dark: #2E2872;
+  --c-yellow: #fd0;
+  --c-violet-dark: #461850;
+  --c-magenta-dark: #561038;
+  --c-gray-darkest: #21272A;
+}
 
+// @todo stop using scss variables and use css variables instead.
 $c-navy: #052049;
 $c-dark-navy: #121a31;
 $c-teal: #058488;
@@ -77,16 +97,6 @@ $c-print-green: #90bd31;
 $c-print-orange: #f48024;
 $c-print-red: #ec1848;
 
-// additional colors for parallax background
-$c-blue-dark: #064260;
-$c-teal-dark: #0E5258;
-$c-green-cool: #00483A;
-$c-green-warm: #006400;
-$c-purple-dark: #2E2872;
-$c-violet-dark: #461850;
-$c-magenta-dark: #561038;
-
-
 //brand colors
 $facebook-color: #3b5998;
 $twitter-color: #1da1f2;
@@ -104,30 +114,30 @@ $areas: (
   ("location", $c-green, $c-print-green),
   ("news-center", $c-purple, $c-purple),
   ("news--media", $c-purple, $c-purple),
-  ("patient-care", $c-blue, $c-print-blue),
+  ("patient-care", var(--c-blue), var(--c-print-blue)),
   ("research", $c-teal, $c-print-teal),
   ("ucsf-magazine", $c-purple, $c-purple),
 );
 
 $color-map: (
-  blue: $c-blue,
-  gray: $c-gray-blue,
-  green: $c-print-green,
-  teal: $c-teal,
-  navy: $c-navy,
-  purple: $c-purple,
-  yellow: $c-yellow,
-  black: $c-black,
+  blue: var(--c-blue),
+  gray: var(--c-gray-blue),
+  green: var(--c-print-green),
+  teal: var(--c-teal),
+  navy: var(--c-navy),
+  purple: var(--c-purple),
+  yellow: var(--c-yellow),
+  black: var(--black),
 
   // these colors are used in parallax (aka scrollyteller).
-  blue-dark: $c-blue-dark,
-  teal-dark: $c-teal-dark,
-  green-cool: $c-green-cool,
-  green-warm: $c-green-warm,
-  purple-dark: $c-purple-dark,
-  violet-dark: $c-violet-dark,
-  magenta-dark: $c-magenta-dark,
-  gray-darkest: $c-gray-darkest
+  blue-dark: var(--c-blue-dark),
+  teal-dark: var(--c-teal-dark),
+  green-cool: var(--c-green-cool),
+  green-warm: var(--c-green-warm),
+  purple-dark: var(--c-purple-dark),
+  violet-dark: var(--c-violet-dark),
+  magenta-dark: var(--c-magenta-dark),
+  gray-darkest: var(--c-gray-darkest)
 );
 
 // Font Families

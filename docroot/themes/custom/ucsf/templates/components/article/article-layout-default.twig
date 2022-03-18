@@ -19,14 +19,15 @@
     {% set class= 'article-medium-header article-medium-header-video' %}
   {% endif %}
 
+  <header class="article-header {{ class }}">
+    {% include '@theme/banner/banner-content.twig' %}
+  </header>
+
   {% if content.field_parallax_img_txt_overlay|render %}
     {{ attach_library('ucsf/ucsf_parallax_image_with_text_overlay') }}
     {{content.field_parallax_img_txt_overlay}}
   {% endif %}
 
-  <header class="article-header {{ class }}">
-    {% include '@theme/banner/banner-content.twig' %}
-  </header>
   {#{% include "@theme/share/share.twig" %}#}
   <ul class="article-meta-share">
     <li><a rel="nofollow" href="http://www.facebook.com/share.php?u={{ url('<current>') }}" target="_blank" title="Facebook"><span class="fab fa-facebook-square"></span> <span class="indent-text">Facebook</span></a></li>

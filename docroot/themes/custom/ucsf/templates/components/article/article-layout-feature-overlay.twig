@@ -11,6 +11,10 @@
     <div class="article-feature-overlay"> </div>
   </figure>
 
+  {% if content.field_parallax_img_txt_overlay|render %}
+    {{ attach_library('ucsf/ucsf_parallax_image_with_text_overlay') }}
+    {{content.field_parallax_img_txt_overlay}}
+  {% endif %}
 
   <header class="article-header article-feature-overlay-header">
     {% include '@theme/banner/banner-content.twig' %}
