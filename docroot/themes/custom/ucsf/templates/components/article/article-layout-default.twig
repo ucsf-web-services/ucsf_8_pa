@@ -19,6 +19,11 @@
     {% set class= 'article-medium-header article-medium-header-video' %}
   {% endif %}
 
+  {% if content.field_parallax_img_txt_overlay|render %}
+    {{ attach_library('ucsf/ucsf_parallax_image_with_text_overlay') }}
+    {{content.field_parallax_img_txt_overlay}}
+  {% endif %}
+
   <header class="article-header {{ class }}">
     {% include '@theme/banner/banner-content.twig' %}
   </header>

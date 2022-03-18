@@ -1,97 +1,147 @@
 .narrow-page .field-parallax-img-txt-overlay {
   grid-column: 1 / -1;
+
+  /* Make it full screen */
   // grid-row: 2;
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  aspect-ratio: 16/9;
+  // width: 100vw;
+  // position: relative;
+  // left: 50%;
+  // right: 50%;
+  // margin-left: -50vw;
+  // margin-right: -50vw;
+  // aspect-ratio: 16/9;
+
+  *,
+  .eyebrow-title,
+  .eyebrow-title::after {
+    color: $white;
+  }
+
+  // Reset links and buttons.
+  a {
+    border-bottom-color: $white;
+  }
+
+  .button {
+    color: $white;
+    border-color: $white;
+    background-color: transparent;
+    font-size: 25px;
+    padding: 18px 27px;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+    display: block;
+  }
+
+  @each $name, $color in $color-map {
+    .background-#{$name}  + .scrolly-gallery__text-inner a:not(.button):hover {
+      background-color: $color;
+      border-bottom-color: $color;
+    }
+    .background-#{$name}  + .scrolly-gallery__text-inner .button:hover {
+      background-color: $color;
+      border-color: $white;
+    }
+
+  }
+
 }
 
-$height: auto;
-$width: 100%;
+.scrolly-gallery {
+  --scrolly-gallery-height: 100vh;
+  --scrolly-gallery-width: 100%;
 
-.item {
-  position: relative;
-  width: 100%;
-  z-index: 1;
+  &__item {
+    position: relative;
+    width: var(--scrolly-gallery-width, 100%);
+    min-height: calc(var(--scrolly-gallery-height, 100vh) * 3);
 
-  &--current {
+    > * {
+      height: var(--scrolly-gallery-height, 100vh);
+    }
+  }
+
+  &__bg {
+    position: sticky;
+    top: 0;
+    margin: 0;
+  }
+
+  &__bg-image,
+  & img {
+    height:var(--scrolly-gallery-height, 100vh);
+    width: var(--scrolly-gallery-width, 100%);
+    object-fit: cover;
+    filter: grayscale(0);
+    transition: filter .5s ease-in-out;
+  }
+
+  .grayscale img {
+    filter: grayscale(100%);
+  }
+
+  &__text {
+    visibility: hidden;
+
+    .scrolly-gallery__item--current & {
+      visibility: visible;
+    }
+  }
+
+  &__text-inner,
+  &__text-overlay {
+    position: fixed;
     z-index: 2;
+    top: 0;
+    height: var(--scrolly-gallery-height, 100vh);
+    width: var(--scrolly-gallery-width, 100%);
+    color: $white;
+    opacity: 0;
+
+    .scrolly-gallery__text--active & {
+      opacity: 1;
+    }
   }
 
-  > * {
-    height: $height;
+  &__text-overlay {
+    // background-color: var(--scrolly-gallery-overlay, #000);
+    transition: opacity .5s;
+
+    .scrolly-gallery__text--active & {
+      opacity: .75;
+    }
   }
-}
 
-.item__image {
-  position: sticky;
-  top: 0;
-}
+  &__text-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    padding-left: 10%;
+    padding-right: 10%;
 
-.item__image img {
+    .scrolly-gallery__text--active & {
+      animation: scrolly-gallery-slide-in .5s ease-out;
 
-  position: static;
-  top: 0;
-  height: $height;
-  width: $width;
-  z-index: 1;
-  opacity: 1;
-  object-fit: cover;
-  aspect-ratio: 16/9;
+      [data-scrolly-gallery-direction="up"] & {
+        animation: scrolly-gallery-slide-in-up .5s ease-out;
+      }
+    }
 
+    .scrolly-gallery__text--out & {
+      opacity: 1;
+      transform: translateY(-1000vh);
+      animation: scrolly-gallery-slide-out .5s ease-in;
 
-  .item--current & {
-    opacity: 1;
-  }
-}
-
-.item__text-inner,
-.item__text-bg {
-  // position: fixed;
-  position: relative;
-  z-index: 2;
-  top: 0;
-  height: $height;
-  width: $width;
-  opacity: 0;
-  color: white;
-  aspect-ratio: 16/9;
-
-  .active & {
-    opacity: 1;
-  }
-}
-
-.item__text-bg {
-  transition: opacity .5s;
-
-  .active & {
-    opacity: .75;
+      [data-scrolly-gallery-direction="up"] & {
+        animation: scrolly-gallery-slide-out-up .5s ease-out;
+      }
+    }
   }
 }
 
-.item__text-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 30px;
-
-  .active & {
-    animation: slide-in .5s ease-out;
-  }
-
-  .animate-out & {
-    transition-delay: .5s;
-    transition-property: opacity;
-    animation: slide-out .5s ease-in;
-  }
-}
-
-@keyframes slide-in {
+@keyframes scrolly-gallery-slide-in {
   from {
     transform: translateY(100vh);
   }
@@ -100,7 +150,16 @@ $width: 100%;
   }
 }
 
-@keyframes slide-out {
+@keyframes scrolly-gallery-slide-in-up {
+  from {
+    transform: translateY(-100vh);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes scrolly-gallery-slide-out {
   from {
     transform: translateY(0);
   }
@@ -109,13 +168,11 @@ $width: 100%;
   }
 }
 
-// Use this if you want the images to fade in rather than scroll in.
-// This works better within the context of a page.
-.fade-images {
-  .item__image img {
-    position: fixed;
-    transition: opacity .5s;
-    opacity: 0;
+@keyframes scrolly-gallery-slide-out-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100vh);
   }
 }
-
