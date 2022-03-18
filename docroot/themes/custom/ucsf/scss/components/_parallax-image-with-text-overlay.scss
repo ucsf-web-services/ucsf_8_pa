@@ -94,6 +94,7 @@
   &__bg-image,
   & img {
     object-fit: cover;
+    width: 100%;
 
     @include breakpoint($new-large) {
       height:var(--scrolly-gallery-height, 100vh);
@@ -124,11 +125,13 @@
   }
 
   &__text {
+
     @include breakpoint($new-large-max) {
       position: relative;
     }
 
     @include breakpoint($new-large) {
+      line-height: 1.2em;
       visibility: hidden;
     }
 
