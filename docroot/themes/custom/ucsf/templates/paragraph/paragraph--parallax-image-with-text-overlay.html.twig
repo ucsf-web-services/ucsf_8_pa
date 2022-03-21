@@ -60,11 +60,12 @@
 {% endif %}
 
 {% block paragraph %}
+{{ attach_library('ucsf/ucsf_parallax_image_with_text_overlay') }}
 	<div{{attributes.addClass(classes)}}>
 		{% block content %}
       <section class="scrolly-gallery__item">
         {% if content.field_image_media.0 %}
-          <figure class="scrolly-gallery__step scrolly-gallery__bg border-{{overlay_class|trim}}">
+          <figure class="scrolly-gallery__step scrolly-gallery__bg">
             {{ content.field_image_media.0}}
           </figure>
         {% endif %}

@@ -1,0 +1,11 @@
+{# Setting field "Manage display" format to "key", iterating through those keys (a.k.a. item.value) and using them as classes #}
+{% set layout_control_class = '' %}
+{% if paragraph.field_layout_controls %}
+  {% for key, item in paragraph.field_layout_controls if key|first != '#' %}
+    {% set layout_control_class = layout_control_class ~ " " ~ item.value %}
+  {% endfor %}
+{% endif %}
+
+<div{{ attributes.addClass("scrolly-gallery-wrapper", layout_control_class) }}>
+  {{ content|without('field_layout_controls') }}
+</div>

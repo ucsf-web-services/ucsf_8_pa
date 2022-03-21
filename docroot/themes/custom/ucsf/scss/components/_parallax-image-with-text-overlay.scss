@@ -1,63 +1,87 @@
-.page-node-type-article .field-parallax-img-txt-overlay {
+.page-node-type-article .scrolly-gallery-wrapper {
   grid-column: 1 / -1;
 
-  /* Make it full screen */
-  grid-row: 2;
-  // width: 100vw;
-  // position: relative;
-  // left: 50%;
-  // right: 50%;
-  // margin-left: -50vw;
-  // margin-right: -50vw;
-  // aspect-ratio: 16/9;
+  padding-top: 40px;
+
+  @include breakpoint($new-large) {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
 
   *,
   .eyebrow-title,
   .eyebrow-title::after {
-    // @include breakpoint($new-large) {
+    @include breakpoint($new-large) {
       color: $white;
-    // }
+    }
   }
 
   // Reset links and buttons.
   a {
-    // @include breakpoint($new-large) {
+    @include breakpoint($new-large) {
       border-bottom: 1px solid;
       border-bottom-color: $white;
-    // }
+    }
   }
 
   .button {
-    font-size: 25px;
-    padding: 18px 27px;
+    // font-size: 25px;
+    // padding: 18px 27px;
     margin-left: auto;
     margin-right: auto;
     width: max-content;
     display: block;
     border: 2px solid;
-    // @include breakpoint($new-large) {
+    @include breakpoint($new-large) {
       color: $white;
       border-color: $white;
       background-color: transparent;
-    // }
+    }
   }
 
   @each $name, $color in $color-map {
     .background-#{$name}  + .scrolly-gallery__text-inner a:not(.button):hover {
-      // @include breakpoint($new-large) {
+      @include breakpoint($new-large) {
         background-color: #{$color};
         border-bottom-color: #{$color};
-      // }
+      }
     }
     .background-#{$name}  + .scrolly-gallery__text-inner .button:hover {
-      // @include breakpoint($new-large) {
+      @include breakpoint($new-large) {
         background-color: #{$color};
         border-color: #{$color};
-      // }
+      }
     }
 
   }
 
+  // Editor forgot to add the color
+  .background- {
+    & + .scrolly-gallery__text-inner a:not(.button):hover {
+      @include breakpoint($new-large) {
+        background-color: var(--c-navy, #052049);
+        border-bottom-color: var(--c-navy, #052049);
+      }
+    }
+    & + .scrolly-gallery__text-inner .button:hover {
+      @include breakpoint($new-large) {
+        background-color: var(--c-navy, #052049);
+        border-color: var(--c-navy, #052049);
+      }
+    }
+  }
+}
+
+.scrolly-gallery-wrapper + .paragraph-text-block {
+  @include breakpoint($new-large) {
+    padding-top: 80px;
+  }
+}
+
+.scrolly-gallery-wrapper.padding-margin-bottom-0 + .article-full-width__space {
+  @include breakpoint($new-large) {
+    padding-top: 80px;
+  }
 }
 
 .scrolly-gallery {
@@ -81,8 +105,6 @@
 
   &__bg {
     margin: 0;
-    border-top: 2px solid var(--color, var(--c-navy));
-    border-bottom: 2px solid var(--color, var(--c-navy));
 
     @include breakpoint($new-large) {
       position: sticky;
@@ -125,13 +147,14 @@
   }
 
   &__text {
+    text-align: start;
 
     @include breakpoint($new-large-max) {
       position: relative;
     }
 
     @include breakpoint($new-large) {
-      line-height: 1.2em;
+      line-height: 1.2;
       visibility: hidden;
     }
 
@@ -159,18 +182,10 @@
   }
 
   &__text-overlay {
-    @include breakpoint ($new-large-max) {
-      display: block;
-      width: 100%;
-      height: auto;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      opacity: .85;
-    }
+    transition: opacity .5s;
+
     .scrolly-gallery__text--active & {
       background-color: var(--color, var(--c-navy));
-      transition: opacity .5s;
       opacity: .75;
     }
   }
@@ -180,7 +195,6 @@
     padding-bottom: 2rem;
     padding-left: 20px;
     padding-right: 20px;
-    margin-bottom: 2rem;
 
     @include breakpoint ($new-small) {
       padding-left: 11%;
@@ -198,7 +212,7 @@
       justify-content: center;
       padding-top: 0;
       padding-bottom: 0;
-      font-size: 40px;
+      font-size: 24px;
       margin-bottom: 0;
     }
 
