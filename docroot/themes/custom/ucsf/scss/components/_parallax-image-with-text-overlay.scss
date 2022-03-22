@@ -1,11 +1,35 @@
+.page_narrow {
+    &--scrolly {
+    padding-top: 40px;
+
+    @include breakpoint($new-large) {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+  }
+
+  & + &.page_narrow--scrolly {
+    @include breakpoint($new-large) {
+      grid-column: 1 / -1;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
 .page-node-type-article .scrolly-gallery-wrapper {
   grid-column: 1 / -1;
+  // margin: 0 -40px;
+  padding-top: 0;
 
-  padding-top: 40px;
+  @include breakpoint($new-small) {
+    // margin-left: -14%;
+    // margin-right: -14%;
+  }
 
   @include breakpoint($new-large) {
-    padding-top: 80px;
-    padding-bottom: 80px;
+    // margin-left: -37.5%;
+    // margin-right: -37.5%;
   }
 
   *,
@@ -25,8 +49,8 @@
   }
 
   .button {
-    // font-size: 25px;
-    // padding: 18px 27px;
+    font-size: 18px;
+    padding: 18px 27px;
     margin-left: auto;
     margin-right: auto;
     width: max-content;
@@ -53,22 +77,31 @@
       }
     }
 
+    .scrolly-gallery__text--active .background-#{$name} {
+      background-color: rgba($color, .75);
+    }
+
   }
 
-  // Editor forgot to add the color
+  // Default color is used
   .background- {
     & + .scrolly-gallery__text-inner a:not(.button):hover {
       @include breakpoint($new-large) {
-        background-color: var(--c-navy, #052049);
-        border-bottom-color: var(--c-navy, #052049);
+        background-color: $c-navy;
+        border-bottom-color: $c-navy;
       }
     }
+
     & + .scrolly-gallery__text-inner .button:hover {
       @include breakpoint($new-large) {
-        background-color: var(--c-navy, #052049);
-        border-color: var(--c-navy, #052049);
+        background-color: $c-navy;
+        border-color: $c-navy;
       }
     }
+  }
+
+  .scrolly-gallery__text--active .background- {
+    background-color: rgba($c-navy, .75);
   }
 }
 
@@ -106,10 +139,43 @@
   &__bg {
     margin: 0;
 
+    @include breakpoint($new-large-max) {
+      margin-left: -14%;
+      margin-right: -14%;
+    }
+
+    @include breakpoint ($new-small-max) {
+      margin-left: -40px;
+      margin-right: -40px;
+    }
+
     @include breakpoint($new-large) {
       position: sticky;
       top: 0;
-      border: none;
+    }
+
+    // mobile image
+    &--small-screen {
+      @include breakpoint($new-large) {
+        display: none;
+      }
+    }
+
+    // mobile image has been provided
+    &--small-screen + &--desktop {
+      @include breakpoint($new-large-max) {
+        display: none;
+      }
+    }
+
+    // mobile image has not been provided, use default
+    &--desktop img {
+      object-fit: cover;
+      width: 100%;
+
+      @include breakpoint($new-large-max) {
+        aspect-ratio: 1;
+      }
     }
   }
 
@@ -121,14 +187,6 @@
     @include breakpoint($new-large) {
       height:var(--scrolly-gallery-height, 100vh);
       width: var(--scrolly-gallery-width, 100%);
-      transition: filter .5s ease-in-out;
-      filter: grayscale(0);
-    }
-  }
-
-  .grayscale img {
-    @include breakpoint($new-large) {
-      filter: grayscale(100%);
     }
   }
 
@@ -185,21 +243,14 @@
     transition: opacity .5s;
 
     .scrolly-gallery__text--active & {
-      background-color: var(--color, var(--c-navy));
-      opacity: .75;
+      backdrop-filter: grayscale(100%);
+      opacity: 1;
     }
   }
 
   &__text-inner {
     padding-top: 2rem;
     padding-bottom: 2rem;
-    padding-left: 20px;
-    padding-right: 20px;
-
-    @include breakpoint ($new-small) {
-      padding-left: 11%;
-      padding-right: 11%;
-    }
 
     @include breakpoint ($new-large-max) {
       position: relative;
@@ -214,6 +265,13 @@
       padding-bottom: 0;
       font-size: 24px;
       margin-bottom: 0;
+      padding-left: 16%;
+      padding-right: 16%;
+    }
+
+    @include breakpoint(1440px) {
+      padding-left: 309px;
+      padding-right: 309px;
     }
 
     .scrolly-gallery__text--active & {

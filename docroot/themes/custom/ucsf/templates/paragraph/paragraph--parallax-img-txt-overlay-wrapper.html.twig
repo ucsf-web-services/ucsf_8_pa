@@ -5,7 +5,9 @@
     {% set layout_control_class = layout_control_class ~ " " ~ item.value %}
   {% endfor %}
 {% endif %}
-
-<div{{ attributes.addClass("scrolly-gallery-wrapper", layout_control_class) }}>
-  {{ content|without('field_layout_controls') }}
+<div class="page_narrow page_narrow--scrolly {{layout_control_class}}">
+  <div{{ attributes.addClass("scrolly-gallery-wrapper") }}>
+    {{ content|without('field_layout_controls') }}
+  </div>
 </div>
+
