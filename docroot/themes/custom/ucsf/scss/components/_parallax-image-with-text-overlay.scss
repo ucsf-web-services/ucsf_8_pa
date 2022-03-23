@@ -80,11 +80,6 @@
         border-color: #{$color};
       }
     }
-
-    .scrolly-gallery__text--active .background-#{$name} {
-      background-color: rgba($color, .75);
-    }
-
   }
 
   // Default color is used
@@ -102,10 +97,6 @@
         border-color: $c-navy;
       }
     }
-  }
-
-  .scrolly-gallery__text--active .background- {
-    background-color: rgba($c-navy, .75);
   }
 }
 
@@ -244,10 +235,11 @@
   }
 
   &__text-overlay {
-    transition: opacity .5s;
+    transition: opacity 1s;
+    backdrop-filter: grayscale(100%);
+    background-color: rgba(var(--color-rgb, hex-to-rgb($c-navy)), .75);
 
     .scrolly-gallery__text--active & {
-      backdrop-filter: grayscale(100%);
       opacity: 1;
     }
   }
