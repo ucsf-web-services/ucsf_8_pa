@@ -1410,9 +1410,18 @@ a.icon-transit {
   padding: 16px 32px; }
 
 p.quote-style {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
   font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif;
-  letter-spacing: -1px;
-  line-height: 1.2em; }
+  font-size: 31px;
+  line-height: 1.2em;
+  letter-spacing: -0.6px; }
+  @media (min-width: 600px) {
+    p.quote-style {
+      font-size: 40px;
+      letter-spacing: -1px; } }
 
 .element-fade {
   opacity: 0; }
@@ -3623,8 +3632,15 @@ figure figure[class="image"] {
     padding-left: 0;
     padding-right: 0; } }
 
-.page_narrow.move-scrolly-to-banner {
-  grid-row: 1; }
+@media (min-width: 1050px) {
+  .page_narrow.move-scrolly-to-banner {
+    grid-row: 1;
+    grid-column: 1 / -1;
+    padding-left: 0;
+    padding-right: 0; } }
+
+.page_narrow.move-scrolly-to-banner .scrolly-gallery__flexbox-wrapper {
+  width: 100%; }
 
 .page-node-type-article .scrolly-gallery-wrapper {
   grid-column: 1 / -1;
@@ -3882,8 +3898,9 @@ figure figure[class="image"] {
     -webkit-backdrop-filter: grayscale(100%);
             backdrop-filter: grayscale(100%);
     background-color: rgba(var(--color-rgb, 5, 32, 73), 0.75); }
-    .scrolly-gallery__text--active .scrolly-gallery__text-overlay {
-      opacity: 1; }
+    .scrolly-gallery__text--out .scrolly-gallery__text-overlay {
+      -webkit-animation: scrolly-gallery-fade-out .75s ease-in;
+              animation: scrolly-gallery-fade-out .75s ease-in; }
   .scrolly-gallery__text-inner {
     padding-top: 2rem;
     padding-bottom: 2rem; }
@@ -3904,7 +3921,6 @@ figure figure[class="image"] {
                 justify-content: center;
         padding-top: 0;
         padding-bottom: 0;
-        font-size: 24px;
         margin-bottom: 0;
         padding-left: 16%;
         padding-right: 16%; } }
@@ -3996,6 +4012,22 @@ figure figure[class="image"] {
   to {
     -webkit-transform: translateY(100vh);
             transform: translateY(100vh); } }
+
+@-webkit-keyframes scrolly-gallery-fade-out {
+  0% {
+    opacity: 1; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+
+@keyframes scrolly-gallery-fade-out {
+  0% {
+    opacity: 1; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
 
 .slicknav_btn {
   position: relative;

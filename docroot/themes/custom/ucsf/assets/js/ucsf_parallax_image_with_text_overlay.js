@@ -13,6 +13,7 @@ var scroller = scrollama();
 var gallery = document.querySelector('.scrolly-gallery');
 var items = document.querySelectorAll('.scrolly-gallery__item');
 var textItems = document.querySelectorAll('.scrolly-gallery__text');
+var background = document.querySelectorAll('.scrolly-gallery__text-overlay');
 
 function setGalleryWidth() {
   gallery.style.setProperty('--scrolly-gallery-width', gallery.offsetWidth + 'px');
@@ -82,6 +83,7 @@ if (mql.matches) {
   // setup the instance, pass callback functions
   scroller.setup({
     step: '.scrolly-gallery__step'
+    // debug: true
   }).onStepEnter(stepEnter).onStepExit(stepExit);
 }
 

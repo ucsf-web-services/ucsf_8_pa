@@ -16,8 +16,18 @@
     }
   }
 
+  // Custom layout control option to move scrolly visually below banner in desktop.
   &.move-scrolly-to-banner {
-    grid-row: 1;
+    @include breakpoint($new-large) {
+      grid-row: 1;
+      grid-column: 1 / -1;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .scrolly-gallery__flexbox-wrapper {
+      width: 100%;
+    }
   }
 }
 
@@ -239,8 +249,8 @@
     backdrop-filter: grayscale(100%);
     background-color: rgba(var(--color-rgb, hex-to-rgb($c-navy)), .75);
 
-    .scrolly-gallery__text--active & {
-      opacity: 1;
+    .scrolly-gallery__text--out & {
+      animation: scrolly-gallery-fade-out .75s ease-in;
     }
   }
 
@@ -259,7 +269,7 @@
       justify-content: center;
       padding-top: 0;
       padding-bottom: 0;
-      font-size: 24px;
+      // font-size: 24px;
       margin-bottom: 0;
       padding-left: 16%;
       padding-right: 16%;
@@ -332,5 +342,17 @@
   }
   to {
     transform: translateY(100vh);
+  }
+}
+
+@keyframes scrolly-gallery-fade-out {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
