@@ -68,7 +68,8 @@
       '.blockquote-full-width',
       '.blockquote--half-left',
       '.paragraph--type--gallery',
-      '.align--left.wysiwyg_quote'
+      '.align--left.wysiwyg_quote',
+      '.scrolly-gallery'
     ];
 
     // Get the NodeList of all the selectors matching elements on the page.
