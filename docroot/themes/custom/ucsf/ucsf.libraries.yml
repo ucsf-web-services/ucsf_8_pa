@@ -86,8 +86,18 @@ press_releases_tab:
 
 ucsf_parallax_image_with_text_overlay:
   js:
-    assets/js/scrollama.min.js: {}
     assets/js/ucsf_parallax_image_with_text_overlay.js: {}
+  dependencies:
+    - ucsf/gsap
+
+gsap:
+  js:
+    https://unpkg.com/gsap@3.9.1/dist/gsap.min.js:
+      type: external
+      minified: true
+    https://unpkg.com/gsap@3.9.1/dist/ScrollTrigger.min.js:
+      type: external
+      minified: true
 
 lazyload:
   js:

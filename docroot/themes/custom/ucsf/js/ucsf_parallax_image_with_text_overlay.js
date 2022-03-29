@@ -1,106 +1,89 @@
 
-
-// scrollama documentation and tutoreal
-// https://www.npmjs.com/package/scrollama
-// https://www.youtube.com/watch?v=d7wTA9F-l8c
-
-// Scrollama event triggers
-// https://www.youtube.com/watch?v=rXHtHLiBWhY
-
-// instantiate the scrollama library.
-const scroller = scrollama();
+gsap.registerPlugin('ScrollTrigger')
 
 const gallery = document.querySelector('.scrolly-gallery');
-const items = document.querySelectorAll('.scrolly-gallery__item');
-const textItems = document.querySelectorAll('.scrolly-gallery__text');
+const items = document.querySelectorAll('.scrolly-gallery__item')
 
 function setGalleryWidth() {
   gallery.style.setProperty('--scrolly-gallery-width', `${gallery.offsetWidth}px`);
 }
+// Set the initial gallery width:
+setGalleryWidth();
+window.addEventListener('resize', setGalleryWidth);
 
-function removeCurrent() {
-  items.forEach((item) => item.classList.remove('scrolly-gallery__item--current'))
-}
+items.forEach(item => {
+  const text = item.querySelector('.scrolly-gallery__text')
+  const textInner = text.querySelector('.scrolly-gallery__text-inner')
+  const image = item.querySelector('.scrolly-gallery__bg')
 
-function removeAnimateOut() {
-  textItems.forEach((item) => item.classList.remove('scrolly-gallery__text--out'))
-}
+  const tl = gsap.timeline({
+    //repeat: 2,
+    //repeatDelay: 1,
+    scrollTrigger: {
+      trigger: item,
+      //pin: true,   // pin the trigger element while active
+      start: "33% center", // when the top of the trigger hits the top of the viewport
+      end: "45%", // end after scrolling 500px beyond the start
+      scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+      // toggleActions: 'play none reverse none',
+      toggleClass: 'current',
+      // markers: true,
+    },
+  });
 
-function stepEnter(response) {
-  gallery.dataset.scrollyGalleryDirection = response.direction
+  tl.from(text, {
+    opacity: 0,
+  })
+  tl.from(textInner, {
+    y: '100%',
+  })
+  tl.to(textInner, {
+    y: '-5%',
+  })
+  tl.to(textInner, {
+    y: '-100%',
+  })
+  tl.to(text, {
+    opacity: 0,
+  })
 
-  // 0 is the first stem in an item and 2 is the last
-  const position = (response.direction === 'down') ? 0 : 2;
-  if (response.index % 3 === position) {
-    removeCurrent();
-    response.element.parentElement.classList.add('scrolly-gallery__item--current')
-  }
-
-  // Ensure the first item gets the current class.
-  if (response.direction === 'down' && response.index === 1) {
-    response.element.parentElement.classList.add('scrolly-gallery__item--current')
-  }
-
-  if (response.element.classList.contains('scrolly-gallery__text')) {
-    removeAnimateOut();
-    response.element.classList.add('scrolly-gallery__text--active');
-    response.element.previousElementSibling.classList.add('grayscale');
-  }
-}
-
-function stepExit(response) {
-  if (response.element.classList.contains('scrolly-gallery__text')) {
-    response.element.classList.remove('scrolly-gallery__text--active');
-    response.element.classList.add('scrolly-gallery__text--out');
-    response.element.previousElementSibling.classList.remove('grayscale');
-  }
-
-  // Remove classes when exiting the gallery.
-  const exitFirst = response.direction === 'up' && response.index <= 1;
-  const exitLast = response.direction === 'down' && response.index >= ((items.length * 3) - 1);
-  if (exitFirst || exitLast) {
-    setTimeout(() => {
-      removeCurrent()
-      removeAnimateOut();
-    }, 500);
-  }
-}
-
-
-// Use MatchMedia to ensure that collision events are only happening in Desktop
-const mql = matchMedia('(min-width: 1050px)');
-// On page load, check if desktop and listen to scroll event.
-if (mql.matches) {
-
-  // Set the initial gallery width:
-  setGalleryWidth();
-  window.addEventListener('resize', setGalleryWidth);
-
-  // setup the instance, pass callback functions
-  scroller
-    .setup({
-      step: '.scrolly-gallery__step',
-    })
-    .onStepEnter(stepEnter)
-    .onStepExit(stepExit);
-}
-
-// When screen size changes, add or remove the scroll listener.
-mql.addListener(event => {
-  if (event.matches) {
-      // Set the initial gallery width:
-    setGalleryWidth();
-    window.addEventListener('resize', setGalleryWidth);
-
-    // setup the instance, pass callback functions
-    scroller
-      .setup({
-        step: '.scrolly-gallery__step',
-      })
-      .onStepEnter(stepEnter)
-      .onStepExit(stepExit);
-  } else {
-    window.removeEventListener('resize', setGalleryWidth);
-    scrollama.destroy();
-  }
 })
+
+
+// // Use MatchMedia to ensure that collision events are only happening in Desktop
+// const mql = matchMedia('(min-width: 1050px)');
+// // On page load, check if desktop and listen to scroll event.
+// if (mql.matches) {
+
+//   // Set the initial gallery width:
+//   setGalleryWidth();
+//   window.addEventListener('resize', setGalleryWidth);
+
+//   // setup the instance, pass callback functions
+//   scroller
+//     .setup({
+//       step: '.scrolly-gallery__step',
+//     })
+//     .onStepEnter(stepEnter)
+//     .onStepExit(stepExit);
+// }
+
+// // When screen size changes, add or remove the scroll listener.
+// mql.addListener(event => {
+//   if (event.matches) {
+//       // Set the initial gallery width:
+//     setGalleryWidth();
+//     window.addEventListener('resize', setGalleryWidth);
+
+//     // setup the instance, pass callback functions
+//     scroller
+//       .setup({
+//         step: '.scrolly-gallery__step',
+//       })
+//       .onStepEnter(stepEnter)
+//       .onStepExit(stepExit);
+//   } else {
+//     window.removeEventListener('resize', setGalleryWidth);
+//     scrollama.destroy();
+//   }
+// })
