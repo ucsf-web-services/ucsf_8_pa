@@ -14,7 +14,6 @@ const gallery = document.querySelectorAll('.scrolly-gallery');
 const items = document.querySelectorAll('.scrolly-gallery__item');
 const textItems = document.querySelectorAll('.scrolly-gallery__text');
 const background = document.querySelectorAll('.scrolly-gallery__text-overlay');
-console.log(gallery)
 function setGalleryWidth() {
   gallery.forEach((item) => item.style.setProperty('--scrolly-gallery-width', `${item.offsetWidth}px`));
 }
