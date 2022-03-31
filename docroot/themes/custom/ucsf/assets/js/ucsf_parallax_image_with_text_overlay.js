@@ -101,7 +101,7 @@ mql.addListener(function (event) {
     }).onStepEnter(stepEnter).onStepExit(stepExit);
   } else {
     window.removeEventListener('resize', setGalleryWidth);
-    scrollama.destroy();
+    scroller.destroy();
   }
 });
 //# sourceMappingURL=ucsf_parallax_image_with_text_overlay.js.map

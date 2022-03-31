@@ -8,7 +8,8 @@
     }
   }
 
-  & + &.page_narrow--scrolly {
+  & + &.page_narrow--scrolly,
+  .narrow-page &.page_narrow--scrolly {
     @include breakpoint($new-large) {
       grid-column: 1 / -1;
       padding-left: 0;
@@ -229,7 +230,6 @@
 
   &__text-inner,
   &__text-overlay {
-    z-index: 2;
     top: 0;
 
     @include breakpoint($new-large) {
@@ -238,6 +238,7 @@
       width: var(--scrolly-gallery-width, 100%);
       color: $white;
       opacity: 0;
+      z-index: 2;
     }
 
     .scrolly-gallery__text--active & {
@@ -261,7 +262,6 @@
 
     @include breakpoint ($new-large-max) {
       position: relative;
-      z-index: 2;
     }
 
     @include breakpoint($new-large) {
@@ -270,7 +270,6 @@
       justify-content: center;
       padding-top: 0;
       padding-bottom: 0;
-      // font-size: 24px;
       margin-bottom: 0;
       padding-left: 16%;
       padding-right: 16%;

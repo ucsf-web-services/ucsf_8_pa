@@ -100,6 +100,7 @@ mql.addListener(event => {
       .onStepExit(stepExit);
   } else {
     window.removeEventListener('resize', setGalleryWidth);
-    scrollama.destroy();
+    scroller.destroy();
+
   }
 })
