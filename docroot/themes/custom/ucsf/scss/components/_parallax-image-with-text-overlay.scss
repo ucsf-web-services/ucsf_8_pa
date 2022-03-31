@@ -16,6 +16,13 @@
     }
   }
 
+  // To remove a gap between two galleries
+  &--scrolly + &--scrolly {
+    @include breakpoint($new-large) {
+      margin-top: -1px;
+    }
+  }
+
   // Custom layout control option to move scrolly visually below banner in desktop.
   &.move-scrolly-to-banner {
     @include breakpoint($new-large) {
