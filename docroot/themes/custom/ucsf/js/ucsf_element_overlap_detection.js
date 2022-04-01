@@ -68,7 +68,8 @@
       '.blockquote-full-width',
       '.blockquote--half-left',
       '.paragraph--type--gallery',
-      '.align--left.wysiwyg_quote'
+      '.align--left.wysiwyg_quote',
+      '.scrolly-gallery__step'
     ];
 
     // Get the NodeList of all the selectors matching elements on the page.
@@ -76,6 +77,7 @@
 
     // Set the starting state for if there is anything colliding
     let overlapState = null;
+    
 
     /**
      * Hide element if overlap is detected.
