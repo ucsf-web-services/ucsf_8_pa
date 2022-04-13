@@ -14,6 +14,18 @@ var gallery = document.querySelectorAll('.scrolly-gallery');
 var items = document.querySelectorAll('.scrolly-gallery__item');
 var textItems = document.querySelectorAll('.scrolly-gallery__text');
 var background = document.querySelectorAll('.scrolly-gallery__text-overlay');
+var images = document.querySelectorAll('.scrolly-gallery__bg img');
+
+function removeLazyLoading() {
+  setTimeout(function () {
+    images.forEach(function (image) {
+      image.removeAttribute('loading');
+      image.style.animation = 'none';
+    });
+  }, 600);
+}
+removeLazyLoading();
+
 function setGalleryWidth() {
   gallery.forEach(function (item) {
     return item.style.setProperty('--scrolly-gallery-width', item.offsetWidth + 'px');
@@ -91,6 +103,8 @@ if (mql.matches) {
 // When screen size changes, add or remove the scroll listener.
 mql.addListener(function (event) {
   if (event.matches) {
+    removeLazyLoading();
+
     // Set the initial gallery width:
     setGalleryWidth();
     window.addEventListener('resize', setGalleryWidth);
