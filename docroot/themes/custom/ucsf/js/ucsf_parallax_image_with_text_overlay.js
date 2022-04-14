@@ -14,6 +14,18 @@ const gallery = document.querySelectorAll('.scrolly-gallery');
 const items = document.querySelectorAll('.scrolly-gallery__item');
 const textItems = document.querySelectorAll('.scrolly-gallery__text');
 const background = document.querySelectorAll('.scrolly-gallery__text-overlay');
+const images = document.querySelectorAll('.scrolly-gallery__bg img');
+
+function removeLazyLoading() {
+  setTimeout(() => {
+    images.forEach(image => {
+      image.removeAttribute('loading')
+      image.style.animation = 'none';
+    })
+  }, 600);
+}
+removeLazyLoading();
+
 function setGalleryWidth() {
   gallery.forEach((item) => item.style.setProperty('--scrolly-gallery-width', `${item.offsetWidth}px`));
 }
@@ -87,7 +99,9 @@ if (mql.matches) {
 // When screen size changes, add or remove the scroll listener.
 mql.addListener(event => {
   if (event.matches) {
-      // Set the initial gallery width:
+    removeLazyLoading();
+
+    // Set the initial gallery width:
     setGalleryWidth();
     window.addEventListener('resize', setGalleryWidth);
 
@@ -101,6 +115,5 @@ mql.addListener(event => {
   } else {
     window.removeEventListener('resize', setGalleryWidth);
     scroller.destroy();
-
   }
 })
