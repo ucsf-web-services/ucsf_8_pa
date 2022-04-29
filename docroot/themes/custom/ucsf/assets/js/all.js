@@ -222,5 +222,35 @@
             $(this).addClass('align-center--video');
         };
     });
+
+    // when article ckeditor body is left empty because content lives in Paragraphs,
+    //  it leaves a gap between header and those elements.
+    var removeSpaceFromEmptyElement = function removeSpaceFromEmptyElement() {
+        if (document.querySelector('.page_narrow')) {
+            var emptyNarrowPageElement = document.querySelectorAll('.page_narrow');
+            var styles = '\n        padding-top:0;\n        margin-top:-1px;\n        margin-bottom:-1px;';
+
+            emptyNarrowPageElement.forEach(function (element) {
+                if (!element.hasChildNodes()) {
+                    element.style = styles;
+                }
+            });
+        }
+    };
+
+    // Check screen size.
+    var mql = window.matchMedia('(max-width: 1049px)');
+
+    function screenTest(event) {
+        if (event.matches) {
+            /* the viewport is 1049 pixels wide or less */
+        } else {
+            /* the viewport is more than 1049 pixels wide */
+            removeSpaceFromEmptyElement();
+        }
+    }
+
+    screenTest(mql);
+    mql.addListener(screenTest);
 })(jQuery, window);
 //# sourceMappingURL=all.js.map

@@ -467,3 +467,12 @@ a[name] {
   top: -200px;
 }
 
+// move element below the banner added by layout controls in editor UI
+.move-to-banner {
+  @include breakpoint($new-large) {
+    grid-row: 1;
+    grid-column: 1 / -1;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
