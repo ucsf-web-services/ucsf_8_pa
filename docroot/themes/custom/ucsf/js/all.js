@@ -234,4 +234,38 @@
     };
   });
 
+
+  // when article ckeditor body is left empty because content lives in Paragraphs,
+  //  it leaves a gap between header and those elements.
+  const removeSpaceFromEmptyElement = () => {
+    if (document.querySelector('.page_narrow')) {
+      const emptyNarrowPageElement = document.querySelectorAll('.page_narrow')
+      let styles = `
+        padding-top:0;
+        margin-top:-1px;
+        margin-bottom:-1px;`
+
+      emptyNarrowPageElement.forEach(element => {
+        if (!element.hasChildNodes()) {
+          element.style = styles;
+        }
+      });
+    }
+  }
+
+  // Check screen size.
+   const mql = window.matchMedia('(max-width: 1049px)');
+
+  function screenTest(event) {
+    if (event.matches) {
+      /* the viewport is 1049 pixels wide or less */
+    } else {
+      /* the viewport is more than 1049 pixels wide */
+      removeSpaceFromEmptyElement()
+    }
+  }
+
+  screenTest(mql);
+  mql.addListener(screenTest);
+
 })(jQuery, window);
