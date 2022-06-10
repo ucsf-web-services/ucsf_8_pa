@@ -58,6 +58,9 @@
   {% endfor %}
 {% endif %}
 
+{# Magazine mobile treatment #}
+{% set text_background_color = text_background_color ? : "" %}
+
 {% block paragraph %}
 {{ attach_library('ucsf/ucsf_parallax_image_with_text_overlay') }}
 	<div{{attributes.addClass(classes)}}>
@@ -77,7 +80,7 @@
         {% endif %}
 
 
-        <div class="scrolly-gallery__step scrolly-gallery__text">
+        <div class="scrolly-gallery__step scrolly-gallery__text {{text_background_color}}">
           <div class="scrolly-gallery__text-overlay background-{{overlay_class|trim}}"></div>
           <div class="scrolly-gallery__text-inner">
             <div class="scrolly-gallery__flexbox-wrapper">
