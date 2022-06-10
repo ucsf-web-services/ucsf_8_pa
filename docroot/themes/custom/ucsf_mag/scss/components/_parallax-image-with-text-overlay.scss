@@ -1,0 +1,81 @@
+// Magazine specific overwrites to the scrolly.
+.page_narrow--scrolly {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.scrolly-gallery {
+  &__text {
+    @include breakpoint($new-large) {
+      background-color: transparent;
+    }
+
+    a:not(.button) {
+      color: $white;
+      border-bottom-color: $white;
+      @include breakpoint($new-large) {}
+
+    }
+
+    .button {
+      color: $white;
+      border-color: $white;
+      background-color: transparent;
+    }
+  }
+
+  @each $name, $color in $color-map {
+    .background-#{$name}  + .scrolly-gallery__text-inner a:not(.button):hover {
+      background-color: darken($color, 5%);
+      @include breakpoint($new-large) {
+        background-color: #{$color};
+        border-bottom-color: #{$color};
+      }
+    }
+
+    .background-#{$name} + .scrolly-gallery__text-inner .button:hover {
+      background-color: darken($color, 5%);
+      border-color: $white;
+      @include breakpoint($new-large) {
+        background-color: #{$color};
+        border-color: #{$color};
+      }
+    }
+  }
+
+  // Default color is used
+  .background- {
+    @include breakpoint($new-large-max) {
+      background-color: $c-navy;
+    }
+
+    & + .scrolly-gallery__text-inner a:not(.button):hover {
+      background-color: darken($c-navy, 5%);
+
+      @include breakpoint($new-large) {
+        background-color: $c-navy;
+        border-bottom-color: $c-navy;
+      }
+    }
+
+    & + .scrolly-gallery__text-inner .button:hover {
+      background-color: darken($c-navy, 5%);
+      border-color: $c-navy;
+
+      @include breakpoint($new-large) {
+        background-color: $c-navy;
+        border-color: $c-navy;
+      }
+    }
+  }
+
+
+
+  &__text-inner {
+    @include breakpoint($new-large-max) {
+      padding-left: 20px;
+      padding-right: 20px;
+      color: $white;
+    }
+  }
+}
