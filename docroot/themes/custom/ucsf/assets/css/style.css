@@ -9406,8 +9406,8 @@ body.loading .quicklinks {
     .home-banner__header {
       grid-column: 1/6;
       grid-row: 2/3;
-      background: url(/themes/custom/ucsf/assets/images/banner-overlay-left.png) left top repeat-y rgba(255, 255, 255, 0.925);
-      margin-top: 0;
+      background: -webkit-gradient(linear, left top, right top, from(white), color-stop(50%, rgba(255, 255, 255, 0.925)));
+      background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0.925) 50%);
       margin-right: 0; } }
   @media (min-width: 1280px) {
     .home-banner__header {
@@ -9425,7 +9425,8 @@ body.loading .quicklinks {
     padding-bottom: 0;
     grid-column: 2/-1;
     grid-row: 3/3;
-    background: url(/themes/custom/ucsf/assets/images/banner-overlay-bottom.png) left bottom repeat-x rgba(255, 255, 255, 0.925); } }
+    background: -webkit-gradient(linear, left bottom, left top, from(white), color-stop(50%, rgba(255, 255, 255, 0.925)));
+    background: linear-gradient(to top, white 0%, rgba(255, 255, 255, 0.925) 50%); } }
   @media (min-width: 1050px) and (min-width: 850px) {
     .home-banner-two .home-banner__header {
       grid-template-columns: repeat(16, minmax(0, 1fr));
@@ -9453,7 +9454,8 @@ body.loading .quicklinks {
     padding-bottom: 0;
     padding-left: 80px;
     padding-top: 48px;
-    background: url(/themes/custom/ucsf/assets/images/banner-overlay-bottom.png) left bottom repeat-x rgba(255, 255, 255, 0.925); } }
+    background: -webkit-gradient(linear, left bottom, left top, from(white), color-stop(50%, rgba(255, 255, 255, 0.925)));
+    background: linear-gradient(to top, white 0%, rgba(255, 255, 255, 0.925) 50%); } }
 
 @media (min-width: 1050px) {
   .home-banner-two .home-banner-support-wrapper {
@@ -9658,7 +9660,8 @@ body.loading .quicklinks {
       padding: 40px;
       margin-top: 0;
       margin-right: 0;
-      background: url(/themes/custom/ucsf/assets/images/banner-overlay-right.png) right top repeat-y rgba(255, 255, 255, 0.925); } }
+      background: -webkit-gradient(linear, right top, left top, from(white), color-stop(50%, rgba(255, 255, 255, 0.925)));
+      background: linear-gradient(to left, white 0%, rgba(255, 255, 255, 0.925) 50%); } }
   @media (min-width: 1280px) {
     .field-map-text {
       padding: 64px;
@@ -13088,146 +13091,141 @@ a[href*="http"] .remove-ext-url .article-header__date {
       padding-left: 0;
       padding-bottom: 0;
       padding-right: 0; } }
-
-.topics-list__header {
-  padding: 0 20px; }
-  @media (min-width: 769px) {
-    .topics-list__header {
-      padding: 0 40px; } }
-  @media (min-width: 1050px) {
-    .topics-list__header {
-      padding: 0 80px; } }
-
-.topics-list__title,
-.page-node-type-news-center .topics-list__title {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  font-weight: 500;
-  font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-  font-size: 32px;
-  line-height: 1.25;
-  letter-spacing: -0.6px;
-  color: #052049;
-  margin: 0 auto;
-  margin-bottom: 16px;
-  max-width: 1280px; }
-  @media (min-width: 600px) {
-    .topics-list__title,
-    .page-node-type-news-center .topics-list__title {
-      font-size: 56px;
-      letter-spacing: -1.2px; } }
-
-.topics-list__description {
-  margin: 0;
-  color: #506380; }
-  @media (min-width: 769px) {
-    .topics-list__description {
-      float: left; } }
-
-.topics-list__view-all {
-  margin: 0; }
-  @media (min-width: 769px) {
-    .topics-list__view-all {
-      float: right; } }
-
-.topics-list__topics-wrapper {
-  clear: both;
-  display: grid;
-  grid-template-columns: repeat(1, auto);
-  grid-template-rows: repeat(2, auto); }
-
-.topics-list__topics-wrapper-space-bottom {
-  grid-column: 1/-1;
-  grid-row: 2/-1;
-  content: ' ';
-  background: #fff;
-  height: 100px;
-  -ms-flex-item-align: end;
-      align-self: end;
-  margin-top: -100px; }
-
-.topics-list__topics-wrapper {
-  position: relative; }
-
-.topics-list__topics.slick-slider:not(.slick-initialized) {
-  height: 410px; }
-
-.topics-list__topics.slick-slider {
-  clear: both;
-  padding-top: 40px;
-  position: initial;
-  margin-bottom: 0;
-  margin-top: 0;
-  overflow: hidden;
-  display: block;
-  padding-left: 40px; }
-  @media (max-width: 599px) {
-    .topics-list__topics.slick-slider {
-      padding-top: 20px;
-      padding-left: 0; } }
-  .topics-list__topics.slick-slider:hover {
- }
-  .topics-list__topics.slick-slider button {
-    display: block;
-    height: 28px;
-    width: 28px;
-    background-size: 10px 10px;
-    border: 0;
-    font-size: 0;
-    padding: 10px;
-    position: absolute;
-    text-indent: -999px;
-    top: 35%;
-    z-index: 700; }
-    @media (max-width: 599px) {
-      .topics-list__topics.slick-slider button {
-        display: none; } }
-    @media (min-width: 480px) {
-      .topics-list__topics.slick-slider button {
-        top: 30%; } }
+  .topics-list__header {
+    padding: 0 20px; }
+    @media (min-width: 769px) {
+      .topics-list__header {
+        padding: 0 40px; } }
+    @media (min-width: 1050px) {
+      .topics-list__header {
+        padding: 0 80px; } }
+  .topics-list__title,
+  .page-node-type-news-center .topics-list__title {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    font-weight: 500;
+    font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-size: 32px;
+    line-height: 1.25;
+    letter-spacing: -0.6px;
+    color: #052049;
+    margin: 0 auto;
+    margin-bottom: 16px;
+    max-width: 1280px; }
     @media (min-width: 600px) {
-      .topics-list__topics.slick-slider button {
-        top: 35%; } }
-    .topics-list__topics.slick-slider button:after {
-      content: none; }
-  .topics-list__topics.slick-slider .slick-next {
-    background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #0071ad;
-    right: 35px; }
-  .topics-list__topics.slick-slider .slick-prev {
-    background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #0071ad;
-    left: 35px; }
-  .topics-list__topics.slick-slider .slick-arrow {
-    height: 40px;
-    width: 40px;
-    background-size: 50%;
-    top: 45%; }
-  .topics-list__topics.slick-slider .slick-prev {
-    left: 20px; }
-  .topics-list__topics.slick-slider .slick-next {
-    right: 35px; }
-    @media (min-width: 1466px) {
-      .topics-list__topics.slick-slider .slick-next {
-        right: 20px; } }
-  .topics-list__topics.slick-slider .slick-slide {
-    width: 340px; }
-  .topics-list__topics.slick-slider .topic-card span {
-    padding: 16px; }
+      .topics-list__title,
+      .page-node-type-news-center .topics-list__title {
+        font-size: 56px;
+        letter-spacing: -1.2px; } }
+  .topics-list__description {
+    margin: 0;
+    color: #506380; }
+    @media (min-width: 769px) {
+      .topics-list__description {
+        float: left; } }
+  .topics-list__view-all {
+    margin: 0; }
+    @media (min-width: 769px) {
+      .topics-list__view-all {
+        float: right; } }
+  .topics-list__topics-wrapper {
+    clear: both;
+    display: grid;
+    grid-template-columns: repeat(1, auto);
+    grid-template-rows: repeat(2, auto);
+    position: relative; }
+  .topics-list__topics-wrapper-space-bottom {
+    grid-column: 1/-1;
+    grid-row: 2/-1;
+    content: ' ';
+    background: #fff;
+    height: 100px;
+    -ms-flex-item-align: end;
+        align-self: end;
+    margin-top: -100px; }
+  .topics-list__topics.slick-slider:not(.slick-initialized) {
+    height: 410px; }
+  .topics-list__topics.slick-slider {
+    clear: both;
+    padding-top: 40px;
+    position: initial;
+    margin-bottom: 0;
+    margin-top: 0;
+    overflow: hidden;
+    display: block;
+    padding-left: 40px; }
     @media (max-width: 599px) {
-      .topics-list__topics.slick-slider .topic-card span {
-        padding: 16px 11px; } }
-  @media (max-width: 599px) {
-    .topics-list__topics.slick-slider .slick-track {
-      left: -10px; }
+      .topics-list__topics.slick-slider {
+        padding-top: 20px;
+        padding-left: 0; } }
+    .topics-list__topics.slick-slider:hover {
+ }
+    .topics-list__topics.slick-slider button {
+      display: block;
+      height: 28px;
+      width: 28px;
+      background-size: 10px 10px;
+      border: 0;
+      font-size: 0;
+      padding: 10px;
+      position: absolute;
+      text-indent: -999px;
+      top: 35%;
+      z-index: 700; }
+      @media (max-width: 599px) {
+        .topics-list__topics.slick-slider button {
+          display: none; } }
+      @media (min-width: 480px) {
+        .topics-list__topics.slick-slider button {
+          top: 30%; } }
+      @media (min-width: 600px) {
+        .topics-list__topics.slick-slider button {
+          top: 35%; } }
+      .topics-list__topics.slick-slider button:after {
+        content: none; }
+    .topics-list__topics.slick-slider .slick-next {
+      background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #0071ad;
+      right: 35px; }
+    .topics-list__topics.slick-slider .slick-prev {
+      background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #0071ad;
+      left: 35px; }
+    .topics-list__topics.slick-slider .slick-arrow {
+      height: 40px;
+      width: 40px;
+      background-size: 50%;
+      top: 45%; }
+    .topics-list__topics.slick-slider .slick-prev {
+      left: 20px; }
+    .topics-list__topics.slick-slider .slick-next {
+      right: 35px; }
+      @media (min-width: 1466px) {
+        .topics-list__topics.slick-slider .slick-next {
+          right: 20px; } }
     .topics-list__topics.slick-slider .slick-slide {
-      width: 320px; } }
+      width: 340px; }
+    .topics-list__topics.slick-slider .topic-card span {
+      padding: 16px;
+      left: 0; }
+      @media (max-width: 599px) {
+        .topics-list__topics.slick-slider .topic-card span {
+          padding: 16px 11px; } }
+    @media (max-width: 599px) {
+      .topics-list__topics.slick-slider .slick-track {
+        left: -10px; }
+      .topics-list__topics.slick-slider .slick-slide {
+        width: 320px; } }
 
 .topic-card {
   display: inline-block;
   height: 350px;
   float: left;
   position: relative;
-  margin-bottom: 60px; }
+  margin-bottom: 60px;
+  margin-left: 30px; }
+  @media (min-width: 600px) {
+    .topic-card {
+      margin-left: 40px; } }
   .topic-card a {
     color: #052049;
     display: inline-block;
@@ -13251,6 +13249,8 @@ a[href*="http"] .remove-ext-url .article-header__date {
     line-height: 1.4;
     -webkit-transition: .2s ease-out all;
     transition: .2s ease-out all; }
+  .topic-card img {
+    width: 100%; }
 
 .universal-header__give {
   display: block;
@@ -15848,7 +15848,6 @@ body.page-node-type-magazine-homepage .layout-panel {
           letter-spacing: -2px; } }
     @media all and (-ms-high-contrast: none) and (min-width: 1050px), (-ms-high-contrast: active) and (min-width: 1050px) {
       .explorer .home-banner__header {
-        background: url(/themes/custom/ucsf/assets/images/banner-overlay-left.png) left top repeat-y rgba(255, 255, 255, 0.925);
         padding: 40px;
         background: #fff;
         position: relative;
@@ -15860,7 +15859,6 @@ body.page-node-type-magazine-homepage .layout-panel {
         width: 80%; } }
     @media all and (-ms-high-contrast: none) and (min-width: 1280px), (-ms-high-contrast: active) and (min-width: 1280px) {
       .explorer .home-banner__header {
-        background: url(/themes/custom/ucsf/assets/images/banner-overlay-left.png) left top repeat-y rgba(255, 255, 255, 0.925);
         padding: 40px;
         background: #fff;
         position: relative;
@@ -16074,7 +16072,6 @@ body.page-node-type-magazine-homepage .layout-panel {
           padding: 40px;
           margin-top: 0;
           margin-right: 0;
-          background: url(/themes/custom/ucsf/assets/images/banner-overlay-right.png) right top repeat-y rgba(255, 255, 255, 0.925);
           width: 50%; } }
       @media all and (-ms-high-contrast: none) and (min-width: 1280px), (-ms-high-contrast: active) and (min-width: 1280px) {
         .explorer .map-home .field-map-text {
@@ -16086,8 +16083,7 @@ body.page-node-type-magazine-homepage .layout-panel {
           bottom: 70px;
           padding: 40px;
           margin-top: 0;
-          margin-right: 0;
-          background: url(/themes/custom/ucsf/assets/images/banner-overlay-right.png) right top repeat-y rgba(255, 255, 255, 0.925); } }
+          margin-right: 0; } }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     .explorer .page-node-type-news-center .combined-header-region,
