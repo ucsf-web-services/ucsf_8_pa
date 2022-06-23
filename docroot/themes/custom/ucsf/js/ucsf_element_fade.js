@@ -5,7 +5,6 @@
 
   // Elements that should not be animated with a fade
   const excludeElements = [
-    '.explorer .element-fade',
     'dom-twocolumn-layout .element-fade',
     'dom-threecolumn-layout .element-fade',
     '.column1 .element-fade',
