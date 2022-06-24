@@ -1,2 +1,170 @@
-{% extends "@ucsf/taxonomy/taxonomy-term--magazine-issue.html.twig" %}
-{% set no_page_title = true %}
+{% set classes = ['main'] %}
+{% set layout = term.field_banner_layout.value %}
+{% set taxonomy_page = 'issue-page' %}
+
+{% if '1' in content.field_subscribe_in_recommended[0] %}
+	{% set has_mag_subscribe = "magazine-hub-inside--has-form" %}
+	{% set mag_subscribe_form = "magazine-hub-inside__form" %}
+{% endif %}
+{% set no_page_title = no_page_title ? no_page_title : '' %}
+<div class="magazine-topic-issue-page magazine-{{taxonomy_page}}">
+	<main {{ attributes.addClass(classes) }}>
+		<a id="main-content" tabindex="-1"></a>
+		<div class="magazine-topic-page">
+			<header class="basic-header magazine-homepage-banner {{ banner_image }} {{ body_classes}}">
+				<div class="magazine-homepage-banner__header">
+					<h1 class="magazine-homepage-banner__title--alt">{{ name }}</h1>
+
+					<div class="magazine-issue-banner">
+						{{ content.field_issue_cover }}
+
+						<div class="magazine-issue-banner__content">
+							{{ content.field_issue_description }}
+							<h3 class="magazine-issue-banner__about-title">About this Issue:</h3>
+							<p class="magazine-issue-banner__about-desc">
+								{{ content.field_volume_issue }}
+
+								{% if term.field_editorial_team is not empty %}
+									<br/>
+									{{ content.field_editorial_team }}
+								{% endif %}
+
+							</p>
+							{% if term.field_download_pdf is not empty %}
+								<p class="magazine-issue-banner__download">{{ content.field_download_pdf }}</p>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</header>
+
+			{# Features area #}
+			{% if term.field_feature_article.entity.field_news_article.0 or term.field_big_picture.entity.field_news_article.0 %}
+				<h2 class="magazine-issue-feature__title">Features</h2>
+			{% endif %}
+
+			{# Features area, Featured Article section #}
+			{% if term.field_feature_article.entity.field_news_article.0 %}
+				{% if layout == 'featuretwosupport' %}
+					{% include '@ucsf_mag/components/banner/magazine-feature-two-support.twig' %}
+				{% else %}
+					{% include '@ucsf_mag/components/banner/magazine-feature-three-support.twig' %}
+				{% endif %}
+			{% endif %}
+
+			{# Features area, Big Picture and Subscribe section #}
+			{% if term.field_big_picture.entity.field_news_article.0 %}
+				<div class="magazine-big-picture-subscribe">
+					<div class="magazine-big-picture-subscribe__big-picture">
+						{{ content.field_big_picture }}
+					</div>
+
+					{# Movable Subscribe Form, checking if not used in "Reccommended" area #}
+					{% if '0' in content.field_subscribe_in_recommended[0] %}
+						<div class="magazine__subscribe-movable">
+							{% block form_subscribe_mag %}
+								<h2>Stay up to date on the latest from
+									<em>UCSF Magazine</em>
+								</h2>
+								<form action="/subscribe-magazine" class="form--subscribe-mag" method="GET">
+									<label class="visually-hidden" for="email">E-mail</label>
+									<input id="email" name="email" onblur="this.placeholder='Enter your email'" onfocus="this.placeholder=''" placeholder="Enter your email" type="text" value=""><button>Subscribe</button>
+								</form>
+							{% endblock %}
+						</div>
+					{% endif %}
+				</div>
+			{% endif %}
+
+			<div class="magazine-supporting-feature-list">
+				{{ content.field_feature_article_list }}
+			</div>
+
+			<div class="magazine-insight-advice">
+				<h2>Insights & Voices</h2>
+
+				<div class="news-list">
+					{% block article_view %}
+						{{ drupal_view('topics_tags_news_articles', 'block_3') }}
+					{% endblock %}
+				</div>
+			</div>
+
+			<div class="magazine-hub-inside {{ has_mag_subscribe }}">
+				<div class="magazine-hub-inside__hub">
+					<div class="magazine-hub-inside__header">
+						<h2 class="magazine-hub-inside__title">Alumni Stories</h2>
+						<p class="magazine-hub-inside__inside-more">
+							<a href="https://alumni.ucsf.edu/stories" class="link--cta">Read more</a>
+						</p>
+					</div>
+					{{ content.field_alumni_hub }}
+				</div>
+				<div
+					class="magazine-hub-inside__inside">
+					{# Movable Subscribe Form, replaces "Books, Videos, Podcasts" #}
+					{% if '1' in content.field_subscribe_in_recommended[0] %}
+						<div class="magazine__subscribe-movable {{ mag_subscribe_form }}">
+							{{block('form_subscribe_mag')}}
+						</div>
+					{% else %}
+						{# "Books, Videos, Podcasts" Section #}
+						<div class="magazine-hub-inside__header">
+							<h2 class="magazine-hub-inside__title">Recommended</h2>
+							{# <p class="magazine-hub-inside__inside-more">
+							                <a href="/magazine/feature" class="link--cta">Find more</a>
+							              </p> #}
+						</div>
+
+						<div class="magazine-hub-recommended">
+							<figure class="magazine-hub-recommended__icon">
+								<img src="/themes/custom/ucsf/assets/images/read-icon.svg" alt="">
+							</figure>
+							<div class="magazine-hub-recommended__body">
+								<p class="magazine-hub-recommended-label">Books</p>
+								{{ content.field_recommended_read}}
+							</div>
+						</div>
+
+						<div class="magazine-hub-recommended">
+							<figure class="magazine-hub-recommended__icon">
+								<img src="/themes/custom/ucsf/assets/images/watch-icon.svg" alt="">
+							</figure>
+							<div class="magazine-hub-recommended__body">
+								<p class="magazine-hub-recommended-label">Videos</p>
+								{{ content.field_recommended_watch }}
+							</div>
+						</div>
+
+						<div class="magazine-hub-recommended">
+							<figure class="magazine-hub-recommended__icon">
+								<img src="/themes/custom/ucsf/assets/images/listen-icon.svg" alt="">
+							</figure>
+							<div class="magazine-hub-recommended__body">
+								<p class="magazine-hub-recommended-label">Podcasts</p>
+								{{ content.field_recommended_listen }}
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="magazine-inside-hub">
+				<div class="magazine-inside-hub__heading">
+					<h2>UCSF News</h2>
+					<p class="magazine-inside-hub__heading-more">
+						<a href="https://ucsf.edu/news" class="link--cta">Visit the News Center</a>
+					</p>
+				</div>
+				{{ content.field_inside_ucsf }}
+			</div>
+
+		</div>
+	</main>
+	{% if content.field_ankle_cta.0 %}
+		{# Magazine signup #}
+		<div class="footer-ctas-wrapper magazine-issue-footer-ctas-wrapper" role="complementary">
+			{{ content.field_ankle_cta }}
+		</div>
+	{% endif %}
+</div>
