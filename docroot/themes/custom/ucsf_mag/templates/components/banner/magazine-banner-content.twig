@@ -1,4 +1,4 @@
-{% include '@theme/article/magazine-byline.twig' %}
+{% include '@ucsf_mag/components/byline/magazine-byline.twig' %}
 <h1>{{ label }}</h1>
 {{ content.field_sub_title }}
 <p class="article-header__author">
@@ -20,19 +20,19 @@
   {# Output each author with proper separator. #}
   {%- for author in authors -%}
     {%- if loop.first -%}
-      {%- include '@theme/banner/magazine-banner-author.twig' -%}
+      {%- include '@ucsf_mag/components/banner/magazine-banner-author.twig' -%}
     {%- elseif loop.last and loop.length == 2 -%}
-      {%- include '@theme/banner/magazine-banner-author.twig' with {separator: ' and '} -%}
+      {%- include '@ucsf_mag/components/banner/magazine-banner-author.twig' with {separator: ' and '} -%}
     {%- elseif loop.last -%}
-      {%- include '@theme/banner/magazine-banner-author.twig'  with {separator: ', and '}-%}
+      {%- include '@ucsf_mag/components/banner/magazine-banner-author.twig'  with {separator: ', and '}-%}
     {%- else -%}
-      {%- include '@theme/banner/magazine-banner-author.twig' with {separator: ', '}-%}
+      {%- include '@ucsf_mag/components/banner/magazine-banner-author.twig' with {separator: ', '}-%}
     {%- endif -%}
   {%- endfor -%}
   {% if content.field_article_affiliation|render %}
     {{ content.field_article_affiliation  }}
   {% endif %}
-  
+
   {{ content.field_magazine_issue }}
 
   {% if content.field_art_credit|render %}
