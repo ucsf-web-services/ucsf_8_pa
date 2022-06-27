@@ -24,137 +24,135 @@
     padding-right: 0;
   }
 
+  &__header {
+    padding: 0 20px;
 
-}
+    @include breakpoint($new-small) {
+      padding: 0 $space-five;
+    }
 
-.topics-list__header {
-  padding: 0 20px;
-
-  @include breakpoint($new-small) {
-    padding: 0 $space-five;
-  }
-
-  @include breakpoint($new-large) {
-    padding: 0 $space-ten;
-  }
-}
-
-.topics-list__title,
-.page-node-type-news-center .topics-list__title  {
-  @include fs-heading;
-
-  margin: 0 auto;
-  margin-bottom: $space-two;
-  max-width: $xl;
-}
-
-.topics-list__description {
-  margin: 0;
-  color: $gray-blue;
-
-  @include breakpoint($new-small) {
-    float: left;
-  }
-}
-
-.topics-list__view-all {
-  margin: 0;
-
-  @include breakpoint($new-small) {
-    float: right;
-  }
-}
-
-.topics-list__topics-wrapper {
-  clear: both;
-  display: grid;
-  grid-template-columns: repeat(1, auto);
-  grid-template-rows: repeat(2, auto);
-  //display: none;
-}
-
-.topics-list__topics-wrapper-space-bottom {
-  grid-column: 1/-1;
-  grid-row: 2/-1;
-  content: ' ';
-  background: $white;
-  height: 100px;
-  align-self: end;
-  margin-top: -100px;
-}
-.topics-list__topics-wrapper {
-  position: relative;
-}
-// This helps with layout shift.
-.topics-list__topics.slick-slider:not(.slick-initialized) {
-  height: 410px;
-}
-
-.topics-list__topics.slick-slider {
-  clear: both;
-  padding-top: $space-five;
-  position: initial;
-  margin-bottom: 0;
-  margin-top: 0;
-  overflow: hidden;
-  display: block;
-  padding-left: $space-five;
-  //border: solid 2px #ff00b8;
-  //width: 1360px;
-  //grid-column: 1/-1;
-  //grid-row: 1/-1;
-  //margin: 0 auto 20px;
-
-  @include breakpoint($new-x-small-max) {
-    padding-top: 20px;
-    padding-left: 0;
-  }
-
-  @include slick-buttons;
-
-  .slick-arrow {
-    height: 40px;
-    width: 40px;
-    background-size: 50%;
-    top: 45%;
-  }
-
-  .slick-prev {
-    left: 20px;
-  }
-
-  .slick-next {
-    right: 35px;
-    @include breakpoint(1466px) {
-      right: 20px;
+    @include breakpoint($new-large) {
+      padding: 0 $space-ten;
     }
   }
 
-  .slick-slide {
-    width: 340px;
+  &__title,
+  .page-node-type-news-center &__title  {
+    @include fs-heading;
+
+    margin: 0 auto;
+    margin-bottom: $space-two;
+    max-width: $xl;
   }
 
-  .topic-card span {
-    padding: 16px;
+  &__description {
+    margin: 0;
+    color: $gray-blue;
+
+    @include breakpoint($new-small) {
+      float: left;
+    }
+  }
+
+  &__view-all {
+    margin: 0;
+
+    @include breakpoint($new-small) {
+      float: right;
+    }
+  }
+
+  &__topics-wrapper {
+    clear: both;
+    display: grid;
+    grid-template-columns: repeat(1, auto);
+    grid-template-rows: repeat(2, auto);
+    position: relative;
+    //display: none;
+  }
+
+  &__topics-wrapper-space-bottom {
+    grid-column: 1/-1;
+    grid-row: 2/-1;
+    content: ' ';
+    background: $white;
+    height: 100px;
+    align-self: end;
+    margin-top: -100px;
+  }
+
+  // This helps with layout shift.
+  &__topics.slick-slider:not(.slick-initialized) {
+    height: 410px;
+  }
+
+  &__topics.slick-slider {
+    clear: both;
+    padding-top: $space-five;
+    position: initial;
+    margin-bottom: 0;
+    margin-top: 0;
+    overflow: hidden;
+    display: block;
+    padding-left: $space-five;
+    //border: solid 2px #ff00b8;
+    //width: 1360px;
+    //grid-column: 1/-1;
+    //grid-row: 1/-1;
+    //margin: 0 auto 20px;
 
     @include breakpoint($new-x-small-max) {
-      padding: 16px 11px;
+      padding-top: 20px;
+      padding-left: 0;
     }
-  }
 
-  @include breakpoint($new-x-small-max) {
-    .slick-track {
-      left: -10px;
+    @include slick-buttons;
+
+    .slick-arrow {
+      height: 40px;
+      width: 40px;
+      background-size: 50%;
+      top: 45%;
+    }
+
+    .slick-prev {
+      left: 20px;
+    }
+
+    .slick-next {
+      right: 35px;
+      @include breakpoint(1466px) {
+        right: 20px;
+      }
     }
 
     .slick-slide {
-      width: 320px;
+      width: 340px;
     }
 
+    .topic-card span {
+      padding: 16px;
+      left: 0;
+
+      @include breakpoint($new-x-small-max) {
+        padding: 16px 11px;
+      }
+    }
+
+    @include breakpoint($new-x-small-max) {
+      .slick-track {
+        left: -10px;
+      }
+
+      .slick-slide {
+        width: 320px;
+      }
+
+    }
+
+
+
   }
-
-
-
 }
 
 .topic-card {
@@ -163,7 +161,12 @@
   float: left;
   position: relative;
   margin-bottom: 60px;
-  //overflow: hidden;
+  margin-left: 30px;
+
+  @include breakpoint($bp-medium) {
+    margin-left: 40px;
+  }
+
   a {
     color: $navy;
     display: inline-block;
@@ -192,5 +195,9 @@
     font-family: $font-helvetica-neue-medium;
     line-height: 1.4;
     @include transition;
+  }
+
+  img {
+    width: 100%;
   }
 }
