@@ -1,5 +1,5 @@
+{% set include_path = '@ucsf_mag/components/article-layout' %}
 {% set layout = node.field_banner_layout.value %}
-
 {% set body_classes = not node.isPublished() ? "node--unpublished" %}
 {{ attach_library('ucsf/ucsf_social_icons') }}
 {{ attach_library('ucsf/element_overlap_detection') }}
@@ -7,21 +7,21 @@
   {# link is in html.html.twig #}
   <a id="main-content" tabindex="-1"></a>
   {% if layout == 'feature' %}
-    {% include '@theme/article/magazine-article-layout-feature.twig' %}
+    {% include include_path ~ '/magazine-article-layout-feature.twig' %}
   {% elseif layout == 'featureoverlaydark' %}
-      {% include '@theme/article/magazine-article-layout-feature-overlay.twig' %}
+      {% include include_path ~ '/magazine-article-layout-feature-overlay.twig' %}
   {% elseif layout == 'featureoverlaylight' %}
-      {% include '@theme/article/magazine-article-layout-feature-overlay.twig' %}
+      {% include include_path ~ '/magazine-article-layout-feature-overlay.twig' %}
   {% elseif layout == 'twocolleftlight' %}
-    {% include '@theme/article/magazine-article-layout-twocol.twig' %}
+    {% include include_path ~ '/magazine-article-layout-twocol.html.twig' %}
   {% elseif layout == 'twocolrightlight' %}
-    {% include '@theme/article/magazine-article-layout-twocol.twig' %}
+    {% include include_path ~ '/magazine-article-layout-twocol.html.twig' %}
   {% elseif layout == 'twocolleftdark' %}
-    {% include '@theme/article/magazine-article-layout-twocol.twig' %}
+    {% include include_path ~ '/magazine-article-layout-twocol.html.twig' %}
   {% elseif layout == 'twocolrightdark' %}
-    {% include '@theme/article/magazine-article-layout-twocol.twig' %}
+    {% include include_path ~ '/magazine-article-layout-twocol.html.twig' %}
   {% else %}
-    {% include '@theme/article/magazine-article-layout-default.twig' %}
+    {% include include_path ~ '/magazine-article-layout-default.twig' %}
   {% endif %}
 </main>
 

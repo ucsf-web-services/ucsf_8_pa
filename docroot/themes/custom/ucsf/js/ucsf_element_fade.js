@@ -5,19 +5,20 @@
 
   // Elements that should not be animated with a fade
   const excludeElements = [
-    '.explorer .element-fade',
+    '.home-banner__image img',
     'dom-twocolumn-layout .element-fade',
     'dom-threecolumn-layout .element-fade',
     '.column1 .element-fade',
     '.column2 .element-fade',
     '.column3 .element-fade',
     '.field-taxonomy-banner-image .element-fade',
-    '.paragraph--type--gallery  :not(.slick-active) .element-fade'
+    '.paragraph--type--gallery  :not(.slick-active) .element-fade',
+    '.topics-list__topics img'
   ];
-
   // element to be animated
   Drupal.behaviors.fadeInImages = {
     attach: function (context, settings) {
+
       // Get the NodeList of all the selectors matching elements on the page.
       const excludeSelectors = document.querySelectorAll(excludeElements.toString());
       excludeSelectors.forEach(element => element.classList.remove('element-fade'));
