@@ -36,9 +36,9 @@
     {% if article_type == 'media-coverage' %}
       {% include '@theme/article/byline-media.twig' %}
     {% elseif node_type == 'magazine-article'%}
-      {% include '@theme/article/magazine-card-byline.twig' %}
+      {% include '@ucsf_mag/components/byline/magazine-card-byline.twig' %}
     {% else %}
-      {% include '@theme/article/magazine-ucsf-news-byline-search.twig' %}
+      {% include '@ucsf_mag/components/byline/magazine-ucsf-news-byline-search.twig' %}
     {% endif %}
     {% if content.field_short_title|render|striptags != ''  %}
       <h2><a href="https://www.ucsf.edu{{ article_url }}">{{ content.field_short_title }}</a></h2>

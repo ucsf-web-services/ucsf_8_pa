@@ -6,7 +6,7 @@
 (function () {
 
   // Elements that should not be animated with a fade
-  var excludeElements = ['.explorer .element-fade', '.home-banner__image img', 'dom-twocolumn-layout .element-fade', 'dom-threecolumn-layout .element-fade', '.column1 .element-fade', '.column2 .element-fade', '.column3 .element-fade', '.field-taxonomy-banner-image .element-fade', '.paragraph--type--gallery  :not(.slick-active) .element-fade', '.topics-list__topics img'];
+  var excludeElements = ['.home-banner__image img', 'dom-twocolumn-layout .element-fade', 'dom-threecolumn-layout .element-fade', '.column1 .element-fade', '.column2 .element-fade', '.column3 .element-fade', '.field-taxonomy-banner-image .element-fade', '.paragraph--type--gallery  :not(.slick-active) .element-fade', '.topics-list__topics img'];
   // element to be animated
   Drupal.behaviors.fadeInImages = {
     attach: function attach(context, settings) {

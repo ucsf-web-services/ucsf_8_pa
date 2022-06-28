@@ -1,23 +1,19 @@
-{% set layout = node.field_banner_layout.value %}
-{% set classes = [ 'article-feature-overlay-banner', layout] %}
+{% set classes = [ 'article-feature-banner'] %}
 
 <div{{ attributes.addClass(classes) }}>
-  <figure class="article-feature-overlay-image">
+  <figure class="article-feature-banner-image">
     {% if content.field_video_banner|render %}
       {{ content.field_video_banner }}
     {% else %}
       {{ content.field_banner_image }}
     {% endif %}
-    <div class="article-feature-overlay"> </div>
   </figure>
 
-
-  <header class="article-header article-feature-overlay-header">
-    {% include '@theme/banner/magazine-banner-content.twig' %}
+  <header class="article-header article-feature-header">
+    {% include '@ucsf_mag/components/banner/magazine-banner-content.twig' %}
   </header>
 </div>
 <div class="main-content article-feature-content narrow-page">
-  {#{% include "@theme/share/share.twig" %}#}
     <ul class="article-meta-share">
       <li><a rel="nofollow" href="http://www.facebook.com/share.php?u={{ url('<current>') }}" target="_blank" title="Facebook"><span class="fab fa-facebook-square"></span> <span class="indent-text">Facebook</span></a></li>
 
@@ -30,5 +26,5 @@
       <li><a rel="nofollow" onclick="window.print();return false;" href="{{ url('<current>') }}" title="Print Article"><span class="fas fa-print"></span> <span class="indent-text">Print</span></a></li>
     </ul>
 
-  {% include "@theme/article/magazine-article-body.twig" %}
+  {% include "@ucsf_mag/components/magazine-article-body.twig" %}
 </div>

@@ -30,13 +30,13 @@
   {% set article_url =  url %}
 {% endif %}
 
-<article {{ attributes.addClass(classes) }}">
+<article {{ attributes.addClass(classes) }}>
 
   <header class="search-result__copy">
     {% if article_type == 'media-coverage' %}
-      {% include '@theme/article/byline-media.twig' %}
+      {% include '@ucsf/article/byline-media.twig' %}
     {% else %}
-      {% include '@theme/article/magazine-byline.twig' %}
+      {% include '@ucsf_mag/components/byline/magazine-byline.twig' %}
     {% endif %}
     {% if content.field_short_title|render|striptags != ''  %}
       <h2><a href="{{ article_url }}">{{ content.field_short_title }}</a></h2>
