@@ -13,7 +13,8 @@
     '.column3 .element-fade',
     '.field-taxonomy-banner-image .element-fade',
     '.paragraph--type--gallery  :not(.slick-active) .element-fade',
-    '.topics-list__topics img'
+    '.topics-list__topics img',
+    '.field-banner-image img'
   ];
   // element to be animated
   Drupal.behaviors.fadeInImages = {

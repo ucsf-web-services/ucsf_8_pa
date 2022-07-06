@@ -2,5 +2,5 @@
 window.lazyLoadOptions = {
   // Your custom settings go here
   elements_selector: "[loading]",
-  use_native: true
+  // use_native: true
 };
