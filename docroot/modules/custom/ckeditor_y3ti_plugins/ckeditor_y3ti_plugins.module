@@ -21,8 +21,8 @@ function ckeditor_y3ti_plugins_page_attachments(&$page) {
  */
 function ckeditor_y3ti_plugins_editor_js_settings_alter(array &$settings) {
   global $base_url;
-  $settings['editor']['formats']['sf_full_html']['editorSettings']['contentsCss'][] = $base_url.'/'.drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/css/CKEditorExtra.css';
-  $settings['editor']['formats']['sf_full_html']['editorSettings']['customConfig'] = $base_url.'/'.drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/customCkeditor.config.js';
+  $settings['editor']['formats']['sf_full_html']['editorSettings']['contentsCss'][] = $base_url . '/' . \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins') . '/css/CKEditorExtra.css';
+  $settings['editor']['formats']['sf_full_html']['editorSettings']['customConfig'] = $base_url . '/' . \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins') . '/js/customCkeditor.config.js';
 }
 
 /**
