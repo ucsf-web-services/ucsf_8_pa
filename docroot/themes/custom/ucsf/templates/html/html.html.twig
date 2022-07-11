@@ -42,7 +42,10 @@
   <css-placeholder token="{{ placeholder_token }}">
 
   <script>if (!window.customElements) { document.write('<!--'); }</script>
-  <script type="text/javascript" src="/modules/custom/ckeditor_y3ti_plugins/bower_components/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+ {% if node_type != 'homepage' and  node_type != 'news_center' %}
+   <!--Polymer -->
+    <script type="text/javascript" src="/modules/custom/ckeditor_y3ti_plugins/bower_components/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+ {% endif %}
   <!--! do not remove -->
   <js-placeholder token="{{ placeholder_token }}">
 </head>
@@ -57,7 +60,10 @@
 {{ page_top }}
 {{ page }}
 {{ page_bottom }}
-<link name="polymer_platform" href="{{ ckeditor_y3ti_plugins }}" rel="import" />
+{% if node_type != 'homepage' and node_type != 'news_center' %}
+  <!--Polymer -->
+  <link name="polymer_platform" href="{{ ckeditor_y3ti_plugins }}" rel="import" />
+{% endif %}
 <js-bottom-placeholder token="{{ placeholder_token }}">
 <script type="text/javascript">
   /*<![CDATA[*/
