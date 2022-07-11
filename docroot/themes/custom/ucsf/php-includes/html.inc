@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\node\NodeInterface;
+
 function ucsf_preprocess_html(&$variables) {
 
   // Add path alias as body class.
@@ -18,7 +20,6 @@ function ucsf_preprocess_html(&$variables) {
   }
 
   $variables['attributes']['class'][] = $class;
-
   $variables['ckeditor_y3ti_plugins'] = '/' . \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins') . '/elements/build.html';
 }
 
@@ -28,61 +29,77 @@ function ucsf_page_attachments_alter(array &$page) {
     return;
   }
 
+  // Array of content types that should not have webcomponents loaded of their pages.
+  $nodes_without_webcomponents = [
+    'homepage',
+    'news_center',
+  ];
+
+  // If we are on the Homepage, don't load webcomponents.
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if ($page['#attached']['library'] && $node instanceof NodeInterface) {
+    $node_type = $node->getType();
+    if (in_array($node_type, $nodes_without_webcomponents)) {
+      $index = array_search('ckeditor_y3ti_plugins/webcomponents', $page['#attached']['library']);
+      unset($page['#attached']['library'][$index]);
+    }
+  }
+
   $preload = [
     [
       'rel' => 'preload',
       'href' => '/themes/custom/ucsf/fonts/GranjonLTW01-Roman.woff2',
       'as' => 'font',
-      'crossorigin'=>true
+      'crossorigin' => TRUE,
     ],
     [
       'rel' => 'preload',
       'href' => '/themes/custom/ucsf/fonts/HelveticaNeueLTW04-45Light.woff2',
       'as' => 'font',
-      'crossorigin'=>true
+      'crossorigin' => TRUE,
     ],
     [
       'rel' => 'preload',
       'href' => '/themes/custom/ucsf/fonts/HelveticaNeueLTW04-55Roman.woff2',
       'as' => 'font',
-      'crossorigin'=>true
+      'crossorigin' => TRUE,
     ],
     [
       'rel' => 'preload',
       'href' => '/themes/custom/ucsf/fonts/HelveticaNeueLTW04-56Italic.woff2',
       'as' => 'font',
-      'crossorigin'=>true
+      'crossorigin' => TRUE,
     ],
     [
       'rel' => 'preload',
       'href' => '/themes/custom/ucsf/fonts/HelveticaNeueLTW04-65Medium.woff2',
       'as' => 'font',
-      'crossorigin'=>true
+      'crossorigin' => TRUE,
     ],
     [
       'rel' => 'preload',
       'href' => '/themes/custom/ucsf/fonts/HelveticaNeueLTW06-75Bold.woff2',
       'as' => 'font',
-      'crossorigin'=>true
+      'crossorigin' => TRUE,
     ],
     [
       'rel' => 'preload',
       'href' => '/themes/custom/ucsf/fonts/HelveticaNeueLTW04-65Medium.woff2',
       'as' => 'font',
-      'crossorigin'=>true
+      'crossorigin' => TRUE,
     ],
     [
       'rel' => 'preload',
       'href' => '/themes/custom/ucsf/fonts/fontawesome/webfonts/fa-brands-400.woff2',
       'as' => 'font',
-      'crossorigin'=>true
+      'crossorigin' => TRUE,
     ],
     [
       'rel' => 'preload',
       'href' => '/themes/custom/ucsf/fonts/fontawesome/webfonts/fa-solid-900.woff2',
       'as' => 'font',
-      'crossorigin'=>true
-    ]
+      'crossorigin' => TRUE,
+    ],
   ];
 
   foreach ($preload as $index => $file) {
@@ -90,4 +107,3 @@ function ucsf_page_attachments_alter(array &$page) {
   }
 
 }
-
