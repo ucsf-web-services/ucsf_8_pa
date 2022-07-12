@@ -18,6 +18,7 @@
 
 <div class="tags-menu-region">
   {% if content.field_topics|render or content.field_tags|render %}
+    {{ attach_library('ucsf/ucsf_article_topics_correct_heading') }}
     <h3 class="tags-menu__title">{{ "Topics"|t }}</h3>
     <ul class="tags-menu">
       {{ content.field_topics }} {{ content.field_tags }}

@@ -7,7 +7,7 @@
   {% for tweet in params.tweets %}
   <li class="twitter__tweet">
       <a href="https://twitter.com/{% if tweet.retweeted_status.user.screen_name %}{{tweet.retweeted_status.user.screen_name}}{% else %}{{tweet.user.screen_name}}{% endif %}/status/{{tweet.id}}">
-        <img class="twitter-icon" alt="twitter account icon" src='{% if tweet.retweeted_status.user.profile_image_url %}{{tweet.retweeted_status.user.profile_image_url|replace({"http://":"https://"}) }}{% else %}{{ tweet.user.profile_image_url|replace({"http://":"https://"}) }}{% endif %}' width="48" height="48"/>
+        <img class="twitter-icon" alt="twitter account icon" loading="lazy" src='{% if tweet.retweeted_status.user.profile_image_url %}{{tweet.retweeted_status.user.profile_image_url|replace({"http://":"https://"}) }}{% else %}{{ tweet.user.profile_image_url|replace({"http://":"https://"}) }}{% endif %}' width="48" height="48"/>
 
         <h3 class="twitter__user">
           {% if tweet.retweeted_status.user.name %}

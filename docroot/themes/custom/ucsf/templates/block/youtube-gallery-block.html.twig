@@ -14,7 +14,7 @@
   {% for key, youtube in youtube_content %}
     <li class="video-item__youtube">
       <a class="video_preview" href="https://www.youtube.com/watch?v={{ youtube.video_id }}">
-        <img src={{ youtube["thumbnail"] }} alt="" width="263" height="148"/>
+        <img loading="lazy" src={{ youtube["thumbnail"] }} alt="{{ youtube["video_title"] }}" width="263" height="148"/>
         <h3 class="video_preview__title">{{ youtube["video_title"] }}</h3>
       </a>
     </li>
