@@ -1,5 +1,4 @@
 (function () {
-  console.log("test");
   const articleContentHasH2 = document.querySelector( ".page_narrow h2");
 
   if ( !articleContentHasH2 ) {

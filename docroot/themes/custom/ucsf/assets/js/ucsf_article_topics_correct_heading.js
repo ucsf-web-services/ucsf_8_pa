@@ -1,7 +1,6 @@
 "use strict";
 
 (function () {
-  console.log("test");
   var articleContentHasH2 = document.querySelector(".page_narrow h2");
 
   if (!articleContentHasH2) {
