@@ -47,19 +47,6 @@
     }
   }
 
-  .narrow-page-header__subheading {
-    background: $white;
-    padding: 20px;
-    padding-bottom: 0;
-    padding-top: 0;
-
-    @include breakpoint ($new-small) {
-      padding: $space-decuple 11%;
-      padding-bottom: 0;
-      padding-top: 0;
-    }
-  }
-
   @include breakpoint($new-medium) {
     margin-top: $space-ten;
   }
@@ -91,6 +78,29 @@
         margin-right: 0;
       }
     }
+  }
+}
+
+.narrow-page-body {
+  background: $white;
+  padding: 20px;
+  padding-bottom: 0;
+  padding-top: 0;
+
+  @include breakpoint ($new-small) {
+    padding: $space-decuple 11%;
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+
+  @include breakpoint($new-large) {
+    grid-column: 2 / -2;
+    background: $c-white;
+    grid-row: 2;
+  }
+
+  @include breakpoint($new-xl) {
+    grid-column: 3 / -3;
   }
 }
 
