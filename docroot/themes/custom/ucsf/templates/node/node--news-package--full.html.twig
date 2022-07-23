@@ -1,7 +1,7 @@
 {% set classes = ['main', not node.isPublished() ? 'node--unpublished'] %}
 
 {% block content %}
-<main {{ attributes.addClass(classes) }}>
+<main {{ attributes.addClass(classes)|without('role') }}>
   <a id="main-content" tabindex="-1"></a>
   <div class="news-package-banner">
     <div class="news-package-banner-bk"></div>
