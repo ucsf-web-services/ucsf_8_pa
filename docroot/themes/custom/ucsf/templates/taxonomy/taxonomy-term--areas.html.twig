@@ -1,6 +1,6 @@
 {% set classes = ['main'] %}
 
-<main {{ attributes.addClass(classes) }}>
+<main {{ attributes.addClass(classes)|without('role') }}>
   <a id="main-content" tabindex="-1"></a>
   <div class="news-center areas-content">
     <h1>{{ name }}</h1>
