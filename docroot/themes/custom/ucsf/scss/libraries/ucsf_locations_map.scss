@@ -39,13 +39,58 @@ $map-height-max-nav: calc(100vh - 64px);
     z-index: $z-quicklinks-open-page;
   }
 
-  // // when menu is open
+  // when menu is open
   .slicknav_nav {
     top: 50px;
   }
   // when search and menu are open
   .header--search.header--search-active + .slicknav-placeholder .slicknav_nav {
     top: 210px;
+  }
+
+  // When admin toolbar is present.
+  #toolbar-administration {
+    & + .dialog-off-canvas-main-canvas {
+      .combined-header-region {
+        position: relative;
+        top: 0;
+        z-index: 2;
+        height: 64px;
+      }
+
+      .main-nav__toggle {
+        line-height: 58px;
+      }
+
+      #locations-list {
+        top: 0;
+        position: relative;
+        z-index: 0;
+
+        @include breakpoint($new-small) {
+          top: 126px;
+        }
+      }
+
+      .region-tabs {
+        position: relative;
+        z-index: 2;
+      }
+
+      .logo__img {
+        height: 30px;
+      }
+
+      #map-wrapper {
+        @include breakpoint($new-small) {
+          top: 126px;
+        }
+      }
+
+      footer {
+        display: none;
+      }
+    }
   }
 
   #map-wrapper {
