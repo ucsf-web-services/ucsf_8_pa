@@ -5,10 +5,11 @@
 
     const toolbar = document.querySelector('#toolbar-administration');
     const header = document.querySelector('.combined-header-region');
+    const map = document.querySelector('#map')
     const minimizedMenuSelected = header.classList.contains('is-minimized-sticky-menu');
     // Exit if the admin toolbar is present.
     if (toolbar) {
-      if (minimizedMenuSelected) {
+      if (minimizedMenuSelected || map) {
         header.classList.remove('is-minimized-sticky-menu', 'fixed-nav', 'fixed-nav--visible');
       }
       return;
