@@ -17,6 +17,7 @@ function ucsf_form_views_exposed_form_alter(&$form, FormStateInterface $form_sta
 
     // Attach library.
     $form['#attached']['library'][] = 'ucsf/search_news';
+    $form['#attached']['library'][] = 'ucsf/view_news_filter';
 
     // Create top container.
     $form['top'] = [
