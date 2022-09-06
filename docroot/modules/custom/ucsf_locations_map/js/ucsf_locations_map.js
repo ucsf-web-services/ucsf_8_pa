@@ -10,7 +10,7 @@
   header.classList.add('fixed-nav', 'fixed-nav--visible');
 
   // Valid id for skip to main link
-  document.querySelector('.skip-link').href='#locations-list';
+  document.querySelector('[href="#main-content"]').remove();
 
   Drupal.behaviors.map = {
     attach: function (context, settings) {
@@ -146,7 +146,7 @@
 
           // Close previous location marker pop up when new location is selected.
           $.each(rawLocations, function(index, location) {
-            google.maps.event.addDomListener(document.getElementById('loc-' + index), 'click', (function () {
+            document.getElementById('loc-' + index).addEventListener('click', (function () {
               $.each(infoWindows, function(index, infoWindow) {
                 infoWindow.close()
               });
@@ -164,10 +164,10 @@
 
           // adjust the map center on screen resize.
           var center;
-          google.maps.event.addDomListener(map, 'idle', function() {
+          google.maps.event.addListener(map, 'idle', function() {
             center = map.getCenter()
           });
-          google.maps.event.addDomListener(window, 'resize', function() {
+          window.addEventListener('resize', function() {
             google.maps.event.trigger(map, 'resize');
             map.setCenter(center);
           })
