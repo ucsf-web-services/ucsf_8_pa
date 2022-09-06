@@ -152,7 +152,8 @@ h1 {
   line-height: 1;
   margin: 8px 0; }
 
-h2 {
+h2,
+.h2 {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -163,53 +164,64 @@ h2 {
   letter-spacing: -0.6px;
   color: #052049; }
   @media (min-width: 600px) {
-    h2 {
+    h2,
+    .h2 {
       font-size: 56px;
       letter-spacing: -1.2px; } }
-  h2.small-title {
+  h2.small-title,
+  .h2.small-title {
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 18px;
     margin-top: 8px;
     letter-spacing: -0.2px; }
-    h2.small-title + * {
+    h2.small-title + *,
+    .h2.small-title + * {
       margin-top: 0; }
 
-h3 {
+h3,
+.h3 {
   line-height: 1;
   font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   font-size: 20px;
   line-height: 1.4;
   font-weight: 500; }
   @media (min-width: 600px) {
-    h3 {
+    h3,
+    .h3 {
       font-size: 28px; } }
-  h3.small-title {
+  h3.small-title,
+  .h3.small-title {
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 18px;
     margin-top: 8px;
     letter-spacing: -0.2px;
     font-weight: 500; }
-    h3.small-title + * {
+    h3.small-title + *,
+    .h3.small-title + * {
       margin-top: 0; }
 
-h4 {
+h4,
+.h4 {
   font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   font-size: 18px;
   line-height: 1.4;
   font-weight: 500;
   letter-spacing: -0.3px; }
   @media (min-width: 600px) {
-    h4 {
+    h4,
+    .h4 {
       font-size: 24px; } }
 
-h5 {
+h5,
+.h5 {
   font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
   line-height: 1.4;
   font-weight: 500;
   letter-spacing: -0.3px; }
   @media (min-width: 600px) {
-    h5 {
+    h5,
+    .h5 {
       font-size: 20px; } }
 
 h6 {
@@ -1647,57 +1659,67 @@ p.quote-style {
 
 .page_narrow .blockquote,
 .paragraph-text-block .blockquote,
-.ckpullquote,
-.wysiwyg_quote,
 .narrow-page-body .blockquote {
   background: #f2f4f6; }
-  .page_narrow .blockquote--half-left, .page_narrow .blockquote--half-right, .page_narrow .blockquote.ckpullquote-left, .page_narrow .blockquote.ckpullquote-right, .page_narrow .blockquote.align--left, .page_narrow .blockquote.align--center,
+  .page_narrow .blockquote--half-left,
   .paragraph-text-block .blockquote--half-left,
-  .paragraph-text-block .blockquote--half-right,
-  .paragraph-text-block .blockquote.ckpullquote-left,
-  .paragraph-text-block .blockquote.ckpullquote-right,
-  .paragraph-text-block .blockquote.align--left,
-  .paragraph-text-block .blockquote.align--center,
-  .ckpullquote--half-left,
-  .ckpullquote--half-right,
-  .ckpullquote.ckpullquote-left,
-  .ckpullquote.ckpullquote-right,
-  .ckpullquote.align--left,
-  .ckpullquote.align--center,
-  .wysiwyg_quote--half-left,
-  .wysiwyg_quote--half-right,
-  .wysiwyg_quote.ckpullquote-left,
-  .wysiwyg_quote.ckpullquote-right,
-  .wysiwyg_quote.align--left,
-  .wysiwyg_quote.align--center,
-  .narrow-page-body .blockquote--half-left,
-  .narrow-page-body .blockquote--half-right,
-  .narrow-page-body .blockquote.ckpullquote-left,
-  .narrow-page-body .blockquote.ckpullquote-right,
-  .narrow-page-body .blockquote.align--left,
-  .narrow-page-body .blockquote.align--center {
+  .narrow-page-body .blockquote--half-left {
     float: left;
     width: calc(100% + 20px);
     left: auto;
-    padding-top: 0;
     margin-left: -20px;
-    margin-right: 0;
-    margin-top: 0; }
+    margin-top: 0;
+    padding-top: 0;
+    margin-right: 0; }
+    @media (min-width: 769px) {
+      .page_narrow .blockquote--half-left,
+      .paragraph-text-block .blockquote--half-left,
+      .narrow-page-body .blockquote--half-left {
+        margin-left: -14%;
+        padding-left: 56px;
+        width: 50%; } }
+    @media (min-width: 1050px) {
+      .page_narrow .blockquote--half-left,
+      .paragraph-text-block .blockquote--half-left,
+      .narrow-page-body .blockquote--half-left {
+        margin-left: -20%;
+        padding-left: 0; } }
+    @media (min-width: 769px) {
+      .page_narrow .blockquote--half-left,
+      .paragraph-text-block .blockquote--half-left,
+      .narrow-page-body .blockquote--half-left {
+        margin-right: 80px; } }
+  .page_narrow .blockquote--half-right,
+  .paragraph-text-block .blockquote--half-right,
+  .narrow-page-body .blockquote--half-right {
+    float: right;
+    width: calc(100% + 20px);
+    right: auto;
+    margin-right: -20px;
+    margin-top: 0;
+    padding-top: 0;
+    margin-left: 0; }
+    @media (min-width: 769px) {
+      .page_narrow .blockquote--half-right,
+      .paragraph-text-block .blockquote--half-right,
+      .narrow-page-body .blockquote--half-right {
+        margin-right: -14%;
+        padding-right: 56px;
+        width: 50%; } }
+    @media (min-width: 1050px) {
+      .page_narrow .blockquote--half-right,
+      .paragraph-text-block .blockquote--half-right,
+      .narrow-page-body .blockquote--half-right {
+        margin-right: -20%;
+        padding-right: 0; } }
+    @media (min-width: 769px) {
+      .page_narrow .blockquote--half-right,
+      .paragraph-text-block .blockquote--half-right,
+      .narrow-page-body .blockquote--half-right {
+        margin-left: 80px; } }
   .page_narrow .blockquote-content__text,
-  .page_narrow .blockquote .ckpullquote--quote,
-  .page_narrow .blockquote .wysiwyg_quote--content,
   .paragraph-text-block .blockquote-content__text,
-  .paragraph-text-block .blockquote .ckpullquote--quote,
-  .paragraph-text-block .blockquote .wysiwyg_quote--content,
-  .ckpullquote-content__text,
-  .ckpullquote .ckpullquote--quote,
-  .ckpullquote .wysiwyg_quote--content,
-  .wysiwyg_quote-content__text,
-  .wysiwyg_quote .ckpullquote--quote,
-  .wysiwyg_quote .wysiwyg_quote--content,
-  .narrow-page-body .blockquote-content__text,
-  .narrow-page-body .blockquote .ckpullquote--quote,
-  .narrow-page-body .blockquote .wysiwyg_quote--content {
+  .narrow-page-body .blockquote-content__text {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -1713,37 +1735,13 @@ p.quote-style {
     margin-top: 0; }
     @media (min-width: 600px) {
       .page_narrow .blockquote-content__text,
-      .page_narrow .blockquote .ckpullquote--quote,
-      .page_narrow .blockquote .wysiwyg_quote--content,
       .paragraph-text-block .blockquote-content__text,
-      .paragraph-text-block .blockquote .ckpullquote--quote,
-      .paragraph-text-block .blockquote .wysiwyg_quote--content,
-      .ckpullquote-content__text,
-      .ckpullquote .ckpullquote--quote,
-      .ckpullquote .wysiwyg_quote--content,
-      .wysiwyg_quote-content__text,
-      .wysiwyg_quote .ckpullquote--quote,
-      .wysiwyg_quote .wysiwyg_quote--content,
-      .narrow-page-body .blockquote-content__text,
-      .narrow-page-body .blockquote .ckpullquote--quote,
-      .narrow-page-body .blockquote .wysiwyg_quote--content {
+      .narrow-page-body .blockquote-content__text {
         font-size: 40px;
         letter-spacing: -1px; } }
     .page_narrow .blockquote-content__text::before,
-    .page_narrow .blockquote .ckpullquote--quote::before,
-    .page_narrow .blockquote .wysiwyg_quote--content::before,
     .paragraph-text-block .blockquote-content__text::before,
-    .paragraph-text-block .blockquote .ckpullquote--quote::before,
-    .paragraph-text-block .blockquote .wysiwyg_quote--content::before,
-    .ckpullquote-content__text::before,
-    .ckpullquote .ckpullquote--quote::before,
-    .ckpullquote .wysiwyg_quote--content::before,
-    .wysiwyg_quote-content__text::before,
-    .wysiwyg_quote .ckpullquote--quote::before,
-    .wysiwyg_quote .wysiwyg_quote--content::before,
-    .narrow-page-body .blockquote-content__text::before,
-    .narrow-page-body .blockquote .ckpullquote--quote::before,
-    .narrow-page-body .blockquote .wysiwyg_quote--content::before {
+    .narrow-page-body .blockquote-content__text::before {
       content: '“ ';
       display: inline-block;
       margin-left: -24px;
@@ -1751,56 +1749,20 @@ p.quote-style {
       font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif; }
       @media (min-width: 600px) {
         .page_narrow .blockquote-content__text::before,
-        .page_narrow .blockquote .ckpullquote--quote::before,
-        .page_narrow .blockquote .wysiwyg_quote--content::before,
         .paragraph-text-block .blockquote-content__text::before,
-        .paragraph-text-block .blockquote .ckpullquote--quote::before,
-        .paragraph-text-block .blockquote .wysiwyg_quote--content::before,
-        .ckpullquote-content__text::before,
-        .ckpullquote .ckpullquote--quote::before,
-        .ckpullquote .wysiwyg_quote--content::before,
-        .wysiwyg_quote-content__text::before,
-        .wysiwyg_quote .ckpullquote--quote::before,
-        .wysiwyg_quote .wysiwyg_quote--content::before,
-        .narrow-page-body .blockquote-content__text::before,
-        .narrow-page-body .blockquote .ckpullquote--quote::before,
-        .narrow-page-body .blockquote .wysiwyg_quote--content::before {
+        .narrow-page-body .blockquote-content__text::before {
           padding-right: 8px; } }
     @media (max-width: 768px) {
       .page_narrow .blockquote-content__text,
-      .page_narrow .blockquote .ckpullquote--quote,
-      .page_narrow .blockquote .wysiwyg_quote--content,
       .paragraph-text-block .blockquote-content__text,
-      .paragraph-text-block .blockquote .ckpullquote--quote,
-      .paragraph-text-block .blockquote .wysiwyg_quote--content,
-      .ckpullquote-content__text,
-      .ckpullquote .ckpullquote--quote,
-      .ckpullquote .wysiwyg_quote--content,
-      .wysiwyg_quote-content__text,
-      .wysiwyg_quote .ckpullquote--quote,
-      .wysiwyg_quote .wysiwyg_quote--content,
-      .narrow-page-body .blockquote-content__text,
-      .narrow-page-body .blockquote .ckpullquote--quote,
-      .narrow-page-body .blockquote .wysiwyg_quote--content {
+      .narrow-page-body .blockquote-content__text {
         padding-top: 40px;
         padding-left: 40px;
         padding-right: 40px;
         padding-bottom: 0; } }
   .page_narrow .blockquote-content__cite,
-  .page_narrow .blockquote .ckpullquote--author,
-  .page_narrow .blockquote .wysiwyg_quote--author,
   .paragraph-text-block .blockquote-content__cite,
-  .paragraph-text-block .blockquote .ckpullquote--author,
-  .paragraph-text-block .blockquote .wysiwyg_quote--author,
-  .ckpullquote-content__cite,
-  .ckpullquote .ckpullquote--author,
-  .ckpullquote .wysiwyg_quote--author,
-  .wysiwyg_quote-content__cite,
-  .wysiwyg_quote .ckpullquote--author,
-  .wysiwyg_quote .wysiwyg_quote--author,
-  .narrow-page-body .blockquote-content__cite,
-  .narrow-page-body .blockquote .ckpullquote--author,
-  .narrow-page-body .blockquote .wysiwyg_quote--author {
+  .narrow-page-body .blockquote-content__cite {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -1814,20 +1776,8 @@ p.quote-style {
     font-style: normal;
     padding-right: 15%; }
     .page_narrow .blockquote-content__cite::after,
-    .page_narrow .blockquote .ckpullquote--author::after,
-    .page_narrow .blockquote .wysiwyg_quote--author::after,
     .paragraph-text-block .blockquote-content__cite::after,
-    .paragraph-text-block .blockquote .ckpullquote--author::after,
-    .paragraph-text-block .blockquote .wysiwyg_quote--author::after,
-    .ckpullquote-content__cite::after,
-    .ckpullquote .ckpullquote--author::after,
-    .ckpullquote .wysiwyg_quote--author::after,
-    .wysiwyg_quote-content__cite::after,
-    .wysiwyg_quote .ckpullquote--author::after,
-    .wysiwyg_quote .wysiwyg_quote--author::after,
-    .narrow-page-body .blockquote-content__cite::after,
-    .narrow-page-body .blockquote .ckpullquote--author::after,
-    .narrow-page-body .blockquote .wysiwyg_quote--author::after {
+    .narrow-page-body .blockquote-content__cite::after {
       content: ' ';
       display: inline-block;
       width: 40px;
@@ -1836,349 +1786,43 @@ p.quote-style {
       margin: 0 5px 3px; }
     @media (max-width: 768px) {
       .page_narrow .blockquote-content__cite,
-      .page_narrow .blockquote .ckpullquote--author,
-      .page_narrow .blockquote .wysiwyg_quote--author,
       .paragraph-text-block .blockquote-content__cite,
-      .paragraph-text-block .blockquote .ckpullquote--author,
-      .paragraph-text-block .blockquote .wysiwyg_quote--author,
-      .ckpullquote-content__cite,
-      .ckpullquote .ckpullquote--author,
-      .ckpullquote .wysiwyg_quote--author,
-      .wysiwyg_quote-content__cite,
-      .wysiwyg_quote .ckpullquote--author,
-      .wysiwyg_quote .wysiwyg_quote--author,
-      .narrow-page-body .blockquote-content__cite,
-      .narrow-page-body .blockquote .ckpullquote--author,
-      .narrow-page-body .blockquote .wysiwyg_quote--author {
+      .narrow-page-body .blockquote-content__cite {
         padding-left: 40px; } }
-  .page_narrow .blockquote .ckpullquote--org,
-  .paragraph-text-block .blockquote .ckpullquote--org,
-  .ckpullquote .ckpullquote--org,
-  .wysiwyg_quote .ckpullquote--org,
-  .narrow-page-body .blockquote .ckpullquote--org {
-    font-size: 14px;
-    padding-right: 15%; }
-  .page_narrow .blockquote--half-right, .page_narrow .blockquote.ckpullquote-right, .page_narrow .blockquote.align--right,
-  .paragraph-text-block .blockquote--half-right,
-  .paragraph-text-block .blockquote.ckpullquote-right,
-  .paragraph-text-block .blockquote.align--right,
-  .ckpullquote--half-right,
-  .ckpullquote.ckpullquote-right,
-  .ckpullquote.align--right,
-  .wysiwyg_quote--half-right,
-  .wysiwyg_quote.ckpullquote-right,
-  .wysiwyg_quote.align--right,
-  .narrow-page-body .blockquote--half-right,
-  .narrow-page-body .blockquote.ckpullquote-right,
-  .narrow-page-body .blockquote.align--right {
-    float: right;
-    right: auto;
-    margin-right: -20px;
-    margin-left: 0; }
-    .page_narrow .blockquote--half-right .blockquote-content__text,
-    .page_narrow .blockquote--half-right .ckpullquote--quote,
-    .page_narrow .blockquote--half-right .wysiwyg_quote--content, .page_narrow .blockquote.ckpullquote-right .blockquote-content__text,
-    .page_narrow .blockquote.ckpullquote-right .ckpullquote--quote,
-    .page_narrow .blockquote.ckpullquote-right .wysiwyg_quote--content, .page_narrow .blockquote.align--right .blockquote-content__text,
-    .page_narrow .blockquote.align--right .ckpullquote--quote,
-    .page_narrow .blockquote.align--right .wysiwyg_quote--content,
-    .paragraph-text-block .blockquote--half-right .blockquote-content__text,
-    .paragraph-text-block .blockquote--half-right .ckpullquote--quote,
-    .paragraph-text-block .blockquote--half-right .wysiwyg_quote--content,
-    .paragraph-text-block .blockquote.ckpullquote-right .blockquote-content__text,
-    .paragraph-text-block .blockquote.ckpullquote-right .ckpullquote--quote,
-    .paragraph-text-block .blockquote.ckpullquote-right .wysiwyg_quote--content,
-    .paragraph-text-block .blockquote.align--right .blockquote-content__text,
-    .paragraph-text-block .blockquote.align--right .ckpullquote--quote,
-    .paragraph-text-block .blockquote.align--right .wysiwyg_quote--content,
-    .ckpullquote--half-right .blockquote-content__text,
-    .ckpullquote--half-right .ckpullquote--quote,
-    .ckpullquote--half-right .wysiwyg_quote--content,
-    .ckpullquote.ckpullquote-right .blockquote-content__text,
-    .ckpullquote.ckpullquote-right .ckpullquote--quote,
-    .ckpullquote.ckpullquote-right .wysiwyg_quote--content,
-    .ckpullquote.align--right .blockquote-content__text,
-    .ckpullquote.align--right .ckpullquote--quote,
-    .ckpullquote.align--right .wysiwyg_quote--content,
-    .wysiwyg_quote--half-right .blockquote-content__text,
-    .wysiwyg_quote--half-right .ckpullquote--quote,
-    .wysiwyg_quote--half-right .wysiwyg_quote--content,
-    .wysiwyg_quote.ckpullquote-right .blockquote-content__text,
-    .wysiwyg_quote.ckpullquote-right .ckpullquote--quote,
-    .wysiwyg_quote.ckpullquote-right .wysiwyg_quote--content,
-    .wysiwyg_quote.align--right .blockquote-content__text,
-    .wysiwyg_quote.align--right .ckpullquote--quote,
-    .wysiwyg_quote.align--right .wysiwyg_quote--content,
-    .narrow-page-body .blockquote--half-right .blockquote-content__text,
-    .narrow-page-body .blockquote--half-right .ckpullquote--quote,
-    .narrow-page-body .blockquote--half-right .wysiwyg_quote--content,
-    .narrow-page-body .blockquote.ckpullquote-right .blockquote-content__text,
-    .narrow-page-body .blockquote.ckpullquote-right .ckpullquote--quote,
-    .narrow-page-body .blockquote.ckpullquote-right .wysiwyg_quote--content,
-    .narrow-page-body .blockquote.align--right .blockquote-content__text,
-    .narrow-page-body .blockquote.align--right .ckpullquote--quote,
-    .narrow-page-body .blockquote.align--right .wysiwyg_quote--content {
-      padding-right: 0;
-      padding-left: 15%; }
-      @media (max-width: 768px) {
-        .page_narrow .blockquote--half-right .blockquote-content__text,
-        .page_narrow .blockquote--half-right .ckpullquote--quote,
-        .page_narrow .blockquote--half-right .wysiwyg_quote--content, .page_narrow .blockquote.ckpullquote-right .blockquote-content__text,
-        .page_narrow .blockquote.ckpullquote-right .ckpullquote--quote,
-        .page_narrow .blockquote.ckpullquote-right .wysiwyg_quote--content, .page_narrow .blockquote.align--right .blockquote-content__text,
-        .page_narrow .blockquote.align--right .ckpullquote--quote,
-        .page_narrow .blockquote.align--right .wysiwyg_quote--content,
-        .paragraph-text-block .blockquote--half-right .blockquote-content__text,
-        .paragraph-text-block .blockquote--half-right .ckpullquote--quote,
-        .paragraph-text-block .blockquote--half-right .wysiwyg_quote--content,
-        .paragraph-text-block .blockquote.ckpullquote-right .blockquote-content__text,
-        .paragraph-text-block .blockquote.ckpullquote-right .ckpullquote--quote,
-        .paragraph-text-block .blockquote.ckpullquote-right .wysiwyg_quote--content,
-        .paragraph-text-block .blockquote.align--right .blockquote-content__text,
-        .paragraph-text-block .blockquote.align--right .ckpullquote--quote,
-        .paragraph-text-block .blockquote.align--right .wysiwyg_quote--content,
-        .ckpullquote--half-right .blockquote-content__text,
-        .ckpullquote--half-right .ckpullquote--quote,
-        .ckpullquote--half-right .wysiwyg_quote--content,
-        .ckpullquote.ckpullquote-right .blockquote-content__text,
-        .ckpullquote.ckpullquote-right .ckpullquote--quote,
-        .ckpullquote.ckpullquote-right .wysiwyg_quote--content,
-        .ckpullquote.align--right .blockquote-content__text,
-        .ckpullquote.align--right .ckpullquote--quote,
-        .ckpullquote.align--right .wysiwyg_quote--content,
-        .wysiwyg_quote--half-right .blockquote-content__text,
-        .wysiwyg_quote--half-right .ckpullquote--quote,
-        .wysiwyg_quote--half-right .wysiwyg_quote--content,
-        .wysiwyg_quote.ckpullquote-right .blockquote-content__text,
-        .wysiwyg_quote.ckpullquote-right .ckpullquote--quote,
-        .wysiwyg_quote.ckpullquote-right .wysiwyg_quote--content,
-        .wysiwyg_quote.align--right .blockquote-content__text,
-        .wysiwyg_quote.align--right .ckpullquote--quote,
-        .wysiwyg_quote.align--right .wysiwyg_quote--content,
-        .narrow-page-body .blockquote--half-right .blockquote-content__text,
-        .narrow-page-body .blockquote--half-right .ckpullquote--quote,
-        .narrow-page-body .blockquote--half-right .wysiwyg_quote--content,
-        .narrow-page-body .blockquote.ckpullquote-right .blockquote-content__text,
-        .narrow-page-body .blockquote.ckpullquote-right .ckpullquote--quote,
-        .narrow-page-body .blockquote.ckpullquote-right .wysiwyg_quote--content,
-        .narrow-page-body .blockquote.align--right .blockquote-content__text,
-        .narrow-page-body .blockquote.align--right .ckpullquote--quote,
-        .narrow-page-body .blockquote.align--right .wysiwyg_quote--content {
-          padding-top: 40px;
-          padding-left: 40px;
-          padding-right: 40px;
-          padding-bottom: 0; } }
-    .page_narrow .blockquote--half-right .blockquote-content__cite,
-    .page_narrow .blockquote--half-right .ckpullquote--author,
-    .page_narrow .blockquote--half-right .ckpullquote--org,
-    .page_narrow .blockquote--half-right .wysiwyg_quote--author, .page_narrow .blockquote.ckpullquote-right .blockquote-content__cite,
-    .page_narrow .blockquote.ckpullquote-right .ckpullquote--author,
-    .page_narrow .blockquote.ckpullquote-right .ckpullquote--org,
-    .page_narrow .blockquote.ckpullquote-right .wysiwyg_quote--author, .page_narrow .blockquote.align--right .blockquote-content__cite,
-    .page_narrow .blockquote.align--right .ckpullquote--author,
-    .page_narrow .blockquote.align--right .ckpullquote--org,
-    .page_narrow .blockquote.align--right .wysiwyg_quote--author,
-    .paragraph-text-block .blockquote--half-right .blockquote-content__cite,
-    .paragraph-text-block .blockquote--half-right .ckpullquote--author,
-    .paragraph-text-block .blockquote--half-right .ckpullquote--org,
-    .paragraph-text-block .blockquote--half-right .wysiwyg_quote--author,
-    .paragraph-text-block .blockquote.ckpullquote-right .blockquote-content__cite,
-    .paragraph-text-block .blockquote.ckpullquote-right .ckpullquote--author,
-    .paragraph-text-block .blockquote.ckpullquote-right .ckpullquote--org,
-    .paragraph-text-block .blockquote.ckpullquote-right .wysiwyg_quote--author,
-    .paragraph-text-block .blockquote.align--right .blockquote-content__cite,
-    .paragraph-text-block .blockquote.align--right .ckpullquote--author,
-    .paragraph-text-block .blockquote.align--right .ckpullquote--org,
-    .paragraph-text-block .blockquote.align--right .wysiwyg_quote--author,
-    .ckpullquote--half-right .blockquote-content__cite,
-    .ckpullquote--half-right .ckpullquote--author,
-    .ckpullquote--half-right .ckpullquote--org,
-    .ckpullquote--half-right .wysiwyg_quote--author,
-    .ckpullquote.ckpullquote-right .blockquote-content__cite,
-    .ckpullquote.ckpullquote-right .ckpullquote--author,
-    .ckpullquote.ckpullquote-right .ckpullquote--org,
-    .ckpullquote.ckpullquote-right .wysiwyg_quote--author,
-    .ckpullquote.align--right .blockquote-content__cite,
-    .ckpullquote.align--right .ckpullquote--author,
-    .ckpullquote.align--right .ckpullquote--org,
-    .ckpullquote.align--right .wysiwyg_quote--author,
-    .wysiwyg_quote--half-right .blockquote-content__cite,
-    .wysiwyg_quote--half-right .ckpullquote--author,
-    .wysiwyg_quote--half-right .ckpullquote--org,
-    .wysiwyg_quote--half-right .wysiwyg_quote--author,
-    .wysiwyg_quote.ckpullquote-right .blockquote-content__cite,
-    .wysiwyg_quote.ckpullquote-right .ckpullquote--author,
-    .wysiwyg_quote.ckpullquote-right .ckpullquote--org,
-    .wysiwyg_quote.ckpullquote-right .wysiwyg_quote--author,
-    .wysiwyg_quote.align--right .blockquote-content__cite,
-    .wysiwyg_quote.align--right .ckpullquote--author,
-    .wysiwyg_quote.align--right .ckpullquote--org,
-    .wysiwyg_quote.align--right .wysiwyg_quote--author,
-    .narrow-page-body .blockquote--half-right .blockquote-content__cite,
-    .narrow-page-body .blockquote--half-right .ckpullquote--author,
-    .narrow-page-body .blockquote--half-right .ckpullquote--org,
-    .narrow-page-body .blockquote--half-right .wysiwyg_quote--author,
-    .narrow-page-body .blockquote.ckpullquote-right .blockquote-content__cite,
-    .narrow-page-body .blockquote.ckpullquote-right .ckpullquote--author,
-    .narrow-page-body .blockquote.ckpullquote-right .ckpullquote--org,
-    .narrow-page-body .blockquote.ckpullquote-right .wysiwyg_quote--author,
-    .narrow-page-body .blockquote.align--right .blockquote-content__cite,
-    .narrow-page-body .blockquote.align--right .ckpullquote--author,
-    .narrow-page-body .blockquote.align--right .ckpullquote--org,
-    .narrow-page-body .blockquote.align--right .wysiwyg_quote--author {
-      padding-left: 15%; }
-      @media (max-width: 768px) {
-        .page_narrow .blockquote--half-right .blockquote-content__cite,
-        .page_narrow .blockquote--half-right .ckpullquote--author,
-        .page_narrow .blockquote--half-right .ckpullquote--org,
-        .page_narrow .blockquote--half-right .wysiwyg_quote--author, .page_narrow .blockquote.ckpullquote-right .blockquote-content__cite,
-        .page_narrow .blockquote.ckpullquote-right .ckpullquote--author,
-        .page_narrow .blockquote.ckpullquote-right .ckpullquote--org,
-        .page_narrow .blockquote.ckpullquote-right .wysiwyg_quote--author, .page_narrow .blockquote.align--right .blockquote-content__cite,
-        .page_narrow .blockquote.align--right .ckpullquote--author,
-        .page_narrow .blockquote.align--right .ckpullquote--org,
-        .page_narrow .blockquote.align--right .wysiwyg_quote--author,
-        .paragraph-text-block .blockquote--half-right .blockquote-content__cite,
-        .paragraph-text-block .blockquote--half-right .ckpullquote--author,
-        .paragraph-text-block .blockquote--half-right .ckpullquote--org,
-        .paragraph-text-block .blockquote--half-right .wysiwyg_quote--author,
-        .paragraph-text-block .blockquote.ckpullquote-right .blockquote-content__cite,
-        .paragraph-text-block .blockquote.ckpullquote-right .ckpullquote--author,
-        .paragraph-text-block .blockquote.ckpullquote-right .ckpullquote--org,
-        .paragraph-text-block .blockquote.ckpullquote-right .wysiwyg_quote--author,
-        .paragraph-text-block .blockquote.align--right .blockquote-content__cite,
-        .paragraph-text-block .blockquote.align--right .ckpullquote--author,
-        .paragraph-text-block .blockquote.align--right .ckpullquote--org,
-        .paragraph-text-block .blockquote.align--right .wysiwyg_quote--author,
-        .ckpullquote--half-right .blockquote-content__cite,
-        .ckpullquote--half-right .ckpullquote--author,
-        .ckpullquote--half-right .ckpullquote--org,
-        .ckpullquote--half-right .wysiwyg_quote--author,
-        .ckpullquote.ckpullquote-right .blockquote-content__cite,
-        .ckpullquote.ckpullquote-right .ckpullquote--author,
-        .ckpullquote.ckpullquote-right .ckpullquote--org,
-        .ckpullquote.ckpullquote-right .wysiwyg_quote--author,
-        .ckpullquote.align--right .blockquote-content__cite,
-        .ckpullquote.align--right .ckpullquote--author,
-        .ckpullquote.align--right .ckpullquote--org,
-        .ckpullquote.align--right .wysiwyg_quote--author,
-        .wysiwyg_quote--half-right .blockquote-content__cite,
-        .wysiwyg_quote--half-right .ckpullquote--author,
-        .wysiwyg_quote--half-right .ckpullquote--org,
-        .wysiwyg_quote--half-right .wysiwyg_quote--author,
-        .wysiwyg_quote.ckpullquote-right .blockquote-content__cite,
-        .wysiwyg_quote.ckpullquote-right .ckpullquote--author,
-        .wysiwyg_quote.ckpullquote-right .ckpullquote--org,
-        .wysiwyg_quote.ckpullquote-right .wysiwyg_quote--author,
-        .wysiwyg_quote.align--right .blockquote-content__cite,
-        .wysiwyg_quote.align--right .ckpullquote--author,
-        .wysiwyg_quote.align--right .ckpullquote--org,
-        .wysiwyg_quote.align--right .wysiwyg_quote--author,
-        .narrow-page-body .blockquote--half-right .blockquote-content__cite,
-        .narrow-page-body .blockquote--half-right .ckpullquote--author,
-        .narrow-page-body .blockquote--half-right .ckpullquote--org,
-        .narrow-page-body .blockquote--half-right .wysiwyg_quote--author,
-        .narrow-page-body .blockquote.ckpullquote-right .blockquote-content__cite,
-        .narrow-page-body .blockquote.ckpullquote-right .ckpullquote--author,
-        .narrow-page-body .blockquote.ckpullquote-right .ckpullquote--org,
-        .narrow-page-body .blockquote.ckpullquote-right .wysiwyg_quote--author,
-        .narrow-page-body .blockquote.align--right .blockquote-content__cite,
-        .narrow-page-body .blockquote.align--right .ckpullquote--author,
-        .narrow-page-body .blockquote.align--right .ckpullquote--org,
-        .narrow-page-body .blockquote.align--right .wysiwyg_quote--author {
-          padding-left: 40px; } }
+  .page_narrow .blockquote--half-right .blockquote-content__text,
+  .paragraph-text-block .blockquote--half-right .blockquote-content__text,
+  .narrow-page-body .blockquote--half-right .blockquote-content__text {
+    padding-right: 0;
+    padding-left: 15%; }
+    @media (max-width: 768px) {
+      .page_narrow .blockquote--half-right .blockquote-content__text,
+      .paragraph-text-block .blockquote--half-right .blockquote-content__text,
+      .narrow-page-body .blockquote--half-right .blockquote-content__text {
+        padding-top: 40px;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 0; } }
+  .page_narrow .blockquote--half-right .blockquote-content__cite,
+  .paragraph-text-block .blockquote--half-right .blockquote-content__cite,
+  .narrow-page-body .blockquote--half-right .blockquote-content__cite {
+    padding-left: 15%; }
+    @media (max-width: 768px) {
+      .page_narrow .blockquote--half-right .blockquote-content__cite,
+      .paragraph-text-block .blockquote--half-right .blockquote-content__cite,
+      .narrow-page-body .blockquote--half-right .blockquote-content__cite {
+        padding-left: 40px; } }
   .page_narrow .blockquote footer,
   .paragraph-text-block .blockquote footer,
-  .ckpullquote footer,
-  .wysiwyg_quote footer,
   .narrow-page-body .blockquote footer {
     margin-bottom: 50px; }
-  @media (min-width: 769px) {
-    .page_narrow .blockquote--half-left, .page_narrow .blockquote.ckpullquote-left, .page_narrow .blockquote.align--left, .page_narrow .blockquote.align--center,
-    .paragraph-text-block .blockquote--half-left,
-    .paragraph-text-block .blockquote.ckpullquote-left,
-    .paragraph-text-block .blockquote.align--left,
-    .paragraph-text-block .blockquote.align--center,
-    .ckpullquote--half-left,
-    .ckpullquote.ckpullquote-left,
-    .ckpullquote.align--left,
-    .ckpullquote.align--center,
-    .wysiwyg_quote--half-left,
-    .wysiwyg_quote.ckpullquote-left,
-    .wysiwyg_quote.align--left,
-    .wysiwyg_quote.align--center,
-    .narrow-page-body .blockquote--half-left,
-    .narrow-page-body .blockquote.ckpullquote-left,
-    .narrow-page-body .blockquote.align--left,
-    .narrow-page-body .blockquote.align--center {
-      margin-left: -14%;
-      margin-right: 80px;
-      padding-left: 56px;
-      width: 50%; }
-    .page_narrow .blockquote--half-right, .page_narrow .blockquote.ckpullquote-right, .page_narrow .blockquote.align--right,
-    .paragraph-text-block .blockquote--half-right,
-    .paragraph-text-block .blockquote.ckpullquote-right,
-    .paragraph-text-block .blockquote.align--right,
-    .ckpullquote--half-right,
-    .ckpullquote.ckpullquote-right,
-    .ckpullquote.align--right,
-    .wysiwyg_quote--half-right,
-    .wysiwyg_quote.ckpullquote-right,
-    .wysiwyg_quote.align--right,
-    .narrow-page-body .blockquote--half-right,
-    .narrow-page-body .blockquote.ckpullquote-right,
-    .narrow-page-body .blockquote.align--right {
-      margin-right: -14%;
-      margin-left: 80px;
-      padding-right: 56px;
-      width: 50%; } }
-  @media (min-width: 1050px) {
-    .page_narrow .blockquote--half-left, .page_narrow .blockquote.ckpullquote-left, .page_narrow .blockquote.align--left, .page_narrow .blockquote.align--center,
-    .paragraph-text-block .blockquote--half-left,
-    .paragraph-text-block .blockquote.ckpullquote-left,
-    .paragraph-text-block .blockquote.align--left,
-    .paragraph-text-block .blockquote.align--center,
-    .ckpullquote--half-left,
-    .ckpullquote.ckpullquote-left,
-    .ckpullquote.align--left,
-    .ckpullquote.align--center,
-    .wysiwyg_quote--half-left,
-    .wysiwyg_quote.ckpullquote-left,
-    .wysiwyg_quote.align--left,
-    .wysiwyg_quote.align--center,
-    .narrow-page-body .blockquote--half-left,
-    .narrow-page-body .blockquote.ckpullquote-left,
-    .narrow-page-body .blockquote.align--left,
-    .narrow-page-body .blockquote.align--center {
-      margin-left: -20%;
-      padding-left: 0; }
-    .page_narrow .blockquote--half-right, .page_narrow .blockquote.ckpullquote-right, .page_narrow .blockquote.align--right,
-    .paragraph-text-block .blockquote--half-right,
-    .paragraph-text-block .blockquote.ckpullquote-right,
-    .paragraph-text-block .blockquote.align--right,
-    .ckpullquote--half-right,
-    .ckpullquote.ckpullquote-right,
-    .ckpullquote.align--right,
-    .wysiwyg_quote--half-right,
-    .wysiwyg_quote.ckpullquote-right,
-    .wysiwyg_quote.align--right,
-    .narrow-page-body .blockquote--half-right,
-    .narrow-page-body .blockquote.ckpullquote-right,
-    .narrow-page-body .blockquote.align--right {
-      margin-right: -20%;
-      padding-right: 0; } }
   .page_narrow .blockquote--full-right,
   .paragraph-text-block .blockquote--full-right,
-  .ckpullquote--full-right,
-  .wysiwyg_quote--full-right,
   .narrow-page-body .blockquote--full-right {
     margin: 0 -1.25rem 0 0;
     padding-right: 6%; }
     @media (min-width: 769px) {
       .page_narrow .blockquote--full-right,
       .paragraph-text-block .blockquote--full-right,
-      .ckpullquote--full-right,
-      .wysiwyg_quote--full-right,
       .narrow-page-body .blockquote--full-right {
         border-left-width: 1rem;
         border-left-style: solid;
@@ -2187,42 +1831,13 @@ p.quote-style {
     @media (min-width: 1050px) {
       .page_narrow .blockquote--full-right,
       .paragraph-text-block .blockquote--full-right,
-      .ckpullquote--full-right,
-      .wysiwyg_quote--full-right,
       .narrow-page-body .blockquote--full-right {
         padding-right: 6%; } }
     @media (min-width: 769px) {
       .page_narrow .blockquote--full-right .blockquote-content__text,
       .paragraph-text-block .blockquote--full-right .blockquote-content__text,
-      .ckpullquote--full-right .blockquote-content__text,
-      .wysiwyg_quote--full-right .blockquote-content__text,
       .narrow-page-body .blockquote--full-right .blockquote-content__text {
         padding-right: 0; } }
-
-.ckpullquote {
-  padding-bottom: 50px;
-  margin-bottom: 24px; }
-
-.ckpullquote--author,
-.wysiwyg_quote--author {
-  margin-top: 2rem; }
-
-.wysiwyg_quote {
-  margin-bottom: 32px; }
-
-.wysiwyg_quote--author {
-  margin-bottom: 50px; }
-
-.wysiwyg_quote--org {
-  margin-top: -55px;
-  margin-bottom: 50px;
-  font-size: 16px;
-  padding-right: 15%;
-  padding-left: 15%; }
-  @media (max-width: 768px) {
-    .wysiwyg_quote--org {
-      padding-left: 40px;
-      padding-right: 40px; } }
 
 @media (min-width: 769px) {
   .blockquote--half-right.in-viewport {
@@ -2333,35 +1948,37 @@ p.quote-style {
   float: left;
   margin-left: -20px;
   padding-left: 6%; }
+  @media (min-width: 769px) {
+    .callout-left {
+      margin-left: -14%; } }
+  @media (min-width: 1050px) {
+    .callout-left {
+      margin-left: -20%; } }
   @media (max-width: 768px) {
     .callout-left {
       margin-right: 0; } }
   @media (min-width: 769px) {
-    .callout-left {
-      margin-left: -14%; }
-      .callout-left.in-viewport {
-        -webkit-animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-                animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
-  @media (min-width: 1050px) {
-    .callout-left {
-      margin-left: -20%; } }
+    .callout-left.in-viewport {
+      -webkit-animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+              animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
 
 .callout-right {
   float: right;
   margin-right: -20px;
   padding-right: 6%; }
+  @media (min-width: 769px) {
+    .callout-right {
+      margin-right: -14%; } }
+  @media (min-width: 1050px) {
+    .callout-right {
+      margin-right: -20%; } }
   @media (max-width: 768px) {
     .callout-right {
       margin-left: 0; } }
   @media (min-width: 769px) {
-    .callout-right {
-      margin-right: -14%; }
-      .callout-right.in-viewport {
-        -webkit-animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
-                animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
-  @media (min-width: 1050px) {
-    .callout-right {
-      margin-right: -20%; } }
+    .callout-right.in-viewport {
+      -webkit-animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+              animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards; } }
 
 .callout__image {
   width: 100px;
@@ -2393,12 +2010,16 @@ p.quote-style {
     margin-right: -3.5rem; }
     @media (min-width: 769px) {
       .callout-left .callout__image {
-        float: none;
         margin-left: -14%; } }
     @media (min-width: 1050px) {
       .callout-left .callout__image {
         margin-right: 0;
-        margin-left: 0;
+        margin-left: 0; } }
+    @media (min-width: 769px) {
+      .callout-left .callout__image {
+        float: none; } }
+    @media (min-width: 1050px) {
+      .callout-left .callout__image {
         -webkit-transform: translateX(-50%);
                 transform: translateX(-50%); } }
   .callout-right .callout__image {
@@ -2406,12 +2027,17 @@ p.quote-style {
     margin-left: -3.5rem; }
     @media (min-width: 769px) {
       .callout-right .callout__image {
-        margin-left: 0;
-        margin-right: -14%;
-        float: right; } }
+        margin-right: -14%; } }
     @media (min-width: 1050px) {
       .callout-right .callout__image {
         margin-right: 0;
+        margin-left: 0; } }
+    @media (min-width: 769px) {
+      .callout-right .callout__image {
+        margin-left: 0;
+        float: right; } }
+    @media (min-width: 1050px) {
+      .callout-right .callout__image {
         -webkit-transform: translateX(50%);
                 transform: translateX(50%); } }
 
@@ -3088,38 +2714,22 @@ a.video_preview::before {
       margin-right: -.5rem; }
 
 figure[class="embedded-entity"],
-figure[class="image"],
-figure.image-2014_inline_2-col,
-figure.image-2014_inline_4-col,
-figure.image-2014_inline_5-col,
-.image-2014_wysiwyg_full {
+figure[class="image"] {
   display: table;
   margin: 40px;
   margin-top: 0;
   margin-bottom: 32px; }
   @media (max-width: 768px) {
     figure[class="embedded-entity"],
-    figure[class="image"],
-    figure.image-2014_inline_2-col,
-    figure.image-2014_inline_4-col,
-    figure.image-2014_inline_5-col,
-    .image-2014_wysiwyg_full {
+    figure[class="image"] {
       width: 100% !important;
       margin-left: 0;
       margin-right: 0; }
       figure[class="embedded-entity"] img,
-      figure[class="image"] img,
-      figure.image-2014_inline_2-col img,
-      figure.image-2014_inline_4-col img,
-      figure.image-2014_inline_5-col img,
-      .image-2014_wysiwyg_full img {
+      figure[class="image"] img {
         width: 100%; } }
   figure[class="embedded-entity"] figcaption,
-  figure[class="image"] figcaption,
-  figure.image-2014_inline_2-col figcaption,
-  figure.image-2014_inline_4-col figcaption,
-  figure.image-2014_inline_5-col figcaption,
-  .image-2014_wysiwyg_full figcaption {
+  figure[class="image"] figcaption {
     display: table-caption;
     caption-side: bottom; }
 
@@ -3139,114 +2749,6 @@ figure[class="image"] {
 figure figure[class="embedded-entity"],
 figure figure[class="image"] {
   margin: 0; }
-
-.image-2014_wysiwyg_full[style~="float:right"], .image-2014_wysiwyg_full[style~="right;"], .image-2014_wysiwyg_full[style~="float:right;"],
-.ckimagebox[style~="float:right"],
-.ckimagebox[style~="right;"],
-.ckimagebox[style~="float:right;"],
-.wysiwyg-full[style~="float:right"],
-.wysiwyg-full[style~="right;"],
-.wysiwyg-full[style~="float:right;"],
-.ckgreybox[style~="float:right"],
-.ckgreybox[style~="right;"],
-.ckgreybox[style~="float:right;"] {
-  margin: 40px;
-  margin-right: 0;
-  margin-top: 0;
-  margin-bottom: 32px; }
-  @media (max-width: 768px) {
-    .image-2014_wysiwyg_full[style~="float:right"], .image-2014_wysiwyg_full[style~="right;"], .image-2014_wysiwyg_full[style~="float:right;"],
-    .ckimagebox[style~="float:right"],
-    .ckimagebox[style~="right;"],
-    .ckimagebox[style~="float:right;"],
-    .wysiwyg-full[style~="float:right"],
-    .wysiwyg-full[style~="right;"],
-    .wysiwyg-full[style~="float:right;"],
-    .ckgreybox[style~="float:right"],
-    .ckgreybox[style~="right;"],
-    .ckgreybox[style~="float:right;"] {
-      width: 100% !important;
-      margin-left: 0;
-      margin-right: 0; }
-      .image-2014_wysiwyg_full[style~="float:right"] img, .image-2014_wysiwyg_full[style~="right;"] img, .image-2014_wysiwyg_full[style~="float:right;"] img,
-      .ckimagebox[style~="float:right"] img,
-      .ckimagebox[style~="right;"] img,
-      .ckimagebox[style~="float:right;"] img,
-      .wysiwyg-full[style~="float:right"] img,
-      .wysiwyg-full[style~="right;"] img,
-      .wysiwyg-full[style~="float:right;"] img,
-      .ckgreybox[style~="float:right"] img,
-      .ckgreybox[style~="right;"] img,
-      .ckgreybox[style~="float:right;"] img {
-        width: 100%; } }
-  @media (min-width: 769px) {
-    .image-2014_wysiwyg_full[style~="float:right"], .image-2014_wysiwyg_full[style~="right;"], .image-2014_wysiwyg_full[style~="float:right;"],
-    .ckimagebox[style~="float:right"],
-    .ckimagebox[style~="right;"],
-    .ckimagebox[style~="float:right;"],
-    .wysiwyg-full[style~="float:right"],
-    .wysiwyg-full[style~="right;"],
-    .wysiwyg-full[style~="float:right;"],
-    .ckgreybox[style~="float:right"],
-    .ckgreybox[style~="right;"],
-    .ckgreybox[style~="float:right;"] {
-      margin-left: 80px; } }
-
-.image-2014_wysiwyg_full[style~="float:left"], .image-2014_wysiwyg_full[style~="left;"], .image-2014_wysiwyg_full[style~="float:left;"],
-.ckimagebox[style~="float:left"],
-.ckimagebox[style~="left;"],
-.ckimagebox[style~="float:left;"],
-.wysiwyg-full[style~="float:left"],
-.wysiwyg-full[style~="left;"],
-.wysiwyg-full[style~="float:left;"],
-.ckgreybox[style~="float:left"],
-.ckgreybox[style~="left;"],
-.ckgreybox[style~="float:left;"] {
-  margin: 40px;
-  margin-left: 0;
-  margin-top: 0;
-  margin-bottom: 32px; }
-  @media (max-width: 768px) {
-    .image-2014_wysiwyg_full[style~="float:left"], .image-2014_wysiwyg_full[style~="left;"], .image-2014_wysiwyg_full[style~="float:left;"],
-    .ckimagebox[style~="float:left"],
-    .ckimagebox[style~="left;"],
-    .ckimagebox[style~="float:left;"],
-    .wysiwyg-full[style~="float:left"],
-    .wysiwyg-full[style~="left;"],
-    .wysiwyg-full[style~="float:left;"],
-    .ckgreybox[style~="float:left"],
-    .ckgreybox[style~="left;"],
-    .ckgreybox[style~="float:left;"] {
-      width: 100% !important;
-      margin-left: 0;
-      margin-right: 0; }
-      .image-2014_wysiwyg_full[style~="float:left"] img, .image-2014_wysiwyg_full[style~="left;"] img, .image-2014_wysiwyg_full[style~="float:left;"] img,
-      .ckimagebox[style~="float:left"] img,
-      .ckimagebox[style~="left;"] img,
-      .ckimagebox[style~="float:left;"] img,
-      .wysiwyg-full[style~="float:left"] img,
-      .wysiwyg-full[style~="left;"] img,
-      .wysiwyg-full[style~="float:left;"] img,
-      .ckgreybox[style~="float:left"] img,
-      .ckgreybox[style~="left;"] img,
-      .ckgreybox[style~="float:left;"] img {
-        width: 100%; } }
-  @media (min-width: 769px) {
-    .image-2014_wysiwyg_full[style~="float:left"], .image-2014_wysiwyg_full[style~="left;"], .image-2014_wysiwyg_full[style~="float:left;"],
-    .ckimagebox[style~="float:left"],
-    .ckimagebox[style~="left;"],
-    .ckimagebox[style~="float:left;"],
-    .wysiwyg-full[style~="float:left"],
-    .wysiwyg-full[style~="left;"],
-    .wysiwyg-full[style~="float:left;"],
-    .ckgreybox[style~="float:left"],
-    .ckgreybox[style~="left;"],
-    .ckgreybox[style~="float:left;"] {
-      margin-right: 80px; } }
-
-.image-2014_wysiwyg_full {
-  margin-left: 0;
-  margin-right: 0; }
 
 .wysiwyg_blankdiv {
   border: 0px solid midnightblue;
@@ -8288,16 +7790,6 @@ h2.font-h3 {
   display: block;
   font-size: 12px; }
 
-.video.article-full-width {
-  margin: 0;
-  background-color: #fff; }
-  @media (min-width: 1050px) {
-    .video.article-full-width {
-      grid-column: 2 / -2; } }
-  @media (min-width: 1280px) {
-    .video.article-full-width {
-      grid-column: 3 / -3; } }
-
 .video {
   background-color: #fff; }
   .video .field-video-caption {
@@ -8307,21 +7799,6 @@ h2.font-h3 {
       .video .field-video-caption {
         padding-left: 11%;
         padding-right: 11%; } }
-
-.article-full-width__space {
-  content: ' ';
-  display: block;
-  background: #fff;
-  height: 0; }
-  @media (min-width: 769px) {
-    .article-full-width__space {
-      height: 40px; } }
-  @media (min-width: 1050px) {
-    .article-full-width__space {
-      grid-column: 2 / -2; } }
-  @media (min-width: 1280px) {
-    .article-full-width__space {
-      grid-column: 3 / -3; } }
 
 .full-bleed-image {
   margin: 32px 0;
@@ -8421,134 +7898,6 @@ h2.font-h3 {
 .media--type-image {
   position: static; }
 
-.align--right, .align--left, .about-cta-right {
-  float: right;
-  margin: 80px;
-  margin-right: 0;
-  margin-top: 0; }
-
-.align--left {
-  float: left;
-  margin-right: 80px;
-  margin-left: 0; }
-
-.size--half {
-  width: 50%; }
-
-.wysiwyg_cta.align--left, .wysiwyg_cta.about-cta-right, .wysiwyg_cta.align--right,
-.about-cta.align--left,
-.about-cta.about-cta-right,
-.about-cta.align--right {
-  background: #f2f4f6;
-  margin-right: 0;
-  margin-top: 0;
-  margin-bottom: 32px;
-  margin-left: -20px;
-  width: calc(100% + 20px);
-  padding: 40px; }
-
-.wysiwyg_cta.about-cta-right, .wysiwyg_cta.align--right,
-.about-cta.about-cta-right,
-.about-cta.align--right {
-  margin-left: 0;
-  margin-right: -20px; }
-
-@media (min-width: 769px) {
-  .wysiwyg_cta.align--left, .wysiwyg_cta.about-cta-right, .wysiwyg_cta.align--right,
-  .about-cta.align--left,
-  .about-cta.about-cta-right,
-  .about-cta.align--right {
-    margin-left: -20%;
-    width: 50%;
-    padding: 80px 10%;
-    margin-right: 10%; }
-  .wysiwyg_cta.about-cta-right, .wysiwyg_cta.align--right,
-  .about-cta.about-cta-right,
-  .about-cta.align--right {
-    margin-left: 10%;
-    margin-right: -20%; } }
-
-.wysiwyg_cta .wysiwyg_cta__image,
-.about-cta .wysiwyg_cta__image {
-  padding-bottom: 24px; }
-
-.wysiwyg_cta h3,
-.about-cta h3 {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-  font-weight: 500;
-  font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-  font-size: 12px;
-  letter-spacing: 1.6px;
-  line-height: 1.4em;
-  color: #052049;
-  text-transform: uppercase; }
-  .wysiwyg_cta h3::after,
-  .about-cta h3::after {
-    content: ' ';
-    display: inline-block;
-    width: 40px;
-    height: 1px;
-    background: #052049;
-    margin: 0 5px 3px; }
-
-.wysiwyg_cta .readmore,
-.about-cta .readmore {
-  display: inline-block;
-  background: url("../images/cta-arrow.svg") right center no-repeat transparent;
-  background-size: 14px 10px;
-  padding-right: 24px;
-  text-decoration: none;
-  font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
-
-.wysiwyg_twocols .wysiwyg_twocols--first, .wysiwyg_twocols .wysiwyg_twocols--second, .layout--50-50 .wysiwyg_twocols--first, .layout--50-50 .wysiwyg_twocols--second {
-  float: left;
-  width: 48%;
-  margin-right: 2%; }
-
-.wysiwyg_twocols .wysiwyg_twocols--second, .layout--50-50 .wysiwyg_twocols--second {
-  float: right;
-  margin-right: 0; }
-
-.image-2014_wysiwyg_full p,
-.ckimagebox p {
-  font-size: 14px;
-  color: #506380;
-  padding-top: 16px;
-  font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-  font-weight: 500;
-  line-height: 1.6em;
-  margin: 0; }
-
-.ckgreybox {
-  background-color: #f2f4f6;
-  padding: 32px; }
-  .ckgreybox h3 {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-    font-weight: 500;
-    font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-    font-size: 12px;
-    letter-spacing: 1.6px;
-    line-height: 1.4em;
-    color: #052049;
-    text-transform: uppercase; }
-    .ckgreybox h3::after {
-      content: ' ';
-      display: inline-block;
-      width: 40px;
-      height: 1px;
-      background: #052049;
-      margin: 0 5px 3px; }
-
-[style~="color:#8D8580"],
-[style~="color:#729ABD"],
-[style~="color:rgb(114, 154, 189)"],
-[style="color:rgb(114, 154, 189)"] {
-  color: #052049 !important; }
-
 .video-container {
   position: relative;
   height: 0;
@@ -8561,29 +7910,6 @@ h2.font-h3 {
     width: 100%;
     height: 100%;
     margin-bottom: 0; }
-
-.wysiwyg_twocols {
-  clear: both;
-  float: left;
-  width: 100%;
-  margin-bottom: 40px; }
-  .wysiwyg_twocols.layout--60-40 .wysiwyg_twocols--first {
-    width: 58%;
-    margin-right: 2%; }
-  .wysiwyg_twocols.layout--60-40 .wysiwyg_twocols--second {
-    width: 38%;
-    margin-left: 2%; }
-    .wysiwyg_twocols.layout--60-40 .wysiwyg_twocols--second .cke-videolightbox-wrapper.align--right {
-      margin: 0; }
-
-.form--subscribe-mag input {
-  min-height: 64px;
-  width: 100%;
-  margin-bottom: 16px;
-  border: 1px solid #efefef; }
-
-.form--subscribe-mag button {
-  width: 100%; }
 
 .card__title {
   margin-bottom: 0; }

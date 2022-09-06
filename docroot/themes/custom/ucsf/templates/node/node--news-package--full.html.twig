@@ -1,16 +1,19 @@
 {% set classes = ['main', not node.isPublished() ? 'node--unpublished'] %}
-
+{% set uri_value = node.field_textured_background_image.entity.field_media_image.entity.uri.value %}
 {% block content %}
 <main {{ attributes.addClass(classes)|without('role') }}>
   <a id="main-content" tabindex="-1"></a>
   <div class="news-package-banner">
     <div class="news-package-banner-bk"></div>
     <div class="news-package-banner-image-bk"
-         style="background: url('{{ file_url(node.field_textured_background_image.entity.field_media_image.entity.uri.value) }}') no-repeat left bottom transparent;"></div>
-
-         <div class="news-package-banner-image">
-           {{ content.field_banner_image }}
-         </div>
+      {% if uri_value %}
+        style="background: url('{{ file_url(uri_value) }}') no-repeat left bottom transparent;"
+      {% endif %}
+    >
+    </div>
+    <div class="news-package-banner-image">
+      {{ content.field_banner_image }}
+    </div>
     <header class="basic-header news-package-header">
       <ul class="article-header__byline">
         <li class="article-header__date">{{ content.field_date_and_time }}</li>
@@ -24,19 +27,7 @@
     <div class="news-package-banner-bk-bottom"></div>
   </div>
   <div class="main-content article-feature-content narrow-page">
-    {#{% include "@theme/share/share.twig" %}#}
-    <ul class="article-meta-share">
-      <li><a rel="nofollow" href="https://www.facebook.com/share.php?u={{ url('<current>') }}" target="_blank" title="Facebook"><span class="fab fa-facebook-square"></span> <span class="indent-text">Facebook</span></a></li>
-
-      <li><a rel="nofollow" href="https://www.twitter.com/share?text={{node.label}}&url={{ url('<current>') }}" target="_blank" title="Twitter"><span class="fab fa-twitter-square"></span> <span class="indent-text">Twitter</span></a></li>
-
-      <li><a rel="nofollow" href="https://www.reddit.com/submit?url={{ url('<current>') }}&title={{node.label}}" target="_blank" title="Reddit"><span class="fab fa-reddit-square"></span> <span class="indent-text">Reddit</span></a></li>
-
-      <li><a rel="nofollow" href="mailto:?to=&subject=From UCSF News: {{node.label}}&body={{node.label}}%0D%0A%0D%0A{{ node.body.summary }}%0D%0A%0D%0A{{ url('<current>') }}" title="Email Article"><span class="fas fa-envelope-square"></span> <span class="indent-text">Email</span></a></li>
-
-      <li><a rel="nofollow" onclick="window.print();return false;" href="{{ url('<current>') }}" title="Print Article"><span class="fas fa-print"></span> <span class="indent-text">Print</span></a></li>
-    </ul>
-
+    {% include "@theme/share/share.twig" %}
     <div class="page_narrow">
       <ol class="news-row-card">
         {{ content.field_featured }}

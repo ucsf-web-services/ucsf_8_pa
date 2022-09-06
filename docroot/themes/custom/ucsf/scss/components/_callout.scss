@@ -47,47 +47,42 @@ $callout-image-offsetX-medium: $callout-offsetX;
   }
 }
 
-.callout-left {
-  float: left;
-  margin-left: -20px;
-  padding-left: 6%;
+@each $direction in $align-directions {
+  .callout-#{$direction} {
+    float: $direction;
+    margin-#{$direction}: -20px;
+    padding-#{$direction}: 6%;
 
-  @include breakpoint($new-small-max) {
-    margin-right: 0;
-  }
-
-  @include breakpoint($new-small) {
-    margin-left: -$callout-offsetX;
-
-    &.in-viewport {
-      animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    @include breakpoint($new-small) {
+      margin-#{$direction}: -$callout-offsetX;
     }
-  }
 
-  @include breakpoint($new-large) {
-    margin-left: -20%;
-  }
-}
-
-.callout-right {
-  float: right;
-  margin-right: -20px;
-  padding-right: 6%;
-
-  @include breakpoint($new-small-max) {
-    margin-left: 0;
-  }
-
-  @include breakpoint($new-small) {
-    margin-right: -$callout-offsetX;
-
-    &.in-viewport {
-      animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    @include breakpoint($new-large) {
+      margin-#{$direction}: -20%;
     }
-  }
 
-  @include breakpoint($new-large) {
-    margin-right: -20%;
+    @if $direction == left {
+      @include breakpoint($new-small-max) {
+        margin-right: 0;
+      }
+
+      @include breakpoint($new-small) {
+        &.in-viewport {
+          animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+        }
+      }
+
+    } @else {
+      @include breakpoint($new-small-max) {
+        margin-left: 0;
+      }
+
+      @include breakpoint($new-small) {
+        &.in-viewport {
+          animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+        }
+      }
+    }
   }
 }
 
@@ -123,35 +118,42 @@ $callout-image-offsetX-medium: $callout-offsetX;
     }
   }
 
-  .callout-left & {
-    float: right;
-    margin-right: -$callout-image-offsetX-small;
+  @each $direction in $align-directions {
+    .callout-#{$direction} & {
 
-    @include breakpoint($new-small) {
-      float: none;
-      margin-left: -$callout-offsetX;
-    }
+      @include breakpoint($new-small) {
+        margin-#{$direction}: -$callout-offsetX;
+      }
 
-    @include breakpoint($new-large) {
-      margin-right: 0;
-      margin-left: 0;
-      transform: translateX(-50%);
-    }
-  }
+      @include breakpoint($new-large) {
+        margin-right: 0;
+        margin-left: 0;
+      }
 
-  .callout-right & {
-    float: left;
-    margin-left: -$callout-image-offsetX-small;
+      @if $direction == left {
+        float: right;
+        margin-right: -$callout-image-offsetX-small;
 
-    @include breakpoint($new-small) {
-      margin-left: 0;
-      margin-right: -$callout-offsetX;
-      float: right;
-    }
+        @include breakpoint($new-small) {
+          float: none;
+        }
 
-    @include breakpoint($new-large) {
-      margin-right: 0;
-      transform: translateX(50%);
+        @include breakpoint($new-large) {
+          transform: translateX(-50%);
+        }
+      } @else { // right aligned component
+        float: left;
+        margin-left: -$callout-image-offsetX-small;
+
+        @include breakpoint($new-small) {
+          margin-left: 0;
+          float: right;
+        }
+
+        @include breakpoint($new-large) {
+          transform: translateX(50%);
+        }
+      }
     }
   }
 }

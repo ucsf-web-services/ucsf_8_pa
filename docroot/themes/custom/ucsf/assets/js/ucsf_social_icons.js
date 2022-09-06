@@ -6,7 +6,7 @@
     attach: function attach(context, settings) {
       $(window, context).once('social-icon-context').each(function () {
         var $socialIcons = $('.article-meta-share', context);
-        var $iconPrint = $('li', context).has('a[title="Print Article"]');
+        var $iconPrint = $('li', context).has('a[title*="Print"]');
         var lastScroll = 0;
 
         // Social Navbar behavior
