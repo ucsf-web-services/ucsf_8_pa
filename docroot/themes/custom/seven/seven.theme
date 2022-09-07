@@ -217,7 +217,7 @@ function seven_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_s
   // \Drupal\image\Plugin\Filter\FilterImageStyle $filter
   $filter = $editor->getFilterFormat()->filters('filter_image_style');
   //get the allowed image style sets from the Image Style Options patch.
-  $styles = $filter->getAllowedImageStyleOptions();
+  $styles = $filter->getAllowedImageStylesAsOptions();
 
   // After getting the allowed image styles, filter out options we don't need.
   if (isset($form['attributes']['data-entity-embed-display-settings']['image_style'])) {
