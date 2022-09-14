@@ -1,0 +1,763 @@
+/*------------------------------------*\
+  # Legacy content styles.
+\*------------------------------------*/
+// This file only loads if article's created date is before 2019.
+// Moved the styles here from:
+// _align-legacy.scss
+// _blockquote.scss
+// _callout.scss
+// _node-article.scss
+// _node-timeline.scss
+
+@import '../../node_modules/breakpoint-sass/stylesheets/breakpoint';
+@import '../tools/variables';
+@import '../tools/variables-pl';
+@import '../tools/variables-space';
+@import '../tools/mixins-pl';
+@import '../tools/mixins-font-styles';
+
+// testing that file loads.
+// body * {
+//   color: red !important;
+// }
+
+
+/*---------------In this section---------------------*\
+  IMAGES / VIDEO
+\*---------------------------------------------------*/
+@mixin force-full-width-mobile {
+  // disregard inline width in mobile
+  @include breakpoint($new-small-max) {
+    width: 100% !important;
+    margin-left: 0;
+    margin-right: 0;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.image-2014_wysiwyg_full,
+.ckimagebox {
+  p {
+    font-size: $font-size-xsm;
+    color: $gray-blue;
+    padding-top: $space-double;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    line-height: 1.6em;
+    margin: 0;
+  }
+}
+
+figure.image-2014_inline_2-col,
+figure.image-2014_inline_4-col,
+figure.image-2014_inline_5-col,
+.image-2014_wysiwyg_full {
+  @include force-full-width-mobile();
+  display:table;
+  margin: $space-five;
+  margin-top: 0;
+  margin-bottom: $space-quadruple;
+
+  figcaption {
+    display:table-caption;
+    caption-side:bottom;
+  }
+}
+
+.image-2014_wysiwyg_full,
+.ckimagebox,
+.wysiwyg-full,
+.ckgreybox {
+  &[style~="float:right"],
+  &[style*="float:right"],
+  &[style~="right;"],
+  &[style~="float:right;"] {
+    @include force-full-width-mobile();
+    margin: $space-five;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: $space-four;
+
+
+    @include breakpoint($new-small) {
+      margin-left: $space-ten;
+    }
+  }
+
+  &[style~="float:left"],
+  &[style*="float:left"],
+  &[style~="left;"],
+  &[style~="float:left;"] {
+    @include force-full-width-mobile();
+    margin: $space-five;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: $space-four;
+
+    @include breakpoint($new-small) {
+      margin-right: $space-ten;
+    }
+  }
+}
+
+.image-2014_wysiwyg_full {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.size--half {
+  width: 50%;
+}
+
+// Video
+.video.article-full-width {
+  margin: 0;
+  background-color: $white;
+
+  @include breakpoint($new-large) {
+    grid-column: 2 / -2;
+  }
+
+  @include breakpoint($new-xl) {
+    grid-column: 3 / -3;
+  }
+}
+
+.article-full-width__space {
+  content: ' ';
+  display: block;
+  background: $white;
+  height: 0;
+
+  @include breakpoint($new-small) {
+    height: $space-five;
+  }
+
+  @include breakpoint($new-large) {
+    grid-column: 2 / -2;
+  }
+
+  @include breakpoint($new-xl) {
+    grid-column: 3 / -3;
+  }
+}
+
+/*---------------In this section---------------------*\
+  GRAYBOX
+\*---------------------------------------------------*/
+.ckgreybox {
+  background-color: $c-background-gray;
+  padding: $space-four;
+
+  h3 {
+    @include eyebrow;
+  }
+}
+
+/*---------------In this section---------------------*\
+  ALIGNED CTA
+\*---------------------------------------------------*/
+@each $direction in $align-directions {
+  .align--#{$direction} {
+    float: $direction;
+    margin-#{$direction}: 0;
+    margin-top: 0;
+
+    @if $direction == left {
+      margin-right: $space-ten;
+    } @else {
+      margin-left: $space-ten;
+    }
+  }
+}
+
+.about-cta-right {
+  margin-top: 0;
+  float: right;
+  margin: $space-ten;
+  margin-right: 0;
+
+}
+
+
+.wysiwyg_cta,
+.about-cta {
+  background: $c-background-gray;
+  margin-top: 0;
+  margin-bottom: $space-four;
+  width: calc(100% + 20px);
+  padding: $space-five;
+
+  @include breakpoint($new-small) {
+    padding: 80px 10%;
+  }
+
+  @each $direction in $align-directions {
+    &.align--#{$direction}, &.about-cta-#{$direction} {
+      margin-#{$direction}: -20px;
+
+      @include breakpoint($new-small) {
+        margin-#{$direction}: -20%;
+        width: 50%;
+      }
+
+      @if $direction == left {
+        margin-right: 0;
+
+        @include breakpoint($new-small) {
+          margin-right: 10%;
+        }
+      } @else {
+        margin-left: 0;
+
+        @include breakpoint($new-small) {
+          margin-left: 10%;
+        }
+      }
+    }
+  }
+
+
+  .wysiwyg_cta__image {
+    padding-bottom: $space-three;
+  }
+
+  h3 {
+    @include eyebrow;
+  }
+
+  .readmore {
+    display: inline-block;
+    background: url('../images/cta-arrow.svg') right center no-repeat transparent;
+    background-size: 14px 10px;
+    padding-right: $space-three;
+    text-decoration: none;
+    font-family: $font-helvetica-neue-medium;
+  }
+}
+
+/*---------------In this section---------------------*\
+  WYSIWYG LAYOUTS
+\*---------------------------------------------------*/
+
+.wysiwyg_twocols, .layout--50-50 {
+  .wysiwyg_twocols--first, .wysiwyg_twocols--second {
+    float: left;
+    width: 48%;
+    margin-right: 2%;
+  }
+
+  .wysiwyg_twocols--second {
+    float: right;
+    margin-right: 0;
+  }
+}
+
+.wysiwyg_twocols {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-bottom: $space-five;
+
+  &.layout--60-40 {
+    .wysiwyg_twocols--first {
+      width: 58%;
+      margin-right: 2%;
+    }
+
+    .wysiwyg_twocols--second {
+      width: 38%;
+      margin-left: 2%;
+
+      .cke-videolightbox-wrapper.align--right {
+        margin: 0;
+      }
+    }
+  }
+}
+
+/*---------------In this section---------------------*\
+  BLOCKQUOTES
+\*---------------------------------------------------*/
+.ckpullquote,
+.wysiwyg_quote {
+  background: $background-gray;
+
+  &--half-left,
+  &--half-right,
+  &.ckpullquote-left,
+  &.ckpullquote-right,
+  &.align--left,
+  &.align--center {
+    float: left;
+    width: calc(100% + 20px);
+    left: auto;
+    padding-top: 0;
+    margin-left: -20px;
+    margin-right: 0;
+    margin-top: 0;
+  }
+
+  .ckpullquote--quote,
+  .wysiwyg_quote--content {
+    @include fs-heading-blockquote;
+    font-size: 31px;
+    line-height: 1.2em;
+    padding: $space-seven $space-ten 0 0;
+    padding-right: 15%;
+    margin-top: 0;
+
+    &::before {
+      content: '“ ';
+      display: inline-block;
+      margin-left: -$space-three;
+      padding-right: 12px;
+      font-family: $font-granjon;
+
+      @include breakpoint($new-x-small) {
+        padding-right: $space;
+      }
+    }
+
+    @include breakpoint($new-small-max) {
+      padding-top: $space-five;
+      padding-left: $space-five;
+      padding-right: $space-five;
+      padding-bottom: 0;
+    }
+  }
+
+  .ckpullquote--author,
+  .wysiwyg_quote--author {
+    @include eyebrow;
+
+    font-style: normal;
+    padding-right: 15%;
+
+    @include breakpoint($new-small-max) {
+      padding-left: $space-five;
+    }
+  }
+
+  .ckpullquote--org {
+    font-size: 14px;
+    padding-right: 15%;
+  }
+
+  &.ckpullquote-right,
+  &.align--right {
+    float: right;
+    right: auto;
+    margin-right: -20px;
+    margin-left: 0;
+
+    .ckpullquote--quote,
+    .wysiwyg_quote--content {
+      padding-right: 0;
+      padding-left: 15%;
+
+      @include breakpoint($new-small-max) {
+        padding-top: $space-five;
+        padding-left: $space-five;
+        padding-right: $space-five;
+        padding-bottom: 0;
+      }
+    }
+
+    .ckpullquote--author,
+    .ckpullquote--org,
+    .wysiwyg_quote--author {
+      padding-left: 15%;
+
+      @include breakpoint($new-small-max) {
+        padding-left: $space-five;
+      }
+    }
+  }
+
+  @include breakpoint($new-small) {
+
+    &--half-left,
+    &.ckpullquote-left,
+    &.align--left,
+    &.align--center {
+      margin-left: -14%;
+      margin-right: $space-ten;
+      padding-left: 56px;
+      width: 50%;
+    }
+
+    &--half-right,
+    &.ckpullquote-right,
+    &.align--right {
+      margin-right: -14%;
+      margin-left: $space-ten;
+      padding-right: 56px;
+      width: 50%;
+    }
+  }
+
+  @include breakpoint($new-large) {
+
+    &--half-left,
+    &.ckpullquote-left,
+    &.align--left,
+    &.align--center {
+      margin-left: -20%;
+      padding-left: 0;
+    }
+
+    &--half-right,
+    &.ckpullquote-right,
+    &.align--right {
+      margin-right: -20%;
+      padding-right: 0;
+    }
+  }
+}
+
+.ckpullquote {
+  padding-bottom: 50px;
+  margin-bottom: 24px;
+}
+
+
+.ckpullquote--author,
+.wysiwyg_quote--author {
+  margin-top: 2rem;
+}
+
+.wysiwyg_quote {
+  margin-bottom: $space-four;
+}
+
+.wysiwyg_quote--author {
+  margin-bottom: 50px;
+}
+
+.wysiwyg_quote--org {
+  margin-top: -55px;
+  margin-bottom: 50px;
+  font-size: 16px;
+  padding-right: 15%;
+  padding-left: 15%;
+  @include breakpoint($new-small-max) {
+    padding-left: $space-five;
+    padding-right: $space-five;
+  }
+}
+
+/*---------------In this section---------------------*\
+  Node timeline
+\*---------------------------------------------------*/
+// Example: https://www.ucsf.edu/node/405151
+
+.cd-container {
+  /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
+  max-width: 1170px;
+  margin: 0 auto;
+}
+.cd-container::after {
+  /* clearfix */
+  content: '';
+  display: table;
+  clear: both;
+}
+
+
+@media only screen and (min-width: 769px) {
+  .page-node-type-article .cd-container {
+      width: 100%;
+  }
+}
+@media only screen and (min-width: 769px) {
+
+}
+
+#cd-timeline {
+  position: relative;
+  padding: 2em 0;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+#cd-timeline::before {
+  /* this is the vertical line */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 18px;
+  height: 100%;
+  width: 4px;
+  background: #d7e4ed;
+}
+@media only screen and (min-width: 769px) {
+  #cd-timeline {
+    margin-top: 3em;
+    margin-bottom: 3em;
+  }
+  #cd-timeline::before {
+    left: 50%;
+    margin-left: -2px;
+  }
+}
+
+.cd-timeline-block {
+  position: relative;
+  margin: 2em 0;
+}
+.cd-timeline-block:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.cd-timeline-block:first-child {
+  margin-top: 0;
+}
+.cd-timeline-block:last-child {
+  margin-bottom: 0;
+}
+@media only screen and (min-width: 769px) {
+  .cd-timeline-block {
+    margin: 4em 0;
+  }
+  .cd-timeline-block:first-child {
+    margin-top: 0;
+  }
+  .cd-timeline-block:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.cd-timeline-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px #d7e4ed, inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05);
+}
+.cd-timeline-img img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  margin-left: -12px;
+  margin-top: -12px;
+}
+.cd-timeline-img.cd-picture {
+  background: #90BD31;
+}
+.cd-timeline-img.cd-movie {
+  background: #18A3AC;
+}
+.cd-timeline-img.cd-location {
+  background: #716FB2;
+}
+@media only screen and (min-width:  769px) {
+  .cd-timeline-img {
+    width: 60px;
+    height: 60px;
+    left: 50%;
+    margin-left: -30px;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+  }
+  .cssanimations .cd-timeline-img.is-hidden {
+    visibility: hidden;
+  }
+  .cssanimations .cd-timeline-img.bounce-in {
+    visibility: visible;
+    animation: cd-bounce-1 0.6s;
+  }
+}
+
+@keyframes cd-bounce-1 {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+.cd-timeline-content {
+  position: relative;
+  margin-left: 60px;
+  background: #f9f9f9;
+  border-radius: 0.25em;
+  padding: 1em;
+  box-shadow: 0 3px 0 #d7e4ed;
+
+  img {
+    padding: 5px 10px;
+  }
+}
+.cd-timeline-content:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.cd-timeline-content h2 {
+  color: #303e49;
+  font-weight: bold;
+  letter-spacing:1px;
+}
+.cd-timeline-content p,
+.cd-timeline-content .cd-read-more {
+  font-size: 13px;
+}
+.cd-timeline-content .cd-read-more,
+.cd-timeline-content .cd-date {
+  display: inline-block;
+}
+.cd-timeline-content p {
+  margin: 1em 0;
+  line-height: 1.6;
+}
+.cd-timeline-content .cd-read-more {
+  float: right;
+  padding: .8em 1em;
+  background: var(--c-blue);
+  color: white;
+  border-radius: 0.25em;
+}
+.no-touch .cd-timeline-content .cd-read-more:hover {
+  background-color: var(--c-navy);
+}
+.cd-timeline-content .cd-date {
+  float: left;
+  padding: .8em 0;
+  color: #666666;
+}
+.cd-timeline-content::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  right: 100%;
+  height: 0;
+  width: 0;
+  border: 7px solid transparent;
+  border-right: 7px solid white;
+  border-left-color: #f9f9f9;
+}
+@media only screen and (min-width: 768px) {
+  .cd-timeline-content h2 {
+    font-size: 20px;
+  }
+  .cd-timeline-content p {
+    font-size: 16px;
+  }
+  .cd-timeline-content .cd-read-more, .cd-timeline-content .cd-date {
+    font-size: 15px;
+  }
+}
+@media only screen and (min-width: 769px) {
+  .cd-timeline-content {
+    margin-left: 10px;
+    padding: 1.6em;
+    width: 45%;
+  }
+  .cd-timeline-content::before {
+    top: 24px;
+    left: 100%;
+    border-color: transparent;
+    border-left-color: #f9f9f9;
+  }
+  .cd-timeline-content .cd-read-more {
+    float: left;
+  }
+  .cd-timeline-content .cd-date {
+    position: absolute;
+    width: 100%;
+    left: 122%;
+    top: 6px;
+    font-size: 18px;
+  }
+  .cd-timeline-block:nth-child(even) .cd-timeline-content {
+    float: right;
+    margin-right: 10px;
+  }
+  .cd-timeline-block:nth-child(even) .cd-timeline-content::before {
+    top: 24px;
+    left: auto;
+    right: 100%;
+    border-color: transparent;
+    border-right-color: #f9f9f9;
+  }
+  .cd-timeline-block:nth-child(even) .cd-timeline-content .cd-read-more {
+    float: right;
+  }
+  .cd-timeline-block:nth-child(even) .cd-timeline-content .cd-date {
+    left: auto;
+    right: 122%;
+    text-align: right;
+  }
+  .cssanimations .cd-timeline-content.is-hidden {
+    visibility: hidden;
+  }
+  .cssanimations .cd-timeline-content.bounce-in {
+    visibility: visible;
+    animation: cd-bounce-2 0.6s;
+  }
+}
+
+@media only screen and (min-width: 1170px) {
+  /* inverse bounce effect on even content blocks */
+  .cssanimations .cd-timeline-block:nth-child(even) .cd-timeline-content.bounce-in {
+    animation: cd-bounce-2-inverse 0.6s;
+  }
+}
+
+@keyframes cd-bounce-2 {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateX(20px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes cd-bounce-2-inverse {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateX(-20px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/*---------------In this section---------------------*\
+  COLOR OVERWRITES
+\*---------------------------------------------------*/
+[style~="color:#8D8580"],
+[style~="color:#729ABD"],
+[style~="color:rgb(114, 154, 189)"],
+[style="color:rgb(114, 154, 189)"] {
+  color: $navy !important;
+}

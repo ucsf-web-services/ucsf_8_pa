@@ -26,4 +26,8 @@ function ucsf_preprocess_views_view(&$variables) {
       $variables['more']['#url']->setOption('query', $query);
     }
   }
+
+  if ($variables['id'] == 'news_filter') {
+    $variables['#attached']['library'][] = 'ucsf/view_news_filter';
+  }
 }
