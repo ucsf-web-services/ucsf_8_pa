@@ -12,11 +12,7 @@
 }
 
 figure[class="embedded-entity"],
-figure[class="image"],
-figure.image-2014_inline_2-col,
-figure.image-2014_inline_4-col,
-figure.image-2014_inline_5-col,
-.image-2014_wysiwyg_full {
+figure[class="image"] {
   @include force-full-width-mobile();
   display:table;
   margin: $space-five;
@@ -48,43 +44,4 @@ figure[class="image"] {
 figure figure[class="embedded-entity"],
 figure figure[class="image"] {
   margin: 0;
-}
-
-.image-2014_wysiwyg_full,
-.ckimagebox,
-.wysiwyg-full,
-.ckgreybox {
-  &[style~="float:right"],
-  &[style~="right;"],
-  &[style~="float:right;"] {
-    @include force-full-width-mobile();
-    margin: $space-five;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: $space-four;
-
-
-    @include breakpoint($new-small) {
-      margin-left: $space-ten;
-    }
-  }
-
-  &[style~="float:left"],
-  &[style~="left;"],
-  &[style~="float:left;"] {
-    @include force-full-width-mobile();
-    margin: $space-five;
-    margin-left: 0;
-    margin-top: 0;
-    margin-bottom: $space-four;
-
-    @include breakpoint($new-small) {
-      margin-right: $space-ten;
-    }
-  }
-}
-
-.image-2014_wysiwyg_full {
-  margin-left: 0;
-  margin-right: 0;
 }

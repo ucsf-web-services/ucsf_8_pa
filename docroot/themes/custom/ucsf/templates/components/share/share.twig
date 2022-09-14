@@ -1,12 +1,12 @@
 
 <ul class="article-meta-share">
-  <li><a rel="nofollow" href="https://www.facebook.com/share.php?u={{ url('<current>') }}" target="_blank" title="Facebook"><span class="fab fa-facebook-square"></span> <span class="indent-text">Share on Facebook</span></a></li>
+  <li><a rel="nofollow" href="https://www.facebook.com/share.php?u={{ url('<current>') }}" target="_blank" title="Share on Facebook"><span class="fab fa-facebook-square"></span> <span class="indent-text">Share on Facebook</span></a></li>
 
-  <li><a rel="nofollow" href="https://www.twitter.com/share?url={{ url('<current>') }}" target="_blank" title="Twitter"><span class="fab fa-twitter-square"></span> <span class="indent-text">Share on Twitter</span></a></li>
+  <li><a rel="nofollow" href="https://www.twitter.com/share?text={{node.label}}&url={{ url('<current>') }}" target="_blank" title="Share on Twitter"><span class="fab fa-twitter-square"></span> <span class="indent-text">Share on Twitter</span></a></li>
 
-  <li><a rel="nofollow" href="https://www.reddit.com/submit?url={{ url('<current>') }}" target="_blank" title="Reddit"><span class="fab fa-reddit-square"></span> <span class="indent-text">Share on Reddit</span></a></li>
+  <li><a rel="nofollow" href="https://www.reddit.com/submit?url={{ url('<current>') }}&title={{node.label}}" target="_blank" title="Share on Reddit"><span class="fab fa-reddit-square"></span> <span class="indent-text">Share on Reddit</span></a></li>
 
-  <li><a rel="nofollow" href="mailto:?to=&subject={{content.sub_title}}&body={{ node.body.summary }}%0D%0A%0D%0A%0D%0A%0D%0A{{ url('<current>') }}" title="Email Article"><span class="fas fa-envelope-square"></span> <span class="indent-text">Email this article</span></a></li>
+  <li><a rel="nofollow" href="mailto:?to=&subject=From UCSF News: {{node.label}}&body={{node.label}}%0D%0A%0D%0A{{ node.body.summary }}%0D%0A%0D%0A{{ url('<current>') }}" title="Email this article"><span class="fas fa-envelope-square"></span> <span class="indent-text">Email this article</span></a></li>
 
-  <li><a rel="nofollow" onclick="window.print();return false;" href="{{ url('<current>') }}" title="Print Article"><span class="fas fa-print"></span> <span class="indent-text">Print this article</span></a></li>
+  <li><a rel="nofollow" onclick="window.print();return false;" href="{{ url('<current>') }}" title="Print this article"><span class="fas fa-print"></span> <span class="indent-text">Print this article</span></a></li>
 </ul>
