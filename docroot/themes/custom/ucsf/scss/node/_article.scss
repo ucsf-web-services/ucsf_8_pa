@@ -138,6 +138,39 @@
   background: $bk-color-blue;
 }
 
+// Video
+.video.article-full-width {
+  margin: 0;
+  background-color: $white;
+
+  @include breakpoint($new-large) {
+    grid-column: 2 / -2;
+  }
+
+  @include breakpoint($new-xl) {
+    grid-column: 3 / -3;
+  }
+}
+
+.article-full-width__space {
+  content: ' ';
+  display: block;
+  background: $white;
+  height: 0;
+
+  @include breakpoint($new-small) {
+    height: $space-five;
+  }
+
+  @include breakpoint($new-large) {
+    grid-column: 2 / -2;
+  }
+
+  @include breakpoint($new-xl) {
+    grid-column: 3 / -3;
+  }
+}
+
 // A class that makes text look like h3, so that editors stop
 // using actual h3 out of order.
 .font-h3,
