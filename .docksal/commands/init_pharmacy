@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+## cd to the directory containing your SQL files, then run this script to create
+## and import all the databases.
+## 
+## Usage: fin init_pharmacy [sitename]
+##
+## If [sitename] is omitted, all sites are used.
+
+
+#############################################################################
+#
+# env info
+#
+#############################################################################
+
+SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+REPOPATH=${SCRIPTPATH%scripts}
+SITEFOLDER="docroot/sites"
+LOCALROOT=$REPOPATH$SITEFOLDER
+
+if [ "$1" != "" ]; then
+	sites="$1"
+else
+	sites='bioengineering clinicalpharmacy pharmacy pharmchem pharmd pharmsites qbc_master'
+fi
+
+for site in $sites
+do
+#	if [ ! -f "$LOCALROOT/dev.$site.ucsf.edu/local.settings.inc" ]; then
+#		cd "$LOCALROOT/dev.$site.ucsf.edu"
+#		cp ../default/default.local.settings.inc ./local.settings.inc
+#	fi
+
+#	fin db drop $site
+#	fin db create $site
+#	fin db import $site.sql --db=$site
+done
+
+#fin drush @dev-ph-all rr --no-cache-clear -y
+#fin drush @dev-ph-all cc all
