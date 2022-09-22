@@ -88,18 +88,6 @@ function ucsf_page_attachments_alter(array &$page) {
       'as' => 'font',
       'crossorigin' => TRUE,
     ],
-    [
-      'rel' => 'preload',
-      'href' => '/themes/custom/ucsf/fonts/fontawesome/webfonts/fa-brands-400.woff2',
-      'as' => 'font',
-      'crossorigin' => TRUE,
-    ],
-    [
-      'rel' => 'preload',
-      'href' => '/themes/custom/ucsf/fonts/fontawesome/webfonts/fa-solid-900.woff2',
-      'as' => 'font',
-      'crossorigin' => TRUE,
-    ],
   ];
 
   foreach ($preload as $index => $file) {
