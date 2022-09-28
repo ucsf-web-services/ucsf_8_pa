@@ -1,7 +1,7 @@
 <?php
 
-// Only do this in a browser.
-if (!empty($_SERVER['SERVER_NAME'])) {
+// Don't do this in command line.
+if (PHP_SAPI != "cli") {
 
   $db_master = new mysqli("db", "root", "root");
   if (mysqli_connect_errno()) {
@@ -23,7 +23,7 @@ if (!empty($_SERVER['SERVER_NAME'])) {
   $client_secret = getenv('API_SECRET');
 
   $db_dir = __DIR__ . '/../db/'; # .docksal/db
-  $omit = ['.', '..', '.DS_Store'];
+  $omit = ['.', '..', '.gitignore', '.DS_Store'];
   $db_files = array_diff(scandir($db_dir), $omit);
   $db_files_html = ''; # init empty
   foreach ($db_files as $file) {
@@ -33,25 +33,21 @@ if (!empty($_SERVER['SERVER_NAME'])) {
   $download_url = ''; # init empty
   $db_import_file = ''; # init empty
 
-  // Assume the database name is the part that isn't a generic domain string.
-  $omit = ['dev.', 'stage.', 'test.', 'ra.', 'sand.', '.ucsf.edu', '.' . $virtual_host];
-  $acquia_db_name = str_replace($omit, '', $server_name);
-
   // Display import options to user.
   if (empty($_GET['docksal_import'])) {
     echo "
-Welcome to docksal database import.<br>
-The database name for this site in docksal db will be <b>`$db_name`</b>.<br>
-Choose a sql backup to import.<br>
-<br>
-From acquia cloud:<br>
-<br>
-<a href='?docksal_import=ac'>See database list and select</b></a><br>
-<br>
-From local file in .docksal/db:<br>
-<br>
-$db_files_html
-";
+      Welcome to docksal database import.<br>
+      The database name for this site in docksal db will be <b>`$db_name`</b>.<br>
+      Choose a sql backup to import.<br>
+      <br>
+      From acquia cloud:<br>
+      <br>
+      <a href='?docksal_import=ac'>See database list and select</b></a><br>
+      <br>
+      From local file in .docksal/db:<br>
+      <br>
+      $db_files_html
+    ";
     die;
   }
 
@@ -99,11 +95,11 @@ $db_files_html
       }
 
       echo "Select the acquia database to import.<br>
-The most recent backup will be imported into <b>`$db_name`</b>.<br>
-A copy of the sql backup file will also be downloaded to .docksal/db.<br>
-<br>
-$databases_list_html
-";
+        The most recent backup will be imported into <b>`$db_name`</b>.<br>
+        A copy of the sql backup file will also be downloaded to .docksal/db.<br>
+        <br>
+        $databases_list_html
+      ";
       die;
     }
     else {
@@ -137,7 +133,6 @@ $databases_list_html
         die ($output);
       }
       $download_url = $json->url;
-
 
       // save and set file as import file for next step
       $url_query = parse_url($download_url, PHP_URL_QUERY);

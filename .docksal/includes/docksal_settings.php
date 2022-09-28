@@ -3,14 +3,13 @@
 /**
  * Adds docksal required site settings.
  *
- * This file should be included at the bottom each sites 'settings.php'.
+ * This file should be included at the bottom of each sites 'settings.php'.
  */
 
 // Only do this for a docksal request.
 if (substr($_SERVER['VIRTUAL_HOST'] ?? '', -13) == '.docksal.site') {
 
-  // Set database name for 'default' site.
-  // The default site hostname is the same as the docksal virtual host.
+  // Set the db name for the "default" site to the project/virtual hostname.
   // For multi-sites, see ./docksal/includes/docksal_sites.php.
   if (($_SERVER['SERVER_NAME'] ?? '') == $_SERVER['VIRTUAL_HOST']) {
     putenv('MYSQL_DATABASE=' . $_SERVER['VIRTUAL_HOST']);
