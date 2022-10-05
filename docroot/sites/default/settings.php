@@ -819,3 +819,7 @@ if (file_exists('/var/www/site-php')) {
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
 }
+// Only do this for a docksal request.
+if (substr($_SERVER['VIRTUAL_HOST'] ?? '', -13) == '.docksal.site') {
+  require('../.docksal/includes/docksal_settings.php');
+}

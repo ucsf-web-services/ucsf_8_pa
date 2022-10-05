@@ -10,8 +10,8 @@ set -e
 container_port=$(docker ps --all --filter 'label=com.docker.compose.service=db' --filter "label=com.docker.compose.project=${COMPOSE_PROJECT_NAME_SAFE}" --format '{{.Ports}}' | sed 's/.*0.0.0.0://g'|sed 's/->.*//g')
 HOST=${VIRTUAL_HOST}
 DB=${MYSQL_DATABASE:-default}
-USER=${MYSQL_USER:-user}
-PASS=${MYSQL_PASSWORD:-user}
+USER=root
+PASS=root
 NAME=${COMPOSE_PROJECT_NAME}
 
 PORT=${PORT:-$container_port}
