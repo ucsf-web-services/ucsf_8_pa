@@ -25,8 +25,7 @@
   {% endif %}
 </main>
 
-{# @todo Wrapper should probably be conditional. #}
-<section class="recommended-articles{{ content.field_recommended_article|render ? ' has-recommended-article' }} " role="complementary">
+<aside class="recommended-articles{{ content.field_recommended_article|render ? ' has-recommended-article' }} ">
 
   {% if content.field_topics|render or content.field_tags|render or content.field_primary_area|render %}
     <div class="recommended-articles__banner">
@@ -44,4 +43,4 @@
   <div class="footer-ctas-wrapper">
     {{ content.field_ankle_cta }}
   </div>
-</section>
+</aside>
