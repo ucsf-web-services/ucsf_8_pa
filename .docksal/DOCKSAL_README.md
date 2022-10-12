@@ -1,106 +1,81 @@
-2021-01-27
-----------
-Updated to be compatible with Docksal 1.15.0/1.15.1 (fin version 1.102.0/1.103.0) and Docker 2.5.0.1.
-
-To upgrade Docker for Mac, download at https://docs.docker.com/docker-for-mac/release-notes/#docker-desktop-community-2501.
-Removing existing containers and volumes might be necessary.
-It might be faster to just reset Docker to factory defaults. Go to Docker dashboard and click on the bug icon in the upper right.
-
-**WARNING:** Doing so will remove existing data so BACKUP YOUR DB/WORK before removing containers/volumes or resetting!
-
-To upgrade Docksal: "fin update" while Docker is running.
-
-Also add these Docksal variables to the global config:
-
->    fin config set --global DOCKSAL_DNS_DOMAIN="docksal.site";
->    
->    fin config set --global DOCKSAL_NO_DNS_RESOLVER=1;
->    
->    fin system reset;
-
-The local dev domains are now accessible at "*.ucsfp1.docksal.site" instead of "*.[repo folder name].docksal".
-eg. http://dev.pharmacy.ucsf.edu.ucsfp1.docksal.site/, http://pma.ucsfp1.docksal.site/
-
-
-
-
 # Setup instructions
 
 ## Docksal environment setup
 
-NOTE:
-Do not go above the Docker version mentioned in the Docksal release notes https://github.com/docksal/docksal/releases.
-
-
-1. Follow [Docksal install instructions](https://docksal.io/installation)
-
-2. With Docker started, set Docksal global config variables
-
->     fin config set --global DOCKSAL_DNS_DOMAIN="docksal.site";
->     fin config set --global DOCKSAL_NO_DNS_RESOLVER=1;
-
-3. Or, modify ~/.docksal/docksal.env to include DOCKSAL_DNS_DOMAIN="docksal.site" and DOCKSAL_NO_DNS_RESOLVER=1 on its own lines
-
->     fin system reset;
-
-
+Follow [Docksal install instructions](https://docksal.io/installation)
 
 ## Project setup
 
-1. Check that your site's settings.php has an include or require statement for the ucsfp1/docroot/sites/all/ucsfp_acquia_settings.inc file or ucsfp1/.docksal/includes/docksal_settings.php file at the bottom.
+1. Include in bottom of each site `settings.php`:
 
-    If it doesn't, add only 1 of either:
+        // Only do this for a docksal request.
+        if (substr($_SERVER['VIRTUAL_HOST'] ?? '', -13) == '.docksal.site') {
+          require('../.docksal/includes/docksal_settings.php');
+        }
 
->     //load ucsfp_acquia_settings (memcache, newrelic, fast404, etc)
->     require_once("./sites/all/ucsfp_acquia_settings.inc");
-
-  or,
-     
-
->     if(!empty($_SERVER['VIRTUAL_HOST']) && $_SERVER['VIRTUAL_HOST'] == DOCKSAL_VIRTUAL_HOST) {
->       require('../.docksal/includes/docksal_settings.php'); # do this for docksal local env
->     }
+    This snippet (or similar) may already be in an included file.
 
 
-2. Initialize the project
+2. For Drupal multi-sites, include in bottom of `sites/sites.php`:
 
-    cd [ucsfp1 git repo folder];
+        // Only do this for a docksal request.
+        if (substr($_SERVER['VIRTUAL_HOST'] ?? '', -13) == '.docksal.site') {
+          require('../.docksal/includes/docksal_sites.php');
+        }
 
-    fin init;
+    This snippet (or similar) may already be in an included file.
 
-3. (optional) Setup Acquia Cloud API credentials for automatic database import. Create an API Token at https://cloud.acquia.com/a/profile/tokens and copy the API Key and API Secret.
+3. Copy `PROJECT_ROOT/.docksal/example.docksal-local.env` to `docksal-local.env` and `PROJECT_ROOT/.docksal/example.docksal-local.yml` to `docksal-local.yml`.
 
-   ` fin config set --env=local SECRET_ACQUIA_CLI_KEY="[API Key]";`
+    Put your own services and settings in docksal-local.env and docksal-local.yml.
 
-   ` fin config set --env=local SECRET_ACQUIA_CLI_SECRET="[API Secret]";`
+    **Do not edit `docksal.env` or `docksal.yml`.**
 
-  Or, just modify ucsfp1/.docksal/docksal-local.env to include API_KEY="[API Key] and API_SECRET="[API Secret]" on its own lines
+4. (optional) Setup Acquia Cloud API credentials to import databases from Acquia Cloud.
 
- `   fin p restart;`
+    Create credentials at https://docs.acquia.com/cloud-platform/develop/api/auth/.
 
-3. Site is available at:
+    Add the `API Key` and `API Secret` to docksal-local.env.
 
-    http://[site].ucsf9-multisite.docksal.site/ #*.ucsf8.docksal.site is the correct domain regardless of git repo folder name
+5. `fin start` to start Docksal and docker containers.
 
-    eg. http://dev.pharmacy.ucsf.edu.ucsf9-multisite.docksal.site/ for dev.pharmacy.ucsf.edu
+6. Site is available at http://[VIRTUAL_HOST].
 
-    phpMyAdmin ui available at http://pma.ucsf9-multisite.docksal.site/.
-    Solr ui available at http://solr.ucsf9-multisite.docksal.site/solr/.
-      - Apachesolr module setting use solr server http://solr:8983/solr.
+    VIRTUAL_HOST is preset in docksal.env.
+
+    If you want to use a different value, set it in docksal-local.env.
+
+    For multi-sites, each site is available at http://[SITE_DIRECTORY].[VIRTUAL_HOST].
+
+    Example 1: `http://giving.ucsf.edu.ucsf9-multisite.docksal.site`
+
+    Example 2: `http://cls.intranet.docksal.site`
+
+## Other services (if installed)
+
+- phpMyAdmin ui available at `http://pma.[VIRTUAL_HOST]/`.
+
+- Solr ui available at `http://solr.[VIRTUAL_HOST]/solr/`.
+  Apachesolr module setting use solr server http://solr:8983/solr.
+
+## Documentation
+
+The full Docksal documentation is at https://docs.docksal.io/.
+
+`fin help` will get you a list of Docksal commands.
+Also available at https://docs.docksal.io/fin/fin-help/.
 
 
-## Recommended
+## Troubleshooting
 
-It's a good idea to read the `fin help` documentation (https://docs.docksal.io/fin/fin-help/).
+Here's a list of things you can try:
 
-The most commonly used commands are probably `fin project`, `fin db`, and `fin drush`.
+-- `fin restart` the docker containers
 
-`fin project start` to start up the docksal stack (and remember to start Docker Desktop).
+-- Restart Docker
 
-`fin db drop [dbname]` is useful to clear out a site before doing a fresh auto-import.
+-- Restart the host machine
 
-And note that `fin drush` is just a shortcut for running drush commands in the cli container from the host machine, so it's best to be within the drupal docroot directory or in a site directory.
+-- `fin stop`, delete existing project containers and volumes through the Docker UI, then recreate `fin start`
 
-Additional advanced use cases documentation is TODO.
-
-	Contact @jameshuang-ucsf in uctech slack if you have questions.
+-- Ask for help in Slack in the UC Tech channel #drucsf https://app.slack.com/client/T0BMNCSBA/C0EE2SEET/details.

@@ -1,6 +1,11 @@
-version: "2.1"
+version: "3.9"
+
 services:
-  # PHPMyAdmin
+  cli:
+    environment:
+      - API_KEY
+      - API_SECRET
+      - ACQUIA_ENV_ID
   pma:
     hostname: pma
     image: phpmyadmin/phpmyadmin

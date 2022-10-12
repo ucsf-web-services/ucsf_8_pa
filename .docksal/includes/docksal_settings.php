@@ -1,36 +1,37 @@
 <?php
-define('DOCKSAL_DEBUG', false);
 
+/**
+ * Adds docksal required site settings.
+ *
+ * This file should be included at the bottom of each sites 'settings.php'.
+ */
 
+// Only do this for a docksal request.
+if (substr($_SERVER['VIRTUAL_HOST'] ?? '', -13) == '.docksal.site') {
 
-if(defined('DOCKSAL_SITE_HOSTNAME')) { # DOCKSAL_SITE_HOSTNAME defined in docksal_sites.php
-	if (DOCKSAL_DEBUG) echo "DOCKSAL_SITE_HOSTNAME:" . DOCKSAL_SITE_HOSTNAME . "<br>";
-  require('../.docksal/includes/docksal_db_name.php'); # Script to determine db name for this site
-  require('../.docksal/includes/docksal_auto_db.php'); # Script to do auto db create and import
-
-  # DOCKSAL_SITE_HOSTNAME defined in docksal_db_name.php
-  $docksal_env = 'prod';
-  $docksal_env = (stripos(DOCKSAL_SITE_HOSTNAME, 'dev.') !== FALSE) ? 'dev' : $docksal_env;
-  $docksal_env = (stripos(DOCKSAL_SITE_HOSTNAME, 'sand.') !== FALSE) ? 'sand' : $docksal_env;
-  $docksal_env = (stripos(DOCKSAL_SITE_HOSTNAME, 'ra.') !== FALSE) ? 'ra' : $docksal_env;
-  $docksal_env = (stripos(DOCKSAL_SITE_HOSTNAME, 'stage.') !== FALSE) ? 'stage' : $docksal_env;
-  $docksal_env = (stripos(DOCKSAL_SITE_HOSTNAME, 'test.') !== FALSE) ? 'test' : $docksal_env;
-  $_ENV['DOCKSAL_SITE_ENVIRONMENT'] = $docksal_env;
-
-  if(empty($setting['docksal_auto_db_disable'])) {
-    
-    $databases['default']['default'] = array (
-      'database' => DOCKSAL_DB_NAME, # DOCKSAL_DB_NAME set in docksal_db_name.php
-      'username' => 'root',
-      'password' => 'root',
-      'host' => 'db',
-      'driver' => 'mysql',
-    );
-
+  // Set the db name for the "default" site to the project/virtual hostname.
+  // For multi-sites, see ./docksal/includes/docksal_sites.php.
+  if (($_SERVER['SERVER_NAME'] ?? '') == $_SERVER['VIRTUAL_HOST']) {
+    putenv('MYSQL_DATABASE=' . $_SERVER['VIRTUAL_HOST']);
   }
 
-  $settings['trusted_host_patterns'][] = '^.+\.ucsf\.edu\.ucsf9-multisite\.docksal\.site$';
-  $settings['trusted_host_patterns'][] = '^.+\.ucsfbenioffchildrens\.org\.ucsf9-multisite\.docksal\.site$';
+  // Performs database create and import from acquia or file.
+  require('../.docksal/includes/docksal_auto_db.php');
+
+  // Do not change unless you know better.
+  $databases['default']['default'] = [
+    'database' => getenv('MYSQL_DATABASE'),
+    'username' => 'root',
+    'password' => 'root',
+    'host' => 'db',
+    'driver' => 'mysql',
+  ];
+
+  # Trusted host configuration.
+  $settings['trusted_host_patterns'][] = '.+';
+  // $settings['trusted_host_patterns'][] = '^.+\.ucsf\.edu\.ucsf9-multisite\.docksal\.site$';
+  // $settings['trusted_host_patterns'][] = '^.+\.ucsfbenioffchildrens\.org\.ucsf9-multisite\.docksal\.site$';
+
   # File system settings.
   $setting['file_temporary_path'] = '/tmp';
   # Workaround for permission issues with NFS shares in Vagrant
@@ -38,9 +39,8 @@ if(defined('DOCKSAL_SITE_HOSTNAME')) { # DOCKSAL_SITE_HOSTNAME defined in docksa
   $setting['file_chmod_file'] = 0666;
 
   # Reverse proxy configuration (Docksal's vhost-proxy)
-  $setting['reverse_proxy'] = TRUE;
-  $remote = $_SERVER["REMOTE_ADDR"] ?? '127.0.0.1';
-  $setting['reverse_proxy_addresses'] = array($remote);
+  $conf['reverse_proxy'] = TRUE;
+  $conf['reverse_proxy_addresses'] = array($_SERVER['REMOTE_ADDR']);
   // HTTPS behind reverse-proxy
   if (
     isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' &&
