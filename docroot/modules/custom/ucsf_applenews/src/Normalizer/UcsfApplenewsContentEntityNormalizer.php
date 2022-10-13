@@ -139,7 +139,7 @@ class UcsfApplenewsContentEntityNormalizer extends ApplenewsContentEntityNormali
       $banner = new EmbedWebVideo($banner_video->get('field_media_video_embed_field')->value, 'video-embed-' . $entity->id());
     }
 
-    if ($banner) {
+    if (isset($banner)) {
       $banner->setLayout(_ucsf_applenews_banner_component_layout());
       $header->addComponent($banner);//$this->serializer->normalize($banner, $format, $context));
       $header->setLayout(_ucsf_applenews_main_header_component_layout());

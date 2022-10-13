@@ -798,6 +798,11 @@ $config['image.settings']['allow_insecure_derivatives'] = TRUE;
  * Include Acquia Connection
  */
 if (file_exists('/var/www/site-php')) {
+  
+  // Workaround for database error:
+  // Cannot instantiate abstract class Drupal\Core\Database\Schema.
+  $class_loader->addPsr4('Drupal\\mysql\\', DRUPAL_ROOT . '/core/modules/mysql/src/');
+  // Load database and other configuration.
   require '/var/www/site-php/ucsfpa1/ucsfpa8-settings.inc';
   // Memcached settings for Acquia Hosting
   if (file_exists(DRUPAL_ROOT . '/sites/default/cloud-memcache-d8.php')) {
