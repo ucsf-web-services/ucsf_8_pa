@@ -1,0 +1,37 @@
+diff --git a/src/Plugin/CKEditorPlugin/StylesCombo.php b/src/Plugin/CKEditorPlugin/StylesCombo.php
+index e35c5ac1f5..4287065f23 100644
+--- a/src/Plugin/CKEditorPlugin/StylesCombo.php
++++ b/src/Plugin/CKEditorPlugin/StylesCombo.php
+@@ -80,7 +80,7 @@ public function settingsForm(array $form, FormStateInterface $form_state, Editor
+       '#title_display' => 'invisible',
+       '#type' => 'textarea',
+       '#default_value' => $config['styles'],
+-      '#description' => $this->t('A list of classes that will be provided in the "Styles" dropdown. Enter one or more classes on each line in the format: element.classA.classB|Label. Example: h1.title|Title. Advanced example: h1.fancy.title|Fancy title.<br />These styles should be available in your theme\'s CSS file.'),
++      '#description' => $this->t('A list of classes that will be provided in the "Styles" dropdown. Enter one or more classes on each line in the format: elements.classA.classB|Label. Multiple elements may be provided as a comma-separated list. Example: h1.title|Title. Advanced example: h1,h2,h3.fancy.title|Fancy title.<br />These styles should be available in your theme\'s CSS file.'),
+       '#attached' => [
+         'library' => ['ckeditor/drupal.ckeditor.stylescombo.admin'],
+       ],
+@@ -141,20 +141,20 @@ protected function generateStylesSetSetting($styles) {
+       }
+ 
+       // Validate syntax: element[.class...]|label pattern expected.
+-      if (!preg_match('@^ *[a-zA-Z0-9-]+ *(\\.[a-zA-Z0-9_-]+ *)*\\| *.+ *$@', $style)) {
++      if (!preg_match('@^ *[a-zA-Z0-9-,]+ *(\\.[a-zA-Z0-9_-]+ *)*\\| *.+ *$@', $style)) {
+         return FALSE;
+       }
+ 
+       // Parse.
+       [$selector, $label] = explode('|', $style);
+       $classes = explode('.', $selector);
+-      $element = array_shift($classes);
++      $elements = preg_split('/, */', trim(array_shift($classes)));
+ 
+       // Build the data structure CKEditor's stylescombo plugin expects.
+       // @see https://ckeditor.com/docs/ckeditor4/latest/guide/dev_howtos_styles.html
+       $configured_style = [
+         'name' => trim($label),
+-        'element' => trim($element),
++        'element' => (count($elements) === 1) ? $elements[0] : $elements,
+       ];
+       if (!empty($classes)) {
+         $configured_style['attributes'] = [
