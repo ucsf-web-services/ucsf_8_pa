@@ -5,7 +5,7 @@
 {% if node.field_external_url.value.0.uri  %}
  {% set link = node.field_external_url.value.0.uri %}
 {% else %}
- {% set link = 'https://www.ucsf.edu' ~ path('entity.node.canonical', {'node': node.id}) %}
+ {% set link = path('entity.node.canonical', {'node': node.id}) %}
 {% endif %}
 
 <article {{ attributes.addClass(classes) }} data-primary-area="{{ primary_area ? 'pa-' ~ primary_area}}">
