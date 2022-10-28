@@ -41,9 +41,9 @@
       {% include '@ucsf_mag/components/byline/magazine-ucsf-news-byline-search.twig' %}
     {% endif %}
     {% if content.field_short_title|render|striptags != ''  %}
-      <h2><a href="https://www.ucsf.edu{{ article_url }}">{{ content.field_short_title }}</a></h2>
+      <h2><a href="{{ article_url }}">{{ content.field_short_title }}</a></h2>
     {% else %}
-      <h2><a href="https://www.ucsf.edu{{ article_url }}">{{ label }}</a></h2>
+      <h2><a href="{{ article_url }}">{{ label }}</a></h2>
     {% endif %}
 
 
