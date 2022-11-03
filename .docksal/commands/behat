@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+## Run project's Behat tests.
+##
+## Usage: fin behat [--path=path] [arguments]
+##
+## behat_config_path defaults to tests/behat for general behat configuration (behat.yml & "features" folder)
+## path is set to vendor/behat/behat for the behat composer.json file
+
+# Environment variables passed from fin:
+#
+#   $PROJECT_ROOT - (string) absolute path to NEAREST .docksal folder
+#   $VIRTUAL_HOST - (string) ex. projectname.docksal
+#   $DOCROOT - name of the docroot folder
+#   $DOCKER_RUNNING - (string) "true" or "false"
+
+params=''
+
+path='vendor/behat/behat'
+for i in "$@"; do
+	case "$i" in
+		--path=*)
+			path="${i#*=}"
+			;;
+		*)
+			params="$params$i "
+			;;
+	esac;
+done
+
+behat_config_path='tests/behat'
+for i in "$@"; do
+	case "$i" in
+		--behat_config_path=*)
+			behat_config_path="${i#*=}"
+			;;
+		*)
+			params="$params$i "
+			;;
+	esac;
+done
+
+
+behat_yml_path="$PROJECT_ROOT/$behat_config_path/behat.yml"
+if [[ ! -f "$behat_yml_path" ]]; then
+	echo "Could not find $behat_yml_path"
+	exit 1
+fi
+
+# var $PROJECT_ROOT = /var/www
+cd $PROJECT_ROOT
+
+# Make sure Composer dependencies are installed
+if [[ ! -d "$path/vendor" ]]; then
+	fin exec "cd $path && composer install --prefer-source --no-interaction"
+fi
+
+# Launch Behat tests
+# Specify a yml config with --config [path_to_file_name.yml]
+# Specify a profile within the yml config with -p [profile_name]
+
+# This command does not work because it runs in the /var/www/tests/behat directory which is not apart of the composer project
+# fin exec "cd $behat_config_path && ../../vendor/bin/behat"
+
+# This command must be run in the project root directory(/var/www)
+# Currently runs with the "default" profile
+fin exec "vendor/bin/behat --config tests/behat/behat.yml"
+
+# Helpful command optons
+# fin exec "vendor/bin/behat --config tests/behat/behat.yml --debug"
+# fin exec "vendor/bin/behat --config tests/behat/behat.yml -dl"
+

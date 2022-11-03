@@ -19,8 +19,8 @@
  * To use this feature, include this file at the bottom of sites/sites.php.
  */
 
-// Only do this for a docksal request.
-if (substr($_SERVER['VIRTUAL_HOST'] ?? '', -13) == '.docksal.site') {
+// Only do this for docksal local dev.
+if (getenv('IS_DOCKSAL')) {
 
   // For browser requests to a multi-site.
   if (stripos($_SERVER['SERVER_NAME'] ?? '', '.' . $_SERVER['VIRTUAL_HOST']) !== FALSE) {

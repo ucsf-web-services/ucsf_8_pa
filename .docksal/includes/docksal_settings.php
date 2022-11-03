@@ -6,8 +6,8 @@
  * This file should be included at the bottom of each sites 'settings.php'.
  */
 
-// Only do this for a docksal request.
-if (substr($_SERVER['VIRTUAL_HOST'] ?? '', -13) == '.docksal.site') {
+// Only do this for docksal local dev.
+if (getenv('IS_DOCKSAL')) {
 
   // Set the db name for the "default" site to the project/virtual hostname.
   // For multi-sites, see ./docksal/includes/docksal_sites.php.
@@ -50,4 +50,20 @@ if (substr($_SERVER['VIRTUAL_HOST'] ?? '', -13) == '.docksal.site') {
     // This is hardcoded because there is no header specifying the original port.
     $_SERVER['SERVER_PORT'] = 443;
   }
+
+  /**
+   * Put other config overrides below here.
+   */
+  // Disable simplesamlphp_auth.
+  $config['simplesamlphp_auth.settings']['activate'] = FALSE;
+
+  // Alter acquia solr connection to local.
+  $config['search_api.server.acquia_search_server']['backend_config']['connector'] = 'standard';
+  $config['search_api.server.acquia_search_server']['backend_config']['connector_config'] = [
+    'scheme' => 'http',
+    'host' => 'solr',
+    'port' => '8983',
+    'path' => '/',
+    'core' => getenv('SOLR_CORE') ?: 'acquia_copy',
+  ];
 }

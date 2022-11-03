@@ -8,8 +8,8 @@ Follow [Docksal install instructions](https://docksal.io/installation)
 
 1. Include in bottom of each site `settings.php`:
 
-        // Only do this for a docksal request.
-        if (substr($_SERVER['VIRTUAL_HOST'] ?? '', -13) == '.docksal.site') {
+        // Only do this for docksal local dev.
+        if (getenv('IS_DOCKSAL')) {
           require('../.docksal/includes/docksal_settings.php');
         }
 
@@ -18,8 +18,8 @@ Follow [Docksal install instructions](https://docksal.io/installation)
 
 2. For Drupal multi-sites, include in bottom of `sites/sites.php`:
 
-        // Only do this for a docksal request.
-        if (substr($_SERVER['VIRTUAL_HOST'] ?? '', -13) == '.docksal.site') {
+        // Only do this for docksal local dev.
+        if (getenv('IS_DOCKSAL')) {
           require('../.docksal/includes/docksal_sites.php');
         }
 
@@ -55,8 +55,16 @@ Follow [Docksal install instructions](https://docksal.io/installation)
 
 - phpMyAdmin ui available at `http://pma.[VIRTUAL_HOST]/`.
 
-- Solr ui available at `http://solr.[VIRTUAL_HOST]/solr/`.
-  Apachesolr module setting use solr server http://solr:8983/solr.
+- Solr ui available at `http://solr.[VIRTUAL_HOST]/`.
+
+  Enable the solr instance in docksal-local.yml.
+
+  The project is setup to override config of Acquia Search Solr server with
+  a local solr core named 'acquia_copy'. If you want the override to use a
+  different solr core, set SOLR_CORE to your new core name in docksal-local.env,
+  put the new core configset in .docksal/etc/solr/ with a same folder name, and
+  `fin up` to load the changes.
+
 
 ## Documentation
 

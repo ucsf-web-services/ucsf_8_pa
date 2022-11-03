@@ -1,11 +1,19 @@
+# Do not change this file unless you know better.
+# Create docksal-local.yml and make overrides there.
+
 version: "3.9"
 
 services:
   cli:
     environment:
+      - IS_DOCKSAL=1
+      - SOLR_CORE
       - API_KEY
       - API_SECRET
       - ACQUIA_ENV_ID
+      - MODULES_ENABLED
+      - MODULES_DISABLED
+
   pma:
     hostname: pma
     image: phpmyadmin/phpmyadmin
@@ -13,7 +21,7 @@ services:
       - PMA_HOST=db
       - PMA_USER=root
       - PMA_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
-      - MEMORY_LIMIT=1G
-      - UPLOAD_LIMIT=1G
+      - MEMORY_LIMIT=-1
+      - UPLOAD_LIMIT=-1
     labels:
       - io.docksal.virtual-host=pma.${VIRTUAL_HOST}
