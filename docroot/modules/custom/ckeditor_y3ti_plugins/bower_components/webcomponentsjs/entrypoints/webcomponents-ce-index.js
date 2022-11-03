@@ -14,9 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  * Used in: Safari 9, Firefox, Edge
  */
 
-import '../node_modules/@webcomponents/shadydom/src/shadydom.js';
 import '../node_modules/@webcomponents/custom-elements/src/custom-elements.js';
-import '../node_modules/@webcomponents/shadycss/entrypoints/scoping-shim.js';
 
 let document = window.document;
 // global for (1) existence means `WebComponentsReady` will file,
@@ -24,10 +22,8 @@ let document = window.document;
 window.WebComponents = window.WebComponents || {};
 
 function fire() {
-  requestAnimationFrame(() => {
-    window.WebComponents.ready = true;
-    window.document.dispatchEvent(new CustomEvent('WebComponentsReady', { bubbles: true }));
-  })
+  window.WebComponents.ready = true;
+  window.document.dispatchEvent(new CustomEvent('WebComponentsReady', { bubbles: true }));
 }
 
 function wait() {
