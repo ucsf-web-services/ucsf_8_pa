@@ -10,29 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 'use strict';
 
 /*
- * Polyfills loaded: Custom Elements, Shady DOM/Shady CSS
- * Used in: Safari 9, Firefox, Edge
+ * Polyfills loaded: Custom Elements
+ * Used in: Safari 10
  */
 
 import '../node_modules/@webcomponents/custom-elements/src/custom-elements.js';
-
-let document = window.document;
-// global for (1) existence means `WebComponentsReady` will file,
-// (2) WebComponents.ready == true means event has fired.
-window.WebComponents = window.WebComponents || {};
-
-function fire() {
-  window.WebComponents.ready = true;
-  window.document.dispatchEvent(new CustomEvent('WebComponentsReady', { bubbles: true }));
-}
-
-function wait() {
-  fire();
-  document.removeEventListener('readystatechange', wait);
-}
-
-if (document.readyState !== 'loading') {
-  fire();
-} else {
-  document.addEventListener('readystatechange', wait);
-}

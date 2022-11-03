@@ -10,12 +10,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 import PromisePolyfill from '../node_modules/promise-polyfill/src/index.js';
 
+/*
+Assign the ES6 promise polyfill to window ourselves instead of using the "auto" polyfill
+to work around https://github.com/webcomponents/webcomponentsjs/issues/837
+*/
 if (!window.Promise) {
   window.Promise = PromisePolyfill;
-  // save Promise API that is removed by closure compiler
-  // catch and finally are safe, as they are stringified in the library source
+  // save Promise API
   /* eslint-disable no-self-assign */
+  // PromisePolyfill.prototype['catch'] = PromisePolyfill.prototype.catch;
   PromisePolyfill.prototype['then'] = PromisePolyfill.prototype.then;
+  // PromisePolyfill.prototype['finally'] = PromisePolyfill.prototype.finally;
   PromisePolyfill['all'] = PromisePolyfill.all;
   PromisePolyfill['race'] = PromisePolyfill.race;
   PromisePolyfill['resolve'] = PromisePolyfill.resolve;
@@ -41,5 +46,5 @@ if (!window.Promise) {
   PromisePolyfill._immediateFn = (fn) => {
     callbacks.push(fn);
     twiddleNode();
-  };
+  }
 }

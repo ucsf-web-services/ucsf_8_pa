@@ -7,15 +7,25 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-'use strict';
 
-/*
- * Polyfills loaded: HTML Imports, Shady DOM/Shady CSS
- * Used in: Firefox with CustomElements enabled
- */
+import {BaseClass} from './common-subclass.js';
+import './module-a-sub.js';
 
-import '../node_modules/@webcomponents/html-imports/src/html-imports.js';
-import '../node_modules/@webcomponents/shadydom/src/shadydom.js';
-import '../node_modules/@webcomponents/shadycss/entrypoints/scoping-shim.js';
-import '../src/post-polyfill.js';
-import '../src/unresolved.js';
+const template = document.createElement('template');
+template.innerHTML = `
+<style>
+:host {
+  display: block;
+  border: 5px solid orange;
+}
+</style>
+<module-a-sub></module-a-sub>
+`;
+
+class ModuleA extends BaseClass {
+  static get template() {
+    return template;
+  }
+}
+
+customElements.define('module-a', ModuleA);

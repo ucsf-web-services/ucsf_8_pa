@@ -12,34 +12,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <head>
     <title></title>
     <meta charset="UTF-8">
+  </head>
+  <body>
     <script>
-      window.webComponentsReadyCount = 0;
-      document.addEventListener('WebComponentsReady', function() {
-        window.webComponentsReadyCount++;
-      });
+      // Force all polyfills on
+      if (window.customElements) window.customElements.forcePolyfill = true;
+      ShadyDOM = { force: true };
+      ShadyCSS = { shimcssproperties: true};
+
+      window.errored = false;
+
+      window.onerror = function() {
+        window.errored = true;
+      }
+
+      window.WebComponents = window.WebComponents || {};
+      window.WebComponents.root = '../';
     </script>
     <script src="../webcomponents-loader.js"></script>
     <script src="./wct-config.js"></script>
     <script src="../node_modules/wct-browser-legacy/browser.js"></script>
-  </head>
-  <body>
-    <my-element></my-element>
     <script>
-      window.addEventListener('WebComponentsReady', () => {
-        class MyElement extends HTMLElement {
-          connectedCallback(){
-            this.textContent = 'upgraded!';
-          }
-        }
-        customElements.define('my-element', MyElement);
-      });
-      suite('Loader', function() {
-        test('expected boot', function() {
-          assert.equal(window.webComponentsReadyCount, 1, 'failed to fire WebComponentsReady');
+      suite('loader with root defined', function() {
+        test('should load without an error', function() {
+          assert.isFalse(window.errored, 'Script should not have errored when loading');
         });
-        test('WebComponentsReady was fired on document and bubbled', function() {
-          assert.equal(document.querySelector('my-element').textContent, 'upgraded!');
-        })
       });
     </script>
   </body>

@@ -1,5 +1,5 @@
 /**
-@license @nocompile
+@license
 Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
 The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
@@ -7,9 +7,23 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-(function () {
-'use strict';
 
-(function(){if(void 0===window.Reflect||void 0===window.customElements||window.customElements.hasOwnProperty('polyfillWrapFlushCallback'))return;const a=HTMLElement;window.HTMLElement=function HTMLElement(){return Reflect.construct(a,[],this.constructor)},HTMLElement.prototype=a.prototype,HTMLElement.prototype.constructor=HTMLElement,Object.setPrototypeOf(HTMLElement,a);})();
+import {BaseClass} from './common-subclass.js';
 
-}());
+const template = document.createElement('template');
+template.innerHTML = `
+<style>
+:host {
+  display: block;
+  border: 2px solid blue;
+}
+</style>
+`;
+
+class ModuleASub extends BaseClass {
+  static get template() {
+    return template;
+  }
+}
+
+customElements.define('module-a-sub', ModuleASub);
