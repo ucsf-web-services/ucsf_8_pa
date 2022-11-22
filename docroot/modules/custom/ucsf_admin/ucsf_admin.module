@@ -15,7 +15,7 @@ function ucsf_admin_preprocess_page(&$variables) {
  * Implements hook_form_alter().
  */
 function ucsf_admin_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  if ($form["moderation_state"]) {
+  if (isset($form["moderation_state"])) {
     // Changing the label of the dropdown for moderation states.
     $form["moderation_state"]["widget"][0]["state"]["#title"] = "Save as";
 
