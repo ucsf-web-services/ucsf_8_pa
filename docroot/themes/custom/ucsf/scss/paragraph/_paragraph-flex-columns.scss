@@ -1,0 +1,123 @@
+// Attention ! I'm reusing the class .field-content-wrapper-content so that I use existing css from _paragraph.scss
+// Twig file: docroot/themes/custom/ucsf/templates/field/multiple-no-label/field--paragraph--field-content-wrapper-flex--column-content-row-flexible.html.twig
+// CSS file: docroot/themes/custom/ucsf/scss/paragraph/_paragraph.scss
+
+// These are overwrites and tweaks needed to incorporate the flexible layouts
+// and column switching.
+.flexible-column-layout {
+  // Width of columns.
+  --size-20 : 20%;
+  --size-30 : 30%;
+  --size-40 : 40%;
+  --size-50 : 50%;
+  --size-60 : 60%;
+  --size-70 : 70%;
+
+  padding: $space-five $page-gutter;
+  float: left;
+  width: 100%;
+
+  @include breakpoint($new-medium) {
+    padding: $space-five;
+  }
+
+  @include breakpoint($new-large) {
+   padding: $space-ten;
+  }
+
+  figure[class="embedded-entity"] {
+    margin-bottom: 0;
+  }
+
+  .field-content-wrapper-content {
+    @include breakpoint($new-medium) {
+      display: grid;
+      grid-auto-rows: auto;
+      grid-column-gap: 5%;
+    }
+  }
+
+  // Grid for column layout.
+  &.layout-columns__2 .field-content-wrapper-content {
+    @include breakpoint($new-medium) {
+      grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size));
+    }
+  }
+
+  &.layout-columns__3 .field-content-wrapper-content{
+    @include breakpoint($new-medium) {
+      grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size));
+    }
+  }
+
+  &.layout-columns__4 .field-content-wrapper-content {
+    @include breakpoint($new-medium) {
+      grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size)) minmax(0, var(--column4-size));
+    }
+  }
+
+  // Default placement of grid items
+  // column 1
+  .field-content-wrapper-content {
+    > .layout-column {
+      @include breakpoint($new-medium) {
+        width: auto;
+    }
+    }
+  }
+
+  .field-content-wrapper-content > :nth-child(1) {
+    @include breakpoint($new-medium) {
+
+    }
+
+
+  }
+
+  // column 2
+  .field-content-wrapper-content > :nth-child(2) {
+    @include breakpoint($new-medium) {
+
+    }
+
+  }
+
+  // column 3
+  .field-content-wrapper-content > :nth-child(3) {
+
+    @include breakpoint($new-medium) {
+
+    }
+
+    @include breakpoint($new-large) {
+    }
+  }
+
+  // column 4
+  .field-content-wrapper-content > :nth-child(4) {
+    @include breakpoint($new-medium) {
+
+    }
+  }
+
+  // Reversed placement of first and second columns in desktop.
+  // Note: accessibility rule is to have DOM placement match the visual,
+  //  so regardless of how many columns we have in the layout,
+  //  we only ever allowing column1 and column2 to be switched.
+  &--reverse {
+    .field-content-wrapper-content > :nth-child(1) {
+      @include breakpoint($new-medium) {
+        grid-row: 1;
+        grid-column: 2;
+      }
+    }
+
+    // column 2
+    .field-content-wrapper-content > :nth-child(2) {
+      @include breakpoint($new-medium) {
+        grid-row: 1;
+        grid-column: 1;
+      }
+    }
+  }
+}
