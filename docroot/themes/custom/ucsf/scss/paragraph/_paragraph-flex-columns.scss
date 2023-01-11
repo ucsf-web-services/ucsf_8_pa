@@ -4,6 +4,12 @@
 
 // These are overwrites and tweaks needed to incorporate the flexible layouts
 // and column switching.
+@mixin flex-column-error {
+  display: block;
+  color: red;
+  background-color: white;
+}
+
 .flexible-column-layout {
   // Width of columns.
   --size-20 : 20%;
@@ -38,21 +44,72 @@
   }
 
   // Grid for column layout.
-  &.layout-columns__2 .field-content-wrapper-content {
-    @include breakpoint($new-medium) {
-      grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size));
+  &.layout-columns__2 {
+    .field-content-wrapper-content {
+      @include breakpoint($new-medium) {
+        grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size));
+      }
+    }
+
+    @for $i from 0 to 2 {
+      &.layout-items__#{$i} .field-content-wrapper-content::after {
+        @include breakpoint($new-medium) {
+          content: "You have only #{$i} items in the 2 column layout. Please add additional items or switch to a different layout";
+          @include flex-column-error;
+        }
+      }
+    }
+
+    @for $i from 3 to 5 {
+      &.layout-items__#{$i} .field-content-wrapper-content::after {
+        @include breakpoint($new-medium) {
+          content: "You have #{$i} items in the 2 column layout. Please remove some items or switch to a different layout";
+          @include flex-column-error;
+        }
+      }
     }
   }
 
-  &.layout-columns__3 .field-content-wrapper-content{
-    @include breakpoint($new-medium) {
-      grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size));
+  &.layout-columns__3 {
+   .field-content-wrapper-content {
+      @include breakpoint($new-medium) {
+        grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size));
+      }
+    }
+
+    // Error handling for when we are short on content.
+    @for $i from 0 to 3 {
+      &.layout-items__#{$i} .field-content-wrapper-content::after {
+        @include breakpoint($new-medium) {
+          content: "You have only #{$i} items in the 3 column layout. Please add additional items or switch to a different layout";
+          @include flex-column-error;
+        }
+      }
+    }
+
+    &.layout-items__4 .field-content-wrapper-content::after {
+      @include breakpoint($new-medium) {
+        content: "You have 4 items in the 3 column layout. Please remove some items or switch to a different layout";
+        @include flex-column-error;
+      }
     }
   }
 
-  &.layout-columns__4 .field-content-wrapper-content {
-    @include breakpoint($new-medium) {
-      grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size)) minmax(0, var(--column4-size));
+  &.layout-columns__4 {
+    .field-content-wrapper-content {
+      @include breakpoint($new-medium) {
+        grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size)) minmax(0, var(--column4-size));
+      }
+    }
+
+    // Error handling for when we are short on content.
+    @for $i from 0 to 4 {
+      &.layout-items__#{$i} .field-content-wrapper-content::after {
+        @include breakpoint($new-medium) {
+          content: "You have only #{$i} items in the 4 column layout. Please add additional items or switch to a different layout";
+          @include flex-column-error;
+        }
+      }
     }
   }
 
@@ -63,40 +120,6 @@
       @include breakpoint($new-medium) {
         width: auto;
     }
-    }
-  }
-
-  .field-content-wrapper-content > :nth-child(1) {
-    @include breakpoint($new-medium) {
-
-    }
-
-
-  }
-
-  // column 2
-  .field-content-wrapper-content > :nth-child(2) {
-    @include breakpoint($new-medium) {
-
-    }
-
-  }
-
-  // column 3
-  .field-content-wrapper-content > :nth-child(3) {
-
-    @include breakpoint($new-medium) {
-
-    }
-
-    @include breakpoint($new-large) {
-    }
-  }
-
-  // column 4
-  .field-content-wrapper-content > :nth-child(4) {
-    @include breakpoint($new-medium) {
-
     }
   }
 
