@@ -6931,12 +6931,13 @@ body.loading .quicklinks {
           transform: scale(1.1); }
 
 .card-with-offset-color .offset-frame {
-  margin-bottom: calc(10px + 1rem);
-  margin-left: -10px; }
+  margin-bottom: calc(10px + 1rem); }
   @media (min-width: 850px) {
     .card-with-offset-color .offset-frame {
-      margin-left: 1.1rem;
       margin-bottom: calc(1.1rem + 1rem); } }
+  @media (min-width: 1050px) {
+    .card-with-offset-color .offset-frame {
+      margin-left: 1.1rem; } }
 
 .card-with-offset-color .card__image-wrapper {
   -webkit-transform: translate(-10px, 10px);
@@ -6945,6 +6946,29 @@ body.loading .quicklinks {
     .card-with-offset-color .card__image-wrapper {
       -webkit-transform: translate(-1.1rem, 1.1rem);
               transform: translate(-1.1rem, 1.1rem); } }
+
+.layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color {
+  float: left;
+  width: 100%; }
+  @media (min-width: 850px) {
+    .layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color {
+      clear: left;
+      float: left;
+      width: 48%;
+      margin-right: 2%;
+      margin-left: 0; } }
+  @media (min-width: 1050px) {
+    .layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color {
+      float: none;
+      width: auto;
+      margin-right: 0;
+      margin-left: 0; }
+      .layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color:last-child, .layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color:nth-child(even) {
+        margin-right: 0;
+        margin-left: 0; } }
+  .layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color:nth-child(2n) {
+    margin-right: 0;
+    margin-left: 0; }
 
 .flexible-column-layout {
   --size-20: 20%;
@@ -7030,6 +7054,12 @@ body.loading .quicklinks {
   @media (min-width: 850px) {
     .flexible-column-layout.layout-columns__4 .field-content-wrapper-content {
       grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size)) minmax(0, var(--column4-size)); } }
+  @media (min-width: 600px) {
+    .flexible-column-layout.layout-columns__4 .field-content-wrapper-content > .layout-column {
+      float: left;
+      width: 100%;
+      margin-left: 0;
+      margin-bottom: 2em; } }
   @media (min-width: 850px) {
     .flexible-column-layout.layout-columns__4.layout-items__0 .field-content-wrapper-content::after {
       content: "You have only 0 items in the 4 column layout. Please add additional items or switch to a different layout";

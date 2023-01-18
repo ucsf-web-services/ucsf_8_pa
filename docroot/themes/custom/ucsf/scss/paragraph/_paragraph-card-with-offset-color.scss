@@ -44,11 +44,15 @@
 
   .offset-frame {
     margin-bottom: calc(#{$offset-frame} + 1rem);
-    margin-left: -$offset-frame;
+    // margin-left: -$offset-frame;
 
     @include breakpoint($new-medium) {
-      margin-left: $offset-frame-desktop;
       margin-bottom: calc(#{$offset-frame-desktop} + 1rem);
+    }
+
+    @include breakpoint($new-large) {
+      margin-left: $offset-frame-desktop;
+
     }
   }
 
@@ -58,5 +62,35 @@
     @include breakpoint($new-medium) {
       transform: translate(-$offset-frame-desktop, $offset-frame-desktop);
     }
+  }
+}
+
+.layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color {
+  float: left;
+  width: 100%;
+
+  @include breakpoint($new-medium) {
+    clear: left;
+    float: left;
+    width: 48%;
+    margin-right: 2%;
+    margin-left: 0;
+  }
+
+  @include breakpoint($new-large) {
+    float: none;
+    width: auto;
+    margin-right: 0;
+    margin-left: 0;
+
+    &:last-child, &:nth-child(even) {
+      margin-right: 0;
+      margin-left: 0;
+    }
+  }
+
+  &:nth-child(2n) {
+    margin-right: 0;
+    margin-left: 0;
   }
 }

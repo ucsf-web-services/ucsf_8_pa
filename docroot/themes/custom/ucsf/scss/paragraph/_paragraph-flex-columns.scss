@@ -102,8 +102,18 @@
 
   &.layout-columns__4 {
     .field-content-wrapper-content {
+
       @include breakpoint($new-medium) {
         grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size)) minmax(0, var(--column4-size));
+      }
+
+      > .layout-column {
+        @include breakpoint($new-x-small) {
+          float: left;
+          width: 100%;
+          margin-left: 0;
+          margin-bottom: 2em;
+        }
       }
     }
 
