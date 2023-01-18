@@ -1,0 +1,68 @@
+{% if paragraph.field_white_text[0].value == '1' %}
+  {% set whitetext = 'col-white-text' %}
+{% endif %}
+
+{% if paragraph.field_background_color_hex.value|render != '' %}
+  {% set backgroundhex = 'background-color:#' ~ paragraph.field_background_color_hex.value %}
+{% endif %}
+
+{# Setting field "Manage display" format to "key", iterating through those keys (a.k.a. item.value) and using them as classes #}
+{% set layout_control_class = '' %}
+{% if paragraph.field_column_layout_controls %}
+  {% for key, item in paragraph.field_column_layout_controls if key|first != '#' %}
+    {% set layout_control_class = layout_control_class ~ " " ~ item.value %}
+  {% endfor %}
+{% endif %}
+
+{% if paragraph.field_anchor_link.value %}
+ {% set anchor_id = paragraph.field_anchor_link.value|clean_class %}
+{% endif %}
+
+{% if paragraph.field_switch_columns_in_desktop[0].value == '1' %}
+  {% set column_switch_class = "flexible-column-layout--reverse" %}
+{% endif %}
+
+{# Getting column widht values to create data attributes for columns #}
+{% set col_data = '' %}
+{% set col_css_var = '' %}
+{% set col_count = 0 %}
+
+{% if paragraph.field_column_widths.value %}
+  {# for as many layouts as user selected. #}
+  {% for key, item in paragraph.field_column_widths if key|first != '#' %}
+    {# get the layout value (example: "70-30"). Convert into an array to be used as column widht values.#}
+    {% set column_widths_values = item.value|replace({'-':' '})|split(' ') %}
+
+    {# Switching the column order if the checkbox is checked. #}
+    {% if paragraph.field_switch_columns_in_desktop[0].value == '1' %}
+      {% set column_widths_values = item.value|replace({'-':' '})|split(' ')|reverse %}
+    {% endif %}
+
+    {% for key, layout in column_widths_values %}
+      {# Need to use (key + 1) since array is 0 based.
+       Expecting final output to look like this: data-column1-size="70" data-column2-size="30".
+      Unless the checkbox to switch columns in desktop is checked #}
+      {% set col_data = col_data ~ ' data-column' ~ (key + 1) ~ '-size=' ~ layout %}
+      {% set col_css_var = col_css_var ~ '--column'~ (key + 1)~ '-size:var(--size-' ~ layout ~ ');' %}
+      {% set col_count = key + 1 %}
+
+    {% endfor %}
+  {% endfor %}
+{% endif %}
+
+{% set classes = [
+  whitetext,
+  layout_control_class,
+  paragraph.field_background_color.value,
+  column_switch_class,
+  paragraph.field_column_widths ? "flexible-column-layout" : '',
+  "layout-columns__" ~ col_count,
+  "layout-items__" ~ paragraph.field_content_wrapper_flex.value |length,
+] %}
+
+<div{{ attributes.addClass(classes) }} style="{{ backgroundhex ? backgroundhex ~ ";" : ''}} {{col_css_var ? col_css_var : ''}}" {{col_data}} >
+  {{ content|without('field_column_widths', 'field_switch_columns_in_desktop',
+    'field_background_color', 'field_remove_top_space', 'field_background_color_hex',
+    'field_white_text', 'field_column_layout_controls'
+    )}}
+</div>
