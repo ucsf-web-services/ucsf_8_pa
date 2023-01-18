@@ -18,22 +18,16 @@
   {% endfor %}
 {% endif %}
 
-{% if paragraph.field_switch_columns_in_desktop[0].value == '1' %}
-  {% set column_switch_class = "switch-columns-in-desktop" %}
-{% endif %}
-
 {% set classes = [
   'layout-columns__' ~ paragraph.field_content_wrapper_content.value |length,
   paragraph.field_background_color.value,
   remove,
   whitetext,
-  layout_control_class,
-  column_switch_class
+  layout_control_class
 ] %}
 
 <div{{ attributes.addClass(classes) }} style="{{ backgroundhex }}">
   {{ content|without('field_background_color', 'field_remove_top_space',
-   'field_background_color_hex', 'field_white_text', 'field_column_layout_controls',
-   'field_switch_columns_in_desktop'
+   'field_background_color_hex', 'field_white_text', 'field_column_layout_controls'
   ) }}
 </div>

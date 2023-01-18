@@ -148,30 +148,3 @@ dom-threecolumn-layout {
     }
   }
 }
-
-// This is to account for the hack that editors are doing,
-// where they use 1 column layout paragraph,
-// and then stick two column y3ty component inside.
-// We still needed a way to reverse those in desktop.
-// Example: https://ucsf.edu/cphp
-.layout-columns__1.switch-columns-in-desktop {
-  @include breakpoint($new-small) {
-    dom-twocolumn-layout {
-      flex-direction: row-reverse;
-
-      .column1 {
-        @include breakpoint($new-small) {
-          padding-right: 0;
-          margin-right: 0;
-          padding-left: 2%;
-        }
-      }
-
-      .column2 {
-        padding-left: 0;
-        padding-right: 2%;
-        margin-right: 2%;
-      }
-    }
-  }
-}
