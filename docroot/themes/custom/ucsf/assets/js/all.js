@@ -158,12 +158,23 @@
         }
     };
 
+    var checkIfHasCardWithOffsetColor = function checkIfHasCardWithOffsetColor() {
+        var offsetCardWithColor = document.querySelectorAll('.card-with-offset-color');
+        // console.log(offsetCardWithColor)
+
+        offsetCardWithColor.forEach(function (element) {
+
+            $(element).closest('.layout-column').addClass("has-card-with-offset-color");
+        });
+    };
+
     // Check screen size.
     var mql = window.matchMedia('(max-width: 1049px)');
 
     function screenTest(event) {
         if (event.matches) {
             /* the viewport is 1049 pixels wide or less */
+            checkIfHasCardWithOffsetColor();
         } else {
             /* the viewport is more than 1049 pixels wide */
             removeSpaceFromEmptyElement();

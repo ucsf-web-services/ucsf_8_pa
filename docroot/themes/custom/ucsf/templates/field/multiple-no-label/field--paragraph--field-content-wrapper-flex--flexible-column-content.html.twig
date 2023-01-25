@@ -1,0 +1,10 @@
+{% extends 'field.html.twig' %}
+
+{% block multiple_item_no_label %}
+  <div{{ attributes.addClass('field-content-wrapper-content', 'field__items') }}>
+    {% for key, item in items %}
+      {% set col_count = key + 1 %}
+      <div{{ item.attributes.addClass('layout-column', 'layout-column-' ~ col_count)}}>{{ item.content }}</div>
+    {% endfor %}
+  </div>
+{% endblock multiple_item_no_label %}
