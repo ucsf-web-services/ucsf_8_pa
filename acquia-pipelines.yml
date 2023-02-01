@@ -29,9 +29,9 @@ events:
           script:
             - echo "PIPELINES DEPLOY"
             - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ] && [ "$SOURCE_VCS_PATH" != "master" ]; then
-            - echo "Create/Update a new On Demand Environment for $PIPELINE_DEPLOY_VCS_PATH"
-            - pipelines-deploy
-            - pipelines-sync-dbs ucsfpa8
+            -  echo "Create/Update a new On Demand Environment for $PIPELINE_DEPLOY_VCS_PATH"
+            -  pipelines-deploy
+            -  pipelines-sync-dbs ucsfpa8
             - fi
             - echo "PIPELINES DEPLOY FINISHED"
   # When a GitHub pull request is merged, this deletes the corresponding ODE.
@@ -39,7 +39,7 @@ events:
     steps:
       - deploy:
           script:
-            - pipelines-deploy
+            #- pipelines-deploy
   # When a GitHub pull request is closed, this deletes the corresponding ODE.
   pr-closed:
     steps:
