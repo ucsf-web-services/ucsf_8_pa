@@ -5641,6 +5641,11 @@ body.loading .quicklinks {
     .main-content.narrow-page .layout-columns__4.col-white-text a.button-reverse:hover,
     .main-content.narrow-page .layout-columns__4.col-white-text a.button-reverse:visited:hover {
       border: 2px solid #fff; }
+  .main-content.narrow-page .layout-columns__1.col-white-text .contextual-links a,
+  .main-content.narrow-page .layout-columns__2.col-white-text .contextual-links a,
+  .main-content.narrow-page .layout-columns__3.col-white-text .contextual-links a,
+  .main-content.narrow-page .layout-columns__4.col-white-text .contextual-links a {
+    color: #333; }
   .main-content.narrow-page .layout-columns__1.col-white-text .eyebrow-title::after,
   .main-content.narrow-page .layout-columns__2.col-white-text .eyebrow-title::after,
   .main-content.narrow-page .layout-columns__3.col-white-text .eyebrow-title::after,
@@ -5773,6 +5778,16 @@ body.loading .quicklinks {
   .full-width-page .layout-columns__4.col-white-text a.button-reverse:visited:hover {
     border: 2px solid #fff; }
 
+.areas-content .layout-columns__1.col-white-text .contextual-links a,
+.areas-content .layout-columns__2.col-white-text .contextual-links a,
+.areas-content .layout-columns__3.col-white-text .contextual-links a,
+.areas-content .layout-columns__4.col-white-text .contextual-links a,
+.full-width-page .layout-columns__1.col-white-text .contextual-links a,
+.full-width-page .layout-columns__2.col-white-text .contextual-links a,
+.full-width-page .layout-columns__3.col-white-text .contextual-links a,
+.full-width-page .layout-columns__4.col-white-text .contextual-links a {
+  color: #333; }
+
 .areas-content .layout-columns__1.col-white-text .eyebrow-title::after,
 .areas-content .layout-columns__2.col-white-text .eyebrow-title::after,
 .areas-content .layout-columns__3.col-white-text .eyebrow-title::after,
@@ -5782,6 +5797,31 @@ body.loading .quicklinks {
 .full-width-page .layout-columns__3.col-white-text .eyebrow-title::after,
 .full-width-page .layout-columns__4.col-white-text .eyebrow-title::after {
   background: #fff; }
+
+.col-white-text p, .col-white-text li, .col-white-text h2, .col-white-text h3, .col-white-text h4, .col-white-text h5, .col-white-text a {
+  color: #fff; }
+
+.col-white-text a, .col-white-text a:visited {
+  color: #fff;
+  border-bottom: 1px solid #fff; }
+  .col-white-text a:hover, .col-white-text a:visited:hover {
+    background: #fff;
+    border-bottom: 1px solid #fff;
+    color: #052049; }
+
+.col-white-text a.button-reverse, .col-white-text a.button-reverse:visited {
+  border: 2px solid #fff; }
+  .col-white-text a.button-reverse:hover, .col-white-text a.button-reverse:visited:hover {
+    border: 2px solid #fff; }
+
+.col-white-text .contextual-links a {
+  color: #333; }
+
+.col-white-text .eyebrow-title::after {
+  background: #fff; }
+
+.col-white-text .field__label {
+  color: #fff; }
 
 .latest-events-list {
   float: left;
@@ -6891,12 +6931,13 @@ body.loading .quicklinks {
           transform: scale(1.1); }
 
 .card-with-offset-color .offset-frame {
-  margin-bottom: calc(10px + 1rem);
-  margin-left: -10px; }
+  margin-bottom: calc(10px + 1rem); }
   @media (min-width: 850px) {
     .card-with-offset-color .offset-frame {
-      margin-left: 1.1rem;
       margin-bottom: calc(1.1rem + 1rem); } }
+  @media (min-width: 1050px) {
+    .card-with-offset-color .offset-frame {
+      margin-left: 1.1rem; } }
 
 .card-with-offset-color .card__image-wrapper {
   -webkit-transform: translate(-10px, 10px);
@@ -6905,6 +6946,155 @@ body.loading .quicklinks {
     .card-with-offset-color .card__image-wrapper {
       -webkit-transform: translate(-1.1rem, 1.1rem);
               transform: translate(-1.1rem, 1.1rem); } }
+
+.layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color {
+  float: left;
+  width: 100%; }
+  @media (min-width: 850px) {
+    .layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color {
+      clear: left;
+      float: left;
+      width: 48%;
+      margin-right: 2%;
+      margin-left: 0; } }
+  @media (min-width: 1050px) {
+    .layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color {
+      float: none;
+      width: auto;
+      margin-right: 0;
+      margin-left: 0; }
+      .layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color:last-child, .layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color:nth-child(even) {
+        margin-right: 0;
+        margin-left: 0; } }
+  .layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color:nth-child(2n) {
+    margin-right: 0;
+    margin-left: 0; }
+
+.flexible-column-layout {
+  --size-20: 20%;
+  --size-25: 25%;
+  --size-30: 30%;
+  --size-33: 33%;
+  --size-40: 40%;
+  --size-50: 50%;
+  --size-60: 60%;
+  --size-66: 66%;
+  --size-70: 70%;
+  --size-75: 75%;
+  padding: 40px 20px;
+  float: left;
+  width: 100%; }
+  @media (min-width: 850px) {
+    .flexible-column-layout {
+      padding: 40px; } }
+  @media (min-width: 1050px) {
+    .flexible-column-layout {
+      padding: 80px; } }
+  .flexible-column-layout figure[class="embedded-entity"] {
+    margin-bottom: 0; }
+  @media (min-width: 850px) {
+    .flexible-column-layout .field-content-wrapper-content {
+      display: grid;
+      grid-auto-rows: auto;
+      grid-column-gap: 5%; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__2 .field-content-wrapper-content {
+      grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)); } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__2.layout-items__0 .field-content-wrapper-content::after {
+      content: "You have only 0 items in the 2 column layout. Please add additional items or switch to a different layout";
+      display: block;
+      color: red;
+      background-color: white; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__2.layout-items__1 .field-content-wrapper-content::after {
+      content: "You have only 1 items in the 2 column layout. Please add additional items or switch to a different layout";
+      display: block;
+      color: red;
+      background-color: white; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__2.layout-items__3 .field-content-wrapper-content::after {
+      content: "You have 3 items in the 2 column layout. Please remove some items or switch to a different layout";
+      display: block;
+      color: red;
+      background-color: white; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__2.layout-items__4 .field-content-wrapper-content::after {
+      content: "You have 4 items in the 2 column layout. Please remove some items or switch to a different layout";
+      display: block;
+      color: red;
+      background-color: white; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__3 .field-content-wrapper-content {
+      grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size)); } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__3.layout-items__0 .field-content-wrapper-content::after {
+      content: "You have only 0 items in the 3 column layout. Please add additional items or switch to a different layout";
+      display: block;
+      color: red;
+      background-color: white; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__3.layout-items__1 .field-content-wrapper-content::after {
+      content: "You have only 1 items in the 3 column layout. Please add additional items or switch to a different layout";
+      display: block;
+      color: red;
+      background-color: white; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__3.layout-items__2 .field-content-wrapper-content::after {
+      content: "You have only 2 items in the 3 column layout. Please add additional items or switch to a different layout";
+      display: block;
+      color: red;
+      background-color: white; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__3.layout-items__4 .field-content-wrapper-content::after {
+      content: "You have 4 items in the 3 column layout. Please remove some items or switch to a different layout";
+      display: block;
+      color: red;
+      background-color: white; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__4 .field-content-wrapper-content {
+      grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size)) minmax(0, var(--column4-size)); } }
+  @media (min-width: 600px) {
+    .flexible-column-layout.layout-columns__4 .field-content-wrapper-content > .layout-column {
+      float: left;
+      width: 100%;
+      margin-left: 0;
+      margin-bottom: 2em; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__4.layout-items__0 .field-content-wrapper-content::after {
+      content: "You have only 0 items in the 4 column layout. Please add additional items or switch to a different layout";
+      display: block;
+      color: red;
+      background-color: white; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__4.layout-items__1 .field-content-wrapper-content::after {
+      content: "You have only 1 items in the 4 column layout. Please add additional items or switch to a different layout";
+      display: block;
+      color: red;
+      background-color: white; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__4.layout-items__2 .field-content-wrapper-content::after {
+      content: "You have only 2 items in the 4 column layout. Please add additional items or switch to a different layout";
+      display: block;
+      color: red;
+      background-color: white; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout.layout-columns__4.layout-items__3 .field-content-wrapper-content::after {
+      content: "You have only 3 items in the 4 column layout. Please add additional items or switch to a different layout";
+      display: block;
+      color: red;
+      background-color: white; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout .field-content-wrapper-content > .layout-column {
+      width: auto; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout--reverse .field-content-wrapper-content > :nth-child(1) {
+      grid-row: 1;
+      grid-column: 2; } }
+  @media (min-width: 850px) {
+    .flexible-column-layout--reverse .field-content-wrapper-content > :nth-child(2) {
+      grid-row: 1;
+      grid-column: 1; } }
 
 .page-node-type-author,
 .page-node-type-article,
@@ -9720,6 +9910,10 @@ h2.font-h3 {
     margin: 8px 0;
     margin: 24px 0;
     padding-bottom: 16px; }
+  .media-coverage__list-articles .media-coverage__list-date {
+    padding-right: 30px;
+    background: url("../images/ext-link-gray.svg") right center no-repeat transparent;
+    background-size: 20px; }
   .media-coverage__list-articles article {
     margin-bottom: 0 !important; }
 
@@ -10132,6 +10326,9 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
   border: 2px solid #fff; }
   .page-node-type-full-width-news-package.col-white-text a.button-reverse:hover, .page-node-type-full-width-news-package.col-white-text a.button-reverse:visited:hover {
     border: 2px solid #fff; }
+
+.page-node-type-full-width-news-package.col-white-text .contextual-links a {
+  color: #333; }
 
 .page-node-type-full-width-news-package.col-white-text .eyebrow-title::after {
   background: #fff; }

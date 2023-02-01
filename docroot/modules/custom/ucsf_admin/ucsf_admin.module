@@ -1,7 +1,31 @@
 <?php
 
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_preprocess_page().
+ */
 function ucsf_admin_preprocess_page(&$variables) {
   if (\Drupal::service('router.admin_context')->isAdminRoute()) {
     $variables['#attached']['library'][] = 'ucsf_admin/paragraphs';
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function ucsf_admin_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (isset($form["moderation_state"])) {
+    // Changing the label of the dropdown for moderation states.
+    $form["moderation_state"]["widget"][0]["state"]["#title"] = "Save as";
+
+    // Additional explanation for the workflow.
+    $form['moderation_state']['#prefix'] = '<p>' . t('If this page/article has never been published
+      and should be timed for release at a later date and time, use the <strong>Scheduling Options</strong>
+      area on the right side of the page and then save this article as “Draft”.') . '</p>';
+
+    // This appears in the sidebar of the editorial form.
+    $form['publish_state']['#suffix'] = '<p>' . t('Select “Published” and then save as a Draft below.') . '</p>';
+
   }
 }
