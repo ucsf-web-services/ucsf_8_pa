@@ -5,7 +5,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Drupal\Core\Url;
+
 //use Drupal\user\Entity\User;
 /**
 * Redirect .html pages to corresponding Node page.
@@ -17,7 +17,7 @@ class ConditionalStylesSubscriber implements EventSubscriberInterface {
 
   /**
   * Redirect pattern based url
-  * @param \Symfony\Component\HttpKernel\Event\Re t $event
+  * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
   */
   public function customRedirection(RequestEvent $event) {
 
@@ -27,6 +27,7 @@ class ConditionalStylesSubscriber implements EventSubscriberInterface {
     $admin_context = \Drupal::service('router.admin_context');
     if ($admin_context->isAdminRoute()) {
       // perform tasks.
+      //dpm('trigger isAdminRoute() stop forwarding');
       return;
     }
 
@@ -40,10 +41,13 @@ class ConditionalStylesSubscriber implements EventSubscriberInterface {
     //dpm('are we some sort of admin: '. $isAdmin);
     // this isn't working because of some Drupal cache thing going (!$isAdmin)
     if (is_object($node) && $node->hasField('field_article_type') && $node->hasField('field_external_url')) {
+  
       \Drupal::service('page_cache_kill_switch')->trigger();
       //dpm($node);
       if ($node->get('field_article_type')->first()->getValue()['target_id'] == '413496') {
         if ($node->get('field_external_url')->first() !== null) {
+
+          //dpm('trigger forwarding url');
           $url = $node->get('field_external_url')->first()->getValue()['uri'];
           $response = new RedirectResponse($url, $this->redirectCode);
           $response->send();
