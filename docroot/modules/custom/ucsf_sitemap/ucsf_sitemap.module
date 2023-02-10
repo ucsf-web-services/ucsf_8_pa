@@ -9,11 +9,17 @@ use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_form_alter().
+ * This function removes the sitemap checkbox to index the url.
+ * These url's are external so we don't want Google to pick them up.
  */
 function ucsf_sitemap_form_alter(&$form, &$form_state, $form_id) {
   // Exit if this is not a News content type.
-  if ($form_id != 'node_article_form' && $form_id != "node_article_edit_form") {
-    return;
+  // updated to include magazine article types 
+  if (
+    $form_id != 'node_article_form' && $form_id != "node_article_edit_form" &&
+    $form_id != "node_magazine_article_form" && $form_id != "node_magazine_article_edit_form") {
+    
+      return;
   }
 
   // Add custom submit hook at start of array
