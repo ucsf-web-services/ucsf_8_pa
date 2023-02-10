@@ -74,16 +74,26 @@
   padding-top: 0;
 }
 
+
+
 .article-meta-share ~ .page_narrow:empty {
   height: min-content;
-
-  & + [class*="layout-columns"] {
-    grid-row: 2;
-  }
 }
 
-.article-meta-share + [class*="layout-columns"] {
-  grid-row: 2;
+[class*="layout-columns"] {
+  $share: ".article-meta-share";
+
+  #{$share} ~ .page_narrow:empty + & {
+    grid-row: 2;
+  }
+
+  #{$share} + & {
+    grid-row: 1;
+  }
+
+  .article-header + #{$share} + & {
+    grid-row: 2;
+  }
 }
 
 .page-node-type-article,
