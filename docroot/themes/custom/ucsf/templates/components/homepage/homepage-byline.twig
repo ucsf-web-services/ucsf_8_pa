@@ -16,7 +16,7 @@
       {% if primary_area in campus_news %}
         {{ primary_area_field ? primary_area_field : content.field_primary_area }}
       {% else %}
-        {{ drupal_field('field_primary_area', 'node', paragraph.field_news_article.target_id) }}
+        {{ drupal_field('field_primary_area', 'node', paragraph.field_news_article.target_id)|render|striptags }}
       {% endif %}
     </li>
   {% endif %}
