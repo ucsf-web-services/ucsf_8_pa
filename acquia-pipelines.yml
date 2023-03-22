@@ -35,11 +35,11 @@ events:
             - fi
             - echo "PIPELINES DEPLOY FINISHED"
   # When a GitHub pull request is merged, this deletes the corresponding ODE.
-  #pr-merged:
-  #  steps:
-  #    - deploy:
-  #        script:
-  #          - pipelines-deploy
+  pr-merged:
+    steps:
+      - deploy:
+          script:
+            - pipelines-deploy
   # When a GitHub pull request is closed, this deletes the corresponding ODE.
   pr-closed:
     steps:
