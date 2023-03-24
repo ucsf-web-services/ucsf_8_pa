@@ -8,8 +8,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\File\FileSystemInterface;
 use Symfony\Component\HttpFoundation\Request as GetReq;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-//use Symfony\Component\Cache;
-//use GuzzleHttp\Psr7\Request;
+
 
 class UcsfsearchController extends ControllerBase {
 
@@ -172,7 +171,7 @@ class UcsfsearchController extends ControllerBase {
 
     //call GuzzleHTTP for the lookup and JSON decode the body request
     $base_url = 'https://websites.ucsf.edu';
-    $client       = new Client(array('base_uri' => $base_url));
+    $client       = new Client(['base_uri' => $base_url, 'http_errors' => false]);
     $res          = $client->request('GET', "/azlist/json?combine={$search}");
     $jsonresponse = json_decode($res->getBody(), TRUE);
 
@@ -245,7 +244,7 @@ class UcsfsearchController extends ControllerBase {
 
 
     //call GuzzleHTTP for the lookup and JSON decode the body request
-    $client       = new Client(array('base_uri' => 'https://directory.ucsf.edu'));
+    $client       = new Client(['base_uri' => 'https://directory.ucsf.edu', 'http_errors' => false]);
     $res          = $client->request('GET', "/people/search/name/{$search}/json");
     $jsonresponse = json_decode($res->getBody(), TRUE);
     //dpm("https://directory.ucsf.edu/people/search/name/{$search}/json");
