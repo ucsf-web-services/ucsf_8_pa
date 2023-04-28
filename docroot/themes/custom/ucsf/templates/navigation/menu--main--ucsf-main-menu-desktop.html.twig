@@ -105,7 +105,7 @@
 
         {# START. LEVEL-0/LEVEL-1 SUBMENU PANEL #}
         {% if item.below and item.title != 'Search' %}
-          <div id="aria-{{ item_title_class }}" class="main-submenu main-submenu--{{ menu_level }}" data-level="level-{{ menu_level }}">
+          <div id="aria-{{ item_title_class }}" aria-labelledby="aria-label-{{ item_title_class }}" class="main-submenu main-submenu--{{ menu_level }}" data-level="level-{{ menu_level }}">
 
             {# Level-0 close btn #}
             {% if menu_level == 0 %}
@@ -116,7 +116,7 @@
 
             {# Level-0/Level-1 submenu titles #}
             <div data-section="section-{{ item_title_class }}" class="{{ menu_level == 0 ? 'main-submenu__label main-submenu__label--0' : 'main-submenu__label' }}">
-              <h{{menu_level + 2 }} class="main-submenu__label-text">{{ item.title }}</h{{menu_level + 2 }}>
+              <span id="aria-label-{{ item_title_class }}" class="main-submenu__label-text">{{ item.title }}</span>
             </div>
 
             {# submenu links #}
