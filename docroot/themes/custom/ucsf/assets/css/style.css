@@ -45,19 +45,21 @@
   --c-blue: #007cbe;
   --c-blue-2023:#4896E8;
   --c-print-blue: #178ccb;
+  --c-blue-text-2023: #086290;
   --c-blue-dark: #064260;
   --c-gray-blue: #506380;
   --c-gray: #9BA6B6;
   --c-green-cool: #00483A;
+  --c-green-text-2023: #007242;
   --c-green-2023: #2C8A1A;
   --c-light-green-cool: #32A03E;
   --c-green-warm: #006400;
   --c-print-green: #90bd31;
   --c-teal: #058488;
   --c-teal-2023: #16A0AC;
+  --c-teal-medium-2023: #14828C;
   --c-teal-dark: #0E5258;
-  --c-purple: #716fb2;
-  --c-purple-2023: #6C62D0;
+  --c-purple: #6C62D0;
   --c-purple-dark: #2E2872;
   --c-yellow: #fd0;
   --c-yellow-2023: #FEB80A;
@@ -88,8 +90,8 @@
   background-color: #052049; }
 
 .background-purple {
-  --color-rgb: 113, 111, 178;
-  background-color: #716fb2; }
+  --color-rgb: 108, 98, 208;
+  background-color: #6C62D0; }
 
 .background-yellow {
   --color-rgb: 255, 221, 0;
@@ -1212,58 +1214,104 @@ a.icon-transit {
         padding-left: 48px; } }
 
 [data-primary-area] figure,
-[data-primary-area="pa-about"] figure,
-[data-primary-area="pa-campus-news"] figure,
-[data-primary-area="pa-announcements"] figure,
-[data-primary-area="pa-happenings"] figure,
-[data-primary-area="pa-honors-awards"] figure,
-[data-primary-area="pa-spotlight"] figure,
-[data-primary-area="pa-education"] figure,
-[data-primary-area="pa-patient-care"] figure,
-[data-primary-area="pa-research"] figure,
-[data-primary-area="pa-locations"] figure,
-[data-primary-area="pa-news-center"] figure,
-[data-primary-area="pa-ucsf-magazine"] figure,
+[data-primary-area=""] figure,
 .news-card--media-coverage figure,
 .news-card--magazine-article figure {
   background-repeat: no-repeat;
   background-position: 50% 35%;
   background-size: 48px 48px; }
 
-[data-primary-area] figure {
+[data-primary-area] figure,
+[data-primary-area=""] figure {
   background-image: url(/themes/custom/ucsf/assets/images/card/ucsf-reverse.svg);
   background-color: #052049; }
 
-[data-primary-area="pa-campus-news"] figure,
-[data-primary-area="pa-announcements"] figure,
-[data-primary-area="pa-happenings"] figure,
-[data-primary-area="pa-honors-awards"] figure,
-[data-primary-area="pa-spotlight"] figure {
-  background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
-  background-color: #052049; }
-
-[data-primary-area="pa-education"] figure {
-  background-image: url(/themes/custom/ucsf/assets/images/card/education-reverse.svg);
-  background-color: #90bd31; }
-
-[data-primary-area="pa-patient-care"] figure {
-  background-image: url(/themes/custom/ucsf/assets/images/card/doctor-reverse.svg);
-  background-color: #007cbe; }
-
-[data-primary-area="pa-research"] figure {
-  background-image: url(/themes/custom/ucsf/assets/images/card/microscope-reverse.svg);
-  background-color: #058488; }
-
-[data-primary-area="pa-ucsf-magazine"] figure,
 .news-card--media-coverage figure,
 .news-card--magazine-article figure {
   background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg);
-  background-color: #716fb2; }
+  background-color: #6C62D0; }
 
 .icon-external-link {
   padding-right: 30px;
   background: url(/themes/custom/ucsf/assets/images/ext-link-gray.svg) right center no-repeat transparent;
   background-size: 20px; }
+
+[data-primary-area="pa-about"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/ucsf-reverse.svg);
+  background-color: #6C62D0; }
+
+[data-primary-area="pa-campus-news"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+  background-color: #052049; }
+
+[data-primary-area="pa-announcements"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+  background-color: #052049; }
+
+[data-primary-area="pa-happenings"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+  background-color: #052049; }
+
+[data-primary-area="pa-honors-awards"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+  background-color: #052049; }
+
+[data-primary-area="pa-spotlight"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+  background-color: #052049; }
+
+[data-primary-area="pa-education"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/education-reverse.svg);
+  background-color: #32A03E; }
+
+[data-primary-area="pa-patient-care"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/doctor-reverse.svg);
+  background-color: #178ccb; }
+
+[data-primary-area="pa-research"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/microscope-reverse.svg);
+  background-color: #16A0AC; }
+
+[data-primary-area="pa-news-center"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/ucsf-reverse.svg);
+  background-color: #6C62D0; }
+
+[data-primary-area="pa-ucsf-magazine"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg);
+  background-color: #6C62D0; }
 
 .vertical-tab {
   grid-column: 1/-1;
@@ -2146,14 +2194,14 @@ p.quote-style {
         .article-meta-share .fa-reddit-square:hover {
           color: #ff4500; } }
   .article-meta-share .fa-envelope-square {
-    color: #716fb2;
+    color: #6C62D0;
     -webkit-transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) color;
     transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) color; }
     @media (min-width: 1050px) {
       .article-meta-share .fa-envelope-square {
         color: #506380; }
         .article-meta-share .fa-envelope-square:hover {
-          color: #716fb2; } }
+          color: #6C62D0; } }
   .article-meta-share .fa-print {
     color: #058488;
     -webkit-transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) color;
@@ -3175,12 +3223,12 @@ figure figure[class="image"] {
       border-color: #052049; } }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-purple + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #716fb2;
-      border-bottom-color: #716fb2; } }
+      background-color: #6C62D0;
+      border-bottom-color: #6C62D0; } }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-purple + .scrolly-gallery__text-inner .button:hover {
-      background-color: #716fb2;
-      border-color: #716fb2; } }
+      background-color: #6C62D0;
+      border-color: #6C62D0; } }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-yellow + .scrolly-gallery__text-inner a:not(.button):hover {
       background-color: #fd0;
@@ -3887,26 +3935,16 @@ figure figure[class="image"] {
             box-sizing: border-box;
     width: 48px;
     padding: 24px 0; }
-    .main-submenu__label--0[data-section="section-about"] {
-      background: #716fb2; }
     .main-submenu__label--0[data-section="section-about-menu"] {
       background: #052049; }
-    .main-submenu__label--0[data-section="section-campus-news"] {
-      background: #052049; }
     .main-submenu__label--0[data-section="section-education"] {
-      background: #568001; }
-    .main-submenu__label--0[data-section="section-location"] {
-      background: #568001; }
-    .main-submenu__label--0[data-section="section-news-center"] {
-      background: #716fb2; }
+      background: #006400; }
     .main-submenu__label--0[data-section="section-news--media"] {
-      background: #716fb2; }
+      background: #6C62D0; }
     .main-submenu__label--0[data-section="section-patient-care"] {
       background: #007cbe; }
     .main-submenu__label--0[data-section="section-research"] {
-      background: #058488; }
-    .main-submenu__label--0[data-section="section-ucsf-magazine"] {
-      background: #716fb2; }
+      background: #14828C; }
     .main-submenu__label--0 .main-submenu__label-text {
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -5317,11 +5355,11 @@ body.loading .quicklinks {
             box-shadow: inset 0 0 0 1000px rgba(5, 32, 73, 0.95); }
 
 .overlay-purple {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.8); }
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(108, 98, 208, 0.8);
+          box-shadow: inset 0 0 0 1000px rgba(108, 98, 208, 0.8); }
   .overlay-purple:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.95); }
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(108, 98, 208, 0.95);
+            box-shadow: inset 0 0 0 1000px rgba(108, 98, 208, 0.95); }
 
 .overlay-yellow {
   -webkit-box-shadow: inset 0 0 0 1000px rgba(255, 221, 0, 0.8);
@@ -5394,7 +5432,7 @@ body.loading .quicklinks {
             box-shadow: inset 0 0 0 1000px rgba(33, 39, 42, 0.95); }
 
 .accent-purple {
-  border-bottom: 8px solid #716fb2; }
+  border-bottom: 8px solid #6C62D0; }
 
 .accent-teal {
   border-bottom: 8px solid #18a3ac; }
@@ -6642,16 +6680,16 @@ body.loading .quicklinks {
 
 .promo-list__card--featured .overlay-purple,
 .promo-list__card--alt .overlay-purple {
-  -webkit-box-shadow: inset 0 0 0 1000px #716fb2;
-          box-shadow: inset 0 0 0 1000px #716fb2; }
+  -webkit-box-shadow: inset 0 0 0 1000px #6c62d0;
+          box-shadow: inset 0 0 0 1000px #6c62d0; }
   .promo-list__card--featured .overlay-purple:hover,
   .promo-list__card--alt .overlay-purple:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.95); }
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(108, 98, 208, 0.95);
+            box-shadow: inset 0 0 0 1000px rgba(108, 98, 208, 0.95); }
 
 .promo-list__card--alt .overlay-purple:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #716fb2;
-          box-shadow: inset 0 0 0 1000px #716fb2; }
+  -webkit-box-shadow: inset 0 0 0 1000px #6c62d0;
+          box-shadow: inset 0 0 0 1000px #6c62d0; }
 
 .promo-list__card--featured .overlay-yellow,
 .promo-list__card--alt .overlay-yellow {
@@ -7914,9 +7952,9 @@ h2.font-h3 {
     background: #052049; }
 
 [data-primary-area="pa-about"] {
-  color: #716fb2; }
+  color: #6C62D0; }
   [data-primary-area="pa-about"]::before {
-    background: #716fb2; }
+    background: #6C62D0; }
 
 [data-primary-area="pa-about-menu"] {
   color: #052049; }
@@ -7929,39 +7967,34 @@ h2.font-h3 {
     background: #052049; }
 
 [data-primary-area="pa-education"] {
-  color: #568001; }
+  color: #007242; }
   [data-primary-area="pa-education"]::before {
-    background: #90bd31; }
-
-[data-primary-area="pa-location"] {
-  color: #568001; }
-  [data-primary-area="pa-location"]::before {
-    background: #90bd31; }
+    background: #32A03E; }
 
 [data-primary-area="pa-news-center"] {
-  color: #716fb2; }
+  color: #6C62D0; }
   [data-primary-area="pa-news-center"]::before {
-    background: #716fb2; }
+    background: #6C62D0; }
 
 [data-primary-area="pa-news--media"] {
-  color: #716fb2; }
+  color: #6C62D0; }
   [data-primary-area="pa-news--media"]::before {
-    background: #716fb2; }
+    background: #6C62D0; }
 
 [data-primary-area="pa-patient-care"] {
-  color: #007cbe; }
+  color: #086290; }
   [data-primary-area="pa-patient-care"]::before {
     background: #178ccb; }
 
 [data-primary-area="pa-research"] {
-  color: #058488; }
+  color: #14828C; }
   [data-primary-area="pa-research"]::before {
-    background: #18a3ac; }
+    background: #16A0AC; }
 
 [data-primary-area="pa-ucsf-magazine"] {
-  color: #716fb2; }
+  color: #6C62D0; }
   [data-primary-area="pa-ucsf-magazine"]::before {
-    background: #716fb2; }
+    background: #6C62D0; }
 
 .basic-header__subheading,
 .article-header .field-sub-title {
@@ -8403,10 +8436,10 @@ h2.font-h3 {
 
 .news-card--media-coverage [data-primary-area],
 .news-card--magazine-article [data-primary-area] {
-  color: #716fb2; }
+  color: #6C62D0; }
   .news-card--media-coverage [data-primary-area]::before,
   .news-card--magazine-article [data-primary-area]::before {
-    background: #716fb2; }
+    background: #6C62D0; }
 
 .magazine-article-card__date {
   text-transform: capitalize; }

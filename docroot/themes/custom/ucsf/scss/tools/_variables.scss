@@ -35,25 +35,28 @@ $bp-main-menu-medium: 43em;
 
 // Colors
 //------------------------------------------------------------------------------
+// @todo replace all $c-green, with $c-green-worm
 :root {
   --black: #000;
   --c-navy: #052049;
   --c-blue: #007cbe;
   --c-blue-2023:#4896E8;
   --c-print-blue: #178ccb;
+  --c-blue-text-2023: #086290;
   --c-blue-dark: #064260;
   --c-gray-blue: #506380;
   --c-gray: #9BA6B6; // aka "Cool Gray"
   --c-green-cool: #00483A;
+  --c-green-text-2023: #007242;
   --c-green-2023: #2C8A1A;
   --c-light-green-cool: #32A03E;
   --c-green-warm: #006400;
   --c-print-green: #90bd31;
   --c-teal: #058488;
   --c-teal-2023: #16A0AC;
+  --c-teal-medium-2023: #14828C;
   --c-teal-dark: #0E5258;
-  --c-purple: #716fb2;
-  --c-purple-2023: #6C62D0;
+  --c-purple: #6C62D0;
   --c-purple-dark: #2E2872;
   --c-yellow: #fd0;
   --c-yellow-2023: #FEB80A;
@@ -68,15 +71,17 @@ $c-navy: #052049;
 $c-dark-navy: #121a31;
 $c-teal: #058488;
 $c-teal-2023: #16A0AC;
+$c-teal-medium-2023: #14828C;
+$c-green-text-2023: #007242;
 $c-green: #568001;
 $c-green-2023: #2C8A1A;
 $c-blue: #007cbe;
 $c-blue-2023:#4896E8;
+$c-blue-text-2023: #086290;
 $c-blue-link: #0071ad;
 $c-blue-link-rollover: #e8f4fa;
 $orange: #f26d04;
-$c-purple: #716fb2;
-$c-purple-2023: #6C62D0;
+$c-purple: #6C62D0;
 $c-violet: #A238BA;
 $c-red: #eb093c;
 $c-yellow: #fd0;
@@ -129,19 +134,32 @@ $reddit-color: #ff4500;
 //Magazine
 $magazine-gray-blue: #384559;
 
-// @todo Get all these values.
+
+// List of areas/topics and colors associated with them
+// @param $area - string of text used to create css selector.
+// @param $color1 - color for the background
+// @param $color2 - color for the text
 $areas: (
+  // ($area, $color1, $color2),
   ("about", $c-purple, $c-purple),
   ("about-menu", $c-navy, $c-navy),
   ("campus-news", $c-navy, $c-navy),
-  ("education", $c-green, $c-print-green),
-  ("location", $c-green, $c-print-green),
+  ("education", $c-light-green-cool, $c-green-text-2023),
   ("news-center", $c-purple, $c-purple),
   ("news--media", $c-purple, $c-purple),
-  ("patient-care", $c-blue, $c-print-blue),
-  ("research", $c-teal, $c-print-teal),
+  ("patient-care", $c-print-blue, $c-blue-text-2023),
+  ("research", $c-teal-2023, $c-teal-medium-2023),
   ("ucsf-magazine", $c-purple, $c-purple),
 );
+
+$areas-nav: (
+  about-menu: $c-navy,
+  education: $c-green-warm,
+  news--media: $c-purple,
+  patient-care: $c-blue,
+  research: $c-teal-medium-2023,
+);
+
 
 $color-map: (
   blue: $c-blue,
@@ -170,7 +188,7 @@ $new-color-map: (
   teal: $c-teal-2023,
   light-green-cool: $c-light-green-cool,
   green: $c-green-2023,
-  purple: $c-purple-2023,
+  purple: $c-purple,
   violet: $c-violet,
   magenta:$c-magenta,
   cool-gray: $c-gray,
