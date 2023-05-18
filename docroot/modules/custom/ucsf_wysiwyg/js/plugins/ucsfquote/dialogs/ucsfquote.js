@@ -66,7 +66,7 @@ CKEDITOR.dialog.add('ucsfquote', function( editor ) {
             label: 'Color Accent',
             items: [
               [ 'Blue', 'blue' ],
-              [ 'Light Blue', 'light-blue' ],
+              [ 'Light Blue', 'blue-light' ],
               [ 'Teal', 'teal' ],
               [ 'Cool Green', 'light-cool-green' ],
               [ 'Warm Green', 'green' ],
