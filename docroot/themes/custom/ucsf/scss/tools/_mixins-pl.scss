@@ -4,19 +4,19 @@
 // @todo Don't do this.
 
 @mixin xs {
-  @include breakpoint($xs) {
+  @include breakpoint($bp-xs) {
     @content;
   }
 }
 
 @mixin small {
-  @include breakpoint($small) {
+  @include breakpoint($bp-small) {
     @content;
   }
 }
 
 @mixin medium {
-  @include breakpoint($medium) {
+  @include breakpoint($new-medium) {
     @content;
   }
 }
@@ -28,19 +28,19 @@
 
 }
 @mixin large {
-  @include breakpoint($large) {
+  @include breakpoint($bp-large) {
     @content;
   }
 }
 
 @mixin xl {
-  @include breakpoint($xl) {
+  @include breakpoint($bp-xl) {
     @content;
   }
 }
 
 @mixin max-width {
-  @include breakpoint($max-width) {
+  @include breakpoint($bp-full) {
     @content;
   }
 }
@@ -64,7 +64,7 @@
 
 @mixin card-three-up-constrained {
   margin: 0 auto;
-  max-width: $xl;
+  max-width: $bp-xl;
   margin-top: 0;
   padding-top: $space-five;
 }
