@@ -1,5 +1,17 @@
+$parallax-options: (
+  navy: $c-navy,
+  blue-dark: $c-blue-dark,
+  teal-dark: $c-teal-dark,
+  green-cool: $c-green-dark,
+  green-warm: $c-green-warm,
+  purple-dark: $c-purple-dark,
+  violet-dark: $c-violet-dark,
+  magenta-dark:$c-magenta-dark,
+  gray-darkest: $c-gray-darkest
+);
+
 .page_narrow {
-    &--scrolly {
+  &--scrolly {
     padding-top: 40px;
 
     @include breakpoint($new-large) {
@@ -78,7 +90,11 @@
     }
   }
 
-  @each $name, $color in $color-map {
+  @each $name, $color in $parallax-options {
+    .background-#{$name} {
+      --color-rgb: #{hex-to-rgb($color)};
+    }
+
     .background-#{$name}  + .scrolly-gallery__text-inner a:not(.button):hover {
       @include breakpoint($new-large) {
         background-color: #{$color};

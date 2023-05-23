@@ -12,6 +12,7 @@
   .promo-list__card {
     @extend %card-bg-image;
     margin-bottom: $space-nine;
+    z-index: 1;
 
     &::after {
       background: transparent;
@@ -25,7 +26,23 @@
     &-link {
       padding: $space-eight $space-five;
       align-self: center;
+      width: 100%;
+      height: 100%;
     }
+
+  }
+
+  .promo-list__background-img {
+    display: block;
+    filter:grayscale(1);
+    background-size: 100%;
+    width: 100%;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
   }
 }
 
@@ -99,6 +116,7 @@
     width: 100%;
     display: grid;
     grid-template-rows: auto 1fr;
+    height: auto;
 
     &:hover {
       .promo-list__card-image {
@@ -139,33 +157,21 @@
   }
 }
 
-// Background Overlay colors
-@each $name, $color in $color-map {
+.promo-list__card--alt {
+  @include colored('background', false);
+}
 
+// Background Overlay colors
+@each $name, $color in $color-options-with-text {
   // create a class name based on the color name
-  .promo-list__card--featured .overlay-#{$name},
-  .promo-list__card--alt .overlay-#{$name} {
+  .promo-list__card--featured .overlay-#{$name} {
+    --overlay-#{$name}-rgb: #{hex-to-rgb($color)};
+    --overlay-teal-rgb: #{hex-to-rgb($c-teal-dark)};
     // convert hex value into rgba box-shadow
-    box-shadow: inset 0 0 0 1000px rgba($color, 1);
+    box-shadow: inset 0 0 0 1000px rgba(var(--overlay-#{$name}-rgb), 1);
 
     &:hover {
-      box-shadow: inset 0 0 0 1000px rgba($color, 0.95);
+      box-shadow: inset 0 0 0 1000px rgba(var(--overlay-#{$name}-rgb), 0.95);
     }
-
-    @if ($name == yellow) {
-      .field-promo-text {
-        color: $c-navy;
-      }
-
-      .promo-list__card-more .link--cta {
-        color: $c-navy;
-        background-image: url("../images/cta-arrow-navy.svg");
-      }
-    }
-  }
-
-  // No background color fade on hover for Homepage Promo Alt
-  .promo-list__card--alt .overlay-#{$name}:hover {
-    box-shadow: inset 0 0 0 1000px rgba($color, 1);
   }
 }

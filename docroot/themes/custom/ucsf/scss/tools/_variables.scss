@@ -43,7 +43,7 @@ $bp-main-menu-medium: 43em;
   --c-yellow-light: #FED658;
   --c-green-cool: #00483A;
   --c-green-alt: #007242;
-  --c-green-2023: #2C8A1A;
+  --c-green: #2C8A1A;
   --c-light-green-cool: #32A03E;
   --c-green-warm: #006400;
   --c-print-green: #90bd31;
@@ -51,10 +51,9 @@ $bp-main-menu-medium: 43em;
   --c-teal-alt: #16A0AC;
   --c-teal-medium: #14828C;
   --c-teal-dark: #0E5258;
-  // --c-blue: #007cbe;
   --c-blue:#4896E8;
   --c-blue-light: #178ccb;
-  --c-blue-alt: #086290;
+  --c-blue-warm: #086290;
   --c-blue-dark: #064260;
   --c-blue-medium: #0F388A;
   --c-navy: #052049;
@@ -85,17 +84,16 @@ $c-teal-alt: #16A0AC;
 $c-teal-medium: #14828C;
 $c-teal-dark: #0E5258;
 // Green
-$c-green-alt: #007242; // aka Cool green
 $c-green: #2C8A1A;
-$c-green-cool: #00483A; // Scrolly cool green
+$c-green-alt: #007242; // aka Cool green
 $c-light-green-cool: #32A03E; // also called Cool green in ui
 $c-green-warm: #006400; // Warm Green
+$c-green-dark: #00483A; // Scrolly cool green
 
 // Blue
-// $c-blue: #007cbe;
 $c-blue:#4896E8;
 $c-blue-warm: #086290;
-$c-blue-medium: #0F388A;
+$c-blue-medium: #0F388A; //Promotional with Background Image, used in promotional with image  https://www.ucsf.edu/about
 $c-blue-dark: #064260;
 
 // Navy
@@ -136,7 +134,7 @@ $c-gray-darkest: #21272A;
 $c-gray-dark: #666;
 $c-gray-darker: #525860;
 $c-gray-blue: #506380;
-$c-background-gray: #f2f4f6;
+$c-background-gray: #f2f3f4;
 $c-twitter-blue: #f0faff;
 $c-border-grey-blue: #d5d9de;
 
@@ -185,52 +183,82 @@ $areas-nav: (
   research: $c-teal-medium,
 );
 
+// Blue
+// #0F388A
+// #4896E8 $blue-medium /used as hex
+
+// Light Blue
+// $c-blue-light: #178ccb;
+// $c-blue-warm: #086290; /uses as hex
+
+// Teal
+// $c-teal-medium: #14828C /used as hex
+// $c-teal-alt: #16A0AC;
+// $c-teal-dark: #0E5258; /used 1
+
+// Cool Green
+// light-green-cool: $c-light-green-cool #32A03E
+// cool-green: $c-green-alt: #007242 /used as hex
+
+// Warm Green
+// warm-green: $c-green-warm: #006400/used as hex
+// warm-green: $c-green; // #2C8A1A
+
+// Purple
+// purple: $c-purple: #6C62D0;
+// purple: $c-purple-medium: #443E8C/used as hex;
+
+// Violet
+// violet: $c-violet, #A238BA
+// violet: $c-violet-medium, #6C247C//used as hex;
+
+// Magenta
+// magenta:$c-magenta, : #C42882
+// magenta:$c-magenta-medium, : #821A56/ used as hex
+
+// Gray ! / Cool gray where?
+// gray: $c-gray, #9ba6b6;
+
+// Dark Gray
+// dark-gray: $c-gray-darkest: #21272A /used as hex
+
+// Navy
+// $c-navy: #052049 /used as hex;
+
+// Yellow
+// yellow: $c-yellow, : #FEB80A
+// yellow: $c-yellow-light: #FED658; only 1 for emrg alert
 
 
-// Blue: #4896E8 – Maps to current Blue selection
-// Light Blue: #178CCB
-// Teal: #16A0AC – Maps to current Teal selection
-// Cool Green: #32A03E
-// Warm Green: #2C8A1A – Maps to current Green selection
-// Purple: #6C62D0 – Maps to current Purple selection
-// Violet: #A238BA
-// Magenta: #C42882
-// Gray: #9BA6B6 – Maps to current Gray selection
-// Navy: #052049 – Maps to current Navy selection
-// Yellow: #FEB80A – Maps to current Yellow selection
-// Dark Gray: #21272A – Maps to current Black selection
+// Emergency Alert
+// additional colors
+// Red: #E61048
 
-$color-map: (
-  black: $c-black,
-  red: $c-red,
-  orange: $c-orange,
-  yellow: $c-yellow,
-  yellow-light: $c-yellow-light,
-  green: $c-green,
-  green-alt: $c-green-alt,
-  green-warm: $c-green-warm,
-  green-cool: $c-green-cool,
-  light-green-cool: $c-light-green-cool,
-  teal: $c-teal-alt,
-  teal-medium: $c-teal-medium,
-  teal-dark: $c-teal-dark,
-  navy: $c-navy,
+$color-options-no-text: (
   blue: $c-blue,
-  blue-warm: $c-blue-warm,
-  blue-light: $c-blue-light,
-  blue-medium: $c-blue-medium,
-  blue-dark: $c-blue-dark,
-  magenta:$c-magenta,
-  magenta-dark: $c-magenta-dark,
-  violet: $c-violet,
-  violet-medium: $c-violet-medium,
-  violet-dark: $c-violet-dark,
+  light-blue: $c-blue-light,
+  teal: $c-teal-alt,
+  cool-green: $c-light-green-cool,
+  warm-green: $c-green,
   purple: $c-purple,
-  purple-medium: $c-purple-medium,
-  purple-dark: $c-purple-dark,
-  gray: $c-gray-blue,
-  cool-gray: $c-gray,
-  gray-darkest: $c-gray-darkest
+  magenta:$c-magenta,
+  gray: $c-gray,
+  navy: $c-navy,
+  yellow: $c-yellow,
+  dark-gray: $c-gray-darkest,
+);
+
+$color-options-with-text: (
+  blue: $c-blue-medium,
+  light-blue: $c-blue-warm,
+  teal: $c-teal-medium,
+  cool-green: $c-green-alt,
+  warm-green: $c-green-warm,
+  purple: $c-purple-medium,
+  violet: $c-violet-medium,
+  magenta:$c-magenta-medium,
+  navy: $c-navy,
+  dark-gray: $c-gray-darkest,
 );
 
 // Font Families
