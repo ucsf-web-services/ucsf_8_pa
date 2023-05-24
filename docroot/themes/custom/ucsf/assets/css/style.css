@@ -387,6 +387,8 @@ a {
     color: #006BE9; }
   a:focus {
     color: #006BE9; }
+  a.active:hover, a.is-active:hover, a.active-trail:hover, a.visited:hover, a:hover {
+    color: #0F388A; }
   a.is-active, a:active, a.active-trail {
     color: #006BE9; }
   a:hover {
@@ -434,14 +436,16 @@ a {
   border-bottom: 1px solid #006BE9;
   overflow-wrap: break-word;
   word-break: break-word;
-  word-wrap: break-word; }
+  word-wrap: break-word;
+  font-weight: 500; }
   .narrow-page a:hover,
   .article-header a:hover,
   .full-width-page-wrapper a:hover,
   .full-width-page-banner a:hover,
   .fact-card a:hover {
     background-color: #e8f4fa;
-    border-bottom: 1px solid #e8f4fa; }
+    border-bottom: 2px solid #0F388A;
+    color: #0F388A; }
 
 .rollover--blue {
   color: #006BE9;
@@ -452,10 +456,12 @@ a {
   border-bottom: 1px solid #006BE9;
   overflow-wrap: break-word;
   word-break: break-word;
-  word-wrap: break-word; }
+  word-wrap: break-word;
+  font-weight: 500; }
   .rollover--blue:hover {
     background-color: #e8f4fa;
-    border-bottom: 1px solid #e8f4fa; }
+    border-bottom: 2px solid #0F388A;
+    color: #0F388A; }
 
 .tags-menu a,
 .footer-ctas-wrapper a,
@@ -498,6 +504,17 @@ a {
   .link--cta a:hover,
   .full-width-page-banner__header a.link--cta:hover {
     background-position: 100% center; }
+  .link--cta:hover,
+  .narrow-page a.link--cta:hover,
+  .full-width-page-wrapper a.link--cta:hover,
+  .link--cta a:hover,
+  .full-width-page-banner__header a.link--cta:hover {
+    background-image: url("../images/cta-arrow-blue-hover.svg");
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: 14px 14px;
+    padding-right: 24px;
+    background-size: 14px 10px; }
 
 span.ext {
   background: url("/themes/custom/ucsf/assets/images/external-link.svg") no-repeat right center transparent;
@@ -944,7 +961,8 @@ textarea {
   height: 48px;
   width: 48px; }
   .icon-awards:hover, .icon-caduceus:hover, .icon-campus:hover, .icon-comprehensive:hover, .icon-directions:hover, .icon-doctor:hover, .icon-education:hover, .icon-heart:hover, .icon-hospital:hover, .icon-media:hover, .icon-microscope:hover, .icon-money:hover, .icon-patient-care:hover, .icon-research:hover, .icon-support:hover, .icon-transit:hover {
-    text-decoration: underline; }
+    text-decoration: underline;
+    text-decoration-thickness: 2px; }
 
 .icon-awards {
   background: url(/themes/custom/ucsf/assets/images/card/awards.svg) left center no-repeat transparent; }
@@ -1018,11 +1036,13 @@ a.icon-awards {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-awards:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/awards-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/awards-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-awards:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/awards.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/awards-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-caduceus {
   background: url(/themes/custom/ucsf/assets/images/card/caduceus.svg) left center no-repeat transparent; }
@@ -1036,11 +1056,13 @@ a.icon-caduceus {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-caduceus:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/caduceus-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/caduceus-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-caduceus:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/caduceus.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/caduceus-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-campus {
   background: url(/themes/custom/ucsf/assets/images/card/campus.svg) left center no-repeat transparent; }
@@ -1054,11 +1076,13 @@ a.icon-campus {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-campus:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-campus:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/campus.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/campus-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-comprehensive {
   background: url(/themes/custom/ucsf/assets/images/card/comprehensive.svg) left center no-repeat transparent; }
@@ -1072,11 +1096,13 @@ a.icon-comprehensive {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-comprehensive:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/comprehensive-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/comprehensive-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-comprehensive:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/comprehensive.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/comprehensive-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-directions {
   background: url(/themes/custom/ucsf/assets/images/card/directions.svg) left center no-repeat transparent; }
@@ -1090,11 +1116,13 @@ a.icon-directions {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-directions:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/directions-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/directions-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-directions:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/directions.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/directions-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-doctor {
   background: url(/themes/custom/ucsf/assets/images/card/doctor.svg) left center no-repeat transparent; }
@@ -1108,11 +1136,13 @@ a.icon-doctor {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-doctor:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/doctor-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/doctor-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-doctor:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/doctor.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/doctor-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-education {
   background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent; }
@@ -1126,11 +1156,13 @@ a.icon-education {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-education:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/education-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/education-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-education:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/education.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/education-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-heart {
   background: url(/themes/custom/ucsf/assets/images/card/heart.svg) left center no-repeat transparent; }
@@ -1144,11 +1176,13 @@ a.icon-heart {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-heart:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-heart:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/heart.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/heart-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-hospital {
   background: url(/themes/custom/ucsf/assets/images/card/hospital.svg) left center no-repeat transparent; }
@@ -1162,11 +1196,13 @@ a.icon-hospital {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-hospital:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/hospital-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/hospital-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-hospital:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/hospital.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/hospital-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-media {
   background: url(/themes/custom/ucsf/assets/images/card/media.svg) left center no-repeat transparent; }
@@ -1180,11 +1216,13 @@ a.icon-media {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-media:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-media:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/media.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/media-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-microscope {
   background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent; }
@@ -1198,11 +1236,13 @@ a.icon-microscope {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-microscope:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/microscope-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/microscope-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-microscope:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/microscope.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/microscope-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-money {
   background: url(/themes/custom/ucsf/assets/images/card/money.svg) left center no-repeat transparent; }
@@ -1216,11 +1256,13 @@ a.icon-money {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-money:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/money-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/money-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-money:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/money.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/money-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-patient-care {
   background: url(/themes/custom/ucsf/assets/images/card/patient-care.svg) left center no-repeat transparent; }
@@ -1234,11 +1276,13 @@ a.icon-patient-care {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-patient-care:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/patient-care-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/patient-care-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-patient-care:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/patient-care.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/patient-care-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-research {
   background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent; }
@@ -1252,11 +1296,13 @@ a.icon-research {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-research:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/research-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/research-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-research:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/research.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/research-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-support {
   background: url(/themes/custom/ucsf/assets/images/card/support.svg) left center no-repeat transparent; }
@@ -1270,11 +1316,13 @@ a.icon-support {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-support:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/support-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/support-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-support:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/support.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/support-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 a.icon-transit {
   background: url(/themes/custom/ucsf/assets/images/card/transit.svg) left center no-repeat transparent; }
@@ -1288,11 +1336,13 @@ a.icon-transit {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-transit:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/transit-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/transit-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-transit:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/transit.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/transit-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline; } }
 
 [data-primary-area] figure,
 [data-primary-area=""] figure,
@@ -2408,12 +2458,14 @@ p.quote-style {
     border-bottom: 1px solid #006BE9;
     overflow-wrap: break-word;
     word-break: break-word;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    font-weight: 500; }
     .twitter__tweet a:hover {
       background-color: #e8f4fa;
-      border-bottom: 1px solid #e8f4fa;
+      border-bottom: 2px solid #0F388A;
+      color: #0F388A;
       background-color: #fff;
-      border-bottom: 1px solid #fff; }
+      border-bottom: 2px solid #fff; }
 
 img.twitter-icon {
   border-radius: 50%;
@@ -2498,6 +2550,7 @@ a.video_preview::before {
       .video-list__youtube a.link--cta:hover {
         color: #fff;
         text-decoration: underline;
+        text-decoration-thickness: 2x;
         text-underline-position: under; }
     .video-list__youtube a span {
       margin-right: 4px;
@@ -2565,10 +2618,14 @@ a.video_preview::before {
 #block-youtubegallery .slick-next {
   background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #006BE9;
   right: 35px; }
+  #block-youtubegallery .slick-next:hover {
+    background-color: #0F388A; }
 
 #block-youtubegallery .slick-prev {
   background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #006BE9;
   left: 35px; }
+  #block-youtubegallery .slick-prev:hover {
+    background-color: #0F388A; }
 
 #block-youtubegallery .slick-slider {
   margin: 0;
@@ -2601,7 +2658,8 @@ a.video_preview::before {
 #block-youtubegallery a:hover,
 #block-youtubegallery .video_preview:hover .video_preview__title {
   text-decoration: underline;
-  text-underline-position: under; }
+  text-underline-position: under;
+  text-decoration-thickness: 2px; }
 
 #block-youtubegallery li {
   color: white;
@@ -4894,6 +4952,11 @@ body.loading .quicklinks {
       color: #006BE9;
       font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
       text-decoration: none; }
+      .field-ankle-cta p a:hover {
+        color: #0F388A;
+        -webkit-text-decoration-color: #0F388A;
+                text-decoration-color: #0F388A;
+        text-decoration-thickness: 2px; }
   @media (max-width: 849px) {
     .field-ankle-cta {
       padding-top: 32px; }
@@ -6190,10 +6253,14 @@ body.loading .quicklinks {
 .field-gallery-items .slick-next {
   background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #006BE9;
   right: 35px; }
+  .field-gallery-items .slick-next:hover {
+    background-color: #0F388A; }
 
 .field-gallery-items .slick-prev {
   background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #006BE9;
   left: 35px; }
+  .field-gallery-items .slick-prev:hover {
+    background-color: #0F388A; }
 
 .field-gallery-items button {
   top: calc(50% - 100px); }
@@ -6391,6 +6458,7 @@ body.loading .quicklinks {
         -webkit-transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
         transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
         text-decoration: underline;
+        text-decoration-thickness: 2px;
         padding-right: 32px;
         background-position: 100% center; }
         .promo-list__card-link:hover .link--cta:hover {
@@ -6422,7 +6490,8 @@ body.loading .quicklinks {
       color: #fff; }
       .promo-list__card-more a:hover {
         color: #fff;
-        text-decoration: underline; }
+        text-decoration: underline;
+        text-decoration-thickness: 2px; }
     .promo-list__card-more a.link--cta {
       background-image: url("../images/cta-arrow-white.svg");
       background-repeat: no-repeat;
@@ -6462,16 +6531,6 @@ body.loading .quicklinks {
       background-color: #fff; }
   .promo-list__card a.promo-list__card-link {
     color: #fff; }
-  .promo-list__card.overlay-yellow .promo-list__card-link {
-    color: #052049; }
-  .promo-list__card.overlay-yellow .promo-list__card-title {
-    color: #052049; }
-    .promo-list__card.overlay-yellow .promo-list__card-title::after {
-      display: inline-block;
-      background-color: #052049; }
-  .promo-list__card.overlay-yellow .link--cta {
-    background-image: url("../images/cta-arrow-navy.svg");
-    color: #052049; }
 
 .homepage .promo-list__card, .promo-list__card--featured {
   background-size: cover;
@@ -6515,7 +6574,8 @@ body.loading .quicklinks {
 
 .promo-list__card--featured:hover .link--cta {
   background-position: 100% center;
-  text-decoration: underline; }
+  text-decoration: underline;
+  text-decoration-thickness: 2px; }
 
 .promo-list__card--featured a {
   display: -webkit-box;
@@ -7797,16 +7857,18 @@ h2.font-h3 {
             border-bottom: 1px solid #fff;
             overflow-wrap: break-word;
             word-break: break-word;
-            word-wrap: break-word; }
+            word-wrap: break-word;
+            font-weight: 500; }
             .article-twocol-banner.twocolleftdark .article-twocol-header h1 a:hover,
             .article-twocol-banner.twocolleftdark .article-twocol-header .field-sub-title a:hover,
             .article-twocol-banner.twocolleftdark .article-twocol-header .article-header__author a:hover, .article-twocol-banner.twocolrightdark .article-twocol-header h1 a:hover,
             .article-twocol-banner.twocolrightdark .article-twocol-header .field-sub-title a:hover,
             .article-twocol-banner.twocolrightdark .article-twocol-header .article-header__author a:hover {
               background-color: #e8f4fa;
-              border-bottom: 1px solid #e8f4fa;
+              border-bottom: 2px solid #0F388A;
+              color: #0F388A;
               background-color: rgba(255, 255, 255, 0.3);
-              border-bottom: 1px solid rgba(255, 255, 255, 0.3); }
+              border-bottom: 2px solid rgba(255, 255, 255, 0.3); }
         .article-twocol-banner.twocolleftdark .article-twocol-header .article-header__byline .article-header__primary-area,
         .article-twocol-banner.twocolleftdark .article-twocol-header .article-header__byline .article-header__date, .article-twocol-banner.twocolrightdark .article-twocol-header .article-header__byline .article-header__primary-area,
         .article-twocol-banner.twocolrightdark .article-twocol-header .article-header__byline .article-header__date {
@@ -7890,14 +7952,16 @@ h2.font-h3 {
         border-bottom: 1px solid #fff;
         overflow-wrap: break-word;
         word-break: break-word;
-        word-wrap: break-word; }
+        word-wrap: break-word;
+        font-weight: 500; }
         .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header h1 a:hover,
         .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .field-sub-title a:hover,
         .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-header__author a:hover {
           background-color: #e8f4fa;
-          border-bottom: 1px solid #e8f4fa;
+          border-bottom: 2px solid #0F388A;
+          color: #0F388A;
           background-color: rgba(0, 0, 0, 0.45);
-          border-bottom: 1px solid rgba(0, 0, 0, 0.45); }
+          border-bottom: 2px solid rgba(0, 0, 0, 0.45); }
       .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header h1 .article-art-credit,
       .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .field-sub-title .article-art-credit,
       .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-header__author .article-art-credit {
@@ -7930,14 +7994,16 @@ h2.font-h3 {
         border-bottom: 1px solid #052049;
         overflow-wrap: break-word;
         word-break: break-word;
-        word-wrap: break-word; }
+        word-wrap: break-word;
+        font-weight: 500; }
         .article-feature-overlay-banner.featureoverlaylight .article-feature-overlay-header h1 a:hover,
         .article-feature-overlay-banner.featureoverlaylight .article-feature-overlay-header .field-sub-title a:hover,
         .article-feature-overlay-banner.featureoverlaylight .article-feature-overlay-header .article-header__author a:hover {
           background-color: #e8f4fa;
-          border-bottom: 1px solid #e8f4fa;
+          border-bottom: 2px solid #0F388A;
+          color: #0F388A;
           background-color: rgba(255, 255, 255, 0.65);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.65); }
+          border-bottom: 2px solid rgba(255, 255, 255, 0.65); }
     .article-feature-overlay-banner.featureoverlaylight .article-feature-overlay-header .article-header__byline .article-header__primary-area,
     .article-feature-overlay-banner.featureoverlaylight .article-feature-overlay-header .article-header__byline .article-header__date {
       color: #052049; }
@@ -8086,10 +8152,12 @@ h2.font-h3 {
     border-bottom: 1px solid #506380;
     overflow-wrap: break-word;
     word-break: break-word;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    font-weight: 500; }
     .article-header__author a:hover {
       background-color: #e8f4fa;
-      border-bottom: 1px solid #e8f4fa; }
+      border-bottom: 2px solid #0F388A;
+      color: #0F388A; }
 
 .article-art-credit {
   color: #506380;
@@ -9173,10 +9241,12 @@ h2.font-h3 {
     border-bottom: 1px solid #006BE9;
     overflow-wrap: break-word;
     word-break: break-word;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    font-weight: 500; }
     .home-banner-support__links a:hover {
       background-color: #e8f4fa;
-      border-bottom: 1px solid #e8f4fa; }
+      border-bottom: 2px solid #0F388A;
+      color: #0F388A; }
   @media (min-width: 769px) {
     .home-banner-support__links {
       padding: 0 40px; }
@@ -9413,9 +9483,11 @@ h2.font-h3 {
           -webkit-transition: .2s ease-out all;
           transition: .2s ease-out all; }
           .home-search__presearch-links li a:hover {
+            background: url("/themes/custom/ucsf/assets/images/magnifier-hover.svg") no-repeat left transparent;
+            background-size: 16px 16px;
             text-decoration: underline;
-            padding-left: 28px;
-            margin-right: 20px; } }
+            text-decoration-thickness: 2px;
+            color: #0F388A; } }
 
 .home-talking-about {
   background: #fff;
@@ -10156,7 +10228,8 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
           -ms-flex-pack: start;
               justify-content: flex-start; } }
   .news-search .home-search__presearch-links a:hover {
-    text-decoration: underline; }
+    text-decoration: underline;
+    text-decoration-thickness: 2px; }
 
 .news-search .home-search__advanced-search {
   margin-left: auto; }
@@ -10165,6 +10238,8 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
     margin-right: 0;
     background-size: 16px 16px; }
     .news-search .home-search__advanced-search a:hover {
+      background: url("/themes/custom/ucsf/assets/images/filter-blue-hover.svg") no-repeat left transparent;
+      background-size: 16px 16px;
       text-decoration: underline;
       margin-right: 0; }
 
@@ -11001,7 +11076,7 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    background-color: #d5d9de;
+    background-color: #E1E3E5;
     cursor: pointer;
     font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 12px;
@@ -11069,10 +11144,12 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
     border-bottom: 1px solid #006BE9;
     overflow-wrap: break-word;
     word-break: break-word;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    font-weight: 500; }
     .topic-page a:not([class]):hover {
       background-color: #e8f4fa;
-      border-bottom: 1px solid #e8f4fa; }
+      border-bottom: 2px solid #0F388A;
+      color: #0F388A; }
   .topic-page .pager__item a {
     -webkit-transition: none;
     transition: none;
@@ -11641,9 +11718,13 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
     .topics-list__topics.slick-slider .slick-next {
       background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #006BE9;
       right: 35px; }
+      .topics-list__topics.slick-slider .slick-next:hover {
+        background-color: #0F388A; }
     .topics-list__topics.slick-slider .slick-prev {
       background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #006BE9;
       left: 35px; }
+      .topics-list__topics.slick-slider .slick-prev:hover {
+        background-color: #0F388A; }
     .topics-list__topics.slick-slider .slick-arrow {
       height: 40px;
       width: 40px;

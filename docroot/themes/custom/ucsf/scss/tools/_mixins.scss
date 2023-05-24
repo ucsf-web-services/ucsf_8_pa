@@ -138,7 +138,7 @@
 }
 
 @mixin link-text {
-  @include link-colors($c-blue-link);
+  @include link-colors($c-blue-link, $c-blue-link-hover);
   text-decoration: none;
 
   &:hover {
@@ -198,11 +198,17 @@
   .slick-next {
     @include background-image('cta-arrow-white.svg', center center/12px 12px , $c-blue-link);
     right: 35px;
+    &:hover {
+      background-color: $c-blue-link-hover;
+    }
   }
 
   .slick-prev {
     @include background-image('cta-arrow-white-left.svg', center center/12px 12px , $c-blue-link);
     left: 35px;
+    &:hover {
+      background-color: $c-blue-link-hover;
+    }
   }
 
 }
@@ -251,20 +257,24 @@
   overflow-wrap: break-word;
   word-break: break-word;
   word-wrap: break-word;
+  font-weight: $fw-medium;
 
   &:hover {
-    $hover-default: $c-blue-link-rollover;
+    $hover-background-default: $c-blue-link-rollover;
+    $hover-color-default: $c-blue-link-hover;
 
-    background-color: $hover-default;
-    border-bottom: 1px solid $hover-default;
+    background-color: $hover-background-default;
+    border-bottom: 2px solid $hover-color-default;
+    color: $hover-color-default;
 
     @if $hover-background {
       background-color: $hover-background;
-      border-bottom: 1px solid $hover-background;
+      border-bottom: 2px solid $hover-background;
     }
 
     @if $hover-color {
       color: $hover-color;
+      border-bottom: 2px solid $hover-color;
     }
   }
 }
