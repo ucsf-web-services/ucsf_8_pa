@@ -76,7 +76,7 @@ CKEDITOR.dialog.add('ucsfquote', function( editor ) {
               [ 'Cool Gray', 'gray' ],
               [ 'Navy', 'navy' ],
               [ 'Yellow', 'yellow' ],
-              [ 'Dark Gray', 'gray-darkest' ],
+              [ 'Dark Gray', 'dark-gray' ],
             ],
             setup: function( widget ) {
               this.setValue( widget.data.colorAccent ? widget.data.colorAccent : 'blue' );
