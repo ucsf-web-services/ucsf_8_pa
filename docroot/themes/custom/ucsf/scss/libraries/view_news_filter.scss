@@ -37,6 +37,13 @@
       width: 24px;
       font-family: $font-helvetica-neue-medium;
 
+      &:hover {
+        @include background-image('filter-blue-hover.svg', left);
+        background-size: 24px 24px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+      }
+
       @include breakpoint($bp-medium) {
         padding-left: 32px;
         right: 23px;
@@ -56,11 +63,6 @@
       }
     }
   // Advanced.
-  #universal-search {
-    .search-filter__advanced {
-
-    }
-  }
   .form-item-combine {
     margin: 0;
   }
@@ -142,12 +144,22 @@
     top: 56px;
     width: 24px;
 
+    &:hover {
+      @include background-image('magnifier-hover.svg', center);
+      background-size: 23px;
+    }
+
     @include breakpoint($bp-medium) {
       background-size: 28px;
       height: 80px;
       right: 23px;
       top: 47px;
       width: 45px;
+
+      &:hover {
+        background-size: 28px;
+      }
+
     }
 
     @include breakpoint($new-medium) {
@@ -313,6 +325,11 @@
     right: 12px;
     top: 16px;
     background-size: 18px;
+
+    &:hover {
+      @include background-image('x-large-hover.svg', left);
+      background-size: 18px;
+    }
 
     @include breakpoint($bp-medium) {
       left: auto;

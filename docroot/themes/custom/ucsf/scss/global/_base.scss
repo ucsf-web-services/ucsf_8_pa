@@ -142,11 +142,11 @@ a {
 .footer-ctas-wrapper,
 .event-card__title {
   a {
-    border-bottom: 1px solid transparent;
+    border-bottom: 2px solid transparent;
 
     &:hover {
       background-color: transparent;
-      text-decoration: underline;
+      // text-decoration: underline;
     }
   }
 }
@@ -191,6 +191,7 @@ span.ext {
 }
 
 .button,
+.button:link,
 .full-width-page-wrapper .button,
 .full-width-page-wrapper .button:first-child,
 .full-width-page-wrapper .button:last-child,
@@ -265,27 +266,32 @@ a.button-reverse:visited,
       background-repeat: no-repeat;
       background-position: 98% center;
       background-color: $c-blue-link-rollover;
+      background-image: url('../images/cta-arrow-blue-hover.svg');
     }
   }
 }
 
 .cta--list {
   a {
+    border-bottom: 1px solid #CACED2;
     &:hover,
     &:focus {
-      background-image: url('../images/cta-arrow.svg');
+      border-bottom: 1px solid #e8f4fa;
+      background-image: url('../images/cta-arrow-blue-hover.svg');
     }
   }
 }
 
 .ext--list {
+  border-bottom: 1px solid #CACED2;
   a {
+    border-bottom: 1px solid #e8f4fa;
     background-image: url('../images/ext-link.svg');
     background-size: 20px;
 
     &:hover,
     &:focus {
-      background-image: url('../images/ext-link.svg');
+      background-image: url('../images/cta-arrow-blue-hover.svg');
     }
   }
 }
@@ -305,6 +311,8 @@ a.button-reverse:visited,
     display: inline-block;
     margin-right: $space-three;
   }
+
+  
 }
 
 .line--list {

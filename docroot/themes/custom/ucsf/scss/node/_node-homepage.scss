@@ -292,7 +292,7 @@
 }
 
 .map-home {
-
+  $icons-list: campus, transit, directions;
   ul {
     margin-bottom: 0;
 
@@ -301,6 +301,15 @@
 
       a {
         font-family: $font-helvetica-neue-medium;
+        &:hover {
+          color: $c-blue-link-hover;
+        }
+      }
+
+      @each $item in $icons-list {
+        .icon-#{$item}:hover {
+          background-image: url(/themes/custom/ucsf/assets/images/card/#{$item}-blue-hover.svg);
+        }
       }
     }
   }
@@ -361,36 +370,6 @@
 .map-home__subheading {
   margin: 1em 0;
   color: $c-gray-blue;
-}
-
-.map-home__links {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-family: $font-helvetica-neue-medium;
-
-  li {
-    margin-bottom: $space-two;
-
-    a {
-      color: $c-blue-link;
-      text-decoration: none;
-      display: block;
-      padding-left: $space-five;
-
-      &.map-home__locations {
-        @include background-image('map-home-locations.svg', left top );
-      }
-
-      &.map-home__transport {
-        @include background-image('map-home-transport.svg', left top );
-      }
-
-      &.map-home__directions {
-        @include background-image('map-home-directions.svg', left top );
-      }
-    }
-  }
 }
 
 .home-search {
