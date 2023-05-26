@@ -584,16 +584,13 @@
   background: $c-white;
 }
 
-.accent-purple {
-  border-bottom: 8px solid $c-purple;
-}
 
-.accent-teal {
-  border-bottom: 8px solid $c-print-teal;
-}
-
-.accent-blue {
-  border-bottom: 8px solid $c-blue-light;
+// Accent colors
+@each $name, $color in $color-options-no-text{
+  // create a class name based on the color name
+  .accent-#{$name} {
+    border-bottom: 8px solid #{$color};
+  }
 }
 
 .nobel-card {
@@ -727,7 +724,7 @@
 .memberships-cards__title {
   @include fs-display;
 
-  color: $c-teal;
+  color: $c-teal-alt;
   margin-bottom: $space-four;
 }
 
