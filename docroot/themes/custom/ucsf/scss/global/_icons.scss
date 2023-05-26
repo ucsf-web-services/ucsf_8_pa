@@ -165,6 +165,24 @@ a%icon {
     }
   }
 }
+.fact-card {
+  $fact-card-icons: awards, campus, doctor, education, hospital,
+                  money, patient-care, research, support;
+  @each $item in $fact-card-icons {
+    @if $item == research {
+      .icon-#{$item} {
+        background: url(/themes/custom/ucsf/assets/images/card/microscope-teal.svg) left center no-repeat transparent;
+      }
+    }
+
+    @else {
+      .icon-#{$item} {
+        background: url(/themes/custom/ucsf/assets/images/card/#{$item}-teal.svg) left center no-repeat transparent;
+
+      }
+    }
+  }
+}
 
 figure {
   [data-primary-area] &,
