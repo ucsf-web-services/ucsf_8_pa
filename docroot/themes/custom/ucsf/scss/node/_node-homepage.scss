@@ -454,17 +454,17 @@
     text-indent: -9999px;
     //padding-top: 10px;
 
+    &:hover {
+      cursor: pointer;
+      color: auto;
+      border-color: transparent;
+      @include background-image('magnifier-hover.svg', center, transparent);
+      background-size: 28px;
+    }
+
     @include breakpoint($bp-large) {
       position: relative;
       top: -2px;
-
-      &:hover {
-        cursor: pointer;
-        color: auto;
-        border-color: transparent;
-        @include background-image('magnifier-hover.svg', center, transparent);
-        background-size: 28px;
-      }
 
       &:focus {
         border: 1px dotted $c-navy;
