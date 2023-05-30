@@ -3848,7 +3848,7 @@ figure figure[class="image"] {
     height: calc(100% - 80px);
     overflow-y: auto; }
     .slicknav_nav ul.menu-parent-wrapper .menu-child-wrapper a.is-active {
-      color: #007cbe; }
+      color: #006BE9; }
     .slicknav_nav ul.menu-parent-wrapper .search {
       display: none; }
 
@@ -3861,7 +3861,7 @@ figure figure[class="image"] {
 .page-node-type-news-package .slicknav_nav ul.menu-parent-wrapper .menu-child-wrapper a[href="/news"],
 .page-node-type-trending .slicknav_nav ul.menu-parent-wrapper .menu-child-wrapper a[href="/news"],
 .page-node-type-author .slicknav_nav ul.menu-parent-wrapper .menu-child-wrapper a[href="/news"] {
-  color: #007cbe; }
+  color: #006BE9; }
 
 .slicknav_btn {
   position: absolute;
@@ -11071,11 +11071,13 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
     line-height: 1.4;
     color: #052049;
     text-decoration: none; }
-  .results-content .gsc-wrapper .gsc-webResult a.gs-title:hover {
-    color: #006BE9;
-    text-decoration: underline; }
-    .results-content .gsc-wrapper .gsc-webResult a.gs-title:hover b {
-      color: #006BE9; }
+  .results-content .gsc-wrapper .gsc-webResult :is(#specificity, a.gs-title) {
+    color: #006BE9; }
+    .results-content .gsc-wrapper .gsc-webResult :is(#specificity, a.gs-title):hover {
+      color: #0F388A;
+      text-decoration: underline; }
+      .results-content .gsc-wrapper .gsc-webResult :is(#specificity, a.gs-title):hover b {
+        color: #0F388A; }
 
 .results-content .gcsc-more-maybe-branding-root,
 .results-content .gsc-table-cell-thumbnail {
@@ -11102,8 +11104,13 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
   font-size: 18px; }
   .results-content .gsc-control-cse .gsc-cursor-page {
     margin-right: 16px !important; }
-    .results-content .gsc-control-cse .gsc-cursor-page.gsc-cursor-current-page {
-      color: #052049; }
+    :is(#specificity, .results-content .gsc-control-cse .gsc-cursor-page) {
+      color: #006BE9; }
+      :is(#specificity, .results-content .gsc-control-cse .gsc-cursor-page):hover {
+        text-decoration: none;
+        color: #0F388A; }
+    :is(#specificity, .results-content .gsc-control-cse .gsc-cursor-page.gsc-cursor-current-page) {
+      color: #0F388A; }
 
 .search-filter {
   border: none;
