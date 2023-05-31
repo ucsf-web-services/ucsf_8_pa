@@ -18,13 +18,20 @@
   }
 }
 
+input[type="submit"].button {
+  &:hover {
+    border-color: $c-blue-link;
+    background-color: $c-blue-link;
+  }
+}
+
 .link--cta,
 a.link--cta,
 .narrow-page a.link--cta,
 .full-width-page-wrapper a.link--cta,
 .link--cta a,
 .full-width-page-banner__header a.link--cta {
-  @include link-bg-image('cta-arrow-007cbe.svg');
+  @include link-bg-image('cta-arrow-0071ad.svg');
   @include link-bg-image-hover();
   @include transition;
   display: inline-block;
@@ -34,6 +41,7 @@ a.link--cta,
   font-family: $font-helvetica-neue-medium;
   border-bottom: none;
   color: $c-blue-link;
+  font-weight: $fw-medium;
 
   &:hover {
     @include link-bg-image('cta-arrow-0071ad.svg');
@@ -59,12 +67,30 @@ a.link--cta,
 }
 
 .mag-nav .mobile-search-reveal,
-.home-search__form .home-search__form-submit {
-  background-image: url('../images/magnifier.svg');
+.home-search__form .home-search__form-submit,
+.search-filter__top [data-drupal-selector="edit-submit-news-filter-2"] {
+  background-image: url('../images/magnifier.svg') !important;
 
   &:hover {
-    background-image: url('../images/magnifier.svg');
+    background-image: url('../images/magnifier.svg')!important;
   }
+}
+.block-views-exposed-filter-blocknews-filter-page-1 .search-filter__advanced {
+  background-image: url('../images/filter.svg') !important;
+  color: $c-blue-link;
+
+  &:hover {
+    background-image: url('../images/filter.svg') !important;
+  }
+}
+
+.header--search a.active,
+.js-search_filter__top-open .search-filter__advanced {
+  background-image: url('../images/x-large.svg') !important;
+}
+
+.js-search_filter__top-open .search-filter__advanced:hover {
+  background-image: url('../images/x-large.svg') !important;
 }
 
 .magazine-home-feature {
@@ -91,7 +117,7 @@ a:link,
 .full-width-page-banner a,
 .fact-card a {
   color: $c-blue-link;
-  border-bottom-color: $c-blue-link;
+  font-weight: $fw-medium;
 }
 
 .narrow-page a:hover,
@@ -145,4 +171,9 @@ form button:hover {
     background-color: $c-blue-link;
     border-color: $c-blue-link;
   }
+}
+
+.search-filter__radio:checked + .search-filter__label {
+  background-color: $c-background-gray;
+  color: $c-blue-link;
 }
