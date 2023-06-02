@@ -308,7 +308,10 @@
 
       @each $item in $icons-list {
         .icon-#{$item}:hover {
-          background-image: url(/themes/custom/ucsf/assets/images/card/#{$item}-blue-hover.svg);
+          &::before {
+            background-repeat: no-repeat;
+            filter: $filter-0F388A;
+          }
         }
       }
     }
