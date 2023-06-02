@@ -117,7 +117,7 @@ $primary-areas: (
 // Compiles to a list of comma separated selectors for link with a class - a.icon-awards, a.icon-campus, ...
 a%icon {
 
-  display: flex;
+  display: inline-flex;
   transition: $transition-time $transition-type all;
   &::before {
     transition: $transition-time $transition-type padding-right;
@@ -162,7 +162,7 @@ a%icon {
   // Screen size up to 850px
   .field-ankle-cta {
     a.icon-#{$item} {
-      display: flex;
+      display: inline-flex;
       align-items: center;
 
       &::before {
@@ -173,6 +173,7 @@ a%icon {
 
       // Screen size starting at 850px
       @include breakpoint($bp-large) {
+
         &::before {
           background-position: left center;
           padding-right: $space-two;
