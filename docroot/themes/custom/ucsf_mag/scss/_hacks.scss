@@ -50,6 +50,7 @@ a.link--cta,
   &:hover {
     @include link-bg-image('cta-arrow-0071ad.svg');
     background-size: 14px 10px;
+    color: $c-blue-link;
   }
 }
 .mag-submenu__link[href*="http"]:hover::after,
@@ -111,6 +112,14 @@ a.link--cta,
   background-image: url("../images/gray-sq.svg") !important;
 }
 
+.magazine-issue-banner .magazine-issue-banner__download a {
+  background-image: url("../images/media.svg") !important;
+}
+
+.mag-nav__ucsf-news--menu[href*="http"]:hover::after {
+  background-image: url("../images/external-link-hover.svg") !important;
+}
+
 .magazine-home-feature {
   h2 a {
     color: $c-dark-navy;
@@ -137,6 +146,7 @@ a:link,
 .fact-card a {
   color: $c-blue-link;
   font-weight: $fw-medium;
+  border-bottom: 1px solid $c-blue-link;
 }
 
 .narrow-page a:hover,
@@ -146,7 +156,8 @@ a:link,
 .fact-card a:hover,
 .topic-card a:hover {
   color: $c-blue-link;
-  border-bottom-color: $c-blue-link;
+  border-bottom-color: $c-blue-link-rollover;
+  background-color: $c-blue-link-rollover;
 }
 
 
@@ -171,6 +182,11 @@ a:link,
 
 form button:hover {
   background-color: $c-blue-link;
+  border-color: $c-blue-link;
+}
+
+a.mag-nav__ucsf-give:hover {
+ color: $c-white;
 }
 
 .recommended-media__filter a {
