@@ -131,6 +131,7 @@ a%icon {
 
   &:hover {
     &::before {
+      display: block;
       padding-right: $space-three;
       background-repeat: no-repeat;
     }
@@ -142,6 +143,8 @@ a%icon {
   @if $item == research {
     a.icon-#{$item} {
       &::before {
+        content: "";
+        display: block;
         background: url(/themes/custom/ucsf/assets/images/card/microscope-black.svg) left center no-repeat transparent;
         filter: $filter-006BE9;
       }
@@ -153,6 +156,7 @@ a%icon {
     a.icon-#{$item} {
       &::before {
         content: "";
+        display: block;
         background: url(/themes/custom/ucsf/assets/images/card/#{$item}-black.svg) left center no-repeat transparent;
         filter: $filter-006BE9;
       }
@@ -230,21 +234,19 @@ figure {
   // media-coverage card is used on ucsf.edu/topic/covid-19
   .news-card--media-coverage &,
   .news-card--magazine-article & {
-    img {
-      position: relative;
-      &:before {
-        content: "";
-        display: block;
-        height: auto;
-        width: 100%;
-        background-repeat: no-repeat;
-        background-position: 50% 35%;
-        background-size: $space-six $space-six;
-        top: 0;
-        bottom: 0;
-        position: absolute;
-        filter: $filter-black-to-white;
-      }
+    position: relative;
+    &::before {
+      content: "";
+      display: block;
+      height: auto;
+      width: 100%;
+      background-repeat: no-repeat;
+      background-position: 50% 35%;
+      background-size: $space-six $space-six;
+      top: 0;
+      bottom: 0;
+      position: absolute;
+      filter: $filter-black-to-white;
     }
   }
 
@@ -253,7 +255,7 @@ figure {
   .news-card--media-coverage &,
   .news-card--magazine-article & {
     background-color: $c-purple;
-    img:before {
+    &::before {
       background-image: url(/themes/custom/ucsf/assets/images/card/media-black.svg);
 
     }
@@ -262,7 +264,7 @@ figure {
   // Default placeholder used on mag. site when ucsf card has no card image
   [data-primary-area=""] & {
     background-color: $c-navy;
-    img:before {
+    &::before {
       background-image: url(/themes/custom/ucsf/assets/images/card/ucsf-black.svg);
     }
   }
@@ -273,7 +275,7 @@ figure {
     [data-primary-area="pa-#{$area}"] & {
       background-color: $color;
 
-      img:before {
+      &::before {
         background-image: $background-image;
       }
     }
