@@ -285,7 +285,8 @@
           color: $c-white;
 
           a {
-            @include link-rollover($c-white, rgba(255, 255, 255, 0.3));
+            @include link-in-content($c-white);
+
           }
         }
 
@@ -390,69 +391,45 @@
       justify-self: center;
     }
 
-    &.featureoverlaydark {
-      .article-feature-overlay-header {
-        h1,
-        .field-sub-title,
-        .article-header__author {
-          color: $c-white;
-
-          a {
-            @include link-rollover($c-white, rgba(0, 0, 0, 0.45));
-          }
-
-          .article-art-credit {
-            background-color: rgba(0, 0, 0, 0.55);
-            color: $c-white;
-          }
-        }
-
-        .article-header__byline {
-          .article-header__primary-area,
-          .article-header__date {
-            color: $c-white;
-
-            &::before {
-              background: $c-white;
+    $feature-modes: (
+      light: $c-navy,
+      dark: $c-white,
+    );
+    @each $mode, $color in $feature-modes {
+      &.featureoverlay#{$mode} {
+        @if $mode == light {
+          .article-feature-overlay-image {
+            .article-feature-overlay {
+              background-color: rgba(255,255,255,0.65);
             }
           }
         }
 
-        .article-affiliation {
-          color: $c-white;
+        .article-feature-overlay-header {
+          h1,
+          .field-sub-title,
+          .article-header__author {
+            color: $color;
+            a {
+              @include link-in-content($color);
+            }
 
-          &::before {
-            background: $c-white;
+            @if $mode == dark {
+              .article-art-credit {
+                background-color: rgba(0, 0, 0, 0.55);
+                color: $color;
+              }
+            }
           }
-        }
-      }
-    }
 
-    &.featureoverlaylight {
-      .article-feature-overlay-image {
-        .article-feature-overlay {
-          background-color: rgba(255,255,255,0.65);
-        }
-      }
+          .article-header__byline {
+            .article-header__primary-area,
+            .article-header__date {
+              color: $color;
 
-      .article-feature-overlay-header {
-        h1,
-        .field-sub-title,
-        .article-header__author {
-          color: $c-navy;
-
-          a {
-            @include link-rollover($c-navy, rgba(255, 255, 255, 0.65));
-          }
-        }
-
-        .article-header__byline {
-          .article-header__primary-area,
-          .article-header__date {
-            color: $c-navy;
-
-            &::before {
-              background: $c-navy;
+              &::before {
+                background: $color;
+              }
             }
           }
         }
@@ -575,7 +552,7 @@
   }
 
   a {
-    @include link-rollover($c-gray-blue);
+    @include link-in-content($c-gray-blue);
   }
 }
 
@@ -735,3 +712,7 @@
     margin-bottom: 0; // bottom margin is removed here because it can cause issues with the parent wrapper
   }
 }
+
+// --------------------------------------------------
+
+

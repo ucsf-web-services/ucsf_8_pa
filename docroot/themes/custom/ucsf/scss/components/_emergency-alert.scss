@@ -44,14 +44,18 @@
     }
   }
 
-  .link--cta {
-    background-image: url("../images/cta-arrow-white.svg");
-    color: $c-white;
+  &__content a:not(.link--cta) {
+    @include link-in-content($c-white);
   }
 
-  a {
-    @include link-colors($c-white);
+  a.link--cta {
+    background-image: url("../images/cta-arrow-white.svg");
+    color: $c-white;
+    &:hover{
+      color: $c-white;
+    }
   }
+
 
   // Modifiers
 
@@ -96,12 +100,16 @@
 .emergency-alert.background-orange {
   color: $c-navy;
 
-  .link--cta {
-    background-image: url("../images/cta-arrow-navy.svg");
+  &__content a:not(.link--cta) {
+    @include link-in-content($c-navy);
   }
 
-  a {
-    @include link-colors($c-navy);
+  a.link--cta {
+    background-image: url("../images/cta-arrow-navy.svg");
+    color: $c-navy;
+    &:hover{
+      color: $c-navy;
+    }
   }
 
   .emergency-alert__header {
