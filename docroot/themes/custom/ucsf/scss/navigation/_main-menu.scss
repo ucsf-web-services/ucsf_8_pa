@@ -427,9 +427,18 @@ $label-width: 48px;
       padding: $space-two $space-three;
       text-align: left;
       font-family: $font-helvetica-neue-medium;
-      background: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg) no-repeat $c-blue-link;
-      background-size: 32px;
-      background-position: calc(100% - 24px);
+
+      &::before {
+        content: "";
+        display: block;
+        width: 32px;
+        height: 32px;
+        background: url(/themes/custom/ucsf/assets/images/card/heart-black.svg) no-repeat transparent;
+        background-size: 32px;
+        position: absolute;
+        right: 24px;
+        filter: $filter-black-to-white;
+      }
     }
   }
 }

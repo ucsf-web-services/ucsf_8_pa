@@ -248,35 +248,41 @@
 // $color - initial color of the link,
 // $hover-background - optional to overwrite default, border-bottom on hover will use this value as well
 // $hover-color - optional parameter, for when link color needs to change on hover.
-@mixin link-rollover($color: $c-blue-link, $hover-background: false, $hover-color: false) {
+@mixin link-in-content($color: $c-blue-link, $hover-color: false, $hover-background: false,) {
   color: $color;
   background-color: transparent;
   text-decoration: none;
-  transition: background-color 0.15s cubic-bezier(0.33,0.66,0.66,1);
-  border-bottom: 2px solid $color;
+  transition: color 0.15s cubic-bezier(0.33,0.66,0.66,1);
+  border-bottom: none;
   overflow-wrap: break-word;
   word-break: break-word;
   word-wrap: break-word;
   font-weight: $fw-medium;
+  font-family: "HelveticaNeueLTW04-65Medium";
 
   &:hover {
-    $hover-background-default: $c-blue-link-rollover;
     $hover-color-default: $c-blue-link-hover;
-
-    background-color: $hover-background-default;
     border-bottom: 2px solid $hover-color-default;
     color: $hover-color-default;
 
-    @if $hover-background {
-      background-color: $hover-background;
-      border-bottom: 2px solid $hover-background;
+    @if $color {
+      border-bottom: 2px solid $color;
+      color: $color;
     }
 
     @if $hover-color {
       color: $hover-color;
       border-bottom: 2px solid $hover-color;
     }
+
+    @if $hover-background {
+      background-color: $hover-background;
+      border-bottom: 2px solid $hover-background;
+    }
   }
+
+
+
 }
 
 @mixin tables {
