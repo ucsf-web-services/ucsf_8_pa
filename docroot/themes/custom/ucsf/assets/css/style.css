@@ -40,96 +40,179 @@
   font-display: swap; }
 
 :root {
-  --black: #000;
-  --c-navy: #052049;
-  --c-blue: #007cbe;
-  --c-blue-2023:#4896E8;
-  --c-print-blue: #178ccb;
-  --c-blue-dark: #064260;
-  --c-gray-blue: #506380;
-  --c-gray: #9BA6B6;
+  --c-red: #E61048;
+  --c-orange: #FE8638;
+  --c-yellow: #FEB80A;
+  --c-yellow-light: #FED658;
   --c-green-cool: #00483A;
-  --c-green-2023: #2C8A1A;
+  --c-green-alt: #007242;
+  --c-green: #2C8A1A;
   --c-light-green-cool: #32A03E;
   --c-green-warm: #006400;
   --c-print-green: #90bd31;
   --c-teal: #058488;
-  --c-teal-2023: #16A0AC;
+  --c-teal-alt: #16A0AC;
+  --c-teal-medium: #14828C;
   --c-teal-dark: #0E5258;
-  --c-purple: #716fb2;
-  --c-purple-2023: #6C62D0;
+  --c-blue:#4896E8;
+  --c-blue-light: #178ccb;
+  --c-blue-warm: #086290;
+  --c-blue-dark: #064260;
+  --c-blue-medium: #0F388A;
+  --c-navy: #052049;
   --c-purple-dark: #2E2872;
-  --c-yellow: #fd0;
-  --c-yellow-2023: #FEB80A;
-  --c-violet: #A238BA;
+  --c-purple-medium: #443E8C;
+  --c-purple: #6C62D0;
   --c-violet-dark: #461850;
+  --c-violet-medium: #6C247C;
+  --c-violet: #A238BA;
   --c-magenta: #C42882;
+  --c-magenta-medium: #821A56;
   --c-magenta-dark: #561038;
-  --c-gray-darkest: #21272A; }
+  --c-gray-blue: #506380;
+  --c-gray: #9BA6B6;
+  --c-gray-darkest: #21272A;
+  --black: #000; }
 
 .background-blue {
-  --color-rgb: 0, 124, 190;
-  background-color: #007cbe; }
+  --background-blue-rgb: 15, 56, 138;
+  --background-blue-hex: #0F388A;
+  background-color: var(--background-blue-hex); }
 
-.background-gray {
-  --color-rgb: 80, 99, 128;
-  background-color: #506380; }
-
-.background-green {
-  --color-rgb: 144, 189, 49;
-  background-color: #90bd31; }
+.background-light-blue {
+  --background-light-blue-rgb: 8, 98, 144;
+  --background-light-blue-hex: #086290;
+  background-color: var(--background-light-blue-hex); }
 
 .background-teal {
-  --color-rgb: 5, 132, 136;
-  background-color: #058488; }
+  --background-teal-rgb: 20, 130, 140;
+  --background-teal-hex: #14828C;
+  background-color: var(--background-teal-hex); }
 
-.background-navy {
-  --color-rgb: 5, 32, 73;
-  background-color: #052049; }
+.background-cool-green {
+  --background-cool-green-rgb: 0, 114, 66;
+  --background-cool-green-hex: #007242;
+  background-color: var(--background-cool-green-hex); }
+
+.background-warm-green {
+  --background-warm-green-rgb: 0, 100, 0;
+  --background-warm-green-hex: #006400;
+  background-color: var(--background-warm-green-hex); }
 
 .background-purple {
-  --color-rgb: 113, 111, 178;
-  background-color: #716fb2; }
+  --background-purple-rgb: 68, 62, 140;
+  --background-purple-hex: #443E8C;
+  background-color: var(--background-purple-hex); }
 
-.background-yellow {
-  --color-rgb: 255, 221, 0;
-  background-color: #fd0; }
+.background-violet {
+  --background-violet-rgb: 108, 36, 124;
+  --background-violet-hex: #6C247C;
+  background-color: var(--background-violet-hex); }
 
-.background-black {
-  --color-rgb: 0, 0, 0;
-  background-color: #000; }
+.background-magenta {
+  --background-magenta-rgb: 130, 26, 86;
+  --background-magenta-hex: #821A56;
+  background-color: var(--background-magenta-hex); }
 
-.background-blue-dark {
-  --color-rgb: 6, 66, 96;
-  background-color: #064260; }
+.background-navy {
+  --background-navy-rgb: 5, 32, 73;
+  --background-navy-hex: #052049;
+  background-color: var(--background-navy-hex); }
 
-.background-teal-dark {
-  --color-rgb: 14, 82, 88;
-  background-color: #0E5258; }
+.background-dark-gray {
+  --background-dark-gray-rgb: 33, 39, 42;
+  --background-dark-gray-hex: #21272A;
+  background-color: var(--background-dark-gray-hex); }
 
-.background-green-cool {
-  --color-rgb: 0, 72, 58;
-  background-color: #00483A; }
+.overlay-blue {
+  --overlay-blue-rgb: 15, 56, 138;
+  --overlay-blue-hex: #0F388A;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-blue-rgb), 0.8);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-blue-rgb), 0.8); }
+  .overlay-blue:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-blue-rgb), 1);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-blue-rgb), 1); }
 
-.background-green-warm {
-  --color-rgb: 0, 100, 0;
-  background-color: #006400; }
+.overlay-light-blue {
+  --overlay-light-blue-rgb: 8, 98, 144;
+  --overlay-light-blue-hex: #086290;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-light-blue-rgb), 0.8);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-light-blue-rgb), 0.8); }
+  .overlay-light-blue:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-light-blue-rgb), 1);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-light-blue-rgb), 1); }
 
-.background-purple-dark {
-  --color-rgb: 46, 40, 114;
-  background-color: #2E2872; }
+.overlay-teal {
+  --overlay-teal-rgb: 20, 130, 140;
+  --overlay-teal-hex: #14828C;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-teal-rgb), 0.8);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-teal-rgb), 0.8); }
+  .overlay-teal:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-teal-rgb), 1);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-teal-rgb), 1); }
 
-.background-violet-dark {
-  --color-rgb: 70, 24, 80;
-  background-color: #461850; }
+.overlay-cool-green {
+  --overlay-cool-green-rgb: 0, 114, 66;
+  --overlay-cool-green-hex: #007242;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-cool-green-rgb), 0.8);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-cool-green-rgb), 0.8); }
+  .overlay-cool-green:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-cool-green-rgb), 1);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-cool-green-rgb), 1); }
 
-.background-magenta-dark {
-  --color-rgb: 86, 16, 56;
-  background-color: #561038; }
+.overlay-warm-green {
+  --overlay-warm-green-rgb: 0, 100, 0;
+  --overlay-warm-green-hex: #006400;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-warm-green-rgb), 0.8);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-warm-green-rgb), 0.8); }
+  .overlay-warm-green:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-warm-green-rgb), 1);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-warm-green-rgb), 1); }
 
-.background-gray-darkest {
-  --color-rgb: 33, 39, 42;
-  background-color: #21272A; }
+.overlay-purple {
+  --overlay-purple-rgb: 68, 62, 140;
+  --overlay-purple-hex: #443E8C;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-purple-rgb), 0.8);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-purple-rgb), 0.8); }
+  .overlay-purple:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-purple-rgb), 1);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-purple-rgb), 1); }
+
+.overlay-violet {
+  --overlay-violet-rgb: 108, 36, 124;
+  --overlay-violet-hex: #6C247C;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-violet-rgb), 0.8);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-violet-rgb), 0.8); }
+  .overlay-violet:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-violet-rgb), 1);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-violet-rgb), 1); }
+
+.overlay-magenta {
+  --overlay-magenta-rgb: 130, 26, 86;
+  --overlay-magenta-hex: #821A56;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-magenta-rgb), 0.8);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-magenta-rgb), 0.8); }
+  .overlay-magenta:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-magenta-rgb), 1);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-magenta-rgb), 1); }
+
+.overlay-navy {
+  --overlay-navy-rgb: 5, 32, 73;
+  --overlay-navy-hex: #052049;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-navy-rgb), 0.8);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-navy-rgb), 0.8); }
+  .overlay-navy:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-navy-rgb), 1);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-navy-rgb), 1); }
+
+.overlay-dark-gray {
+  --overlay-dark-gray-rgb: 33, 39, 42;
+  --overlay-dark-gray-hex: #21272A;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-dark-gray-rgb), 0.8);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-dark-gray-rgb), 0.8); }
+  .overlay-dark-gray:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-dark-gray-rgb), 1);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-dark-gray-rgb), 1); }
 
 * {
   -webkit-box-sizing: border-box;
@@ -299,13 +382,15 @@ p {
 a {
   text-decoration: none; }
   a:link {
-    color: #0071ad; }
+    color: #006BE9; }
   a:visited, a:link:visited {
-    color: #0071ad; }
+    color: #006BE9; }
   a:focus {
-    color: #0071ad; }
+    color: #006BE9; }
+  a.active:hover, a.is-active:hover, a.active-trail:hover, a.visited:hover, a:hover {
+    color: #0F388A; }
   a.is-active, a:active, a.active-trail {
-    color: #0071ad; }
+    color: #006BE9; }
   a:hover {
     text-decoration: none; }
   a.cta {
@@ -328,13 +413,13 @@ a {
     a.cta:hover::after {
       background: url("../../images/cta/cta-triangle-textgrey.svg") no-repeat; }
   .text-formatted a:link {
-    color: #0071ad; }
+    color: #006BE9; }
   .text-formatted a:visited, .text-formatted a:link:visited {
-    color: #0071ad; }
+    color: #006BE9; }
   .text-formatted a:focus {
-    color: #0071ad; }
+    color: #006BE9; }
   .text-formatted a.is-active, .text-formatted a:active, .text-formatted a.active-trail {
-    color: #0071ad; }
+    color: #006BE9; }
   .text-formatted a.button--alt:hover {
     color: #fff; }
 
@@ -343,46 +428,49 @@ a {
 .full-width-page-wrapper a,
 .full-width-page-banner a,
 .fact-card a {
-  color: #0071ad;
+  color: #006BE9;
   background-color: transparent;
   text-decoration: none;
   -webkit-transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
   transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
-  border-bottom: 1px solid #0071ad;
+  border-bottom: 2px solid #006BE9;
   overflow-wrap: break-word;
   word-break: break-word;
-  word-wrap: break-word; }
+  word-wrap: break-word;
+  font-weight: 500; }
   .narrow-page a:hover,
   .article-header a:hover,
   .full-width-page-wrapper a:hover,
   .full-width-page-banner a:hover,
   .fact-card a:hover {
     background-color: #e8f4fa;
-    border-bottom: 1px solid #e8f4fa; }
+    border-bottom: 2px solid #0F388A;
+    color: #0F388A; }
 
 .rollover--blue {
-  color: #0071ad;
+  color: #006BE9;
   background-color: transparent;
   text-decoration: none;
   -webkit-transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
   transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
-  border-bottom: 1px solid #0071ad;
+  border-bottom: 2px solid #006BE9;
   overflow-wrap: break-word;
   word-break: break-word;
-  word-wrap: break-word; }
+  word-wrap: break-word;
+  font-weight: 500; }
   .rollover--blue:hover {
     background-color: #e8f4fa;
-    border-bottom: 1px solid #e8f4fa; }
+    border-bottom: 2px solid #0F388A;
+    color: #0F388A; }
 
 .tags-menu a,
 .footer-ctas-wrapper a,
 .event-card__title a {
-  border-bottom: 1px solid transparent; }
+  border-bottom: 2px solid transparent; }
   .tags-menu a:hover,
   .footer-ctas-wrapper a:hover,
   .event-card__title a:hover {
-    background-color: transparent;
-    text-decoration: underline; }
+    background-color: transparent; }
 
 .event-card__title a:hover {
   border-bottom: none;
@@ -415,6 +503,17 @@ a {
   .link--cta a:hover,
   .full-width-page-banner__header a.link--cta:hover {
     background-position: 100% center; }
+  .link--cta:hover,
+  .narrow-page a.link--cta:hover,
+  .full-width-page-wrapper a.link--cta:hover,
+  .link--cta a:hover,
+  .full-width-page-banner__header a.link--cta:hover {
+    background-image: url("../images/cta-arrow-blue-hover.svg");
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: 14px 14px;
+    padding-right: 24px;
+    background-size: 14px 10px; }
 
 span.ext {
   background: url("/themes/custom/ucsf/assets/images/external-link.svg") no-repeat right center transparent;
@@ -423,6 +522,7 @@ span.ext {
     background: url("/themes/custom/ucsf/assets/images/external-link-hover.svg") no-repeat right center transparent; }
 
 .button,
+.button:link,
 .full-width-page-wrapper .button,
 .full-width-page-wrapper .button:first-child,
 .full-width-page-wrapper .button:last-child,
@@ -442,16 +542,17 @@ span.ext {
   font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   min-height: 64px; }
   .button:hover,
+  .button:link:hover,
   .full-width-page-wrapper .button:hover,
   .full-width-page-wrapper .button:first-child:hover,
   .full-width-page-wrapper .button:last-child:hover,
   .layout-column .button:first-child:hover,
   .layout-column .button:last-child:hover,
   .narrow-page .button:hover {
-    background-color: #0071ad;
+    background-color: #006BE9;
     color: #fff;
     border-width: 2px;
-    border-color: #0071ad;
+    border-color: #006BE9;
     -webkit-transition: 0.2s ease background-color;
     transition: 0.2s ease background-color; }
 
@@ -474,8 +575,8 @@ span.ext {
   text-align: center;
   font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   min-height: 64px;
-  border-color: #0071ad;
-  color: #0071ad; }
+  border-color: #006BE9;
+  color: #006BE9; }
   .button--alt:hover,
   .full-width-page-wrapper .button--alt:hover,
   .full-width-page-wrapper .button--alt:first-child:hover,
@@ -483,10 +584,10 @@ span.ext {
   .narrow-page .button--alt:hover,
   .layout-column .button--alt:first-child:hover,
   .layout-column .button--alt:last-child:hover {
-    background-color: #0071ad;
+    background-color: #006BE9;
     color: #fff;
     border-width: 2px;
-    border-color: #0071ad;
+    border-color: #006BE9;
     -webkit-transition: 0.2s ease background-color;
     transition: 0.2s ease background-color; }
 
@@ -528,15 +629,15 @@ a.button-reverse:visited,
   .full-width-page-wrapper a.button-reverse:link:hover,
   .full-width-page-wrapper .button-reverse:visited:hover,
   .full-width-page-wrapper a.button-reverse:visited:hover {
-    background-color: #0071ad;
+    background-color: #006BE9;
     color: #fff;
     border-width: 2px;
-    border-color: #0071ad;
+    border-color: #006BE9;
     -webkit-transition: 0.2s ease background-color;
     transition: 0.2s ease background-color; }
 
 .narrow-page a.button:hover {
-  border: 2px solid #0071ad; }
+  border: 2px solid #006BE9; }
 
 .cta--list,
 .ext--list {
@@ -550,7 +651,7 @@ a.button-reverse:visited,
   .ext--list a,
   .ext--list button {
     display: block;
-    color: #0071ad;
+    color: #006BE9;
     text-decoration: none;
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     padding: 16px 0;
@@ -572,16 +673,23 @@ a.button-reverse:visited,
     .ext--list button:focus {
       background-repeat: no-repeat;
       background-position: 98% center;
-      background-color: #e8f4fa; }
+      background-color: #e8f4fa;
+      background-image: url("../images/cta-arrow-blue-hover.svg"); }
 
-.cta--list a:hover, .cta--list a:focus {
-  background-image: url("../images/cta-arrow.svg"); }
+.cta--list a {
+  border-bottom: 1px solid #CACED2; }
+  .cta--list a:hover, .cta--list a:focus {
+    border-bottom: 1px solid #e8f4fa;
+    background-image: url("../images/cta-arrow-blue-hover.svg"); }
 
-.ext--list a {
-  background-image: url("../images/ext-link.svg");
-  background-size: 20px; }
-  .ext--list a:hover, .ext--list a:focus {
-    background-image: url("../images/ext-link.svg"); }
+.ext--list {
+  border-bottom: 1px solid #CACED2; }
+  .ext--list a {
+    border-bottom: 1px solid #e8f4fa;
+    background-image: url("../images/ext-link.svg");
+    background-size: 20px; }
+    .ext--list a:hover, .ext--list a:focus {
+      background-image: url("../images/cta-arrow-blue-hover.svg"); }
 
 .no-bullets,
 .no-bullets ul,
@@ -793,10 +901,10 @@ form button {
   font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   min-height: 64px; }
   form button:hover {
-    background-color: #0071ad;
+    background-color: #006BE9;
     color: #fff;
     border-width: 2px;
-    border-color: #0071ad;
+    border-color: #006BE9;
     -webkit-transition: 0.2s ease background-color;
     transition: 0.2s ease background-color; }
 
@@ -829,12 +937,14 @@ input[type="submit"] {
   font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   min-height: 64px; }
   input[type="submit"]:hover {
-    background-color: #0071ad;
+    background-color: #006BE9;
     color: #fff;
     border-width: 2px;
-    border-color: #0071ad;
+    border-color: #006BE9;
     -webkit-transition: 0.2s ease background-color;
     transition: 0.2s ease background-color; }
+  input[type="submit"]:hover {
+    background-color: transparent; }
 
 select {
   background: url("/themes/custom/ucsf/assets/images/arrow-down.svg") no-repeat right 19px center #fff; }
@@ -861,7 +971,8 @@ textarea {
   height: 48px;
   width: 48px; }
   .icon-awards:hover, .icon-caduceus:hover, .icon-campus:hover, .icon-comprehensive:hover, .icon-directions:hover, .icon-doctor:hover, .icon-education:hover, .icon-heart:hover, .icon-hospital:hover, .icon-media:hover, .icon-microscope:hover, .icon-money:hover, .icon-patient-care:hover, .icon-research:hover, .icon-support:hover, .icon-transit:hover {
-    text-decoration: underline; }
+    text-decoration: underline;
+    text-decoration-thickness: 2px; }
 
 .icon-awards {
   background: url(/themes/custom/ucsf/assets/images/card/awards.svg) left center no-repeat transparent; }
@@ -935,11 +1046,14 @@ a.icon-awards {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-awards:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/awards-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/awards-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-awards:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/awards.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/awards-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-caduceus {
   background: url(/themes/custom/ucsf/assets/images/card/caduceus.svg) left center no-repeat transparent; }
@@ -953,11 +1067,14 @@ a.icon-caduceus {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-caduceus:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/caduceus-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/caduceus-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-caduceus:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/caduceus.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/caduceus-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-campus {
   background: url(/themes/custom/ucsf/assets/images/card/campus.svg) left center no-repeat transparent; }
@@ -971,11 +1088,14 @@ a.icon-campus {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-campus:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-campus:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/campus.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/campus-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-comprehensive {
   background: url(/themes/custom/ucsf/assets/images/card/comprehensive.svg) left center no-repeat transparent; }
@@ -989,11 +1109,14 @@ a.icon-comprehensive {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-comprehensive:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/comprehensive-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/comprehensive-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-comprehensive:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/comprehensive.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/comprehensive-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-directions {
   background: url(/themes/custom/ucsf/assets/images/card/directions.svg) left center no-repeat transparent; }
@@ -1007,11 +1130,14 @@ a.icon-directions {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-directions:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/directions-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/directions-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-directions:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/directions.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/directions-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-doctor {
   background: url(/themes/custom/ucsf/assets/images/card/doctor.svg) left center no-repeat transparent; }
@@ -1025,11 +1151,14 @@ a.icon-doctor {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-doctor:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/doctor-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/doctor-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-doctor:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/doctor.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/doctor-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-education {
   background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent; }
@@ -1043,11 +1172,14 @@ a.icon-education {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-education:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/education-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/education-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-education:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/education.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/education-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-heart {
   background: url(/themes/custom/ucsf/assets/images/card/heart.svg) left center no-repeat transparent; }
@@ -1061,11 +1193,14 @@ a.icon-heart {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-heart:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-heart:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/heart.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/heart-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-hospital {
   background: url(/themes/custom/ucsf/assets/images/card/hospital.svg) left center no-repeat transparent; }
@@ -1079,11 +1214,14 @@ a.icon-hospital {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-hospital:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/hospital-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/hospital-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-hospital:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/hospital.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/hospital-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-media {
   background: url(/themes/custom/ucsf/assets/images/card/media.svg) left center no-repeat transparent; }
@@ -1097,11 +1235,14 @@ a.icon-media {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-media:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-media:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/media.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/media-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-microscope {
   background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent; }
@@ -1115,11 +1256,14 @@ a.icon-microscope {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-microscope:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/microscope-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/microscope-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-microscope:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/microscope.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/microscope-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-money {
   background: url(/themes/custom/ucsf/assets/images/card/money.svg) left center no-repeat transparent; }
@@ -1133,11 +1277,14 @@ a.icon-money {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-money:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/money-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/money-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-money:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/money.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/money-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-patient-care {
   background: url(/themes/custom/ucsf/assets/images/card/patient-care.svg) left center no-repeat transparent; }
@@ -1151,11 +1298,14 @@ a.icon-patient-care {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-patient-care:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/patient-care-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/patient-care-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-patient-care:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/patient-care.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/patient-care-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-research {
   background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent; }
@@ -1169,11 +1319,14 @@ a.icon-research {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-research:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/research-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/research-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-research:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/research.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/research-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-support {
   background: url(/themes/custom/ucsf/assets/images/card/support.svg) left center no-repeat transparent; }
@@ -1187,11 +1340,14 @@ a.icon-support {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-support:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/support-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/support-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-support:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/support.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/support-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
 
 a.icon-transit {
   background: url(/themes/custom/ucsf/assets/images/card/transit.svg) left center no-repeat transparent; }
@@ -1205,65 +1361,141 @@ a.icon-transit {
       background-position: left center;
       padding-left: 40px; } }
   .field-ankle-cta a.icon-transit:hover {
-    background-image: url(/themes/custom/ucsf/assets/images/card/transit-reverse.svg); }
+    background-image: url(/themes/custom/ucsf/assets/images/card/transit-reverse.svg);
+    text-decoration: none; }
     @media (min-width: 850px) {
       .field-ankle-cta a.icon-transit:hover {
-        background-image: url(/themes/custom/ucsf/assets/images/card/transit.svg);
-        padding-left: 48px; } }
+        background-image: url(/themes/custom/ucsf/assets/images/card/transit-blue-hover.svg);
+        padding-left: 48px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px; } }
+
+.fact-card .icon-awards {
+  background: url(/themes/custom/ucsf/assets/images/card/awards-teal.svg) left center no-repeat transparent; }
+
+.fact-card .icon-campus {
+  background: url(/themes/custom/ucsf/assets/images/card/campus-teal.svg) left center no-repeat transparent; }
+
+.fact-card .icon-doctor {
+  background: url(/themes/custom/ucsf/assets/images/card/doctor-teal.svg) left center no-repeat transparent; }
+
+.fact-card .icon-education {
+  background: url(/themes/custom/ucsf/assets/images/card/education-teal.svg) left center no-repeat transparent; }
+
+.fact-card .icon-hospital {
+  background: url(/themes/custom/ucsf/assets/images/card/hospital-teal.svg) left center no-repeat transparent; }
+
+.fact-card .icon-money {
+  background: url(/themes/custom/ucsf/assets/images/card/money-teal.svg) left center no-repeat transparent; }
+
+.fact-card .icon-patient-care {
+  background: url(/themes/custom/ucsf/assets/images/card/patient-care-teal.svg) left center no-repeat transparent; }
+
+.fact-card .icon-research {
+  background: url(/themes/custom/ucsf/assets/images/card/microscope-teal.svg) left center no-repeat transparent; }
+
+.fact-card .icon-support {
+  background: url(/themes/custom/ucsf/assets/images/card/support-teal.svg) left center no-repeat transparent; }
 
 [data-primary-area] figure,
-[data-primary-area="pa-about"] figure,
-[data-primary-area="pa-campus-news"] figure,
-[data-primary-area="pa-announcements"] figure,
-[data-primary-area="pa-happenings"] figure,
-[data-primary-area="pa-honors-awards"] figure,
-[data-primary-area="pa-spotlight"] figure,
-[data-primary-area="pa-education"] figure,
-[data-primary-area="pa-patient-care"] figure,
-[data-primary-area="pa-research"] figure,
-[data-primary-area="pa-locations"] figure,
-[data-primary-area="pa-news-center"] figure,
-[data-primary-area="pa-ucsf-magazine"] figure,
+[data-primary-area=""] figure,
 .news-card--media-coverage figure,
 .news-card--magazine-article figure {
   background-repeat: no-repeat;
   background-position: 50% 35%;
   background-size: 48px 48px; }
 
-[data-primary-area] figure {
+[data-primary-area] figure,
+[data-primary-area=""] figure {
   background-image: url(/themes/custom/ucsf/assets/images/card/ucsf-reverse.svg);
   background-color: #052049; }
 
-[data-primary-area="pa-campus-news"] figure,
-[data-primary-area="pa-announcements"] figure,
-[data-primary-area="pa-happenings"] figure,
-[data-primary-area="pa-honors-awards"] figure,
-[data-primary-area="pa-spotlight"] figure {
-  background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
-  background-color: #052049; }
-
-[data-primary-area="pa-education"] figure {
-  background-image: url(/themes/custom/ucsf/assets/images/card/education-reverse.svg);
-  background-color: #90bd31; }
-
-[data-primary-area="pa-patient-care"] figure {
-  background-image: url(/themes/custom/ucsf/assets/images/card/doctor-reverse.svg);
-  background-color: #007cbe; }
-
-[data-primary-area="pa-research"] figure {
-  background-image: url(/themes/custom/ucsf/assets/images/card/microscope-reverse.svg);
-  background-color: #058488; }
-
-[data-primary-area="pa-ucsf-magazine"] figure,
 .news-card--media-coverage figure,
 .news-card--magazine-article figure {
   background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg);
-  background-color: #716fb2; }
+  background-color: #6C62D0; }
 
 .icon-external-link {
   padding-right: 30px;
   background: url(/themes/custom/ucsf/assets/images/ext-link-gray.svg) right center no-repeat transparent;
   background-size: 20px; }
+
+[data-primary-area="pa-about"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/ucsf-reverse.svg);
+  background-color: #6C62D0; }
+
+[data-primary-area="pa-campus-news"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+  background-color: #052049; }
+
+[data-primary-area="pa-announcements"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+  background-color: #052049; }
+
+[data-primary-area="pa-happenings"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+  background-color: #052049; }
+
+[data-primary-area="pa-honors-awards"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+  background-color: #052049; }
+
+[data-primary-area="pa-spotlight"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
+  background-color: #052049; }
+
+[data-primary-area="pa-education"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/education-reverse.svg);
+  background-color: #32A03E; }
+
+[data-primary-area="pa-patient-care"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/doctor-reverse.svg);
+  background-color: #178ccb; }
+
+[data-primary-area="pa-research"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/microscope-reverse.svg);
+  background-color: #16A0AC; }
+
+[data-primary-area="pa-news-center"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/ucsf-reverse.svg);
+  background-color: #6C62D0; }
+
+[data-primary-area="pa-ucsf-magazine"] figure {
+  background-repeat: no-repeat;
+  background-position: 50% 35%;
+  background-size: 48px 48px;
+  background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg);
+  background-color: #6C62D0; }
 
 .vertical-tab {
   grid-column: 1/-1;
@@ -1291,7 +1523,7 @@ a.icon-transit {
         outline: 2px solid black; }
       .vertical-tab .vertical-tab__title li[aria-selected="true"] a {
         background: url("/themes/custom/ucsf/assets/images/vertical-tab-highlight.png") no-repeat left center #fff;
-        color: #0071ad;
+        color: #006BE9;
         border-top: 0;
         border-bottom: 0;
         position: relative;
@@ -1321,7 +1553,7 @@ a.icon-transit {
       padding: 56px 80px;
       padding-bottom: 56px;
       padding-bottom: 0;
-      background: #f2f4f6;
+      background: #f2f3f4;
       width: 62%;
       min-height: 42em; }
   .vertical-tab-alt .vertical-tab__title {
@@ -1352,7 +1584,7 @@ a.icon-transit {
         padding: 0; }
       .vertical-tab-alt .vertical-tab__title li[aria-selected="true"] a {
         background: url("/themes/custom/ucsf/assets/images/vertical-tab-highlight.png") no-repeat right center #fff;
-        color: #0071ad;
+        color: #006BE9;
         border-top: 0;
         position: relative;
         margin-right: -120px;
@@ -1373,7 +1605,7 @@ a.icon-transit {
       background-color: #506380;
       border-radius: 5px; }
       .vertical-tab-alt.layout-left-30-70 .field-tab-content::-webkit-scrollbar-thumb:hover {
-        background-color: #007cbe; }
+        background-color: #4896E8; }
   .vertical-tab-alt .field-tab-content {
     list-style: none;
     margin: 0;
@@ -1382,9 +1614,11 @@ a.icon-transit {
       margin-top: 0;
       font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
       .vertical-tab-alt .field-tab-content .line--list p a {
-        color: #052049; }
+        color: #052049;
+        border-bottom-color: #052049; }
         .vertical-tab-alt .field-tab-content .line--list p a:hover {
-          color: #0071ad; }
+          color: #006BE9;
+          border-bottom-color: #006BE9; }
   .vertical-tab-alt .field-tab-unscrollable-content :first-child {
     margin-top: 0; }
 
@@ -1408,11 +1642,11 @@ a.icon-transit {
     background: url("../images/accordion-button-close.png") right center no-repeat transparent;
     background-size: 60px 40px;
     border-bottom: none;
-    color: #0071ad;
+    color: #006BE9;
     -webkit-box-shadow: -4px 6px 11px 0 rgba(213, 217, 222, 0.35);
             box-shadow: -4px 6px 11px 0 rgba(213, 217, 222, 0.35); }
   .vertical-tab-alt .ui-accordion > h3 {
-    background-color: #f2f4f6;
+    background-color: #f2f3f4;
     font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif;
     font-size: 28px;
     line-height: 1.14;
@@ -1426,7 +1660,7 @@ a.icon-transit {
   height: auto !important;
   border-bottom: 1px solid #d1d3d3; }
   .vertical-tab-alt .ui-accordion .ui-accordion-content {
-    background: #f2f4f6; }
+    background: #f2f3f4; }
   .ui-accordion .ui-accordion-content .field-tab-content > :first-child {
     margin-top: 0;
     padding-top: 0; }
@@ -1618,7 +1852,7 @@ p.quote-style {
       grid-column: 2 / -3; } }
 
 .blockquote .blockquote-content {
-  background: #f2f4f6;
+  background: #f2f3f4;
   padding: 40px; }
   @media (max-width: 768px) {
     .blockquote .blockquote-content .field-blockquote-body p:first-child {
@@ -1674,7 +1908,7 @@ p.quote-style {
 .page_narrow .blockquote,
 .paragraph-text-block .blockquote,
 .narrow-page-body .blockquote {
-  background: #f2f4f6; }
+  background: #f2f3f4; }
   .page_narrow .blockquote--half-left,
   .paragraph-text-block .blockquote--half-left,
   .narrow-page-body .blockquote--half-left {
@@ -1870,8 +2104,11 @@ p.quote-style {
 .blockquote--color-teal {
   border-color: #16A0AC; }
 
-.blockquote--color-light-green-cool {
+.blockquote--color-cool-green {
   border-color: #32A03E; }
+
+.blockquote--color-warm-green {
+  border-color: #2C8A1A; }
 
 .blockquote--color-green {
   border-color: #2C8A1A; }
@@ -1885,7 +2122,7 @@ p.quote-style {
 .blockquote--color-magenta {
   border-color: #C42882; }
 
-.blockquote--color-cool-gray {
+.blockquote--color-gray {
   border-color: #9ba6b6; }
 
 .blockquote--color-navy {
@@ -1894,11 +2131,17 @@ p.quote-style {
 .blockquote--color-yellow {
   border-color: #FEB80A; }
 
-.blockquote--color-gray-darkest {
+.blockquote--color-dark-gray {
   border-color: #21272A; }
 
+.blockquote--color-black {
+  border-color: #21272A; }
+
+.blockquote--color-green {
+  border-color: #2C8A1A; }
+
 .ucsfcallout {
-  background: #f2f4f6;
+  background: #f2f3f4;
   margin: 10%;
   margin-top: 0;
   margin-bottom: 32px;
@@ -2067,7 +2310,7 @@ p.quote-style {
   position: fixed;
   bottom: -100%;
   list-style: none;
-  background-color: #f2f4f6;
+  background-color: #f2f3f4;
   -webkit-transition: 0.2s cubic-bezier(0.77, 0, 0.175, 1);
   transition: 0.2s cubic-bezier(0.77, 0, 0.175, 1);
   -webkit-transition-property: opacity, bottom;
@@ -2146,14 +2389,14 @@ p.quote-style {
         .article-meta-share .fa-reddit-square:hover {
           color: #ff4500; } }
   .article-meta-share .fa-envelope-square {
-    color: #716fb2;
+    color: #6C62D0;
     -webkit-transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) color;
     transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) color; }
     @media (min-width: 1050px) {
       .article-meta-share .fa-envelope-square {
         color: #506380; }
         .article-meta-share .fa-envelope-square:hover {
-          color: #716fb2; } }
+          color: #6C62D0; } }
   .article-meta-share .fa-print {
     color: #058488;
     -webkit-transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) color;
@@ -2199,7 +2442,7 @@ p.quote-style {
       float: none; } }
 
 .twitter-wrapper {
-  background: #f0faff;
+  background: #EEFAFF;
   padding: 40px;
   padding-left: 40px;
   padding-right: 0;
@@ -2271,20 +2514,22 @@ p.quote-style {
       padding-right: 15%;
       width: 100%; } }
   .twitter__tweet a {
-    color: #0071ad;
+    color: #006BE9;
     background-color: transparent;
     text-decoration: none;
     -webkit-transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
     transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
-    border-bottom: 1px solid #0071ad;
+    border-bottom: 2px solid #006BE9;
     overflow-wrap: break-word;
     word-break: break-word;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    font-weight: 500; }
     .twitter__tweet a:hover {
       background-color: #e8f4fa;
-      border-bottom: 1px solid #e8f4fa;
+      border-bottom: 2px solid #0F388A;
+      color: #0F388A;
       background-color: #fff;
-      border-bottom: 1px solid #fff; }
+      border-bottom: 2px solid #fff; }
 
 img.twitter-icon {
   border-radius: 50%;
@@ -2369,6 +2614,7 @@ a.video_preview::before {
       .video-list__youtube a.link--cta:hover {
         color: #fff;
         text-decoration: underline;
+        text-decoration-thickness: 2x;
         text-underline-position: under; }
     .video-list__youtube a span {
       margin-right: 4px;
@@ -2434,12 +2680,16 @@ a.video_preview::before {
     content: none; }
 
 #block-youtubegallery .slick-next {
-  background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #0071ad;
+  background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #006BE9;
   right: 35px; }
+  #block-youtubegallery .slick-next:hover {
+    background-color: #0F388A; }
 
 #block-youtubegallery .slick-prev {
-  background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #0071ad;
+  background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #006BE9;
   left: 35px; }
+  #block-youtubegallery .slick-prev:hover {
+    background-color: #0F388A; }
 
 #block-youtubegallery .slick-slider {
   margin: 0;
@@ -2472,7 +2722,8 @@ a.video_preview::before {
 #block-youtubegallery a:hover,
 #block-youtubegallery .video_preview:hover .video_preview__title {
   text-decoration: underline;
-  text-underline-position: under; }
+  text-underline-position: under;
+  text-decoration-thickness: 2px; }
 
 #block-youtubegallery li {
   color: white;
@@ -2491,7 +2742,7 @@ a.video_preview::before {
   z-index: 800;
   border-radius: 50%;
   border: 1px solid #121a31;
-  background-color: #007cbe; }
+  background-color: #4896E8; }
 
 #block-youtubegallery .slick-slide {
   margin: 0 16px;
@@ -2620,27 +2871,47 @@ a.video_preview::before {
       margin-bottom: 0; }
     .emergency-alert--collapsed .emergency-alert__content {
       display: none; }
-  .emergency-alert.background-yellow {
-    color: #052049; }
-    .emergency-alert.background-yellow .link--cta {
-      background-image: url("../images/cta-arrow-navy.svg"); }
-    .emergency-alert.background-yellow a:link {
-      color: #052049; }
-    .emergency-alert.background-yellow a:visited, .emergency-alert.background-yellow a:link:visited {
-      color: #052049; }
-    .emergency-alert.background-yellow a:focus {
-      color: #052049; }
-    .emergency-alert.background-yellow a.is-active, .emergency-alert.background-yellow a:active, .emergency-alert.background-yellow a.active-trail {
-      color: #052049; }
-    .emergency-alert.background-yellow .emergency-alert__header {
-      color: #052049;
-      -webkit-filter: none;
-              filter: none; }
   .emergency-alert.emergency-alert--small-title .emergency-alert__header {
     font-size: 18px;
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     background-size: 18px 18px;
     letter-spacing: 0.2px; }
+
+.emergency-alert.background-yellow {
+  background-color: #FED658; }
+
+.emergency-alert.background-orange {
+  background-color: #FE8638; }
+
+.emergency-alert.background-red {
+  background-color: #E61048; }
+
+.emergency-alert.background-yellow,
+.emergency-alert.background-orange {
+  color: #052049; }
+  .emergency-alert.background-yellow .link--cta,
+  .emergency-alert.background-orange .link--cta {
+    background-image: url("../images/cta-arrow-navy.svg"); }
+  .emergency-alert.background-yellow a:link,
+  .emergency-alert.background-orange a:link {
+    color: #052049; }
+  .emergency-alert.background-yellow a:visited, .emergency-alert.background-yellow a:link:visited,
+  .emergency-alert.background-orange a:visited,
+  .emergency-alert.background-orange a:link:visited {
+    color: #052049; }
+  .emergency-alert.background-yellow a:focus,
+  .emergency-alert.background-orange a:focus {
+    color: #052049; }
+  .emergency-alert.background-yellow a.is-active, .emergency-alert.background-yellow a:active, .emergency-alert.background-yellow a.active-trail,
+  .emergency-alert.background-orange a.is-active,
+  .emergency-alert.background-orange a:active,
+  .emergency-alert.background-orange a.active-trail {
+    color: #052049; }
+  .emergency-alert.background-yellow .emergency-alert__header,
+  .emergency-alert.background-orange .emergency-alert__header {
+    color: #052049;
+    -webkit-filter: none;
+            filter: none; }
 
 .search-form {
   position: relative; }
@@ -2685,6 +2956,8 @@ a.video_preview::before {
         width: 1.75rem;
         right: 2rem; } }
     .search-form .search-form__submit:hover {
+      background: url("/themes/custom/ucsf/assets/images/magnifier-hover.svg") no-repeat center transparent;
+      background-size: 1.45rem;
       cursor: pointer;
       background-color: transparent;
       border-color: transparent; }
@@ -2696,7 +2969,7 @@ a.video_preview::before {
     border: none;
     background-color: transparent;
     min-height: auto;
-    color: #0071ad;
+    color: #006BE9;
     font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     background-size: 1.45rem;
     padding: 0 0 0 calc(1.45rem + .5rem);
@@ -2712,8 +2985,12 @@ a.video_preview::before {
       border-bottom: none;
       background-color: transparent; }
     .search-form .search-filter__advanced:hover {
-      padding-left: calc(1.45rem + 1rem);
-      margin-right: -.5rem; }
+      background: url("/themes/custom/ucsf/assets/images/filter-blue-hover.svg") no-repeat left transparent;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      margin-right: 0;
+      background-size: 1.45rem;
+      color: #0F388A; }
 
 figure[class="embedded-entity"],
 figure[class="image"] {
@@ -3133,38 +3410,8 @@ figure figure[class="image"] {
         color: #fff;
         border-color: #fff;
         background-color: transparent; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-blue + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #007cbe;
-      border-bottom-color: #007cbe; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-blue + .scrolly-gallery__text-inner .button:hover {
-      background-color: #007cbe;
-      border-color: #007cbe; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-gray + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #506380;
-      border-bottom-color: #506380; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-gray + .scrolly-gallery__text-inner .button:hover {
-      background-color: #506380;
-      border-color: #506380; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-green + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #90bd31;
-      border-bottom-color: #90bd31; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-green + .scrolly-gallery__text-inner .button:hover {
-      background-color: #90bd31;
-      border-color: #90bd31; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-teal + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #058488;
-      border-bottom-color: #058488; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-teal + .scrolly-gallery__text-inner .button:hover {
-      background-color: #058488;
-      border-color: #058488; } }
+  .page-node-type-article .scrolly-gallery-wrapper .background-navy {
+    --color-rgb: 5, 32, 73; }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-navy + .scrolly-gallery__text-inner a:not(.button):hover {
       background-color: #052049;
@@ -3173,30 +3420,8 @@ figure figure[class="image"] {
     .page-node-type-article .scrolly-gallery-wrapper .background-navy + .scrolly-gallery__text-inner .button:hover {
       background-color: #052049;
       border-color: #052049; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-purple + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #716fb2;
-      border-bottom-color: #716fb2; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-purple + .scrolly-gallery__text-inner .button:hover {
-      background-color: #716fb2;
-      border-color: #716fb2; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-yellow + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #fd0;
-      border-bottom-color: #fd0; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-yellow + .scrolly-gallery__text-inner .button:hover {
-      background-color: #fd0;
-      border-color: #fd0; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-black + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #000;
-      border-bottom-color: #000; } }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-black + .scrolly-gallery__text-inner .button:hover {
-      background-color: #000;
-      border-color: #000; } }
+  .page-node-type-article .scrolly-gallery-wrapper .background-blue-dark {
+    --color-rgb: 6, 66, 96; }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-blue-dark + .scrolly-gallery__text-inner a:not(.button):hover {
       background-color: #064260;
@@ -3205,6 +3430,8 @@ figure figure[class="image"] {
     .page-node-type-article .scrolly-gallery-wrapper .background-blue-dark + .scrolly-gallery__text-inner .button:hover {
       background-color: #064260;
       border-color: #064260; } }
+  .page-node-type-article .scrolly-gallery-wrapper .background-teal-dark {
+    --color-rgb: 14, 82, 88; }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-teal-dark + .scrolly-gallery__text-inner a:not(.button):hover {
       background-color: #0E5258;
@@ -3213,6 +3440,8 @@ figure figure[class="image"] {
     .page-node-type-article .scrolly-gallery-wrapper .background-teal-dark + .scrolly-gallery__text-inner .button:hover {
       background-color: #0E5258;
       border-color: #0E5258; } }
+  .page-node-type-article .scrolly-gallery-wrapper .background-green-cool {
+    --color-rgb: 0, 72, 58; }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-green-cool + .scrolly-gallery__text-inner a:not(.button):hover {
       background-color: #00483A;
@@ -3221,6 +3450,8 @@ figure figure[class="image"] {
     .page-node-type-article .scrolly-gallery-wrapper .background-green-cool + .scrolly-gallery__text-inner .button:hover {
       background-color: #00483A;
       border-color: #00483A; } }
+  .page-node-type-article .scrolly-gallery-wrapper .background-green-warm {
+    --color-rgb: 0, 100, 0; }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-green-warm + .scrolly-gallery__text-inner a:not(.button):hover {
       background-color: #006400;
@@ -3229,6 +3460,8 @@ figure figure[class="image"] {
     .page-node-type-article .scrolly-gallery-wrapper .background-green-warm + .scrolly-gallery__text-inner .button:hover {
       background-color: #006400;
       border-color: #006400; } }
+  .page-node-type-article .scrolly-gallery-wrapper .background-purple-dark {
+    --color-rgb: 46, 40, 114; }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-purple-dark + .scrolly-gallery__text-inner a:not(.button):hover {
       background-color: #2E2872;
@@ -3237,6 +3470,8 @@ figure figure[class="image"] {
     .page-node-type-article .scrolly-gallery-wrapper .background-purple-dark + .scrolly-gallery__text-inner .button:hover {
       background-color: #2E2872;
       border-color: #2E2872; } }
+  .page-node-type-article .scrolly-gallery-wrapper .background-violet-dark {
+    --color-rgb: 70, 24, 80; }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-violet-dark + .scrolly-gallery__text-inner a:not(.button):hover {
       background-color: #461850;
@@ -3245,6 +3480,8 @@ figure figure[class="image"] {
     .page-node-type-article .scrolly-gallery-wrapper .background-violet-dark + .scrolly-gallery__text-inner .button:hover {
       background-color: #461850;
       border-color: #461850; } }
+  .page-node-type-article .scrolly-gallery-wrapper .background-magenta-dark {
+    --color-rgb: 86, 16, 56; }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-magenta-dark + .scrolly-gallery__text-inner a:not(.button):hover {
       background-color: #561038;
@@ -3253,6 +3490,8 @@ figure figure[class="image"] {
     .page-node-type-article .scrolly-gallery-wrapper .background-magenta-dark + .scrolly-gallery__text-inner .button:hover {
       background-color: #561038;
       border-color: #561038; } }
+  .page-node-type-article .scrolly-gallery-wrapper .background-gray-darkest {
+    --color-rgb: 33, 39, 42; }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-gray-darkest + .scrolly-gallery__text-inner a:not(.button):hover {
       background-color: #21272A;
@@ -3581,7 +3820,7 @@ figure figure[class="image"] {
     margin-top: 4px; }
 
 .slicknav_menu .slicknav_icon:hover .slicknav_icon-bar {
-  background: #007cbe; }
+  background: #006BE9; }
 
 @media (min-width: 850px) {
   .slicknav-placeholder,
@@ -3590,7 +3829,7 @@ figure figure[class="image"] {
 
 .slicknav_nav {
   display: none;
-  background: #f2f4f6;
+  background: #f2f3f4;
   position: fixed;
   right: 0;
   left: 0;
@@ -3601,6 +3840,8 @@ figure figure[class="image"] {
   @media (min-width: 850px) {
     .slicknav_nav {
       display: none; } }
+  .slicknav_nav .fa-angle-up {
+    color: #006BE9; }
   .slicknav_nav ul.menu-parent-wrapper {
     padding-left: 24px;
     width: calc(100% - 15px);
@@ -3675,7 +3916,7 @@ figure figure[class="image"] {
   [role="menuitem"].active-trail:hover,
   [role="menuitem"].visited:hover,
   [role="menuitem"]:hover {
-    color: #0071ad; }
+    color: #006BE9; }
   .slicknav_nav .slicknav_item a.is-active, .slicknav_nav .slicknav_item a:active, .slicknav_nav .slicknav_item a.active-trail,
   .slicknav_nav .slicknav_item [data-drupal-link-system-path].is-active,
   .slicknav_nav .slicknav_item [data-drupal-link-system-path]:active,
@@ -3691,22 +3932,22 @@ figure figure[class="image"] {
     height: 44px; }
 
 .slicknav_nav .slicknav_open .slicknav_item a:link {
-  color: #0071ad; }
+  color: #006BE9; }
 
 .slicknav_nav .slicknav_open .slicknav_item a:visited, .slicknav_nav .slicknav_open .slicknav_item a:link:visited {
-  color: #0071ad; }
+  color: #006BE9; }
 
 .slicknav_nav .slicknav_open .slicknav_item a:focus {
-  color: #0071ad; }
+  color: #006BE9; }
 
 .slicknav_nav .slicknav_open .slicknav_item a.active:hover, .slicknav_nav .slicknav_open .slicknav_item a.is-active:hover, .slicknav_nav .slicknav_open .slicknav_item a.active-trail:hover, .slicknav_nav .slicknav_open .slicknav_item a.visited:hover, .slicknav_nav .slicknav_open .slicknav_item a:hover {
   color: #052049; }
 
 .slicknav_nav .slicknav_open .slicknav_item a.is-active, .slicknav_nav .slicknav_open .slicknav_item a:active, .slicknav_nav .slicknav_open .slicknav_item a.active-trail {
-  color: #0071ad; }
+  color: #006BE9; }
 
 [role="menuitem"] {
-  border-bottom: 1px solid #d5d9de; }
+  border-bottom: 1px solid #CACED2; }
 
 .slicknav_arrow {
   display: inline-block; }
@@ -3748,14 +3989,14 @@ figure figure[class="image"] {
   -webkit-transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) line-height;
   transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) line-height; }
   .main-nav__toggle:focus, .main-nav__toggle:hover {
-    border-bottom: 4px solid #0071ad;
+    border-bottom: 4px solid #006BE9;
     padding-bottom: 0; }
   .main-nav__toggle:focus {
     outline: 1px dotted #052049; }
   .main-nav__menu .menu-item:first-child .main-nav__toggle {
     margin-left: 0; }
   .menu-item--active-trail .main-nav__toggle {
-    border-bottom: 4px solid #0071ad;
+    border-bottom: 4px solid #006BE9;
     padding-bottom: 0; }
 
 .main-submenu {
@@ -3766,7 +4007,7 @@ figure figure[class="image"] {
   width: 1px;
   word-wrap: normal;
   visibility: hidden;
-  background: #f2f4f6;
+  background: #f2f3f4;
   height: auto;
   right: 0;
   z-index: 780;
@@ -3796,7 +4037,7 @@ figure figure[class="image"] {
       .main-submenu--0 > .main-submenu__menu {
         width: 464px; } }
     .main-submenu--0 > .main-submenu__menu .menu-item {
-      border-bottom: 1px solid #d5d9de;
+      border-bottom: 1px solid #CACED2;
       display: block;
       margin-left: 73px; }
   .main-submenu--1 .main-submenu__menu {
@@ -3835,7 +4076,7 @@ figure figure[class="image"] {
     padding: 8px 0;
     width: 16px; }
   .main-submenu__menu .menu-item--expanded:hover .fa-angle-right {
-    color: #0071ad; }
+    color: #006BE9; }
   .main-submenu__menu a {
     display: block;
     font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
@@ -3852,7 +4093,7 @@ figure figure[class="image"] {
     .main-submenu__menu a:focus {
       color: #052049; }
     .main-submenu__menu a.active:hover, .main-submenu__menu a.is-active:hover, .main-submenu__menu a.active-trail:hover, .main-submenu__menu a.visited:hover, .main-submenu__menu a:hover {
-      color: #0071ad; }
+      color: #006BE9; }
     .main-submenu__menu a.is-active, .main-submenu__menu a:active, .main-submenu__menu a.active-trail {
       color: #052049; }
   .main-submenu__menu span.ext {
@@ -3887,26 +4128,16 @@ figure figure[class="image"] {
             box-sizing: border-box;
     width: 48px;
     padding: 24px 0; }
-    .main-submenu__label--0[data-section="section-about"] {
-      background: #716fb2; }
     .main-submenu__label--0[data-section="section-about-menu"] {
       background: #052049; }
-    .main-submenu__label--0[data-section="section-campus-news"] {
-      background: #052049; }
     .main-submenu__label--0[data-section="section-education"] {
-      background: #568001; }
-    .main-submenu__label--0[data-section="section-location"] {
-      background: #568001; }
-    .main-submenu__label--0[data-section="section-news-center"] {
-      background: #716fb2; }
+      background: #006400; }
     .main-submenu__label--0[data-section="section-news--media"] {
-      background: #716fb2; }
+      background: #6C62D0; }
     .main-submenu__label--0[data-section="section-patient-care"] {
-      background: #007cbe; }
+      background: #007CBE; }
     .main-submenu__label--0[data-section="section-research"] {
-      background: #058488; }
-    .main-submenu__label--0[data-section="section-ucsf-magazine"] {
-      background: #716fb2; }
+      background: #14828C; }
     .main-submenu__label--0 .main-submenu__label-text {
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -3944,7 +4175,7 @@ figure figure[class="image"] {
     padding: 8px 20px 8px 0;
     text-align: left; }
     .main-submenu__toggle:hover {
-      color: #0071ad; }
+      color: #006BE9; }
   .main-nav__menu .menu-item-open > .main-submenu {
     clip: auto;
     overflow: visible;
@@ -4036,7 +4267,7 @@ figure figure[class="image"] {
 .page-node-type-author .main-nav .menu-item-news--media,
 [class*="alias-news"] .main-nav .menu-item-news--media,
 [class*="alias-magazine"] .main-nav .menu-item-news--media {
-  border-bottom: 4px solid #0071ad;
+  border-bottom: 4px solid #006BE9;
   padding-bottom: 0; }
 
 .universal-header__give-mobile {
@@ -4053,7 +4284,7 @@ figure figure[class="image"] {
         padding: 16px 24px;
         text-align: left;
         font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-        background: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg) no-repeat #007cbe;
+        background: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg) no-repeat #006BE9;
         background-size: 32px;
         background-position: calc(100% - 24px); } }
 
@@ -4116,7 +4347,7 @@ figure figure[class="image"] {
           transform: scale(1.1); }
 
 .recommended-articles__banner:hover .recommended-article__copy h2 a {
-  color: #0071ad; }
+  color: #006BE9; }
 
 .magazine-home-feature .card-row__image {
   overflow: hidden; }
@@ -4134,7 +4365,7 @@ figure figure[class="image"] {
           transform: scale(1.1); }
 
 .magazine-home-feature:hover .card-row__copy h2 a {
-  color: #0071ad; }
+  color: #006BE9; }
 
 @-webkit-keyframes fade-and-slide {
   0% {
@@ -4293,7 +4524,7 @@ figure figure[class="image"] {
     -webkit-transform: scale(1.1);
             transform: scale(1.1); }
   .news-card:hover h2 {
-    color: #0071ad; }
+    color: #006BE9; }
 
 .four-card-row {
   overflow: hidden; }
@@ -4310,7 +4541,7 @@ figure figure[class="image"] {
     -webkit-transform: scale(1.1);
             transform: scale(1.1); }
   .four-card-row:hover h2 {
-    color: #0071ad !important; }
+    color: #006BE9 !important; }
 
 .pager {
   list-style: none;
@@ -4719,10 +4950,10 @@ body.loading .quicklinks {
             line-height: 60px;
             border-bottom: none; } }
         .header-subnav__menu .menu-item a:hover, .header-subnav__menu .menu-item a:active, .header-subnav__menu .menu-item a.is-active, .header-subnav__menu .menu-item a:focus-visible {
-          color: #0071ad; }
+          color: #006BE9; }
           @media (min-width: 850px) {
             .header-subnav__menu .menu-item a:hover, .header-subnav__menu .menu-item a:active, .header-subnav__menu .menu-item a.is-active, .header-subnav__menu .menu-item a:focus-visible {
-              border-bottom: 4px solid #0071ad; } }
+              border-bottom: 4px solid #006BE9; } }
         .fixed-nav .header-subnav__menu .menu-item a {
           line-height: 56px;
           height: 56px; }
@@ -4734,7 +4965,7 @@ body.loading .quicklinks {
     display: -ms-flexbox;
     display: flex;
     height: 100vh;
-    background-color: #f2f4f6;
+    background-color: #f2f3f4;
     -webkit-animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
             animation: menu-slide 500ms cubic-bezier(0.77, 0, 0.175, 1) 50ms both;
     overflow-y: auto; }
@@ -4768,7 +4999,7 @@ body.loading .quicklinks {
   margin: 0 auto; }
   .field-ankle-cta > .field__item {
     padding: 40px 80px;
-    background: #f2f4f6; }
+    background: #f2f3f4; }
     .field-ankle-cta > .field__item .field--type-text-with-summary {
       padding: 40px 0; }
     .field-ankle-cta > .field__item:first-child {
@@ -4788,9 +5019,14 @@ body.loading .quicklinks {
   .field-ankle-cta p {
     margin: 0; }
     .field-ankle-cta p a {
-      color: #0071ad;
+      color: #006BE9;
       font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
       text-decoration: none; }
+      .field-ankle-cta p a:hover {
+        color: #0F388A;
+        -webkit-text-decoration-color: #0F388A;
+                text-decoration-color: #0F388A;
+        text-decoration-thickness: 2px; }
   @media (max-width: 849px) {
     .field-ankle-cta {
       padding-top: 32px; }
@@ -4823,13 +5059,13 @@ body.loading .quicklinks {
         text-align: center;
         font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
         min-height: 64px;
-        border-color: #0071ad;
-        color: #0071ad; }
+        border-color: #006BE9;
+        color: #006BE9; }
         .field-ankle-cta p a:hover {
-          background-color: #0071ad;
+          background-color: #006BE9;
           color: #fff;
           border-width: 2px;
-          border-color: #0071ad;
+          border-color: #006BE9;
           -webkit-transition: 0.2s ease background-color;
           transition: 0.2s ease background-color; } }
   @media (min-width: 850px) {
@@ -5270,7 +5506,7 @@ body.loading .quicklinks {
     border-top: none; } }
 
 .bg-gray {
-  background: #f2f4f6;
+  background: #f2f3f4;
   padding-bottom: 40px;
   margin-top: 40px; }
   @media (min-width: 1050px) {
@@ -5281,126 +5517,44 @@ body.loading .quicklinks {
 .bg-white {
   background: #fff; }
 
-.overlay-blue {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(0, 124, 190, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(0, 124, 190, 0.8); }
-  .overlay-blue:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(0, 124, 190, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(0, 124, 190, 0.95); }
+.accent-blue {
+  border-bottom: 8px solid #4896E8; }
 
-.overlay-gray {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(80, 99, 128, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(80, 99, 128, 0.8); }
-  .overlay-gray:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(80, 99, 128, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(80, 99, 128, 0.95); }
-
-.overlay-green {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(144, 189, 49, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(144, 189, 49, 0.8); }
-  .overlay-green:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(144, 189, 49, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(144, 189, 49, 0.95); }
-
-.overlay-teal {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(5, 132, 136, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(5, 132, 136, 0.8); }
-  .overlay-teal:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(5, 132, 136, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(5, 132, 136, 0.95); }
-
-.overlay-navy {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(5, 32, 73, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(5, 32, 73, 0.8); }
-  .overlay-navy:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(5, 32, 73, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(5, 32, 73, 0.95); }
-
-.overlay-purple {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.8); }
-  .overlay-purple:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.95); }
-
-.overlay-yellow {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(255, 221, 0, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(255, 221, 0, 0.8); }
-  .overlay-yellow:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(255, 221, 0, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(255, 221, 0, 0.95); }
-
-.overlay-black {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.8); }
-  .overlay-black:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.95); }
-
-.overlay-blue-dark {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(6, 66, 96, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(6, 66, 96, 0.8); }
-  .overlay-blue-dark:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(6, 66, 96, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(6, 66, 96, 0.95); }
-
-.overlay-teal-dark {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(14, 82, 88, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(14, 82, 88, 0.8); }
-  .overlay-teal-dark:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(14, 82, 88, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(14, 82, 88, 0.95); }
-
-.overlay-green-cool {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(0, 72, 58, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(0, 72, 58, 0.8); }
-  .overlay-green-cool:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(0, 72, 58, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(0, 72, 58, 0.95); }
-
-.overlay-green-warm {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(0, 100, 0, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(0, 100, 0, 0.8); }
-  .overlay-green-warm:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(0, 100, 0, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(0, 100, 0, 0.95); }
-
-.overlay-purple-dark {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(46, 40, 114, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(46, 40, 114, 0.8); }
-  .overlay-purple-dark:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(46, 40, 114, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(46, 40, 114, 0.95); }
-
-.overlay-violet-dark {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(70, 24, 80, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(70, 24, 80, 0.8); }
-  .overlay-violet-dark:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(70, 24, 80, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(70, 24, 80, 0.95); }
-
-.overlay-magenta-dark {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(86, 16, 56, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(86, 16, 56, 0.8); }
-  .overlay-magenta-dark:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(86, 16, 56, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(86, 16, 56, 0.95); }
-
-.overlay-gray-darkest {
-  -webkit-box-shadow: inset 0 0 0 1000px rgba(33, 39, 42, 0.8);
-          box-shadow: inset 0 0 0 1000px rgba(33, 39, 42, 0.8); }
-  .overlay-gray-darkest:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(33, 39, 42, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(33, 39, 42, 0.95); }
-
-.accent-purple {
-  border-bottom: 8px solid #716fb2; }
+.accent-light-blue {
+  border-bottom: 8px solid #178ccb; }
 
 .accent-teal {
-  border-bottom: 8px solid #18a3ac; }
+  border-bottom: 8px solid #16A0AC; }
 
-.accent-blue {
-  border-bottom: 8px solid #178ccb; }
+.accent-cool-green {
+  border-bottom: 8px solid #32A03E; }
+
+.accent-warm-green {
+  border-bottom: 8px solid #2C8A1A; }
+
+.accent-green {
+  border-bottom: 8px solid #2C8A1A; }
+
+.accent-purple {
+  border-bottom: 8px solid #6C62D0; }
+
+.accent-violet {
+  border-bottom: 8px solid #A238BA; }
+
+.accent-magenta {
+  border-bottom: 8px solid #C42882; }
+
+.accent-gray {
+  border-bottom: 8px solid #9ba6b6; }
+
+.accent-navy {
+  border-bottom: 8px solid #052049; }
+
+.accent-yellow {
+  border-bottom: 8px solid #FEB80A; }
+
+.accent-dark-gray {
+  border-bottom: 8px solid #21272A; }
 
 .nobel-card img {
   margin: 0 auto; }
@@ -5550,7 +5704,7 @@ body.loading .quicklinks {
   font-size: 40px;
   line-height: 1;
   letter-spacing: -1px;
-  color: #058488;
+  color: #16A0AC;
   margin-bottom: 32px; }
   @media (min-width: 600px) {
     .memberships-cards__title {
@@ -5980,7 +6134,7 @@ body.loading .quicklinks {
     .event-card__title a:focus {
       color: #052049; }
     .event-card__title a.active:hover, .event-card__title a.is-active:hover, .event-card__title a.active-trail:hover, .event-card__title a.visited:hover, .event-card__title a:hover {
-      color: #0071ad; }
+      color: #006BE9; }
     .event-card__title a.is-active, .event-card__title a:active, .event-card__title a.active-trail {
       color: #052049; }
 
@@ -6064,7 +6218,7 @@ body.loading .quicklinks {
   font-size: 40px;
   line-height: 1;
   letter-spacing: -1px;
-  color: #058488;
+  color: #16A0AC;
   margin-bottom: 32px; }
   @media (min-width: 600px) {
     .field-fact-card-stat {
@@ -6197,12 +6351,16 @@ body.loading .quicklinks {
     content: none; }
 
 .field-gallery-items .slick-next {
-  background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #0071ad;
+  background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #006BE9;
   right: 35px; }
+  .field-gallery-items .slick-next:hover {
+    background-color: #0F388A; }
 
 .field-gallery-items .slick-prev {
-  background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #0071ad;
+  background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #006BE9;
   left: 35px; }
+  .field-gallery-items .slick-prev:hover {
+    background-color: #0F388A; }
 
 .field-gallery-items button {
   top: calc(50% - 100px); }
@@ -6356,7 +6514,7 @@ body.loading .quicklinks {
 
 .overlay-gray .field-content-promotional-conten {
   padding: 58px 40px;
-  background: #f2f4f6;
+  background: #f2f3f4;
   position: relative; }
   .overlay-gray .field-content-promotional-conten::after {
     background: #fff;
@@ -6400,6 +6558,7 @@ body.loading .quicklinks {
         -webkit-transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
         transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
         text-decoration: underline;
+        text-decoration-thickness: 2px;
         padding-right: 32px;
         background-position: 100% center; }
         .promo-list__card-link:hover .link--cta:hover {
@@ -6431,7 +6590,8 @@ body.loading .quicklinks {
       color: #fff; }
       .promo-list__card-more a:hover {
         color: #fff;
-        text-decoration: underline; }
+        text-decoration: underline;
+        text-decoration-thickness: 2px; }
     .promo-list__card-more a.link--cta {
       background-image: url("../images/cta-arrow-white.svg");
       background-repeat: no-repeat;
@@ -6471,16 +6631,6 @@ body.loading .quicklinks {
       background-color: #fff; }
   .promo-list__card a.promo-list__card-link {
     color: #fff; }
-  .promo-list__card.overlay-yellow .promo-list__card-link {
-    color: #052049; }
-  .promo-list__card.overlay-yellow .promo-list__card-title {
-    color: #052049; }
-    .promo-list__card.overlay-yellow .promo-list__card-title::after {
-      display: inline-block;
-      background-color: #052049; }
-  .promo-list__card.overlay-yellow .link--cta {
-    background-image: url("../images/cta-arrow-navy.svg");
-    color: #052049; }
 
 .homepage .promo-list__card, .promo-list__card--featured {
   background-size: cover;
@@ -6491,7 +6641,8 @@ body.loading .quicklinks {
   display: flex; }
 
 .homepage .promo-list__card {
-  margin-bottom: 72px; }
+  margin-bottom: 72px;
+  z-index: 1; }
   .homepage .promo-list__card::after {
     background: transparent; }
   .homepage .promo-list__card-more {
@@ -6500,7 +6651,22 @@ body.loading .quicklinks {
   .homepage .promo-list__card-link {
     padding: 64px 40px;
     -ms-flex-item-align: center;
-        align-self: center; }
+        align-self: center;
+    width: 100%;
+    height: 100%; }
+
+.homepage .promo-list__background-img {
+  display: block;
+  -webkit-filter: grayscale(1);
+          filter: grayscale(1);
+  background-size: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1; }
 
 .promo-list__card--featured:hover .promo-list__card-content-wrapper {
   margin-top: 90%;
@@ -6508,7 +6674,8 @@ body.loading .quicklinks {
 
 .promo-list__card--featured:hover .link--cta {
   background-position: 100% center;
-  text-decoration: underline; }
+  text-decoration: underline;
+  text-decoration-thickness: 2px; }
 
 .promo-list__card--featured a {
   display: -webkit-box;
@@ -6546,7 +6713,8 @@ body.loading .quicklinks {
   text-decoration: none;
   width: 100%;
   display: grid;
-  grid-template-rows: auto 1fr; }
+  grid-template-rows: auto 1fr;
+  height: auto; }
   .promo-list__card--alt .promo-list__card-link:hover .promo-list__card-image {
     background-size: 110%; }
 
@@ -6575,220 +6743,145 @@ body.loading .quicklinks {
 .promo-list__card--alt .field-promo-text {
   margin-top: 0; }
 
-.promo-list__card--featured .overlay-blue,
-.promo-list__card--alt .overlay-blue {
-  -webkit-box-shadow: inset 0 0 0 1000px #007cbe;
-          box-shadow: inset 0 0 0 1000px #007cbe; }
-  .promo-list__card--featured .overlay-blue:hover,
-  .promo-list__card--alt .overlay-blue:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(0, 124, 190, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(0, 124, 190, 0.95); }
+.promo-list__card--alt .background-blue {
+  --background-blue-rgb: 15, 56, 138;
+  --background-blue-hex: #0F388A;
+  background-color: var(--background-blue-hex); }
 
-.promo-list__card--alt .overlay-blue:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #007cbe;
-          box-shadow: inset 0 0 0 1000px #007cbe; }
+.promo-list__card--alt .background-light-blue {
+  --background-light-blue-rgb: 8, 98, 144;
+  --background-light-blue-hex: #086290;
+  background-color: var(--background-light-blue-hex); }
 
-.promo-list__card--featured .overlay-gray,
-.promo-list__card--alt .overlay-gray {
-  -webkit-box-shadow: inset 0 0 0 1000px #506380;
-          box-shadow: inset 0 0 0 1000px #506380; }
-  .promo-list__card--featured .overlay-gray:hover,
-  .promo-list__card--alt .overlay-gray:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(80, 99, 128, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(80, 99, 128, 0.95); }
+.promo-list__card--alt .background-teal {
+  --background-teal-rgb: 20, 130, 140;
+  --background-teal-hex: #14828C;
+  background-color: var(--background-teal-hex); }
 
-.promo-list__card--alt .overlay-gray:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #506380;
-          box-shadow: inset 0 0 0 1000px #506380; }
+.promo-list__card--alt .background-cool-green {
+  --background-cool-green-rgb: 0, 114, 66;
+  --background-cool-green-hex: #007242;
+  background-color: var(--background-cool-green-hex); }
 
-.promo-list__card--featured .overlay-green,
-.promo-list__card--alt .overlay-green {
-  -webkit-box-shadow: inset 0 0 0 1000px #90bd31;
-          box-shadow: inset 0 0 0 1000px #90bd31; }
-  .promo-list__card--featured .overlay-green:hover,
-  .promo-list__card--alt .overlay-green:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(144, 189, 49, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(144, 189, 49, 0.95); }
+.promo-list__card--alt .background-warm-green {
+  --background-warm-green-rgb: 0, 100, 0;
+  --background-warm-green-hex: #006400;
+  background-color: var(--background-warm-green-hex); }
 
-.promo-list__card--alt .overlay-green:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #90bd31;
-          box-shadow: inset 0 0 0 1000px #90bd31; }
+.promo-list__card--alt .background-purple {
+  --background-purple-rgb: 68, 62, 140;
+  --background-purple-hex: #443E8C;
+  background-color: var(--background-purple-hex); }
 
-.promo-list__card--featured .overlay-teal,
-.promo-list__card--alt .overlay-teal {
-  -webkit-box-shadow: inset 0 0 0 1000px #058488;
-          box-shadow: inset 0 0 0 1000px #058488; }
-  .promo-list__card--featured .overlay-teal:hover,
-  .promo-list__card--alt .overlay-teal:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(5, 132, 136, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(5, 132, 136, 0.95); }
+.promo-list__card--alt .background-violet {
+  --background-violet-rgb: 108, 36, 124;
+  --background-violet-hex: #6C247C;
+  background-color: var(--background-violet-hex); }
 
-.promo-list__card--alt .overlay-teal:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #058488;
-          box-shadow: inset 0 0 0 1000px #058488; }
+.promo-list__card--alt .background-magenta {
+  --background-magenta-rgb: 130, 26, 86;
+  --background-magenta-hex: #821A56;
+  background-color: var(--background-magenta-hex); }
 
-.promo-list__card--featured .overlay-navy,
-.promo-list__card--alt .overlay-navy {
-  -webkit-box-shadow: inset 0 0 0 1000px #052049;
-          box-shadow: inset 0 0 0 1000px #052049; }
-  .promo-list__card--featured .overlay-navy:hover,
-  .promo-list__card--alt .overlay-navy:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(5, 32, 73, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(5, 32, 73, 0.95); }
+.promo-list__card--alt .background-navy {
+  --background-navy-rgb: 5, 32, 73;
+  --background-navy-hex: #052049;
+  background-color: var(--background-navy-hex); }
 
-.promo-list__card--alt .overlay-navy:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #052049;
-          box-shadow: inset 0 0 0 1000px #052049; }
+.promo-list__card--alt .background-dark-gray {
+  --background-dark-gray-rgb: 33, 39, 42;
+  --background-dark-gray-hex: #21272A;
+  background-color: var(--background-dark-gray-hex); }
 
-.promo-list__card--featured .overlay-purple,
-.promo-list__card--alt .overlay-purple {
-  -webkit-box-shadow: inset 0 0 0 1000px #716fb2;
-          box-shadow: inset 0 0 0 1000px #716fb2; }
-  .promo-list__card--featured .overlay-purple:hover,
-  .promo-list__card--alt .overlay-purple:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(113, 111, 178, 0.95); }
+.promo-list__card--featured .overlay-blue {
+  --overlay-blue-rgb: 15, 56, 138;
+  --overlay-teal-rgb: 14, 82, 88;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-blue-rgb), 1);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-blue-rgb), 1); }
+  .promo-list__card--featured .overlay-blue:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-blue-rgb), 0.95);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-blue-rgb), 0.95); }
 
-.promo-list__card--alt .overlay-purple:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #716fb2;
-          box-shadow: inset 0 0 0 1000px #716fb2; }
+.promo-list__card--featured .overlay-light-blue {
+  --overlay-light-blue-rgb: 8, 98, 144;
+  --overlay-teal-rgb: 14, 82, 88;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-light-blue-rgb), 1);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-light-blue-rgb), 1); }
+  .promo-list__card--featured .overlay-light-blue:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-light-blue-rgb), 0.95);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-light-blue-rgb), 0.95); }
 
-.promo-list__card--featured .overlay-yellow,
-.promo-list__card--alt .overlay-yellow {
-  -webkit-box-shadow: inset 0 0 0 1000px #ffdd00;
-          box-shadow: inset 0 0 0 1000px #ffdd00; }
-  .promo-list__card--featured .overlay-yellow:hover,
-  .promo-list__card--alt .overlay-yellow:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(255, 221, 0, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(255, 221, 0, 0.95); }
-  .promo-list__card--featured .overlay-yellow .field-promo-text,
-  .promo-list__card--alt .overlay-yellow .field-promo-text {
-    color: #052049; }
-  .promo-list__card--featured .overlay-yellow .promo-list__card-more .link--cta,
-  .promo-list__card--alt .overlay-yellow .promo-list__card-more .link--cta {
-    color: #052049;
-    background-image: url("../images/cta-arrow-navy.svg"); }
+.promo-list__card--featured .overlay-teal {
+  --overlay-teal-rgb: 20, 130, 140;
+  --overlay-teal-rgb: 14, 82, 88;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-teal-rgb), 1);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-teal-rgb), 1); }
+  .promo-list__card--featured .overlay-teal:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-teal-rgb), 0.95);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-teal-rgb), 0.95); }
 
-.promo-list__card--alt .overlay-yellow:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #ffdd00;
-          box-shadow: inset 0 0 0 1000px #ffdd00; }
+.promo-list__card--featured .overlay-cool-green {
+  --overlay-cool-green-rgb: 0, 114, 66;
+  --overlay-teal-rgb: 14, 82, 88;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-cool-green-rgb), 1);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-cool-green-rgb), 1); }
+  .promo-list__card--featured .overlay-cool-green:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-cool-green-rgb), 0.95);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-cool-green-rgb), 0.95); }
 
-.promo-list__card--featured .overlay-black,
-.promo-list__card--alt .overlay-black {
-  -webkit-box-shadow: inset 0 0 0 1000px black;
-          box-shadow: inset 0 0 0 1000px black; }
-  .promo-list__card--featured .overlay-black:hover,
-  .promo-list__card--alt .overlay-black:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.95); }
+.promo-list__card--featured .overlay-warm-green {
+  --overlay-warm-green-rgb: 0, 100, 0;
+  --overlay-teal-rgb: 14, 82, 88;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-warm-green-rgb), 1);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-warm-green-rgb), 1); }
+  .promo-list__card--featured .overlay-warm-green:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-warm-green-rgb), 0.95);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-warm-green-rgb), 0.95); }
 
-.promo-list__card--alt .overlay-black:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px black;
-          box-shadow: inset 0 0 0 1000px black; }
+.promo-list__card--featured .overlay-purple {
+  --overlay-purple-rgb: 68, 62, 140;
+  --overlay-teal-rgb: 14, 82, 88;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-purple-rgb), 1);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-purple-rgb), 1); }
+  .promo-list__card--featured .overlay-purple:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-purple-rgb), 0.95);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-purple-rgb), 0.95); }
 
-.promo-list__card--featured .overlay-blue-dark,
-.promo-list__card--alt .overlay-blue-dark {
-  -webkit-box-shadow: inset 0 0 0 1000px #064260;
-          box-shadow: inset 0 0 0 1000px #064260; }
-  .promo-list__card--featured .overlay-blue-dark:hover,
-  .promo-list__card--alt .overlay-blue-dark:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(6, 66, 96, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(6, 66, 96, 0.95); }
+.promo-list__card--featured .overlay-violet {
+  --overlay-violet-rgb: 108, 36, 124;
+  --overlay-teal-rgb: 14, 82, 88;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-violet-rgb), 1);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-violet-rgb), 1); }
+  .promo-list__card--featured .overlay-violet:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-violet-rgb), 0.95);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-violet-rgb), 0.95); }
 
-.promo-list__card--alt .overlay-blue-dark:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #064260;
-          box-shadow: inset 0 0 0 1000px #064260; }
+.promo-list__card--featured .overlay-magenta {
+  --overlay-magenta-rgb: 130, 26, 86;
+  --overlay-teal-rgb: 14, 82, 88;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-magenta-rgb), 1);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-magenta-rgb), 1); }
+  .promo-list__card--featured .overlay-magenta:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-magenta-rgb), 0.95);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-magenta-rgb), 0.95); }
 
-.promo-list__card--featured .overlay-teal-dark,
-.promo-list__card--alt .overlay-teal-dark {
-  -webkit-box-shadow: inset 0 0 0 1000px #0e5258;
-          box-shadow: inset 0 0 0 1000px #0e5258; }
-  .promo-list__card--featured .overlay-teal-dark:hover,
-  .promo-list__card--alt .overlay-teal-dark:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(14, 82, 88, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(14, 82, 88, 0.95); }
+.promo-list__card--featured .overlay-navy {
+  --overlay-navy-rgb: 5, 32, 73;
+  --overlay-teal-rgb: 14, 82, 88;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-navy-rgb), 1);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-navy-rgb), 1); }
+  .promo-list__card--featured .overlay-navy:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-navy-rgb), 0.95);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-navy-rgb), 0.95); }
 
-.promo-list__card--alt .overlay-teal-dark:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #0e5258;
-          box-shadow: inset 0 0 0 1000px #0e5258; }
-
-.promo-list__card--featured .overlay-green-cool,
-.promo-list__card--alt .overlay-green-cool {
-  -webkit-box-shadow: inset 0 0 0 1000px #00483a;
-          box-shadow: inset 0 0 0 1000px #00483a; }
-  .promo-list__card--featured .overlay-green-cool:hover,
-  .promo-list__card--alt .overlay-green-cool:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(0, 72, 58, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(0, 72, 58, 0.95); }
-
-.promo-list__card--alt .overlay-green-cool:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #00483a;
-          box-shadow: inset 0 0 0 1000px #00483a; }
-
-.promo-list__card--featured .overlay-green-warm,
-.promo-list__card--alt .overlay-green-warm {
-  -webkit-box-shadow: inset 0 0 0 1000px darkgreen;
-          box-shadow: inset 0 0 0 1000px darkgreen; }
-  .promo-list__card--featured .overlay-green-warm:hover,
-  .promo-list__card--alt .overlay-green-warm:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(0, 100, 0, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(0, 100, 0, 0.95); }
-
-.promo-list__card--alt .overlay-green-warm:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px darkgreen;
-          box-shadow: inset 0 0 0 1000px darkgreen; }
-
-.promo-list__card--featured .overlay-purple-dark,
-.promo-list__card--alt .overlay-purple-dark {
-  -webkit-box-shadow: inset 0 0 0 1000px #2e2872;
-          box-shadow: inset 0 0 0 1000px #2e2872; }
-  .promo-list__card--featured .overlay-purple-dark:hover,
-  .promo-list__card--alt .overlay-purple-dark:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(46, 40, 114, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(46, 40, 114, 0.95); }
-
-.promo-list__card--alt .overlay-purple-dark:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #2e2872;
-          box-shadow: inset 0 0 0 1000px #2e2872; }
-
-.promo-list__card--featured .overlay-violet-dark,
-.promo-list__card--alt .overlay-violet-dark {
-  -webkit-box-shadow: inset 0 0 0 1000px #461850;
-          box-shadow: inset 0 0 0 1000px #461850; }
-  .promo-list__card--featured .overlay-violet-dark:hover,
-  .promo-list__card--alt .overlay-violet-dark:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(70, 24, 80, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(70, 24, 80, 0.95); }
-
-.promo-list__card--alt .overlay-violet-dark:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #461850;
-          box-shadow: inset 0 0 0 1000px #461850; }
-
-.promo-list__card--featured .overlay-magenta-dark,
-.promo-list__card--alt .overlay-magenta-dark {
-  -webkit-box-shadow: inset 0 0 0 1000px #561038;
-          box-shadow: inset 0 0 0 1000px #561038; }
-  .promo-list__card--featured .overlay-magenta-dark:hover,
-  .promo-list__card--alt .overlay-magenta-dark:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(86, 16, 56, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(86, 16, 56, 0.95); }
-
-.promo-list__card--alt .overlay-magenta-dark:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #561038;
-          box-shadow: inset 0 0 0 1000px #561038; }
-
-.promo-list__card--featured .overlay-gray-darkest,
-.promo-list__card--alt .overlay-gray-darkest {
-  -webkit-box-shadow: inset 0 0 0 1000px #21272a;
-          box-shadow: inset 0 0 0 1000px #21272a; }
-  .promo-list__card--featured .overlay-gray-darkest:hover,
-  .promo-list__card--alt .overlay-gray-darkest:hover {
-    -webkit-box-shadow: inset 0 0 0 1000px rgba(33, 39, 42, 0.95);
-            box-shadow: inset 0 0 0 1000px rgba(33, 39, 42, 0.95); }
-
-.promo-list__card--alt .overlay-gray-darkest:hover {
-  -webkit-box-shadow: inset 0 0 0 1000px #21272a;
-          box-shadow: inset 0 0 0 1000px #21272a; }
+.promo-list__card--featured .overlay-dark-gray {
+  --overlay-dark-gray-rgb: 33, 39, 42;
+  --overlay-teal-rgb: 14, 82, 88;
+  -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-dark-gray-rgb), 1);
+          box-shadow: inset 0 0 0 1000px rgba(var(--overlay-dark-gray-rgb), 1); }
+  .promo-list__card--featured .overlay-dark-gray:hover {
+    -webkit-box-shadow: inset 0 0 0 1000px rgba(var(--overlay-dark-gray-rgb), 0.95);
+            box-shadow: inset 0 0 0 1000px rgba(var(--overlay-dark-gray-rgb), 0.95); }
 
 .alert-wrapper {
   padding-top: 40px;
@@ -6926,11 +7019,132 @@ body.loading .quicklinks {
   width: 100%; }
 
 .news-package-card a:hover .card__title {
-  color: #0071ad; }
+  color: #006BE9; }
 
 .news-package-card a:hover img {
   -webkit-transform: scale(1.1);
           transform: scale(1.1); }
+
+.card-with-offset-color .background-blue {
+  --background-blue-rgb: 15, 56, 138;
+  --background-blue-hex: #0F388A;
+  background-color: var(--background-blue-hex); }
+
+.card-with-offset-color .background-light-blue {
+  --background-light-blue-rgb: 8, 98, 144;
+  --background-light-blue-hex: #086290;
+  background-color: var(--background-light-blue-hex); }
+
+.card-with-offset-color .background-teal {
+  --background-teal-rgb: 20, 130, 140;
+  --background-teal-hex: #14828C;
+  background-color: var(--background-teal-hex); }
+
+.card-with-offset-color .background-cool-green {
+  --background-cool-green-rgb: 0, 114, 66;
+  --background-cool-green-hex: #007242;
+  background-color: var(--background-cool-green-hex); }
+
+.card-with-offset-color .background-warm-green {
+  --background-warm-green-rgb: 0, 100, 0;
+  --background-warm-green-hex: #006400;
+  background-color: var(--background-warm-green-hex); }
+
+.card-with-offset-color .background-purple {
+  --background-purple-rgb: 68, 62, 140;
+  --background-purple-hex: #443E8C;
+  background-color: var(--background-purple-hex); }
+
+.card-with-offset-color .background-violet {
+  --background-violet-rgb: 108, 36, 124;
+  --background-violet-hex: #6C247C;
+  background-color: var(--background-violet-hex); }
+
+.card-with-offset-color .background-magenta {
+  --background-magenta-rgb: 130, 26, 86;
+  --background-magenta-hex: #821A56;
+  background-color: var(--background-magenta-hex); }
+
+.card-with-offset-color .background-navy {
+  --background-navy-rgb: 5, 32, 73;
+  --background-navy-hex: #052049;
+  background-color: var(--background-navy-hex); }
+
+.card-with-offset-color .background-dark-gray {
+  --background-dark-gray-rgb: 33, 39, 42;
+  --background-dark-gray-hex: #21272A;
+  background-color: var(--background-dark-gray-hex); }
+
+.card-with-offset-color .background-blue {
+  --background-blue-rgb: 72, 150, 232;
+  --background-blue-hex: #4896E8;
+  background-color: var(--background-blue-hex); }
+
+.card-with-offset-color .background-light-blue {
+  --background-light-blue-rgb: 23, 140, 203;
+  --background-light-blue-hex: #178ccb;
+  background-color: var(--background-light-blue-hex); }
+
+.card-with-offset-color .background-teal {
+  --background-teal-rgb: 22, 160, 172;
+  --background-teal-hex: #16A0AC;
+  background-color: var(--background-teal-hex); }
+
+.card-with-offset-color .background-cool-green {
+  --background-cool-green-rgb: 50, 160, 62;
+  --background-cool-green-hex: #32A03E;
+  background-color: var(--background-cool-green-hex); }
+
+.card-with-offset-color .background-warm-green {
+  --background-warm-green-rgb: 44, 138, 26;
+  --background-warm-green-hex: #2C8A1A;
+  background-color: var(--background-warm-green-hex); }
+
+.card-with-offset-color .background-green {
+  --background-green-rgb: 44, 138, 26;
+  --background-green-hex: #2C8A1A;
+  background-color: var(--background-green-hex); }
+
+.card-with-offset-color .background-purple {
+  --background-purple-rgb: 108, 98, 208;
+  --background-purple-hex: #6C62D0;
+  background-color: var(--background-purple-hex); }
+
+.card-with-offset-color .background-violet {
+  --background-violet-rgb: 162, 56, 186;
+  --background-violet-hex: #A238BA;
+  background-color: var(--background-violet-hex); }
+
+.card-with-offset-color .background-magenta {
+  --background-magenta-rgb: 196, 40, 130;
+  --background-magenta-hex: #C42882;
+  background-color: var(--background-magenta-hex); }
+
+.card-with-offset-color .background-gray {
+  --background-gray-rgb: 155, 166, 182;
+  --background-gray-hex: #9ba6b6;
+  background-color: var(--background-gray-hex); }
+
+.card-with-offset-color .background-navy {
+  --background-navy-rgb: 5, 32, 73;
+  --background-navy-hex: #052049;
+  background-color: var(--background-navy-hex); }
+
+.card-with-offset-color .background-yellow {
+  --background-yellow-rgb: 254, 184, 10;
+  --background-yellow-hex: #FEB80A;
+  background-color: var(--background-yellow-hex); }
+
+.card-with-offset-color .background-dark-gray {
+  --background-dark-gray-rgb: 33, 39, 42;
+  --background-dark-gray-hex: #21272A;
+  background-color: var(--background-dark-gray-hex); }
+
+.card-with-offset-color .background-green {
+  background-color: var(--c-green-warm); }
+
+.card-with-offset-color .background-black {
+  background-color: var(--c-gray-darkest); }
 
 .card-with-offset-color .offset-frame {
   margin-bottom: calc(10px + 1rem); }
@@ -7107,7 +7321,7 @@ body.loading .quicklinks {
 .page-node-type-trending,
 .page-node-type-magazine-basic-page,
 .path-webform {
-  background: #f2f4f6; }
+  background: #f2f3f4; }
   .page-node-type-author .main-content,
   .page-node-type-article .main-content,
   .page-node-type-magazine-article .main-content,
@@ -7285,7 +7499,7 @@ body.loading .quicklinks {
 
 .page-node-type-full-width-page,
 .path-taxonomy {
-  background: #f2f4f6; }
+  background: #f2f3f4; }
   .page-node-type-full-width-page .main-content,
   .path-taxonomy .main-content {
     background: #fff; }
@@ -7342,7 +7556,7 @@ body.loading .quicklinks {
       font-size: 36px; } }
 
 .page-node-type-homepage {
-  background: #f2f4f6; }
+  background: #f2f3f4; }
 
 .bk-color-white,
 .bk-color-white .page_narrow blockquote,
@@ -7701,19 +7915,21 @@ h2.font-h3 {
             text-decoration: none;
             -webkit-transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
             transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
-            border-bottom: 1px solid #fff;
+            border-bottom: 2px solid #fff;
             overflow-wrap: break-word;
             word-break: break-word;
-            word-wrap: break-word; }
+            word-wrap: break-word;
+            font-weight: 500; }
             .article-twocol-banner.twocolleftdark .article-twocol-header h1 a:hover,
             .article-twocol-banner.twocolleftdark .article-twocol-header .field-sub-title a:hover,
             .article-twocol-banner.twocolleftdark .article-twocol-header .article-header__author a:hover, .article-twocol-banner.twocolrightdark .article-twocol-header h1 a:hover,
             .article-twocol-banner.twocolrightdark .article-twocol-header .field-sub-title a:hover,
             .article-twocol-banner.twocolrightdark .article-twocol-header .article-header__author a:hover {
               background-color: #e8f4fa;
-              border-bottom: 1px solid #e8f4fa;
+              border-bottom: 2px solid #0F388A;
+              color: #0F388A;
               background-color: rgba(255, 255, 255, 0.3);
-              border-bottom: 1px solid rgba(255, 255, 255, 0.3); }
+              border-bottom: 2px solid rgba(255, 255, 255, 0.3); }
         .article-twocol-banner.twocolleftdark .article-twocol-header .article-header__byline .article-header__primary-area,
         .article-twocol-banner.twocolleftdark .article-twocol-header .article-header__byline .article-header__date, .article-twocol-banner.twocolrightdark .article-twocol-header .article-header__byline .article-header__primary-area,
         .article-twocol-banner.twocolrightdark .article-twocol-header .article-header__byline .article-header__date {
@@ -7794,17 +8010,19 @@ h2.font-h3 {
         text-decoration: none;
         -webkit-transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
         transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
-        border-bottom: 1px solid #fff;
+        border-bottom: 2px solid #fff;
         overflow-wrap: break-word;
         word-break: break-word;
-        word-wrap: break-word; }
+        word-wrap: break-word;
+        font-weight: 500; }
         .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header h1 a:hover,
         .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .field-sub-title a:hover,
         .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-header__author a:hover {
           background-color: #e8f4fa;
-          border-bottom: 1px solid #e8f4fa;
+          border-bottom: 2px solid #0F388A;
+          color: #0F388A;
           background-color: rgba(0, 0, 0, 0.45);
-          border-bottom: 1px solid rgba(0, 0, 0, 0.45); }
+          border-bottom: 2px solid rgba(0, 0, 0, 0.45); }
       .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header h1 .article-art-credit,
       .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .field-sub-title .article-art-credit,
       .article-feature-overlay-banner.featureoverlaydark .article-feature-overlay-header .article-header__author .article-art-credit {
@@ -7834,17 +8052,19 @@ h2.font-h3 {
         text-decoration: none;
         -webkit-transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
         transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
-        border-bottom: 1px solid #052049;
+        border-bottom: 2px solid #052049;
         overflow-wrap: break-word;
         word-break: break-word;
-        word-wrap: break-word; }
+        word-wrap: break-word;
+        font-weight: 500; }
         .article-feature-overlay-banner.featureoverlaylight .article-feature-overlay-header h1 a:hover,
         .article-feature-overlay-banner.featureoverlaylight .article-feature-overlay-header .field-sub-title a:hover,
         .article-feature-overlay-banner.featureoverlaylight .article-feature-overlay-header .article-header__author a:hover {
           background-color: #e8f4fa;
-          border-bottom: 1px solid #e8f4fa;
+          border-bottom: 2px solid #0F388A;
+          color: #0F388A;
           background-color: rgba(255, 255, 255, 0.65);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.65); }
+          border-bottom: 2px solid rgba(255, 255, 255, 0.65); }
     .article-feature-overlay-banner.featureoverlaylight .article-feature-overlay-header .article-header__byline .article-header__primary-area,
     .article-feature-overlay-banner.featureoverlaylight .article-feature-overlay-header .article-header__byline .article-header__date {
       color: #052049; }
@@ -7914,9 +8134,9 @@ h2.font-h3 {
     background: #052049; }
 
 [data-primary-area="pa-about"] {
-  color: #716fb2; }
+  color: #6C62D0; }
   [data-primary-area="pa-about"]::before {
-    background: #716fb2; }
+    background: #6C62D0; }
 
 [data-primary-area="pa-about-menu"] {
   color: #052049; }
@@ -7929,39 +8149,34 @@ h2.font-h3 {
     background: #052049; }
 
 [data-primary-area="pa-education"] {
-  color: #568001; }
+  color: #007242; }
   [data-primary-area="pa-education"]::before {
-    background: #90bd31; }
-
-[data-primary-area="pa-location"] {
-  color: #568001; }
-  [data-primary-area="pa-location"]::before {
-    background: #90bd31; }
+    background: #32A03E; }
 
 [data-primary-area="pa-news-center"] {
-  color: #716fb2; }
+  color: #6C62D0; }
   [data-primary-area="pa-news-center"]::before {
-    background: #716fb2; }
+    background: #6C62D0; }
 
 [data-primary-area="pa-news--media"] {
-  color: #716fb2; }
+  color: #6C62D0; }
   [data-primary-area="pa-news--media"]::before {
-    background: #716fb2; }
+    background: #6C62D0; }
 
 [data-primary-area="pa-patient-care"] {
-  color: #007cbe; }
+  color: #086290; }
   [data-primary-area="pa-patient-care"]::before {
     background: #178ccb; }
 
 [data-primary-area="pa-research"] {
-  color: #058488; }
+  color: #14828C; }
   [data-primary-area="pa-research"]::before {
-    background: #18a3ac; }
+    background: #16A0AC; }
 
 [data-primary-area="pa-ucsf-magazine"] {
-  color: #716fb2; }
+  color: #6C62D0; }
   [data-primary-area="pa-ucsf-magazine"]::before {
-    background: #716fb2; }
+    background: #6C62D0; }
 
 .basic-header__subheading,
 .article-header .field-sub-title {
@@ -7995,13 +8210,15 @@ h2.font-h3 {
     text-decoration: none;
     -webkit-transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
     transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
-    border-bottom: 1px solid #506380;
+    border-bottom: 2px solid #506380;
     overflow-wrap: break-word;
     word-break: break-word;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    font-weight: 500; }
     .article-header__author a:hover {
       background-color: #e8f4fa;
-      border-bottom: 1px solid #e8f4fa; }
+      border-bottom: 2px solid #0F388A;
+      color: #0F388A; }
 
 .article-art-credit {
   color: #506380;
@@ -8153,10 +8370,10 @@ h2.font-h3 {
   font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
   min-height: 64px; }
   .card__button:hover {
-    background-color: #0071ad;
+    background-color: #006BE9;
     color: #fff;
     border-width: 2px;
-    border-color: #0071ad;
+    border-color: #006BE9;
     -webkit-transition: 0.2s ease background-color;
     transition: 0.2s ease background-color; }
 
@@ -8398,15 +8615,15 @@ h2.font-h3 {
 .news-card__link {
   text-decoration: none; }
   .news-card__link:hover {
-    color: #0071ad;
+    color: #006BE9;
     text-decoration: none; }
 
 .news-card--media-coverage [data-primary-area],
 .news-card--magazine-article [data-primary-area] {
-  color: #716fb2; }
+  color: #6C62D0; }
   .news-card--media-coverage [data-primary-area]::before,
   .news-card--magazine-article [data-primary-area]::before {
-    background: #716fb2; }
+    background: #6C62D0; }
 
 .magazine-article-card__date {
   text-transform: capitalize; }
@@ -8460,10 +8677,10 @@ h2.font-h3 {
       grid-gap: 0; } }
 
 .recommended-article__link:hover h2 {
-  color: #0071ad; }
+  color: #006BE9; }
 
 .page-node-type-magazine-article #block-ucsf-mag-content .recommended-article__link:hover .field--name-title {
-  color: #0071ad; }
+  color: #006BE9; }
 
 .recommended-article__image {
   background-color: transparent;
@@ -8725,7 +8942,7 @@ h2.font-h3 {
       .full-width-page-banner.full-width-has-image {
         background: transparent; } }
   .full-width-page-banner figure {
-    background: #f2f4f6; }
+    background: #f2f3f4; }
     .full-width-page-banner figure img {
       margin: 0 0 0 auto; }
   .full-width-page-banner .field-banner-description p {
@@ -9077,18 +9294,20 @@ h2.font-h3 {
     display: inline;
     margin: 0; }
   .home-banner-support__links a {
-    color: #0071ad;
+    color: #006BE9;
     background-color: transparent;
     text-decoration: none;
     -webkit-transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
     transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
-    border-bottom: 1px solid #0071ad;
+    border-bottom: 2px solid #006BE9;
     overflow-wrap: break-word;
     word-break: break-word;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    font-weight: 500; }
     .home-banner-support__links a:hover {
       background-color: #e8f4fa;
-      border-bottom: 1px solid #e8f4fa; }
+      border-bottom: 2px solid #0F388A;
+      color: #0F388A; }
   @media (min-width: 769px) {
     .home-banner-support__links {
       padding: 0 40px; }
@@ -9117,6 +9336,14 @@ h2.font-h3 {
     margin-bottom: 16px; }
     .map-home ul li a {
       font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
+      .map-home ul li a:hover {
+        color: #0F388A; }
+    .map-home ul li .icon-campus:hover {
+      background-image: url(/themes/custom/ucsf/assets/images/card/campus-blue-hover.svg); }
+    .map-home ul li .icon-transit:hover {
+      background-image: url(/themes/custom/ucsf/assets/images/card/transit-blue-hover.svg); }
+    .map-home ul li .icon-directions:hover {
+      background-image: url(/themes/custom/ucsf/assets/images/card/directions-blue-hover.svg); }
 
 @media (min-width: 1050px) {
   .map-home {
@@ -9182,25 +9409,6 @@ h2.font-h3 {
 .map-home__subheading {
   margin: 1em 0;
   color: #506380; }
-
-.map-home__links {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif; }
-  .map-home__links li {
-    margin-bottom: 16px; }
-    .map-home__links li a {
-      color: #0071ad;
-      text-decoration: none;
-      display: block;
-      padding-left: 40px; }
-      .map-home__links li a.map-home__locations {
-        background: url("/themes/custom/ucsf/assets/images/map-home-locations.svg") no-repeat left top transparent; }
-      .map-home__links li a.map-home__transport {
-        background: url("/themes/custom/ucsf/assets/images/map-home-transport.svg") no-repeat left top transparent; }
-      .map-home__links li a.map-home__directions {
-        background: url("/themes/custom/ucsf/assets/images/map-home-directions.svg") no-repeat left top transparent; }
 
 .home-search {
   text-align: center;
@@ -9280,16 +9488,16 @@ h2.font-h3 {
   border: none;
   background-size: 28px;
   text-indent: -9999px; }
+  .home-search__form .home-search__form-submit:hover {
+    cursor: pointer;
+    color: auto;
+    border-color: transparent;
+    background: url("/themes/custom/ucsf/assets/images/magnifier-hover.svg") no-repeat center transparent;
+    background-size: 28px; }
   @media (min-width: 850px) {
     .home-search__form .home-search__form-submit {
       position: relative;
       top: -2px; }
-      .home-search__form .home-search__form-submit:hover {
-        cursor: pointer;
-        color: auto;
-        border-color: transparent;
-        background: url("/themes/custom/ucsf/assets/images/magnifier-hover.svg") no-repeat center transparent;
-        background-size: 28px; }
       .home-search__form .home-search__form-submit:focus {
         border: 1px dotted #052049; } }
 
@@ -9315,7 +9523,7 @@ h2.font-h3 {
       .home-search__presearch-links li {
         display: inline-block; }
         .home-search__presearch-links li a {
-          color: #0071ad;
+          color: #006BE9;
           text-decoration: none;
           display: block;
           background: url("/themes/custom/ucsf/assets/images/magnifier.svg") no-repeat left transparent;
@@ -9325,9 +9533,11 @@ h2.font-h3 {
           -webkit-transition: .2s ease-out all;
           transition: .2s ease-out all; }
           .home-search__presearch-links li a:hover {
+            background: url("/themes/custom/ucsf/assets/images/magnifier-hover.svg") no-repeat left transparent;
+            background-size: 16px 16px;
             text-decoration: underline;
-            padding-left: 28px;
-            margin-right: 20px; } }
+            text-decoration-thickness: 2px;
+            color: #0F388A; } }
 
 .home-talking-about {
   background: #fff;
@@ -9682,7 +9892,7 @@ h2.font-h3 {
       color: #052049; }
       .news-center-banner__featured h2 a:hover,
       .media-coverage__featured h2 a:hover {
-        color: #0071ad; }
+        color: #006BE9; }
     .news-center-banner__featured h2 p,
     .media-coverage__featured h2 p {
       margin: 1em 0; }
@@ -9852,15 +10062,15 @@ h2.font-h3 {
           text-align: center;
           font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
           min-height: 64px;
-          border-color: #0071ad;
-          color: #0071ad;
+          border-color: #006BE9;
+          color: #006BE9;
           background: none;
           display: block; }
           .media-coverage__list .media-coverage__list-more a:hover {
-            background-color: #0071ad;
+            background-color: #006BE9;
             color: #fff;
             border-width: 2px;
-            border-color: #0071ad;
+            border-color: #006BE9;
             -webkit-transition: 0.2s ease background-color;
             transition: 0.2s ease background-color; } }
   @media (min-width: 769px) {
@@ -9921,7 +10131,7 @@ h2.font-h3 {
       text-decoration: none;
       color: #052049; }
       .media-coverage__list-articles h3 a:hover {
-        color: #0071ad; }
+        color: #006BE9; }
   .media-coverage__list-articles li {
     border-bottom: 1px solid #d1d3d3;
     margin: 8px 0;
@@ -10068,7 +10278,8 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
           -ms-flex-pack: start;
               justify-content: flex-start; } }
   .news-search .home-search__presearch-links a:hover {
-    text-decoration: underline; }
+    text-decoration: underline;
+    text-decoration-thickness: 2px; }
 
 .news-search .home-search__advanced-search {
   margin-left: auto; }
@@ -10077,6 +10288,8 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
     margin-right: 0;
     background-size: 16px 16px; }
     .news-search .home-search__advanced-search a:hover {
+      background: url("/themes/custom/ucsf/assets/images/filter-blue-hover.svg") no-repeat left transparent;
+      background-size: 16px 16px;
       text-decoration: underline;
       margin-right: 0; }
 
@@ -10545,7 +10758,7 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
     .node--view-mode-search-index h2 a:focus {
       color: #052049; }
     .node--view-mode-search-index h2 a.active:hover, .node--view-mode-search-index h2 a.is-active:hover, .node--view-mode-search-index h2 a.active-trail:hover, .node--view-mode-search-index h2 a.visited:hover, .node--view-mode-search-index h2 a:hover {
-      color: #0071ad; }
+      color: #006BE9; }
     .node--view-mode-search-index h2 a.is-active, .node--view-mode-search-index h2 a:active, .node--view-mode-search-index h2 a.active-trail {
       color: #052049; }
   .node--view-mode-search-index .search-result__image {
@@ -10588,7 +10801,7 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
   margin-bottom: 0; }
 
 .path-search .page {
-  background: #f2f4f6; }
+  background: #f2f3f4; }
 
 .gsc-refinementsArea {
   display: none !important;
@@ -10615,7 +10828,7 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
     left: 0;
     width: 100%;
     width: 100vw;
-    background-color: #f2f4f6;
+    background-color: #f2f3f4;
     -webkit-box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.08);
             box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.08);
     padding: 0; }
@@ -10859,10 +11072,10 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
     color: #052049;
     text-decoration: none; }
   .results-content .gsc-wrapper .gsc-webResult a.gs-title:hover {
-    color: #0071ad;
+    color: #006BE9;
     text-decoration: underline; }
     .results-content .gsc-wrapper .gsc-webResult a.gs-title:hover b {
-      color: #0071ad; }
+      color: #006BE9; }
 
 .results-content .gcsc-more-maybe-branding-root,
 .results-content .gsc-table-cell-thumbnail {
@@ -10913,7 +11126,7 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    background-color: #d5d9de;
+    background-color: #E1E3E5;
     cursor: pointer;
     font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
     font-size: 12px;
@@ -10932,8 +11145,8 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
             -ms-flex-pack: center;
                 justify-content: center; } }
     .search-filter__radio:checked + .search-filter__label {
-      background-color: #f2f4f6;
-      color: #0071ad; }
+      background-color: #f2f3f4;
+      color: #006BE9; }
   .search-filter__option {
     position: relative;
     display: inline-block;
@@ -10948,15 +11161,15 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
       .search-filter__option {
         margin: 0 0 0 .85em; } }
     .search-filter__radio:checked + .search-filter__label .search-filter__option {
-      background-color: #0071ad;
-      border-color: #0071ad;
+      background-color: #006BE9;
+      border-color: #006BE9;
       -webkit-box-shadow: inset 0 0 0 0.2em #fff;
               box-shadow: inset 0 0 0 0.2em #fff; }
   .search-filter__radio:focus + .search-filter__label {
     outline: 1px solid #052049; }
 
 .path-taxonomy {
-  background: #f2f4f6; }
+  background: #f2f3f4; }
   .path-taxonomy .topic-content .news-list {
     padding-left: 0;
     padding-right: 0;
@@ -10973,18 +11186,22 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
 .topic-page {
   background: #fff; }
   .topic-page a:not([class]) {
-    color: #0071ad;
+    color: #006BE9;
     background-color: transparent;
     text-decoration: none;
     -webkit-transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
     transition: background-color 0.15s cubic-bezier(0.33, 0.66, 0.66, 1);
-    border-bottom: 1px solid #0071ad;
+    border-bottom: 2px solid #006BE9;
     overflow-wrap: break-word;
     word-break: break-word;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    font-weight: 500; }
     .topic-page a:not([class]):hover {
       background-color: #e8f4fa;
-      border-bottom: 1px solid #e8f4fa; }
+      border-bottom: 2px solid #0F388A;
+      color: #0F388A; }
+    .topic-page a:not([class]):active, .topic-page a:not([class]):hover {
+      border-bottom: none; }
   .topic-page .pager__item a {
     -webkit-transition: none;
     transition: none;
@@ -11123,7 +11340,7 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
       letter-spacing: -0.3px; } }
 
 .article-type a:hover .article-header__title {
-  color: #0071ad; }
+  color: #006BE9; }
 
 .article-type .article-header__byline li {
   border-bottom: none;
@@ -11551,11 +11768,15 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
       .topics-list__topics.slick-slider button:after {
         content: none; }
     .topics-list__topics.slick-slider .slick-next {
-      background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #0071ad;
+      background: url("/themes/custom/ucsf/assets/images/cta-arrow-white.svg") no-repeat center center/12px 12px #006BE9;
       right: 35px; }
+      .topics-list__topics.slick-slider .slick-next:hover {
+        background-color: #0F388A; }
     .topics-list__topics.slick-slider .slick-prev {
-      background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #0071ad;
+      background: url("/themes/custom/ucsf/assets/images/cta-arrow-white-left.svg") no-repeat center center/12px 12px #006BE9;
       left: 35px; }
+      .topics-list__topics.slick-slider .slick-prev:hover {
+        background-color: #0F388A; }
     .topics-list__topics.slick-slider .slick-arrow {
       height: 40px;
       width: 40px;
@@ -11598,7 +11819,7 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
     height: 350px;
     width: 260px; }
     .topic-card a:hover {
-      color: #0071ad; }
+      color: #006BE9; }
       .topic-card a:hover span {
         bottom: -24px; }
   .topic-card span {
@@ -11624,12 +11845,12 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
   padding-top: 10px;
   min-width: 152px;
   border: none;
-  background: #007cbe;
+  background: #006BE9;
   color: #fff;
   width: 100%;
   text-align: center; }
   .universal-header__give:hover {
-    background: #0071ad; }
+    background: #0F388A; }
   @media (min-width: 850px) {
     .universal-header__give {
       display: inline-block;
@@ -11740,7 +11961,7 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
   .header--search a:focus {
     color: #052049; }
   .header--search a.active:hover, .header--search a.is-active:hover, .header--search a.active-trail:hover, .header--search a.visited:hover, .header--search a:hover {
-    color: #0071ad; }
+    color: #006BE9; }
   .header--search a.is-active, .header--search a:active, .header--search a.active-trail {
     color: #052049; }
   .header--search a:hover {

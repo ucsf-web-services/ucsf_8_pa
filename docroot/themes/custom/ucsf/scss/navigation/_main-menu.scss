@@ -32,7 +32,7 @@ $label-width: 48px;
   // navbar buttons
   &__toggle {
     background-color: transparent;
-    color: $gray-blue;
+    color: $c-gray-blue;
     border: none;
     line-height: $nav-line-height;
     letter-spacing: 0;
@@ -77,7 +77,7 @@ $label-width: 48px;
 
   @include visually-hidden;
   visibility: hidden;
-  background: $c-grey-pale;
+  background: $c-background-gray;
   height: auto;
   right: 0;
   z-index: $z-quicklinks-open-page;
@@ -120,7 +120,7 @@ $label-width: 48px;
       }
 
       .menu-item {
-        border-bottom: 1px solid #d5d9de;
+        border-bottom: 1px solid #CACED2;
         display: block;
         margin-left: 73px;
       }
@@ -181,12 +181,12 @@ $label-width: 48px;
 
       // Icon angle right on menu item hover
       &:hover .fa-angle-right {
-        color: $c-blue-link;
+        color: $c-cta-element;
       }
     }
 
     a {
-      @include link-colors($c-navy, $c-blue-link);
+      @include link-colors($c-navy, $c-cta-element);
       display: block;
       font-family: $font-helvetica-neue-light;
       font-size: 18px;
@@ -223,7 +223,7 @@ $label-width: 48px;
       width: $label-width;
       padding: 24px 0;
 
-      @each $area, $color, $color2 in $areas {
+      @each $area, $color in $areas-nav {
         &[data-section="section-#{$area}"] {
           background: $color;
         }
@@ -255,7 +255,7 @@ $label-width: 48px;
     text-align: left;
 
     &:hover {
-      color: $c-blue-link;
+      color: $c-cta-element;
     }
   }
 
@@ -422,12 +422,12 @@ $label-width: 48px;
     //margin-left: -$space-three;
 
     a.universal-header__give {
-      color: $white;
+      color: $c-white;
       width: 100%;
       padding: $space-two $space-three;
       text-align: left;
       font-family: $font-helvetica-neue-medium;
-      background: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg) no-repeat #007cbe;
+      background: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg) no-repeat $c-blue-link;
       background-size: 32px;
       background-position: calc(100% - 24px);
     }

@@ -1,17 +1,15 @@
 {% set classes = [
   'promo-list__card',
-  'overlay-' ~ paragraph.field_textbox_background_color.entity.label|clean_class,
 ] %}
-
+{% set overlay_class = 'overlay-' ~ paragraph.field_textbox_background_color.entity.label|clean_class %}
 {% set image_value = paragraph.field_image_media.entity.field_media_image.entity.uri.value %}
 {% set background = image_value ? file_url(image_value | image_style('homepage_promo_list__card')) : false %}
-<li{{ attributes.addClass(classes) }}
-  {# Check if background image exists #}
+<li{{ attributes.addClass(classes) }}>
   {% if background %}
-    style="background: url('{{ background }}') no-repeat left bottom  / cover transparent;"
+    <span class="promo-list__background-img" style="background: url('{{ background }}') no-repeat left bottom  / cover transparent;">
+    </span>
   {% endif %}
->
-  <a class="promo-list__card-link" href="{{ paragraph.field_promo_cta.0.url }}">
+  <a class="promo-list__card-link {{overlay_class}}" href="{{ paragraph.field_promo_cta.0.url }}">
     <h3 class="promo-list__card-title">{{ paragraph.field_title.value }}</h3>
     {{ content|without(
       'field_textbox_background_color',

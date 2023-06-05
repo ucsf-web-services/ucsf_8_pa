@@ -6,6 +6,7 @@
 //
 // Variables and placeholders used
 // @param $icon-styles - a sass list of icon styles.
+// @param $icon-styles - a sass list of icon styles.
 // @param #{$item} - current item from $icon-styles iterated over by the @each loop
 // @param %icon - placeholder for .icon-#{$item}
 
@@ -14,6 +15,64 @@ $icon-styles: awards, caduceus, campus, comprehensive, directions,
               microscope, money, patient-care, research, support,
               transit;
 
+$primary-areas: (
+  // ($area, $color1, $color2),
+  (
+    "about",
+    $c-purple,
+    url(/themes/custom/ucsf/assets/images/card/ucsf-reverse.svg),
+  ),
+  (
+    "campus-news",
+    $c-navy,
+    url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg),
+  ),
+  (
+    "announcements",
+    $c-navy,
+    url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg),
+  ),
+  (
+    "happenings",
+    $c-navy,
+    url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg),
+  ),
+  (
+    "honors-awards",
+    $c-navy,
+    url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg),
+  ),
+  (
+    "spotlight",
+    $c-navy,
+    url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg),
+  ),
+  (
+    "education",
+    $c-light-green-cool,
+    url(/themes/custom/ucsf/assets/images/card/education-reverse.svg),
+  ),
+  (
+    "patient-care",
+    $c-blue-light,
+    url(/themes/custom/ucsf/assets/images/card/doctor-reverse.svg),
+  ),
+  (
+    "research",
+    $c-teal-alt,
+    url(/themes/custom/ucsf/assets/images/card/microscope-reverse.svg),
+  ),
+  (
+    "news-center",
+    $c-purple,
+    url(/themes/custom/ucsf/assets/images/card/ucsf-reverse.svg),
+  ),
+  (
+    "ucsf-magazine",
+    $c-purple,
+    url(/themes/custom/ucsf/assets/images/card/media-reverse.svg)
+  ),
+);
 // Common properties that all icons will share.
 %icon {
   content: ' ';
@@ -24,6 +83,7 @@ $icon-styles: awards, caduceus, campus, comprehensive, directions,
 
   &:hover {
     text-decoration: underline;
+    text-decoration-thickness: 2px;
   }
 }
 
@@ -93,85 +153,58 @@ a%icon {
 
       &:hover {
         background-image: url(/themes/custom/ucsf/assets/images/card/#{$item}-reverse.svg);
-
-      // Screen size starting at 850px
+        text-decoration: none;
+        // Screen size starting at 850px
         @include breakpoint($bp-large) {
-          background-image: url(/themes/custom/ucsf/assets/images/card/#{$item}.svg);
+          background-image: url(/themes/custom/ucsf/assets/images/card/#{$item}-blue-hover.svg);
           padding-left: $space-six;
+          text-decoration: underline;
+          text-decoration-thickness: 2px;
         }
       }
     }
   }
 }
+.fact-card {
+  $fact-card-icons: awards, campus, doctor, education, hospital,
+                  money, patient-care, research, support;
+  @each $item in $fact-card-icons {
+    @if $item == research {
+      .icon-#{$item} {
+        background: url(/themes/custom/ucsf/assets/images/card/microscope-teal.svg) left center no-repeat transparent;
+      }
+    }
 
-// Only rules that are common for all
-[data-primary-area],
-[data-primary-area="pa-about"],
-[data-primary-area="pa-campus-news"],
-[data-primary-area="pa-announcements"],
-[data-primary-area="pa-happenings"],
-[data-primary-area="pa-honors-awards"],
-[data-primary-area="pa-spotlight"],
-[data-primary-area="pa-education"],
-[data-primary-area="pa-patient-care"],
-[data-primary-area="pa-research"],
-[data-primary-area="pa-locations"],
-[data-primary-area="pa-news-center"],
-[data-primary-area="pa-ucsf-magazine"],
-// media-coverage card is used on ucsf.edu/topic/covid-19
-.news-card--media-coverage,
-.news-card--magazine-article {
-  figure {
+    @else {
+      .icon-#{$item} {
+        background: url(/themes/custom/ucsf/assets/images/card/#{$item}-teal.svg) left center no-repeat transparent;
+
+      }
+    }
+  }
+}
+
+figure {
+  [data-primary-area] &,
+  [data-primary-area=""] &,
+  // media-coverage card is used on ucsf.edu/topic/covid-19
+  .news-card--media-coverage &,
+  .news-card--magazine-article & {
     background-repeat: no-repeat;
     background-position: 50% 35%;
     background-size: $space-six $space-six;
-  }
-}
 
-[data-primary-area] {
-  figure {
+  }
+
+  [data-primary-area] &,
+  [data-primary-area=""] & {
     background-image: url(/themes/custom/ucsf/assets/images/card/ucsf-reverse.svg);
-    background-color: $navy;
+    background-color: $c-navy;
   }
-}
 
-[data-primary-area="pa-campus-news"],
-[data-primary-area="pa-announcements"],
-[data-primary-area="pa-happenings"],
-[data-primary-area="pa-honors-awards"],
-[data-primary-area="pa-spotlight"] {
-  figure {
-    background-image: url(/themes/custom/ucsf/assets/images/card/campus-reverse.svg);
-    background-color: $navy;
-  }
-}
-
-[data-primary-area="pa-education"] {
-  figure {
-    background-image: url(/themes/custom/ucsf/assets/images/card/education-reverse.svg);
-    background-color: $print-green;
-  }
-}
-
-[data-primary-area="pa-patient-care"] {
-  figure {
-    background-image: url(/themes/custom/ucsf/assets/images/card/doctor-reverse.svg);
-    background-color: $blue;
-  }
-}
-
-[data-primary-area="pa-research"] {
-  figure {
-    background-image: url(/themes/custom/ucsf/assets/images/card/microscope-reverse.svg);
-    background-color: $teal;
-  }
-}
-
-[data-primary-area="pa-ucsf-magazine"],
-// media-coverage card is used on ucsf.edu/topic/covid-19
-.news-card--media-coverage,
-.news-card--magazine-article {
-  figure {
+  // media-coverage card is used on ucsf.edu/topic/covid-19
+  .news-card--media-coverage &,
+  .news-card--magazine-article & {
     background-image: url(/themes/custom/ucsf/assets/images/card/media-reverse.svg);
     background-color: $c-purple;
   }
@@ -181,4 +214,17 @@ a%icon {
   padding-right: 30px;
   background: url(/themes/custom/ucsf/assets/images/ext-link-gray.svg) right center no-repeat transparent;
   background-size: 20px;
+}
+
+// Only rules that are common for all
+figure {
+  @each $area, $color, $background-image in $primary-areas {
+    [data-primary-area="pa-#{$area}"] & {
+      background-repeat: no-repeat;
+      background-position: 50% 35%;
+      background-size: $space-six $space-six;
+      background-image: $background-image;
+      background-color: $color;
+    }
+  }
 }
