@@ -36,6 +36,7 @@
     background-color: $c-background-gray;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.08);
     padding: 0;
+    z-index: 1;
 
     @include breakpoint($new-medium) {
       width: 100%;
@@ -345,12 +346,13 @@
         text-decoration: none;
       }
 
-      a.gs-title {
+      :is(#specificity, a.gs-title) {
+        color: $c-blue-link;
         &:hover {
-          color: $c-blue-link;
+          color: $c-blue-link-hover;
           text-decoration: underline;
           b {
-            color: $c-blue-link;
+            color: $c-blue-link-hover;
           }
         }
       }
@@ -390,11 +392,21 @@
 
       .gsc-cursor-page {
         margin-right: $space-two !important;
+        :is(#specificity, &) {
+          color: $c-blue-link;
 
-        &.gsc-cursor-current-page {
-          color: $c-navy;
+          &:hover{
+            text-decoration: none;
+            color: $c-blue-link-hover;
+          }
+        }
+
+
+        :is(#specificity, &.gsc-cursor-current-page) {
+          color: $c-blue-link-hover;
         }
       }
+
     }
 }
 

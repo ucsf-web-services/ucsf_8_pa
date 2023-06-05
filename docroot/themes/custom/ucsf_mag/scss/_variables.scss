@@ -1,8 +1,44 @@
 // Colors
 // -------------------------
 $c-gulf-blue: #344160 !default; // used on menu links !default;
-// Colors
-//------------------------------------------------------------------------------
+
+// Filter colors
+// -------------------------
+// Use filters in order to not load extra svg just for hover color.
+// https://codepen.io/sosuke/pen/Pjoqqp
+$filter-c-white: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(2%) hue-rotate(291deg) brightness(108%) contrast(101%);
+$filter-c-dark-navy: brightness(0) saturate(100%) invert(5%) sepia(58%) saturate(2369%) hue-rotate(212deg) brightness(90%) contrast(92%); //#121a31;
+$filter-c-blue-link: brightness(0) saturate(100%) invert(25%) sepia(94%) saturate(1577%) hue-rotate(179deg) brightness(99%) contrast(101%); //#0071ad;
+// $filter-c-blue-link: invert(25%) sepia(91%) saturate(2048%) hue-rotate(201deg) brightness(97%) contrast(104%); //#006BE9;
+$filter-c-gulf-blue: brightness(0) saturate(100%) invert(38%) sepia(39%) saturate(379%) hue-rotate(177deg) brightness(90%) contrast(89%);
+
+// // Z-index master list
+// -------------------------
+// Used for a bird's eye view of components dependent on the z-axis
+// Try to avoid customizing these :)
+$zindex-component-bg:     800 !default;
+$zindex-component-mg:     810 !default;
+$zindex-component-fg:     820 !default;
+$zindex-navbar:           830 !default;
+$zindex-dropdown:         840 !default;
+$zindex-popover:          850 !default;
+$zindex-tooltip:          860 !default;
+$zindex-navbar-fixed:     870 !default;
+$zindex-modal-bg:         1000 !default;
+$zindex-modal:            1050 !default;
+
+// Page width
+$mag-page-narrow: 828px;
+
+// Component width / height
+// -------------------------
+$mag-navbar-height: 50px;
+$mag-navbar-height-medium: 72px;
+$mag-navbar-height-big: 112px;
+$mag-search-form-height: 162px;
+$mag-search-form-height-tablet: 142px;
+
+// DELETE WHEN NEW COLOR PALLET IS IMPLEMENTED
 :root {
   --black: #000;
   --c-navy: #052049;
@@ -28,9 +64,10 @@ $c-dark-navy: #121a31;
 $c-teal: #058488;
 $c-green: #568001;
 $c-blue: #007cbe;
+// $c-blue-link: red;
 $c-blue-link: #0071ad;
 $c-blue-link-rollover: #e8f4fa;
-$orange: #f26d04;
+$c-orange: #f26d04;
 $c-purple: #716fb2;
 $c-red: #eb093c;
 $c-yellow: #fd0;
@@ -118,39 +155,3 @@ $color-map: (
   magenta-dark: $c-magenta-dark,
   gray-darkest: $c-gray-darkest,
 );
-
-// Filter colors
-// -------------------------
-// Use filters in order to not load extra svg just for hover color.
-// https://codepen.io/sosuke/pen/Pjoqqp
-$filter-c-white: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(2%) hue-rotate(291deg) brightness(108%) contrast(101%);
-$filter-c-dark-navy: brightness(0) saturate(100%) invert(5%) sepia(58%) saturate(2369%) hue-rotate(212deg) brightness(90%) contrast(92%); //#121a31;
-$filter-c-blue-link: brightness(0) saturate(100%) invert(25%) sepia(94%) saturate(1577%) hue-rotate(179deg) brightness(99%) contrast(101%); //#0071ad;
-$filter-c-gulf-blue: brightness(0) saturate(100%) invert(38%) sepia(39%) saturate(379%) hue-rotate(177deg) brightness(90%) contrast(89%);
-
-// // Z-index master list
-// -------------------------
-// Used for a bird's eye view of components dependent on the z-axis
-// Try to avoid customizing these :)
-$zindex-component-bg:     800 !default;
-$zindex-component-mg:     810 !default;
-$zindex-component-fg:     820 !default;
-$zindex-navbar:           830 !default;
-$zindex-dropdown:         840 !default;
-$zindex-popover:          850 !default;
-$zindex-tooltip:          860 !default;
-$zindex-navbar-fixed:     870 !default;
-$zindex-modal-bg:         1000 !default;
-$zindex-modal:            1050 !default;
-
-// Page width
-$mag-page-narrow: 828px;
-
-// Component width / height
-// -------------------------
-$mag-navbar-height: 50px;
-$mag-navbar-height-medium: 72px;
-$mag-navbar-height-big: 112px;
-$mag-search-form-height: 162px;
-$mag-search-form-height-tablet: 142px;
-
