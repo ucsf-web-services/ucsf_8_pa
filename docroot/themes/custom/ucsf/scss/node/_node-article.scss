@@ -19,7 +19,7 @@
   }
 
   @include breakpoint($new-large) {
-    background: $white;
+    background: $c-white;
     grid-column: 2 / -2;
   }
 
@@ -103,7 +103,7 @@
 .page-node-type-trending {
   .main {
     margin-bottom: 0;
-    background: $white;
+    background: $c-white;
 
     @include breakpoint($new-large) {
       background: transparent;
@@ -285,7 +285,8 @@
           color: $c-white;
 
           a {
-            @include link-rollover($c-white, rgba(255, 255, 255, 0.3));
+            @include link-in-content($c-white);
+
           }
         }
 
@@ -390,69 +391,45 @@
       justify-self: center;
     }
 
-    &.featureoverlaydark {
-      .article-feature-overlay-header {
-        h1,
-        .field-sub-title,
-        .article-header__author {
-          color: $c-white;
-
-          a {
-            @include link-rollover($c-white, rgba(0, 0, 0, 0.45));
-          }
-
-          .article-art-credit {
-            background-color: rgba(0, 0, 0, 0.55);
-            color: $c-white;
-          }
-        }
-
-        .article-header__byline {
-          .article-header__primary-area,
-          .article-header__date {
-            color: $c-white;
-
-            &::before {
-              background: $c-white;
+    $feature-modes: (
+      light: $c-navy,
+      dark: $c-white,
+    );
+    @each $mode, $color in $feature-modes {
+      &.featureoverlay#{$mode} {
+        @if $mode == light {
+          .article-feature-overlay-image {
+            .article-feature-overlay {
+              background-color: rgba(255,255,255,0.65);
             }
           }
         }
 
-        .article-affiliation {
-          color: $c-white;
+        .article-feature-overlay-header {
+          h1,
+          .field-sub-title,
+          .article-header__author {
+            color: $color;
+            a {
+              @include link-in-content($color);
+            }
 
-          &::before {
-            background: $c-white;
+            @if $mode == dark {
+              .article-art-credit {
+                background-color: rgba(0, 0, 0, 0.55);
+                color: $color;
+              }
+            }
           }
-        }
-      }
-    }
 
-    &.featureoverlaylight {
-      .article-feature-overlay-image {
-        .article-feature-overlay {
-          background-color: rgba(255,255,255,0.65);
-        }
-      }
+          .article-header__byline {
+            .article-header__primary-area,
+            .article-header__date {
+              color: $color;
 
-      .article-feature-overlay-header {
-        h1,
-        .field-sub-title,
-        .article-header__author {
-          color: $c-navy;
-
-          a {
-            @include link-rollover($c-navy, rgba(255, 255, 255, 0.65));
-          }
-        }
-
-        .article-header__byline {
-          .article-header__primary-area,
-          .article-header__date {
-            color: $c-navy;
-
-            &::before {
-              background: $c-navy;
+              &::before {
+                background: $color;
+              }
             }
           }
         }
@@ -489,11 +466,11 @@
   }
 
   .article-header__date {
-    color: $gray-blue;
+    color: $c-gray-blue;
   }
 
   &.media {
-    color: $gray-blue;
+    color: $c-gray-blue;
 
     @include breakpoint($bp-medium) {
       white-space: nowrap;
@@ -514,7 +491,7 @@
   float: left;
   height: 3px;
   width: 3px;
-  background: $gray-blue;
+  background: $c-gray-blue;
   margin: .95rem 10px 3px 7px;
   border-radius: 50%;
 }
@@ -535,10 +512,10 @@
 
 @each $area, $color, $color2 in $areas {
   [data-primary-area="pa-#{$area}"] {
-    color: $color;
+    color: $color2;
 
     &::before {
-      background: $color2;
+      background: $color;
     }
   }
 }
@@ -547,7 +524,7 @@
 .article-header .field-sub-title { // .article-header__subheading
   font-size: 20px;
   line-height: 1.6;
-  color: $gray-blue;
+  color: $c-gray-blue;
   margin: 0;
 
   @include medium {
@@ -559,7 +536,7 @@
   font-size: $font-size-xsm;
   font-family: $font-helvetica-neue-roman;
   font-weight: 500;
-  color: $gray-blue;
+  color: $c-gray-blue;
   width: 64%;
   margin-top: $space;
   margin-bottom: 0;
@@ -575,7 +552,7 @@
   }
 
   a {
-    @include link-rollover($gray-blue);
+    @include link-in-content($c-gray-blue);
   }
 }
 
@@ -587,7 +564,7 @@
 
 // Ticket https://ucsfredesign.atlassian.net/browse/UCSFD8-1085
 .video {
-  background-color: $white;
+  background-color: $c-white;
 
   .field-video-caption {
     padding-left: $article-gutter;
@@ -659,7 +636,7 @@
 
 // Field Tags.
 .tags-menu-region {
-  background: $white;
+  background: $c-white;
   padding: $space-four 20px;
   clear: both;
 
@@ -693,7 +670,7 @@
       display: inline-block;
       height: 3px;
       width: 3px;
-      background: $gray-blue;
+      background: $c-gray-blue;
       margin: 0 10px 3px 7px;
       border-radius: 50%;
     }
@@ -735,3 +712,7 @@
     margin-bottom: 0; // bottom margin is removed here because it can cause issues with the parent wrapper
   }
 }
+
+// --------------------------------------------------
+
+

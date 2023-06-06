@@ -1,5 +1,5 @@
 .emergency-alert {
-  color: $white;
+  color: $c-white;
   padding: $space-five 0 $space 0;
 
   .path-frontpage & {
@@ -14,7 +14,7 @@
   }
 
   &__header {
-    color: $white;
+    color: $c-white;
     font-family: $font-helvetica-neue-light;
     font-size: 36px;
     margin-bottom: 0;
@@ -44,14 +44,18 @@
     }
   }
 
-  .link--cta {
-    background-image: url("../images/cta-arrow-white.svg");
-    color: $white;
+  &__content a:not(.link--cta) {
+    @include link-in-content($c-white);
   }
 
-  a {
-    @include link-colors($white);
+  a.link--cta {
+    background-image: url("../images/cta-arrow-white.svg");
+    color: $c-white;
+    &:hover{
+      color: $c-white;
+    }
   }
+
 
   // Modifiers
 
@@ -68,22 +72,7 @@
     }
   }
 
-  &.background-yellow {
-    color: $c-navy;
 
-    .link--cta {
-      background-image: url("../images/cta-arrow-navy.svg");
-    }
-
-    a {
-      @include link-colors($c-navy);
-    }
-
-    .emergency-alert__header {
-      color: $c-navy;
-      filter: none;
-    }
-  }
 
   &.emergency-alert--small-title {
     .emergency-alert__header {
@@ -92,5 +81,39 @@
       background-size: 18px 18px;
       letter-spacing: 0.2px;
     }
+  }
+}
+
+  .emergency-alert.background-yellow {
+    background-color:  $c-yellow-light;
+  }
+
+  .emergency-alert.background-orange {
+    background-color:  $c-orange;
+  }
+
+  .emergency-alert.background-red {
+    background-color:  $c-red;
+  }
+
+.emergency-alert.background-yellow,
+.emergency-alert.background-orange {
+  color: $c-navy;
+
+  &__content a:not(.link--cta) {
+    @include link-in-content($c-navy);
+  }
+
+  a.link--cta {
+    background-image: url("../images/cta-arrow-navy.svg");
+    color: $c-navy;
+    &:hover{
+      color: $c-navy;
+    }
+  }
+
+  .emergency-alert__header {
+    color: $c-navy;
+    filter: none;
   }
 }

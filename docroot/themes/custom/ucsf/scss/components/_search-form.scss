@@ -9,10 +9,10 @@ $icon-btn-size-desktop: 1.75rem;
   & &__input {
     height: $search-form-textbox-height;
     width: 100%;
-    border: 1px solid $near-white;
+    border: 1px solid $c-near-white;
     font-size: $font-size;
     box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
-    color: $gray-blue;
+    color: $c-gray-blue;
     font-family: $font-helvetica-neue-light;
     padding-right: 80px;
 
@@ -22,7 +22,7 @@ $icon-btn-size-desktop: 1.75rem;
     }
 
     &::placeholder {
-      color: $gray-blue;
+      color: $c-gray-blue;
     }
   }
 
@@ -47,6 +47,8 @@ $icon-btn-size-desktop: 1.75rem;
     }
 
     &:hover {
+      @include background-image('magnifier-hover.svg', center);
+      background-size: $icon-btn-size;
       cursor: pointer;
       background-color: transparent;
       border-color: transparent;
@@ -71,8 +73,12 @@ $icon-btn-size-desktop: 1.75rem;
     // Padding is increased by the same amount as negative margin
     // Increased padding will keep icon in place, while negative margin will cause text to move
     &:hover {
-      padding-left: calc(#{$icon-btn-size} + 1rem);
-      margin-right: -.5rem;
+      @include background-image('filter-blue-hover.svg', left);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      margin-right: 0;
+      background-size: $icon-btn-size;
+      color: $c-blue-link-hover;
     }
   }
 }

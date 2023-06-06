@@ -1,4 +1,5 @@
 @include colored("background");
+@include colored("overlay");
 
 * {
   box-sizing: border-box;
@@ -119,7 +120,7 @@ a {
   }
 
   .text-formatted &.button--alt:hover {
-    color: $white;
+    color: $c-white;
   }
 }
 //link style for text areas of articles, full-width, and narrow pages
@@ -129,23 +130,23 @@ a {
 .full-width-page-banner,
 .fact-card {
   a {
-    @include link-rollover();
+    @include link-in-content();
   }
 }
 
 .rollover--blue {
-  @include link-rollover();
+  @include link-in-content();
 }
 
 .tags-menu,
 .footer-ctas-wrapper,
 .event-card__title {
   a {
-    border-bottom: 1px solid transparent;
+    border-bottom: 2px solid transparent;
 
     &:hover {
       background-color: transparent;
-      text-decoration: underline;
+      // text-decoration: underline;
     }
   }
 }
@@ -173,6 +174,12 @@ a {
   text-decoration: none;
   font-family: $font-helvetica-neue-medium;
   border-bottom: none;
+
+  &:hover {
+    @include link-bg-image('cta-arrow-blue-hover.svg');
+    color: $c-blue-link-hover;
+    background-size: 14px 10px;
+  }
 }
 
 span.ext {
@@ -185,6 +192,7 @@ span.ext {
 }
 
 .button,
+.button:link,
 .full-width-page-wrapper .button,
 .full-width-page-wrapper .button:first-child,
 .full-width-page-wrapper .button:last-child,
@@ -218,8 +226,8 @@ a.button-reverse:visited,
 .full-width-page-wrapper a.button-reverse:visited {
   @include button;
 
-  color: $white;
-  border-color: $white;
+  color: $c-white;
+  border-color: $c-white;
 }
 
 // .narrow-page a:hover was overwriting border bottom of the button
@@ -232,7 +240,7 @@ a.button-reverse:visited,
   list-style: none;
   padding: 0;
   margin: 0;
-  border-top: 1px solid $gray-lightest;
+  border-top: 1px solid $c-gray-lightest;
   margin-bottom: $space-five;
 
   a,
@@ -242,7 +250,7 @@ a.button-reverse:visited,
     text-decoration: none;
     font-family: $font-helvetica-neue-medium;
     padding: $space-two 0;
-    border-bottom: 1px solid $gray-lightest;
+    border-bottom: 1px solid $c-gray-lightest;
     background-image: url('../images/cta-arrow.svg');
     background-repeat: no-repeat;
     background-color: transparent;
@@ -259,27 +267,32 @@ a.button-reverse:visited,
       background-repeat: no-repeat;
       background-position: 98% center;
       background-color: $c-blue-link-rollover;
+      background-image: url('../images/cta-arrow-blue-hover.svg');
     }
   }
 }
 
 .cta--list {
   a {
+    border-bottom: 1px solid #CACED2;
     &:hover,
     &:focus {
-      background-image: url('../images/cta-arrow.svg');
+      border-bottom: 1px solid #e8f4fa;
+      background-image: url('../images/cta-arrow-blue-hover.svg');
     }
   }
 }
 
 .ext--list {
+  border-bottom: 1px solid #CACED2;
   a {
+    border-bottom: 1px solid #e8f4fa;
     background-image: url('../images/ext-link.svg');
     background-size: 20px;
 
     &:hover,
     &:focus {
-      background-image: url('../images/ext-link.svg');
+      background-image: url('../images/cta-arrow-blue-hover.svg');
     }
   }
 }
@@ -299,6 +312,8 @@ a.button-reverse:visited,
     display: inline-block;
     margin-right: $space-three;
   }
+
+
 }
 
 .line--list {
@@ -323,7 +338,7 @@ figure {
 .field-video-caption,
 figcaption {
   font-size: $font-size-xsm;
-  color: $gray-blue;
+  color: $c-gray-blue;
   padding-top: $space-double;
   font-family: $font-helvetica-neue-roman;
   font-weight: 500;
@@ -365,7 +380,7 @@ strong, b {
 
 // Global Content Styles
 .submitted {
-  color: $c-gray;
+  color: $c-gray-darkest;
   font-size: 13px;
 }
 

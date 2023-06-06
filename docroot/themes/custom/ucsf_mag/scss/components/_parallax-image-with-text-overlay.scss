@@ -1,4 +1,16 @@
 // Magazine specific overwrites to the scrolly.
+$parallax-options: (
+  navy: $c-navy,
+  blue-dark: $c-blue-dark,
+  teal-dark: $c-teal-dark,
+  green-cool: $c-green-dark,
+  green-warm: $c-green-warm,
+  purple-dark: $c-purple-dark,
+  violet-dark: $c-violet-dark,
+  magenta-dark:$c-magenta-dark,
+  gray-darkest: $c-gray-darkest
+);
+
 .page_narrow--scrolly {
   padding-left: 0;
   padding-right: 0;
@@ -11,31 +23,39 @@
     }
 
     a:not(.button) {
-      color: $white;
-      border-bottom-color: $white;
-      @include breakpoint($new-large) {}
+      color: $c-white;
+      font-weight: $fw-medium-link;
+      border-bottom-color: $c-white;
+      &:hover {
+        color: $c-white;
+        border-bottom: 2px solid;
+        border-bottom-color: $c-white;
+      }
+
+      @include breakpoint($new-large) {
+
+      }
 
     }
 
     .button {
-      color: $white;
-      border-color: $white;
+      color: $c-white;
+      border-color: $c-white;
       background-color: transparent;
     }
   }
 
-  @each $name, $color in $color-map {
-    .background-#{$name}  + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: darken($color, 5%);
-      @include breakpoint($new-large) {
-        background-color: #{$color};
-        border-bottom-color: #{$color};
+  @each $name, $color in $parallax-options {
+    .background-#{$name} {
+      --color-rgb: #{hex-to-rgb($color)};
+      @include breakpoint($new-large-max) {
+        background-color: $color;
       }
     }
 
     .background-#{$name} + .scrolly-gallery__text-inner .button:hover {
       background-color: darken($color, 5%);
-      border-color: $white;
+      border-color: $c-white;
       @include breakpoint($new-large) {
         background-color: #{$color};
         border-color: #{$color};
@@ -75,7 +95,7 @@
     @include breakpoint($new-large-max) {
       padding-left: 20px;
       padding-right: 20px;
-      color: $white;
+      color: $c-white;
     }
   }
 }

@@ -2,19 +2,18 @@
 @import '../tools/variables';
 @import '../tools/variables-space';
 @import '../tools/mixins';
-@import '../tools/variables-pl';
 @import '../tools/mixins-pl';
 @import '../tools/mixins-font-styles';
 // Exposed Filter
 .block-views-exposed-filter-blocknews-filter-page-1 {
-  background: $c-grey-pale;
+  background: $c-background-gray;
 
   .form--inline .form-item {
     margin: 0;
   }
 
   form {
-    background: $c-grey-pale;
+    background: $c-background-gray;
 
     @include breakpoint($new-medium) {
       padding: 0 $space-ten;
@@ -38,6 +37,13 @@
       width: 24px;
       font-family: $font-helvetica-neue-medium;
 
+      &:hover {
+        @include background-image('filter-blue-hover.svg', left);
+        background-size: 24px 24px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+      }
+
       @include breakpoint($bp-medium) {
         padding-left: 32px;
         right: 23px;
@@ -57,20 +63,15 @@
       }
     }
   // Advanced.
-  #universal-search {
-    .search-filter__advanced {
-
-    }
-  }
   .form-item-combine {
     margin: 0;
   }
 
   // Text Input.
   [data-drupal-selector="edit-combine"] {
-    border: 1px solid $near-white;
+    border: 1px solid $c-near-white;
     box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.04);
-    color: $gray-blue;
+    color: $c-gray-blue;
     font-family: $font-helvetica-neue-light;
     font-size: $font-size;
     height: 52px;
@@ -87,7 +88,7 @@
     }
 
     &::placeholder {
-      color: $gray-blue;
+      color: $c-gray-blue;
     }
   }
 
@@ -109,7 +110,7 @@
 
 // Top of Filter.
 .search-filter__top {
-  background: $c-grey-pale;
+  background: $c-background-gray;
   position: relative;
   padding: 40px 20px;
   padding-bottom: 80px;
@@ -143,12 +144,22 @@
     top: 56px;
     width: 24px;
 
+    &:hover {
+      @include background-image('magnifier-hover.svg', center);
+      background-size: 23px;
+    }
+
     @include breakpoint($bp-medium) {
       background-size: 28px;
       height: 80px;
       right: 23px;
       top: 47px;
       width: 45px;
+
+      &:hover {
+        background-size: 28px;
+      }
+
     }
 
     @include breakpoint($new-medium) {
@@ -315,6 +326,11 @@
     top: 16px;
     background-size: 18px;
 
+    &:hover {
+      @include background-image('x-large-hover.svg', left);
+      background-size: 18px;
+    }
+
     @include breakpoint($bp-medium) {
       left: auto;
       right: 28px;
@@ -326,7 +342,7 @@
 // Dropdown filters.
 .search-filter__dropdown {
   @include transition;
-  background: $c-grey-pale;
+  background: $c-background-gray;
   height: 0;
   width: 100%;
   visibility: hidden;
@@ -459,8 +475,8 @@
 
 // Results
 .view-news-filter {
-  background: $white;
-  background: $c-grey-pale;
+  background: $c-white;
+  background: $c-background-gray;
 
   .view-header { // @todo Remove from view.
     display: none;
@@ -472,7 +488,7 @@
 
   .view-content {
     max-width: $bp-full;
-    background: url("../images/gray-sq.svg") right top no-repeat $white;
+    background: url("../images/gray-sq.svg") right top no-repeat $c-white;
     background-size: 16px;
     margin: 0 auto;
     margin-top: -$space-five;
@@ -480,7 +496,7 @@
     position: relative;
 
     @include breakpoint($new-medium) {
-      background: url("../images/gray-sq.svg") left top no-repeat $white;
+      background: url("../images/gray-sq.svg") left top no-repeat $c-white;
       background-size: 80px;
       margin-top: -$space-ten;
       padding-top: $space-ten;
@@ -498,7 +514,7 @@
   .view-empty {
     max-width: $bp-full;
     margin: 0 auto;
-    background: $white;
+    background: $c-white;
   }
 
   .view-empty {
@@ -517,7 +533,7 @@
       right: 0;
       width: 16px;
       height: 16px;
-      background-color: #f2f4f6;
+      background-color: $c-background-gray;
 
       @include breakpoint($new-medium) {
         width: 80px;
@@ -585,6 +601,10 @@
       text-decoration: underline;
     }
   }
+}
+
+.search-filter__indicator-item:hover{
+ color: $white;
 }
 
 .js-search_filter__is-open {

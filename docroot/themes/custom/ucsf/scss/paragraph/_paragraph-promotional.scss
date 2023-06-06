@@ -1,5 +1,5 @@
 .promo-list__card {
-  color: $white;
+  color: $c-white;
   position: relative;
 
   &::after {
@@ -25,6 +25,7 @@
       .link--cta {
         @include link-bg-image-hover;
         text-decoration: underline;
+        text-decoration-thickness: 2px;
         padding-right: $space-four;
         background-position: 100% center;
       }
@@ -35,7 +36,7 @@
     @include link-bg-image('cta-arrow-white.svg');
     background-position: 96% center;
     background-size: 14px 10px;
-    color: $white;
+    color: $c-white;
     padding-right: $space-four;
     transition: 0.15s $transition-type background-position;
   }
@@ -57,11 +58,12 @@
     margin-bottom: $space-three;
 
     a {
-      color: $white;
+      color: $c-white;
 
       &:hover {
-        color: $white;
+        color: $c-white;
         text-decoration: underline;
+        text-decoration-thickness: 2px;
       }
     }
 
@@ -69,7 +71,7 @@
       @include link-bg-image('cta-arrow-white.svg');
       @include link-bg-image-hover(96%, 98%);
       background-size: 14px 10px;
-      color: $white;
+      color: $c-white;
       padding-right: $space-four;
     }
   }
@@ -78,36 +80,16 @@
     @include eyebrow;
 
     margin: 0;
-    color: $white;
+    color: $c-white;
     font-size: 12px;
 
     &::after {
-      background-color: $white;
+      background-color: $c-white;
     }
   }
 
   // overwrite for link color
   a.promo-list__card-link {
-    color: $white;
-  }
-
-  &.overlay-yellow {
-    .promo-list__card-link {
-      color: $c-navy;
-    }
-
-    .promo-list__card-title {
-      color: $c-navy;
-
-      &::after {
-        display: inline-block;
-        background-color: $c-navy;
-      }
-    }
-
-    .link--cta {
-      background-image: url("../images/cta-arrow-navy.svg");
-      color: $c-navy;
-    }
+    color: $c-white;
   }
 }
