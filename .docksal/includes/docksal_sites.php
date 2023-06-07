@@ -20,7 +20,7 @@
  */
 
 // Only do this for a docksal request.
-if (substr($_SERVER['VIRTUAL_HOST'] ?? '', -13) == '.docksal.site') {
+if (getenv('IS_DOCKSAL')) {
 
   // For browser requests to a multi-site.
   if (stripos($_SERVER['SERVER_NAME'] ?? '', '.' . $_SERVER['VIRTUAL_HOST']) !== FALSE) {
