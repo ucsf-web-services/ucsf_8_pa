@@ -44,67 +44,62 @@ $filter-black-to-white: invert(100%) sepia(31%) saturate(7%) hue-rotate(219deg) 
 $bk-color-white: $c-white;
 $c-near-white: #efefef;
 // Red
-$c-red: #E61048;
+$n3-red: #E61048;
 // Orange
 $c-orange: #FE8638;
 // Yellow
-$c-yellow: #FEB80A;
+$l3-yellow: #FEB80A;
 $c-yellow-light: #FED658; //used only 1, for emrgcy alert
 // Teal
 $c-teal: #058488;
-$c-teal-alt: #16A0AC;
 $filter-16A0AC: invert(45%) sepia(55%) saturate(2454%) hue-rotate(152deg) brightness(94%) contrast(83%);
-$c-teal-medium: #14828C;
-$c-teal-dark: #0E5258;
+$c1-teal: #0E5258;
+$c2-teal: #14828C;
+$c3-teal: #16A0AC;
 $bk-color-teal: #e8f6f7;
 // Green
 $c-green: #2C8A1A;
-$c-green-alt: #007242; // aka Cool green
-$c-light-green-cool: #32A03E; // also called Cool green in ui
+$d1-green: #00483A; // Scrolly cool green
+$d2-green: #007242; // aka Cool green
+$d3-green: #32A03E; // also called Cool green in ui
 $c-green-warm: #006400; // Warm Green
-$c-green-dark: #00483A; // Scrolly cool green
 
 // Blue
 $c-blue:#4896E8;
 $c-blue-alt:#007CBE;
-$c-blue-light: #178ccb;
+$b3-blue: #178ccb;
 $c-blue-warm: #086290;
-$c-blue-medium: #0F388A;
+$a2-blue: #0F388A;
 $filter-0F388A: invert(18%) sepia(49%) saturate(2847%) hue-rotate(208deg) brightness(94%) contrast(103%);
 $c-blue-dark: #064260;
 $bk-color-blue: #e8f4fa;
 $c-twitter-blue: #EEFAFF;
 // Navy
-$c-navy: #052049;
+$a1-navy: #052049;
 $c-dark-navy: #121a31;
 
 // Purple
-$c-purple: #6C62D0;
-$c-purple-medium: #443E8C;
-$c-purple-dark: #2E2872;
+$f1-purple: #2E2872;
+$f2-purple: #443E8C;
+$f3-purple: #6C62D0;
 
 // Violet
-$c-violet: #A238BA;
-$c-violet-dark: #461850;
-$c-violet-medium: #6C247C;
+$g1-violet: #461850;
+$g2-violet: #6C247C;
+$g3-violet: #A238BA;
 
 // Magenta
-$c-magenta: #C42882;
-$c-magenta-medium: #821A56;
-$c-magenta-dark: #561038;
+$h1-magenta: #561038;
+$h2-magenta: #821A56;
+$h3-magenta: #C42882;
 
 // Gray
-$c-grey-pale: #f2f4f6;
 $c-gray-lightest: #ddd;
-$c-gray-lighter: #d1d3d3;
-$c-gray-light: #b4b9bf;
-$c-near-medium: #939393;
+$k3-gray: #d1d3d3;
 $c-gray: #9ba6b6; // aka "Cool Gray"
 $c-gray-darkest: #21272A;
-$c-gray-dark: #666;
-$c-gray-darker: #525860;
 $c-gray-blue: #506380;
-$c-background-gray: #f2f3f4;
+$i6-gray:#f2f3f4;
 $c-border-grey-blue: #d5d9de;
 
 // Links/CTA
@@ -112,7 +107,7 @@ $c-border-grey-blue: #d5d9de;
 $c-cta-element: #006BE9;
 $filter-006BE9: invert(25%) sepia(91%) saturate(2048%) hue-rotate(201deg) brightness(97%) contrast(104%);
 $c-blue-link: $c-cta-element;
-$c-blue-link-hover: $c-blue-medium;
+$c-blue-link-hover: $a2-blue;
 $c-blue-link-rollover: #e8f4fa;
 $c-unpublished: #fdecf0;
 
@@ -121,34 +116,30 @@ $facebook-color: #3b5998;
 $twitter-color: #1da1f2;
 $reddit-color: #ff4500;
 
-//Magazine
-$magazine-gray-blue: #384559;
-
-
 // List of areas/topics and colors associated with them
 // @param $area - string of text used to create css selector.
 // @param $color1 - color for the background
 // @param $color2 - color for the text
 $areas: (
   // ($area, $color1, $color2),
-  ("about", $c-purple, $c-purple),
-  ("about-menu", $c-navy, $c-navy),
-  ("campus-news", $c-navy, $c-navy),
-  ("education", $c-light-green-cool, $c-green-alt),
-  ("news-center", $c-purple, $c-purple),
-  ("news--media", $c-purple, $c-purple),
-  ("patient-care", $c-blue-light, $c-blue-warm),
-  ("research", $c-teal-alt, $c-teal-medium),
-  ("ucsf-magazine", $c-purple, $c-purple),
+  ("about", $f3-purple, $f3-purple),
+  ("about-menu", $a1-navy, $a1-navy),
+  ("campus-news", $a1-navy, $a1-navy),
+  ("education", $d3-green, $d2-green),
+  ("news-center", $f3-purple, $f3-purple),
+  ("news--media", $f3-purple, $f3-purple),
+  ("patient-care", $b3-blue, $c-blue-warm),
+  ("research", $c3-teal, $c2-teal),
+  ("ucsf-magazine", $f3-purple, $f3-purple),
 );
 
 // Used for desktop navigation panel colors
 $areas-nav: (
-  about-menu: $c-navy,
+  about-menu: $a1-navy,
   education: $c-green-warm,
-  news--media: $c-purple,
+  news--media: $f3-purple,
   patient-care: $c-blue-alt,
-  research: $c-teal-medium,
+  research: $c2-teal,
 );
 
 // These are used when element has color accents,
@@ -156,32 +147,32 @@ $areas-nav: (
 // For example: full width blockquote, promo square card with offset color.
 $color-options-no-text: (
   blue: $c-blue,
-  light-blue: $c-blue-light,
-  teal: $c-teal-alt,
-  cool-green: $c-light-green-cool,
+  light-blue: $b3-blue,
+  teal: $c3-teal,
+  cool-green: $d3-green,
   warm-green: $c-green,
   green: $c-green,
-  purple: $c-purple,
-  violet: $c-violet,
-  magenta:$c-magenta,
+  purple: $f3-purple,
+  violet: $g3-violet,
+  magenta:$h3-magenta,
   gray: $c-gray,
-  navy: $c-navy,
-  yellow: $c-yellow,
+  navy: $a1-navy,
+  yellow: $l3-yellow,
   dark-gray: $c-gray-darkest,
 );
 
 // These are used when the element has colored background and text is on top of it,
 // such as: emergency alert, promo card with background image.
 $color-options-with-text: (
-  blue: $c-blue-medium,
+  blue: $a2-blue,
   light-blue: $c-blue-warm,
-  teal: $c-teal-medium,
-  cool-green: $c-green-alt,
+  teal: $c2-teal,
+  cool-green: $d2-green,
   warm-green: $c-green-warm,
-  purple: $c-purple-medium,
-  violet: $c-violet-medium,
-  magenta:$c-magenta-medium,
-  navy: $c-navy,
+  purple: $f2-purple,
+  violet: $g2-violet,
+  magenta:$h2-magenta,
+  navy: $a1-navy,
   dark-gray: $c-gray-darkest,
 );
 
