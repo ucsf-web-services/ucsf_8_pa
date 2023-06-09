@@ -1,5 +1,17 @@
+$parallax-options: (
+  navy: $a1-navy,
+  blue-dark: $c-blue-dark,
+  teal-dark: $c1-teal,
+  green-cool: $d1-green,
+  green-warm: $c-green-warm,
+  purple-dark: $f1-purple,
+  violet-dark: $g1-violet,
+  magenta-dark:$h1-magenta,
+  gray-darkest: $c-gray-darkest
+);
+
 .page_narrow {
-    &--scrolly {
+  &--scrolly {
     padding-top: 40px;
 
     @include breakpoint($new-large) {
@@ -47,19 +59,19 @@
   .eyebrow-title,
   .eyebrow-title::after {
     @include breakpoint($new-large) {
-      color: $white;
+      color: $c-white;
     }
   }
 
   .eyebrow-title::after {
-    background-color: $white;
+    background-color: $c-white;
   }
 
   // Reset links and buttons.
   a {
     @include breakpoint($new-large) {
       border-bottom: 1px solid;
-      border-bottom-color: $white;
+      border-bottom-color: $c-white;
     }
   }
 
@@ -72,13 +84,17 @@
     display: block;
     border: 2px solid;
     @include breakpoint($new-large) {
-      color: $white;
-      border-color: $white;
+      color: $c-white;
+      border-color: $c-white;
       background-color: transparent;
     }
   }
 
-  @each $name, $color in $color-map {
+  @each $name, $color in $parallax-options {
+    .background-#{$name} {
+      --color-rgb: #{hex-to-rgb($color)};
+    }
+
     .background-#{$name}  + .scrolly-gallery__text-inner a:not(.button):hover {
       @include breakpoint($new-large) {
         background-color: #{$color};
@@ -97,15 +113,15 @@
   .background- {
     & + .scrolly-gallery__text-inner a:not(.button):hover {
       @include breakpoint($new-large) {
-        background-color: $c-navy;
-        border-bottom-color: $c-navy;
+        background-color: $a1-navy;
+        border-bottom-color: $a1-navy;
       }
     }
 
     & + .scrolly-gallery__text-inner .button:hover {
       @include breakpoint($new-large) {
-        background-color: $c-navy;
-        border-color: $c-navy;
+        background-color: $a1-navy;
+        border-color: $a1-navy;
       }
     }
   }
@@ -244,7 +260,7 @@
       position: fixed;
       height: var(--scrolly-gallery-height, 100vh);
       width: var(--scrolly-gallery-width, 100%);
-      color: $white;
+      color: $c-white;
       opacity: 0;
       z-index: 2;
     }
@@ -257,7 +273,7 @@
   &__text-overlay {
     transition: opacity 1s;
     backdrop-filter: grayscale(100%);
-    background-color: rgba(var(--color-rgb, hex-to-rgb($c-navy)), .75);
+    background-color: rgba(var(--color-rgb, hex-to-rgb($a1-navy)), .75);
 
     .scrolly-gallery__text--out & {
       animation: scrolly-gallery-fade-out .75s ease-in;

@@ -6,7 +6,7 @@ $quote-border-left: 1rem;
   @include clearfix;
 
   &.blockquote-full-width {
-    background: $white;
+    background: $c-white;
     margin: 0;
 
     .field-blockquote-body {
@@ -74,7 +74,7 @@ $quote-border-left: 1rem;
   }
 
   .blockquote-content {
-    background: $background-gray;
+    background: $i6-gray;
     padding: $space-five;
 
     @include breakpoint($new-small-max) {
@@ -117,7 +117,7 @@ $quote-border-left: 1rem;
 .page_narrow .blockquote,
 .paragraph-text-block .blockquote,
 .narrow-page-body .blockquote {
-  background: $background-gray;
+  background: $i6-gray;
 
   @each $direction in $align-directions {
     &--half-#{$direction} {
@@ -261,8 +261,16 @@ $quote-border-left: 1rem;
 }
 
 // Border colors.
-@each $name, $color in $color-map {
+@each $name, $color in $color-options-no-text {
   .blockquote--color-#{$name} {
     border-color: $color;
   }
+}
+
+.blockquote--color-black {
+  border-color: $c-gray-darkest;
+}
+
+.blockquote--color-green {
+  border-color: $c-green;
 }

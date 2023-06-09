@@ -3,9 +3,13 @@ version: "3.9"
 services:
   cli:
     environment:
+      - IS_DOCKSAL=1
+      - SOLR_CORE
       - API_KEY
       - API_SECRET
       - ACQUIA_ENV_ID
+      - MODULES_ENABLED
+      - MODULES_DISABLED
   pma:
     hostname: pma
     image: phpmyadmin/phpmyadmin

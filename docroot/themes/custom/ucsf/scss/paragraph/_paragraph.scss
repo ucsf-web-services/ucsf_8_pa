@@ -570,7 +570,7 @@
 }
 
 .bg-gray {
-  background: $background-gray;
+  background: $i6-gray;
   padding-bottom: $space-five;
   margin-top: $space-five;
 
@@ -581,30 +581,16 @@
 }
 
 .bg-white {
-  background: $white;
+  background: $c-white;
 }
 
-@each $name, $color in $color-map {
+
+// Accent colors
+@each $name, $color in $color-options-no-text{
   // create a class name based on the color name
-  .overlay-#{$name} {
-    // convert hex value into rgba box-shadow
-    box-shadow: inset 0 0 0 1000px rgba($color, 0.8);
-    &:hover {
-      box-shadow: inset 0 0 0 1000px rgba($color, 0.95);
-    }
+  .accent-#{$name} {
+    border-bottom: 8px solid #{$color};
   }
-}
-
-.accent-purple {
-  border-bottom: 8px solid $c-purple;
-}
-
-.accent-teal {
-  border-bottom: 8px solid $print-teal;
-}
-
-.accent-blue {
-  border-bottom: 8px solid $print-blue;
 }
 
 .nobel-card {
@@ -705,7 +691,7 @@
 }
 
 .memberships-cards__card {
-  border: 1px solid $c-gray-border;
+  border: 1px solid $c-gray;
   margin-right: $space-three;
   padding: $space-four;
   min-height: 285px;
@@ -738,7 +724,7 @@
 .memberships-cards__title {
   @include fs-display;
 
-  color: $teal;
+  color: $c3-teal;
   margin-bottom: $space-four;
 }
 
@@ -782,7 +768,7 @@
         &:hover {
           background: $c-white;
           border-bottom: 1px solid $c-white;
-          color: $c-navy;
+          color: $a1-navy;
         }
       }
 
@@ -829,7 +815,7 @@
         &:hover {
           background: $c-white;
           border-bottom: 1px solid $c-white;
-          color: $c-navy;
+          color: $a1-navy;
         }
       }
 
@@ -866,7 +852,7 @@
     &:hover {
       background: $c-white;
       border-bottom: 1px solid $c-white;
-      color: $c-navy;
+      color: $a1-navy;
     }
   }
 

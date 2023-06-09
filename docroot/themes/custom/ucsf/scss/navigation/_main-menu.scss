@@ -32,7 +32,7 @@ $label-width: 48px;
   // navbar buttons
   &__toggle {
     background-color: transparent;
-    color: $gray-blue;
+    color: $c-gray-blue;
     border: none;
     line-height: $nav-line-height;
     letter-spacing: 0;
@@ -50,7 +50,7 @@ $label-width: 48px;
     }
 
     &:focus {
-      outline: 1px dotted $c-navy;
+      outline: 1px dotted $a1-navy;
     }
 
     // Remove margin from first menu item
@@ -77,7 +77,7 @@ $label-width: 48px;
 
   @include visually-hidden;
   visibility: hidden;
-  background: $c-grey-pale;
+  background: $i6-gray;
   height: auto;
   right: 0;
   z-index: $z-quicklinks-open-page;
@@ -120,7 +120,7 @@ $label-width: 48px;
       }
 
       .menu-item {
-        border-bottom: 1px solid #d5d9de;
+        border-bottom: 1px solid #CACED2;
         display: block;
         margin-left: 73px;
       }
@@ -181,12 +181,12 @@ $label-width: 48px;
 
       // Icon angle right on menu item hover
       &:hover .fa-angle-right {
-        color: $c-blue-link;
+        color: $c-cta-element;
       }
     }
 
     a {
-      @include link-colors($c-navy, $c-blue-link);
+      @include link-colors($a1-navy, $c-cta-element);
       display: block;
       font-family: $font-helvetica-neue-light;
       font-size: 18px;
@@ -223,7 +223,7 @@ $label-width: 48px;
       width: $label-width;
       padding: 24px 0;
 
-      @each $area, $color, $color2 in $areas {
+      @each $area, $color in $areas-nav {
         &[data-section="section-#{$area}"] {
           background: $color;
         }
@@ -255,7 +255,7 @@ $label-width: 48px;
     text-align: left;
 
     &:hover {
-      color: $c-blue-link;
+      color: $c-cta-element;
     }
   }
 
@@ -293,7 +293,7 @@ $label-width: 48px;
   border: 0;
 
   &:focus {
-    border: 1px dotted $c-navy;
+    border: 1px dotted $a1-navy;
   }
 }
 
@@ -326,7 +326,7 @@ $label-width: 48px;
   }
 
   &:focus {
-    border: 1px dotted $c-navy;
+    border: 1px dotted $a1-navy;
   }
 
   // "X" btn when search form is open
@@ -339,7 +339,7 @@ $label-width: 48px;
     }
 
     &:focus {
-      border: 1px dotted $c-navy;
+      border: 1px dotted $a1-navy;
     }
   }
 
@@ -422,14 +422,23 @@ $label-width: 48px;
     //margin-left: -$space-three;
 
     a.universal-header__give {
-      color: $white;
+      color: $c-white;
       width: 100%;
       padding: $space-two $space-three;
       text-align: left;
       font-family: $font-helvetica-neue-medium;
-      background: url(/themes/custom/ucsf/assets/images/card/heart-reverse.svg) no-repeat #007cbe;
-      background-size: 32px;
-      background-position: calc(100% - 24px);
+
+      &::before {
+        content: "";
+        display: block;
+        width: 32px;
+        height: 32px;
+        background: url(/themes/custom/ucsf/assets/images/card/heart-black.svg) no-repeat transparent;
+        background-size: 32px;
+        position: absolute;
+        right: 24px;
+        filter: $filter-black-to-white;
+      }
     }
   }
 }

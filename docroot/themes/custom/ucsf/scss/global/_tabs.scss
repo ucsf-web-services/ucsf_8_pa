@@ -17,11 +17,11 @@
 
 
       a {
-        background-color: $white;
+        background-color: $c-white;
         padding: $space-two $space-four;
         cursor: pointer;
         display: block;
-        border-bottom: 1px solid $gray-lightest;
+        border-bottom: 1px solid $c-gray-lightest;
         text-decoration: none;
         font-family: $font-helvetica-neue-medium;
       }
@@ -31,7 +31,7 @@
       }
 
       &[aria-selected="true"] a {
-        @include background-image('vertical-tab-highlight.png', left center, $white);
+        @include background-image('vertical-tab-highlight.png', left center, $c-white);
         color: $c-blue-link;
         border-top: 0;
         border-bottom: 0;
@@ -58,7 +58,7 @@
   }
 
   .cta-list, .ext-list { // PL: .vertical-tab__content
-    background-color: $white;
+    background-color: $c-white;
     min-height: 15em;
     padding-top: 0;
   }
@@ -80,7 +80,7 @@
       padding: 56px 80px;
       padding-bottom: 56px;
       padding-bottom: 0;
-      background: #f2f4f6;
+      background: $i6-gray;
       width: 62%;
       min-height: 42em;
     }
@@ -91,7 +91,7 @@
     width: 38%;
 
     li {
-      border-bottom: 1px solid $gray-lightest;
+      border-bottom: 1px solid $c-gray-lightest;
 
       a {
         @include fs-heading-two;
@@ -108,7 +108,7 @@
       }
 
       &[aria-selected="true"] a {
-        @include background-image('vertical-tab-highlight-alt.png', right center, $white);
+        @include background-image('vertical-tab-highlight.png', right center, $white);
         color: $c-blue-link;
         border-top: 0;
         position: relative;
@@ -131,7 +131,7 @@
 
       &::-webkit-scrollbar {
         width: 5px;
-        background-color: $c-gray-lighter;
+        background-color: $k3-gray;
         border-radius: 5px;
       }
 
@@ -157,10 +157,12 @@
         font-family: $font-helvetica-neue-medium;
 
         a {
-          color: $c-navy;
+          color: $a1-navy;
+          border-bottom-color: $a1-navy;
 
           &:hover {
             color: $c-blue-link;
+            border-bottom-color: $c-blue-link;
           }
         }
       }
@@ -180,10 +182,10 @@
     padding: 20px;
     padding-right: 70px;
     margin: 0;
-    border-bottom: 1px solid $c-gray-lighter;
+    border-bottom: 1px solid $k3-gray;
 
     &:first-child {
-      border-top: 1px solid $c-gray-lighter;
+      border-top: 1px solid $k3-gray;
     }
 
     &.ui-accordion-header-collapsed {
@@ -200,7 +202,7 @@
     }
 
     .vertical-tab-alt & {
-      background-color: #f2f4f6;
+      background-color: $i6-gray;
       font-family: $font-granjon;
       font-size: 28px;
       line-height: 1.14;
@@ -216,10 +218,10 @@
 .ui-accordion .ui-accordion-content {
   padding: 30px 20px;
   height: auto !important;
-  border-bottom: 1px solid $c-gray-lighter;
+  border-bottom: 1px solid $k3-gray;
 
   .vertical-tab-alt & {
-    background: #f2f4f6;
+    background: $i6-gray;
   }
 
   .field-tab-content {

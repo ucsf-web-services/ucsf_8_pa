@@ -7,7 +7,7 @@
  */
 
 // Only do this for a docksal request.
-if (substr($_SERVER['VIRTUAL_HOST'] ?? '', -13) == '.docksal.site') {
+if (getenv('IS_DOCKSAL')) {
 
   // Set the db name for the "default" site to the project/virtual hostname.
   // For multi-sites, see ./docksal/includes/docksal_sites.php.

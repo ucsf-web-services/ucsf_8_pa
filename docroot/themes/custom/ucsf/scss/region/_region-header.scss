@@ -3,7 +3,7 @@ $icon-logo-height-sticky: 30px;
 
 .header-region {
   @include breakpoint($bp-until-large) {
-    background: $white;
+    background: $c-white;
     padding-bottom: 12px;
     padding-top: 11px;
     height: 50px;
@@ -11,7 +11,7 @@ $icon-logo-height-sticky: 30px;
   }
 
   @include breakpoint($bp-large) {
-    background: $white;
+    background: $c-white;
     box-shadow: 0 12px 12px -4px rgba(0, 0, 0, 0.02);
   }
 }
@@ -53,7 +53,7 @@ $icon-logo-height-sticky: 30px;
 
 .header--search {
   a {
-    @include link-colors($c-navy, $c-blue-link);
+    @include link-colors($a1-navy, $c-blue-link);
 
     position: absolute;
     right: 60px;
@@ -102,7 +102,7 @@ $icon-logo-height-sticky: 30px;
       top: 9px;
 
       .search__form {
-        background: $white;
+        background: $c-white;
         border: 1px solid #efefef;
 
         .home-search__form-input {
@@ -111,6 +111,12 @@ $icon-logo-height-sticky: 30px;
 
         .home-search__form-submit {
           margin-left: -70px;
+        }
+
+        input[type="submit"] {
+          &:hover {
+            background-color: transparent;
+          }
         }
       }
 

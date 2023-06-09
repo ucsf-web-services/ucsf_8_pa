@@ -825,6 +825,6 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
 }
 // Only do this for a docksal request.
-if (substr($_SERVER['VIRTUAL_HOST'] ?? '', -13) == '.docksal.site') {
+if (getenv('IS_DOCKSAL')) {
   require('../.docksal/includes/docksal_settings.php');
 }
