@@ -31,11 +31,6 @@ $parallax-options: (
         border-bottom: 2px solid;
         border-bottom-color: $c-white;
       }
-
-      @include breakpoint($new-large) {
-
-      }
-
     }
 
     .button {
@@ -52,6 +47,16 @@ $parallax-options: (
         background-color: $color;
       }
     }
+
+    .background-#{$name}  + .scrolly-gallery__text-inner a:not(.button):hover {
+        background-color: darken($color, 5%);
+        border-bottom-color: darken($color, 5%);
+
+        @include breakpoint($new-large) {
+          background-color: #{$color};
+          border-bottom-color: #{$color};
+        }
+      }
 
     .background-#{$name} + .scrolly-gallery__text-inner .button:hover {
       background-color: darken($color, 5%);
