@@ -1,6 +1,32 @@
 body.page-node-type-magazine-article,
 .magazine-topic-issue-page {
   background: $c-white;
+  .page_narrow a {
+    font-family: $font-ivar;
+  }
+
+  @for $heading-level from 1 through 6 {
+  .page_narrow h#{$heading-level} a {
+    font-family: $font-helvetica-neue-light;
+    }
+  }
+
+  a.eyebrow-title,
+  .eyebrow-title a {
+    font-family: $font-helvetica-neue-bold;
+  }
+
+  .small-text a,
+  .footer-region a {
+    font-family: $font-helvetica-neue-regular;
+  }
+
+  .view-more a,
+  .tags-menu__item a,
+  // .footer-region a,
+  .article-header__author a {
+    font-family: $font-helvetica-neue-medium;
+  }
 
   // Possibly HTML nesting bug .recommended-articles is a sibling of #block-ucsf-content
   // instead of being it's child element on following page
@@ -76,6 +102,7 @@ body.page-node-type-magazine-article,
   [style*="background-color:#dedeed"] .link--cta {
     color: #121a31;
     @include link-bg-image('cta-arrow-navy.svg');
+    background-image: url('/themes/custom/ucsf/assets/images/cta-arrow-navy.svg');
   }
 
   .article-art-credit {
@@ -210,7 +237,8 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
   //updating font
   .article-header .field-sub-title,
   .field-blockquote-source-org,
-  p.feature-text {
+  p.feature-text,
+  p.feature-text a {
     font-family: $font-helvetica-neue-light;
   }
 
@@ -219,6 +247,8 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
   .layout__heading,
   .paragraph--type--column-content h2,
   .caption-drupal-entity,
+  .field-image-caption,
+  .field-video-caption,
   .ucsfcallout,
   .embedded-entity,
   .footer-ctas-wrapper,
@@ -237,7 +267,6 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
   // dom-twocolumn-layout,
   .layout__heading,
   .paragraph--type--column-content h2,
-  .caption-drupal-entity,
   .ucsfcallout,
   .blockquote,
   .footer-ctas-wrapper,
@@ -304,8 +333,13 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
     }
   }
 
-  .caption-drupal-entity em {
-    font-family: $font-helvetica-neue-roman;
+  .caption-drupal-entity,
+  .field-image-caption,
+  .field-video-caption {
+    em {
+      font-family: $font-helvetica-neue-roman;
+      font-style: italic;
+    }
   }
 
   blockquote,
@@ -397,6 +431,12 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
     }
   }
 
+  .featureoverlaydark .article-affiliation::before {
+    @include breakpoint($new-large) {
+      background-color: $white;
+    }
+  }
+
   .twocolleftdark,
   .twocolrightdark {
     background: $c-black;
@@ -475,6 +515,14 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
 
   .paragraph-text-block {
     background-color: transparent;
+  }
+
+  .article-header__author a {
+    border-bottom-color: $magazine-gray-blue;
+
+    &:hover {
+      border-bottom-color: $c-blue-link-rollover;
+    }
   }
 
   .scrolly-gallery .eyebrow-title::after {
