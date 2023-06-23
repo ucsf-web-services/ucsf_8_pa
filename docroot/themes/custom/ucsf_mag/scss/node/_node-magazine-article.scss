@@ -1,8 +1,19 @@
+.page-node-type-magazine-article,
+.magazine-topic-issue-page {
+  a {
+    font-family: $font-ivar;
+  }
+}
+
 body.page-node-type-magazine-article,
 .magazine-topic-issue-page {
   background: $c-white;
-  a {
-    font-family: $font-ivar;
+  .toolbar-menu-administration a {
+    font-family: "Source Sans Pro","Lucida Grande",Verdana,sans-serif;
+  }
+
+  .block-local-tasks-block a {
+    font-family: $font-helvetica-neue-light;
   }
 
   .mag-menu__link,
@@ -12,11 +23,15 @@ body.page-node-type-magazine-article,
     font-family: $font-helvetica-neue-roman;
   }
 
-  @for $heading-level from 1 through 6 {
+  @for $heading-level from 1 through 4 {
   .page_narrow h#{$heading-level} a {
     font-family: $font-helvetica-neue-light;
     }
   }
+
+  .page_narrow h5 a {
+    font-family: $font-helvetica-neue-medium;
+    }
 
   a.eyebrow-title,
   .eyebrow-title,
