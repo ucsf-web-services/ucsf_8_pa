@@ -1,3 +1,22 @@
+
+.narrow-page {
+  // When it is just a link inside the article body, use ivar
+  a {
+    font-family: $font-ivar;
+  }
+
+  // When it is a link inside the heading
+  @for $heading-level from 1 through 4 {
+  h#{$heading-level} a {
+    font-family: $font-helvetica-neue-light;
+    }
+  }
+
+  h5 a {
+    font-family: $font-helvetica-neue-medium;
+  }
+}
+
 .text-formatted a:link,
 a:hover,
 a:link,
@@ -132,3 +151,12 @@ ul#universalSearchTabs li.active {
   border-bottom-color: $c-blue-link;
 }
 
+.eyebrow-title,
+.eyebrow-title a {
+  font-family: $font-helvetica-neue-bold !important;
+}
+
+.small-text a,
+.article-header__author a {
+  font-family: $font-helvetica-neue-regular;
+}
