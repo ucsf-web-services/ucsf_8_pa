@@ -1,19 +1,57 @@
-body.page-node-type-magazine-article,
+.page-node-type-magazine-article,
 .magazine-topic-issue-page {
-  background: $c-white;
-
   a {
     font-family: $font-ivar;
   }
+}
+
+body.page-node-type-magazine-article,
+.magazine-topic-issue-page {
+  background: $c-white;
+  .toolbar-menu-administration a {
+    font-family: "Source Sans Pro","Lucida Grande",Verdana,sans-serif;
+  }
+
+  .block-local-tasks-block a {
+    font-family: $font-helvetica-neue-light;
+  }
+
+  .mag-menu__link,
+  .mag-submenu__link,
+  .mag-nav__ucsf a,
+  .latest-issue a {
+    font-family: $font-helvetica-neue-roman;
+  }
+
+  @for $heading-level from 1 through 4 {
+  .page_narrow h#{$heading-level} a {
+    font-family: $font-helvetica-neue-light;
+    }
+  }
+
+  .page_narrow h5 a {
+    font-family: $font-helvetica-neue-medium;
+    }
+
+  a.eyebrow-title,
+  .eyebrow-title,
+  .page_narrow .eyebrow-title a {
+    font-family: $font-helvetica-neue-bold !important;
+  }
+
+
+  .mag-menu__link--alt {
+    font-family: $font-helvetica-neue-bold;
+  }
 
   .small-text a,
-  .footer-region a {
+  .footer-region a,
+  .article-header__author a {
     font-family: $font-helvetica-neue-regular;
   }
 
   .view-more a,
-  .tags-menu__item a,
-  .footer-region a {
+  .tags-menu__item a {
     font-family: $font-helvetica-neue-medium;
   }
 
@@ -327,6 +365,7 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
   .field-video-caption {
     em {
       font-family: $font-helvetica-neue-roman;
+      font-style: italic;
     }
   }
 
