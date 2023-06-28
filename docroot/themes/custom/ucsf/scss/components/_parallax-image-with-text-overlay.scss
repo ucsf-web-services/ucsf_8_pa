@@ -90,21 +90,42 @@ $parallax-options: (
     }
   }
 
+  .button-reverse {
+    border-color: $a1-navy;
+    border-width: 2px;
+    color: $a1-navy;
+
+    @include breakpoint($new-large) {
+      border-color: $white;
+      color: $white;
+    }
+  }
+
   @each $name, $color in $parallax-options {
     .background-#{$name} {
       --color-rgb: #{hex-to-rgb($color)};
     }
 
-    .background-#{$name}  + .scrolly-gallery__text-inner a:not(.button):hover {
+    .background-#{$name}  + .scrolly-gallery__text-inner a:not(.button, .button-reverse):hover {
       @include breakpoint($new-large) {
         background-color: #{$color};
         border-bottom-color: #{$color};
+        color: $white;
       }
     }
     .background-#{$name}  + .scrolly-gallery__text-inner .button:hover {
       @include breakpoint($new-large) {
         background-color: #{$color};
         border-color: #{$color};
+      }
+    }
+
+    .background-#{$name}  + .scrolly-gallery__text-inner .button-reverse:hover {
+      @include breakpoint($new-large) {
+        background-color: $c-cta-element;
+        border-color: $c-cta-element;
+        border-bottom-color: $c-cta-element;
+        color: $white;
       }
     }
   }
