@@ -68,16 +68,19 @@ $parallax-options: (
   }
 
   // Reset links and buttons.
-  a {
-    @include breakpoint($new-large) {
-      border-bottom: 1px solid;
-      border-bottom-color: $c-white;
+  a:not([class *="button"]) {
+    color: $white;
+    border-bottom: 2px solid;
 
+    @include breakpoint($new-large) {
+      border-bottom: 2px solid $white;
+    }
+
+    &:hover {
       @include breakpoint($new-large) {
-        &:hover {
-          color: white;
-          font-weight: 600;
-        }
+        border-bottom: none;
+        color: $white;
+        font-weight: 600;
       }
     }
   }
@@ -90,9 +93,11 @@ $parallax-options: (
     width: max-content;
     display: block;
     border: 2px solid;
+
     @include breakpoint($new-large) {
       color: $c-white;
       border-color: $c-white;
+      border-width: 2px;
       background-color: transparent;
     }
   }
@@ -103,8 +108,15 @@ $parallax-options: (
     color: $a1-navy;
 
     @include breakpoint($new-large) {
-      border-color: $white;
-      color: $white;
+      color: $c-white;
+      border-color: $c-white;
+
+      :hover {
+        background-color: $c-cta-element;
+        border-color: $c-cta-element;
+        border-bottom: 2px solid $c-cta-element;
+        color: $white;
+      }
     }
   }
 
@@ -113,36 +125,23 @@ $parallax-options: (
       --color-rgb: #{hex-to-rgb($color)};
     }
 
-    .background-#{$name}  + .scrolly-gallery__text-inner a:not(.button, .button-reverse):hover {
-      @include breakpoint($new-large) {
-        background-color: #{$color};
-        border-bottom-color: #{$color};
-        color: $white;
-      }
-    }
     .background-#{$name}  + .scrolly-gallery__text-inner .button:hover {
       @include breakpoint($new-large) {
         background-color: #{$color};
         border-color: #{$color};
       }
     }
-
-    .background-#{$name}  + .scrolly-gallery__text-inner .button-reverse:hover {
-      @include breakpoint($new-large) {
-        background-color: $c-cta-element;
-        border-color: $c-cta-element;
-        border-bottom-color: $c-cta-element;
-        color: $white;
-      }
-    }
   }
 
   // Default color is used
   .background- {
-    & + .scrolly-gallery__text-inner a:not(.button):hover {
+    & + .scrolly-gallery__text-inner a:not([class *="button"]) {
       @include breakpoint($new-large) {
-        background-color: $a1-navy;
-        border-bottom-color: $a1-navy;
+        border-bottom: 2px solid $white;
+      }
+
+      &:hover {
+        border-bottom: none;
       }
     }
 
