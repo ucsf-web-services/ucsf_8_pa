@@ -1861,7 +1861,7 @@ a.icon-transit::before {
         margin: 0;
         padding: 0; }
       .vertical-tab-alt .vertical-tab__title li[aria-selected="true"] a {
-        background: url("/themes/custom/ucsf/assets/images/vertical-tab-highlight.png") no-repeat right center #fff;
+        background: url("/themes/custom/ucsf/assets/images/vertical-tab-highlight-alt.png") no-repeat right center #fff;
         color: #006BE9;
         border-top: 0;
         position: relative;
@@ -1954,7 +1954,7 @@ a.icon-transit::before {
   float: none;
   padding: 16px 32px; }
 
-p.quote-style {
+.quote-style {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -1964,9 +1964,24 @@ p.quote-style {
   line-height: 1.2em;
   letter-spacing: -0.6px; }
   @media (min-width: 600px) {
-    p.quote-style {
+    .quote-style {
       font-size: 40px;
       letter-spacing: -1px; } }
+  .quote-style:is(p),
+  .quote-style a {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    font-weight: 500;
+    font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif;
+    font-size: 31px;
+    line-height: 1.2em;
+    letter-spacing: -0.6px; }
+    @media (min-width: 600px) {
+      .quote-style:is(p),
+      .quote-style a {
+        font-size: 40px;
+        letter-spacing: -1px; } }
 
 .element-fade {
   opacity: 0; }
@@ -3688,10 +3703,18 @@ figure figure[class="image"] {
       color: #fff; } }
   .page-node-type-article .scrolly-gallery-wrapper .eyebrow-title::after {
     background-color: #fff; }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper a {
-      border-bottom: 1px solid;
-      border-bottom-color: #fff; } }
+  .page-node-type-article .scrolly-gallery-wrapper a:not([class*="button"]) {
+    border-bottom: 2px solid #052049;
+    color: #052049; }
+    @media (min-width: 1050px) {
+      .page-node-type-article .scrolly-gallery-wrapper a:not([class*="button"]) {
+        color: #fff;
+        border-bottom: 2px solid #fff; } }
+    @media (min-width: 1050px) {
+      .page-node-type-article .scrolly-gallery-wrapper a:not([class*="button"]):hover {
+        border-bottom: none;
+        color: #fff;
+        font-weight: 600; } }
   .page-node-type-article .scrolly-gallery-wrapper .button {
     font-size: 18px;
     padding: 18px 27px;
@@ -3706,13 +3729,23 @@ figure figure[class="image"] {
       .page-node-type-article .scrolly-gallery-wrapper .button {
         color: #fff;
         border-color: #fff;
+        border-width: 2px;
         background-color: transparent; } }
+  .page-node-type-article .scrolly-gallery-wrapper .button-reverse {
+    border-color: #052049;
+    border-width: 2px;
+    color: #052049; }
+    @media (min-width: 1050px) {
+      .page-node-type-article .scrolly-gallery-wrapper .button-reverse {
+        color: #fff;
+        border-color: #fff; }
+        .page-node-type-article .scrolly-gallery-wrapper .button-reverse :hover {
+          background-color: #006BE9;
+          border-color: #006BE9;
+          border-bottom: 2px solid #006BE9;
+          color: #fff; } }
   .page-node-type-article .scrolly-gallery-wrapper .background-navy {
     --color-rgb: 5, 32, 73; }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-navy + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #052049;
-      border-bottom-color: #052049; } }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-navy + .scrolly-gallery__text-inner .button:hover {
       background-color: #052049;
@@ -3720,19 +3753,11 @@ figure figure[class="image"] {
   .page-node-type-article .scrolly-gallery-wrapper .background-blue-dark {
     --color-rgb: 6, 66, 96; }
   @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-blue-dark + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #064260;
-      border-bottom-color: #064260; } }
-  @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-blue-dark + .scrolly-gallery__text-inner .button:hover {
       background-color: #064260;
       border-color: #064260; } }
   .page-node-type-article .scrolly-gallery-wrapper .background-teal-dark {
     --color-rgb: 14, 82, 88; }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-teal-dark + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #0E5258;
-      border-bottom-color: #0E5258; } }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-teal-dark + .scrolly-gallery__text-inner .button:hover {
       background-color: #0E5258;
@@ -3740,19 +3765,11 @@ figure figure[class="image"] {
   .page-node-type-article .scrolly-gallery-wrapper .background-green-cool {
     --color-rgb: 0, 72, 58; }
   @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-green-cool + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #00483A;
-      border-bottom-color: #00483A; } }
-  @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-green-cool + .scrolly-gallery__text-inner .button:hover {
       background-color: #00483A;
       border-color: #00483A; } }
   .page-node-type-article .scrolly-gallery-wrapper .background-green-warm {
     --color-rgb: 0, 100, 0; }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-green-warm + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #006400;
-      border-bottom-color: #006400; } }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-green-warm + .scrolly-gallery__text-inner .button:hover {
       background-color: #006400;
@@ -3760,19 +3777,11 @@ figure figure[class="image"] {
   .page-node-type-article .scrolly-gallery-wrapper .background-purple-dark {
     --color-rgb: 46, 40, 114; }
   @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-purple-dark + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #2E2872;
-      border-bottom-color: #2E2872; } }
-  @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-purple-dark + .scrolly-gallery__text-inner .button:hover {
       background-color: #2E2872;
       border-color: #2E2872; } }
   .page-node-type-article .scrolly-gallery-wrapper .background-violet-dark {
     --color-rgb: 70, 24, 80; }
-  @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-violet-dark + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #461850;
-      border-bottom-color: #461850; } }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-violet-dark + .scrolly-gallery__text-inner .button:hover {
       background-color: #461850;
@@ -3780,27 +3789,20 @@ figure figure[class="image"] {
   .page-node-type-article .scrolly-gallery-wrapper .background-magenta-dark {
     --color-rgb: 86, 16, 56; }
   @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-magenta-dark + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #561038;
-      border-bottom-color: #561038; } }
-  @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-magenta-dark + .scrolly-gallery__text-inner .button:hover {
       background-color: #561038;
       border-color: #561038; } }
   .page-node-type-article .scrolly-gallery-wrapper .background-gray-darkest {
     --color-rgb: 33, 39, 42; }
   @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background-gray-darkest + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #21272A;
-      border-bottom-color: #21272A; } }
-  @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background-gray-darkest + .scrolly-gallery__text-inner .button:hover {
       background-color: #21272A;
       border-color: #21272A; } }
   @media (min-width: 1050px) {
-    .page-node-type-article .scrolly-gallery-wrapper .background- + .scrolly-gallery__text-inner a:not(.button):hover {
-      background-color: #052049;
-      border-bottom-color: #052049; } }
+    .page-node-type-article .scrolly-gallery-wrapper .background- + .scrolly-gallery__text-inner a:not([class*="button"]) {
+      border-bottom: 2px solid #fff; } }
+  .page-node-type-article .scrolly-gallery-wrapper .background- + .scrolly-gallery__text-inner a:not([class*="button"]):hover {
+    border-bottom: none; }
   @media (min-width: 1050px) {
     .page-node-type-article .scrolly-gallery-wrapper .background- + .scrolly-gallery__text-inner .button:hover {
       background-color: #052049;
@@ -6543,7 +6545,8 @@ body.loading .quicklinks {
   @media (min-width: 1050px) {
     .gallery-title-description {
       padding: 80px;
-      padding-bottom: 0; } }
+      padding-bottom: 0;
+      grid-column: 3/-3; } }
   .gallery-title-description .field-description {
     max-width: 900px; }
 

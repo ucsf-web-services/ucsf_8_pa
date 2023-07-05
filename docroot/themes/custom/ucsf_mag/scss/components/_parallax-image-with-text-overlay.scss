@@ -22,7 +22,7 @@ $parallax-options: (
       background-color: transparent;
     }
 
-    a:not(.button) {
+    a:not([class *="button"]) {
       color: $c-white;
       font-weight: $fw-medium-link;
       border-bottom-color: $c-white;
@@ -37,6 +37,10 @@ $parallax-options: (
       color: $c-white;
       border-color: $c-white;
       background-color: transparent;
+      // padding: 18px 27px;
+      font-size: 18px;
+      letter-spacing: .2px;
+
     }
   }
 
@@ -48,7 +52,7 @@ $parallax-options: (
       }
     }
 
-    .background-#{$name}  + .scrolly-gallery__text-inner a:not(.button):hover {
+    .background-#{$name}  + .scrolly-gallery__text-inner a:not([class *="button"]):hover {
         background-color: darken($color, 5%);
         border-bottom-color: darken($color, 5%);
 
@@ -74,7 +78,7 @@ $parallax-options: (
       background-color: $a1-navy;
     }
 
-    & + .scrolly-gallery__text-inner a:not(.button):hover {
+    & + .scrolly-gallery__text-inner a:not([class *="button"]):hover {
       background-color: darken($a1-navy, 5%);
 
       @include breakpoint($new-large) {
@@ -90,6 +94,25 @@ $parallax-options: (
       @include breakpoint($new-large) {
         background-color: $a1-navy;
         border-color: $a1-navy;
+      }
+    }
+
+    & + .scrolly-gallery__text-inner .button-reverse {
+      border-color: $white;
+      border-bottom-color: $white;
+      background-color: transparent;
+      color: $white;
+    }
+
+    & + .scrolly-gallery__text-inner .button-reverse:hover {
+      border-color: $c-blue-link;
+      border-bottom-color: $c-blue-link;
+      background-color: $c-blue-link;
+
+      @include breakpoint($new-large) {
+        border-color: $c-blue-link;
+        border-bottom-color: $c-blue-link;
+        background-color: $c-blue-link;
       }
     }
   }
