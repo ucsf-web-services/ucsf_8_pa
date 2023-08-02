@@ -10,7 +10,13 @@
   </figure>
 
   <header class="article-header article-feature-header">
+    {# Read article player #}
+    <script>
+      const trinityScript = document.createElement('script');  trinityScript.setAttribute('fetchpriority', 'high'); trinityScript.src = 'https://trinitymedia.ai/player/trinity/2900011813/?pageURL=' + encodeURIComponent(window.location.href); document.currentScript.parentNode.insertBefore(trinityScript, document.currentScript);
+    </script>
+    {# Read article player - end #}
     {% include '@theme/banner/banner-content.twig' %}
+
   </header>
 </div>
 <div class="main-content article-feature-content narrow-page">
