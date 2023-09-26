@@ -53,7 +53,8 @@
       "exclude": [
         "drupal/twitter_tweets",
         "drupal/entity_embed_link",
-        "drupal/youtube_gallery"
+        "drupal/youtube_gallery",
+        "drupal/metatag"
       ]
     },
     "drupal/youtube_gallery": {
@@ -76,6 +77,10 @@
     "drupal/entity_embed_link": {
       "type": "git",
       "url": "https://git.drupalcode.org/issue/entity_embed_link-3147324.git"
+    },
+    "drupal/metatag" : {
+      "type": "git",
+      "url": "https://github.com/ucsf-it-webservices/metatag.git"
     },
     "assets": {
       "type": "composer",
@@ -180,7 +185,7 @@
     "drupal/menu_position": "~1.0",
     "drupal/menu_reference_render": "^2.0@alpha",
     "drupal/menus_attribute": "^1.2",
-    "drupal/metatag": "^1.26",
+    "drupal/metatag": "dev-oc-patched as 2.0",
     "drupal/module_filter": "^4.0",
     "drupal/notification": "^1.0",
     "drupal/paragraphs": "^1.9",
@@ -192,7 +197,7 @@
     "drupal/save_edit": "^1.1",
     "drupal/scheduler": "^2.0",
     "drupal/scheduler_content_moderation_integration": "^2.0@beta",
-    "drupal/schema_metatag": "^2.5",
+    "drupal/schema_metatag": "^3.0",
     "drupal/search_api": "^1.23",
     "drupal/seckit": "^2.0",
     "drupal/sendgrid_integration": "^2.0",
@@ -311,9 +316,6 @@
       "drupal/youtube_gallery": {
         "3042898 - Don't ask to download libraries in drush_hook_post_pm_enable()": "https://www.drupal.org/files/issues/2019-03-24/youtube_gallery-no_post_enable-3042898-2.patch",
         "Fix deprecated code" : "./patches/youtube_gallery_fix_deprecated_code.patch"
-      },
-      "drupal/metatag" : {
-        "Fallback options for various metatag fields, only display the first valid option" : "./patches/metatag_fallback.patch"
       },
       "drupal/video_embed_field" : {
         "UCSF Video Embed Patch - Allow background param" : "./patches/video_embed_field__allow_background_param.patch",
