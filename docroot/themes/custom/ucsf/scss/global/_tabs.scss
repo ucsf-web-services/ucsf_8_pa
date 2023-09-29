@@ -1,3 +1,35 @@
+// Start - Overwriting default styling
+.ui-tabs {
+  border: none;
+  &.ui-widget {
+    border: none;
+  }
+
+  .ui-tabs-nav {
+    border: none;
+    background-color: transparent;
+  }
+}
+
+.ui-widget-header .ui-state-active,
+.ui-widget-header .ui-state-default,
+.ui-state-active,
+.ui-state-default  {
+  color: inherit;
+  border: none;
+  background-color: transparent;
+}
+.ui-widget-content {
+  color: $a1-navy;
+}
+
+.ui-accordion {
+  &-header-icon {
+    display: none
+  }
+}
+// End - Overwriting default styling
+
 .vertical-tab {
   grid-column: 1/-1;
   clear: both;
@@ -15,7 +47,6 @@
       outline: 0;
       text-decoration: none;
 
-
       a {
         background-color: $c-white;
         padding: $space-two $space-four;
@@ -24,6 +55,7 @@
         border-bottom: 1px solid $c-gray-lightest;
         text-decoration: none;
         font-family: $font-helvetica-neue-medium;
+        color: $a1-navy;
       }
 
       &:focus a {
@@ -95,11 +127,11 @@
 
       a {
         @include fs-heading-two;
-
         padding: $space-four 0;
         border-bottom: none;
         display: block;
         font-size: 40px !important;
+        color: $a1-navy;
       }
 
       h2 {
@@ -177,6 +209,11 @@
 }
 
 .ui-accordion {
+
+  &-header-icon {
+    display: none
+  }
+
   > h3 {
    @include fs-small-title;
     padding: 20px;
