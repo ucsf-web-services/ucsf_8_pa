@@ -48,7 +48,7 @@ class DomQuote extends CKEditorPluginBase implements CKEditorPluginInterface {
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domquote/plugin.js';
+    return \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domquote/plugin.js';
   }
 
   /**
@@ -65,7 +65,7 @@ class DomQuote extends CKEditorPluginBase implements CKEditorPluginInterface {
     return [
       'Domquote' => [
         'label' => t('Domquote'),
-        'image' => drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domquote/icons/domquote.png',
+        'image' => \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domquote/icons/domquote.png',
       ]
     ];
   }

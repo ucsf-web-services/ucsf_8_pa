@@ -11,9 +11,6 @@ use Drupal\ckeditor\CKEditorPluginBase;
 use Drupal\ckeditor\Annotation\CKEditorPlugin;
 use Drupal\Component\Plugin\PluginBase;
 use Drupal\ckeditor\CKEditorPluginInterface;
-// use Drupal\ckeditor\CKEditorPluginContextualInterface;
-// use Drupal\ckeditor\CKEditorPluginConfigurableInterface;
-// use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Annotation\Translation;
 use Drupal\editor\Entity\Editor;
 
@@ -53,7 +50,7 @@ class DomTabs extends CKEditorPluginBase implements CKEditorPluginInterface {
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domtabs/plugin.js';
+    return \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domtabs/plugin.js';
   }
 
   /**
@@ -70,7 +67,7 @@ class DomTabs extends CKEditorPluginBase implements CKEditorPluginInterface {
     return [
       'Domtabs' => [
         'label' => t('DomTabs'),
-        'image' => drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domtabs/icons/domtabs.png',
+        'image' => \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domtabs/icons/domtabs.png',
       ]
     ];
   }
