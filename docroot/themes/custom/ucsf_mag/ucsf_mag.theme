@@ -86,3 +86,19 @@ function ucsf_mag_preprocess_node(&$variables) {
     $variables['no_page_banner'] = true;
   }
 }
+
+/**
+ * Implements template_preprocess_field().
+ */
+function ucsf_mag_preprocess_field(array &$variables) {
+  /** @var \Drupal\node\Entity\Node $node */
+  $node = $variables['element']['#object'];
+
+  if (method_exists($node, 'getType')) {
+    $node_type = $node->getType();
+
+    if ($node_type == 'magazine_article' && isset($node->field_date_and_time)) {
+      $variables['article_date'] = $node->field_date_and_time->value;
+    }
+  }
+}
