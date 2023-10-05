@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * @file
  * Drush command file.
@@ -35,6 +36,7 @@ function drush_ucsf_applenews_generate() {
   }
   else {
     $query = \Drupal::entityQuery($entity_type)
+      ->accessCheck(TRUE)
       ->condition('status', 1)
       ->condition('type', $entity_bundle)
       ->sort('created', 'DESC');
