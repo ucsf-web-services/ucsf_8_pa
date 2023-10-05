@@ -1,0 +1,7 @@
+{% extends 'field.html.twig' %}
+
+{% block single_item_no_label %}
+  {% for item in items %}
+    <time {{ attributes.addClass('article-issue article-affiliation') }} datetime={{article_date}}>{{ item.content }}</time>
+  {% endfor %}
+{% endblock single_item_no_label %}
