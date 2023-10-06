@@ -3,7 +3,7 @@
  * Scripts for UCSF dom
  *
  */
-(function ($, Drupal, drupalSettings, window) {
+(function ($, Drupal, drupalSettings, window, once) {
 
   // Use minimized header nav whenever this file is used
   var header = document.querySelector('.combined-header-region');
@@ -17,7 +17,7 @@
 
 
       // Only run this code once.
-      $(window, context).once('map').each( function() {
+      once('map', 'html', context).forEach(() => {
         // Google map set up and center for the map
         var map = new google.maps.Map(document.getElementById('map'), {
           center: { lat: 37.195, lng: -123.775 },
@@ -207,4 +207,4 @@
     header.classList.add('fixed-nav--visible');
   }
 
-})(jQuery, Drupal, drupalSettings, window);
+})(jQuery, Drupal, drupalSettings, window, once);
