@@ -48,7 +48,7 @@ class DomNumbercallout extends CKEditorPluginBase implements CKEditorPluginConfi
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domnumbercallout/plugin.js';
+    return \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domnumbercallout/plugin.js';
   }
 
   /**
@@ -72,7 +72,7 @@ class DomNumbercallout extends CKEditorPluginBase implements CKEditorPluginConfi
     return [
       'Domnumbercallout' => [
         'label' => t('Domnumbercallout'),
-        'image' => drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domnumbercallout/icons/domnumbercallout.png',
+        'image' => \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domnumbercallout/icons/domnumbercallout.png',
       ]
     ];
   }

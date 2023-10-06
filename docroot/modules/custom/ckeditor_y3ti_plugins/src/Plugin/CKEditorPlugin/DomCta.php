@@ -48,7 +48,7 @@ class DomCta extends CKEditorPluginBase implements CKEditorPluginConfigurableInt
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domcta/plugin.js';
+    return \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domcta/plugin.js';
   }
 
   /**
@@ -72,7 +72,7 @@ class DomCta extends CKEditorPluginBase implements CKEditorPluginConfigurableInt
     return [
       'Domcta' => [
         'label' => t('Domcta'),
-        'image' => drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domcta/icons/domcta.png',
+        'image' => \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domcta/icons/domcta.png',
       ]
     ];
   }
