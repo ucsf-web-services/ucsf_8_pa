@@ -1,8 +1,10 @@
 {# Setting field "Manage display" format to "key", iterating through those keys (a.k.a. item.value) and using them as classes #}
 {% set layout_control_class = '' %}
 {% if paragraph.field_layout_controls %}
-  {% for key, item in paragraph.field_layout_controls if key|first != '#' %}
-    {% set layout_control_class = layout_control_class ~ " " ~ item.value %}
+  {% for key, item in paragraph.field_layout_controls %}
+    {% if key|first != '#' %}
+      {% set layout_control_class = layout_control_class ~ " " ~ item.value %}
+    {% endif %}
   {% endfor %}
 {% endif %}
 <div class="page_narrow page_narrow--scrolly {{layout_control_class}}">
