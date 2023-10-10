@@ -84,19 +84,6 @@
         }
       }
     },
-    "drupal/twig_extensions": {
-      "type": "package",
-      "package": {
-        "name": "drupal/twig_extensions",
-        "version": "dev-custom",
-        "type": "drupal-module",
-        "source": {
-          "type": "git",
-            "url": "https://git.drupalcode.org/issue/twig_extensions-3337585.git",
-            "reference": "3337585-drupal-10-compatibility"
-        }
-      }
-    },
     "assets": {
       "type": "composer",
       "url": "https://asset-packagist.org",
@@ -133,6 +120,7 @@
     "drupal/ckeditor_iframe": "^2.2",
     "drupal/ckeditor_liststyle": "^1.5",
     "drupal/classy": "^1.0",
+    "drupal/color": "^1.0",
     "drupal/colorbox": "^2.0",
     "drupal/components": "^3",
     "drupal/conditional_fields": "^4.0@alpha",
@@ -218,7 +206,6 @@
     "drupal/taxonomy_import": "^2.0",
     "drupal/taxonomy_term_revision": "^1.1",
     "drupal/token": "^1.9",
-    "drupal/twig_extensions": "dev-custom",
     "drupal/twig_tweak": "^3.2",
     "drupal/url_embed": "^2.0@alpha",
     "drupal/video_embed_field": "^2.0",
@@ -288,15 +275,11 @@
     "enable-patching": true,
     "patches": {
       "drupal/core": {
-        "2061377 - Allow image style to be selected in Text Editor's image dialog https://drupal.org/i/2061377" : "https://www.drupal.org/files/issues/2022-12-16/2061377-435.patch",
         "UCSF FilterAlign - remove aggressive removal of classes" : "./patches/core-filteralign.patch",
-        "2973706 - Styles dropdown configuration permit multiple tags" : "https://www.drupal.org/files/issues/2022-06-28/allow-multiple-elements-2973706-24.patch",
         "UCSF FilterCaption - Fix decode entities on FilterCaption" : "./patches/core-filtercaption.patch",
-        "3200283 - Acquia Connector - add missing SVG images" : "https://www.drupal.org/files/issues/2021-03-24/check-svg-and-error-svg-not-found-3200283-5.patch",
-        "3267870 - Order image mappings by breakpoint ID and numeric multiplier. https://drupal.org/i/3267870" : "https://www.drupal.org/files/issues/2022-05-19/3267870-9.5.x-47.patch",
-        "2511878 - Support enclosure field in Views RssFields row plugin" : "https://www.drupal.org/files/issues/2020-07-24/views-rss-fields-enclosure-2511878-30.patch",
-        "2918784 - Views RSS row plugin incorrectly assumes links are relative. Using custom patch due to conflict with 2511878": "./patches/views-rss-fields-enclosure-2511878-custom.patch",
-        "2949017 - There is no way to delete or update file entities of other users" : "https://www.drupal.org/files/issues/2021-12-01/2949017-85.patch"
+        "Support enclosure field in Views RssFields row plugin, fix absolute paths" : "https://www.drupal.org/files/issues/2023-02-20/2511878-56.patch",
+        "2061377 - Allow image style to be selected in Text Editor's image dialog" : "https://www.drupal.org/files/issues/2022-12-16/2061377-435.patch",
+        "3200283 - Acquia Connector - add missing SVG images" : "https://www.drupal.org/files/issues/2021-03-24/check-svg-and-error-svg-not-found-3200283-5.patch"
       },
       "drupal/field_group": {
         "2652642 - Allow to position the group in the advanced sidebar column": "https://www.drupal.org/files/issues/2018-07-26/2652642-57.patch"
@@ -339,8 +322,7 @@
     "drupal-lenient": {
       "allowed-list": [
         "drupal/menu_reference_render", 
-        "drupal/simple_instagram_feed",
-        "drupal/twig_extensions"
+        "drupal/simple_instagram_feed"
       ]
     }
   },
