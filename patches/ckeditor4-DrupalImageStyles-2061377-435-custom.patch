@@ -1,0 +1,1290 @@
+diff --git a/core/lib/Drupal/Core/Entity/DependencyRemovalTrait.php b/core/lib/Drupal/Core/Entity/DependencyRemovalTrait.php
+new file mode 100644
+index 0000000000..e4e8162b84
+--- /dev/null
++++ b/core/lib/Drupal/Core/Entity/DependencyRemovalTrait.php
+@@ -0,0 +1,56 @@
++<?php
++
++namespace Drupal\Core\Entity;
++
++use Drupal\Core\Config\Entity\ConfigEntityInterface;
++
++/**
++ * Provides reusable code for config entities handling their dependency removal.
++ */
++trait DependencyRemovalTrait {
++
++  /**
++   * Returns the plugin dependencies being removed.
++   *
++   * The function recursively computes the intersection between all plugin
++   * dependencies and all removed dependencies.
++   *
++   * Note: The two arguments do not have the same structure.
++   *
++   * @param array[] $plugin_dependencies
++   *   A list of dependencies having the same structure as the return value of
++   *   ConfigEntityInterface::calculateDependencies().
++   * @param array[] $removed_dependencies
++   *   A list of dependencies having the same structure as the input argument of
++   *   ConfigEntityInterface::onDependencyRemoval().
++   *
++   * @return array
++   *   A recursively computed intersection.
++   *
++   * @see \Drupal\Core\Config\Entity\ConfigEntityInterface::calculateDependencies()
++   * @see \Drupal\Core\Config\Entity\ConfigEntityInterface::onDependencyRemoval()
++   */
++  protected function getPluginRemovedDependencies(array $plugin_dependencies, array $removed_dependencies) {
++    assert($this instanceof ConfigEntityInterface, __METHOD__ . '() method should be used only by config entities');
++
++    $intersect = [];
++    foreach ($plugin_dependencies as $type => $dependencies) {
++      if ($removed_dependencies[$type]) {
++        // Config and content entities have the dependency names as keys while
++        // module and theme dependencies are indexed arrays of dependency names.
++        // @see \Drupal\Core\Config\ConfigManager::callOnDependencyRemoval()
++        if (in_array($type, ['config', 'content'], TRUE)) {
++          $removed = array_intersect_key($removed_dependencies[$type], array_flip($dependencies));
++        }
++        else {
++          $removed = array_values(array_intersect($removed_dependencies[$type], $dependencies));
++        }
++        if ($removed) {
++          $intersect[$type] = $removed;
++        }
++      }
++    }
++    return $intersect;
++  }
++
++}
+diff --git a/core/lib/Drupal/Core/Entity/EntityDisplayBase.php b/core/lib/Drupal/Core/Entity/EntityDisplayBase.php
+index 1724addaed..e3565cd228 100644
+--- a/core/lib/Drupal/Core/Entity/EntityDisplayBase.php
++++ b/core/lib/Drupal/Core/Entity/EntityDisplayBase.php
+@@ -12,6 +12,8 @@
+  */
+ abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDisplayInterface {
+ 
++  use DependencyRemovalTrait;
++
+   /**
+    * The mode used to render entities with arbitrary display options.
+    *
+@@ -481,48 +483,6 @@ public function onDependencyRemoval(array $dependencies) {
+     return $changed;
+   }
+ 
+-  /**
+-   * Returns the plugin dependencies being removed.
+-   *
+-   * The function recursively computes the intersection between all plugin
+-   * dependencies and all removed dependencies.
+-   *
+-   * Note: The two arguments do not have the same structure.
+-   *
+-   * @param array[] $plugin_dependencies
+-   *   A list of dependencies having the same structure as the return value of
+-   *   ConfigEntityInterface::calculateDependencies().
+-   * @param array[] $removed_dependencies
+-   *   A list of dependencies having the same structure as the input argument of
+-   *   ConfigEntityInterface::onDependencyRemoval().
+-   *
+-   * @return array
+-   *   A recursively computed intersection.
+-   *
+-   * @see \Drupal\Core\Config\Entity\ConfigEntityInterface::calculateDependencies()
+-   * @see \Drupal\Core\Config\Entity\ConfigEntityInterface::onDependencyRemoval()
+-   */
+-  protected function getPluginRemovedDependencies(array $plugin_dependencies, array $removed_dependencies) {
+-    $intersect = [];
+-    foreach ($plugin_dependencies as $type => $dependencies) {
+-      if ($removed_dependencies[$type]) {
+-        // Config and content entities have the dependency names as keys while
+-        // module and theme dependencies are indexed arrays of dependency names.
+-        // @see \Drupal\Core\Config\ConfigManager::callOnDependencyRemoval()
+-        if (in_array($type, ['config', 'content'])) {
+-          $removed = array_intersect_key($removed_dependencies[$type], array_flip($dependencies));
+-        }
+-        else {
+-          $removed = array_values(array_intersect($removed_dependencies[$type], $dependencies));
+-        }
+-        if ($removed) {
+-          $intersect[$type] = $removed;
+-        }
+-      }
+-    }
+-    return $intersect;
+-  }
+-
+   /**
+    * Gets the default region.
+    *
+diff --git a/core/misc/cspell/dictionary.txt b/core/misc/cspell/dictionary.txt
+index 6a37f15b84..e4668cd6dd 100644
+--- a/core/misc/cspell/dictionary.txt
++++ b/core/misc/cspell/dictionary.txt
+@@ -371,6 +371,7 @@ drupalhtmlbuilder
+ drupalimage
+ drupalimage's
+ drupalimagecaption
++drupalimagestyle
+ drupalin
+ drupalism
+ drupalisms
+diff --git a/core/modules/filter/filter.module b/core/modules/filter/filter.module
+index d068ae03ac..7cecf97a8f 100644
+--- a/core/modules/filter/filter.module
++++ b/core/modules/filter/filter.module
+@@ -316,7 +316,7 @@ function check_markup($text, $format_id = NULL, $langcode = '', $filter_types_to
+  * @return array
+  *   An associative array of filtering tips, keyed by filter name. Each
+  *   filtering tip is an associative array with elements:
+- *   - tip: Tip text.
++ *   - tip: Tip text as render array, translated markup object or string.
+  *   - id: Filter ID.
+  */
+ function _filter_tips($format_id, $long = FALSE) {
+@@ -334,8 +334,9 @@ function _filter_tips($format_id, $long = FALSE) {
+       if ($filter->status) {
+         $tip = $filter->tips($long);
+         if (isset($tip)) {
++          $tip_render_array = is_array($tip) ? $tip : ['#markup' => $tip];
+           $tips[$format->label()][$name] = [
+-            'tip' => ['#markup' => $tip],
++            'tip' => $tip_render_array,
+             'id' => $name,
+           ];
+         }
+diff --git a/core/modules/filter/src/Entity/FilterFormat.php b/core/modules/filter/src/Entity/FilterFormat.php
+index c975f718ac..9c4556dd0e 100644
+--- a/core/modules/filter/src/Entity/FilterFormat.php
++++ b/core/modules/filter/src/Entity/FilterFormat.php
+@@ -4,6 +4,7 @@
+ 
+ use Drupal\Component\Plugin\PluginInspectionInterface;
+ use Drupal\Core\Config\Entity\ConfigEntityBase;
++use Drupal\Core\Entity\DependencyRemovalTrait;
+ use Drupal\Core\Entity\EntityWithPluginCollectionInterface;
+ use Drupal\Core\Entity\EntityStorageInterface;
+ use Drupal\filter\FilterFormatInterface;
+@@ -55,6 +56,8 @@
+  */
+ class FilterFormat extends ConfigEntityBase implements FilterFormatInterface, EntityWithPluginCollectionInterface {
+ 
++  use DependencyRemovalTrait;
++
+   /**
+    * Unique machine name of the format.
+    *
+@@ -420,7 +423,28 @@ public function removeFilter($instance_id) {
+   public function onDependencyRemoval(array $dependencies) {
+     $changed = parent::onDependencyRemoval($dependencies);
+     $filters = $this->filters();
++    /** @var \Drupal\filter\Plugin\FilterInterface $filter */
+     foreach ($filters as $filter) {
++      // Give this filter the opportunity to react on dependency removal.
++      $filter_removed_dependencies = $this->getPluginRemovedDependencies($filter->calculateDependencies(), $dependencies);
++      if ($filter_removed_dependencies) {
++        if ($filter->onDependencyRemoval($filter_removed_dependencies)) {
++          $this->setFilterConfig($filter->getPluginId(), $filter->getConfiguration());
++          $changed = TRUE;
++        }
++      }
++      // If there are unresolved deleted dependencies left, disable this filter
++      // to avoid the removal of the entire text format entity.
++      if ($this->getPluginRemovedDependencies($filter->calculateDependencies(), $dependencies)) {
++        $this->removeFilter($filter->getPluginId());
++        filter_formats_reset();
++        $this->getLogger()->warning("The '@format' filter '@filter' has been disabled because its configuration depends on removed dependencies.", [
++          '@format' => $this->id(),
++          '@filter' => $filter->getPluginId(),
++        ]);
++        $changed = TRUE;
++      }
++
+       // Remove disabled filters, so that this FilterFormat config entity can
+       // continue to exist.
+       if (!$filter->status && in_array($filter->provider, $dependencies['module'])) {
+@@ -444,4 +468,14 @@ protected function calculatePluginDependencies(PluginInspectionInterface $instan
+     }
+   }
+ 
++  /**
++   * Provides the 'filter' channel logger service.
++   *
++   * @return \Psr\Log\LoggerInterface
++   *   The 'filter' channel logger.
++   */
++  private function getLogger() {
++    return \Drupal::logger('filter');
++  }
++
+ }
+diff --git a/core/modules/filter/src/Plugin/FilterBase.php b/core/modules/filter/src/Plugin/FilterBase.php
+index 11e385f27a..9c93eaea9c 100644
+--- a/core/modules/filter/src/Plugin/FilterBase.php
++++ b/core/modules/filter/src/Plugin/FilterBase.php
+@@ -153,4 +153,11 @@ public function getHTMLRestrictions() {
+   public function tips($long = FALSE) {
+   }
+ 
++  /**
++   * {@inheritdoc}
++   */
++  public function onDependencyRemoval(array $dependencies): bool {
++    return FALSE;
++  }
++
+ }
+diff --git a/core/modules/filter/src/Plugin/FilterInterface.php b/core/modules/filter/src/Plugin/FilterInterface.php
+index eaae5e9c1d..9917655349 100644
+--- a/core/modules/filter/src/Plugin/FilterInterface.php
++++ b/core/modules/filter/src/Plugin/FilterInterface.php
+@@ -277,11 +277,25 @@ public function getHTMLRestrictions();
+    *   (FALSE), or whether a more elaborate filter tips should be returned for
+    *   template_preprocess_filter_tips() (TRUE).
+    *
+-   * @return string|null
+-   *   Translated text to display as a tip, or NULL if this filter has no tip.
++   * @return array|\Drupal\Component\Render\MarkupInterface|string|null
++   *   Translated text to display as a tip. Can be a render array, a translated
++   *   markup, a string or NULL if this filter has no tip.
+    *
+    * @todo Split into getSummaryItem() and buildGuidelines().
+    */
+   public function tips($long = FALSE);
+ 
++  /**
++   * Allows the plugin to react when one of its dependencies are deleted.
++   *
++   * @param array $dependencies
++   *   An array of dependencies that will be deleted keyed by dependency type.
++   *
++   * @return bool
++   *   TRUE if the plugin settings have been changed, FALSE if not.
++   *
++   * @todo Move to a generic interface in https://www.drupal.org/node/2579743.
++   */
++  public function onDependencyRemoval(array $dependencies): bool;
++
+ }
+diff --git a/core/modules/image/config/schema/image.schema.yml b/core/modules/image/config/schema/image.schema.yml
+index 5368f85f4c..4ace75c0e3 100644
+--- a/core/modules/image/config/schema/image.schema.yml
++++ b/core/modules/image/config/schema/image.schema.yml
+@@ -168,3 +168,15 @@ field.widget.settings.image_image:
+     preview_image_style:
+       type: string
+       label: 'Preview image style'
++
++filter_settings.filter_image_style:
++  type: filter
++  label: 'Display image styles'
++  mapping:
++    allowed_styles:
++      type: sequence
++      label: 'Allowed image styles'
++      orderby: value
++      sequence:
++        type: string
++        label: 'Image style ID'
+diff --git a/core/modules/image/image.module b/core/modules/image/image.module
+index c835449534..af0d487b8f 100644
+--- a/core/modules/image/image.module
++++ b/core/modules/image/image.module
+@@ -7,12 +7,14 @@
+ 
+ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+ use Drupal\Core\Entity\EntityInterface;
++use Drupal\Core\Form\FormStateInterface;
+ use Drupal\Core\File\FileSystemInterface;
+ use Drupal\Core\Routing\RouteMatchInterface;
+ use Drupal\Core\StreamWrapper\StreamWrapperManager;
+ use Drupal\Core\Url;
+ use Drupal\field\FieldConfigInterface;
+ use Drupal\field\FieldStorageConfigInterface;
++use Drupal\file\Entity\File;
+ use Drupal\file\FileInterface;
+ use Drupal\image\Entity\ImageStyle;
+ use Drupal\image\ImageConfigUpdater;
+@@ -491,3 +493,108 @@ function image_field_config_delete(FieldConfigInterface $field) {
+     \Drupal::service('file.usage')->delete($file, 'image', 'default_image', $field->uuid());
+   }
+ }
++
++/**
++ * Implements hook_form_FORM_ID_alter().
++ *
++ * Alters the image dialog form for text editor to allow the user to select an
++ * image style.
++ *
++ * @see \Drupal\editor\Form\EditorImageDialog::buildForm()
++ */
++function image_form_editor_image_dialog_alter(array &$form, FormStateInterface $form_state): void {
++  /** @var \Drupal\editor\EditorInterface $editor */
++  $editor = $form_state->getBuildInfo()['args'][0];
++
++  /** @var \Drupal\image\Plugin\Filter\FilterImageStyle $filter */
++  $filter = $editor->getFilterFormat()->filters('filter_image_style');
++
++  if (!$filter->status) {
++    // The 'filter_image_style' filter is not enabled for this text format.
++    return;
++  }
++
++  // Get the image (<img>) that is being edited on the client.
++  $image_element = $form_state->get('image_element');
++
++  // Add a select element to choose an image style.
++  $form['image_style']['selection'] = [
++    '#title' => t('Use image style'),
++    '#type' => 'select',
++    '#default_value' => isset($image_element['data-image-style']) ? $image_element['data-image-style'] : '',
++    '#options' => $filter->getAllowedImageStylesAsOptions(),
++    '#empty_value' => '',
++    // Set #parents in order to make the selected value an image attribute,
++    // named 'data-image-style', in the same way as other image attributes, such as
++    // 'data-align' or 'hasCaption', are added to the form.
++    // @see \Drupal\editor\Form\EditorImageDialog::buildForm()
++    '#parents' => ['attributes', 'data-image-style'],
++  ];
++
++  $form['actions']['save_modal']['#validate'][] = 'image_form_editor_image_dialog_validate';
++}
++
++/**
++ * Form validation handler for EditorImageDialog.
++ *
++ * Ensures the image shown in the text editor matches the chosen image style.
++ *
++ * @param array $form
++ *   The form render array
++ * @param \Drupal\Core\Form\FormStateInterface $form_state
++ *   The form state object.
++ *
++ * @see image_form_editor_image_dialog_alter()
++ * @see \Drupal\editor\Form\EditorImageDialog::buildForm()
++ * @see \Drupal\editor\Form\EditorImageDialog::validateForm()
++ */
++function image_form_editor_image_dialog_validate(array &$form, FormStateInterface $form_state): void {
++  // There is no file yet to apply an image style so no need to validate.
++  if (empty($form_state->getValue('fid')[0])) {
++    return;
++  }
++
++  $attributes = $form_state->getValue('attributes');
++  if (!$attributes) {
++    return;
++  }
++
++  // A previous image style may have been removed from the image ("-None-"
++  // selected), or globally deleted.
++  // So we will check later that this variable is defined.
++  $image_style = ImageStyle::load($attributes['data-image-style']);
++
++  $uri = File::load($form_state->getValue('fid')[0])->getFileUri();
++
++  // Set the 'src' attribute to the image style URL. FilterImageStyle will
++  // look at the 'data-editor-file-uuid' attribute, not the 'src' attribute
++  // to render the appropriate output.
++  $attributes['src'] = $image_style ? file_url_transform_relative($image_style->buildUrl($uri)) : '';
++
++  /** @var \Drupal\Core\Image\ImageInterface $image */
++  $image = \Drupal::service('image.factory')->get($uri);
++
++  if ($image->isValid()) {
++    // Get the original width and height of the image.
++    $dimensions = [
++      'width' => $image->getWidth(),
++      'height' => $image->getHeight(),
++    ];
++
++    // Transform the 'width' and 'height' dimensions of the image based on
++    // the image style.
++    if ($image_style) {
++      $image_style->transformDimensions($dimensions, $attributes['src']);
++      $attributes['width'] = $dimensions['width'];
++      $attributes['height'] = $dimensions['height'];
++    }
++    else {
++      // We must explicitly set to NULL (and not unset) for CKEditor to take
++      // the change into account.
++      foreach (['width', 'height', 'data-image-style'] as $key) {
++        $attributes[$key] = NULL;
++      }
++    }
++  }
++  $form_state->setValue('attributes', $attributes);
++}
+diff --git a/core/modules/image/image.post_update.php b/core/modules/image/image.post_update.php
+index 35248108c3..ca85663f93 100644
+--- a/core/modules/image/image.post_update.php
++++ b/core/modules/image/image.post_update.php
+@@ -19,6 +20,30 @@ function image_removed_post_updates() {
+   ];
+ }
+ 
++/**
++ * Update filter formats to allow the use of the image style filter.
++ */
++function image_post_update_enable_filter_image_style(array &$sandbox): void {
++  \Drupal::classResolver(ConfigEntityUpdater::class)->update($sandbox, 'filter_format', function (FilterFormatInterface $format): bool {
++    /** @var \Drupal\filter\Plugin\FilterInterface $filter */
++    if (!($filter = $format->filters('filter_html'))) {
++      return FALSE;
++    }
++
++    $config = $filter->getConfiguration();
++    $allowed_html = !empty($config['settings']['allowed_html']) ? $config['settings']['allowed_html'] : NULL;
++    $matches = [];
++    if ($allowed_html && preg_match('/<img([^>]*)>/', $allowed_html, $matches)) {
++      $attributes = array_filter(preg_split('/\s/', $matches[1]));
++      $attributes[] = 'data-image-style';
++      $config['settings']['allowed_html'] = preg_replace('/<img([^>]*)>/', '<img ' . implode(' ', array_unique($attributes)) . '>', $allowed_html);
++      $format->setFilterConfig('filter_html', $config);
++      return TRUE;
++    }
++    return FALSE;
++  });
++}
++
+ /**
+  * Add the image loading attribute setting to image field formatter instances.
+  */
+
+diff --git a/core/modules/image/tests/fixtures/update/test_enable_filter_image_style.php b/core/modules/image/tests/fixtures/update/test_enable_filter_image_style.php
+new file mode 100644
+index 0000000000..29e717a125
+--- /dev/null
++++ b/core/modules/image/tests/fixtures/update/test_enable_filter_image_style.php
+@@ -0,0 +1,35 @@
++<?php
++
++/**
++ * @file
++ * Test fixture for ImageUpdateTest::testPostUpdateFilterImageStyle() test.
++ */
++
++use Drupal\Core\Database\Database;
++
++$connection = Database::getConnection();
++
++$data = unserialize($connection->select('config')
++  ->fields('config', ['data'])
++  ->condition('collection', '')
++  ->condition('name', 'filter.format.full_html')
++  ->execute()
++  ->fetchField());
++
++$data['filters']['filter_html'] = [
++  'id' => 'filter_html',
++  'provider' => 'filter',
++  'status' => FALSE,
++  'weight' => -10,
++  'settings' => [
++    'allowed_html' => '<a href hreflang> <em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <s> <sup> <sub> <table> <caption> <tbody> <thead> <tfoot> <th> <td> <tr> <hr> <p> <h1> <pre> <drupal-media data-entity-type data-entity-uuid data-view-mode data-align data-caption alt title>',
++    'filter_html_help' => TRUE,
++    'filter_html_nofollow' => FALSE,
++  ],
++];
++
++$connection->update('config')
++  ->fields(['data' => serialize($data)])
++  ->condition('collection', '')
++  ->condition('name', 'filter.format.full_html')
++  ->execute();
+diff --git a/core/modules/image/tests/modules/image_style_filter_test/image_style_filter_test.info.yml b/core/modules/image/tests/modules/image_style_filter_test/image_style_filter_test.info.yml
+new file mode 100644
+index 0000000000..60adccce7d
+--- /dev/null
++++ b/core/modules/image/tests/modules/image_style_filter_test/image_style_filter_test.info.yml
+@@ -0,0 +1,5 @@
++name: 'Image Style Filter views'
++type: module
++description: 'Testing module for Filter integration.'
++package: Testing
++version: VERSION
+diff --git a/core/modules/image/tests/modules/image_style_filter_test/image_style_filter_test.module b/core/modules/image/tests/modules/image_style_filter_test/image_style_filter_test.module
+new file mode 100644
+index 0000000000..c3935884d9
+--- /dev/null
++++ b/core/modules/image/tests/modules/image_style_filter_test/image_style_filter_test.module
+@@ -0,0 +1,15 @@
++<?php
++
++/**
++ * @file
++ * Hook implementations for image_style_filter_test module.
++ */
++
++use Drupal\image_style_filter_test\FilterTestImageStyle;
++
++/**
++ * Implements hook_filter_info_alter().
++ */
++function image_style_filter_test_filter_info_alter(array &$info) {
++  $info['filter_image_style']['class'] = FilterTestImageStyle::class;
++}
+diff --git a/core/modules/image/tests/modules/image_style_filter_test/src/FilterTestImageStyle.php b/core/modules/image/tests/modules/image_style_filter_test/src/FilterTestImageStyle.php
+new file mode 100644
+index 0000000000..6956c86c08
+--- /dev/null
++++ b/core/modules/image/tests/modules/image_style_filter_test/src/FilterTestImageStyle.php
+@@ -0,0 +1,37 @@
++<?php
++
++namespace Drupal\image_style_filter_test;
++
++use Drupal\image\Plugin\Filter\FilterImageStyle;
++
++/**
++ * Replacement class for 'filter_image_style' plugin.
++ *
++ * Overrides parent::onDependencyRemoval() and omits to resolve the 'style2'
++ * dependency.
++ */
++class FilterTestImageStyle extends FilterImageStyle {
++
++  /**
++   * {@inheritdoc}
++   */
++  public function onDependencyRemoval(array $dependencies): bool {
++    $changed = FALSE;
++    if ($this->settings['allowed_styles']) {
++      foreach ($this->getAllowedImageStyles() as $image_style_id => $image_style) {
++        // Unlike the parent method, we intentionally don't resolve the 'style2'
++        // dependency to test the case when there are still unresolved
++        // dependencies left after plugins got the chance to act on removal.
++        // @see \Drupal\Tests\image\Kernel\FilterDependencyTest::testDependencyRemoval()
++        if ($image_style_id !== 'style2') {
++          if (isset($dependencies[$image_style->getConfigDependencyKey()][$image_style->getConfigDependencyName()])) {
++            unset($this->settings['allowed_styles'][array_search($image_style_id, $this->settings['allowed_styles'])]);
++            $changed = TRUE;
++          }
++        }
++      }
++    }
++    return $changed;
++  }
++
++}
+diff --git a/core/modules/image/tests/src/Functional/FilterImageStyleTest.php b/core/modules/image/tests/src/Functional/FilterImageStyleTest.php
+new file mode 100644
+index 0000000000..7415eac6cb
+--- /dev/null
++++ b/core/modules/image/tests/src/Functional/FilterImageStyleTest.php
+@@ -0,0 +1,129 @@
++<?php
++
++declare(strict_types = 1);
++
++namespace Drupal\Tests\image\Functional;
++
++use Drupal\Core\Url;
++use Drupal\Tests\BrowserTestBase;
++use Drupal\file\Entity\File;
++use Drupal\filter\Entity\FilterFormat;
++
++/**
++ * Tests FilterImageStyle conversion of inline images to utilize image styles.
++ *
++ * @coversDefaultClass \Drupal\image\Plugin\Filter\FilterImageStyle
++ *
++ * @group image
++ */
++class FilterImageStyleTest extends BrowserTestBase {
++
++  /**
++   * {@inheritdoc}
++   */
++  protected static $modules = ['filter', 'file', 'editor', 'node', 'image'];
++
++  /**
++   * {@inheritdoc}
++   */
++  protected $defaultTheme = 'stark';
++
++  /**
++   * A text format allowing images and with FilterImageStyle applied.
++   *
++   * @var \Drupal\Filter\FilterFormatInterface
++   */
++  protected $format;
++
++  /**
++   * Tasks common to all tests.
++   */
++  protected function setUp(): void {
++    parent::setUp();
++
++    $this->format = FilterFormat::create([
++      'format' => $this->randomMachineName(),
++      'name' => $this->randomString(),
++      'filters' => [
++        'filter_html' => [
++          'status' => TRUE,
++          'settings' => [
++            'allowed_html' => '<img src alt data-entity-type data-entity-uuid data-align data-caption data-image-style width height>',
++          ],
++        ],
++        'filter_image_style' => ['status' => TRUE],
++        'editor_file_reference' => ['status' => TRUE],
++      ],
++    ]);
++    $this->format->save();
++
++    $user = $this->drupalCreateUser(['access content', 'administer nodes']);
++    $this->drupalLogin($user);
++
++    $this->drupalCreateContentType(['type' => 'page', 'name' => 'Basic page']);
++  }
++
++  /**
++   * Helper function to create a test node with configurable image html.
++   *
++   * @param string $image_html
++   *   The image HTML markup.
++   */
++  protected function nodeHelper(string $image_html): void {
++    $node = $this->createNode([
++      'type' => 'page',
++      'title' => $this->randomString(),
++      'body' => [
++        [
++          'format' => $this->format->id(),
++          'value' => $image_html,
++        ],
++      ],
++    ]);
++    $node->save();
++
++    $this->drupalGet($node->toUrl());
++    $this->assertSession()->statusCodeEquals(200);
++  }
++
++  /**
++   * Tests that images not uploaded through media module are unmolested.
++   */
++  public function testImageNoStyle(): void {
++    $file_url = Url::fromUri('base:core/themes/stark/screenshot.png')->toString();
++
++    $image_html = '<img src="' . $file_url . '" width="220">';
++    $this->nodeHelper($image_html);
++
++    /** @var \Behat\Mink\Element\NodeElement $img_element */
++    $image_element = $this->getSession()->getPage()->find('css', 'img');
++    $this->assertNotEmpty($image_element);
++
++    $this->assertFalse($image_element->hasAttribute('class'));
++    $this->assertSame($file_url, $image_element->getAttribute('src'));
++    $this->assertSame('220', $image_element->getAttribute('width'));
++    $this->assertFalse($image_element->hasAttribute('height'));
++  }
++
++  /**
++   * Tests image style modification of images.
++   */
++  public function testImageStyle(): void {
++    $this->assertArrayHasKey('medium', $this->container->get('entity_type.manager')->getStorage('image_style')->loadMultiple());
++
++    $file = File::create(['uri' => 'core/themes/stark/screenshot.png']);
++    $file->save();
++
++    $image_html = '<img src="' . $file->createFileUrl() . '" data-entity-type="file" data-entity-uuid="' . $file->uuid() . '" data-image-style="medium" width="220">';
++    $this->nodeHelper($image_html);
++
++    /** @var \Behat\Mink\Element\NodeElement $img_element */
++    $image_element = $this->getSession()->getPage()->find('css', 'img[data-entity-uuid="' . $file->uuid() . '"]');
++    $this->assertNotEmpty($image_element);
++
++    $this->assertStringContainsString('medium', $image_element->getAttribute('src'));
++    $this->assertSame('220', $image_element->getAttribute('width'));
++    $this->assertSame('164', $image_element->getAttribute('height'));
++  }
++
++}
+diff --git a/core/modules/image/tests/src/Functional/Update/FilterImageStylePostUpdateTest.php b/core/modules/image/tests/src/Functional/Update/FilterImageStylePostUpdateTest.php
+new file mode 100644
+index 0000000000..cc2b95dcdb
+--- /dev/null
++++ b/core/modules/image/tests/src/Functional/Update/FilterImageStylePostUpdateTest.php
+@@ -0,0 +1,74 @@
++<?php
++
++declare(strict_types=1);
++
++namespace Drupal\Tests\image\Functional\Update;
++
++use Drupal\FunctionalTests\Update\UpdatePathTestBase;
++
++/**
++ * Tests image_post_update_enable_filter_image_style().
++ *
++ * @group image
++ * @group legacy
++ */
++class FilterImageStylePostUpdateTest extends UpdatePathTestBase {
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function setDatabaseDumpFiles() {
++    $this->databaseDumpFiles = [
++      __DIR__ . '/../../../../../system/tests/fixtures/update/drupal-8.8.0.bare.standard.php.gz',
++      __DIR__ . '/../../../fixtures/update/test_enable_filter_image_style.php',
++    ];
++  }
++
++  /**
++   * Tests image_post_update_enable_filter_image_style().
++   *
++   * @see image_post_update_enable_filter_image_style()
++   */
++  public function testFilterImageStylePostUpdate(): void {
++    $config_trail = 'filters.filter_html.settings.allowed_html';
++
++    // A format with an enabled filter_html filter.
++    $basic_html = $this->config('filter.format.basic_html');
++    // A format with a disabled filter_html filter.
++    $full_html = $this->config('filter.format.full_html');
++    // A format without a filter_html filter.
++    $plain_text = $this->config('filter.format.plain_text');
++
++    // Check that 'basic_html' text format has an enabled 'filter_html' filter,
++    // whose 'allowed_html' setting contains an <img ...> tag that is missing
++    // the 'data-image-style' attribute.
++    $this->assertTrue($basic_html->get('filters.filter_html.status'));
++    $this->assertStringNotContainsString('data-image-style', $basic_html->get($config_trail));
++
++    // Check that 'full_html' text format has an disabled 'filter_html' filter,
++    // whose 'allowed_html' setting contains an <img ...> tag that is missing
++    // the 'data-image-style' attribute.
++    $this->assertFalse($full_html->get('filters.filter_html.status'));
++    $this->assertStringNotContainsString('data-image-style', $full_html->get($config_trail));
++
++    // Check that 'plain_text' text format is missing an 'filter_html' filter.
++    $this->assertNull($plain_text->get('filters.filter_html'));
++
++    // Run updates.
++    $this->runUpdates();
++
++    $basic_html = $this->config('filter.format.basic_html');
++    $full_html = $this->config('filter.format.full_html');
++    $plain_text = $this->config('filter.format.plain_text');
++
++    // Check that 'basic_html' text format 'filter_html' filter was updated.
++    $this->assertStringContainsString('data-image-style', $basic_html->get($config_trail));
++
++    // Check that 'full_html' text format 'filter_html' filter was not updated.
++    $this->assertStringNotContainsString('data-image-style', $full_html->get($config_trail));
++
++    // Check that 'plain_text' text format is missing the 'filter_html' filter.
++    $this->assertNull($plain_text->get('filters.filter_html'));
++  }
++
++}
+diff --git a/core/modules/image/tests/src/FunctionalJavascript/AddImageTest.php b/core/modules/image/tests/src/FunctionalJavascript/AddImageTest.php
+new file mode 100644
+index 0000000000..6b65edafcc
+--- /dev/null
++++ b/core/modules/image/tests/src/FunctionalJavascript/AddImageTest.php
+@@ -0,0 +1,109 @@
++<?php
++
++declare(strict_types = 1);
++
++namespace Drupal\Tests\image\FunctionalJavascript;
++
++use Drupal\Core\Url;
++use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
++use Drupal\Tests\TestFileCreationTrait;
++use Drupal\editor\Entity\Editor;
++use Drupal\filter\Entity\FilterFormat;
++
++/**
++ * Tests the JavaScript functionality of the drupalimagestyle CKEditor plugin.
++ *
++ * @group image
++ */
++class AddImageTest extends WebDriverTestBase {
++
++  use TestFileCreationTrait;
++
++  /**
++   * {@inheritdoc}
++   */
++  protected static $modules = ['filter', 'file', 'node', 'image', 'ckeditor'];
++
++  /**
++   * {@inheritdoc}
++   */
++  protected $defaultTheme = 'stark';
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function setUp(): void {
++    parent::setUp();
++
++    FilterFormat::create([
++      'format' => 'filtered_html',
++      'name' => $this->randomString(),
++      'filters' => [
++        'filter_image_style' => ['status' => TRUE],
++      ],
++    ])->save();
++
++    $this->drupalCreateContentType(['type' => 'page', 'name' => 'Basic page']);
++
++    Editor::create([
++      'format' => 'filtered_html',
++      'editor' => 'ckeditor',
++    ])->save();
++
++    $user = $this->drupalCreateUser([
++      'access content',
++      'administer nodes',
++      'create page content',
++      'use text format filtered_html',
++    ]);
++    $this->drupalLogin($user);
++  }
++
++  /**
++   * Tests if an image can be placed inline with the data-image-style attribute.
++   */
++  public function testDataImageStyleElement(): void {
++    $image_url = Url::fromUri('base:core/themes/bartik/screenshot.png')->toString();
++
++    $this->drupalGet('node/add/page');
++    $this->assertSession()->pageTextContains('Create Basic page');
++
++    $page = $this->getSession()->getPage();
++    // Wait for the ckeditor toolbar elements to appear (loading is done).
++    $image_button_selector = 'a.cke_button__drupalimage';
++    $this->assertJsCondition("jQuery('$image_button_selector').length > 0");
++
++    $image_button = $page->find('css', $image_button_selector);
++    $this->assertNotEmpty($image_button);
++    $image_button->click();
++
++    $url_input = $this->assertSession()->waitForField('attributes[src]');
++    $this->assertNotEmpty($url_input);
++    $url_input->setValue($image_url);
++
++    $alt_input = $page->findField('attributes[alt]');
++    $this->assertNotEmpty($alt_input);
++    $alt_input->setValue('asd');
++
++    $image_style_input_name = 'attributes[data-image-style]';
++    $this->assertNotEmpty($page->findField($image_style_input_name));
++    $page->selectFieldOption($image_style_input_name, 'thumbnail');
++
++    // To prevent 403s on save, we re-set our request (cookie) state.
++    $this->prepareRequest();
++
++    // @todo: Switch to using NodeElement::click() on the button or
++    // NodeElement::submit() on the form when #2831506 is fixed.
++    // @see https://www.drupal.org/node/2831506
++    $script = "jQuery('input[id^=\"edit-actions-save-modal\"]').click()";
++    $this->getSession()->executeScript($script);
++    $this->assertSession()->assertWaitOnAjaxRequest();
++
++    $source_button = $page->find('css', 'a.cke_button__source');
++    $this->assertNotEmpty($source_button);
++    $source_button->click();
++
++    $this->assertStringContainsString('data-image-style="thumbnail"', $page->find('css', 'textarea.cke_source')->getValue());
++  }
++
++}
+diff --git a/core/modules/image/tests/src/Kernel/EditorImageStyleDialogTest.php b/core/modules/image/tests/src/Kernel/EditorImageStyleDialogTest.php
+new file mode 100644
+index 0000000000..89803b6bde
+--- /dev/null
++++ b/core/modules/image/tests/src/Kernel/EditorImageStyleDialogTest.php
+@@ -0,0 +1,169 @@
++<?php
++
++declare(strict_types = 1);
++
++namespace Drupal\Tests\image\Kernel;
++
++use Drupal\Core\Form\FormState;
++use Drupal\Core\Render\RenderContext;
++use Drupal\editor\Entity\Editor;
++use Drupal\editor\Form\EditorImageDialog;
++use Drupal\filter\Entity\FilterFormat;
++use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
++use Drupal\node\Entity\NodeType;
++
++/**
++ * Tests EditorImageDialog alteration to add image style selection.
++ *
++ * @see image_form_editor_image_dialog_alter()
++ *
++ * @group image
++ */
++class EditorImageStyleDialogTest extends EntityKernelTestBase {
++
++  /**
++   * Editor for testing.
++   *
++   * @var \Drupal\editor\EditorInterface
++   */
++  protected $editor;
++
++  /**
++   * {@inheritdoc}
++   */
++  protected static $modules = [
++    'ckeditor',
++    'editor',
++    'editor_test',
++    'file',
++    'image',
++    'node',
++    'system',
++    'user',
++  ];
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function setUp(): void {
++    parent::setUp();
++
++    $this->installEntitySchema('file');
++    $this->installSchema('node', ['node_access']);
++    $this->installSchema('file', ['file_usage']);
++    $this->installConfig(['node']);
++
++    // Install the image module config so we have the medium image style.
++    $this->installConfig('image');
++
++    // Create a node type for testing.
++    $type = NodeType::create(['type' => 'page', 'name' => 'page']);
++    $type->save();
++    node_add_body_field($type);
++    $this->installEntitySchema('user');
++    $this->container->get('router.builder')->rebuild();
++  }
++
++  /**
++   * Fixture to consolidate tasks while making filter status configurable.
++   *
++   * @param bool $enable_image_filter
++   *   Whether to activate filter_image_style in the text format.
++   *
++   * @return array|\Symfony\Component\HttpFoundation\Response
++   *   The submitted form.
++   */
++  protected function setUpForm(bool $enable_image_filter) {
++    $format = FilterFormat::create([
++      'format' => $this->randomMachineName(),
++      'name' => $this->randomString(),
++      'weight' => 0,
++      'filters' => [
++        'filter_image_style' => ['status' => $enable_image_filter],
++      ],
++    ]);
++    $format->save();
++
++    // Set up text editor.
++    /** @var \Drupal\editor\EditorInterface $editor */
++    $editor = Editor::create([
++      'format' => $format->id(),
++      'editor' => 'ckeditor',
++      'image_upload' => [
++        'max_size' => 100,
++        'scheme' => 'public',
++        'directory' => '',
++        'status' => TRUE,
++      ],
++    ]);
++    $editor->save();
++
++    /** @var \Drupal\file\FileInterface $file */
++    $file = file_save_data(file_get_contents($this->root . '/core/modules/image/sample.png'), 'public://');
++
++    $input = [
++      'editor_object' => [
++        'src' => file_url_transform_relative($file->getFileUri()),
++        'alt' => 'Balloons floating above a field.',
++        'data-entity-type' => 'file',
++        'data-entity-uuid' => $file->uuid(),
++      ],
++      'dialogOptions' => [
++        'title' => 'Edit Image',
++        'dialogClass' => 'editor-image-dialog',
++        'autoResize' => 'true',
++      ],
++      '_drupal_ajax' => '1',
++      'ajax_page_state' => [
++        'theme' => 'bartik',
++        'theme_token' => 'some-token',
++        'libraries' => '',
++      ],
++    ];
++    if ($enable_image_filter) {
++      $input['editor_object']['data-image-style'] = 'medium';
++    }
++
++    $form_state = (new FormState())
++      ->setRequestMethod('POST')
++      ->setUserInput($input)
++      ->addBuildInfo('args', [$editor]);
++
++    /** @var \Drupal\Core\Form\FormBuilderInterface $form_builder */
++    $form_builder = $this->container->get('form_builder');
++    $form_object = new EditorImageDialog(\Drupal::entityTypeManager()->getStorage('file'));
++    $form_id = $form_builder->getFormId($form_object, $form_state);
++    $form = [];
++
++    /** @var \Drupal\Core\Render\RendererInterface $renderer */
++    $renderer = \Drupal::service('renderer');
++    $renderer->executeInRenderContext(new RenderContext(), function () use (&$form, $form_builder, $form_id, $form_state) {
++      $form = $form_builder->retrieveForm($form_id, $form_state);
++      $form_builder->prepareForm($form_id, $form, $form_state);
++      $form_builder->processForm($form_id, $form, $form_state);
++    });
++
++    return $form;
++  }
++
++  /**
++   * Tests that style selection is hidden when filter_image_style is disabled.
++   */
++  public function testDialogNoStyles(): void {
++    $this->assertArrayNotHasKey('image_style', $this->setUpForm(FALSE));
++  }
++
++  /**
++   * Tests EditorImageDialog when filter_image_style is enabled.
++   */
++  public function testDialogStyles(): void {
++    $form = $this->setUpForm(TRUE);
++
++    $this->assertSame(
++      ['', 'large', 'medium', 'thumbnail', 'wide'],
++      array_keys($form['image_style']['selection']['#options'])
++    );
++    $this->assertSame('medium', $form['image_style']['selection']['#default_value']);
++  }
++
++}
+diff --git a/core/modules/image/tests/src/Kernel/FilterDependencyTest.php b/core/modules/image/tests/src/Kernel/FilterDependencyTest.php
+new file mode 100644
+index 0000000000..9d14f8581e
+--- /dev/null
++++ b/core/modules/image/tests/src/Kernel/FilterDependencyTest.php
+@@ -0,0 +1,147 @@
++<?php
++
++namespace Drupal\Tests\image\Kernel;
++
++use Drupal\Core\Database\Database;
++use Drupal\filter\Entity\FilterFormat;
++use Drupal\image\Entity\ImageStyle;
++use Drupal\KernelTests\KernelTestBase;
++
++/**
++ * Tests text format and filter dependencies.
++ *
++ * @group filter
++ */
++class FilterDependencyTest extends KernelTestBase {
++
++  /**
++   * {@inheritdoc}
++   */
++  protected static $modules = [
++    'dblog',
++    'filter',
++    'image',
++    'image_style_filter_test',
++  ];
++
++  /**
++   * @covers \Drupal\image\Plugin\Filter\FilterImageStyle::calculateDependencies
++   * @covers \Drupal\image\Plugin\Filter\FilterImageStyle::onDependencyRemoval
++   * @covers \Drupal\filter\Entity\FilterFormat::onDependencyRemoval
++   */
++  public function testDependencyRemoval(): void {
++    $this->installSchema('dblog', ['watchdog']);
++
++    // Create two image styles and a text format.
++    $style1 = ImageStyle::create(['name' => 'style1', 'label' => 'Style 1']);
++    $style1->save();
++    $style2 = ImageStyle::create(['name' => 'style2', 'label' => 'Style 2']);
++    $style2->save();
++    /** @var \Drupal\filter\FilterFormatInterface $format */
++    $format = FilterFormat::create(['format' => 'format']);
++    $format->save();
++
++    $config = [
++      'settings' => ['allowed_styles' => []],
++      'status' => TRUE,
++    ];
++
++    // Add the enabled 'filter_image_style' filter with no 'allowed_styles'.
++    $format->setFilterConfig('filter_image_style', $config);
++    $format->save();
++
++    // Check that no config dependencies were added.
++    $this->assertEmpty($format->filters('filter_image_style')->getConfiguration()['settings']['allowed_styles']);
++    $this->assertSame([
++      'module' => [
++        'image',
++      ],
++    ], $format->getDependencies());
++    $this->assertTrue($format->filters('filter_image_style')->getConfiguration()['status']);
++
++    // Add a dependency but disable the filter.
++    $config['settings']['allowed_styles'][] = 'style1';
++    $config['status'] = FALSE;
++    $format->setFilterConfig('filter_image_style', $config);
++    $format->save();
++
++    // Check dependencies are added also for disabled filters.
++    $this->assertSame(
++      ['style1'],
++      $format->filters('filter_image_style')->getConfiguration()['settings']['allowed_styles']
++    );
++    $this->assertSame([
++      'config' => [
++        'image.style.style1',
++      ],
++      'module' => [
++        'image',
++      ],
++    ], $format->getDependencies());
++    $this->assertFalse($format->filters('filter_image_style')->getConfiguration()['status']);
++
++    // Re-enable the filter and add second dependency.
++    $config['status'] = TRUE;
++    $config['settings']['allowed_styles'] = [
++      // Descending order to test if they're stored in ascending order.
++      'style2',
++      'style1',
++    ];
++    $format->setFilterConfig('filter_image_style', $config);
++    $format->save();
++
++    $this->assertSame([
++      // The allowed styles list was ordered ascending by label.
++      'style1',
++      'style2',
++    ], $format->filters('filter_image_style')->getConfiguration()['settings']['allowed_styles']);
++    $this->assertSame([
++      'config' => [
++        'image.style.style1',
++        'image.style.style2',
++      ],
++      'module' => [
++        'image',
++      ],
++    ], $format->getDependencies());
++
++    // Delete the first dependency and reload the entity.
++    $style1->delete();
++    $format = FilterFormat::load('format');
++
++    // Check that the text format entity has been updated.
++    $this->assertSame([
++      'style2',
++    ], $format->filters('filter_image_style')->getConfiguration()['settings']['allowed_styles']);
++    $this->assertSame([
++      'config' => [
++        'image.style.style2',
++      ],
++      'module' => [
++        'image',
++      ],
++    ], $format->getDependencies());
++
++    // Delete the second dependency and reload the entity.
++    $style2->delete();
++    $format = FilterFormat::load('format');
++
++    // Check that an unresolved removed dependency disables the filter.
++    // @see \Drupal\image_style_filter_test\FilterTestImageStyle::onDependencyRemoval()
++    $this->assertEmpty($format->filters('filter_image_style')->getConfiguration()['settings']['allowed_styles']);
++    $this->assertEmpty($format->getDependencies());
++    $this->assertFalse($format->filters('filter_image_style')->getConfiguration()['status']);
++
++    // Check that the correct warning message has been logged.
++    $arguments = ['@format' => 'format', '@filter' => 'filter_image_style'];
++    $logged = (bool) Database::getConnection()->select('watchdog', 'w')
++      ->fields('w', ['wid'])
++      ->condition('type', 'filter')
++      ->condition('message', "The '@format' filter '@filter' has been disabled because its configuration depends on removed dependencies.")
++      ->condition('variables', serialize($arguments))
++      ->execute()
++      ->fetchAll();
++    $this->assertTrue($logged);
++  }
++
++}
+
+diff --git a/core/profiles/standard/config/install/filter.format.basic_html.yml b/core/profiles/standard/config/install/filter.format.basic_html.yml
+index 7bf4073c91..dd088200f3 100644
+--- a/core/profiles/standard/config/install/filter.format.basic_html.yml
++++ b/core/profiles/standard/config/install/filter.format.basic_html.yml
+@@ -3,6 +3,7 @@ status: true
+ dependencies:
+   module:
+     - editor
++    - image
+ name: 'Basic HTML'
+ format: basic_html
+ weight: 0
+@@ -15,7 +16,7 @@ filters:
+     status: true
+     weight: -10
+     settings:
+-      allowed_html: '<br> <p> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <cite> <dl> <dt> <dd> <a hreflang href> <blockquote cite> <ul type> <ol start type> <strong> <em> <code> <li> <img src alt data-entity-uuid data-entity-type height width data-caption data-align>'
++      allowed_html: '<br> <p> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <cite> <dl> <dt> <dd> <a hreflang href> <blockquote cite> <ul type> <ol start type> <strong> <em> <code> <li> <img src alt data-entity-uuid data-entity-type height width data-caption data-align data-image-style>'
+       filter_html_help: false
+       filter_html_nofollow: false
+   filter_align:
+@@ -40,5 +41,12 @@ filters:
+     id: editor_file_reference
+     provider: editor
+     status: true
+-    weight: 11
++    weight: 10
+     settings: {  }
++  filter_image_style:
++    id: filter_image_style
++    provider: image
++    status: true
++    weight: 11
++    settings:
++      allowed_styles: {  }
+diff --git a/core/profiles/standard/config/install/filter.format.full_html.yml b/core/profiles/standard/config/install/filter.format.full_html.yml
+index 8aca83e0d9..19298184e5 100644
+--- a/core/profiles/standard/config/install/filter.format.full_html.yml
++++ b/core/profiles/standard/config/install/filter.format.full_html.yml
+@@ -3,6 +3,7 @@ status: true
+ dependencies:
+   module:
+     - editor
++    - image
+ name: 'Full HTML'
+ format: full_html
+ weight: 2
+@@ -33,3 +34,10 @@ filters:
+     status: true
+     weight: 11
+     settings: {  }
++  filter_image_style:
++    id: filter_image_style
++    provider: image
++    status: true
++    weight: 12
++    settings:
++      allowed_styles: {  }
