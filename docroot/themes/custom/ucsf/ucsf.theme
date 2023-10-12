@@ -25,3 +25,20 @@ function ucsf_preprocess_webform(&$vars){
   $vars["title"] = $wf->label();
 }
 
+/**
+ * Implements hook_css_alter().
+ */
+function ucsf_css_alter(&$css, \Drupal\Core\Asset\AttachedAssetsInterface $assets) {
+  // List the CSS files you want to remove.
+  $css_to_remove = [
+    'modules/contrib/jquery_ui/assets/vendor/jquery.ui/themes/base/theme.css',
+    'core/assets/vendor/jquery.ui/themes/base/theme.css',
+    'modules/contrib/jquery_ui/assets/vendor/jquery.ui/themes/base/accordion.css',
+    'modules/contrib/jquery_ui/assets/vendor/jquery.ui/themes/base/tabs.css',
+  ];
+
+  // Unset the specified CSS files.
+  $css = array_filter($css, function ($key) use ($css_to_remove) {
+    return !in_array($key, $css_to_remove);
+  }, ARRAY_FILTER_USE_KEY);
+}
