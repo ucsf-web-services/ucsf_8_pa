@@ -1,5 +1,5 @@
 /* eslint-disable */
-(function ($, window) {
+(function ($, window, once) {
     'use strict';
 
     Drupal.behaviors.dieToolbardie = {
@@ -41,76 +41,76 @@
     };
 
     Drupal.behaviors.fixHeights = {
-        attach: function (context, settings) {
-            $(window, context).once('fixheight').each( function() {
-                // Select and loop the container element of the elements you want to equalise
-                resizeCards();
+      attach: function (context, settings) {
+        once('fixheight', 'html', context).forEach(() => {
+          // Select and loop the container element of the elements you want to equalise
+          resizeCards();
 
-                var intstop = 0;
-                var intervals = setInterval(function() {
-                    resizeCards();
-                    intstop++;
-                    // console.log('interval number: '+ intstop);
-                    if (intstop==2) clearInterval(intervals);
-                 }, 3500);
+          let intstop = 0;
+          const intervals = setInterval(function() {
+            resizeCards();
+            intstop++;
+            // console.log('interval number: '+ intstop);
+            if (intstop==2) clearInterval(intervals);
+          }, 3500);
 
 
-                // At the end of a screen resize, card sizes.
-                let resizeTimer = null;
-                $(window).on('resize', context, () => {
-                    clearTimeout(resizeTimer);
-                    resizeTimer = setTimeout(() => {
-                        // resizing has "stopped".
-                        resizeCards();
-                    }, 250);
-                });
-            });
-        }
+          // At the end of a screen resize, card sizes.
+          let resizeTimer = null;
+          $('html').on('resize', context, () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+              // resizing has "stopped".
+              resizeCards();
+            }, 250);
+          });
+        });
+      }
     };
 
     function resizeCards() {
-        $('.layout-columns__2, .layout-columns__3, .layout-columns__4').each(function() {
-            // Cache the highest
-            let highestBox = 0;
+      $('.layout-columns__2, .layout-columns__3, .layout-columns__4').each(function() {
+        // Cache the highest
+        let highestBox = 0;
 
-            // FYI, There are some cards that need the sizing done on a parent
-            // wrapper, and some that need it on an inner child. This is
-            // confusing but due to the way the markup is, we have no other
-            // option.
-            // For example: .field-content-promotional-conten can be by itself
-            // or it can be a sibling to an image. This causes boxes to get
-            // miscalculated. So if .field-content-promotional-image is a
-            // previous sibling we have to apply the style to the parent
-            // wrapper.
-            let $items = $('.fact-card, .promo-list__card, .field-content-promotional-conten, .field-column-content-content:has(.field-content-promotional-image)', this);
+        // FYI, There are some cards that need the sizing done on a parent
+        // wrapper, and some that need it on an inner child. This is
+        // confusing but due to the way the markup is, we have no other
+        // option.
+        // For example: .field-content-promotional-conten can be by itself
+        // or it can be a sibling to an image. This causes boxes to get
+        // miscalculated. So if .field-content-promotional-image is a
+        // previous sibling we have to apply the style to the parent
+        // wrapper.
+        let $items = $('.fact-card, .promo-list__card, .field-content-promotional-conten, .field-column-content-content:has(.field-content-promotional-image)', this);
 
-            // Exit if this column doesn't have anything needing resized.
-            if ($items.length < 1) {
-                return;
-            }
+        // Exit if this column doesn't have anything needing resized.
+        if ($items.length < 1) {
+          return;
+        }
 
-            // Remove a selector if it is actually a child of the real box selector.
-            $items = $items.filter(function () {
-                if (!$(this).prev('.field-content-promotional-image').length) {
-                    return $(this)
-                }
-            });
-
-            // Clear the current height values.
-            $items.css('height', 'auto');
-
-            // Select and loop the elements you want to equalise
-            $items.each(function () {
-                const $this = $(this);
-                // If this box is higher than the cached highest then store it
-                if ($this.innerHeight() > highestBox) {
-                    highestBox = $this.innerHeight();
-                }
-            });
-
-            // Set the height of all those children to whichever was highest
-            $items.css('height', highestBox + 'px');
+        // Remove a selector if it is actually a child of the real box selector.
+        $items = $items.filter(function () {
+          if (!$(this).prev('.field-content-promotional-image').length) {
+            return $(this)
+          }
         });
+
+        // Clear the current height values.
+        $items.css('height', 'auto');
+
+        // Select and loop the elements you want to equalise
+        $items.each(function () {
+          const $this = $(this);
+          // If this box is higher than the cached highest then store it
+          if ($this.innerHeight() > highestBox) {
+            highestBox = $this.innerHeight();
+          }
+        });
+
+        // Set the height of all those children to whichever was highest
+        $items.css('height', highestBox + 'px');
+      });
     }
 
     // for emergency alerts
@@ -191,4 +191,4 @@
   screenTest(mql);
   mql.addListener(screenTest);
 
-})(jQuery, window);
+})(jQuery, window, once);
