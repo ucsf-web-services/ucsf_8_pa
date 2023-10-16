@@ -23,10 +23,6 @@
         closedSymbol: '<span class="fas fa-angle-down">'
       });
 
-      //var height = $(window).height();
-      //$('#block-ucsf-main-menu').css({'height': height - 90});
-      //$('.menu-parent-wrapper').css({'height': height - 150, 'overflow-y':'scroll'});
-
       $('.slicknav_menu .slicknav_btn').on('click', function () {
         if ($(this).hasClass('slicknav_collapsed')) {
           //console.log('menu is being closed');
@@ -163,7 +159,6 @@
     // console.log(offsetCardWithColor)
 
     offsetCardWithColor.forEach(function (element) {
-
       $(element).closest('.layout-column').addClass("has-card-with-offset-color");
     });
   };
