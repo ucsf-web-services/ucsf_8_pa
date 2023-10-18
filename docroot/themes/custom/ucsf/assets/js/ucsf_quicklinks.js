@@ -47,7 +47,6 @@
 
         // Toggle visibility of the quicklinks panel
         $triggerToggle.click(function (e) {
-          console.log('made it');
           e.preventDefault();
           setVisibility("toggle");
 
