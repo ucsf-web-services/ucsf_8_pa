@@ -48,7 +48,7 @@ class DomTwocolumn extends CKEditorPluginBase implements CKEditorPluginConfigura
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domtwocolumn/plugin.js';
+    return \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domtwocolumn/plugin.js';
   }
 
   /**
@@ -72,7 +72,7 @@ class DomTwocolumn extends CKEditorPluginBase implements CKEditorPluginConfigura
     return [
       'Domtwocolumn' => [
         'label' => t('Domtwocolumn'),
-        'image' => drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domtwocolumn/icons/domtwocolumn.png',
+        'image' => \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domtwocolumn/icons/domtwocolumn.png',
       ]
     ];
   }
@@ -103,8 +103,7 @@ class DomTwocolumn extends CKEditorPluginBase implements CKEditorPluginConfigura
         'interactive-yellow' => 'Interactive Yellow',
         'interactive-orange' => 'Interactive Orange',
         'interactive-green' => 'Interactive Green',
-      ),
-      //'#required' => TRUE
+      )
     ];
 
     return $form;

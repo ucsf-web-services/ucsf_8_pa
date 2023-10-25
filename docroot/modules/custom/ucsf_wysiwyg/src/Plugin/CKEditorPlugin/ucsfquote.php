@@ -47,7 +47,7 @@ class ucsfquote extends CKEditorPluginBase {
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/ucsfquote/plugin.js';
+    return \Drupal::service('extension.list.module')->getPath('ucsf_wysiwyg')  . '/js/plugins/ucsfquote/plugin.js';
   }
 
   /**
@@ -64,7 +64,7 @@ class ucsfquote extends CKEditorPluginBase {
     return [
       'Ucsfquote' => [
         'label' => t('Pull Quote'),
-        'image' => drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/ucsfquote/icons/ucsfquote.png'
+        'image' => \Drupal::service('extension.list.module')->getPath('ucsf_wysiwyg') . '/js/plugins/ucsfquote/icons/ucsfquote.png'
       ]
     ];
   }

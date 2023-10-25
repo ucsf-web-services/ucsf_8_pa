@@ -16,7 +16,7 @@ use Drupal\ckeditor\CKEditorPluginInterface;
 // use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Annotation\Translation;
 use Drupal\editor\Entity\Editor;
-
+use Drupal\Core\Extension\ExtensionPathResolver;
 /**
  * Defines the "DomCollapsible" plugin.
 
@@ -53,7 +53,7 @@ class DomCollapsible extends CKEditorPluginBase implements CKEditorPluginInterfa
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domcollapsible/plugin.js';
+    return \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins') . '/js/plugins/domcollapsible/plugin.js';
   }
 
   /**
@@ -70,7 +70,7 @@ class DomCollapsible extends CKEditorPluginBase implements CKEditorPluginInterfa
     return [
       'Domcollapsible' => [
         'label' => t('Domcollapsible'),
-        'image' => drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domcollapsible/icons/domcollapsible.png',
+        'image' => \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domcollapsible/icons/domcollapsible.png',
       ]
     ];
   }
