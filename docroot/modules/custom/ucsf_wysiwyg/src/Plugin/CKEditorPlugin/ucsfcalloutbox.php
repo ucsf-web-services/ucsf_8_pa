@@ -47,7 +47,7 @@ class ucsfcalloutbox extends CKEditorPluginBase {
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/ucsfcalloutbox/plugin.js';
+    return \Drupal::service('extension.list.module')->getPath('ucsf_wysiwyg') . '/js/plugins/ucsfcalloutbox/plugin.js';
   }
 
   /**
@@ -64,7 +64,7 @@ class ucsfcalloutbox extends CKEditorPluginBase {
     return [
       'Ucsfcalloutbox' => [
         'label' => t('Callout Box'),
-        'image' => drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/ucsfcalloutbox/icons/ucsfcalloutbox.png',
+        'image' => \Drupal::service('extension.list.module')->getPath('ucsf_wysiwyg') . '/js/plugins/ucsfcalloutbox/icons/ucsfcalloutbox.png',
       ]
     ];
   }

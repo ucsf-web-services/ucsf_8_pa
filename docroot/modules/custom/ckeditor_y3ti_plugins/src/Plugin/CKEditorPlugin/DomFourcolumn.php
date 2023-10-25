@@ -48,7 +48,7 @@ class DomFourColumn extends CKEditorPluginBase implements CKEditorPluginConfigur
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domfourcolumn/plugin.js';
+    return \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domfourcolumn/plugin.js';
   }
 
   /**
@@ -72,7 +72,7 @@ class DomFourColumn extends CKEditorPluginBase implements CKEditorPluginConfigur
     return [
       'Domfourcolumn' => [
         'label' => t('Domfourcolumn'),
-        'image' => drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domfourcolumn/icons/domfourcolumn.png',
+        'image' => \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domfourcolumn/icons/domfourcolumn.png',
       ]
     ];
   }

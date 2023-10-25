@@ -1,0 +1,36 @@
+diff --git a/simple_instagram_feed.info.yml b/simple_instagram_feed.info.yml
+index 1a1cc6b..0936f6f 100644
+--- a/simple_instagram_feed.info.yml
++++ b/simple_instagram_feed.info.yml
+@@ -2,7 +2,6 @@ name: Simple Instagram Feed
+ description: Creates a block with a dynamic Instagram Feed using https://github.com/jsanahuja/jquery.instagramFeed.
+ package: Social
+ type: module
+-core: 8.x
+-core_version_requirement: ^8 || ^9
++core_version_requirement: ^8 || ^9 || ^10
+ dependencies:
+   - drupal:block
+diff --git a/simple_instagram_feed.services.yml b/simple_instagram_feed.services.yml
+index 31ea451..6ade0ce 100644
+--- a/simple_instagram_feed.services.yml
++++ b/simple_instagram_feed.services.yml
+@@ -1,4 +1,4 @@
+ services:
+   simple_instagram_feed.library:
+     class: Drupal\simple_instagram_feed\Services\SimpleInstagramFeedLibrary
+-    arguments: ['@app.root']
++    arguments: ['%app.root%']
+diff --git a/tests/src/Functional/SimpleInstagramFeedTest.php b/tests/src/Functional/SimpleInstagramFeedTest.php
+index 7056360..78586b9 100644
+--- a/tests/src/Functional/SimpleInstagramFeedTest.php
++++ b/tests/src/Functional/SimpleInstagramFeedTest.php
+@@ -32,8 +32,6 @@ class SimpleInstagramFeedTest extends BrowserTestBase {
+    * {@inheritdoc}
+    */
+   protected function setUp() {
+-    parent::setUp();
+-
+     // Create admin user.
+     $this->adminUser = $this->drupalCreateUser([
+       'view the administration theme',

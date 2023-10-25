@@ -47,7 +47,7 @@ class blankdiv extends CKEditorPluginBase {
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/blankdiv/plugin.js';
+    return \Drupal::service('extension.list.module')->getPath('ucsf_wysiwyg') . '/js/plugins/blankdiv/plugin.js';
   }
 
   /**
@@ -64,7 +64,7 @@ class blankdiv extends CKEditorPluginBase {
     return [
       'Blankdiv' => [
         'label' => t('blankdiv'),
-        'image' => drupal_get_path('module', 'ucsf_wysiwyg') . '/js/plugins/blankdiv/icons/blankdiv.png'
+        'image' => \Drupal::service('extension.list.module')->getPath('ucsf_wysiwyg') . '/js/plugins/blankdiv/icons/blankdiv.png'
       ]
     ];
   }

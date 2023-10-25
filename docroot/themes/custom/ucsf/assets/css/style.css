@@ -800,8 +800,9 @@ strong, b {
   .wisepops-root #wisepops-container-197460 .hWoFRQ {
     display: none; } }
 
-.underline {
-  text-decoration: underline; }
+.underline,
+a.underline {
+  border-bottom: 1px solid #052049; }
 
 a[name] {
   display: block;
@@ -818,6 +819,11 @@ a[name] {
     grid-column: 1 / -1;
     padding-left: 0;
     padding-right: 0; } }
+
+.caption {
+  display: block; }
+  .caption > figcaption {
+    display: block; }
 
 .breadcrumb-region {
   -webkit-box-shadow: inset 0 9px 4px -4px rgba(0, 0, 0, 0.035);
@@ -3041,7 +3047,7 @@ a.video_preview::before {
     padding: 0 20px; }
     .emergency-alert__content > :last-child {
       margin-bottom: 0; }
-  .emergency-alert__content a:not(.link--cta) {
+  .emergency-alert__content a {
     color: #fff;
     background-color: transparent;
     text-decoration: none;
@@ -3053,16 +3059,21 @@ a.video_preview::before {
     word-wrap: break-word;
     font-weight: 500;
     font-family: "HelveticaNeueLTW04-65Medium"; }
-    .emergency-alert__content a:not(.link--cta):hover {
+    .emergency-alert__content a:hover {
       border-bottom: 2px solid #0F388A;
       color: #0F388A;
       border-bottom: 2px solid #fff;
       color: #fff; }
+    .emergency-alert__content a.underline {
+      border-bottom: 1px solid #fff; }
+      .emergency-alert__content a.underline:hover {
+        border-bottom: 2px solid #fff; }
   .emergency-alert a.link--cta {
     background-image: url("../images/cta-arrow-white.svg");
     color: #fff; }
     .emergency-alert a.link--cta:hover {
-      color: #fff; }
+      color: #fff;
+      border-bottom: none; }
   .emergency-alert--collapsed {
     padding: 16px 0; }
     .emergency-alert--collapsed .emergency-alert__header {
@@ -3088,8 +3099,8 @@ a.video_preview::before {
 .emergency-alert.background-yellow,
 .emergency-alert.background-orange {
   color: #052049; }
-  .emergency-alert.background-yellow__content a:not(.link--cta),
-  .emergency-alert.background-orange__content a:not(.link--cta) {
+  .emergency-alert.background-yellow .emergency-alert__content a,
+  .emergency-alert.background-orange .emergency-alert__content a {
     color: #052049;
     background-color: transparent;
     text-decoration: none;
@@ -3101,24 +3112,34 @@ a.video_preview::before {
     word-wrap: break-word;
     font-weight: 500;
     font-family: "HelveticaNeueLTW04-65Medium"; }
-    .emergency-alert.background-yellow__content a:not(.link--cta):hover,
-    .emergency-alert.background-orange__content a:not(.link--cta):hover {
+    .emergency-alert.background-yellow .emergency-alert__content a:hover,
+    .emergency-alert.background-orange .emergency-alert__content a:hover {
       border-bottom: 2px solid #0F388A;
       color: #0F388A;
       border-bottom: 2px solid #052049;
       color: #052049; }
+  .emergency-alert.background-yellow .emergency-alert__content a.underline,
+  .emergency-alert.background-orange .emergency-alert__content a.underline {
+    border-bottom: 1px solid #052049; }
+    .emergency-alert.background-yellow .emergency-alert__content a.underline:hover,
+    .emergency-alert.background-orange .emergency-alert__content a.underline:hover {
+      border-bottom: 2px solid #052049; }
   .emergency-alert.background-yellow a.link--cta,
   .emergency-alert.background-orange a.link--cta {
     background-image: url("../images/cta-arrow-navy.svg");
     color: #052049; }
     .emergency-alert.background-yellow a.link--cta:hover,
     .emergency-alert.background-orange a.link--cta:hover {
-      color: #052049; }
+      color: #052049;
+      border-bottom: none; }
   .emergency-alert.background-yellow .emergency-alert__header,
   .emergency-alert.background-orange .emergency-alert__header {
     color: #052049;
     -webkit-filter: none;
             filter: none; }
+    .emergency-alert.background-yellow .emergency-alert__header a,
+    .emergency-alert.background-orange .emergency-alert__header a {
+      color: #052049; }
 
 .search-form {
   position: relative; }
@@ -3506,22 +3527,22 @@ figure figure[class="image"] {
     .node-preview-container .form-select option {
       line-height: 1rem; }
 
-.publication-range {
+:is(#extraspecificity, .publication-range) {
   display: none; }
   @media (min-width: 1027px) {
-    .publication-range {
+    :is(#extraspecificity, .publication-range) {
       display: block; }
-      .publication-range.ui-slider {
+      :is(#extraspecificity, .publication-range).ui-slider {
         height: 0.1rem;
         background-color: rgba(5, 32, 73, 0.5);
         margin: 3rem 0 0 0;
         cursor: -webkit-grab;
         cursor: grab; }
-      .publication-range .ui-slider-range {
+      :is(#extraspecificity, .publication-range) .ui-slider-range {
         height: 0.3rem;
         background-color: #052049;
         top: -0.1rem; }
-      .publication-range .ui-slider-handle {
+      :is(#extraspecificity, .publication-range) .ui-slider-handle {
         width: 0.8rem;
         height: 0.8rem;
         background-color: #052049;
@@ -3534,23 +3555,23 @@ figure figure[class="image"] {
                 align-items: center;
         cursor: -webkit-grab;
         cursor: grab; }
-        .publication-range .ui-slider-handle:focus {
+        :is(#extraspecificity, .publication-range) .ui-slider-handle:focus {
           outline: none; }
-        .publication-range .ui-slider-handle--min {
+        :is(#extraspecificity, .publication-range) .ui-slider-handle--min {
           margin-left: 0; }
-        .publication-range .ui-slider-handle--max {
+        :is(#extraspecificity, .publication-range) .ui-slider-handle--max {
           -webkit-box-pack: end;
               -ms-flex-pack: end;
                   justify-content: end; }
-        .publication-range .ui-slider-handle.ui-state-active {
+        :is(#extraspecificity, .publication-range) .ui-slider-handle.ui-state-active {
           cursor: -webkit-grabbing;
           cursor: grabbing; }
-      .publication-range .ui-slider__handle-label {
+      :is(#extraspecificity, .publication-range) .ui-slider__handle-label {
         position: absolute;
         top: -2rem;
         font-family: "HelveticaNeueLTW06-75Bold", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
         font-size: 14px; }
-        .publication-range .ui-slider__handle-label.min-limit {
+        :is(#extraspecificity, .publication-range) .ui-slider__handle-label.min-limit {
           top: .8rem; } }
 
 .youtube-list__videos.slick-slider {
