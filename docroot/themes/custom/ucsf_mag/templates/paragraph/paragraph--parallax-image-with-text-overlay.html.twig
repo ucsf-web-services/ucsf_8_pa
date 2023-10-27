@@ -1,8 +1,10 @@
 {% extends '@ucsf/paragraph/paragraph--parallax-image-with-text-overlay.html.twig' %}
 {% set overlay_class = '' %}
 {% if content.field_overlay_color.0|render %}
-  {% for key, item in paragraph.field_overlay_color if key|first != '#' %}
-    {% set overlay_class = overlay_class ~ " " ~ item.value %}
+  {% for key, item in paragraph.field_overlay_color %}
+    {% if key|first != '#' %}
+      {% set overlay_class = overlay_class ~ " " ~ item.value %}
+    {% endif %}
   {% endfor %}
 {% endif %}
 {% set text_background_color = 'background-' ~ overlay_class|trim %}

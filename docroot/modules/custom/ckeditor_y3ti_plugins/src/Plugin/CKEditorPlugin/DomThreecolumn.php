@@ -48,7 +48,7 @@ class DomThreeColumn extends CKEditorPluginBase implements CKEditorPluginConfigu
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domthreecolumn/plugin.js';
+    return \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domthreecolumn/plugin.js';
   }
 
   /**
@@ -72,7 +72,7 @@ class DomThreeColumn extends CKEditorPluginBase implements CKEditorPluginConfigu
     return [
       'Domthreecolumn' => [
         'label' => t('Domthreecolumn'),
-        'image' => drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domthreecolumn/icons/domthreecolumn.png',
+        'image' => \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domthreecolumn/icons/domthreecolumn.png',
       ]
     ];
   }
@@ -103,8 +103,7 @@ class DomThreeColumn extends CKEditorPluginBase implements CKEditorPluginConfigu
         'interactive-yellow' => 'Interactive Yellow',
         'interactive-orange' => 'Interactive Orange',
         'interactive-green' => 'Interactive Green',
-      ),
-      //'#required' => TRUE
+      )
     ];
 
     return $form;

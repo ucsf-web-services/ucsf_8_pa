@@ -48,7 +48,7 @@ class DomVideodetector extends CKEditorPluginBase implements CKEditorPluginInter
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domvideodetector/plugin.js';
+    return \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domvideodetector/plugin.js';
   }
 
   /**
@@ -65,7 +65,7 @@ class DomVideodetector extends CKEditorPluginBase implements CKEditorPluginInter
     return [
       'Domvideodetector' => [
         'label' => t('Domvideodetector'),
-        'image' => drupal_get_path('module', 'ckeditor_y3ti_plugins') . '/js/plugins/domvideodetector/icons/domvideodetector.png',
+        'image' => \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins')  . '/js/plugins/domvideodetector/icons/domvideodetector.png',
       ]
     ];
   }

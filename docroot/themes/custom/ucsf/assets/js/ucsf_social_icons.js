@@ -1,10 +1,10 @@
 'use strict';
 
-(function ($) {
+(function ($, once) {
   // All of this code is used for small screen:
   Drupal.behaviors.socialIconsMobile = {
     attach: function attach(context, settings) {
-      $(window, context).once('social-icon-context').each(function () {
+      once('social-icon-context', 'html', context).forEach(function () {
         var $socialIcons = $('.article-meta-share', context);
         var $iconPrint = $('li', context).has('a[title*="Print"]');
         var lastScroll = 0;
@@ -79,5 +79,5 @@
       });
     }
   };
-})(jQuery);
+})(jQuery, once);
 //# sourceMappingURL=ucsf_social_icons.js.map
