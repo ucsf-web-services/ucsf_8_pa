@@ -17,13 +17,14 @@ function ucsf_preprocess_image(&$variables) {
   // Array of image styles that should be loaded eagerly.
   $is_eager = [
     'banner',
-    // 'topic__card',
   ];
 
   // Overwrite default load value.
   foreach ($is_eager as $value) {
-    if (strpos($variables['attributes']['src'], $value)) {
-      $variables['attributes']['loading'] = 'eager';
+    if (isset($variables['attributes']['src'])) {
+      if (strpos(strval($variables['attributes']['src']), strval($value))) {
+        $variables['attributes']['loading'] = 'eager';
+      }
     }
   };
 
