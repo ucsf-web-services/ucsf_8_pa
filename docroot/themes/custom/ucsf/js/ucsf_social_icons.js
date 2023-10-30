@@ -1,8 +1,8 @@
-(($) => {
+(($, once) => {
   // All of this code is used for small screen:
   Drupal.behaviors.socialIconsMobile = {
     attach: function attach(context, settings) {
-      $(window, context).once('social-icon-context').each(function () {
+      once('social-icon-context', 'html', context).forEach(() => {
         const $socialIcons = $('.article-meta-share', context);
         const $iconPrint = $('li', context).has('a[title*="Print"]');
         let lastScroll = 0;
@@ -78,4 +78,4 @@
       });
     }
   };
-})(jQuery);
+})(jQuery, once);

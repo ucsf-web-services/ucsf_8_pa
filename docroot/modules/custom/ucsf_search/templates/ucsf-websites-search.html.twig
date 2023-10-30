@@ -33,7 +33,7 @@
             <li><a href="/search/websites?search={{ searchterm }}">Websites</a></li>
         </ul>
     </div>
-    {% spaceless %}
+    {% apply spaceless %}
     <div id="websiteSearchResults">
         {% for website in websites %}
             <li>
@@ -46,7 +46,7 @@
             </li>
         {% endfor %}
     </div>
-    {% endspaceless %}
+    {% endapply %}
 
     {% if more.web %}
         <a>See More Website Results</a>

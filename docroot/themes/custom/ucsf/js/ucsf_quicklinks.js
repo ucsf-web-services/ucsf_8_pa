@@ -1,5 +1,5 @@
 /* eslint-disable */
-(function ($) {
+(function ($, once) {
   const quicklinksNav = () => {
     $(document).ready(function () {
       setTimeout(function () {
@@ -10,7 +10,7 @@
     Drupal.behaviors.quicklinks = {
       attach: function (context) {
         const $quicklinks = $(".quicklinks", context);
-        const $triggerToggle = $(".quicklinks-trigger", context);
+        const $triggerToggle = $(once("triggerToggle",".quicklinks-trigger", context));
         const $triggerClose = $(".quicklinks-close", context);
         const $quicklinksTriggers = [ $triggerToggle, $triggerClose];
         const selectorsArr = [ $quicklinks, $(".header-region", context) ];
@@ -43,7 +43,7 @@
 
 
         // Toggle visibility of the quicklinks panel
-        $triggerToggle.click(function (e) {
+        $triggerToggle.click((e) => {
           e.preventDefault();
           setVisibility("toggle" );
 
@@ -93,4 +93,4 @@
   if (mql.matches) {
     quicklinksNav();
   }
-})(jQuery);
+})(jQuery, once);

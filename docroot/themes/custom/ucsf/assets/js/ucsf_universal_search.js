@@ -3,7 +3,7 @@
 /**
  * Created by eguerin on 4/7/19.
  */
-(function ($, drupalSettings) {
+(function ($, drupalSettings, once) {
 
     /**
      * Use this behavior as a template for custom Javascript.
@@ -48,7 +48,7 @@
                 $('#universal-search').submit();
             });
 
-            $('.mobile-search-reveal', context).click(function (e) {
+            $(once('mobileAdvanced', '.mobile-search-reveal', context)).click(function (e) {
                 e.preventDefault();
                 if ($(this).hasClass('active')) {
                     $('.home-search__form').removeClass('active');
@@ -63,5 +63,5 @@
         }
 
     };
-})(jQuery, drupalSettings);
+})(jQuery, drupalSettings, once);
 //# sourceMappingURL=ucsf_universal_search.js.map

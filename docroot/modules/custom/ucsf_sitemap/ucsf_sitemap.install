@@ -11,6 +11,7 @@
 function ucsf_sitemap_update_8001(&$sandbox) {
   // Get the node IDs for each article that has a "Media Coverage" term.
   $nids = \Drupal::entityQuery('node')
+    ->accessCheck(TRUE)
     ->condition('type', 'article')
     ->condition('field_article_type', '413496')
     ->execute();
@@ -50,6 +51,7 @@ function ucsf_sitemap_update_8002(&$sandbox) {
   if (!isset($sandbox['nids'])) {
     // Get the node IDs for each article that has an external url field filled out.
     $nids = \Drupal::entityQuery('node')
+      ->accessCheck(TRUE)
       ->condition('type', 'article')
       ->exists('field_external_url')
       ->execute();

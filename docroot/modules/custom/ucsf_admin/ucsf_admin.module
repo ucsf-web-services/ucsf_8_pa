@@ -14,6 +14,7 @@ function ucsf_admin_preprocess_page(&$variables) {
   if (\Drupal::service('router.admin_context')->isAdminRoute()) {
     $variables['#attached']['library'][] = 'ucsf_admin/paragraphs';
     $variables['#attached']['library'][] = 'ucsf_admin/custom_blocks';
+    $variables['#attached']['library'][] = 'ucsf_admin/admin_wysiwyg';
   }
 }
 
@@ -35,3 +36,81 @@ function ucsf_admin_form_alter(&$form, FormStateInterface $form_state, $form_id)
 
   }
 }
+
+/**
+ * Hook into the entity_embed_dialog
+ * Allow additional styles over left, right, center.
+ * Add checkbox for whether to use a caption.
+ * Filter the Image Style options based on the Image Styles Options patch.
+ * https://www.drupal.org/files/issues/2018-09-19/2061377-328.patch
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function ucsf_admin_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_state) {
+  // \Drupal\editor\EditorInterface $editor
+  $editor = $form_state->getBuildInfo()['args'][0];
+
+  // \Drupal\image\Plugin\Filter\FilterImageStyle $filter
+  $filter = $editor->getFilterFormat()->filters('filter_image_style');
+  //get the allowed image style sets from the Image Style Options patch.
+  $styles = $filter->getAllowedImageStylesAsOptions();
+
+  // After getting the allowed image styles, filter out options we don't need.
+  if (isset($form['attributes']['data-entity-embed-display-settings']['image_style'])) {
+    foreach ($form['attributes']['data-entity-embed-display-settings']['image_style']['#options'] as $name => $value) {
+      if (!array_key_exists($name, $styles)) {
+        unset($form['attributes']['data-entity-embed-display-settings']['image_style']['#options'][$name]);
+      }
+    }
+  }
+
+  // Add the new styles to the Entity Embed popup.
+  if (isset($form['attributes']['data-align'])) {
+    $form['attributes']['data-align']['#options'] += array (
+      'half-image-right' => t('Half Image Right'),
+      'half-image-left' => t('Half Image Left'),
+      'half-image-right-full' => t('Full Bleed Right'),
+      'half-image-left-full' => t('Full Bleed Left'),
+      'full-bleed-image' => t('Full Bleed')
+    );
+    //change the form filed for styles to a select from a radio.
+    $form['attributes']['data-align']['#type'] = 'select';
+  }
+
+  // // Hide caption textarea, add checkbox for adding caption through WYSIWYG.
+  // if (isset($form['attributes']['data-caption'])) {
+  //   $form['attributes']['data-caption']['#type'] = 'hidden';
+
+  //   $form['show_caption'] = [
+  //     '#type' => 'checkbox',
+  //     '#title' => 'Show a caption',
+  //     '#description' => 'Warning, unchecking this box will delete any current caption.',
+  //     '#default_value' => !!$form['attributes']['data-caption']['#default_value'],
+  //   ];
+  // }
+
+  // array_unshift($form['#submit'], 'seven_form_entity_embed_dialog_submit');
+}
+
+// function ucsf_admin_form_entity_embed_dialog_submit(&$form, FormStateInterface $form_state) {
+//   // If caption should not be visible.
+//   $show_caption = $form_state->getValue('show_caption');
+//   if (!$show_caption) {
+//     // Clear previous caption.
+//     $form_state->setValue(['attributes', 'data-caption'], '');
+//     return;
+//   }
+
+//   // // Store the value of actual caption.
+//   $current_caption = $form_state->getValue(['attributes', 'data-caption']);
+//   // Strip all html off.
+//   $caption_no_html = strip_tags(html_entity_decode($current_caption));
+//   // Remove any leftover whitespace or non breaking space "%C2%A0".
+//   $caption_trimmed = trim($caption_no_html, " \t\n\r\0\x0B\xc2\xa0");
+
+//   // If caption should be visible, but there is no text, add placeholder text.
+//   if (empty($caption_trimmed)) {
+//     $form_state->setValue(['attributes', 'data-caption'], 'Add a caption here.');
+//   }
+
+// }

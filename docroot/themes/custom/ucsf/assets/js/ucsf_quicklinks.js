@@ -1,7 +1,7 @@
 "use strict";
 
 /* eslint-disable */
-(function ($) {
+(function ($, once) {
   var quicklinksNav = function quicklinksNav() {
     $(document).ready(function () {
       setTimeout(function () {
@@ -12,7 +12,7 @@
     Drupal.behaviors.quicklinks = {
       attach: function attach(context) {
         var $quicklinks = $(".quicklinks", context);
-        var $triggerToggle = $(".quicklinks-trigger", context);
+        var $triggerToggle = $(once("triggerToggle", ".quicklinks-trigger", context));
         var $triggerClose = $(".quicklinks-close", context);
         var $quicklinksTriggers = [$triggerToggle, $triggerClose];
         var selectorsArr = [$quicklinks, $(".header-region", context)];
@@ -95,5 +95,5 @@
   if (mql.matches) {
     quicklinksNav();
   }
-})(jQuery);
+})(jQuery, once);
 //# sourceMappingURL=ucsf_quicklinks.js.map
