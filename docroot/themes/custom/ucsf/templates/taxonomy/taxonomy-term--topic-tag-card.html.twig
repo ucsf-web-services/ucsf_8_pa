@@ -3,7 +3,7 @@
 {% set alt = term.field_taxonomy_card_image.entity.field_media_image.alt ? term.field_taxonomy_card_image.entity.field_media_image.alt : term.field_issue_cover.entity.field_media_image.alt %}
 {% set width = width ?: 260 %}
 {% set height = height ?: 350 %}
-<li class="topic-card">
+<div class="topic-card">
   <a href="{{ url }}">
     {% set fid = term.field_taxonomy_card_image.entity.field_media_image.entity.fid.value ?
       term.field_taxonomy_card_image.entity.field_media_image.entity.fid.value :
@@ -15,4 +15,4 @@
 
     <span>{{ name.0 }}</span>
   </a>
-</li>
+</div>
