@@ -6914,7 +6914,8 @@ body.loading .quicklinks {
   text-decoration: none;
   width: 100%; }
   .promo-list__card--featured a:hover {
-    background-color: transparent; }
+    background-color: transparent;
+    color: white; }
 
 .promo-list__card--featured .promo-list__card-content-wrapper {
   -ms-flex-line-pack: end;
@@ -10144,6 +10145,12 @@ h2.font-h3 {
   .news-center-banner__featured .news-card__image img,
   .media-coverage__featured .news-card__image img {
     float: right; }
+    @media (max-width: 849px) {
+      .news-center-banner__featured .news-card__image img,
+      .media-coverage__featured .news-card__image img {
+        -o-object-fit: cover;
+           object-fit: cover;
+        width: 100%; } }
   .news-center-banner__featured .news-card__desc,
   .media-coverage__featured .news-card__desc {
     display: none;
@@ -11985,6 +11992,8 @@ a[href*="http://www.ucsf.edu"] .article-header__date {
     overflow: hidden;
     display: block;
     padding-left: 40px; }
+    .topics-list__topics.slick-slider .slick-autoplay-toggle-button {
+      display: none; }
     @media (max-width: 599px) {
       .topics-list__topics.slick-slider {
         padding-top: 20px;
