@@ -10,13 +10,13 @@
 #}
 {% set classes = ['youtube-list__videos'] %}
 {{ attach_library('ucsf/slick_youtube') }}
-<ul{{attributes.addClass(classes)}}>
+<div{{attributes.addClass(classes)}}>
   {% for key, youtube in youtube_content %}
-    <li class="video-item__youtube">
+    <div class="video-item__youtube">
       <a class="video_preview" href="https://www.youtube.com/watch?v={{ youtube.video_id }}">
         <img loading="lazy" src={{ youtube["thumbnail"] }} alt="{{ youtube["video_title"] }}" width="263" height="148"/>
         <h3 class="video_preview__title">{{ youtube["video_title"] }}</h3>
       </a>
-    </li>
+    </div>
   {% endfor %}
-</ul>
+</div>
