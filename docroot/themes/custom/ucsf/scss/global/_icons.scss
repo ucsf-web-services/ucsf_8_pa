@@ -20,57 +20,57 @@ $primary-areas: (
   (
     "about",
     $f3-purple,
-    url(/themes/custom/ucsf/assets/images/card/ucsf-black.svg),
+    url(/themes/custom/ucsf/images/card/ucsf-black.svg),
   ),
   (
     "campus-news",
     $a1-navy,
-    url(/themes/custom/ucsf/assets/images/card/campus-black.svg),
+    url(/themes/custom/ucsf/images/card/campus-black.svg),
   ),
   (
     "announcements",
     $a1-navy,
-    url(/themes/custom/ucsf/assets/images/card/campus-black.svg),
+    url(/themes/custom/ucsf/images/card/campus-black.svg),
   ),
   (
     "happenings",
     $a1-navy,
-    url(/themes/custom/ucsf/assets/images/card/campus-black.svg),
+    url(/themes/custom/ucsf/images/card/campus-black.svg),
   ),
   (
     "honors-awards",
     $a1-navy,
-    url(/themes/custom/ucsf/assets/images/card/campus-black.svg),
+    url(/themes/custom/ucsf/images/card/campus-black.svg),
   ),
   (
     "spotlight",
     $a1-navy,
-    url(/themes/custom/ucsf/assets/images/card/campus-black.svg),
+    url(/themes/custom/ucsf/images/card/campus-black.svg),
   ),
   (
     "education",
     $d3-green,
-    url(/themes/custom/ucsf/assets/images/card/education-black.svg),
+    url(/themes/custom/ucsf/images/card/education-black.svg),
   ),
   (
     "patient-care",
     $b3-blue,
-    url(/themes/custom/ucsf/assets/images/card/doctor-black.svg),
+    url(/themes/custom/ucsf/images/card/doctor-black.svg),
   ),
   (
     "research",
     $c3-teal,
-    url(/themes/custom/ucsf/assets/images/card/microscope-black.svg),
+    url(/themes/custom/ucsf/images/card/microscope-black.svg),
   ),
   (
     "news-center",
     $f3-purple,
-    url(/themes/custom/ucsf/assets/images/card/ucsf-black.svg),
+    url(/themes/custom/ucsf/images/card/ucsf-black.svg),
   ),
   (
     "ucsf-magazine",
     $f3-purple,
-    url(/themes/custom/ucsf/assets/images/card/media-black.svg)
+    url(/themes/custom/ucsf/images/card/media-black.svg)
   ),
 );
 // Common properties that all icons will share.
@@ -78,7 +78,7 @@ $primary-areas: (
   &::before {
     content: ' ';
     display: block;
-    background: url(/themes/custom/ucsf/assets/images/card/education.svg) left center no-repeat transparent;
+    background: url(/themes/custom/ucsf/images/card/education.svg) left center no-repeat transparent;
     background-size: $space-six $space-six;
     height: $space-six;
     width: $space-six;
@@ -102,13 +102,13 @@ $primary-areas: (
     // if .icon-research uses microscope svg.
     @if $item == research {
       &::before {
-        background: url(/themes/custom/ucsf/assets/images/card/microscope.svg) left center no-repeat transparent;
+        background: url(/themes/custom/ucsf/images/card/microscope.svg) left center no-repeat transparent;
       }
     }
     // For other icons generates current item's svg name from the list of icon styles
     @else {
       &::before {
-        background: url(/themes/custom/ucsf/assets/images/card/#{$item}.svg) left center no-repeat transparent;
+        background: url(/themes/custom/ucsf/images/card/#{$item}.svg) left center no-repeat transparent;
       }
     }
   }
@@ -145,7 +145,7 @@ a%icon {
       &::before {
         content: "";
         display: block;
-        background: url(/themes/custom/ucsf/assets/images/card/microscope-black.svg) left center no-repeat transparent;
+        background: url(/themes/custom/ucsf/images/card/microscope-black.svg) left center no-repeat transparent;
         filter: $filter-006BE9;
       }
     }
@@ -157,7 +157,7 @@ a%icon {
       &::before {
         content: "";
         display: block;
-        background: url(/themes/custom/ucsf/assets/images/card/#{$item}-black.svg) left center no-repeat transparent;
+        background: url(/themes/custom/ucsf/images/card/#{$item}-black.svg) left center no-repeat transparent;
         filter: $filter-006BE9;
       }
     }
@@ -188,7 +188,7 @@ a%icon {
         text-decoration: none;
         // Screen size starting at 850px
         &::before {
-          background-image: url(/themes/custom/ucsf/assets/images/card/#{$item}-black.svg);
+          background-image: url(/themes/custom/ucsf/images/card/#{$item}-black.svg);
           background-repeat: no-repeat;
           filter: $filter-black-to-white;
         }
@@ -213,14 +213,14 @@ a%icon {
   @each $item in $fact-card-icons {
     @if $item == research {
       .icon-#{$item} {
-        background: url(/themes/custom/ucsf/assets/images/card/microscope-black.svg) left center no-repeat transparent;
+        background: url(/themes/custom/ucsf/images/card/microscope-black.svg) left center no-repeat transparent;
         filter: $filter-16A0AC;
       }
     }
 
     @else {
       .icon-#{$item} {
-        background: url(/themes/custom/ucsf/assets/images/card/#{$item}-black.svg) left center no-repeat transparent;
+        background: url(/themes/custom/ucsf/images/card/#{$item}-black.svg) left center no-repeat transparent;
         filter: $filter-16A0AC;
       }
     }
@@ -256,7 +256,7 @@ figure {
   .news-card--magazine-article & {
     background-color: $f3-purple;
     &::before {
-      background-image: url(/themes/custom/ucsf/assets/images/card/media-black.svg);
+      background-image: url(/themes/custom/ucsf/images/card/media-black.svg);
 
     }
   }
@@ -265,7 +265,7 @@ figure {
   [data-primary-area=""] & {
     background-color: $a1-navy;
     &::before {
-      background-image: url(/themes/custom/ucsf/assets/images/card/ucsf-black.svg);
+      background-image: url(/themes/custom/ucsf/images/card/ucsf-black.svg);
     }
   }
 }
@@ -284,7 +284,7 @@ figure {
 
 .icon-external-link {
   padding-right: 30px;
-  background: url(/themes/custom/ucsf/assets/images/ext-link-gray.svg) right center no-repeat transparent;
+  background: url(/themes/custom/ucsf/images/ext-link-gray.svg) right center no-repeat transparent;
   background-size: 20px;
 }
 
