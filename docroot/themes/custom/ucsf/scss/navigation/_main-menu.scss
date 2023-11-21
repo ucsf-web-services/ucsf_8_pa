@@ -1,3 +1,4 @@
+@use "sass:math";
 // Desktop menu, for mobile go to _slicknav.scss
 $nav-line-height: 84px;
 $nav-line-height-sticky: 60px;
@@ -315,8 +316,8 @@ $label-width: 48px;
   padding-bottom: 0;
   margin-left: $space-five;
   margin-right: 22px; // to offset icon to the right
-  margin-top: $hover-border-size / 2;
-  margin-bottom: $hover-border-size / 2;
+  margin-top: math.div($hover-border-size, 2);
+  margin-bottom: math.div($hover-border-size, 2);
   text-indent: -9999px;
 
   &:focus,

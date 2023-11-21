@@ -122,11 +122,11 @@ $parallax-options: (
   }
 
   @each $name, $color in $parallax-options {
-    .background-#{$name} {
+    .background-#{"" + $name} {
       --color-rgb: #{hex-to-rgb($color)};
     }
 
-    .background-#{$name}  + .scrolly-gallery__text-inner .button:hover {
+    .background-#{"" + $name}  + .scrolly-gallery__text-inner .button:hover {
       @include breakpoint($new-large) {
         background-color: #{$color};
         border-color: #{$color};

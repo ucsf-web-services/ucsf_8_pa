@@ -416,19 +416,19 @@
 @mixin colored($color-application:"background", $text:true) {
   @each $name, $color in $color-options-with-text {
     // create a class name based on the color name
-    .#{$color-application}-#{$name} {
-      --#{$color-application}-#{$name}-rgb: #{hex-to-rgb($color)};
-      --#{$color-application}-#{$name}-hex: #{$color};
+    .#{$color-application}-#{"" + $name} {
+      --#{$color-application}-#{"" + $name}-rgb: #{hex-to-rgb($color)};
+      --#{$color-application}-#{"" + $name}-hex: #{$color};
 
       @if ($color-application == "background") {
-        background-color: var(--#{$color-application}-#{$name}-hex);
+        background-color: var(--#{$color-application}-#{"" + $name}-hex);
       }
 
       @if ($color-application == "overlay")  {
         // convert hex value into rgba box-shadow
-        box-shadow: inset 0 0 0 1000px rgba(var(--#{$color-application}-#{$name}-rgb), 0.8);
+        box-shadow: inset 0 0 0 1000px rgba(var(--#{$color-application}-#{"" + $name}-rgb), 0.8);
         &:hover {
-          box-shadow: inset 0 0 0 1000px rgba(var(--#{$color-application}-#{$name}-rgb), 1);
+          box-shadow: inset 0 0 0 1000px rgba(var(--#{$color-application}-#{"" + $name}-rgb), 1);
         }
       }
     }
@@ -437,19 +437,19 @@
   @if ($text == false ) {
     @each $name, $color in $color-options-no-text {
       // create a class name based on the color name
-      .#{$color-application}-#{$name} {
-        --#{$color-application}-#{$name}-rgb: #{hex-to-rgb($color)};
-        --#{$color-application}-#{$name}-hex: #{$color};
+      .#{$color-application}-#{"" + $name} {
+        --#{$color-application}-#{"" + $name}-rgb: #{hex-to-rgb($color)};
+        --#{$color-application}-#{"" + $name}-hex: #{$color};
 
         @if ($color-application == "background") {
-          background-color: var(--#{$color-application}-#{$name}-hex);
+          background-color: var(--#{$color-application}-#{"" + $name}-hex);
         }
 
         @if ($color-application == "overlay")  {
           // convert hex value into rgba box-shadow
-          box-shadow: inset 0 0 0 1000px rgba(var(--#{$color-application}-#{$name}-rgb), 0.8);
+          box-shadow: inset 0 0 0 1000px rgba(var(--#{$color-application}-#{"" + $name}-rgb), 0.8);
           &:hover {
-            box-shadow: inset 0 0 0 1000px rgba(var(--#{$color-application}-#{$name}-rgb), 1);
+            box-shadow: inset 0 0 0 1000px rgba(var(--#{$color-application}-#{"" + $name}-rgb), 1);
           }
         }
       }
