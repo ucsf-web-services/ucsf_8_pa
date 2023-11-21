@@ -1,13 +1,14 @@
 {
+  "description": "Sass compiling for theme",
   "dependencies": {
-    "autoprefixer": "^10.4",
-    "breakpoint-sass": "^2.7",
-    "cthreem-core": "^1.0.5",
-    "gulp": "^4",
-    "sass": "^1.49",
-    "susy": "^3.0"
+    "breakpoint-sass": "3.0.0",
+    "sass": "^1.69.5"
   },
   "scripts": {
-    "start": "npx gulp"
+    "start": "npm run sass:build && npm run sass:watch",
+    "build": "npm run sass:build",
+    "sass:build": "sass scss:dist --style expanded",
+    "sass:watch": "sass --watch scss:dist --style expanded",
+    "postinstall": "npm run build"
   }
 }
