@@ -1,0 +1,359 @@
+/**
+* Have to put my @mixins for animations here otherwise gulp goes caput...
+*/
+/**
+* Multirange Slider Start
+* modifications for the jQuery slider UI
+*/
+/**
+* Multirange Slider End
+*/
+.page-node-type-map .poi-info-window .address-line, .page-node-type-map .poi-info-window .view-link a, .page-node-type-map .infobox {
+  font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 32px;
+  letter-spacing: 0.2px;
+  color: #052049;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+  line-height: 1.33;
+  font-size: 16px;
+}
+@media (min-width: 769px) {
+  .page-node-type-map .poi-info-window .address-line, .page-node-type-map .poi-info-window .view-link a, .page-node-type-map .infobox {
+    font-size: 18px;
+  }
+}
+
+.page-node-type-map .poi-info-window .title,
+.page-node-type-map .poi-info-window .transit-title span, .page-node-type-map .infobox__title {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+  font-family: "GranjonLTW01-Roman", "Garamond", "Times New Roman", serif;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.6px;
+  color: #052049;
+  padding-right: 1.8rem;
+  font-size: 24px;
+}
+@media (min-width: 769px) {
+  .page-node-type-map .poi-info-window .title,
+  .page-node-type-map .poi-info-window .transit-title span, .page-node-type-map .infobox__title {
+    font-size: 28px;
+  }
+}
+
+.page-node-type-map .universal-header-region {
+  display: none;
+}
+.page-node-type-map .header-region {
+  top: 0;
+  z-index: 780;
+}
+.page-node-type-map .slicknav_nav {
+  top: 50px;
+}
+.page-node-type-map .header--search.header--search-active + .slicknav-placeholder .slicknav_nav {
+  top: 210px;
+}
+.page-node-type-map #toolbar-administration + .dialog-off-canvas-main-canvas .combined-header-region {
+  position: relative;
+  top: 0;
+  z-index: 2;
+  height: 64px;
+}
+.page-node-type-map #toolbar-administration + .dialog-off-canvas-main-canvas .main-nav__toggle {
+  line-height: 58px;
+}
+.page-node-type-map #toolbar-administration + .dialog-off-canvas-main-canvas #locations-list {
+  top: 0;
+  position: relative;
+  z-index: 0;
+}
+@media (min-width: 769px) {
+  .page-node-type-map #toolbar-administration + .dialog-off-canvas-main-canvas #locations-list {
+    top: 126px;
+  }
+}
+.page-node-type-map #toolbar-administration + .dialog-off-canvas-main-canvas .region-tabs {
+  position: relative;
+  z-index: 2;
+}
+.page-node-type-map #toolbar-administration + .dialog-off-canvas-main-canvas .logo__img {
+  height: 30px;
+}
+@media (min-width: 769px) {
+  .page-node-type-map #toolbar-administration + .dialog-off-canvas-main-canvas #map-wrapper {
+    top: 126px;
+  }
+}
+.page-node-type-map #toolbar-administration + .dialog-off-canvas-main-canvas footer {
+  display: none;
+}
+.page-node-type-map .skip-link:focus {
+  outline: 2px solid #0060df;
+  background-color: white;
+  position: absolute !important;
+  width: max-content;
+  height: 40px;
+  z-index: 1000;
+  left: 200px;
+  padding: 8px;
+}
+.page-node-type-map #map-wrapper {
+  height: 70vh;
+  z-index: 1;
+}
+@media (min-width: 769px) {
+  .page-node-type-map #map-wrapper {
+    min-height: calc(100vh - 64px);
+  }
+}
+@media (min-width: 769px) and (max-width: 849px) {
+  .page-node-type-map #map-wrapper {
+    min-height: calc(100vh - 50px);
+  }
+}
+.page-node-type-map #map {
+  height: 100%;
+  width: 100%;
+}
+@media (min-width: 769px) {
+  .page-node-type-map .map-grid-container {
+    position: absolute;
+    /* top should be offset by the height of the header nav */
+    top: 64px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: grid;
+    grid-template-columns: auto 400px;
+    grid-template-rows: 100%;
+  }
+}
+@media (min-width: 769px) and (max-width: 849px) {
+  .page-node-type-map .map-grid-container {
+    top: 50px;
+  }
+}
+.page-node-type-map #locations-list {
+  background-color: #f2f3f4;
+  padding: 16px 16px 10px 16px;
+  height: 100%;
+  overflow-y: scroll;
+  z-index: 100;
+}
+@media (min-width: 769px) {
+  .page-node-type-map #locations-list {
+    padding: 44px 48px;
+    max-height: calc(100vh - 64px);
+  }
+}
+@media (min-width: 769px) and (max-width: 849px) {
+  .page-node-type-map #locations-list {
+    max-height: calc(100vh - 50px);
+  }
+}
+.page-node-type-map #locations-list h1 {
+  font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-size: 24px;
+  line-height: 1.4;
+  letter-spacing: -0.8px;
+  margin: 1rem 0 1.5rem;
+}
+@media (min-width: 600px) {
+  .page-node-type-map #locations-list h1 {
+    font-size: 36px;
+  }
+}
+@media (min-width: 769px) {
+  .page-node-type-map #locations-list h1 {
+    margin: 0 0 1.8rem;
+  }
+}
+.page-node-type-map #locations-list h2,
+.page-node-type-map #locations-list h3 {
+  text-transform: uppercase;
+  font-family: "HelveticaNeueLTW04-55Roman", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 1rem 0;
+  margin: 0px;
+  cursor: pointer;
+}
+@media (min-width: 769px) {
+  .page-node-type-map #locations-list h2,
+  .page-node-type-map #locations-list h3 {
+    text-transform: none;
+    font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-size: 18px;
+  }
+}
+.page-node-type-map #locations-list button {
+  outline: none;
+  border-left: none;
+  border-right: none;
+  appearance: none;
+  font-family: "HelveticaNeueLTW04-45Light", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  color: #052049;
+  text-align: left;
+  width: 100%;
+  background-image: none;
+  border-bottom: 1px solid #052049;
+  cursor: pointer;
+}
+.page-node-type-map #locations-list button:first-of-type {
+  border-top: 1px solid #052049;
+}
+@media (min-width: 769px) {
+  .page-node-type-map #locations-list button {
+    background-image: url("/themes/custom/ucsf/assets/images/cta-arrow-navy.svg");
+    border-bottom: 1px solid #ddd;
+    padding-right: 28px;
+  }
+  .page-node-type-map #locations-list button:first-of-type {
+    border-top: 1px solid #ddd;
+  }
+}
+.page-node-type-map .locations-label {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+.page-node-type-map .loading input[type=checkbox] {
+  display: none;
+}
+.page-node-type-map .loading input[type=checkbox] + label:before {
+  font-family: "Font Awesome 6 Pro";
+  font-weight: normal;
+  border-radius: 10%;
+  padding-right: 2%;
+  pointer-events: none;
+}
+.page-node-type-map .loading input[type=checkbox] + label:before {
+  content: "\f0c8";
+}
+.page-node-type-map .loading input[type=checkbox]:checked + label:before {
+  content: "\f14a";
+}
+.page-node-type-map .gm-style-iw.gm-style-iw-c {
+  width: 266px !important;
+  border-radius: 8%;
+  padding: 21px 21px 0 21px !important;
+}
+.page-node-type-map .gm-style-iw-d {
+  overflow: auto !important;
+}
+.page-node-type-map .infobox__item {
+  margin-bottom: 1rem;
+}
+.page-node-type-map .infobox__image {
+  display: none;
+  height: 124px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+@media (min-width: 769px) {
+  .page-node-type-map .infobox__image {
+    display: block;
+  }
+}
+.page-node-type-map .infobox__image img {
+  width: 100%;
+}
+@media (min-width: 769px) {
+  .infobox__image + .page-node-type-map .infobox__title {
+    padding-right: 0;
+  }
+}
+.page-node-type-map .infobox__link {
+  display: flex;
+  justify-content: space-between;
+  max-width: 100%;
+}
+.page-node-type-map .infobox__link a {
+  background-position: 96% 60%;
+  max-width: min-content;
+}
+.page-node-type-map .infobox__link a:hover, .page-node-type-map .infobox__link a:focus {
+  background-position: 100% 60%;
+  padding-right: 24px;
+}
+.page-node-type-map .gm-ui-hover-effect {
+  position: absolute !important;
+  width: 26px !important;
+  height: 26px !important;
+  top: 21px !important;
+  right: 21px !important;
+  background-color: #006BE9 !important;
+  opacity: 1;
+}
+.page-node-type-map .gm-ui-hover-effect > span {
+  margin: 0 auto !important;
+  filter: brightness(0) invert(1) !important;
+  transform: scale(2) !important;
+}
+.page-node-type-map .gm-ui-hover-effect:hover {
+  background-color: #0F388A !important;
+}
+.page-node-type-map .poi-info-window .title,
+.page-node-type-map .poi-info-window .transit-title span {
+  margin-bottom: 1rem;
+}
+.page-node-type-map .poi-info-window .view-link {
+  text-decoration: none;
+}
+.page-node-type-map .poi-info-window .view-link a {
+  text-decoration: none;
+  background-image: url("../images/cta-arrow.svg");
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-size: 14px 14px;
+  padding-right: 24px;
+  background-position: 98% center;
+  transition: 0.15s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
+  display: inline-block;
+  font-family: "HelveticaNeueLTW04-65Medium", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+  margin-bottom: 21px !important;
+  background-size: 14px 10px;
+}
+.page-node-type-map .poi-info-window .view-link a:link {
+  color: #006BE9;
+}
+.page-node-type-map .poi-info-window .view-link a:visited, .page-node-type-map .poi-info-window .view-link a:link:visited {
+  color: #006BE9;
+}
+.page-node-type-map .poi-info-window .view-link a:focus {
+  color: #006BE9;
+}
+.page-node-type-map .poi-info-window .view-link a.active:hover, .page-node-type-map .poi-info-window .view-link a.is-active:hover, .page-node-type-map .poi-info-window .view-link a.active-trail:hover, .page-node-type-map .poi-info-window .view-link a.visited:hover, .page-node-type-map .poi-info-window .view-link a:hover {
+  color: #0F388A;
+}
+.page-node-type-map .poi-info-window .view-link a.is-active, .page-node-type-map .poi-info-window .view-link a:active, .page-node-type-map .poi-info-window .view-link a.active-trail {
+  color: #006BE9;
+}
+.page-node-type-map .poi-info-window .view-link a:hover {
+  text-decoration: none;
+}
+.page-node-type-map .poi-info-window .view-link a:hover {
+  background-position: 100% center;
+}
+.page-node-type-map .poi-info-window .address {
+  margin-bottom: 1rem;
+}
+.page-node-type-map .poi-info-window .address-line.full-width {
+  width: auto !important;
+}
+.page-node-type-map .poi-info-window .transit-wheelchair-icon {
+  display: block !important;
+}
+
+/*# sourceMappingURL=ucsf_locations_map.css.map */
