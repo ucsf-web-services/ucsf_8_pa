@@ -1,10 +1,13 @@
+@use "variables" as *;
+@use "variables-space" as *;
+@use "mixins";
 // fs: font-style
 // Listed in alpha order.
 // Only apply font family when serif.
 // Only apply colors other than textgrey.
 
 @mixin fs-cta {
-  @include transition;
+  @include mixins.transition;
   font-size: 14px;
   font-weight: $fw-bold;
   line-height: 13px;
@@ -52,13 +55,13 @@
 @mixin fs-article-medium-h1 ($font-family: $font-granjon) {
   @include fs-heading-sm($font-family);
 
-  @include font-large {
+  @include mixins.font-large {
     @include fs-heading-two-md;
   }
 }
 
 @mixin fs-heading ($color: $a1-navy, $font-family: $font-helvetica-neue-light)  {
-  @include font-smooth;
+  @include mixins.font-smooth;
 
   font-family: $font-family;
   font-size: 32px;
@@ -66,14 +69,14 @@
   letter-spacing: -0.6px;
   color: $color;
 
-  @include font-large {
+  @include mixins.font-large {
     font-size: 56px;
     letter-spacing: -1.2px;
   }
 }
 
 @mixin fs-heading-latest-topic ($color: $a1-navy, $font-family: $font-helvetica-neue-light) {
-  @include font-smooth;
+  @include mixins.font-smooth;
 
   font-family: $font-family;
   font-size: 29px;
@@ -81,7 +84,7 @@
   letter-spacing: -0.6px;
   color: $color;
 
-  @include font-large {
+  @include mixins.font-large {
     font-size: 48px;
     letter-spacing: -1.2px;
   }
@@ -93,7 +96,7 @@
 }
 
 @mixin fs-heading-sm ($font-family: $font-granjon) {
-  @include font-smooth;
+  @include mixins.font-smooth;
   font-family: $font-family;
   font-size: 31px;
   line-height: 1.2em;
@@ -103,7 +106,7 @@
 @mixin fs-heading-blockquote ($font-family: $font-granjon) {
   @include fs-heading-sm ($font-family);
 
-  @include font-large {
+  @include mixins.font-large {
     @include fs-heading-blockquote-md;
   }
 }
@@ -115,7 +118,7 @@
 }
 
 @mixin fs-heading-two-sm ($color: $a1-navy, $font-family: $font-granjon) {
-  @include font-smooth;
+  @include mixins.font-smooth;
   font-family: $font-family;
   font-size: 28px;
   line-height: 1;
@@ -126,7 +129,7 @@
 @mixin fs-heading-two ($color: $a1-navy, $font-family: $font-granjon) {
   @include fs-heading-two-sm ($color, $font-family);
 
-  @include font-large {
+  @include mixins.font-large {
     @include fs-heading-two-md;
   }
 }
@@ -139,7 +142,7 @@
   line-height: 1.2em;
   letter-spacing: -0.3px;
 
-  @include font-large {
+  @include mixins.font-large {
     letter-spacing: -0.3px;
   }
 }
@@ -150,7 +153,7 @@
   line-height: 1.4;
   letter-spacing: -0.8px;
 
-  @include font-large {
+  @include mixins.font-large {
     font-size: 36px;
   }
 }
@@ -161,7 +164,7 @@
   line-height: 1.4;
   font-weight: 500;
 
-  @include font-large {
+  @include mixins.font-large {
     font-size: 28px;
   }
 }
@@ -173,7 +176,7 @@
   font-weight: 500;
   letter-spacing: -0.3px;
 
-  @include font-large {
+  @include mixins.font-large {
     font-size: 24px;
   }
 }
@@ -185,7 +188,7 @@
   font-weight: 500;
   letter-spacing: -0.3px;
 
-  @include font-large {
+  @include mixins.font-large {
     font-size: 20px;
   }
 }
@@ -197,20 +200,20 @@
   font-weight: 500;
   letter-spacing: -0.3px;
 
-  @include font-large {
+  @include mixins.font-large {
     font-size: 18px;
   }
 }
 
 @mixin fs-display ($font-family: $font-granjon) {
-  @include font-smooth;
+  @include mixins.font-smooth;
 
   font-family: $font-family;
   font-size: 40px;
   line-height: 1;
   letter-spacing: -1px;
 
-  @include font-large {
+  @include mixins.font-large {
     font-size: 82px;
     letter-spacing: -2px;
   }
@@ -258,7 +261,7 @@
 @mixin fs-trending ($font-family: $font-granjon) {
   @include fs-heading-sm ($font-family);
 
-  @include font-large {
+  @include mixins.font-large {
     @include fs-trending-md;
   }
 }
@@ -286,7 +289,7 @@
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
   font-weight: 500;
 
-  @include font-large {
+  @include mixins.font-large {
     font-size: 19px;
     line-height: 32px;
     letter-spacing: 0.4px;

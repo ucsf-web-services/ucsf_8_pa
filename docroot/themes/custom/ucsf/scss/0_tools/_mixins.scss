@@ -1,3 +1,136 @@
+@use "variables" as *;
+@use "variables-space" as *;
+@use '../../node_modules/breakpoint-sass/stylesheets/breakpoint' as *;
+
+//------------------------------------------------------------------------------
+// Shame file to reconcile theme with pattern lab mixins for faster theming.
+//------------------------------------------------------------------------------
+// @todo Don't do this.
+
+@mixin xs {
+  @include breakpoint($bp-xs) {
+    @content;
+  }
+}
+
+@mixin small {
+  @include breakpoint($bp-small) {
+    @content;
+  }
+}
+
+@mixin medium {
+  @include breakpoint($new-medium) {
+    @content;
+  }
+}
+
+@mixin font-large {
+  @include breakpoint($font-large) {
+  @content;
+}
+
+}
+@mixin large {
+  @include breakpoint($bp-large) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @include breakpoint($bp-xl) {
+    @content;
+  }
+}
+
+@mixin max-width {
+  @include breakpoint($bp-full) {
+    @content;
+  }
+}
+
+// Implementing a bug fix from https://css-tricks.com/preventing-a-grid-blowout/
+@mixin card-three-up {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-top: $space-ten;
+
+  @include breakpoint($new-large) {
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: auto;
+    grid-gap: 5%;
+    grid-row-gap: 0;
+  }
+}
+
+@mixin card-three-up-constrained {
+  margin: 0 auto;
+  max-width: $bp-xl;
+  margin-top: 0;
+  padding-top: $space-five;
+}
+
+@mixin eyebrow {
+  @include font-smooth;
+
+  font-family: $font-helvetica-neue-bold;
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  line-height: 1.4em;
+  color: $a1-navy;
+  text-transform: uppercase;
+
+  &::after {
+    content: ' ';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: $a1-navy;
+    margin: 0 5px 3px;
+  }
+}
+
+@mixin font-smooth {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  font-weight: 500;
+}
+
+@mixin list-reset {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin grid-sixteen {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-gap: 5%;
+  grid-row-gap: 0;
+
+  @include medium {
+    grid-template-columns: repeat(16, minmax(0, 1fr));
+    grid-gap: 0;
+  }
+}
+
+@mixin no-bottom {
+  margin-bottom: 0;
+}
+
+@mixin magazine-eyebrow {
+  font-family: $font-helvetica-neue-bold;
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  line-height: 1.4em;
+  color: $c-dark-navy;
+  text-transform: uppercase;
+}
+
 @mixin background-image($file-name, $position: middle center, $color: transparent) {
   background: url('/themes/custom/ucsf/images/#{$file-name}') no-repeat $position $color;
 }
@@ -481,3 +614,4 @@
 /**
 * Multirange Slider End
 */
+
