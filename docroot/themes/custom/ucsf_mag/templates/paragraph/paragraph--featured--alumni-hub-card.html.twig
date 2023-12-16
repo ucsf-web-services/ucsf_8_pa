@@ -1,8 +1,14 @@
-{# used on "Magazine Homepage" node, "Magazine Issue" taxonomy #}
+{# Handle use case when field value is "null" instead of empty string #}
+{% if paragraph.field_news_article.target_id|render|striptags != null %}
+  {% set drupal_field_paragraph_id = paragraph.field_news_article.target_id|render|striptags %}
+{% else %}
+  {% set drupal_field_paragraph_id = ''%}
+{% endif %}
 
+{# used on "Magazine Homepage" node, "Magazine Issue" taxonomy #}
 {# Only show "Alumni Card" if it's not empty #}
 {% if content.field_link|render|striptags != ''
-  or drupal_field('field_external_url', 'node', paragraph.field_news_article.target_id)|render|striptags != ''
+  or drupal_field_paragraph_id|render|striptags != ''
   or content.field_news_article.0['#node'].id != ''
 %}
 
