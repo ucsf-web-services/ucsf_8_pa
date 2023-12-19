@@ -1,6 +1,5 @@
 @use "../0_tools" as *;
 @use "../0_tools/variables-space" as *;
-@use '../../node_modules/breakpoint-sass/stylesheets/breakpoint' as *;
 $map-height-min-nav: calc(100vh - 50px);
 $map-height-max-nav: calc(100vh - 64px);
 
@@ -113,7 +112,7 @@ $map-height-max-nav: calc(100vh - 64px);
       min-height: $map-height-max-nav;
     }
 
-    @include breakpoint(769px 849px) {
+    @media ($above-s) and ($below-m) {
       min-height: $map-height-min-nav;
     }
   }
@@ -136,7 +135,7 @@ $map-height-max-nav: calc(100vh - 64px);
       grid-template-rows: 100%;
     }
 
-    @include breakpoint(769px 849px) {
+    @media ($above-s) and ($below-m) {
       // top should be offset by the height of the header nav
       top: 50px;
     }
@@ -154,7 +153,7 @@ $map-height-max-nav: calc(100vh - 64px);
       max-height: $map-height-max-nav;
     }
 
-    @include breakpoint(769px 849px) {
+    @media ($above-s) and ($below-m) {
       max-height: $map-height-min-nav;
     }
 

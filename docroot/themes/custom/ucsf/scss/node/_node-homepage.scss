@@ -1,4 +1,5 @@
 @use "../0_tools" as *;
+$home-banner-max-width: 1360px;
 .homepage {
   margin-bottom: 0;
 
@@ -13,7 +14,7 @@
       padding-top: $space-five;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
 
       padding: 0 $space-ten;
       padding-top: $space-ten;
@@ -40,13 +41,13 @@
 }
 
 .home-banner {
-  max-width: 1360px;
+  max-width: $home-banner-max-width;
 
   img {
     width: 100%;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     @include grid;
 
     grid-column: 2/-1;
@@ -57,12 +58,12 @@
 .home-banner-two .home-banner,
 .home-banner-three .home-banner {
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     @include grid-eighteen;
 
     grid-column: 1/-1;
     justify-self: start;
-    max-width: $bp-full;
+    max-width: $bp-3xl;
   }
 }
 
@@ -70,15 +71,15 @@
   grid-column: 1/-1;
   grid-row: 1/-1;
   //justify-self: end;
-  max-width: 1360px;
+  max-width: $home-banner-max-width;
 }
 .home-banner,
 .home-banner-two,
 .home-banner-three {
   .home-banner__image {
-    max-width: $bp-full;
+    max-width: $bp-3xl;
     img {
-      max-width: $bp-full;
+      max-width: $bp-3xl;
     }
   }
 }
@@ -104,7 +105,7 @@
     margin-right: $space-ten;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     grid-column: 1/6;
     grid-row: 2/3;
     //padding-left: 0;
@@ -120,7 +121,7 @@
 }
 
 .home-banner-two .home-banner__header {
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     @include grid-sixteen;
 
     padding-left: $space-three;
@@ -153,7 +154,7 @@
 .home-banner-three {
   .home-banner {
     .home-banner__header {
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         grid-column: 1/13;
         grid-row: 3/3;
         padding: $space-eight;
@@ -169,7 +170,7 @@
 
 .home-banner-two .home-banner-support-wrapper {
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     @include grid-eighteen;
 
     .home-banner-support {
@@ -191,7 +192,7 @@
 
 .home-banner-support {
   background: $c-white;
-  max-width: 1360px;
+  max-width: $home-banner-max-width;
   padding: 20px;
   float: left;
 
@@ -199,7 +200,7 @@
     padding: $space-five;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     @include grid-eighteen;
     grid-gap: 4%;
     float: none;
@@ -215,7 +216,7 @@
   margin-bottom: $space-three;
   font-size: $font-size-xxsm;
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     grid-column: 2/5;
     padding-top: 5px;
   }
@@ -272,7 +273,7 @@
     }
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     grid-column: 5/-1;
     padding: 0;
 
@@ -318,11 +319,11 @@
     }
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     @include grid;
 
     grid-template-rows: repeat(3, auto);
-    max-width: 1360px;
+    max-width: $home-banner-max-width;
   }
 }
 
@@ -330,7 +331,7 @@
   grid-column: 1/-1;
   grid-row: 1/-1;
   justify-self: end;
-  max-width: 1360px;
+  max-width: $home-banner-max-width;
 }
 
 .field-map-text { // PL: .map-home__content
@@ -355,7 +356,7 @@
     margin-right: $space-ten;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     padding-right: 0;
     grid-column: 8/-1;
     grid-row: 2/3;
@@ -386,7 +387,7 @@
     padding: $space-five;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     padding: 0;
     margin-top: $space-ten;
   }
@@ -403,7 +404,7 @@
     margin-bottom: $space-five;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     margin-top: $space-seven;
   }
 }
@@ -426,7 +427,7 @@
       width: 99%;
     }
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       height: 100px;
       padding-left: 32px;
       font-size: $font-size-bg;
@@ -466,7 +467,7 @@
       background-size: 28px;
     }
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       position: relative;
       top: -2px;
 
@@ -535,7 +536,7 @@
     margin-top: $space-five;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
   margin-top: $space-ten;
   }
 
@@ -555,11 +556,11 @@
 
     // .quicklinks-trigger appears at this breakpoint,
     //  add its width to margin right
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       margin: 0 70px 0 $space-five;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       @include card-three-up;
       margin: 0 $space-ten;
     }
@@ -577,7 +578,7 @@
         padding-left: $space-four;
       }
 
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         margin-bottom: $space-five;
       }
     }
@@ -600,7 +601,7 @@
       padding-bottom: 0;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       padding: $space-ten;
       padding-bottom: 0;
     }
@@ -616,7 +617,7 @@
       padding: 0 $space-five;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       padding: 0 $space-ten;
     }
   }

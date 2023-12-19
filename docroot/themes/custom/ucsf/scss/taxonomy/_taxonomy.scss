@@ -24,7 +24,7 @@
 
 .topic-banner {
   margin: 0 auto;
-  max-width: $bp-full;
+  max-width: $bp-3xl;
   min-height: 208px;
 }
 
@@ -58,11 +58,11 @@
   .news-list {
     padding-top: 32px;
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       padding-top: $space-five;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       padding-top: 0;
     }
   }
@@ -70,7 +70,7 @@
 
 .topic-content-wrapper {
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     display: grid;
     grid-template-columns: repeat(12,minmax(0, 1fr));
     grid-gap: 5%;
@@ -81,7 +81,7 @@
   }
 
   .alias-news-media-coverage & {
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       padding-bottom: 80px;
     }
   }
@@ -99,14 +99,14 @@
     @include fs-article-medium-h1;
   }
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     margin-right: $space-five;
     padding-right: $space-five;
     padding-left: $space-five;
     margin-top: -112px;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     grid-column: 1/9;
     margin-right: 0;
     padding-right: $space-ten;
@@ -122,11 +122,11 @@
   margin-top: 0;
   margin-bottom: 0;
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     padding-top: $space-five;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     padding-top: $space-ten;
   }
 }
@@ -148,11 +148,11 @@
     margin-top: $space-ten;
   }
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     padding: 0 $space-five;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     grid-column: 1/9;
     padding: 0 $space-ten;
   }
@@ -164,12 +164,12 @@
     padding-top: 32px;
     padding-bottom: 32px;
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       padding-top: $space-five;
       padding-bottom: 0;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       padding-top: $space-ten;
     }
   }

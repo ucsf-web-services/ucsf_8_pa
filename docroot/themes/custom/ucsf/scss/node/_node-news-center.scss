@@ -19,7 +19,7 @@
   width: 100%;
   padding-bottom: $space-five;
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     @include grid-two;
 
     float: none;
@@ -33,7 +33,7 @@
   position: relative;
   margin-top: 2.5rem;
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     margin-top: 0;
   }
 }
@@ -77,7 +77,7 @@
     img {
       float: right;
 
-      @include breakpoint($new-medium-max) {
+      @media ($below-m) {
         object-fit: cover;
         width: 100%;
       }
@@ -122,12 +122,12 @@
     }
   }
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     float: left;
     width: 48%;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     float: none;
     width: auto;
 
@@ -149,14 +149,14 @@
   top: -9.5rem;
   left: $page-gutter;
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     display: flex;
     top: -3rem;
     left: auto;
     right: $page-gutter; //needs to line up with .news-center-banner_list
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     display: flex;
     top: -3rem;
     left: auto;
@@ -206,14 +206,14 @@
     }
   }
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     margin: $space-ten 0;
     margin-right: 20px;
     float: right;
     width: 48%;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     margin-right: 10%;
     float: none;
     width: auto;
@@ -239,7 +239,7 @@
     }
   }
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     margin-top: $space-ten;
     padding-top: $space-ten;
     padding-bottom: $space-ten;
@@ -277,13 +277,13 @@
     padding-right: 2%;
   }
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     .media-coverage__list-title {
       display: block;
     }
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     grid-column: 1/2;
     grid-row: 1;
     margin-left: 10%;
@@ -445,7 +445,7 @@ a[href*="http://www.ucsf.edu"] {
     padding-left: 2%;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     grid-column: 2/-1;
     grid-row: 1;
     float: none;
@@ -476,7 +476,7 @@ a[href*="http://www.ucsf.edu"] {
     text-align: center;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     padding: $space-ten;
     padding-bottom: 1px;
   }
@@ -532,7 +532,7 @@ a[href*="http://www.ucsf.edu"] {
 .areas-header {
   //display: none;
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     display: block;
   }
 }

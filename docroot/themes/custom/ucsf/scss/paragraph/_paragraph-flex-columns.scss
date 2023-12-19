@@ -28,11 +28,11 @@
   float: left;
   width: 100%;
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     padding: $space-five;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
    padding: $space-ten;
   }
 
@@ -41,7 +41,7 @@
   }
 
   .field-content-wrapper-content {
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       display: grid;
       grid-auto-rows: auto;
       grid-column-gap: 5%;
@@ -51,7 +51,7 @@
   // Grid for column layout.
   &.layout-columns__2 {
     .field-content-wrapper-content {
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size));
       }
     }
@@ -59,7 +59,7 @@
     // Error handling for when we are short on content.
     @for $i from 0 to 2 {
       &.layout-items__#{$i} .field-content-wrapper-content::after {
-        @include breakpoint($bp-large) {
+        @media ($above-m) {
           content: "You have only #{$i} items in the 2 column layout. Please add additional items or switch to a different layout";
           @include flex-column-error;
         }
@@ -69,7 +69,7 @@
     // Error handling for when we have too much content.
     @for $i from 3 to 5 {
       &.layout-items__#{$i} .field-content-wrapper-content::after {
-        @include breakpoint($bp-large) {
+        @media ($above-m) {
           content: "You have #{$i} items in the 2 column layout. Please remove some items or switch to a different layout";
           @include flex-column-error;
         }
@@ -79,14 +79,14 @@
 
   &.layout-columns__3 {
    .field-content-wrapper-content {
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size));
       }
     }
 
     @for $i from 0 to 3 {
       &.layout-items__#{$i} .field-content-wrapper-content::after {
-        @include breakpoint($bp-large) {
+        @media ($above-m) {
           content: "You have only #{$i} items in the 3 column layout. Please add additional items or switch to a different layout";
           @include flex-column-error;
         }
@@ -94,7 +94,7 @@
     }
 
     &.layout-items__4 .field-content-wrapper-content::after {
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         content: "You have 4 items in the 3 column layout. Please remove some items or switch to a different layout";
         @include flex-column-error;
       }
@@ -104,7 +104,7 @@
   &.layout-columns__4 {
     .field-content-wrapper-content {
 
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size)) minmax(0, var(--column4-size));
       }
 
@@ -120,7 +120,7 @@
 
     @for $i from 0 to 4 {
       &.layout-items__#{$i} .field-content-wrapper-content::after {
-        @include breakpoint($bp-large) {
+        @media ($above-m) {
           content: "You have only #{$i} items in the 4 column layout. Please add additional items or switch to a different layout";
           @include flex-column-error;
         }
@@ -132,7 +132,7 @@
   // column 1
   .field-content-wrapper-content {
     > .layout-column {
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         width: auto;
     }
     }
@@ -144,7 +144,7 @@
   //  we only ever allowing column1 and column2 to be switched.
   &--reverse {
     .field-content-wrapper-content > :nth-child(1) {
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         grid-row: 1;
         grid-column: 2;
       }
@@ -152,7 +152,7 @@
 
     // column 2
     .field-content-wrapper-content > :nth-child(2) {
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         grid-row: 1;
         grid-column: 1;
       }

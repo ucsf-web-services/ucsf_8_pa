@@ -3,7 +3,7 @@ $icon-logo-height: 41px;
 $icon-logo-height-sticky: 30px;
 
 .header-region {
-  @include breakpoint($bp-until-large) {
+  @media ($below-m) {
     background: $c-white;
     padding-bottom: 12px;
     padding-top: 11px;
@@ -11,7 +11,7 @@ $icon-logo-height-sticky: 30px;
     z-index: 1;
   }
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     background: $c-white;
     box-shadow: 0 12px 12px -4px rgba(0, 0, 0, 0.02);
   }
@@ -23,7 +23,7 @@ $icon-logo-height-sticky: 30px;
   padding: 0 20px;
 
 
-  @include breakpoint($bp-until-large) {
+  @media ($below-m) {
     line-height: 26px;
     margin-bottom: 0;
     position: relative;
@@ -31,7 +31,7 @@ $icon-logo-height-sticky: 30px;
     vertical-align: middle;
   }
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     @include grid-two-auto;
     align-items: center;
     margin-bottom: 0;
@@ -39,7 +39,7 @@ $icon-logo-height-sticky: 30px;
 }
 
 .logo__img {
-  @include breakpoint($bp-until-large) {
+  @media ($below-m) {
     display: inline-block;
     line-height: 26px;
     height: 26px;
@@ -47,7 +47,7 @@ $icon-logo-height-sticky: 30px;
     vertical-align: middle;
   }
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     height: $icon-logo-height;
   }
 }
@@ -133,13 +133,13 @@ $icon-logo-height-sticky: 30px;
     }
   }
 
-  @include breakpoint($bp-until-large) {
+  @media ($below-m) {
     display: block;
     margin-left: -20px;
     margin-right: -20px;
   }
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
       display: none;
   }
 }
@@ -171,7 +171,7 @@ $icon-logo-height-sticky: 30px;
 .is-minimized-sticky-menu {
   --nav-height: 50px;
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     --nav-height: 65px;
   }
 
@@ -201,7 +201,7 @@ $icon-logo-height-sticky: 30px;
 %fixed-nav--hidden {
   transform: translateY(-100%);
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     transform: translateY(-106%); // To hide current page underline in Chrome
   }
 }

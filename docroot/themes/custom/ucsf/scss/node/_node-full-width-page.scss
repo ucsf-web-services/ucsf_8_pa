@@ -14,12 +14,12 @@
     padding-bottom: 0;
     clear: both;
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       padding: $space-five;
       padding-bottom: 0;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       padding: $space-ten;
       padding-bottom: 0;
     }
@@ -54,7 +54,7 @@
   &.full-width-has-image {
     background: $c-white;
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       background: transparent;
     }
   }
@@ -74,12 +74,12 @@
     }
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     @include grid-fifteen;
 
     grid-column: 1/-1;
     grid-template-rows: $space-ten auto;
-    max-width: $bp-full;
+    max-width: $bp-3xl;
 
     figure { // PL: .full-width-page-banner-photo
       grid-column: 8/-1;
@@ -116,7 +116,7 @@
     margin-bottom: 2rem;
   }
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     padding: $space-five;
     padding-bottom: 1px;
     margin-right: $space-ten;
@@ -127,7 +127,7 @@
     }
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     grid-column: 1/9;
     grid-row: 2/-1;
     padding: $space-ten;

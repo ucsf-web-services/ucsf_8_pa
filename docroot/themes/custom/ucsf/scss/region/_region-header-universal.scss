@@ -14,14 +14,14 @@
     background: $c-blue-link-hover;
   }
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     display: inline-block;
     width: auto;
     float: right;
   }
 
   .universal-header & {
-    @include breakpoint($bp-until-large) {
+    @media ($below-m) {
       display: none;
     }
   }
@@ -35,7 +35,7 @@
     color: $c-white;
   }
 
-  @include breakpoint($bp-until-large) {
+  @media ($below-m) {
     height: 40px;
   }
 }

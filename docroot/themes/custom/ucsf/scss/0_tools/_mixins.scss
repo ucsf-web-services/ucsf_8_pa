@@ -1,6 +1,5 @@
 @use "variables" as *;
 @use "variables-space" as *;
-@use '../../node_modules/breakpoint-sass/stylesheets/breakpoint' as *;
 
 //------------------------------------------------------------------------------
 // Shame file to reconcile theme with pattern lab mixins for faster theming.
@@ -14,7 +13,7 @@
 }
 
 @mixin medium {
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     @content;
   }
 }
@@ -26,7 +25,7 @@
 
 }
 @mixin large {
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     @content;
   }
 }
@@ -38,7 +37,7 @@
 }
 
 @mixin max-width {
-  @include breakpoint($bp-full) {
+  @media ($above-3xl) {
     @content;
   }
 }
@@ -50,7 +49,7 @@
   padding: 0;
   margin-top: $space-ten;
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     grid-column: 1/-1;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -417,7 +416,7 @@
   .table-wrapper-responsive {
     overflow: scroll;
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       overflow: auto;
     }
   }
@@ -520,7 +519,7 @@
 
 /// Mixin - Wrapper
 /// Outer container mixin for large screens
-@mixin wrapper($container-max-width: $bp-full, $outer-container-break: $bp-3xs, $v-margin: 0, $v-padding: 0, $h-padding: $space, $h-padding-large: $h-padding) {
+@mixin wrapper($container-max-width: $bp-3xl, $outer-container-break: $bp-3xs, $v-margin: 0, $v-padding: 0, $h-padding: $space, $h-padding-large: $h-padding) {
   max-width: #{$container-max-width};
   width: 100%;
   margin: #{$v-margin} auto;

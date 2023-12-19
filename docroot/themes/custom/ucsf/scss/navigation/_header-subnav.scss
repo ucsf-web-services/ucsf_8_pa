@@ -17,7 +17,7 @@ $subnav-height-small: 56px;
   display: flex;
   flex-direction: column;
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     @include wrapper;
     padding: 0 20px;
     max-width: $full-width-elements;
@@ -47,7 +47,7 @@ $subnav-height-small: 56px;
     padding: 0 20px;
     cursor: pointer;
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       height: $subnav-height-big;
       line-height: $subnav-height-big;
       padding: 0;
@@ -60,7 +60,7 @@ $subnav-height-small: 56px;
     }
 
     .fixed-nav & {
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         // Desktop. When Header Nav is sticky
         line-height: $subnav-height-small;
         height: $subnav-height-small;
@@ -83,7 +83,7 @@ $subnav-height-small: 56px;
     margin: 0;
     list-style: none;
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       display: flex;
       flex-direction: row;
     }
@@ -91,7 +91,7 @@ $subnav-height-small: 56px;
     .menu-item {
       padding: 0 20px;
 
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         padding: 0 0 0 25px;
       }
 
@@ -104,7 +104,7 @@ $subnav-height-small: 56px;
         outline: none;
         transition: 0.3s cubic-bezier(0.77, 0, 0.175, 1) height;
 
-        @include breakpoint($bp-large) {
+        @media ($above-m) {
           height: $subnav-height-big;
           line-height: $subnav-height-big;
           border-bottom: none;
@@ -116,7 +116,7 @@ $subnav-height-small: 56px;
         &:focus-visible {
           color: $c-blue-link;
 
-          @include breakpoint($bp-large) {
+          @media ($above-m) {
             border-bottom: $hover-border-size solid $c-blue-link;
           }
         }
@@ -150,7 +150,7 @@ $subnav-height-small: 56px;
 .combined-header-region--has-subnav {
   padding-bottom: $subnav-height;
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     padding-bottom: $subnav-height-big;
   }
 }

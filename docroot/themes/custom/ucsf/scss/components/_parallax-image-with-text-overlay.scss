@@ -15,7 +15,7 @@ $parallax-options: (
   &--scrolly {
     padding-top: 40px;
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       padding-top: 80px;
       padding-bottom: 80px;
     }
@@ -23,7 +23,7 @@ $parallax-options: (
 
   & + &.page_narrow--scrolly,
   .narrow-page &.page_narrow--scrolly {
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       grid-column: 1 / -1;
       padding-left: 0;
       padding-right: 0;
@@ -32,14 +32,14 @@ $parallax-options: (
 
   // To remove a gap between two galleries
   &--scrolly + &--scrolly {
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       margin-top: -1px;
     }
   }
 
   // Custom layout control option to move scrolly visually below banner in desktop.
   &.move-scrolly-to-banner {
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       grid-row: 1;
       grid-column: 1 / -1;
       padding-left: 0;
@@ -59,7 +59,7 @@ $parallax-options: (
   *,
   .eyebrow-title,
   .eyebrow-title::after {
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       color: $c-white;
     }
   }
@@ -73,13 +73,13 @@ $parallax-options: (
     border-bottom: 2px solid $a1-navy;
     color: $a1-navy;
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       color: $white;
       border-bottom: 2px solid $white;
     }
 
     &:hover {
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         border-bottom: none;
         color: $white;
         font-weight: 600;
@@ -96,7 +96,7 @@ $parallax-options: (
     display: block;
     border: 2px solid;
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       color: $c-white;
       border-color: $c-white;
       border-width: 2px;
@@ -109,7 +109,7 @@ $parallax-options: (
     border-width: 2px;
     color: $a1-navy;
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       color: $c-white;
       border-color: $c-white;
 
@@ -128,7 +128,7 @@ $parallax-options: (
     }
 
     .background-#{"" + $name}  + .scrolly-gallery__text-inner .button:hover {
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         background-color: #{$color};
         border-color: #{$color};
       }
@@ -138,7 +138,7 @@ $parallax-options: (
   // Default color is used
   .background- {
     & + .scrolly-gallery__text-inner a:not([class *="button"]) {
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         border-bottom: 2px solid $white;
       }
 
@@ -148,7 +148,7 @@ $parallax-options: (
     }
 
     & + .scrolly-gallery__text-inner .button:hover {
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         background-color: $a1-navy;
         border-color: $a1-navy;
       }
@@ -157,13 +157,13 @@ $parallax-options: (
 }
 
 .scrolly-gallery-wrapper + .paragraph-text-block {
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     padding-top: 80px;
   }
 }
 
 .scrolly-gallery-wrapper.padding-margin-bottom-0 + .article-full-width__space {
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     padding-top: 80px;
   }
 }
@@ -175,13 +175,13 @@ $parallax-options: (
   &__item {
     position: relative;
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       width: var(--scrolly-gallery-width, 100%);
       min-height: calc(var(--scrolly-gallery-height, 100vh) * 3);
     }
 
     > * {
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         height: var(--scrolly-gallery-height, 100vh);
       }
     }
@@ -190,7 +190,7 @@ $parallax-options: (
   &__bg {
     margin: 0;
 
-    @include breakpoint($new-large-max) {
+    @media ($below-xl) {
       margin-left: -14%;
       margin-right: -14%;
     }
@@ -200,21 +200,21 @@ $parallax-options: (
       margin-right: -20px;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       position: sticky;
       top: 0;
     }
 
     // mobile image
     &--small-screen {
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         display: none;
       }
     }
 
     // mobile image has been provided
     &--small-screen + &--desktop {
-      @include breakpoint($new-large-max) {
+      @media ($below-xl) {
         display: none;
       }
     }
@@ -224,7 +224,7 @@ $parallax-options: (
       object-fit: cover;
       width: 100%;
 
-      @include breakpoint($new-large-max) {
+      @media ($below-xl) {
         aspect-ratio: 1;
       }
     }
@@ -239,27 +239,27 @@ $parallax-options: (
     object-fit: cover;
     width: 100%;
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       height:var(--scrolly-gallery-height, 100vh);
       width: var(--scrolly-gallery-width, 100%);
     }
   }
 
   .element-fade.loaded {
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       opacity: 1;
     }
   }
 
   &__flexbox-wrapper {
     *:first-child {
-      @include breakpoint($new-large-max) {
+      @media ($below-xl) {
         margin-top: 0;
       }
     }
 
     *:last-child {
-      @include breakpoint($new-large-max) {
+      @media ($below-xl) {
         margin-bottom: 0;
       }
     }
@@ -268,11 +268,11 @@ $parallax-options: (
   &__text {
     text-align: start;
 
-    @include breakpoint($new-large-max) {
+    @media ($below-xl) {
       position: relative;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       visibility: hidden;
     }
 
@@ -285,7 +285,7 @@ $parallax-options: (
   &__text-overlay {
     top: 0;
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       position: fixed;
       height: var(--scrolly-gallery-height, 100vh);
       width: var(--scrolly-gallery-width, 100%);
@@ -313,11 +313,11 @@ $parallax-options: (
     padding-top: 2rem;
     padding-bottom: 2rem;
 
-    @include breakpoint ($new-large-max) {
+    @media ($below-xl) {
       position: relative;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -328,18 +328,18 @@ $parallax-options: (
       padding-right: 16%;
     }
 
-    @include breakpoint(1440px) {
+    @media ($above-3xl) {
       padding-left: 309px;
       padding-right: 309px;
     }
 
     .scrolly-gallery__text--active & {
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         animation: scrolly-gallery-slide-in .5s ease-out;
       }
 
       [data-scrolly-gallery-direction="up"] & {
-        @include breakpoint($new-large) {
+        @media ($above-xl) {
           animation: scrolly-gallery-slide-in-up .5s ease-out;
         }
       }
@@ -347,13 +347,13 @@ $parallax-options: (
 
     .scrolly-gallery__text--out & {
       opacity: 1;
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         transform: translateY(-1000vh);
         animation: scrolly-gallery-slide-out .5s ease-in;
       }
 
       [data-scrolly-gallery-direction="up"] & {
-        @include breakpoint($new-large) {
+        @media ($above-xl) {
           animation: scrolly-gallery-slide-out-up .5s ease-out;
         }
       }

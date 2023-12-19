@@ -30,7 +30,7 @@ $icon-map: (
   transition-property: opacity, bottom;
   z-index: 1;
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     grid-row: 2;
     position: sticky;
     flex-direction: column;
@@ -51,7 +51,7 @@ $icon-map: (
   .page-node-type-magazine-article & {
     margin-top: 0;
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       margin-top: $space-four;
       z-index: 0;
     }
@@ -60,7 +60,7 @@ $icon-map: (
   li {
     margin: 0 0 0 1.4rem;
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       margin: 0 0 1.3rem 0;
     }
   }
@@ -72,7 +72,7 @@ $icon-map: (
     height: $icon-size;
     border-bottom: none;
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       font-size: $icon-size-big;
     }
 
@@ -89,7 +89,7 @@ $icon-map: (
       color: $color;
       transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1) color;
 
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         color: $c-gray-blue;
 
         &:hover {
@@ -100,7 +100,7 @@ $icon-map: (
   }
 
   .fa-print {
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       font-size: 24px;
     }
   }
@@ -124,7 +124,7 @@ $icon-map: (
 }
 
 .article-feature-content {
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     .article-meta-share {
       grid-row: 1;
       margin-top: $space-ten;

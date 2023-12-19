@@ -1,5 +1,4 @@
 @use "../0_tools" as *;
-@use '../../node_modules/breakpoint-sass/stylesheets/breakpoint' as *;
 // Exposed Filter
 .block-views-exposed-filter-blocknews-filter-page-1 {
   background: $i6-gray;
@@ -11,7 +10,7 @@
   form {
     background: $i6-gray;
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       padding: 0 $space-ten;
     }
   }
@@ -48,12 +47,12 @@
         width: auto;
       }
 
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         right: 18px;
         top: 185px;
       }
 
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         left: 709px;
         right: auto;
       }
@@ -79,7 +78,7 @@
       width: 100%;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       max-width: 827px;
     }
 
@@ -111,14 +110,14 @@
   padding: 40px 20px;
   padding-bottom: 80px;
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     margin: 0 auto;
     max-width: $bp-xxl;
     padding: 80px 0 74px;
     padding-bottom: 160px;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     padding: 80px 0 74px;
     padding-bottom: 160px;
   }
@@ -158,12 +157,12 @@
 
     }
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       right: 44px;
       top: 90px;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       left: 757px;
       right: auto;
       top: 90px;
@@ -483,7 +482,7 @@
   }
 
   .view-content {
-    max-width: $bp-full;
+    max-width: $bp-3xl;
     background: url("../images/gray-sq.svg") right top no-repeat $c-white;
     background-size: 16px;
     margin: 0 auto;
@@ -491,7 +490,7 @@
     padding-top: $space-five;
     position: relative;
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       background: url("../images/gray-sq.svg") left top no-repeat $c-white;
       background-size: 80px;
       margin-top: -$space-ten;
@@ -508,7 +507,7 @@
 
   .pager,
   .view-empty {
-    max-width: $bp-full;
+    max-width: $bp-3xl;
     margin: 0 auto;
     background: $c-white;
   }
@@ -517,7 +516,7 @@
     margin-top: -$space-ten;
     position: relative;
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       padding-left: 80px;
     }
 
@@ -531,7 +530,7 @@
       height: 16px;
       background-color: $i6-gray;
 
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         width: 80px;
         height: 80px;
         left: 0;
@@ -542,7 +541,7 @@
       padding: $space-five 16px;
       margin-bottom: 0;
 
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         padding: calc(#{$space-ten} + 16px) 16px;
         margin: 0 auto;
         max-width: 827px;
@@ -626,7 +625,7 @@
 // Publication min/max date labels
 label[for=edit-field-date-and-time-value-1--2],
 label[for=edit-field-date-and-time-value-2--2] {
-  @include breakpoint(1027px) {
+  @media (min-width: 1027px) {
     @include visually-hidden;
   }
 }
@@ -634,7 +633,7 @@ label[for=edit-field-date-and-time-value-2--2] {
 // Publication min/max date inputs
 .form-item-field-date-and-time-value-1,
 .form-item-field-date-and-time-value-2 {
-  @include breakpoint(1027px) {
+  @media (min-width: 1027px) {
     @include visually-hidden;
   }
 }

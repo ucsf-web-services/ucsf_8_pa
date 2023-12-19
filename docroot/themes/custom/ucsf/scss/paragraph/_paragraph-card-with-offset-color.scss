@@ -11,7 +11,7 @@
     margin-left: -$page-gutter;
     margin-right: -$page-gutter;
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       margin-left: 0;
       margin-right: 0;
     }
@@ -52,11 +52,11 @@
     margin-bottom: calc(#{$offset-frame} + 1rem);
     // margin-left: -$offset-frame;
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       margin-bottom: calc(#{$offset-frame-desktop} + 1rem);
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       margin-left: $offset-frame-desktop;
 
     }
@@ -65,7 +65,7 @@
   .card__image-wrapper {
     transform: translate(-$offset-frame, $offset-frame);
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       transform: translate(-$offset-frame-desktop, $offset-frame-desktop);
     }
   }
@@ -75,7 +75,7 @@
   float: left;
   width: 100%;
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     clear: left;
     float: left;
     width: 48%;
@@ -83,7 +83,7 @@
     margin-left: 0;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     float: none;
     width: auto;
     margin-right: 0;

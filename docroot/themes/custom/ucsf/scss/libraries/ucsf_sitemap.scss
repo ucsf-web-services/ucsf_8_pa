@@ -1,5 +1,5 @@
 @use "../0_tools" as *;
-@use '../../node_modules/breakpoint-sass/stylesheets/breakpoint' as *;
+
 .alias-sitemap {
   background: $i6-gray;
 }
@@ -49,7 +49,7 @@
     break-inside: avoid-column;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     .sitemap-box-menu {
       .cta--list {
         columns: 2;

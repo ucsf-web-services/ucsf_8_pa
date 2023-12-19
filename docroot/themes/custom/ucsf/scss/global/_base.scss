@@ -396,7 +396,6 @@ strong, b {
 .footer-bottom,
 .breadcrumb {
   @include wrapper;
-
   margin-bottom: $space-ten;
 }
 
@@ -490,7 +489,7 @@ a[name] {
 
 // move element below the banner added by layout controls in editor UI
 .move-to-banner {
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     grid-row: 1;
     grid-column: 1 / -1;
     padding-left: 0;

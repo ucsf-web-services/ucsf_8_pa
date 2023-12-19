@@ -12,14 +12,14 @@
     // else, title text is visible over the body text
     // /news/2021/03/420137/uc-consortium-launches-first-clinical-trial-using-crispr-correct-gene-defect
     .article-medium-banner & {
-      @include breakpoint($new-medium-max) {
+      @media ($below-m) {
         animation: none;
       }
     }
   }
 
   .article-medium-banner & {
-    @include breakpoint($new-medium-max) {
+    @media ($below-m) {
       opacity: 1;
     }
   }
@@ -100,7 +100,7 @@
 .page-node-type-news-center .combined-header-region,
 .alias-home .combined-header-region,
 .page-node-type-article  .combined-header-region {
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     animation: fade-and-slide 1s cubic-bezier(0.77, 0, 0.175, 1) 0s;
     animation-fill-mode: none !important
   }
@@ -109,7 +109,7 @@
 .alias-home {
   main.main,
   .narrow-page-header {
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       animation: fade 1.0s cubic-bezier(0.77, 0, 0.175, 1) 1.25s both;
     }
   }
@@ -117,32 +117,32 @@
 
 .page-node-type-article .image-style-article-feature-banner__image,
 .page-node-type-magazine-article .image-style-article-feature-banner__image {
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     animation: fade 2000ms cubic-bezier(0.77, 0, 0.175, 1) 0ms both;
   }
 }
 
 .page-node-type-article .article-header.article-medium-header,
 .page-node-type-magazine-article .article-header.article-medium-header {
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     animation: header-swoosh $transition-time cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
   }
 }
 
 .page-node-type-news-center {
   h1 {
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       animation: header-fade .8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
     }
   }
   .news-center-banner_list {
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       animation: header-swoosh-and-fade 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
     }
   }
   .news-center-banner__featured,
   .news-search {
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       animation: header-swoosh-and-fade 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
     }
   }

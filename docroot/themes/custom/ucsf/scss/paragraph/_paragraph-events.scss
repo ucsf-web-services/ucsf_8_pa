@@ -11,7 +11,7 @@
     padding-top: $space-five;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     padding: $space-ten;
     padding-top: $space-ten;
     grid-column: 1/-1;
@@ -57,7 +57,7 @@
   list-style: none;
   padding: 0;
 
-  @include breakpoint($bp-until-large) {
+  @media ($below-m) {
     overflow-x: scroll;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
@@ -68,7 +68,7 @@
     display: block;
     margin-top: 0;
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       @include card-three-up;
       white-space: normal;
     }
@@ -82,7 +82,7 @@
   padding-right: $space-five;
   vertical-align: top;
 
-  @include breakpoint($bp-until-large) {
+  @media ($below-m) {
     padding-right: 20px;
     max-width: 300px;
     min-width: 275px;
@@ -95,7 +95,7 @@
     width: 33%;
   }
 
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     float: none;
     padding-right: 15%;
     width: 100%;
