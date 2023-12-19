@@ -365,7 +365,7 @@
     }
   }
 
-  @include breakpoint($bp-medium) {
+  @media ($above-xs) {
     .field-content-wrapper-content {
       clear: none;
 
@@ -445,7 +445,7 @@
 }
 
 .layout__heading {
-  @include breakpoint($new-small-max) {
+  @media ($below-s) {
     padding-top: 32px;
   }
 }
@@ -532,24 +532,24 @@
 
 .column-list {
   div:first-child {
-    @include breakpoint($new-small-max) {
+    @media ($below-s) {
       margin-bottom: 0;
     }
 
     ul {
-      @include breakpoint($new-small-max) {
+      @media ($below-s) {
         margin-bottom: 0;
       }
     }
   }
 
   div + div {
-    @include breakpoint($new-small-max) {
+    @media ($below-s) {
       margin-bottom: 0;
     }
 
     ul {
-      @include breakpoint($new-small-max) {
+      @media ($below-s) {
         border-top: none;
         margin-bottom: 0;
       }
@@ -557,12 +557,12 @@
   }
 
   div:last-child {
-    @include breakpoint($new-small-max) {
+    @media ($below-s) {
       margin-bottom: 40px;
     }
 
     ul {
-      @include breakpoint($new-small-max) {
+      @media ($below-s) {
         border-top: none;
       }
     }
@@ -667,7 +667,7 @@
   padding: 0;
   columns: 1;
 
-  @include breakpoint($new-small-max) {
+  @media ($below-s) {
     overflow-x: scroll;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
@@ -675,7 +675,7 @@
     float: none;
   }
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     columns: 2;
   }
 
@@ -702,7 +702,7 @@
   flex-direction: column;
   vertical-align: top;
 
-  @include breakpoint($new-small-max) {
+  @media ($below-s) {
     padding-right: 40px;
     max-width: 240px;
     min-width: 200px;

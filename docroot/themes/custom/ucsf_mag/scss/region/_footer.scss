@@ -84,7 +84,7 @@
     align-self: center;
 
     &::before {
-      @include breakpoint($bp-medium) {
+      @media ($above-xs) {
         content: "";
         display: block;
         position: absolute;
@@ -107,7 +107,7 @@
       color: $c-gray;
     }
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       ul {
         text-align: right;
       }

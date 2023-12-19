@@ -14,7 +14,7 @@
     margin-top: 0;
   }
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     padding-left: 11%;
     padding-right: 11%;
   }
@@ -24,7 +24,7 @@
     grid-column: 2 / -2;
   }
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     grid-column: 3 / -3;
   }
 
@@ -38,7 +38,7 @@
     .field-desktop-area {
       display: none;
 
-      @include breakpoint($new-small) {
+      @media ($above-s) {
         display: block;
       }
 
@@ -50,7 +50,7 @@
     .field-mobile-area {
       display: none;
 
-      @include breakpoint($new-small-max) {
+      @media ($below-s) {
         display: block;
       }
 
@@ -131,7 +131,7 @@
   background: url('../images/gray-sq.svg') right top no-repeat $c-white;
   background-size: 80px;
 
-  @include breakpoint ($new-small-max) {
+  @media ($below-s) {
     background-size: 32px;
     padding: 20px;
     padding-bottom: 0;
@@ -142,7 +142,7 @@
     margin-right: $space-ten;
     background: $c-white;
 
-    @include breakpoint ($new-small-max) {
+    @media ($below-s) {
       margin-top: -$space-four;
       margin-right: $space-four;
       padding: 20px;
@@ -164,7 +164,7 @@
     background: $c-white;
   }
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     grid-column: 3 / -3;
   }
 }
@@ -177,7 +177,7 @@
     background: $c-white;
     position: relative;
 
-    @include breakpoint ($new-small-max) {
+    @media ($below-s) {
       margin-top: -$space-four;
       margin-right: $space-four;
       padding: 20px;
@@ -473,7 +473,7 @@
   &.media {
     color: $c-gray-blue;
 
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       white-space: nowrap;
     }
 
@@ -571,7 +571,7 @@
     padding-left: $article-gutter;
     padding-right: $article-gutter;
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       padding-left: 11%;
       padding-right: 11%;
     }
@@ -590,7 +590,7 @@
     margin-right: 20px;
   }
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     margin: $space-ten 0;
     margin-left: -14%;
     margin-right: -14%;
@@ -611,7 +611,7 @@
     }
   }
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     margin-left: -25%;
     margin-right: -25%;
 
@@ -641,7 +641,7 @@
   padding: $space-four 20px;
   clear: both;
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     padding: $space-ten 11%;
     padding-top: $space-four;
   }
@@ -650,7 +650,7 @@
     grid-column: 2 / -2;
   }
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     grid-column: 3 / -3;
   }
 }

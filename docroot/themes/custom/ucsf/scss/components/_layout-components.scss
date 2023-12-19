@@ -1,6 +1,6 @@
 @use "../0_tools" as *;
 dom-twocolumn-layout, dom-threecolumn-layout {
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     .column1, .column2, .column3 {
       > :first-child {
         margin-top: 0;
@@ -17,7 +17,7 @@ dom-twocolumn-layout, dom-threecolumn-layout {
   }
 }
 dom-threecolumn-layout {
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     .column2 {
       padding-right: 1%;
       padding-left: 1%;
@@ -29,7 +29,7 @@ dom-threecolumn-layout {
   }
 }
 dom-twocolumn-layout {
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     &[data-column1-size="20"],
     &[data-column2-size="80"] {
       .column1 {
@@ -101,7 +101,7 @@ dom-twocolumn-layout {
 }
 
 dom-threecolumn-layout {
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     &[data-column1-size="33"],
     &[data-column2-size="33"],
     &[data-column3-size="33"] {

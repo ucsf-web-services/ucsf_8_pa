@@ -36,7 +36,7 @@
     @include wrapper-full-width-small-screen();
     clear: both;
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       max-width: 50%;
       width: 100%;
       float: $direction;
@@ -56,7 +56,7 @@
       margin-#{$direction}: -20%;
     }
 
-    @include breakpoint($bp-xl) {
+    @media ($above-xxl) {
       max-width: 480px;
       margin-#{$direction}: -25%;
     }
@@ -71,7 +71,7 @@
       padding-right: $article-gutter;
       padding-left: $article-gutter;
 
-      @include breakpoint($new-small) {
+      @media ($above-s) {
         @if $direction == left {
           padding-right: 0;
           padding-left: 29%;
@@ -86,7 +86,7 @@
         padding-#{$direction}: 37%;
       }
 
-      @include breakpoint($bp-xl) {
+      @media ($above-xxl) {
         padding-#{$direction}: 42.5%;
       }
     }
@@ -101,7 +101,7 @@
   .half-image-#{$direction}-full {
     @include wrapper-full-width-small-screen();
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       max-width: 55%;
       width: 100%;
       float: $direction;
@@ -116,7 +116,7 @@
       }
     }
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       max-width: 55%;
       margin-#{$direction}: -#{$article-gutter-bp-new-small};
     }
@@ -126,7 +126,7 @@
       margin-#{$direction}: -24%;
     }
 
-    @include breakpoint($bp-xl) {
+    @media ($above-xxl) {
       max-width: 680px;
       margin-#{$direction}: -37%;
     }
@@ -141,7 +141,7 @@
       padding-right: $article-gutter;
       padding-left: $article-gutter;
 
-      @include breakpoint($new-small) {
+      @media ($above-s) {
         @if $direction == left {
           padding-right: 0;
           padding-left: 26%;
@@ -156,7 +156,7 @@
         padding-#{$direction}: 32%;
       }
 
-      @include breakpoint($bp-xl) {
+      @media ($above-xxl) {
         padding-#{$direction}: 44%;
       }
     }
@@ -175,7 +175,7 @@
     width: 100%;
     margin-bottom: $space-quadruple;
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       width: initial;
 
       @if $direction == left {
@@ -186,7 +186,7 @@
     }
 
     img {
-      @include breakpoint($new-small-max) {
+      @media ($below-s) {
         width: 100%;
       }
     }
@@ -207,7 +207,7 @@
   margin-top: $space-two;
   margin-bottom: $space-two;
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     width: initial;
     margin-top: $space-five;
     margin-bottom: $space-five;

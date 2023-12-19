@@ -93,20 +93,20 @@
       margin: 0;
     }
 
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       display: block;
     }
   }
 
   .news-card__more {
     display: none;
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       margin: 2em 0 0 0;
       display: inline-block;
     }
   }
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     .news-card__copy {
       padding: $space-five 20px $space-six $space-eight;
       margin-top: -12%;
@@ -179,7 +179,7 @@
     padding-left: $space-two;
   }
 
-  @include breakpoint($new-x-small-max) {
+  @media ($below-xs) {
     margin: 20px;
     border-top: 1px solid $k3-gray;
 
@@ -233,7 +233,7 @@
       margin-top: 0;
       margin-bottom: $space-five;
 
-      @include breakpoint($new-small) {
+      @media ($above-s) {
         display: none;
       }
     }
@@ -257,7 +257,7 @@
     display: none;
   }
 
-  @include breakpoint($new-small-max) {
+  @media ($below-s) {
     margin: 20px;
     border-top: 1px solid $k3-gray;
 
@@ -271,7 +271,7 @@
     }
   }
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     float: left;
     width: 48%;
     padding-right: 2%;
@@ -439,7 +439,7 @@ a[href*="http://www.ucsf.edu"] {
     color: $a1-navy;
   }
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     float: right;
     width: 48%;
     padding-left: 2%;
@@ -486,7 +486,7 @@ a[href*="http://www.ucsf.edu"] {
   @include fs-heading;
 
   margin: 0 auto;
-  max-width: $bp-xl;
+  max-width: $bp-xxl;
 }
 
 // Search
@@ -495,7 +495,7 @@ a[href*="http://www.ucsf.edu"] {
   .home-search__presearch-links {
     display: none;
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       text-align: left;
       margin-left: auto;
       margin-right: auto;
@@ -538,7 +538,7 @@ a[href*="http://www.ucsf.edu"] {
 }
 
 .all-campus-news {
-  @include breakpoint($new-small-max) {
+  @media ($below-s) {
     a {
       display: block;
     }

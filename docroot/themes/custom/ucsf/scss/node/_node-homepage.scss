@@ -8,7 +8,7 @@
     padding: 0 20px;
     padding-top: 20px;
     overflow: auto;
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       padding: 0 $space-five;
       padding-top: $space-five;
     }
@@ -30,7 +30,7 @@
 .home-banner-wrapper__space {
   display:   none;
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     grid-column: 1/2;
     height: 100%;
     content: ' ';
@@ -96,7 +96,7 @@
     @include fs-display;
   }
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     padding: $space-five;
     // ADD THIS BACK IN: margin-top: -$space-ten;
     //hack for launch
@@ -113,7 +113,7 @@
     margin-right: 0;
   }
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     padding: $space-eight;
     padding-left: 0;
   }
@@ -195,7 +195,7 @@
   padding: 20px;
   float: left;
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     padding: $space-five;
   }
 
@@ -261,7 +261,7 @@
     @include link-in-content();
   }
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     padding: 0 $space-five;
 
     li {
@@ -349,7 +349,7 @@
   }
 
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     padding: $space-five;
     margin-top: -$space-ten;
     margin-right: $space-ten;
@@ -365,7 +365,7 @@
     background: linear-gradient(to left, white 0%, rgba(255, 255, 255, 0.925) 50%);
   }
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     padding: $space-eight;
     padding-right: 0;
   }
@@ -382,7 +382,7 @@
   clear: both;
   padding: 20px;
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     padding: $space-five;
   }
 
@@ -398,7 +398,7 @@
   margin-top: 20px;
   margin-bottom: $space-two;
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     margin-top: $space-five;
     margin-bottom: $space-five;
   }
@@ -422,7 +422,7 @@
     width: 98%;
     max-width: 850px;
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       width: 99%;
     }
 
@@ -485,7 +485,7 @@
     .home-search__form-input {
       width: 98%;
 
-      @include breakpoint($new-small) {
+      @media ($above-s) {
         width: 99%;
       }
     }
@@ -495,7 +495,7 @@
 .home-search__presearch-links {
   display: none;
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     display: block;
     list-style: none;
     margin: 0;
@@ -531,7 +531,7 @@
   background: $c-white;
   margin-top: $space-five;
 
-  @include breakpoint($bp-medium) {
+  @media ($above-xs) {
     margin-top: $space-five;
   }
 
@@ -542,14 +542,14 @@
   .card-three-up {
     margin-top: 0;
 
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       margin: 0 $article-gutter;
       column-gap: 4%;
     }
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       margin: 0 $space-five;
     }
 
@@ -571,7 +571,7 @@
       margin-right: $article-gutter;
       padding-left: $article-gutter;
 
-      @include breakpoint($bp-medium) {
+      @media ($above-xs) {
         margin-left: 10%;
         margin-right: 0;
         padding-left: $space-four;
@@ -595,7 +595,7 @@
     padding: 20px;
     padding-bottom: 0;
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       padding: $space-five;
       padding-bottom: 0;
     }
@@ -612,7 +612,7 @@
     margin-bottom: $space-four;
     margin-top: 0;
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       padding: 0 $space-five;
     }
 
@@ -632,7 +632,7 @@
 }
 
 .mobile-break {
-  @include breakpoint($new-x-small-max) {
+  @media ($below-xs) {
     display: block;
   }
 }

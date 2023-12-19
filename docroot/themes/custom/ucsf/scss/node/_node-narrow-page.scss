@@ -32,7 +32,7 @@
     background: url('../images/gray-sq.svg') right top no-repeat $c-white;
     background-size: 80px;
 
-    @include breakpoint ($new-small-max) {
+    @media ($below-s) {
       background-size: 32px;
       padding: 32px 20px;
       padding-bottom: 0;
@@ -42,7 +42,7 @@
     &--small {
       @include fs-heading-sm;
 
-      @include breakpoint ($font-large) {
+      @media ($above-xs) {
         @include fs-article-medium-h1;
       }
     }
@@ -58,7 +58,7 @@
     grid-row: 1;
   }
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     grid-column: 3 / -3;
   }
 
@@ -70,7 +70,7 @@
       margin-right: $space-four;
       margin-top: -$space-six;
 
-      @include breakpoint ($new-small) {
+      @media ($above-s) {
         margin-right: $space-ten;
         margin-top: -$space-fifteen;
       }
@@ -88,7 +88,7 @@
   padding-bottom: 0;
   padding-top: 0;
 
-  @include breakpoint ($new-small) {
+  @media ($above-s) {
     padding: $space-decuple 11%;
     padding-bottom: 0;
     padding-top: 0;
@@ -100,7 +100,7 @@
     grid-row: 2;
   }
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     grid-column: 3 / -3;
   }
 }
@@ -137,7 +137,7 @@
       padding: 0;
     }
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       padding-top: $space-six;
     }
   }

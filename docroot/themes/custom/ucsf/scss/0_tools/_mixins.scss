@@ -7,14 +7,8 @@
 //------------------------------------------------------------------------------
 // @todo Don't do this.
 
-@mixin xs {
-  @include breakpoint($bp-xs) {
-    @content;
-  }
-}
-
 @mixin small {
-  @include breakpoint($bp-small) {
+  @media ($above-3xs) {
     @content;
   }
 }
@@ -26,7 +20,7 @@
 }
 
 @mixin font-large {
-  @include breakpoint($font-large) {
+  @media ($above-xs) {
   @content;
 }
 
@@ -38,7 +32,7 @@
 }
 
 @mixin xl {
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     @content;
   }
 }
@@ -68,7 +62,7 @@
 
 @mixin card-three-up-constrained {
   margin: 0 auto;
-  max-width: $bp-xl;
+  max-width: $bp-xxl;
   margin-top: 0;
   padding-top: $space-five;
 }
@@ -285,7 +279,7 @@
     /*
     button {
       //@include visually-hidden-reset;
-      @include breakpoint($new-x-small-max) {
+      @media ($below-xs) {
         display: none;
       }
     }
@@ -308,14 +302,15 @@
     top: 35%;
     z-index: $z-gallery;
 
-    @include breakpoint($new-x-small-max) {
+    @media ($below-xs) {
       display: none;
     }
-    @include breakpoint($bp-small) {
+
+    @media ($above-xxs) {
       top: 30%;
     }
 
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       top: 35%;
     }
 
@@ -525,7 +520,7 @@
 
 /// Mixin - Wrapper
 /// Outer container mixin for large screens
-@mixin wrapper($container-max-width: $bp-full, $outer-container-break: $bp-small, $v-margin: 0, $v-padding: 0, $h-padding: $space, $h-padding-large: $h-padding) {
+@mixin wrapper($container-max-width: $bp-full, $outer-container-break: $bp-3xs, $v-margin: 0, $v-padding: 0, $h-padding: $space, $h-padding-large: $h-padding) {
   max-width: #{$container-max-width};
   width: 100%;
   margin: #{$v-margin} auto;

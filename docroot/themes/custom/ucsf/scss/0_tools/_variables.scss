@@ -1,12 +1,6 @@
 // Breakpoints.
 // Documentation: https://breakpoint-sass.com/
 //------------------------------------------------------------------------------
-
-// $new-x-small: 600px;
-$magazine-small: 650px;
-$new-x-small-max: max-width 599px;
-$new-small: 769px;
-$new-small-max: max-width 768px;
 $bp-large: 850px;
 $new-medium-max: max-width 849px;
 $new-large: 1050px;
@@ -14,19 +8,10 @@ $new-large-max: max-width 1049px;
 $bp-xl: 1280px;
 $new-xl-max: max-width 1280px;
 $full-width-elements: $bp-xl + 40px;
-$font-large: 600px;
 $font-large-max: 599px;
 $bp-until-large: max-width 849px; // used to hide top menus
-
-//phones should really be 320-500, the One Plus 3 being 480 viewport size
-$bp-xs: 320px; //should be used for older android phones still, this is like baseline, Galaxy S5 is 360 viewport.
-$bp-xs-medium: 375px;  //use for iPhone X other iPhones are 414 viewport,    Galaxy note 9 is 414 viewport.
-$bp-small: 480px; // used in gallery
-$bp-medium: 600px; //used all over the place -- keep
 $bp-medium-plus: 970px; // Needs a better name. Used in the News Search filter
 
-
-$bp-page-narrow: 1050px;
 $bp-menu: 1360px; // Needs a better name.
 $bp-full: 1440px;
 
@@ -38,38 +23,56 @@ $bp-main-menu-medium: 43em;
   // @media ($above-xs) and ($below-l) {}
   // @media ($below-l) {}
 \*----------------------------------------------------------------------------*/
-// $bp-xs: 480px;
-// $bp-s: 600px;
-// $bp-m: 768px;
-// $bp-l: 992px; // This is where we move from Mobile nav to Desktop.
-// $bp-xl: 1280px;
-// $bp-xxl: 1440px;
+$bp-3xs: 375px;
+$bp-xxs: 480px;
+$bp-xs: 600px;
+$bp-s: 769px;
+$bp-m: 850px;
+$bp-l: 970px;
+$bp-xl: 1050px;
+$bp-xxl: 1280px;
+$bp-3xl: 1360px;
+$bp-4xl: 1440px;
 
-// $bp-navigation-desktop: 1071px; // At this point desktop navbar fits.
+/* xxxs Smallest breakpoint */
+$below-3xs: "max-width: #{$bp-3xs - 1}";
+$above-3xs: "min-width: #{$bp-3xs}";
 
-// /* Extra Small */
-// $below-xs: "max-width: #{$bp-xs - 1}";
-// $above-xs: "min-width: #{$bp-xs}";
+/* xxs Smallest breakpoint */
+$below-xxs: "max-width: #{$bp-xxs - 1}";
+$above-xxs: "min-width: #{$bp-xxs}";
 
-// /* Small */
-// $below-s: "max-width: #{$bp-s - 1}";
-// $above-s: "min-width: #{$bp-s}";
+/* xs Extra Small breakpoint */
+$below-xs: "max-width: #{$bp-xs - 1}";
+$above-xs: "min-width: #{$bp-xs}";
 
-// /* Medium */
-// $below-m: "max-width: #{$bp-m - 1}";
-// $above-m: "min-width: #{$bp-m}";
+/* s Small breakpoint */
+$below-s: "max-width: #{$bp-s - 1}";
+$above-s: "min-width: #{$bp-s}";
 
-// /* Large - This is where we move from Mobile nav to Desktop. */
-// $below-l: "max-width: #{$bp-l - 1}";
-// $above-l: "min-width: #{$bp-l}";
+/* Medium */
+$below-m: "max-width: #{$bp-m - 1}";
+$above-m: "min-width: #{$bp-m}";
 
-// /* Extra Large */
-// $below-xl: "max-width: #{$bp-xl - 1}";
-// $above-xl: "min-width: #{$bp-xl}";
+/* Large - This is where we move from Mobile nav to Desktop. */
+$below-l: "max-width: #{$bp-l - 1}";
+$above-l: "min-width: #{$bp-l}";
 
-// /* Extra Extra Large */
-// $below-xxl: "max-width: #{$bp-xxl - 1}";
-// $above-xxl: "min-width: #{$bp-xxl}";
+/* Extra Large */
+$below-xl: "max-width: #{$bp-xl - 1}";
+$above-xl: "min-width: #{$bp-xl}";
+
+/* Extra Extra Large */
+$below-xxl: "max-width: #{$bp-xxl - 1}";
+$above-xxl: "min-width: #{$bp-xxl}";
+
+/* xxxl Extra Large */
+$below-3xl: "max-width: #{$bp-3xl - 1}";
+$above-3xl: "min-width: #{$bp-3xl}";
+
+/* xxxxl Extra Large - this is full screen */
+$below-4xl: "max-width: #{$bp-4xl - 1}";
+$above-4xl: "min-width: #{$bp-4xl}";
 
 // Colors
 //------------------------------------------------------------------------------

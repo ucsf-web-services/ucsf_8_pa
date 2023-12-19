@@ -40,7 +40,7 @@
   overflow-y: auto;
   display: none;
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     left: 50%;
     margin-left: -50vw;
     width: 100vw;
@@ -79,7 +79,7 @@
     bottom: 0;
     width: 100%;
 
-    @include breakpoint ($bp-medium) {
+    @media ($above-xs) {
       top: calc(#{$mag-navbar-height-medium} + #{$mag-search-form-height} + #{$universal-header-height});
     }
 
@@ -112,7 +112,7 @@
     background-color: $c-background-gray;
     z-index: 1;
 
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       grid-template-columns: 1fr 1fr;
       grid-template-rows: repeat(3, min-content) auto auto;
       grid-template-areas:
@@ -135,7 +135,7 @@
       padding-bottom: 3rem;
     }
 
-    @include breakpoint($bp-xl) {
+    @media ($above-xxl) {
       max-width: 1440px;
       padding-right: 80px;
       padding-left: 86px; // aligning left to .universal-header__title
@@ -217,7 +217,7 @@
   }
 
   &__item:nth-child(4) {
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       margin-bottom: 4rem;
     }
 
@@ -227,7 +227,7 @@
   }
 
   &__item:nth-child(5) {
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       position: relative;
       margin-left: 2rem;
     }
@@ -237,7 +237,7 @@
     }
 
     &::before {
-      @include breakpoint($bp-medium) {
+      @media ($above-xs) {
         content: "";
         display: block;
         position: absolute;

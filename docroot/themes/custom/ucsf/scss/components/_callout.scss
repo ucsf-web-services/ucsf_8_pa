@@ -25,7 +25,7 @@ $callout-image-offsetX-medium: $callout-offsetX;
     margin-bottom: 0;
   }
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     width: 50%;
     padding: 80px 10%;
   }
@@ -54,7 +54,7 @@ $callout-image-offsetX-medium: $callout-offsetX;
     margin-#{$direction}: -20px;
     padding-#{$direction}: 6%;
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       margin-#{$direction}: -$callout-offsetX;
     }
 
@@ -63,22 +63,22 @@ $callout-image-offsetX-medium: $callout-offsetX;
     }
 
     @if $direction == left {
-      @include breakpoint($new-small-max) {
+      @media ($below-s) {
         margin-right: 0;
       }
 
-      @include breakpoint($new-small) {
+      @media ($above-s) {
         &.in-viewport {
           animation: element-slide-right 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
         }
       }
 
     } @else {
-      @include breakpoint($new-small-max) {
+      @media ($below-s) {
         margin-left: 0;
       }
 
-      @include breakpoint($new-small) {
+      @media ($above-s) {
         &.in-viewport {
           animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
         }
@@ -94,7 +94,7 @@ $callout-image-offsetX-medium: $callout-offsetX;
   margin-bottom: 2rem;
   margin-top: -5rem;
 
-  @include breakpoint($bp-medium) {
+  @media ($above-xs) {
     width: $callout-image-size-large;
     height: $callout-image-size-large;
     margin-top: -8rem;
@@ -113,7 +113,7 @@ $callout-image-offsetX-medium: $callout-offsetX;
     height: $callout-image-size;
     object-fit: cover;
 
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       width: $callout-image-size-large;
       height: $callout-image-size-large;
     }
@@ -122,7 +122,7 @@ $callout-image-offsetX-medium: $callout-offsetX;
   @each $direction in $align-directions {
     .callout-#{$direction} & {
 
-      @include breakpoint($new-small) {
+      @media ($above-s) {
         margin-#{$direction}: -$callout-offsetX;
       }
 
@@ -135,7 +135,7 @@ $callout-image-offsetX-medium: $callout-offsetX;
         float: right;
         margin-right: -$callout-image-offsetX-small;
 
-        @include breakpoint($new-small) {
+        @media ($above-s) {
           float: none;
         }
 
@@ -146,7 +146,7 @@ $callout-image-offsetX-medium: $callout-offsetX;
         float: left;
         margin-left: -$callout-image-offsetX-small;
 
-        @include breakpoint($new-small) {
+        @media ($above-s) {
           margin-left: 0;
           float: right;
         }

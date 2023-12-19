@@ -7,19 +7,19 @@
   //border: 1px solid #00c9ff;
   z-index: -100;
   margin-bottom: -800px;
-  @include breakpoint($bp-xs-medium) {
+  @media ($above-3xs) {
     margin-bottom: -400px;
     height: 400px;
   }
-  @include breakpoint($bp-small) {
+  @media ($above-xxs) {
     margin-bottom: -418px;
     height: 418px;
   }
-  @include breakpoint($bp-medium) {
+  @media ($above-xs) {
     margin-bottom: -418px;
     height: 418px;
   }
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     margin-bottom: -450px;
     height: 450px;
   }
@@ -31,7 +31,7 @@
     margin-bottom: -725px;
     height: 725px;
   }
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     margin-bottom: -800px;
     height: 800px;
   }
@@ -58,7 +58,7 @@
       padding: 0 11%;
     }
   }
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     .gallery-container {
       grid-column: 3 / -3;
     }
@@ -69,13 +69,13 @@
 
   .slick-track {
     left: 0;
-    @include breakpoint($bp-xs-medium) {
+    @media ($above-3xs) {
       left: -30px;
     }
-    @include breakpoint($bp-small) {
+    @media ($above-xxs) {
       left: -30px;
     }
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       left: -30px;
     }
     @include breakpoint($bp-large) {
@@ -84,7 +84,7 @@
     @include breakpoint($new-large) {
       left: 0;
     }
-    @include breakpoint($bp-xl) {
+    @media ($above-xxl) {
       left: 0;
     }
   }
@@ -95,15 +95,15 @@
   button {
     top: calc(50% - 100px);
 
-    @include breakpoint($bp-small) {
+    @media ($above-xxs) {
         display: none;
 
     }
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
         display: none;
 
     }
-    @include breakpoint($new-small) {
+    @media ($above-s) {
         display: none;
     }
   }
@@ -125,7 +125,7 @@
     }
 
 
-    @include breakpoint($bp-xl) {
+    @media ($above-xxl) {
       &.slick-prev {
         left: -35%;
       }
@@ -140,20 +140,20 @@
     margin: 0 1.5em;
     width: calc(100vw - 40px);
     //added for certain iPhones!
-    @include breakpoint($bp-xs-medium) {
+    @media ($above-3xs) {
       margin: 0 0.5em;
       width: calc(100vw - 40px);
     }
-    @include breakpoint($bp-small) {
+    @media ($above-xxs) {
       margin: 0 0.8em;
       width: calc(100vw - 40px);
     }
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       margin: 0 1.0em;
       width: calc(100vw - 40px);
     }
     //desktop like sizes
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       width: calc(100vw - 20vw);
     }
     @include breakpoint($bp-large) {
@@ -164,7 +164,7 @@
       width: 823px;
       margin: 0 1.5em;
     }
-    @include breakpoint($bp-xl) {
+    @media ($above-xxl) {
       width: 823px;
       margin: 0 1.5em;
     }
@@ -218,26 +218,21 @@
       padding-left: 10%;
       padding-right: 0;
       //added for certain iPhones!
-      @include breakpoint($bp-xs-medium) {
+      @media ($above-3xs) {
         padding-left: 10%;
         margin: 0 auto;
         //prevent jumping of content below
         min-height: 180px;
       }
-      @include breakpoint($bp-small) {
+      @media ($above-xxs) {
         padding-left: 10%;
         margin: 0 auto;
-        min-height: 180px;
-      }
-      @include breakpoint($bp-small) {
-        margin: 0 auto;
-        padding-left: 10%;
         min-height: 140px;
       }
-      @include breakpoint($bp-medium) {
+      @media ($above-xs) {
         padding-left: 10%;
       }
-      @include breakpoint($new-small) {
+      @media ($above-s) {
         //max-width: 800px;
         padding-left: 13%;
         padding-right: 13%;

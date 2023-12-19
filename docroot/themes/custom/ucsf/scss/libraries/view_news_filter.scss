@@ -40,7 +40,7 @@
         text-decoration-thickness: 2px;
       }
 
-      @include breakpoint($bp-medium) {
+      @media ($above-xs) {
         padding-left: 32px;
         right: 23px;
         text-indent: 0;
@@ -74,7 +74,7 @@
     margin-bottom: 16px;
     width: calc(100% - 52px);
 
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       height: 96px;
       width: 100%;
     }
@@ -113,7 +113,7 @@
 
   @include breakpoint($bp-large) {
     margin: 0 auto;
-    max-width: $bp-xl;
+    max-width: $bp-xxl;
     padding: 80px 0 74px;
     padding-bottom: 160px;
   }
@@ -145,7 +145,7 @@
       background-size: 23px;
     }
 
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       background-size: 28px;
       height: 80px;
       right: 23px;
@@ -203,7 +203,7 @@
       top: 8px;
       left: calc(100% - 245px);
 
-      @include breakpoint($new-x-small-max) {
+      @media ($below-xs) {
         top: 12px;
         left: calc(100% - 96px);
       }
@@ -214,7 +214,7 @@
      padding-right: 80px;
      margin-bottom: 0;
 
-     @include breakpoint($new-x-small-max) {
+     @media ($below-xs) {
        max-width: 100%;
        padding-right: 40px;
      }
@@ -226,7 +226,7 @@
      top: 32px;
      margin-left: 24px;
 
-     @include breakpoint($new-x-small-max) {
+     @media ($below-xs) {
        right: 16px;
        top: 12px;
        margin-left: 8px;
@@ -245,7 +245,7 @@
   & + #block-ucsf-mag-content {
     padding-top: 365px;
 
-    @include breakpoint($new-x-small-max) {
+    @media ($below-xs) {
       padding-top: 200px;
     }
   }
@@ -254,7 +254,7 @@
 //this is jank for now
 .desktop-results {
   display:none;
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     display: inline;
   }
 }
@@ -286,13 +286,13 @@
   width: 100%;
   z-index: $z-news-search-filter;
 
-  @include breakpoint($bp-medium) {
+  @media ($above-xs) {
     height: 129px;
   }
 
   // Text Input.
   [data-drupal-selector="edit-combine"] {
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       max-width: none;
       padding-left: 118px;
       width: calc(100% - 189px);
@@ -304,7 +304,7 @@
     right: 64px;
     top: 16px;
 
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       left: 80px;
       right: auto;
       top: 8px;
@@ -327,7 +327,7 @@
       background-size: 18px;
     }
 
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       left: auto;
       right: 28px;
       top: 39px;
@@ -344,13 +344,13 @@
   visibility: hidden;
 
   [data-drupal-selector="edit-pub-year"] { // Year of Publication.
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       grid-column: 3/5;
     }
   }
 
   [data-drupal-selector="edit-tid-1"] { // Health and Science Topics.
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       grid-column: 1/4;
 
       //had to move this to here to fix Chrome
@@ -367,7 +367,7 @@
     top: 90px;
     visibility: visible;
 
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       grid-row-gap: 55px;
@@ -377,7 +377,7 @@
     }
 
     .fieldset-wrapper {
-      @include breakpoint($bp-medium) {
+      @media ($above-xs) {
         height: auto;
         max-height: none;
         visibility: visible;
@@ -392,7 +392,7 @@
     padding: 9px 0;
     width: 100%;
 
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       @include eyebrow;
       border: 0;
     }
@@ -420,7 +420,7 @@
       margin-right: 20px;
       padding: 7px 0;
 
-      @include breakpoint($bp-medium) {
+      @media ($above-xs) {
         border: 0;
         max-height: none;
         padding: 0;
@@ -438,7 +438,7 @@
 
   // Submit button.
   [data-drupal-selector="edit-actions"] {
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       grid-column: 1/-1;
       margin-top: 0;
     }
@@ -566,7 +566,7 @@
   ul {
     @include ul-item-list-reset;
 
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       padding-left: 0;
     }
   }

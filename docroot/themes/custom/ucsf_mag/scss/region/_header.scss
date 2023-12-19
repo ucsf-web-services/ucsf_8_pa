@@ -14,7 +14,7 @@
     padding-top: 11px;
     padding-bottom: 12px;
 
-    @include breakpoint ($bp-medium) {
+    @media ($above-xs) {
       height: $mag-navbar-height-medium;
     }
 
@@ -22,7 +22,7 @@
       height: $mag-navbar-height-big;
     }
 
-    @include breakpoint($bp-xl) {
+    @media ($above-xxl) {
       max-width: 1440px;
       padding-right: 80px;
       padding-left: 80px;
@@ -56,12 +56,12 @@
     width: 45vw;
     transition: $transition-time $transition-type all;
 
-    @include breakpoint ($bp-xs) {
+    @media (min-width: 320px) {
       width: auto;
       min-width: 178px;
     }
 
-    @include breakpoint ($bp-medium) {
+    @media ($above-xs) {
       min-width: 320px;
     }
 
@@ -95,7 +95,7 @@
     background-image: url('/themes/custom/ucsf/assets/images/magnifier.svg');
     overflow: hidden;
 
-    @include breakpoint ($bp-medium) {
+    @media ($above-xs) {
       top: $offset-top;
     }
 
@@ -123,7 +123,7 @@
     &.active {
       background-color: transparent;
 
-      @include breakpoint ($bp-medium) {
+      @media ($above-xs) {
         top: calc(#{$offset-top} - 1px); //centering vertically
       }
 
@@ -175,7 +175,7 @@
         }
       }
 
-      @include breakpoint($bp-xl) {
+      @media ($above-xxl) {
         right: -58px;
       }
     }
@@ -196,7 +196,7 @@
       right: 0;
       width: 100vw;
 
-      @include breakpoint ($bp-medium) {
+      @media ($above-xs) {
         top: calc(#{$mag-navbar-height-medium} - 10px); // eyeballing the value subtracted
         right: 20px;
         margin-right: -20px;
@@ -207,7 +207,7 @@
         width: 650px;
       }
 
-      @include breakpoint($bp-xl) {
+      @media ($above-xxl) {
         right: -60px;
       }
     }
@@ -223,7 +223,7 @@
         width: 492px;
       }
 
-      @include breakpoint($bp-xl) {
+      @media ($above-xxl) {
         right: -60px;
       }
 
@@ -268,7 +268,7 @@
         min-width: 36px;
       }
 
-      @include breakpoint($bp-xl) {
+      @media ($above-xxl) {
         top: 5;
         right: 71px;
       }
@@ -314,7 +314,7 @@
         font-size: 18px;
       }
 
-      @include breakpoint($bp-xl) {
+      @media ($above-xxl) {
         right: 0;
       }
 
@@ -340,7 +340,7 @@
     align-self: center;
   }
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     max-width: 1440px;
     padding-right: 0;
     padding-left: 80px;
@@ -353,7 +353,7 @@
   // variable to print .mag-nav__ucsf
   $block: &;
 
-  @include breakpoint($bp-medium) {
+  @media ($above-xs) {
     grid-column: 1 /-1;
   }
 
@@ -389,7 +389,7 @@
 
     // Specificity
     .universal-header-mag #{$block} & {
-      @include breakpoint($bp-medium) {
+      @media ($above-xs) {
         color: $c-dark-navy;
       }
 

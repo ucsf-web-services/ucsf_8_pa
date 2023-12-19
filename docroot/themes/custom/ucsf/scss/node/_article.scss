@@ -111,7 +111,7 @@
 .bk-color-white .ucsfcallout,
 .bk-color-white .recommended-articles__title,
 .bk-color-white .paragraph-text-block blockquote {
-  @include breakpoint($new-small-max) {
+  @media ($below-s) {
     border-top: 1px solid $k3-gray;
     border-bottom: 1px solid $k3-gray;
     margin-right: 0;
@@ -148,7 +148,7 @@
     grid-column: 2 / -2;
   }
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     grid-column: 3 / -3;
   }
 }
@@ -159,7 +159,7 @@
   background: $c-white;
   height: 0;
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     height: $space-five;
   }
 
@@ -167,7 +167,7 @@
     grid-column: 2 / -2;
   }
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     grid-column: 3 / -3;
   }
 }

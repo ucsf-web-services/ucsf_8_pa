@@ -10,7 +10,7 @@
   overflow: hidden;
   //border: 1px solid blue;
 
-  @include breakpoint($new-small) {
+  @media ($above-s) {
     display: block;
     padding: $space-five;
     padding-left: 0;
@@ -28,7 +28,7 @@
   &__header {
     padding: 0 20px;
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       padding: 0 $space-five;
     }
 
@@ -43,14 +43,14 @@
 
     margin: 0 auto;
     margin-bottom: $space-two;
-    max-width: $bp-xl;
+    max-width: $bp-xxl;
   }
 
   &__description {
     margin: 0;
     color: $c-gray-blue;
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       float: left;
     }
   }
@@ -58,7 +58,7 @@
   &__view-all {
     margin: 0;
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       float: right;
     }
   }
@@ -106,7 +106,7 @@
       display: none;
     }
 
-    @include breakpoint($new-x-small-max) {
+    @media ($below-xs) {
       padding-top: 20px;
       padding-left: 0;
     }
@@ -139,12 +139,12 @@
       padding: 16px;
       left: 0;
 
-      @include breakpoint($new-x-small-max) {
+      @media ($below-xs) {
         padding: 16px 11px;
       }
     }
 
-    @include breakpoint($new-x-small-max) {
+    @media ($below-xs) {
       .slick-track {
         left: -10px;
       }
@@ -168,7 +168,7 @@
   margin-bottom: 60px;
   margin-left: 30px;
 
-  @include breakpoint($bp-medium) {
+  @media ($above-xs) {
     margin-left: 40px;
   }
 

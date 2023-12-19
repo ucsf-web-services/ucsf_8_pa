@@ -19,7 +19,7 @@
 
 #universalSearchTabs {
   display: none;
-  @include breakpoint($bp-medium) {
+  @media ($above-xs) {
     display: block;
   }
 }
@@ -64,7 +64,7 @@
     & + #universalSearchTabs {
       padding-top: 305px;
 
-      @include breakpoint($new-x-small-max) {
+      @media ($below-xs) {
         display: block;
         height: 1px;
         padding-top: 100px;
@@ -76,7 +76,7 @@
   display: none;
   }
 
-  @include breakpoint($new-x-small-max) {
+  @media ($below-xs) {
   fieldset {
     border: none;
     display: none;
@@ -150,11 +150,11 @@
 
   .home-search__form,
   form {
-    max-width: $bp-xl;
+    max-width: $bp-xxl;
     margin: 0 auto;
   }
 
-  @include breakpoint($new-x-small-max) {
+  @media ($below-xs) {
     #search {
       font-size: $font-size;
       height: 52px;
@@ -183,7 +183,7 @@
   background: url("../images/filter.svg") left center no-repeat transparent;
   background-size: 36px 36px;
   min-height: 52px;
-  @include breakpoint($bp-medium) {
+  @media ($above-xs) {
     display: none;
   }
   &:hover {
@@ -208,7 +208,7 @@
     width: $space-five;
     min-height: $space-five;
     text-indent: -9999px;
-    @include breakpoint($bp-medium) {
+    @media ($above-xs) {
       display: none;
     }
     &:hover {
@@ -283,7 +283,7 @@
     }
   }
 
-  @include breakpoint($new-x-small-max) {
+  @media ($below-xs) {
     .eyebrow-title {
       float: none;
       width: 100%;

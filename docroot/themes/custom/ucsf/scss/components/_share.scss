@@ -30,7 +30,7 @@ $icon-map: (
   transition-property: opacity, bottom;
   z-index: 1;
 
-  @include breakpoint($bp-page-narrow) {
+  @include breakpoint($new-large) {
     grid-row: 2;
     position: sticky;
     flex-direction: column;
@@ -42,7 +42,7 @@ $icon-map: (
     background-color: transparent;
   }
 
-  @include breakpoint($bp-xl) {
+  @media ($above-xxl) {
     grid-column: 2 / 3;
     padding: 0 40%;
   }
@@ -51,7 +51,7 @@ $icon-map: (
   .page-node-type-magazine-article & {
     margin-top: 0;
 
-    @include breakpoint($bp-page-narrow) {
+    @include breakpoint($new-large) {
       margin-top: $space-four;
       z-index: 0;
     }
@@ -60,7 +60,7 @@ $icon-map: (
   li {
     margin: 0 0 0 1.4rem;
 
-    @include breakpoint($bp-page-narrow) {
+    @include breakpoint($new-large) {
       margin: 0 0 1.3rem 0;
     }
   }
@@ -72,7 +72,7 @@ $icon-map: (
     height: $icon-size;
     border-bottom: none;
 
-    @include breakpoint($bp-page-narrow) {
+    @include breakpoint($new-large) {
       font-size: $icon-size-big;
     }
 
@@ -89,7 +89,7 @@ $icon-map: (
       color: $color;
       transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1) color;
 
-      @include breakpoint($bp-page-narrow) {
+      @include breakpoint($new-large) {
         color: $c-gray-blue;
 
         &:hover {
@@ -100,7 +100,7 @@ $icon-map: (
   }
 
   .fa-print {
-    @include breakpoint($bp-page-narrow) {
+    @include breakpoint($new-large) {
       font-size: 24px;
     }
   }
@@ -124,7 +124,7 @@ $icon-map: (
 }
 
 .article-feature-content {
-  @include breakpoint($bp-page-narrow) {
+  @include breakpoint($new-large) {
     .article-meta-share {
       grid-row: 1;
       margin-top: $space-ten;

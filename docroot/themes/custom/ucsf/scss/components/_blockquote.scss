@@ -30,7 +30,7 @@ $quote-border-left: 1rem;
       padding-top: $space;
     }
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       .field-blockquote-body,
       .field-blockquote-source,
       .field-blockquote-source-org {
@@ -69,7 +69,7 @@ $quote-border-left: 1rem;
       }
     }
 
-    @include breakpoint($bp-xl) {
+    @media ($above-xxl) {
       grid-column: 2 / -3;
     }
   }
@@ -78,7 +78,7 @@ $quote-border-left: 1rem;
     background: $i6-gray;
     padding: $space-five;
 
-    @include breakpoint($new-small-max) {
+    @media ($below-s) {
       .field-blockquote-body {
         p:first-child {
           margin-top: 0;
@@ -86,7 +86,7 @@ $quote-border-left: 1rem;
       }
     }
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       padding: $space-six $space-ten;
       padding-right: 15%;
     }
@@ -102,7 +102,7 @@ $quote-border-left: 1rem;
       padding-right: 12px;
       font-family: $font-granjon;
 
-      @include breakpoint($bp-medium) {
+      @media ($above-xs) {
         padding-right: $space;
       }
     }
@@ -129,7 +129,7 @@ $quote-border-left: 1rem;
       margin-top: 0;
       padding-top: 0;
 
-      @include breakpoint($new-small) {
+      @media ($above-s) {
         margin-#{$direction}: -14%;
         padding-#{$direction}: 56px;
         width: 50%;
@@ -143,14 +143,14 @@ $quote-border-left: 1rem;
       @if $direction == left {
         margin-right: 0;
 
-        @include breakpoint($new-small) {
+        @media ($above-s) {
           margin-right: $space-ten;
         }
 
       } @else {
         margin-left: 0;
 
-        @include breakpoint($new-small) {
+        @media ($above-s) {
           margin-left: $space-ten;
         }
       }
@@ -172,12 +172,12 @@ $quote-border-left: 1rem;
       padding-right: 12px;
       font-family: $font-granjon;
 
-      @include breakpoint($bp-medium) {
+      @media ($above-xs) {
         padding-right: $space;
       }
     }
 
-    @include breakpoint($new-small-max) {
+    @media ($below-s) {
       padding-top: $space-five;
       padding-left: $space-five;
       padding-right: $space-five;
@@ -191,7 +191,7 @@ $quote-border-left: 1rem;
     font-style: normal;
     padding-right: 15%;
 
-    @include breakpoint($new-small-max) {
+    @media ($below-s) {
       padding-left: $space-five;
     }
   }
@@ -202,7 +202,7 @@ $quote-border-left: 1rem;
       padding-right: 0;
       padding-left: 15%;
 
-      @include breakpoint($new-small-max) {
+      @media ($below-s) {
         padding-top: $space-five;
         padding-left: $space-five;
         padding-right: $space-five;
@@ -213,7 +213,7 @@ $quote-border-left: 1rem;
     .blockquote-content__cite {
       padding-left: 15%;
 
-      @include breakpoint($new-small-max) {
+      @media ($below-s) {
         padding-left: $space-five;
       }
     }
@@ -227,7 +227,7 @@ $quote-border-left: 1rem;
     margin: 0 -1.25rem 0 0;
     padding-right: 6%;
 
-    @include breakpoint($new-small) {
+    @media ($above-s) {
       border-left-width: $quote-border-left;
       border-left-style: solid;
       margin: 0 -20% 0 (-$quote-border-left);
@@ -239,7 +239,7 @@ $quote-border-left: 1rem;
     }
 
     .blockquote-content__text {
-      @include breakpoint($new-small) {
+      @media ($above-s) {
         padding-right: 0;
       }
     }
@@ -247,7 +247,7 @@ $quote-border-left: 1rem;
 }
 
 
-@include breakpoint($new-small) {
+@media ($above-s) {
   .blockquote--half-right {
     &.in-viewport {
       animation: element-slide-left 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
