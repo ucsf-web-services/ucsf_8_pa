@@ -28,7 +28,7 @@ body.page-node-type-magazine-article,
   // RECOMMENDED READING
   .has-recommended-article {
     // moving title closer to the image
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       .recommended-articles__banner {
         grid-template-rows: auto;
       }
@@ -37,7 +37,7 @@ body.page-node-type-magazine-article,
     .recommended-articles__title {
       padding-top: 0;
 
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         margin: $space-two 0 $space-five 0;
         color: $c-dark-navy;
       }
@@ -81,7 +81,7 @@ body.page-node-type-magazine-article,
   [style*="background-color:#dedeed"] .link--cta {
     color: #121a31;
     @include link-bg-image('cta-arrow-navy.svg');
-    background-image: url('/themes/custom/ucsf/assets/images/cta-arrow-navy.svg');
+    background-image: url('/themes/custom/ucsf/images/cta-arrow-navy.svg');
   }
 
   .article-art-credit {
@@ -119,7 +119,7 @@ body.page-node-type-magazine-article,
       }
     }
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       margin-bottom: $space-ten;
 
       .magazine-feature-support__articles {
@@ -136,7 +136,7 @@ body.page-node-type-magazine-article,
       }
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       @include grid;
 
       .field-feature-article {
@@ -405,13 +405,13 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
   .featureoverlaydark .field--name-title,
   .featureoverlaydark .field-html-title ,
   .featureoverlaydark .article-header__author a {
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       color: $c-white;
     }
   }
 
   .featureoverlaydark .article-affiliation::before {
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       background-color: $white;
     }
   }
@@ -480,14 +480,14 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
   .article-feature-overlay-banner.featureoverlaydark
     .article-feature-overlay-header
     .article-art-credit {
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       color: $c-white;
     }
   }
 
   .twocolleftdark .article-twocol-header .article-art-credit,
   .twocolrightdark .article-twocol-header .article-art-credit {
-    @include breakpoint($new-large-max) {
+    @media ($below-xl) {
       color: $c-white;
     }
   }
@@ -522,7 +522,7 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
       padding: 0;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       background: $c-white;
       grid-column: 2 / -2;
     }
@@ -548,7 +548,7 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
   }
 
   .page_narrow {
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       background: $c-white;
     }
   }
@@ -562,7 +562,7 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
       padding-bottom: 1px;
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       grid-column: 2 / -2;
       width: 100%; // MAG-263 / MAG-265 jira ticket
     }
@@ -648,7 +648,7 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
   .ucsfcallout {
     font-family: $font-helvetica-neue-light;
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       &.callout-left {
         margin-left: -20%;
       }
@@ -658,7 +658,7 @@ body.page-node-type-magazine-article #block-ucsf-mag-content {
       }
     }
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       width: 60%;
       padding: 64px;
 
@@ -778,7 +778,7 @@ body.page-node-type-magazine-article {
       &.paragraph-responsive-areas-fullwidth {
         max-width: 100%;
 
-        @include breakpoint($new-large) {
+        @media ($above-xl) {
             grid-column: 1 / -1;
             max-width: 100%;
             margin-bottom: $space-ten;

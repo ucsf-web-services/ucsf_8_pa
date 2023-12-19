@@ -19,7 +19,7 @@ $parallax-options: (
 
 .scrolly-gallery {
   &__text {
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       background-color: transparent;
     }
 
@@ -48,7 +48,7 @@ $parallax-options: (
   @each $name, $color in $parallax-options {
     .background-#{"" + $name} {
       --color-rgb: #{hex-to-rgb($color)};
-      @include breakpoint($new-large-max) {
+      @media ($below-xl) {
         background-color: $color;
       }
     }
@@ -57,7 +57,7 @@ $parallax-options: (
         background-color: darken($color, 5%);
         border-bottom-color: darken($color, 5%);
 
-        @include breakpoint($new-large) {
+        @media ($above-xl) {
           background-color: #{$color};
           border-bottom-color: #{$color};
         }
@@ -66,7 +66,7 @@ $parallax-options: (
     .background-#{"" + $name} + .scrolly-gallery__text-inner .button:hover {
       background-color: darken($color, 5%);
       border-color: $c-white;
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         background-color: #{$color};
         border-color: #{$color};
       }
@@ -75,14 +75,14 @@ $parallax-options: (
 
   // Default color is used
   .background- {
-    @include breakpoint($new-large-max) {
+    @media ($below-xl) {
       background-color: $a1-navy;
     }
 
     & + .scrolly-gallery__text-inner a:not([class *="button"]):hover {
       background-color: darken($a1-navy, 5%);
 
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         background-color: $a1-navy;
         border-bottom-color: $a1-navy;
       }
@@ -92,7 +92,7 @@ $parallax-options: (
       background-color: darken($a1-navy, 5%);
       border-color: $a1-navy;
 
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         background-color: $a1-navy;
         border-color: $a1-navy;
       }
@@ -110,7 +110,7 @@ $parallax-options: (
       border-bottom-color: $c-blue-link;
       background-color: $c-blue-link;
 
-      @include breakpoint($new-large) {
+      @media ($above-xl) {
         border-color: $c-blue-link;
         border-bottom-color: $c-blue-link;
         background-color: $c-blue-link;
@@ -121,7 +121,7 @@ $parallax-options: (
 
 
   &__text-inner {
-    @include breakpoint($new-large-max) {
+    @media ($below-xl) {
       padding-left: 20px;
       padding-right: 20px;
       color: $c-white;

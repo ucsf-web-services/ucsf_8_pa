@@ -4,7 +4,7 @@
 }
 
 .mag-basic-page {
-  @include breakpoint($new-large) {
+  @media ($above-xl) {
     .main-content {
       @include grid;
 
@@ -17,7 +17,7 @@
   }
 
   &__header {
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       grid-column: 1 / -1;
     }
 
@@ -31,7 +31,7 @@
     padding-right: $page-gutter;
     color: $c-dark-navy;
 
-    @include breakpoint($new-large) {
+    @media ($above-xl) {
       grid-column: 4 / -4;
       max-width: $mag-page-narrow;
       width: 100%;

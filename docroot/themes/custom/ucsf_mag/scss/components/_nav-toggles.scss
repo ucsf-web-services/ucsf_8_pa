@@ -18,7 +18,7 @@
   border: 0;
   outline: 1px solid transparent;
 
-  @include breakpoint ($bp-large) {
+  @media ($above-m) {
     min-width: $menu-bar-width-large;
     max-width: $menu-bar-width-large;
     width: $menu-bar-width-large;
@@ -37,7 +37,7 @@
     margin: 0;
     text-indent: 300%;
 
-    @include breakpoint ($bp-large) {
+    @media ($above-m) {
       width: $menu-bar-width-large;
       height: 3px;
     }
@@ -54,7 +54,7 @@
       transition-property: background-color,transform;
       transition-duration: .3s;
 
-      @include breakpoint ($bp-large) {
+      @media ($above-m) {
         width: $menu-bar-width-large;
         height: 3px;
       }
@@ -63,7 +63,7 @@
     &::before {
       top: -#{$menu-bar-position};
 
-      @include breakpoint ($bp-large) {
+      @media ($above-m) {
         top: -#{$menu-bar-position-large};
       }
     }
@@ -71,7 +71,7 @@
     &::after {
       top: $menu-bar-position;
 
-      @include breakpoint ($bp-large) {
+      @media ($above-m) {
         top: $menu-bar-position-large;
       }
     }
@@ -81,14 +81,14 @@
       &::before {
         transform: translateY($menu-bar-position) rotate(45deg);
 
-        @include breakpoint ($bp-large) {
+        @media ($above-m) {
           transform: translateY($menu-bar-position-large) rotate(45deg);
         }
       }
       &::after {
         transform: translateY(-#{$menu-bar-position}) rotate(-45deg);
 
-        @include breakpoint ($bp-large) {
+        @media ($above-m) {
           transform: translateY(-#{$menu-bar-position-large}) rotate(-45deg);
         }
       }
@@ -118,7 +118,7 @@
     margin-left: auto;
   }
 
-  @include breakpoint($bp-medium-plus) {
+  @media ($above-l) {
     display: none;
   }
 }

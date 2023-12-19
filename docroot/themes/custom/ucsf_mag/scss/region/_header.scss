@@ -18,7 +18,7 @@
       height: $mag-navbar-height-medium;
     }
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       height: $mag-navbar-height-big;
     }
 
@@ -40,7 +40,7 @@
     &--active {
       left: -3px;
 
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         left: -5px;
       }
     }
@@ -65,7 +65,7 @@
       min-width: 320px;
     }
 
-    @include breakpoint ($bp-large) {
+    @media ($above-m) {
       min-width: 438px;
 
       #{$block}--active & {
@@ -92,14 +92,14 @@
     max-width: $search-icon-size;
     min-width: $search-icon-size;
     background-color: transparent;
-    background-image: url('/themes/custom/ucsf/assets/images/magnifier.svg');
+    background-image: url('/themes/custom/ucsf/images/magnifier.svg');
     overflow: hidden;
 
     @media ($above-xs) {
       top: $offset-top;
     }
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       top: $offset-top-big;
       right: 0;
       background-size: $search-icon-size-big;
@@ -114,7 +114,7 @@
       background-size: $search-icon-size;
       background-color: transparent;
 
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         width: $search-icon-size-big;
         background-size: $search-icon-size-big;
       }
@@ -127,7 +127,7 @@
         top: calc(#{$offset-top} - 1px); //centering vertically
       }
 
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         top: calc(#{$offset-top-big} + 1px); //centering vertically
         width: $search-icon-size-big;
         background-size: $search-icon-size-big;
@@ -136,7 +136,7 @@
       &:hover {
         background-color: transparent;
 
-        @include breakpoint($bp-large) {
+        @media ($above-m) {
           width: $search-icon-size-big;
           background-size: $search-icon-size-big;
         }
@@ -152,7 +152,7 @@
 
     // Search form is open and it is inside the open menu. Icon "x"
     .mag-mobile-search-reveal.active {
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         z-index: 3;
         animation-duration: .3s;
         animation-name: hide-fade-in;
@@ -202,7 +202,7 @@
         margin-right: -20px;
       }
 
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         top: calc(#{$mag-navbar-height-big} - 55px); // eyeballing the value subtracted
         width: 650px;
       }
@@ -214,7 +214,7 @@
 
     // when menu is open and form is open
     .mag-nav--active .header--search & {
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         display: block;
         height: 54px;
         top: -30px;
@@ -228,13 +228,13 @@
       }
 
       .search__form {
-        @include breakpoint($bp-large) {
+        @media ($above-m) {
           border: none;
         }
       }
 
       .fieldset-reset {
-        @include breakpoint($bp-large) {
+        @media ($above-m) {
           display: none;
           visibility: hidden;
         }
@@ -257,7 +257,7 @@
 
     // inside open menu
     .mag-nav--active & {
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         position: absolute;
         margin: 0;
         right: 52px;
@@ -274,7 +274,7 @@
       }
 
       &:hover {
-        @include breakpoint($bp-large) {
+        @media ($above-m) {
           background-size: 36px;
           width: 36px;
           max-width: 36px;
@@ -289,7 +289,7 @@
 
     //when menu is open
     .mag-nav--active & {
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         height: 52px;
         position: absolute;
         width: auto;
@@ -304,7 +304,7 @@
 
     // When menu is open and the form is open
     .mag-nav--active .active & {
-      @include breakpoint($bp-large) {
+      @media ($above-m) {
         width: 500px;
         max-width: 500px;
         padding-right: 165px; // so that search text doesn't spill over the buttons
@@ -319,7 +319,7 @@
       }
 
       &#header-search {
-        @include breakpoint ($bp-large) {
+        @media ($above-m) {
           border: 1px solid #DCE0E6;
         }
       }
@@ -328,14 +328,14 @@
 }
 
 .header--logo-minimized .logo__img {
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     min-width: 338px;
   }
 }
 
 .universal-header-mag {
 
-  @include breakpoint($bp-large) {
+  @media ($above-m) {
     display: flex;
     align-self: center;
   }
@@ -361,7 +361,7 @@
     transition: 0.15s $transition-type color;
     display: none;
 
-    @include breakpoint($bp-large) {
+    @media ($above-m) {
       @include external-link-icon();
       display: flex;
       margin-right: 3.75rem;
@@ -373,7 +373,7 @@
     // Modify external link icon for UCSF News link on small screen.
     &[href*="http"] {
       &::after {
-        @include breakpoint($bp-large) {
+        @media ($above-m) {
           top: 0.9rem;
           right: -1.75rem;
           width: 10px;
@@ -393,7 +393,7 @@
         color: $c-dark-navy;
       }
 
-      @include breakpoint($bp-medium-plus) {
+      @media ($above-l) {
         color: white;
       }
 
@@ -407,7 +407,7 @@
   .universal-header-mag > & {
     display: none;
 
-    @include breakpoint($bp-medium-plus) {
+    @media ($above-l) {
       display: flex;
       margin-left: auto;
     }
