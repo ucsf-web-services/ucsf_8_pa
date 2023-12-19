@@ -1,3 +1,4 @@
+@use "../0_tools" as *;
 // Magazine specific overwrites to the scrolly.
 $parallax-options: (
   navy: $a1-navy,
@@ -45,14 +46,14 @@ $parallax-options: (
   }
 
   @each $name, $color in $parallax-options {
-    .background-#{$name} {
+    .background-#{"" + $name} {
       --color-rgb: #{hex-to-rgb($color)};
       @include breakpoint($new-large-max) {
         background-color: $color;
       }
     }
 
-    .background-#{$name}  + .scrolly-gallery__text-inner a:not([class *="button"]):hover {
+    .background-#{"" + $name}  + .scrolly-gallery__text-inner a:not([class *="button"]):hover {
         background-color: darken($color, 5%);
         border-bottom-color: darken($color, 5%);
 
@@ -62,7 +63,7 @@ $parallax-options: (
         }
       }
 
-    .background-#{$name} + .scrolly-gallery__text-inner .button:hover {
+    .background-#{"" + $name} + .scrolly-gallery__text-inner .button:hover {
       background-color: darken($color, 5%);
       border-color: $c-white;
       @include breakpoint($new-large) {

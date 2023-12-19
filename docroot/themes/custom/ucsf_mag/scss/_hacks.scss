@@ -1,3 +1,4 @@
+@use "0_tools" as *;
 // Hacks
 
 // This file is for styles which need to be added quickly or where there
@@ -13,7 +14,7 @@
 
 // Border colors.
 @each $name, $color in $color-map {
-  .blockquote--color-#{$name} {
+  .blockquote--color-#{"" + $name} {
     border-color: $color;
   }
 }
