@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Preprocess functions for customizing Adobe Analytics/DataLayer Javascript.
+ */
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function ucsf_adobe_analytics_preprocess_page(&$variables) {
+  $variables['#attached']['library'][] = 'ucsf_adobe_analytics/ucsf_adobe';
+}
