@@ -1,0 +1,47 @@
+# SCSS local development
+[Read the Main Docs](../README.md)
+
+## Compile for development
+Inside `docroot/themes/custom/ucsf_mag` run following command to do an initial build of the site and start watching for changes while doing
+local development:
+```
+$ npm start
+```
+
+## Folder structure ##
+Folders are numbered to help you visualize css cascade. Do not structure future themes this way, keep directory names non-Drupal specific with
+most partials being inside `components` directory
+```
+|-- 0_tools/
+|-- 1_base/
+|-- 2_navigation/
+|-- 3_region/
+|-- 4_taxonomy/
+|-- 5_view/
+|-- 6_node/
+|-- 7_components/
+|-- hacks.scss
+|-- ckeditor.scss
+|-- style.scss
+```
+**0_tools/**: Variables and mixins are here. None of this code is actually printed to the final styles.css
+
+**1_base/**: Most generic styles for html elements and basic classes.
+
+**2_navigation/**: These partials have styles for navigation elements.
+
+**3_region/**: These partials have styles for Drupal regions.
+
+**4_taxonomy**: These partials have styles for Drupal taxonomy pages/elements.
+
+**5_view**: These partials have styles for Drupal view pages/elements.
+
+**6_node/**: These partials have styles for Drupal node.
+
+**7_components/**: These should be self-contained and not spill out to others.
+
+**style.scss**: This is the master file for all scss. All partials should be imported here using @use. Styles should ideally go into individual component files rather than directly into this file. This will compile to `/dist/style.css`. Variables and mixins are imported in the `O_tools/_index.scss` file.
+
+**hacks.scss**: Also known as "public shame file". If we find your code here, we won't actually shame you for it, but we expect you to come back and clean it up when you have time. This is a file for "don't have time to do it right, sorry guys" type of situations.
+
+**ckeditor.scss**: When using the CKEditor WYSIWYG, it is helpful to see the styles which will be applied in the actual theme. This file allows styles to be injected into the editor so that a user gets a better idea of how text and components like buttons, lists, and links will really look. This will compile to `/dist/ckeditor.css`.

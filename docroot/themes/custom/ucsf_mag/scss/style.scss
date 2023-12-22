@@ -1,53 +1,44 @@
-// // Tools from the main ucsf theme
-// @use "../../ucsf/scss/0_tools/variables" as global_vars;
-// @use "../../ucsf/scss/0_tools/variables-space";
-// @use "../../ucsf/scss/0_tools/mixins";
-// @use "../../ucsf/scss/0_tools/mixins-font-styles";
-// @use "../../ucsf/scss/0_tools/mixins-layout";
-
-// // Site-specific variables and mixins
-// @use "0_tools/variables";
-// @use '0_tools/mixins';
-
 // Base
-@import "base/main";
-@import "base/animations";
-@import "base/text";
+@use "1_base/main";
+@use "1_base/animations";
+@use "1_base/text";
 
-// Components
-@import "components/icons";
-@import "components/nav-toggles";
-@import "components/subscribe-form";
-@import "components/parallax-image-with-text-overlay";
-@import 'components/magazine-subscribe-form-movable';
+// Components. Do not add any more partials here
+@use "7_components/icons";
+@use "7_components/nav-toggles";
+@use "7_components/subscribe-form";
+@use "7_components/parallax-image-with-text-overlay";
+@use '7_components/magazine-subscribe-form-movable';
 
 // Navigation
-@import "navigation/main-menu";
-@import "navigation/slicknav";
+@use "2_navigation/main-menu";
+@use "2_navigation/slicknav";
 
 // Regions
-@import "region/header";
-@import "region/footer";
+@use "3_region/header";
+@use "3_region/footer";
 
 // Taxonomy
-@import "taxonomy/magazine-topic-page";
-@import "taxonomy/magazine-issue-page";
+@use "4_taxonomy/magazine-topic-page";
+@use "4_taxonomy/magazine-issue-page";
 
 // view
-@import "view/magazine-archive";
-@import "view/view-magazine-archive-carousel";
-@import "view/recommended_books_videos_podcasts";
+@use "5_view/magazine-archive";
+@use "5_view/view-magazine-archive-carousel";
+@use "5_view/recommended_books_videos_podcasts";
 
 // Node.
-@import "node/node-magazine-homepage";
-@import "node/node-magazine-basic-page";
-@import "node/node-magazine-article.scss";
+@use "6_node/node-magazine-homepage";
+@use "6_node/node-magazine-basic-page";
+@use "6_node/node-magazine-article.scss";
 
 // Components (these should be able to overwrite Node styles.)
-@import "components/basic-header";
-@import "components/footer-ankle-cta";
-@import "components/alumni-hub";
-@import "components/ancle-cta";
-@import "components/magazine-card-byline";
+// Partials for components should be added here.
+@use "7_components/basic-header";
+@use "7_components/footer-ankle-cta";
+@use "7_components/alumni-hub";
+@use "7_components/ancle-cta";
+@use "7_components/magazine-card-byline";
 
-@import "hacks";
+// Hacks - Public shame!
+@use "hacks";
