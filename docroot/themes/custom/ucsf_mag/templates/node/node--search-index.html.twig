@@ -32,7 +32,7 @@
 {% endif %}
 
 <article {{ attributes.addClass(classes) }}>
-  <header class="search-result__copy icon-link--external">
+  <header class="search-result__copy {{ article_type != 'media-coverage' ? 'icon-link--external' }}">
     {% if article_type == 'media-coverage' %}
       {% include '@theme/article/byline-media.twig' %}
     {% elseif node_type == 'magazine-article'%}
