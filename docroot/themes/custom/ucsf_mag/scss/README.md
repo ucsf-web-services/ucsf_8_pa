@@ -1,5 +1,7 @@
 # SCSS local development
 [Read the Main Docs](../README.md)
+Keep in mind that this is a sub theme of `docroot/themes/custom/ucsf`, so most of the variables and mixins are located in the parent theme.
+Some styles are also located in parent theme. Only overwrites and custom components unique to magazine theme are located here.
 
 ## Compile for development
 Inside `docroot/themes/custom/ucsf_mag` run following command to do an initial build of the site and start watching for changes while doing
@@ -8,7 +10,7 @@ local development:
 $ npm start
 ```
 
-## Folder structure ##
+## Folder structure
 Folders are numbered to help you visualize css cascade. Do not structure future themes this way, keep directory names non-Drupal specific with
 most partials being inside `components` directory
 ```
@@ -43,5 +45,8 @@ most partials being inside `components` directory
 **style.scss**: This is the master file for all scss. All partials should be imported here using @use. Styles should ideally go into individual component files rather than directly into this file. This will compile to `/dist/style.css`. Variables and mixins are imported in the `O_tools/_index.scss` file.
 
 **hacks.scss**: Also known as "public shame file". If we find your code here, we won't actually shame you for it, but we expect you to come back and clean it up when you have time. This is a file for "don't have time to do it right, sorry guys" type of situations.
+Leave a useful comment, maybe even a link to the ticket that you were working on
+so that it's easier to figure out later if the code needs a permanent place or if
+it was a temporary hack that can be removed later.
 
 **ckeditor.scss**: When using the CKEditor WYSIWYG, it is helpful to see the styles which will be applied in the actual theme. This file allows styles to be injected into the editor so that a user gets a better idea of how text and components like buttons, lists, and links will really look. This will compile to `/dist/ckeditor.css`.

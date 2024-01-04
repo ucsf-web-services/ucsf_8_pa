@@ -23,6 +23,7 @@ most partials being inside `components` directory
 |-- 8_region/
 |-- 9_utilities/
 |-- libraries/
+|-- hacks.scss
 |-- ckeditor.scss
 |-- styles.scss
 ```
@@ -48,6 +49,11 @@ most partials being inside `components` directory
 
 **libraries/**: These should be self contained scss files, they compile into self contained css files.
 Instead of being included through style.scss, these files are loaded on a specific page and are included through ucsf.libraries.yml
+
+**hacks.scss**: Also known as "public shame file". If we find your code here, we won't actually shame you for it, but we expect you to come back and clean it up when you have time. This is a file for "don't have time to do it right, sorry guys" type of situations.
+Leave a useful comment, maybe even a link to the ticket that you were working on
+so that it's easier to figure out later if the code needs a permanent place or if
+it was a temporary hack that can be removed later.
 
 **style.scss**: This is the master file for all scss. All partials should be imported here using @use. Styles should ideally go into individual component files rather than directly into this file. This will compile to `/dist/style.css`. Variables and mixins are imported in the `O_tools/_index.scss` file.
 
