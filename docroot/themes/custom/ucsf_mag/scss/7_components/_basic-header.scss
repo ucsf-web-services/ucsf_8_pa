@@ -1,0 +1,39 @@
+@use "../0_tools" as *;
+// Header style shared by Page content types
+.mag-basic-header {
+  @include wrapper;
+
+  background: $i6-gray;
+  margin-bottom: $space-five;
+  padding: 20px;
+  color: $c-dark-navy;
+
+  @media ($above-s) {
+    padding: $space-five;
+    margin-bottom: $space-ten;
+  }
+
+  @media ($above-xl) {
+    padding: $space-five $space-ten;
+  }
+
+
+  &__title {
+    @include fs-heading($c-dark-navy);
+
+    // Specificity issue
+    .magazine-topic-issue-page & {
+      @include fs-heading($c-dark-navy);
+    }
+  }
+
+  &__subtitle {
+    font-family: $font-helvetica-neue-light;
+    color: $magazine-gray-blue;
+
+    p,
+    &:where(p) {
+      margin: 8px 0;
+    }
+  }
+}

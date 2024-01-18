@@ -1,0 +1,102 @@
+@use "../0_tools" as *;
+// General styles, so that editor can forget to provide color and images still look normal.
+.news-package-card {
+  .card__title {
+    @include fs-heading-three;
+    margin-top: 1rem;
+    transition: $transition-time ease-out all;
+  }
+
+  .card__image {
+    margin-left: -$page-gutter;
+    margin-right: -$page-gutter;
+
+    @media ($above-m) {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .card__image-wrapper {
+    display: block;
+    overflow: hidden;
+  }
+
+  img {
+    transition: $transition-time-short ease-out all;
+    width: 100%;
+  }
+
+  a:hover {
+    .card__title {
+      color: $c-blue-link;
+    }
+
+    img {
+      transform: scale(1.1);
+    }
+  }
+}
+
+// styles that kick in when color is selected for the offset frame
+.card-with-offset-color {
+  @include colored("background", false);
+  $offset-frame: 10px; // calc($page-gutter / 2)
+  $offset-frame-desktop: 1.1rem;
+
+  .background-green {background-color: $c-green-warm;}
+
+  .background-black {background-color: $c-gray-darkest;}
+
+  .offset-frame {
+    margin-bottom: calc(#{$offset-frame} + 1rem);
+    // margin-left: -$offset-frame;
+
+    @media ($above-m) {
+      margin-bottom: calc(#{$offset-frame-desktop} + 1rem);
+    }
+
+    @media ($above-xl) {
+      margin-left: $offset-frame-desktop;
+
+    }
+  }
+
+  .card__image-wrapper {
+    transform: translate(-$offset-frame, $offset-frame);
+
+    @media ($above-m) {
+      transform: translate(-$offset-frame-desktop, $offset-frame-desktop);
+    }
+  }
+}
+
+.layout-columns__4 .field-content-wrapper-content > .layout-column.has-card-with-offset-color {
+  float: left;
+  width: 100%;
+
+  @media ($above-m) {
+    clear: left;
+    float: left;
+    width: 48%;
+    margin-right: 2%;
+    margin-left: 0;
+  }
+
+  @media ($above-xl) {
+    float: none;
+    width: auto;
+    margin-right: 0;
+    margin-left: 0;
+
+    &:last-child, &:nth-child(even) {
+      margin-right: 0;
+      margin-left: 0;
+    }
+  }
+
+  &:nth-child(2n) {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
