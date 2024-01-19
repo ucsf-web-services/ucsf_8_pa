@@ -1,0 +1,476 @@
+@use "../0_tools" as *;
+.path-search {
+  .page {
+    background: $i6-gray;
+  }
+}
+
+.gsc-refinementsArea {
+  display: none !important;
+  border: none;
+}
+
+#universalSearchTabs,
+.results-wrapper__content {
+  max-width: $bp-3xl;
+  margin: 0 auto;
+  background: $c-white;
+}
+
+#universalSearchTabs {
+  display: none;
+  @media ($above-xs) {
+    display: block;
+  }
+}
+
+.search-box-container {
+  padding: $space-three $space-two;
+  margin: 0;
+
+  &.scrolled {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    width: 100vw;
+    background-color: $i6-gray;
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.08);
+    padding: 0;
+    z-index: 1;
+
+    @media ($above-m) {
+      width: 100%;
+    }
+
+    .home-search__form,
+    form {
+      max-width: $bp-3xl;
+      background: $c-white;
+
+      .home-search__form-input {
+        width: 99%;
+        max-width: 100%;
+        border-right: none;
+        box-shadow: none;
+      }
+    }
+
+    #search {
+      border: none;
+      box-shadow: none;
+    }
+
+    & + #universalSearchTabs {
+      padding-top: 305px;
+
+      @media ($below-xs) {
+        display: block;
+        height: 1px;
+        padding-top: 100px;
+      }
+    }
+  }
+
+  fieldset {
+  display: none;
+  }
+
+  @media ($below-xs) {
+  fieldset {
+    border: none;
+    display: none;
+
+    &.active {
+      display: block;
+      margin: 0;
+      padding: 0;
+
+      // to hide the radios but keep them accessible
+      input[type=radio] {
+        position: absolute;
+        top: auto;
+        overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+        width: 1px;
+        height: 1px;
+        white-space: nowrap; /* https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe */
+
+      }
+
+      label {
+        display: block;
+        border-bottom: 1px solid $c-dark-navy;
+        padding: 1em 0.5em;
+        padding-left: 2em;
+        max-width: 100%;
+        cursor: pointer;
+      }
+
+      input[type=radio] + span:before {
+        content: '';
+        background: #fff;
+        border: .1em solid $c-dark-navy;
+        background-color: $c-white;
+        display: block;
+        box-sizing: border-box;
+        float: left;
+        width: 1em;
+        height: 1em;
+        margin-left: -1.5em;
+        margin-top: .15em;
+        vertical-align: top;
+        cursor: pointer;
+        text-align: center;
+        transition: all .1s ease-out;
+      }
+
+      input[type=radio] + span:before {
+        border-radius: 100%;
+        margin-top: $space;
+        margin-right: $space-two;
+      }
+
+      input[type=radio]:checked + span:before {
+        background-color: $c-dark-navy;
+        box-shadow: inset 0 0 0 .15em $c-white;
+      }
+
+      label > * { pointer-events:none; }
+    }
+  }
+  }
+
+  button.home-search__form-submit-advanced {
+    margin: $space-four auto;
+    margin-bottom: $space;
+    display: block;
+    width: 100%;
+  }
+
+  .home-search__form,
+  form {
+    max-width: $bp-xxl;
+    margin: 0 auto;
+  }
+
+  @media ($below-xs) {
+    #search {
+      font-size: $font-size;
+      height: 52px;
+      width: calc(100% - 46px);
+    }
+
+    .home-search__form-submit {
+      min-height: 40px;
+      padding: 6px;
+      margin-left: -60px;
+      background-size: 23px;
+    }
+  }
+
+  @media ($above-m) {
+    padding: $space-ten;
+  }
+}
+
+
+
+.home-search__advanced-search {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background: url("../images/filter.svg") left center no-repeat transparent;
+  background-size: 36px 36px;
+  min-height: 52px;
+  @media ($above-xs) {
+    display: none;
+  }
+  &:hover {
+    background-color: transparent;
+  }
+  &.active {
+    background: url("../images/x-large.svg") center center no-repeat transparent;
+    background-size: 36px 36px;
+  }
+}
+
+.form-search-block-div {
+
+  .home-search__advanced-search {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    background: url("../images/filter.svg") center center no-repeat transparent;
+    background-size: $space-three;
+    font-size: 0.5em;
+    height: $space-five;
+    width: $space-five;
+    min-height: $space-five;
+    text-indent: -9999px;
+    @media ($above-xs) {
+      display: none;
+    }
+    &:hover {
+      background-color: transparent;
+    }
+
+    &.active {
+      background: url("../images/x-large.svg") center center no-repeat transparent;
+      background-size: $space-three;
+    }
+  }
+}
+
+.home-search__presearch-links {
+  .home-search__advanced-search {
+    width: auto;
+    height: auto;
+    background-image: none;
+  }
+}
+
+#universalSearchTabs {
+  padding: $space-five;
+  padding-bottom: 0;
+  background: url("../images/gray-sq.svg") right top no-repeat $c-white;
+  background-size: 20px;
+
+  @media ($above-m) {
+    background: url("../images/gray-sq.svg") left top no-repeat $c-white;
+    background-size: 80px;
+    padding-left: 200px;
+  }
+}
+
+.results-wrapper__float {
+  padding: $space-five;
+  float: left;
+  background: $c-white;
+  width: 100%;
+
+  @media ($above-m) {
+    padding: $space-twelve 200px;
+    padding-top: $space-seven;
+    padding-right: 150px;
+  }
+}
+
+#universalDirectory,
+#universalWebsites,
+#cse {
+  padding-top: $space-five;
+  clear: both;
+
+  .eyebrow-title {
+    float: left;
+    padding-top: $space;
+    width: 20%;
+    //white-space: nowrap;
+  }
+
+  .results-content {
+    float: left;
+    vertical-align: top;
+    padding-left: $space-five;
+    width: 80%;
+
+    td.gsc-result-info-container {
+      display: none;
+    }
+    .gsc-above-wrapper-area {
+      border-bottom: 1px solid #9ba6b6;
+    }
+  }
+
+  @media ($below-xs) {
+    .eyebrow-title {
+      float: none;
+      width: 100%;
+      //white-space: nowrap;
+    }
+
+    .results-content {
+      float: none;
+      padding-left: 0;
+      width: 100%;
+    }
+  }
+}
+
+.search-websites,
+.search-people {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  padding-bottom: $space-two;
+  border-bottom: 1px solid #d1d3d3;
+}
+
+.search-more {
+  margin: 1rem 0;
+  margin-bottom: 0;
+}
+
+.results-content {
+  //GOOGLE SEARCH FIXES
+  .gsc-wrapper {
+    .gsc-webResult {
+      border-bottom: 1px solid $c-gray;
+      &:hover {
+        border-bottom: 1px solid $c-gray;
+      }
+      .gsc-result {
+        padding: $space-three 0;
+
+        .gsc-thumbnail-inside,
+        .gsc-url-top {
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        .gs-title {
+          text-decoration: none;
+        }
+      }
+
+      a.gs-title,
+      a.gs-title b,
+      &.gs-result a.gs-title:link b,
+      .gsc-control-cse .gs-result .gs-title *,
+      a b {
+        font-size: 28px;
+        font-family: $font-granjon;
+        text-decoration: none;
+        line-height: 1.4;
+        color: $a1-navy;
+        text-decoration: none;
+      }
+
+      :is(#specificity, a.gs-title) {
+        color: $c-blue-link;
+        &:hover {
+          color: $c-blue-link-hover;
+          text-decoration: underline;
+          b {
+            color: $c-blue-link-hover;
+          }
+        }
+      }
+    }
+  }
+  .gcsc-more-maybe-branding-root,
+  .gsc-table-cell-thumbnail /* remove once we figure out thumbnail placement*/
+  {
+    display: none !important;
+  }
+
+    .gsc-result-info {
+      padding: 0;
+    }
+
+    .cse .gsc-control-cse, .gsc-control-cse {
+      padding: 0;
+    }
+
+    .gs-webResult {
+      .gs-visibleUrl-long {
+        font-size: 0.7em;
+      }
+      div.gs-visibleUrl {
+        color: $a1-navy;
+      }
+    }
+
+    .gsc-table-cell-snippet-close,
+    .gsc-table-cell-snippet-close * {
+      color: $c-gray-blue !important;
+    }
+
+    .gsc-control-cse {
+      font-family: $font-helvetica-neue-medium;
+      font-size: $font-size;
+
+      .gsc-cursor-page {
+        margin-right: $space-two !important;
+        :is(#specificity, &) {
+          color: $c-blue-link;
+
+          &:hover{
+            text-decoration: none;
+            color: $c-blue-link-hover;
+          }
+        }
+
+
+        :is(#specificity, &.gsc-cursor-current-page) {
+          color: $c-blue-link-hover;
+        }
+      }
+
+    }
+}
+
+.search-filter {
+  border: none;
+  margin: 0;
+  padding: 0;
+
+  @media ($above-m) {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+  }
+
+  // !important to have in order to make radios usable on iPhone
+  label > * { pointer-events: none; }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    background-color: #E1E3E5;
+    cursor: pointer;
+    font-family: $font-helvetica-neue-bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 40px;
+    transition: background-color .1s ease-out;
+
+    @media ($above-m) {
+      flex-direction: row-reverse;
+      justify-content: center;
+    }
+
+    .search-filter__radio:checked + & {
+      background-color: $i6-gray;
+      color: $c-blue-link;
+    }
+  }
+
+  &__option {
+    position: relative;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    border: 1px solid $c-dark-navy;
+    border-radius: 100%;
+    margin: 0 .85em;
+    transition: all .1s ease-out;
+
+    @media ($above-m) {
+      margin: 0 0 0 .85em;
+    }
+
+    .search-filter__radio:checked + .search-filter__label & {
+      background-color: $c-blue-link;
+      border-color: $c-blue-link;
+      box-shadow: inset 0 0 0 0.2em #fff;
+    }
+  }
+
+  &__radio:focus + &__label {
+    outline: 1px solid $a1-navy;
+  }
+}

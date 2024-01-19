@@ -1,0 +1,148 @@
+@use "../0_tools" as *;
+.recommended-media {
+
+  &__filter {
+    padding-left: $page-gutter;
+
+
+    @media ($above-xs) {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: $space-five;
+    }
+
+    @media ($above-xl) {
+      padding-left: $space-five;
+    }
+
+    &-title {
+      @include fs-heading($c-dark-navy);
+      margin-bottom: 0;
+    }
+
+    &-items {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+
+      @media ($above-xs) {
+        margin-top: 25px;
+        margin-bottom: 0;
+      }
+    }
+
+    a {
+      @include magazine-eyebrow;
+      margin-left: 1rem;
+      padding: 8px;
+      background: $i6-gray;
+      color: $c-dark-navy;
+
+      &.active {
+        background-color: $c-dark-navy;
+        color: white;
+      }
+    }
+
+    .first-child {
+      margin-left: 0;
+
+      @media ($above-xs) {
+        margin-left: 60px;
+      }
+    }
+  }
+
+  .item-list > ul {
+    list-style: none;
+    margin-top: 0;
+    padding-left: $page-gutter;
+    padding-right: $page-gutter;
+    color: $c-dark-navy;
+
+    @media ($above-xl) {
+      grid-column: 1/-1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-rows: auto;
+      gap: 0 5%;
+      padding-left: $space-five;
+      padding-right: $space-five;
+    }
+  }
+
+  .item-list > ul > li {
+    @media ($above-xs) {
+      width: 48%;
+      float: left;
+      margin-left: 2%;
+    }
+
+    @media ($above-xl) {
+      width: 100%;
+      margin-left: 0;
+      float: none;
+    }
+  }
+
+  .item-list li:nth-child(2n+1) {
+    @media ($above-xs) {
+      clear: left;
+      margin-right: 2%;
+      margin-left: 0;
+    }
+
+    @media ($above-xl) {
+      margin-right: 0;
+      float: none;
+    }
+  }
+
+  figure {
+    display: none;
+    @media ($above-xs) {
+      display: block;
+    }
+  }
+
+  .news-card {
+    border-bottom: 1px solid $k3-gray;
+    @media ($above-xs) {
+      margin-bottom: 40px;
+      border-bottom: none;
+    }
+  }
+
+  .news-card__link {
+    margin-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .news-card__copy {
+    margin-top: 16px;
+    margin-left: 0;
+    padding-left: 0;
+    padding-top: 0;
+    margin-right: 0;
+    padding-bottom: 16px;
+
+    @media ($above-xs) {
+      padding: 20px 0;
+      margin-top: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .news-card__copy h2 {
+    color: $c-dark-navy;
+  }
+
+  .article-affiliation {
+    color: $magazine-gray-blue;
+
+    &::before  {
+      background-color: $magazine-gray-blue;
+    }
+  }
+}

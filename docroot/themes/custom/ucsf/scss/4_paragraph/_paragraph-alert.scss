@@ -1,0 +1,44 @@
+@use "../0_tools" as *;
+.alert-wrapper {
+  padding-top: $space-five;
+  clear: both;
+  background: $c-white;
+
+  @media ($above-xl) {
+    padding-top: $space-ten;
+  }
+}
+
+.alert-content {
+  color: $c-white;
+  padding: $space-five;
+  text-align: center;
+  clear: both;
+
+  p {
+    font-family: $font-granjon;
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 1;
+    letter-spacing: -0.3px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  a, p a {
+    margin: 10px;
+    font-size: $font-size;
+
+    @media ($below-xs) {
+      margin-top: 20px;
+      display: block !important;
+    }
+  }
+
+}

@@ -1,0 +1,285 @@
+@use "../0_tools" as *;
+// This is a hack so we don't have to worry about the gallery resizing the background color white for the section.
+// which it should not be part of anyhow, should be its own grid area.
+
+.gallery-title-description {
+  padding: 20px;
+  padding-bottom: 0;
+  clear: both;
+
+  @media ($above-m) {
+    padding: $space-five;
+    padding-bottom: 0;
+  }
+
+  @media ($above-xl) {
+    padding: $space-ten;
+    padding-bottom: 0;
+    grid-column: 3/-3;
+  }
+
+  .field-description {
+    max-width: 900px;
+  }
+}
+
+.gallery-background-fill {
+  height: 800px;
+  background-color: #fff;
+  //border: 1px solid #00c9ff;
+  z-index: -100;
+  margin-bottom: -800px;
+  @media ($above-3xs) {
+    margin-bottom: -400px;
+    height: 400px;
+  }
+  @media ($above-xxs) {
+    margin-bottom: -418px;
+    height: 418px;
+  }
+  @media ($above-xs) {
+    margin-bottom: -418px;
+    height: 418px;
+  }
+  @media ($above-s) {
+    margin-bottom: -450px;
+    height: 450px;
+  }
+  @media ($above-m) {
+    margin-bottom: -670px;
+    height: 670px;
+  }
+  @media ($above-xl) {
+    margin-bottom: -725px;
+    height: 725px;
+  }
+  @media ($above-xxl) {
+    margin-bottom: -800px;
+    height: 800px;
+  }
+}
+
+.paragraph--type--gallery {
+  //background: $c-white;
+  overflow: hidden;
+
+  .gallery-container {
+    overflow: hidden;
+    //padding-right: 16px;
+    min-width: 0;
+    min-height: 0;
+    background: $c-white;
+  }
+
+  @media ($above-xl) {
+    @include grid-fifteen;
+    background: transparent;
+    grid-column: 1 / -1;
+
+    .gallery-container {
+      grid-column: 2 / -2;
+      overflow: visible;
+      padding: 0 11%;
+    }
+  }
+  @media ($above-xxl) {
+    .gallery-container {
+      grid-column: 3 / -3;
+    }
+  }
+}
+
+.field-gallery-items {
+
+  .slick-track {
+    left: 0;
+    @media ($above-3xs) {
+      left: -30px;
+    }
+    @media ($above-xxs) {
+      left: -30px;
+    }
+    @media ($above-xs) {
+      left: -30px;
+    }
+    @media ($above-m) {
+      left: 0;
+    }
+    @media ($above-xl) {
+      left: 0;
+    }
+    @media ($above-xxl) {
+      left: 0;
+    }
+  }
+
+
+  @include slick-buttons;
+
+  button {
+    top: calc(50% - 100px);
+
+    @media ($above-xxs) {
+        display: none;
+
+    }
+    @media ($above-xs) {
+        display: none;
+
+    }
+    @media ($above-s) {
+        display: none;
+    }
+  }
+
+  .slick-arrow {
+
+    @media ($above-xl) {
+      height: 40px;
+      width: 40px;
+      background-size: 50%;
+
+      &.slick-prev {
+        left: -21%;
+      }
+
+      &.slick-next {
+        right: -21%;
+      }
+    }
+
+
+    @media ($above-xxl) {
+      &.slick-prev {
+        left: -35%;
+      }
+
+      &.slick-next {
+        right: -35%;
+      }
+    }
+
+    @media ($below-s) {
+      &.slick-prev {
+        left: -9999px;
+        position: absolute;
+      }
+    }
+
+
+  }
+
+  .slick-slide {
+    margin: 0 1.5em;
+    width: calc(100vw - 40px);
+    //added for certain iPhones!
+    @media ($above-3xs) {
+      margin: 0 0.5em;
+      width: calc(100vw - 40px);
+    }
+    @media ($above-xxs) {
+      margin: 0 0.8em;
+      width: calc(100vw - 40px);
+    }
+    @media ($above-xs) {
+      margin: 0 1.0em;
+      width: calc(100vw - 40px);
+    }
+    //desktop like sizes
+    @media ($above-s) {
+      width: calc(100vw - 20vw);
+    }
+    @media ($above-m) {
+      width: calc(100vw - 20vw);
+      margin: 0 1.5em;
+    }
+    @media ($above-xl) {
+      width: 823px;
+      margin: 0 1.5em;
+    }
+    @media ($above-xxl) {
+      width: 823px;
+      margin: 0 1.5em;
+    }
+  }
+
+  .slick-list {
+    overflow: visible;
+  }
+
+  .field-gallery-image {
+    //this is the white "overlay" magic
+    background-color: #fff;
+    //fixing the extra space at the bottom
+    height: 0;
+    padding-bottom: 66%; /* for a 4:3 container size */
+  }
+
+  picture {
+    background: $c-white;
+    display: block;
+  }
+
+  img {
+    //filter: blur(3px);
+    margin: 0 auto;
+    padding-left: 0px;
+    padding-right: 0px;
+    opacity: 0.25;
+  }
+
+  figcaption {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    overflow: hidden;
+    height: 1px;
+    width: 1px;
+    word-wrap: normal;
+  }
+
+  .slick-active {
+    img {
+      filter: blur(0);
+      opacity: 1.0;
+      @include transitionset(1s);
+    }
+
+    figcaption {
+      position: relative;
+      clip: auto;
+      overflow: visible;
+      //padding-left: 16px;
+      height: auto;
+      width: auto;
+      //prevent jumping of content below
+      min-height: 125px;
+      padding-left: 10%;
+      padding-right: 0;
+      //added for certain iPhones!
+      @media ($above-3xs) {
+        padding-left: 10%;
+        margin: 0 auto;
+        //prevent jumping of content below
+        min-height: 180px;
+      }
+      @media ($above-xxs) {
+        padding-left: 10%;
+        margin: 0 auto;
+        min-height: 140px;
+      }
+      @media ($above-xs) {
+        padding-left: 10%;
+      }
+      @media ($above-s) {
+        //max-width: 800px;
+        padding-left: 13%;
+        padding-right: 13%;
+      }
+      @media ($above-xl) {
+        //max-width: 602px;
+        padding-left: 13%;
+        padding-right: 13%;
+      }
+    }
+  }
+}

@@ -1,0 +1,1221 @@
+@use "../0_tools" as *;
+$magazine-issue-narrow-row-width: 60%;
+body.page-node-type-magazine-homepage,
+.magazine-topic-issue-page {
+  color: $c-dark-navy;
+
+  h1 {
+    color: $c-dark-navy;
+  }
+
+  .magazine-homepage-banner {
+    @include wrapper;
+
+    background: $i6-gray;
+    margin-bottom: $space-five;
+    padding: 20px;
+
+    @media ($above-s) {
+      padding: $space-five;
+      margin-bottom: $space-ten;
+    }
+
+    @media ($above-xl) {
+      padding: $space-five $space-ten;
+    }
+  }
+
+  .magazine-home-feature {
+    h2 {
+      @include fs-heading-two;
+      margin-bottom: $space-three;
+      color: $c-dark-navy;
+
+      a {
+        color: $c-dark-navy;
+        font-family: $font-granjon;
+
+        &:hover {
+          color: $c-blue-link;
+        }
+      }
+    }
+
+    .card-row__copy {
+      @media ($below-s) {
+        margin-top: 0;
+        margin-right: 0;
+        padding-right: 20px;
+      }
+
+      @media ($above-s) {
+        float: right;
+        width: 50%;
+        padding-right: 40px;
+      }
+
+      @media ($above-m) {
+        width: 50%;
+      }
+
+      @media ($above-xl) {
+        float: none;
+        width: auto;
+        grid-column: 8/-1;
+        padding-right: 80px;
+        align-self: center;
+      }
+    }
+
+    .card-row__body {
+      margin-top: $space-three;
+
+      @media ($below-s) {
+        display: block;
+      }
+
+      p {
+        margin: 0;
+        color: $magazine-gray-blue;
+        font-family: $font-helvetica-neue-light;
+      }
+    }
+
+    &.card-row {
+      .card-row__body {
+        margin-top: 0;
+      }
+    }
+
+    @media ($above-xl) {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+
+      .card-row__image {
+        grid-column: 1/8;
+      }
+    }
+
+    &--alt {
+      .card-row__copy {
+        float: none;
+        width: auto;
+      }
+    }
+  }
+
+
+  .four-card-row:hover h2 {
+    color: $c-blue-link !important;
+  }
+
+  .card-row {
+    .card-row__image {
+      &::after {
+        display: none;
+      }
+
+      img {
+        max-height: none;
+      }
+    }
+  }
+
+  .layout__heading {
+    @include fs-heading;
+
+    color: $c-dark-navy;
+  }
+
+  .layout-column {
+    .card-row__image {
+      img {
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+
+    .card-row__copy {
+      padding-top: $space-four;
+      padding-right: 0;
+
+      h2 {
+        @include fs-heading-three;
+        margin: 0;
+        margin-top: $space;
+        color: $c-dark-navy;
+      }
+
+      .card-row__body {
+        color: $magazine-gray-blue;
+      }
+    }
+  }
+
+  .news-card,
+  .magazine-home-feature,
+  .magazine-alumni {
+    .news-card__copy {
+      padding: 0;
+      padding-top: $space-four;
+      margin-top: 0;
+      margin-left: 0;
+
+      h2,
+      h3 {
+        color: $c-dark-navy;
+      }
+    }
+
+    &:hover {
+      h2,
+      h3 {
+        color: $c-blue-link !important;
+      }
+    }
+  }
+
+  .remove-top-space {
+    margin-top: 0;
+  }
+  .footer-ctas-wrapper {
+    h2 {
+      @include fs-articles-title;
+      color: $c-dark-navy;
+    }
+  }
+
+  .magazine-big-picture-subscribe {
+    @media ($above-xl) {
+      @include grid-two;
+      padding: 0 $space-ten;
+      margin-bottom: $space-fourteen;
+    }
+
+    &__big-picture {
+      h3 {
+        @include fs-heading-three;
+        color: $c-dark-navy;
+      }
+
+      .card-row__body {
+        margin-top: 0;
+
+        p {
+          margin-top: 16px;
+        }
+      }
+    }
+  }
+
+  // Affects both issue and homepages Alumni Hub.
+  // Also affects "Big Picture" section on issue pages
+  // For homepage only use .magazine-hub-inside
+  .magazine-alumni {
+    &__byline {
+      h3 {
+        @include fs-heading-three;
+
+        margin: 0;
+        margin-top: $space;
+        color: $c-dark-navy;
+      }
+    }
+
+    .card-row__copy {
+      padding-right: $article-gutter;
+      padding-left: $article-gutter;
+      float: none;
+      width: 100%;
+
+      @media ($above-m) {
+        float: right;
+        padding-left: $article-gutter;
+      }
+
+      @media ($above-xl) {
+        float: none;
+        width: 100%;
+        padding-right: $space-eight;
+        padding-left: 0;
+      }
+    }
+
+    &.four-card-row {
+      margin-bottom: 0;
+    }
+
+    .card-row__image img {
+      max-height: none;
+    }
+
+    &__topic {
+      margin-bottom: $space;
+    }
+  }
+
+  .magazine-supporting-feature-list {
+    @media ($above-xl) {
+      margin-bottom: $space-fourteen;
+    }
+  }
+
+  .node--view-mode-magazine-issue-insight-advice {
+    border-bottom: 1px solid $c-border-grey-blue;
+    padding: 1.5rem $article-gutter;
+    margin: 0 auto;
+
+    @media ($above-s) {
+      padding: 1.5rem 0;
+      margin: 0 $space-ten;
+    }
+
+    @media ($above-xl) {
+      width: $magazine-issue-narrow-row-width;
+      margin: 0 auto;
+    }
+
+    .article-header__mag-topic-area::before {
+      display: none;
+    }
+
+    .search-result__body {
+      margin: 0;
+    }
+
+    .search-result__copy {
+      @media ($above-xs) {
+        float: left;
+        width: calc(100% - 340px);
+      }
+    }
+
+    h2 {
+      @include fs-heading-three;
+      color: $c-dark-navy;
+      margin-bottom: 0.5rem;
+
+      a {
+        @include link-colors($c-dark-navy, $c-blue-link);
+      }
+    }
+
+    .search-result__image {
+      display: none;
+
+      @media ($above-xs) {
+        display: block;
+        float: right;
+        width: 263px;
+      }
+    }
+
+    .field-sub-title,
+    .search-result__body {
+      @include fs-small-body;
+      color: $magazine-gray-blue;
+    }
+  }
+
+  .magazine-insight-advice {
+    background-color: $i6-gray;
+    padding: $space-ten 0;
+    margin: $space-ten 0;
+
+    .news-list {
+      background-color: $i6-gray;
+      padding: 0;
+    }
+
+    h2:nth-child(1) {
+      @include fs-heading;
+      color: $c-dark-navy;
+      padding: 0 $article-gutter;
+
+      @media ($above-s) {
+        padding: 0;
+        margin: 0 $space-ten 1rem;
+      }
+
+      @media ($above-xl) {
+        width: $magazine-issue-narrow-row-width;
+        margin: 0 auto 1rem auto;
+      }
+    }
+  }
+
+  // needed to center magazine button
+  .layout-columns__1 {
+    float: none;
+  }
+}
+
+.magazine-issue-banner {
+  background: $i6-gray;
+
+  .magazine-issue-banner__title {
+    @include fs-heading;
+
+    margin-bottom: 0;
+    color: $c-dark-navy;
+  }
+
+  figure {
+    margin: $space-three 0;
+  }
+
+  .magazine-issue-banner__content {
+    color: $magazine-gray-blue;
+
+    p {
+      margin-top: $space-two;
+    }
+
+    .field-issue-description {
+      //removing clearfix instead of writing a whole template
+      &.clearfix {
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .magazine-issue-banner__about-title {
+    @include fs-articles-title-hsix;
+
+    color: $c-dark-navy;
+    margin-bottom: 0;
+  }
+
+  .magazine-issue-banner__about-desc {
+    font-size: 14px;
+    line-height: 24px;
+    font-family: $font-helvetica-neue-roman;
+
+    a {
+      color: $magazine-gray-blue;
+      text-decoration: underline;
+    }
+  }
+
+  .magazine-issue-banner__download {
+    margin-bottom: $space;
+
+    a {
+      display: inline-block;
+      font-family: $font-helvetica-neue-medium;
+      background: url(/themes/custom/ucsf/images/card/media.svg) left
+        center no-repeat transparent;
+      background-size: 32px 32px;
+      padding-left: 40px;
+
+      &:hover {
+        text-decoration: underline;
+        text-underline-position: below;
+      }
+    }
+  }
+
+  @media ($above-s) {
+    .field-issue-cover {
+      float: right;
+      width: 33%;
+      margin-left: $space-eight;
+    }
+  }
+
+  @media ($above-xl) {
+    @include grid-two;
+
+    grid-gap: $space-twenty;
+
+    .field-issue-cover {
+      grid-column: 2/-1;
+      float: none;
+      width: 100%;
+      margin-left: 0;
+    }
+
+    .magazine-issue-banner__content {
+      grid-column: 1/2;
+      grid-row: 1;
+      margin-top: $space-eight;
+      //align-self: center;
+    }
+
+    .magazine-issue-banner__download {
+      float: right;
+    }
+
+    .magazine-issue-banner__about-desc {
+      float: left;
+    }
+  }
+}
+
+.magazine-card__byline,
+.magazine-alumni__topic,
+.node--view-mode-magazine-issue-insight-advice .article-header__mag-topic-area {
+  @include magazine-eyebrow;
+  margin: $space 0;
+}
+
+.four-card-row {
+  .card-row__copy {
+    padding-top: $space-four;
+    padding-right: 0;
+
+    h2 {
+      @include fs-heading-three;
+      margin: 0;
+      margin-top: $space;
+      color: $c-dark-navy;
+    }
+
+    .card-row__body {
+      color: $magazine-gray-blue;
+      font-family: $font-helvetica-neue-light;
+    }
+  }
+
+  .card-row__body {
+    margin-top: $space-three;
+  }
+
+  img {
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+body.page-node-type-magazine-homepage {
+  .layout-panel {
+    margin-bottom: 40px;
+  }
+}
+
+// Unique class for homepage Alumni Hub
+.magazine-hub-inside {
+  @include clearfix;
+  clear: both;
+  padding: 0 20px;
+  margin-bottom: $space-five;
+  padding-bottom: 0;
+
+  &__header {
+    margin-bottom: $space-six;
+
+    @media ($above-xxl) {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .magazine-hub-inside__hub & {
+      @media ($above-xl) {
+        margin-left: $space-eight;
+      }
+    }
+  }
+
+  .magazine-hub-inside__title {
+    @include fs-heading;
+
+    margin-left: 0;
+    color: $c-dark-navy;
+  }
+
+  .magazine-hub-inside__hub {
+    .news-card__byline {
+      .article-header__date::before {
+        display: none;
+      }
+    }
+    .card-row__body {
+      p {
+        margin: $space-two 0;
+        color: $magazine-gray-blue;
+      }
+    }
+
+    .magazine-alumni .card-row__copy {
+      @media ($below-s) {
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
+  }
+
+  .magazine-hub-inside__inside,
+  .magazine-hub-inside__hub {
+    .magazine-hub-inside__title {
+      margin-bottom: 0;
+    }
+
+    .field-inside-ucsf {
+      clear: both;
+
+      .campus-news-card__title {
+        margin-bottom: $space;
+        color: $c-dark-navy;
+      }
+
+      .article-header__byline {
+        .article-header__primary-area {
+          color: $magazine-gray-blue;
+          &::before {
+            display: none;
+          }
+        }
+
+        .article-header__date {
+          color: $magazine-gray-blue;
+
+          &::before {
+            color: $magazine-gray-blue;
+          }
+        }
+      }
+    }
+  }
+
+  .magazine-hub-inside__inside {
+    padding-top: $space-five;
+
+    @media ($above-s) {
+      float: right;
+      width: 45%;
+      padding-top: 0;
+    }
+
+    @media (min-width: 930px) {
+      padding-right: 0;
+    }
+  }
+
+  .magazine-hub-inside__inside-more {
+    margin: 0;
+  }
+
+  @media ($above-s) {
+    padding: 0 0 $space-ten;
+    margin: 0 $space-five 0;
+
+    .magazine-hub-inside__hub {
+      float: left;
+      width: 45%;
+    }
+  }
+
+  @media ($above-xxl) {
+    .magazine-hub-inside__inside,
+    .magazine-hub-inside__hub {
+      .magazine-hub-inside__title {
+        margin-bottom: 0;
+        float: left;
+      }
+
+      .field-inside-ucsf,
+      .field-alumni-hub {
+        clear: both;
+      }
+    }
+  }
+
+  @media ($above-xl) {
+    padding: 0 0 $space-ten 0;
+    margin: 0;
+    margin-top: $space-five;
+
+    @include grid-two;
+
+    .magazine-hub-inside__hub,
+    .magazine-hub-inside__inside {
+      float: none;
+      width: 100%;
+    }
+
+    .magazine-hub-inside__inside {
+      float: none;
+      padding-right: $space-five;
+    }
+
+    .magazine-hub-inside__hub {
+      .card-row__copy {
+        margin-left: $space-eight;
+      }
+    }
+  }
+
+  @media ($above-3xl) {
+    .magazine-hub-inside__inside {
+      padding-right: 0;
+    }
+  }
+
+  .card-row__link {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+}
+
+.magazine-feature-support__articles {
+  padding-top: 0;
+
+  .news-card {
+    figure {
+      background: none;
+
+      img {
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+
+    .news-card__copy {
+      padding: 0;
+      padding-top: $space-four;
+      margin-top: 0;
+      margin-left: 0;
+
+      h2 {
+        color: $c-dark-navy;
+      }
+    }
+  }
+}
+
+.magazine-issue-page {
+  &__header-subtitle {
+    display: none;
+  }
+}
+
+.magazine-topic-issue-page {
+  background: $c-white;
+
+  .magazine-home-feature {
+    margin-bottom: 20px;
+
+    @media ($above-s) {
+      margin-bottom: 40px;
+    }
+
+    @media ($above-xl) {
+      margin-bottom: $space-fourteen;
+    }
+  }
+
+  .magazine-issue-feature__title {
+    @include fs-heading;
+    color: $c-dark-navy;
+    padding-left: $article-gutter;
+
+    @media ($above-s) {
+      margin-bottom: $space-six;
+    }
+
+    @media ($above-m) {
+      padding-left: $space-five;
+    }
+
+    @media ($above-xl) {
+      padding-left: $space-ten;
+    }
+  }
+
+  .magazine-home-feature .card-row__image {
+    @media ($above-m) {
+      float: left;
+      width: 50%;
+    }
+
+    @media ($above-xl) {
+      float: none;
+      width: auto;
+      grid-column: 1/8;
+    }
+  }
+
+  .magazine-feature-support__articles {
+    margin-bottom: 0;
+
+    @media ($above-s) {
+      margin-bottom: 20px;
+    }
+
+    @media ($above-xl) {
+      margin-bottom: $space-six;
+    }
+  }
+
+  .magazine-topic-page__header {
+    background: $i6-gray;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    @media ($above-s) {
+      padding: 40px;
+      margin-bottom: 40px;
+    }
+
+    @media ($above-xl) {
+      padding: $space-ten $space-ten $space-six;
+      margin-bottom: $space-ten;
+    }
+
+    &-subtitle {
+      @include fs-heading;
+
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 0;
+      color: $c-dark-navy;
+
+      @media ($above-xl) {
+        margin-top: $space-three;
+        margin-bottom: $space-four;
+      }
+    }
+  }
+
+  .magazine-topics-latest {
+    padding: $space-five 1.25rem 1px 1.25rem;
+    padding-top: 0;
+    clear: both;
+
+    @media ($above-m) {
+      padding: $space-ten $space-five 1px $space-five;
+      padding-top: 0;
+    }
+
+    .magazine-topics-latest__title {
+      @include fs-heading-latest-topic;
+    }
+
+    .news-list {
+      padding: 0;
+    }
+
+    .magazine-topic-list > ul > li {
+      @media ($above-xs) {
+        width: 48%;
+      }
+
+      @media ($above-xl) {
+        width: 100%;
+      }
+
+      .news-card__copy {
+        padding: 20px;
+
+        @media ($above-m) {
+          padding: 20px 0;
+        }
+      }
+    }
+  }
+
+  .article-affiliation {
+    color: $magazine-gray-blue;
+
+    &::before {
+      color: $magazine-gray-blue;
+    }
+  }
+
+  // Removing extra space from "View More" btn
+  .pager {
+    @media ($above-xl) {
+      padding-top: 0;
+    }
+  }
+
+  .view-more {
+    margin-bottom: $space-three;
+  }
+
+  .field-ankle-cta {
+    padding-top: 0;
+  }
+}
+
+.magazine-hub-recommended {
+  clear: both;
+  border-bottom: 1px solid $k3-gray;
+  padding-bottom: 2rem;
+
+  @media ($above-s) {
+    display: flex;
+    align-items: center;
+  }
+
+  & + & {
+    margin-top: 2rem;
+  }
+
+  &__icon {
+    margin-right: 2rem;
+    margin-bottom: 1rem;
+
+    @media ($above-s) {
+      margin-bottom: 0;
+    }
+
+    img {
+      max-width: 3.5rem;
+
+      @media ($above-s) {
+        width: 300px;
+        max-width: 5.2rem;
+      }
+    }
+  }
+
+  &-label {
+    @include magazine-eyebrow;
+    margin: 0 0 1rem 0;
+    padding-right: 30px;
+    background: url("../images/ext-link-gray.svg") right center no-repeat
+      transparent;
+    background-size: 20px;
+    display: inline-block;
+  }
+}
+
+// "Watch, Read, Listen" (a.k.a "Books, Videos, Podcasts")
+.magazine-hub-inside__inside {
+  .news-card__link {
+    color: $c-dark-navy;
+  }
+
+  .search-result__body {
+    @include fs-small-body;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    color: $magazine-gray-blue;
+  }
+}
+
+// Inside UCSF
+.magazine-inside-hub {
+  padding: $space-five 20px $space-ten;
+
+  @media ($above-s) {
+    padding: $space-ten 0;
+    margin: 0 $space-ten;
+  }
+
+  @media ($above-xl) {
+    width: $magazine-issue-narrow-row-width;
+    margin: 0 auto;
+  }
+
+  // Main title area
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+
+    @media (min-width: 930px) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 auto 1rem auto;
+    }
+
+    h2 {
+      @include fs-heading;
+      color: $c-dark-navy;
+
+      @media ($above-xl) {
+        padding: 0;
+        width: $magazine-issue-narrow-row-width;
+      }
+    }
+
+    &-more {
+      margin-top: 0;
+
+      @media ($above-s) {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .node--view-mode-search-index {
+    padding: 1.5rem 0;
+    margin-bottom: 0;
+  }
+
+  // results titles
+  :not(.magazine-inside-hub__heading) h2 {
+    @include fs-heading-three;
+    color: $c-dark-navy;
+    margin-bottom: 0.5rem;
+
+    a {
+      @include link-colors($c-dark-navy, $c-blue-link);
+    }
+  }
+
+  [data-primary-area^="pa"] {
+    color: $c-dark-navy;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .article-header__date {
+    color: $magazine-gray-blue;
+
+    &::before {
+      background: $magazine-gray-blue;
+    }
+  }
+
+  .search-result__body {
+    display: none;
+  }
+
+  .search-result__copy {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .search-result__image {
+    @media ($above-s) {
+      max-width: 13.25rem;
+    }
+  }
+}
+
+.magazine-feature-three-support {
+  overflow: hidden;
+
+  .magazine-home-feature {
+    .magazine-card__byline {
+      margin-bottom: $space-two;
+
+      & + h2 {
+        @include fs-heading-two;
+        color: $c-dark-navy;
+      }
+    }
+  }
+}
+
+.magazine-topic-footer-ctas-wrapper,
+.magazine-topic-issue-ctas-wrapper {
+  margin-top: 0;
+
+  h2 {
+    color: $c-dark-navy;
+  }
+}
+
+// overrides for the magazine topic page
+.magazine-topic-page {
+  .magazine-hub-inside {
+    @media ($above-s) {
+      border-bottom: 1px solid $k3-gray;
+    }
+  }
+
+  .magazine-alumni.four-card-row {
+    .card-row__image::after {
+      display: none;
+    }
+  }
+
+  .magazine-alumni.four-card-row {
+    .magazine-alumni__date {
+      text-indent: -9999px;
+    }
+  }
+
+  .magazine-hub-inside__inside {
+    .news-card__link {
+      color: $c-dark-navy;
+    }
+
+    .campus-news-card {
+      margin: 0;
+      padding-bottom: 0;
+      border-bottom: 0;
+
+      &__title {
+        @include fs-small-body;
+        color: $c-dark-navy;
+        font-family: $font-helvetica-neue-medium;
+        font-style: italic;
+        margin-top: 0;
+      }
+    }
+
+    .search-result__body {
+      @include fs-small-body;
+      margin-top: 1rem;
+      margin-bottom: 0;
+      color: $magazine-gray-blue;
+    }
+  }
+}
+
+// Overwrites for subscribe form inside "Recommended" area.
+// it appears on Magazine Issue pages when checkbox is checked.
+.magazine-hub-inside {
+  &--has-form {
+    @media ($above-s) {
+      margin: 0;
+      padding: 0;
+    }
+
+    @media ($above-xl) {
+      margin: 0;
+      padding-bottom: $space-ten;
+    }
+
+    .magazine-hub-inside__form {
+      margin: 0;
+
+      @media ($above-s) {
+        margin-bottom: $space-ten;
+      }
+
+      @media ($above-xl) {
+        margin-bottom: 0;
+      }
+    }
+
+    .magazine-hub-inside__header {
+      @media ($above-s) {
+        margin-left: 40px;
+      }
+
+      @media ($above-xl) {
+        margin-left: 64px;
+        grid-row: 1;
+      }
+    }
+
+    .magazine-alumni__byline {
+      @media ($above-s) {
+        margin-left: 40px;
+      }
+
+      @media ($above-xl) {
+        margin: 0;
+      }
+    }
+
+    .four-card-row {
+      @media ($above-xl) {
+        overflow: visible;
+      }
+    }
+
+    .card-row__cta-wrapper {
+      @media ($above-xl) {
+        position: relative;
+
+        // White box hack.
+        // Remove the overflow hidden on .four-card-row.magazine-alumni
+        // Add position relative to .card-row__cta-wrapper
+        &::after {
+          content: "";
+          display: block;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 100%;
+          width: 50vw;
+          background: white;
+          margin-top: -33px; // This is to line up the box top to the card title bottom.
+        }
+      }
+    }
+
+    .magazine-hub-inside__hub,
+    .magazine-hub-inside__inside {
+      @media ($above-s) {
+        float: none;
+        width: auto;
+      }
+    }
+
+    .magazine-hub-inside__inside {
+      padding-top: 0;
+
+      @media ($above-xl) {
+        background: linear-gradient(
+          to bottom,
+          $i6-gray 90%,
+          transparent 10%
+        );
+        margin-top: 5.39rem;
+        margin-right: 40px;
+        padding-right: 0;
+      }
+
+      @media ($above-xxl) {
+        margin-top: 3.41rem;
+      }
+    }
+
+    .magazine-hub-inside__hub {
+      margin-bottom: $space-ten;
+
+      @media ($above-xl) {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__form {
+    @media ($above-xl) {
+      padding-top: 4.5rem;
+      padding-bottom: 4.5rem;
+    }
+
+    @media ($above-xxl) {
+      padding-top: 8.7rem;
+      padding-bottom: 8.7rem;
+    }
+  }
+}
+
+.icon-link--external {
+  .magazine-alumni__topic,
+  .article-header__date {
+    padding-right: 30px;
+    background: url(/themes/custom/ucsf/images/ext-link-gray.svg) right
+      center no-repeat transparent;
+    background-size: 20px;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  &.magazine-alumni__byline {
+    .magazine-alumni__topic {
+      padding-right: 0;
+      background: none;
+    }
+  }
+}
+
+body.page-node-type-magazine-homepage {
+  h1 {
+    @include fs-heading ($c-dark-navy);
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 0;
+
+    @media ($above-xl) {
+      margin-top: 8px;
+      margin-bottom: 8px;
+      padding-bottom: 0;
+    }
+  }
+}

@@ -1,0 +1,111 @@
+@use "../0_tools" as *;
+.recommended-articles {
+  grid-column: 1/-1;
+  margin-top: $space-ten;
+
+  &.has-recommended-article {
+    background: $c-white;
+  }
+}
+
+.recommended-articles__banner {
+  margin: 0 auto;
+  max-width: $full-width-elements;
+
+  @media ($above-m) {
+    padding: 0 20px;
+  }
+
+  .has-recommended-article & {
+    position: relative;
+    padding: 0;
+  }
+}
+
+.recommended-articles__title {
+  @media ($below-m) {
+    margin-bottom: 0;
+    padding: 0 20px;
+    background-color: transparent;
+
+    .has-recommended-article & {
+      padding-top: 24px;
+      padding-bottom: 24px;
+
+    }
+  }
+
+  @media ($above-m) {
+    margin: 0 0 40px 0;
+    padding-top: 16px;
+    z-index: 2;
+  }
+}
+
+.recommended-article__link {
+  @media ($above-m) {
+    @include grid-sixteen;
+    padding: 0;
+    grid-template-rows: auto;
+    background: $c-white;
+    max-width: $bp-3xl;
+  }
+
+  &:hover h2 {
+    color: $c-blue-link;
+  }
+
+  // Magazine article, heigh specificity
+  .page-node-type-magazine-article #block-ucsf-mag-content &:hover .field--name-title {
+    color: $c-blue-link;
+  }
+
+}
+
+.recommended-article__image {
+  background-color: transparent;
+  padding-right: 0;
+  position: relative;
+  z-index: 1;
+
+  @media ($above-m) {
+    grid-column: 1/10;
+    grid-row: 3/-1;
+    background: transparent;
+  }
+
+  figure {
+    overflow: hidden;
+  }
+}
+
+.recommended-article__copy {
+  background: $c-white;
+  padding: $space-three $space-three 0 $space-three;
+  margin-top: -64px;
+  position: relative;
+  z-index: 2;
+
+  @media ($above-m) {
+    grid-column: 10/-2;
+    grid-row: 3/-1;
+    background: $c-white;
+    padding: 0 0 0 $space-eight;
+    margin: 0;
+  }
+
+  h2 {
+    @include fs-heading-sm;
+    line-height: 1.2;
+
+    @media ($above-xl) {
+      font-size: fs-heading-two;
+      font-size: 46px;
+    }
+
+    @media ($above-xxl) {
+      font-size: 56px;
+    }
+  }
+
+}

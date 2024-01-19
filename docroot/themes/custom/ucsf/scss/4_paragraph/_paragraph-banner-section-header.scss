@@ -1,0 +1,80 @@
+@use "../0_tools" as *;
+.full-bleed-subbanner {
+  clear: both;
+  position: relative;
+  padding-top: $space-five;
+
+  @media ($above-xl) {
+    grid-column: 1/-1;
+    padding-top: $space-ten;
+  }
+}
+
+.full-bleed-subbanner__image {
+  background-size: auto 100%;
+
+  @media ($above-m) {
+    height: 463px;
+  }
+}
+
+.full-bleed-subbanner__content {
+  width: 100%;
+  height: auto;
+  padding: $space-fifteen 20px;
+  padding-left: 0;
+  padding-bottom: 0;
+
+  @media ($above-m) {
+    background: white;
+    width: 73%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: $space-eight $space-eleven;
+  }
+
+  @media ($above-xl) {
+    width: 48%;
+  }
+}
+
+.subbanner-right {
+  .full-bleed-subbanner__content {
+    left: auto;
+    right: 0;
+  }
+}
+
+.full-bleed-subbanner__title,
+.full-banner-subbanner__subtitle {
+  margin: 0;
+
+  .field-banner-section-description {
+    *:first-child {
+      margin-top: 0;
+    }
+
+    *:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @media ($below-m) {
+    background: white;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.full-bleed-subbanner__title/*,
+.page-node-type-full-width-page h2.full-bleed-subbanner__title*/ {
+  @include fs-heading;
+
+  padding-bottom: $space-two;
+  margin-bottom: 0 !important;
+
+  @media ($below-m) {
+    padding-top: 20px;
+  }
+}

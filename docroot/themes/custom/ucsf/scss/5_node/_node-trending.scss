@@ -1,0 +1,31 @@
+@use "../0_tools" as *;
+.page-node-type-trending,
+.page-node-type-news-package {
+  .article-header h1 {
+    margin-bottom: 0;
+  }
+
+  .narrow-page {
+    .page_narrow {
+      float: left;
+      background: white;
+
+      &:last-child {
+
+        @media ($above-xl) {
+          padding-bottom: $space-ten;
+        }
+        //margin-bottom: $space-ten;
+
+        & > :last-child {
+          margin-bottom: 0;
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .field-bottom-of-page-cta p {
+    margin-bottom: 0;
+  }
+}

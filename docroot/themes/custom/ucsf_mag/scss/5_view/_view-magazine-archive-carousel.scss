@@ -1,0 +1,144 @@
+@use "../0_tools" as *;
+.block-views-blockmagazine-archive-carousel-block-1 {
+  background-color: $i6-gray;
+}
+
+.view-magazine-archive-carousel {
+  max-width: 1440px;
+  padding: $space-five $page-gutter;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+
+  @media ($above-s) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .view-header {
+    max-width: 1320px;
+
+    @media ($above-s) {
+      margin-left: $space-five;
+    }
+
+    @media ($above-xl) {
+      margin-left: $space-ten;
+    }
+  }
+
+  .topics-list {
+    &__title {
+      @include fs-heading($c-dark-navy);
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    &__description {
+      color: $magazine-gray-blue;
+    }
+
+    &__view-all {
+      @media ($above-s) {
+        padding-right: $page-gutter;
+      }
+
+      @media ($above-fw) {
+        padding-right: calc(#{$page-gutter} * 2);
+      }
+    }
+
+    &__topics-wrapper-space-bottom {
+      background-color: transparent;
+    }
+  }
+
+  .slick-slider {
+
+    .slick-slide {
+      width: 330px;
+    }
+
+    .slick-arrow {
+      height: 24px;
+      width: 24px;
+      top: 58%;
+    }
+
+
+    .slick-prev {
+      @media ($above-s) {
+        left: 17px;
+      }
+
+      @media ($above-xl) {
+        left: 56px;
+      }
+
+      @media ($above-fw) {
+        left: 57px;
+      }
+    }
+
+    .slick-next {
+      right: 0;
+
+      @media ($above-s) {
+        right: 16px;
+      }
+
+      @media ($above-fw) {
+        right: 60px;
+      }
+    }
+
+    &.topics-list__topics {
+      padding-left: 5px; // lining up first image edge to the carousel title
+      list-style: none;
+
+      @media ($above-xs) {
+        padding-left: 0;
+        padding-right: $space-five;
+        margin-left: -16px;
+      }
+
+      @media ($above-xl) {
+        padding-left: 40px; // lining up first image edge to the carousel title
+        margin-left: 0;
+      }
+
+      @media ($above-fw) {
+        padding-left: 2.9%; // lining up first image edge to the carousel title
+        padding-right: 0;
+      }
+    }
+
+    & .topic-card span {
+      padding-left: 0;
+      padding-right: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  .topic-card {
+    width: 263px;
+    height: 307px;
+
+    a {
+      height: 307px;
+      width: 263px;
+    }
+
+    span {
+      background-color: transparent;
+      bottom: -100px;
+
+    }
+
+    a:hover span {
+      text-decoration: underline;
+      text-underline-position: under;
+      bottom: -100px;
+    }
+  }
+}

@@ -1,0 +1,68 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+
+@mixin grid-base {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-gap: 5%;
+  grid-row-gap: 0;
+}
+
+@mixin grid {
+  @include grid-base;
+
+  @media ($above-xs) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+@mixin grid-two {
+  @include grid-base;
+
+  @media ($above-xs) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@mixin grid-two-auto {
+  @include grid-base;
+
+  @media ($above-xs) {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+
+@mixin grid-three {
+  @include grid-base;
+
+  @include medium {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@mixin grid-four {
+  @include grid-base;
+
+  @media ($above-xs) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@mixin grid-fifteen {
+  @include grid-base;
+
+  @media ($above-xs) {
+    grid-template-columns: repeat(15, minmax(0, 1fr));
+    grid-gap: 0;
+  }
+}
+
+@mixin grid-eighteen {
+  @include grid-base;
+
+  @include medium {
+    grid-template-columns: repeat(18, minmax(0, 1fr));
+    grid-gap: 0;
+  }
+}
