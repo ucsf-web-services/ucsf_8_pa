@@ -1,0 +1,340 @@
+@use "../0_tools" as *;
+// Global Animations
+
+.element-fade {
+  opacity: 0;
+
+  // on scroll down makes section fade in.
+  &--in-viewport {
+    animation: fade $transition-time-long cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+
+    // because on screen size above $new-medium-max still need opcity:0
+    // else, title text is visible over the body text
+    // /news/2021/03/420137/uc-consortium-launches-first-clinical-trial-using-crispr-correct-gene-defect
+    .article-medium-banner & {
+      @media ($below-m) {
+        animation: none;
+      }
+    }
+  }
+
+  .article-medium-banner & {
+    @media ($below-m) {
+      opacity: 1;
+    }
+  }
+}
+
+// animation for "Recommended Reading" section
+.element-swoosh {
+  // Screen size starting at 769 px
+  @media ($above-s) {
+
+    // on scroll down makes section move up and become visible
+    &--in-viewport {
+      animation: element-swoosh 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    }
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+// Generic animation for elements
+@keyframes element-swoosh {
+  0% {
+    transform: translateY(50px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+// Used on callout boxes and blockquote--half-
+@keyframes element-slide-left {
+  0% {
+    transform: translateX(50px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+// Used on callout boxes
+@keyframes element-slide-right {
+  0% {
+    transform: translateX(-50px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+.page-node-type-news-center .combined-header-region,
+.alias-home .combined-header-region,
+.page-node-type-article  .combined-header-region {
+  @media ($above-m) {
+    animation: fade-and-slide 1s cubic-bezier(0.77, 0, 0.175, 1) 0s;
+    animation-fill-mode: none !important
+  }
+}
+
+.alias-home {
+  main.main,
+  .narrow-page-header {
+    @media ($above-m) {
+      animation: fade 1.0s cubic-bezier(0.77, 0, 0.175, 1) 1.25s both;
+    }
+  }
+}
+
+.page-node-type-article .image-style-article-feature-banner__image,
+.page-node-type-magazine-article .image-style-article-feature-banner__image {
+  @media ($above-m) {
+    animation: fade 2000ms cubic-bezier(0.77, 0, 0.175, 1) 0ms both;
+  }
+}
+
+.page-node-type-article .article-header.article-medium-header,
+.page-node-type-magazine-article .article-header.article-medium-header {
+  @media ($above-xl) {
+    animation: header-swoosh $transition-time cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+  }
+}
+
+.page-node-type-news-center {
+  h1 {
+    @media ($above-m) {
+      animation: header-fade .8s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    }
+  }
+  .news-center-banner_list {
+    @media ($above-m) {
+      animation: header-swoosh-and-fade 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    }
+  }
+  .news-center-banner__featured,
+  .news-search {
+    @media ($above-m) {
+      animation: header-swoosh-and-fade 1.3s cubic-bezier(0.77, 0, 0.175, 1) 0ms forwards;
+    }
+  }
+}
+
+
+.recommended-articles__banner {
+  .recommended-article__image {
+    overflow: hidden;
+  }
+
+  img {
+    transition: $transition-time-short ease-out transform;
+  }
+
+  .recommended-article__copy h2 a {
+    transition: $transition-time ease-out color;
+  }
+
+  &:hover {
+    img {
+      transform: scale(1.1);
+    }
+
+    .recommended-article__copy h2 a {
+      color: $c-blue-link;
+    }
+  }
+}
+
+.magazine-home-feature {
+  .card-row__image {
+    overflow: hidden;
+  }
+
+  img {
+    transition: $transition-time-short ease-out transform;
+  }
+
+  .card-row__copy h2 a {
+    transition: $transition-time ease-out color;
+  }
+
+  &:hover {
+    img {
+      transform: scale(1.1);
+    }
+
+    .card-row__copy h2 a {
+      color: $c-blue-link;
+    }
+  }
+}
+
+/**
+ * ----------------------------------------
+ * animation menu
+ * ----------------------------------------
+ */
+
+@keyframes fade-and-slide {
+  0% {
+    transform: translateY(-147px);
+    opacity: 0;
+  }
+  33% {
+    transform: translateY(-147px);
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes menu-slide {
+  0% {
+    clip: auto;
+    overflow: visible;
+    transform-origin: 0 top;
+    transform: scaleY(0);
+  }
+  100% {
+    clip: auto;
+    overflow: visible;
+    transform-origin: 0 top;
+    transform: scaleY(1);
+  }
+}
+
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(30deg);
+  }
+}
+
+
+@keyframes header-swoosh-and-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(350px);
+  }
+  33% {
+    opacity: 0;
+    transform: translateY(350px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes header-swoosh {
+  0% {
+    transform: translateY(350px);
+  }
+  33% {
+    transform: translateY(350px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes header-fade {
+  0% {
+    opacity: 0;
+  }
+  33% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+// NEWS CARDS
+
+.news-card {
+  overflow: hidden;
+
+  .field-card-image,
+  .news-card__image {
+    overflow: hidden;
+    display: block;
+  }
+
+  .news-card__image img,
+  .field-card-image img,
+  figure::before {
+    transition: $transition-time-short ease-out all;
+  }
+  h2 {
+    transition: $transition-time ease-out all;
+  }
+
+  &:hover {
+    .news-card__image img,
+    .field-card-image img,
+    figure::before {
+      transform: scale(1.1);
+    }
+    h2 {
+      color: $c-blue-link;
+    }
+  }
+
+}
+
+.four-card-row {
+  overflow: hidden;
+
+  .card-row__image {
+    overflow: hidden;
+    display: block;
+  }
+
+  .card-row__image img {
+    transition: $transition-time-short ease-out all;
+  }
+  h2 {
+    transition: $transition-time ease-out all;
+  }
+  &:hover {
+    .card-row__image img {
+      transform: scale(1.1);
+    }
+    h2 {
+      color: $c-blue-link !important;
+    }
+  }
+}

@@ -1,0 +1,231 @@
+@use "../0_tools" as *;
+// @todo this code should be moved to different partials in 2_components directory.
+.path-taxonomy {
+  background: $i6-gray;
+
+  .topic-content {
+    .news-list {
+      padding-left: 0;
+      padding-right: 0;
+      padding-top: 0;
+    }
+  }
+
+  h2, h3 {
+    &.eyebrow-title {
+      font-size: $font-size-xxsm;
+      font-family: $font-helvetica-neue-bold;
+    }
+  }
+}
+
+.topic-banner {
+  margin: 0 auto;
+  max-width: $bp-3xl;
+  min-height: 208px;
+}
+
+.topic-page {
+  background: $c-white;
+
+  a:not([class]) {
+    @include link-in-content();
+
+    &:active,
+    &:hover {
+      border-bottom: none;
+    }
+  }
+
+  .pager__item a {
+    transition: none;
+    border-bottom: none;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  .pager__item.is-active a {
+    color: $c-dark-navy;
+  }
+}
+
+.topic-page-wrapper {
+  .news-list {
+    padding-top: 32px;
+
+    @media ($above-m) {
+      padding-top: $space-five;
+    }
+
+    @media ($above-xl) {
+      padding-top: 0;
+    }
+  }
+}
+
+.topic-content-wrapper {
+
+  @media ($above-xl) {
+    display: grid;
+    grid-template-columns: repeat(12,minmax(0, 1fr));
+    grid-gap: 5%;
+    row-gap: 5%;
+    grid-row-gap: 0;
+    background: #fff;
+    grid-template-rows: auto auto;
+  }
+
+  .alias-news-media-coverage & {
+    @media ($above-xl) {
+      padding-bottom: 80px;
+    }
+  }
+}
+
+.topic-page__header {
+  background: $c-white;
+  margin-top: -102px;
+  padding-right: 20px;
+  padding-left: 20px;
+  position: relative;
+  margin-right: 20px;
+
+  h1 {
+    @include fs-article-medium-h1;
+  }
+
+  @media ($above-m) {
+    margin-right: $space-five;
+    padding-right: $space-five;
+    padding-left: $space-five;
+    margin-top: -112px;
+  }
+
+  @media ($above-xl) {
+    grid-column: 1/9;
+    margin-right: 0;
+    padding-right: $space-ten;
+    padding-left: $space-ten;
+    margin-top: -$space-sixteen;
+  }
+}
+
+.topic-page__eyebrow {
+  @include eyebrow;
+
+  padding-top: 32px;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @media ($above-m) {
+    padding-top: $space-five;
+  }
+
+  @media ($above-xl) {
+    padding-top: $space-ten;
+  }
+}
+
+.topic-content {
+  margin-top: $space;
+  padding: 0 20px;
+
+  p {
+    margin-top: 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .media-coverage__list {
+    margin-left: 0;
+    margin-top: $space-ten;
+  }
+
+  @media ($above-m) {
+    padding: 0 $space-five;
+  }
+
+  @media ($above-xl) {
+    grid-column: 1/9;
+    padding: 0 $space-ten;
+  }
+}
+
+// "Article Type" vocabulary pages
+.article-type {
+  h1 {
+    padding-top: 32px;
+    padding-bottom: 32px;
+
+    @media ($above-m) {
+      padding-top: $space-five;
+      padding-bottom: 0;
+    }
+
+    @media ($above-xl) {
+      padding-top: $space-ten;
+    }
+  }
+
+  .article-header__title {
+    @include fs-heading-three;
+    margin: 0;
+    transition: 0.3s ease-out color;
+  }
+
+  a:hover .article-header__title {
+    color: $c-blue-link;
+  }
+
+  .article-header__byline li {
+    border-bottom: none;
+    margin: 0;
+    padding-bottom: 0;
+  }
+
+  .media-coverage__list-byline {
+    color: $a1-navy;
+  }
+}
+
+.areas-content {
+  .card-four-up {
+    display: block;
+  }
+}
+
+.news-center-banner_list,
+.news-list {
+  .areas-header {
+    @include fs-heading;
+  }
+}
+
+.news-center-banner_list .areas-header {
+  margin-bottom: $space-two;
+
+  @media ($below-xs) {
+    margin-top: $space-five;
+  }
+}
+
+.campus-news-card {
+  border-bottom: 1px solid $k3-gray;
+  margin: $space 0;
+  margin: $space-three 0;
+  padding-bottom: $space-two;
+
+  .campus-news-card__title {
+    @include fs-heading-three;
+    margin-top: $space;
+    margin-bottom: $space-two;
+  }
+}
+
+.all-campus-news {
+  margin-bottom: 0;
+}

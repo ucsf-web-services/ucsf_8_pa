@@ -1,0 +1,163 @@
+@use "../0_tools" as *;
+.page-node-type-author .main-content {
+  display: block;
+}
+.author-page-wrapper {
+  margin: 0 auto;
+  margin-top: 140px;
+  max-width: $bp-3xl;
+  background: $c-white;
+
+  &::before {
+    content: ' ';
+    display: block;
+    height: 40px;
+    width: 95%;
+    background: $c-white;
+    position: relative;
+    top: -70px;
+  }
+
+  @media ($above-m) {
+    margin-top: $space-twenty;
+
+    &::before {
+      height: 80px;
+      width: 88%;
+      top: -80px;
+    }
+  }
+}
+
+.author-page {
+  margin: 0 auto;
+  max-width: $bp-3xl;
+  margin-top: -80px;
+}
+
+.author-page__header {
+  margin-bottom: $space-five;
+  padding: 0 20px;
+
+  h1 {
+    @include fs-heading-two;
+  }
+
+  @media ($above-m) {
+    padding: 0 $space-five;
+  }
+
+  @media ($above-xl) {
+    grid-column: 1/-1;
+    padding: 0 $space-ten;
+  }
+}
+
+.author-card {
+  padding: 0 20px;
+
+  @media ($above-m) {
+    padding: 0 $space-five;
+  }
+
+  @media ($above-xl) {
+    @include grid;
+    grid-column: 1/-1;
+    padding: 0 $space-ten;
+  }
+}
+
+.author-card__copy {
+  p {
+    margin-top: 0;
+  }
+
+  @media ($above-xl) {
+    grid-column: 1/-2;
+  }
+}
+
+.has-image {
+
+  figure {
+    margin-bottom: $space-four;
+    position: relative;
+    float: left;
+
+    img {
+      width: 100%;
+    }
+
+    &::after {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #fff;
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .author-card__copy {
+    clear: left;
+  }
+
+  @media ($above-s) {
+    figure {
+      width: 20%;
+      margin-bottom: 0;
+
+      &::after {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .author-card__copy {
+      float: left;
+      width: 75%;
+      padding-left: 5%;
+      clear: none;
+    }
+
+  }
+
+  @media ($above-xl) {
+    figure { // .author-card__image in PL.
+      grid-column: 1/5;
+      float: none;
+      width: auto;
+
+      img {
+        width: 100%;
+      }
+
+      &::after {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .author-card__copy {
+      grid-column: 5/-2;
+      float: none;
+      width: auto;
+
+      p {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.author-card__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: inline-block;
+    margin-right: $space-five;
+  }
+}

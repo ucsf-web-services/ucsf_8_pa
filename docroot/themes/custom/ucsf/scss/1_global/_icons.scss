@@ -1,0 +1,291 @@
+@use "../0_tools" as *;
+// Icon SVG styles
+//
+// Documentation about Sass functions https://sass-lang.com/documentation/at-rules/control
+// Documentation about Sass Placeholder Selectors https://sass-lang.com/documentation/style-rules/placeholder-selectors
+// Testing how Sass will compile to css https://www.sassmeister.com
+//
+// Variables and placeholders used
+// @param $icon-styles - a sass list of icon styles.
+// @param $icon-styles - a sass list of icon styles.
+// @param #{$item} - current item from $icon-styles iterated over by the @each loop
+// @param %icon - placeholder for .icon-#{$item}
+
+$icon-styles: awards, caduceus, campus, comprehensive, directions,
+              doctor, education, heart, hospital, media,
+              microscope, money, patient-care, research, support,
+              transit;
+
+$primary-areas: (
+  // ($area, $color1, $color2),
+  (
+    "about",
+    $f3-purple,
+    url(/themes/custom/ucsf/images/card/ucsf-black.svg),
+  ),
+  (
+    "campus-news",
+    $a1-navy,
+    url(/themes/custom/ucsf/images/card/campus-black.svg),
+  ),
+  (
+    "announcements",
+    $a1-navy,
+    url(/themes/custom/ucsf/images/card/campus-black.svg),
+  ),
+  (
+    "happenings",
+    $a1-navy,
+    url(/themes/custom/ucsf/images/card/campus-black.svg),
+  ),
+  (
+    "honors-awards",
+    $a1-navy,
+    url(/themes/custom/ucsf/images/card/campus-black.svg),
+  ),
+  (
+    "spotlight",
+    $a1-navy,
+    url(/themes/custom/ucsf/images/card/campus-black.svg),
+  ),
+  (
+    "education",
+    $d3-green,
+    url(/themes/custom/ucsf/images/card/education-black.svg),
+  ),
+  (
+    "patient-care",
+    $b3-blue,
+    url(/themes/custom/ucsf/images/card/doctor-black.svg),
+  ),
+  (
+    "research",
+    $c3-teal,
+    url(/themes/custom/ucsf/images/card/microscope-black.svg),
+  ),
+  (
+    "news-center",
+    $f3-purple,
+    url(/themes/custom/ucsf/images/card/ucsf-black.svg),
+  ),
+  (
+    "ucsf-magazine",
+    $f3-purple,
+    url(/themes/custom/ucsf/images/card/media-black.svg)
+  ),
+);
+// Common properties that all icons will share.
+%icon {
+  &::before {
+    content: ' ';
+    display: block;
+    background: url(/themes/custom/ucsf/images/card/education.svg) left center no-repeat transparent;
+    background-size: $space-six $space-six;
+    height: $space-six;
+    width: $space-six;
+  }
+
+  &:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+}
+
+// Creates a comma separated list of classes
+@each $item in $icon-styles {
+  .icon-#{$item} {
+    @extend %icon;
+  }
+}
+
+@each $item in $icon-styles {
+  .icon-#{$item} {
+    // if .icon-research uses microscope svg.
+    @if $item == research {
+      &::before {
+        background: url(/themes/custom/ucsf/images/card/microscope.svg) left center no-repeat transparent;
+      }
+    }
+    // For other icons generates current item's svg name from the list of icon styles
+    @else {
+      &::before {
+        background: url(/themes/custom/ucsf/images/card/#{$item}.svg) left center no-repeat transparent;
+      }
+    }
+  }
+}
+
+// Compiles to a list of comma separated selectors for link with a class - a.icon-awards, a.icon-campus, ...
+a%icon {
+
+  display: inline-flex;
+  transition: $transition-time $transition-type all;
+  &::before {
+    transition: $transition-time $transition-type padding-right;
+    content: ' ';
+    display: block;
+    background-size: $space-four $space-four;
+    height: $space-four;
+    width: $space-four;
+    padding-right: $space-two;
+  }
+
+  &:hover {
+    &::before {
+      display: block;
+      padding-right: $space-three;
+      background-repeat: no-repeat;
+    }
+  }
+}
+
+@each $item in $icon-styles {
+  // if a.icon-research uses microscope svg.
+  @if $item == research {
+    a.icon-#{$item} {
+      &::before {
+        content: "";
+        display: block;
+        background: url(/themes/custom/ucsf/images/card/microscope-black.svg) left center no-repeat transparent;
+        filter: $filter-006BE9;
+      }
+    }
+  }
+
+  @else {
+    // For other icons generates current item's svg name from the list of icon styles
+    a.icon-#{$item} {
+      &::before {
+        content: "";
+        display: block;
+        background: url(/themes/custom/ucsf/images/card/#{$item}-black.svg) left center no-repeat transparent;
+        filter: $filter-006BE9;
+      }
+    }
+  }
+
+  // Screen size up to 850px
+  .field-ankle-cta {
+    a.icon-#{$item} {
+      display: inline-flex;
+      align-items: center;
+
+      &::before {
+        background-position: left center;
+        padding-right: $space;
+        background-size: $space-four $space-four;
+      }
+
+      // Screen size starting at 850px
+      @media ($above-m) {
+
+        &::before {
+          background-position: left center;
+          padding-right: $space-two;
+        }
+      }
+
+      &:hover {
+        text-decoration: none;
+        // Screen size starting at 850px
+        &::before {
+          background-image: url(/themes/custom/ucsf/images/card/#{$item}-black.svg);
+          background-repeat: no-repeat;
+          filter: $filter-black-to-white;
+        }
+
+        @media ($above-m) {
+          text-decoration: underline;
+          text-decoration-thickness: 2px;
+
+          &::before {
+            padding-right: $space-three;
+            background-repeat: no-repeat;
+            filter: $filter-0F388A;
+          }
+        }
+      }
+    }
+  }
+}
+.fact-card {
+  $fact-card-icons: awards, campus, doctor, education, hospital,
+                  money, patient-care, research, support;
+  @each $item in $fact-card-icons {
+    @if $item == research {
+      .icon-#{$item} {
+        background: url(/themes/custom/ucsf/images/card/microscope-black.svg) left center no-repeat transparent;
+        filter: $filter-16A0AC;
+      }
+    }
+
+    @else {
+      .icon-#{$item} {
+        background: url(/themes/custom/ucsf/images/card/#{$item}-black.svg) left center no-repeat transparent;
+        filter: $filter-16A0AC;
+      }
+    }
+  }
+}
+
+// Only rules that are common for all cards
+figure {
+  [data-primary-area] &,
+  [data-primary-area=""] &,
+  // media-coverage card is used on ucsf.edu/topic/covid-19
+  .news-card--media-coverage &,
+  .news-card--magazine-article & {
+    position: relative;
+    &::before {
+      content: "";
+      display: block;
+      height: auto;
+      width: 100%;
+      background-repeat: no-repeat;
+      background-position: 50% 35%;
+      background-size: $space-six $space-six;
+      top: 0;
+      bottom: 0;
+      position: absolute;
+      filter: $filter-black-to-white;
+    }
+  }
+
+  // Mag. card when on ucsf site and there is no card image.
+  // media-coverage card is used on ucsf.edu/topic/covid-19
+  .news-card--media-coverage &,
+  .news-card--magazine-article & {
+    background-color: $f3-purple;
+    &::before {
+      background-image: url(/themes/custom/ucsf/images/card/media-black.svg);
+
+    }
+  }
+
+  // Default placeholder used on mag. site when ucsf card has no card image
+  [data-primary-area=""] & {
+    background-color: $a1-navy;
+    &::before {
+      background-image: url(/themes/custom/ucsf/images/card/ucsf-black.svg);
+    }
+  }
+}
+
+figure {
+  @each $area, $color, $background-image in $primary-areas {
+    [data-primary-area="pa-#{$area}"] & {
+      background-color: $color;
+
+      &::before {
+        background-image: $background-image;
+      }
+    }
+  }
+}
+
+.icon-external-link {
+  padding-right: 30px;
+  background: url(/themes/custom/ucsf/images/ext-link-gray.svg) right center no-repeat transparent;
+  background-size: 20px;
+}
+

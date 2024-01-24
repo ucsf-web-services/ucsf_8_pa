@@ -1,0 +1,161 @@
+@use "../0_tools" as *;
+// Attention ! I'm reusing the class .field-content-wrapper-content so that I use existing css from _paragraph.scss
+// Twig file: docroot/themes/custom/ucsf/templates/field/multiple-no-label/field--paragraph--field-content-wrapper-flex--column-content-row-flexible.html.twig
+// CSS file: docroot/themes/custom/ucsf/scss/paragraph/_paragraph.scss
+
+// These are overwrites and tweaks needed to incorporate the flexible layouts
+// and column switching.
+@mixin flex-column-error {
+  display: block;
+  color: red;
+  background-color: white;
+}
+
+.flexible-column-layout {
+  // Width of columns.
+  --size-20 : 20%;
+  --size-25 : 25%;
+  --size-30 : 30%;
+  --size-33 : 33%;
+  --size-40 : 40%;
+  --size-50 : 50%;
+  --size-60 : 60%;
+  --size-66 : 66%;
+  --size-70 : 70%;
+  --size-75 : 75%;
+
+  padding: $space-five $page-gutter;
+  float: left;
+  width: 100%;
+
+  @media ($above-m) {
+    padding: $space-five;
+  }
+
+  @media ($above-xl) {
+   padding: $space-ten;
+  }
+
+  figure[class="embedded-entity"] {
+    margin-bottom: 0;
+  }
+
+  .field-content-wrapper-content {
+    @media ($above-m) {
+      display: grid;
+      grid-auto-rows: auto;
+      grid-column-gap: 5%;
+    }
+  }
+
+  // Grid for column layout.
+  &.layout-columns__2 {
+    .field-content-wrapper-content {
+      @media ($above-m) {
+        grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size));
+      }
+    }
+
+    // Error handling for when we are short on content.
+    @for $i from 0 to 2 {
+      &.layout-items__#{$i} .field-content-wrapper-content::after {
+        @media ($above-m) {
+          content: "You have only #{$i} items in the 2 column layout. Please add additional items or switch to a different layout";
+          @include flex-column-error;
+        }
+      }
+    }
+
+    // Error handling for when we have too much content.
+    @for $i from 3 to 5 {
+      &.layout-items__#{$i} .field-content-wrapper-content::after {
+        @media ($above-m) {
+          content: "You have #{$i} items in the 2 column layout. Please remove some items or switch to a different layout";
+          @include flex-column-error;
+        }
+      }
+    }
+  }
+
+  &.layout-columns__3 {
+   .field-content-wrapper-content {
+      @media ($above-m) {
+        grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size));
+      }
+    }
+
+    @for $i from 0 to 3 {
+      &.layout-items__#{$i} .field-content-wrapper-content::after {
+        @media ($above-m) {
+          content: "You have only #{$i} items in the 3 column layout. Please add additional items or switch to a different layout";
+          @include flex-column-error;
+        }
+      }
+    }
+
+    &.layout-items__4 .field-content-wrapper-content::after {
+      @media ($above-m) {
+        content: "You have 4 items in the 3 column layout. Please remove some items or switch to a different layout";
+        @include flex-column-error;
+      }
+    }
+  }
+
+  &.layout-columns__4 {
+    .field-content-wrapper-content {
+
+      @media ($above-m) {
+        grid-template-columns: minmax(0, var(--column1-size)) minmax(0, var(--column2-size)) minmax(0, var(--column3-size)) minmax(0, var(--column4-size));
+      }
+
+      > .layout-column {
+        @media ($above-xs) {
+          float: left;
+          width: 100%;
+          margin-left: 0;
+          margin-bottom: 2em;
+        }
+      }
+    }
+
+    @for $i from 0 to 4 {
+      &.layout-items__#{$i} .field-content-wrapper-content::after {
+        @media ($above-m) {
+          content: "You have only #{$i} items in the 4 column layout. Please add additional items or switch to a different layout";
+          @include flex-column-error;
+        }
+      }
+    }
+  }
+
+  // Default placement of grid items
+  // column 1
+  .field-content-wrapper-content {
+    > .layout-column {
+      @media ($above-m) {
+        width: auto;
+    }
+    }
+  }
+
+  // Reversed placement of first and second columns in desktop.
+  // Note: accessibility rule is to have DOM placement match the visual,
+  //  so regardless of how many columns we have in the layout,
+  //  we only ever allowing column1 and column2 to be switched.
+  &--reverse {
+    .field-content-wrapper-content > :nth-child(1) {
+      @media ($above-m) {
+        grid-row: 1;
+        grid-column: 2;
+      }
+    }
+
+    // column 2
+    .field-content-wrapper-content > :nth-child(2) {
+      @media ($above-m) {
+        grid-row: 1;
+        grid-column: 1;
+      }
+    }
+  }
+}

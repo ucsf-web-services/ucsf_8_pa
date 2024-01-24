@@ -1,0 +1,342 @@
+@use "../0_tools" as *;
+.card__title {
+  @include no-bottom;
+}
+
+.card__subtitle {
+  @include no-bottom;
+
+  color: $c-gray-darkest;
+}
+
+.card__body {
+  margin: 0.7em 0 1em;
+}
+
+.card__button {
+  @include button;
+}
+
+// Variations
+.card--bg {
+  background-color: $c-gray-lightest;
+  padding: 1em;
+}
+
+.news-row-card {
+  list-style: none;
+  padding-left: 0;
+}
+
+.card-row {
+  margin-bottom: $space-ten;
+  float: left;
+
+  .card-row__image {
+    display: block;
+    position: relative;
+    float: left;
+    width: 50%;
+
+    &::after {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: white;
+      width: $space-five;
+      height: $space-five;
+    }
+  }
+
+  .card-row__copy {
+    float: right;
+    width: 50%;
+    padding-left: 5%;
+
+    .article-header__subheading,
+    .card-row__body {
+      color: $a1-navy;
+    }
+  }
+
+  .card-row__body {
+    margin-bottom: 1rem;
+    margin-top: 0;
+  }
+
+  @media ($below-s) {
+    margin-bottom: 0;
+    width: 100%;
+
+    li::before {
+      display: none;
+    }
+
+    .card-row__image {
+      float: none;
+      width: auto;
+
+      img {
+        margin: 0 0 0 auto;
+        width: 100%;
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .card-row__copy {
+      padding-left: $space-three;
+      float: none;
+      width: auto;
+      padding: 20px;
+      margin-right: 20px;
+      margin-top: -56px;
+      background: $c-white;
+      position: relative;
+
+      .article-header__subheading,
+      .card-row__link,
+      .card-row__body {
+        display: none;
+      }
+    }
+  }
+
+  @media ($above-xl) {
+    @include grid-base;
+    float: none;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    .card-row__image {
+      grid-column: 1 / 2;
+      float: none;
+      width: auto;
+
+      img {
+        max-height: 275px;
+      }
+    }
+
+    .card-row__copy {
+      grid-column: 2 / 3;
+      float: none;
+      width: auto;
+      padding-left: 5%;
+    }
+  }
+}
+
+.news-trending {
+  list-style: none;
+  counter-reset: item;
+
+  li {
+    counter-increment: item;
+    margin-bottom: 5px;
+    clear: both;
+
+    &::before {
+      @include fs-heading-three;
+
+      content: counter(item) '.';
+      margin-left: -$space-five;
+      float: left;
+      font-size: 28px;
+      clear: left;
+    }
+  }
+
+  .card-row__image {
+    float: right;
+  }
+
+  .card-row__copy {
+    float: left;
+    padding-right: 5%;
+    padding-left: 0;
+  }
+
+  @media ($below-s) {
+
+    li::before {
+      display: none;
+    }
+
+    .card-row__image {
+      float: none;
+      width: auto;
+
+      img {
+        margin: 0 0 0 auto;
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+
+    article {
+      margin-bottom: 0;
+      width: 100%;
+    }
+
+    .card-row__copy {
+      padding-left: $space-three;
+      float: none;
+      width: auto;
+      padding: 20px;
+      margin-right: 20px;
+      margin-top: -56px;
+      background: $c-white;
+      position: relative;
+
+      .article-header__subheading,
+      .card-row__link {
+        display: none;
+      }
+
+      &::before {
+        @include fs-heading-three;
+
+        content: counter(item) '.';
+        margin-left: -$space-three;
+        float: left;
+        font-size: 28px;
+        clear: left;
+        padding-top: 5px;
+      }
+    }
+  }
+
+  @media ($above-xl) {
+    .card-row__image {
+      grid-column: 2 / 3;
+      grid-row: 1;
+    }
+
+    .card-row__copy {
+      grid-column: 1 / 2;
+      grid-row: 1;
+      padding-left: 0;
+      padding-right: 5%;
+    }
+  }
+}
+
+.card-three-up {
+  @include card-three-up;
+}
+
+.card-four-up {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @media ($above-xs) {
+    > li {
+      float: left;
+      width: 48%;
+      margin-left: 2%;
+
+      &:nth-child(odd) {
+        clear: left;
+        margin-right: 2%;
+        margin-left: 0;
+      }
+    }
+  }
+
+  @media ($above-xl) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-gap: 10%;
+    grid-row-gap: 0;
+    > li {
+      float: none;
+      width: auto;
+      margin-left: 0;
+
+      &:nth-child(odd) {
+        clear: left;
+        margin-right: 0;
+        margin-left: 0;
+      }
+    }
+  }
+
+  &.areas-list {
+    > li {
+      width: auto;
+      float: none;
+      margin-right: 0;
+      margin-left: 0;
+    }
+  }
+}
+
+.news-card {
+  position: relative;
+}
+
+.news-card {
+  .news-card__image img,
+  .field-card-image img {
+    position: relative;
+  }
+}
+
+.news-card__copy {
+  background: $c-white;
+  margin-left: 10%;
+  margin-top: -16%;
+  position: relative;
+  padding: 20px 20px $space-four $space-four;
+
+  @media ($below-xs) {
+    padding-right: 20px;
+  }
+
+  h2 {
+    @include fs-heading-three;
+    margin: 0;
+    margin-top: $space;
+  }
+}
+
+.news-card__content {
+  margin: 1em 0;
+}
+
+.news-card__link {
+  text-decoration: none;
+
+  &:hover {
+    color: $c-blue-link;
+    text-decoration: none;
+  }
+}
+
+// This card is used on ucsf.edu/topic/covid-19
+.news-card--media-coverage,
+.news-card--magazine-article {
+  [data-primary-area] {
+    color: $f3-purple;
+
+    &::before {
+      background: $f3-purple;
+    }
+  }
+}
+
+.magazine-article-card {
+  &__date {
+    text-transform: capitalize;
+    a {
+      color: $c-gray-blue;
+    }
+  }
+}

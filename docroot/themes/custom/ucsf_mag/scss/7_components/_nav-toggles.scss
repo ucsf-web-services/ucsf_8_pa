@@ -1,0 +1,124 @@
+@use "../0_tools" as *;
+.nav-toggle {
+  // variable to print .nav-toggle
+  $block: &;
+  $menu-bar-width: 25px;
+  $menu-bar-width-large: 48px;
+  $menu-bar-position: 7px;
+  $menu-bar-position-large: 14px;
+
+  float: left;
+  white-space: nowrap;
+  overflow: hidden;
+  min-width: $menu-bar-width;
+  max-width: $menu-bar-width;
+  width: $menu-bar-width;
+  height: auto;
+  background-color: transparent;
+  border: 0;
+  outline: 1px solid transparent;
+
+  @media ($above-m) {
+    min-width: $menu-bar-width-large;
+    max-width: $menu-bar-width-large;
+    width: $menu-bar-width-large;
+    height: 50px;
+  }
+
+  &__icon {
+    display: block;
+    position: relative;
+    width: $menu-bar-width;
+    height: 2px;
+    background-color: $c-blue-link;
+    outline: 1px solid transparent;
+    transition-property: background-color, transform;
+    transition-duration: .3s;
+    margin: 0;
+    text-indent: 300%;
+
+    @media ($above-m) {
+      width: $menu-bar-width-large;
+      height: 3px;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: $menu-bar-width;
+      height: 2px;
+      background-color: $c-blue-link;
+      outline: 1px solid transparent;
+      transition-property: background-color,transform;
+      transition-duration: .3s;
+
+      @media ($above-m) {
+        width: $menu-bar-width-large;
+        height: 3px;
+      }
+    }
+
+    &::before {
+      top: -#{$menu-bar-position};
+
+      @media ($above-m) {
+        top: -#{$menu-bar-position-large};
+      }
+    }
+
+    &::after {
+      top: $menu-bar-position;
+
+      @media ($above-m) {
+        top: $menu-bar-position-large;
+      }
+    }
+
+    #{$block}--active & {
+      background-color: transparent;
+      &::before {
+        transform: translateY($menu-bar-position) rotate(45deg);
+
+        @media ($above-m) {
+          transform: translateY($menu-bar-position-large) rotate(45deg);
+        }
+      }
+      &::after {
+        transform: translateY(-#{$menu-bar-position}) rotate(-45deg);
+
+        @media ($above-m) {
+          transform: translateY(-#{$menu-bar-position-large}) rotate(-45deg);
+        }
+      }
+    }
+  }
+}
+
+.subnav-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+
+  &:hover .accordion-arrow {
+    border-top-color: $c-blue-link;
+    border-right-color: $c-blue-link;
+  }
+
+  &__icon {
+    margin-left: auto;
+  }
+
+  @media ($above-l) {
+    display: none;
+  }
+}

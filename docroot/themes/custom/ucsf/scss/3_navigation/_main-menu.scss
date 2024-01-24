@@ -1,0 +1,446 @@
+@use "../0_tools" as *;
+@use "sass:math";
+// Desktop menu, for mobile go to _slicknav.scss
+$nav-line-height: 84px;
+$nav-line-height-sticky: 60px;
+$search-icon: 28px;
+$search-icon-sticky: 24px;
+$hover-border-size: 4px;
+$label-width: 48px;
+
+.main-nav {
+  // variable to print .main-nav
+  $block: &;
+
+
+  // Hide the desktop menu in mobile
+  @media ($below-m) {
+    display: none;
+  }
+
+  // navbar menu <ul>
+  &__menu {
+    margin: 0;
+    padding-left: 0;
+    position: relative;
+    float: right;
+    clear: both;
+
+    .menu-item {
+      display: inline-block;
+    }
+  }
+
+  // navbar buttons
+  &__toggle {
+    background-color: transparent;
+    color: $c-gray-blue;
+    border: none;
+    line-height: $nav-line-height;
+    letter-spacing: 0;
+    font-size: $font-size-sm;
+    font-family: $font-helvetica-neue-roman;
+    font-weight: 500;
+    margin: 0 0 0 $space-five;
+    padding: 0 0 $hover-border-size 0;
+    transition: $transition-time cubic-bezier(0.77, 0, 0.175, 1) line-height;
+
+    &:focus,
+    &:hover {
+      border-bottom: $hover-border-size solid $c-blue-link;
+      padding-bottom: 0; // padding bottom is replaced by the border bottom
+    }
+
+    &:focus {
+      outline: 1px dotted $a1-navy;
+    }
+
+    // Remove margin from first menu item
+    #{$block}__menu .menu-item:first-child & {
+      margin-left: 0;
+    }
+
+    // make top level menu item "active" when visiting linked page
+    .menu-item--active-trail & {
+      border-bottom: $hover-border-size solid $c-blue-link;
+      padding-bottom: 0;
+    }
+  }
+
+}
+
+
+/*---------------In this section---------------------*\
+  SUBMENU
+\*---------------------------------------------------*/
+.main-submenu {
+  // variable to print .main-submenu
+  $block: &;
+
+  @include visually-hidden;
+  visibility: hidden;
+  background: $i6-gray;
+  height: auto;
+  right: 0;
+  z-index: $z-quicklinks-open-page;
+  position: relative;
+
+  // Level-0 Expanded menu wrapper 2nd column.
+  &--0 {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: 1fr;
+    width: calc(800px + #{$label-width});
+
+    @media ($above-xl) {
+      width: calc(999px + #{$label-width});
+    }
+
+  }
+
+  // Level-1 Expanded menu wrapper 2nd column.
+  &--1 {
+    position: absolute;
+    right: 0;
+    top: 48px;
+    width: 450px;
+
+    @media ($above-xl) {
+      width: 535px;
+    }
+  }
+
+  // Level-0 Expanded menu 1st column.
+  &__menu {
+    #{$block}--0 > & {
+      display: block;
+      padding-top: $label-width;
+      width: 350px;
+
+      @media ($above-xl) {
+        width: 464px;
+      }
+
+      .menu-item {
+        border-bottom: 1px solid #CACED2;
+        display: block;
+        margin-left: 73px;
+      }
+    }
+
+    // Level-0 Expanded menu 2nd column.
+     #{$block}--1 & {
+      padding-right: 80px;
+      padding-left: 0;
+      width: 100%;
+      animation: none;
+      .menu-item {
+        margin-left: 80px;
+      }
+    }
+
+    a[href*="http"] {
+      &::after {
+      content: '';
+      display: block;
+      width: 100%;
+      position: absolute;
+      height: 32px;
+      // padding-right: 20px;
+      // background: url("/themes/custom/ucsf/images/external-link.svg") right center no-repeat transparent;
+      top: 20%;
+      background-color: transparent;
+      background-position-x: right;
+      background-position-y: center;
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+      background-image: url("/themes/custom/ucsf/images/external-link.svg");
+      background-size: auto;
+      background-origin: padding-box;
+      background-clip: border-box;
+
+      }
+
+      &:hover::after {
+        background-image: url("/themes/custom/ucsf/images/external-link-hover.svg");
+      }
+    }
+
+    a[href*="https://www.ucsf.edu"]::after,
+    a[href*="http://www.ucsf.edu"]::after {
+      display: none;
+    }
+
+    .menu-item--expanded {
+      // Icon angle right
+      .fa-angle-right {
+        display: inline-block;
+        line-height: 32px;
+        height: 48px;
+        padding: 8px 0;
+        width: 16px;
+      }
+
+      // Icon angle right on menu item hover
+      &:hover .fa-angle-right {
+        color: $c-cta-element;
+      }
+    }
+
+    a {
+      @include link-colors($a1-navy, $c-cta-element);
+      display: block;
+      font-family: $font-helvetica-neue-light;
+      font-size: 18px;
+      line-height: 32px;
+      height: auto;
+      margin: 0;
+      padding: $space 20px $space 0;
+      position: relative;
+    }
+
+    span.ext {
+      position: absolute;
+      height: 32px;
+      right: 0;
+      top: 20%;
+    }
+
+
+  }
+
+  // left and right column labels
+  &__label {
+    &-text {
+      @include eyebrow;
+      margin-left: 80px;
+      &:after {
+        background: none;
+      }
+    }
+
+    &--0 {
+      background: $c-teal;
+      box-sizing: border-box;
+      width: $label-width;
+      padding: 24px 0;
+
+      @each $area, $color in $areas-nav {
+        &[data-section="section-#{$area}"] {
+          background: $color;
+        }
+      }
+
+      #{$block}__label-text {
+        @include eyebrow;
+        line-height: $label-width;
+        margin: 0;
+        color: $c-white;
+        writing-mode: vertical-rl;
+        &:after {
+          width: 1px;
+          height: 40px;
+          margin: 5px 3px 5px 0;
+          background: $c-white;
+        }
+      }
+    }
+  }
+
+  // left column submenu button
+  &__toggle {
+    border: 0;
+    display: inline-block;
+    width: calc(100% - 22px);
+    background-color: transparent;
+    padding: $space 20px $space 0;
+    text-align: left;
+
+    &:hover {
+      color: $c-cta-element;
+    }
+  }
+
+  /*---------------In this section---------------------*\
+    Animations and visibility
+  \*---------------------------------------------------*/
+  // When top level button is clicked.
+  .main-nav__menu .menu-item-open > & {
+    @include visually-hidden-reset;
+    @include menu-animation;
+    visibility: visible;
+  }
+
+  // When left column button is hovered/clicked.
+  &--0 .menu-item:hover &--1,
+  &--0 .menu-item-open > & {
+    animation: none;
+    @include visually-hidden-reset;
+    visibility: visible;
+  }
+}
+
+// close button for submenu
+.menu-item-close {
+  display: block;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 20px;
+  height: 20px;
+  background: url("../images/x-large.svg") left center no-repeat transparent;
+  background-size: 20px 20px;
+  cursor: pointer;
+  text-indent: -9999px;
+  border: 0;
+
+  &:focus {
+    border: 1px dotted $a1-navy;
+  }
+}
+
+
+/*---------------In this section---------------------*\
+  SEARCH BUTTON, ICON, FORM
+\*---------------------------------------------------*/
+
+.menu-item-search-menu {
+  display: inline-block;
+  width: $search-icon;
+  height: $nav-line-height;
+  background-image: url(/themes/custom/ucsf/images/magnifier.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: $search-icon;
+  max-width: $search-icon;
+  vertical-align: middle;
+  padding-bottom: 0;
+  margin-left: $space-five;
+  margin-right: 22px; // to offset icon to the right
+  margin-top: math.div($hover-border-size, 2);
+  margin-bottom: math.div($hover-border-size, 2);
+  text-indent: -9999px;
+
+  &:focus,
+  &:hover {
+    background-image: url(/themes/custom/ucsf/images/magnifier-hover.svg);
+    border-bottom: 0;
+  }
+
+  &:focus {
+    border: 1px dotted $a1-navy;
+  }
+
+  // "X" btn when search form is open
+  .menu-item-open & {
+    background-image: url(/themes/custom/ucsf/images/x-large.svg);
+
+    &:hover,
+    &:focus {
+      background-image: url(/themes/custom/ucsf/images/x-large.svg);
+    }
+
+    &:focus {
+      border: 1px dotted $a1-navy;
+    }
+  }
+
+  .menu-item--active-trail & {
+    border-bottom: 0;
+  }
+}
+
+// Search form
+.main-nav__search {
+  background: none;
+  width: 650px !important;
+
+  .menu-item > .main-submenu & {
+    animation: none;
+  }
+
+  .menu-item-open & {
+    @include menu-animation;
+    visibility: visible;
+    z-index: $z-slicknav-panel-open;
+  }
+
+  .home-search__form {
+    position: relative;
+    .home-search__form-input {
+      width: 100%;
+    }
+    .home-search__form-submit {
+      position: absolute;
+      top: 17px;
+      right: 5px;
+    }
+  }
+}
+
+/*---------------In this section---------------------*\
+  STICKY HEADER NAVIGATION
+\*---------------------------------------------------*/
+.fixed-nav {
+  .main-nav__toggle {
+    // Reduce the height of element
+    line-height: $nav-line-height-sticky;
+  }
+
+  // Minimized search icon for sticky nav
+  .menu-item-search-menu {
+    height: $nav-line-height-sticky;
+    background-size: $search-icon-sticky;
+    max-width: $search-icon-sticky;
+  }
+}
+
+/*---------------In this section---------------------*\
+  ACTIVE MENU BUTTON WHEN VIEWING LINKED PAGE
+\*---------------------------------------------------*/
+// Need to underline top level menu item when viewing the articles
+.page-node-type-trending,
+.page-node-type-author,
+[class*="alias-news"],
+[class*="alias-magazine"] {
+  .main-nav {
+    .menu-item-news--media {
+      border-bottom: $hover-border-size solid $c-blue-link;
+      padding-bottom: 0;
+    }
+  }
+}
+
+/*---------------In this section---------------------*\
+  HEADER "GIVE" BUTTON
+\*---------------------------------------------------*/
+.universal-header__give-mobile {
+    display: none;
+  @media ($below-m) {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    //margin-left: -$space-three;
+
+    a.universal-header__give {
+      color: $c-white;
+      width: 100%;
+      padding: $space-two $space-three;
+      text-align: left;
+      font-family: $font-helvetica-neue-medium;
+
+      &::before {
+        content: "";
+        display: block;
+        width: 32px;
+        height: 32px;
+        background: url(/themes/custom/ucsf/images/card/heart-black.svg) no-repeat transparent;
+        background-size: 32px;
+        position: absolute;
+        right: 24px;
+        filter: $filter-black-to-white;
+      }
+    }
+  }
+}

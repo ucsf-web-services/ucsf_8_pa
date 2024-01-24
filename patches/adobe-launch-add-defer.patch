@@ -1,0 +1,20 @@
+diff --git a/modules/contrib/adobe_launch/adobe_launch.module b/modules/contrib/adobe_launch/adobe_launch.module
+index a200e896e5..80b1ff71ff 100644
+--- a/modules/contrib/adobe_launch/adobe_launch.module
++++ b/modules/contrib/adobe_launch/adobe_launch.module
+@@ -51,6 +51,7 @@ function adobe_launch_preprocess_html(array &$variables) {
+             'src' => $adobeLaunchPath,
+             'type' => 'text/javascript',
+             'async' => TRUE,
++            'defer' => TRUE,
+           ],
+         ];
+       }
+@@ -60,6 +61,7 @@ function adobe_launch_preprocess_html(array &$variables) {
+           '#attributes' => [
+             'src' => $adobeLaunchPath,
+             'type' => 'text/javascript',
++            'defer' => TRUE,
+           ],
+         ];
+       }
