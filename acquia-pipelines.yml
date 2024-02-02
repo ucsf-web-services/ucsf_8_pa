@@ -17,7 +17,7 @@ events:
           script:
             - echo "STARTING BUILD"
             - composer validate --no-check-all --ansi
-            - composer install
+            - composer --no-dev --no-interaction --prefer-dist --optimize-autoloader install
             - mysql -u root -proot -e "CREATE DATABASE ucsfpa8"
             - if [ "$PIPELINE_WEBHOOK_EVENT" == "PULL_REQUEST" ]; then echo "pull request made"; fi
             - echo "FINISHED BUILD"
