@@ -3311,6 +3311,51 @@ a.icon-transit::before {
     font-size: 24px;
   }
 }
+.article-meta-share button {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #506380;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-color: transparent;
+  border-width: 1px;
+  border-radius: 20%;
+  margin: 0;
+  height: 20px;
+  width: 19px;
+  background-color: #821A56;
+  font-size: 0.8rem;
+}
+@media (min-width: 1050px) {
+  .article-meta-share button {
+    height: 25px;
+    width: 23px;
+    background-color: #506380;
+    font-size: 1rem;
+  }
+}
+.article-meta-share button:hover {
+  background-color: #C42882;
+}
+.article-meta-share button:hover .text-to-speech:before, .article-meta-share button.paused .text-to-speech:before {
+  content: "\f04b";
+}
+.article-meta-share button.playing .text-to-speech:before {
+  content: "\f04c";
+}
+.article-meta-share button.paused, .article-meta-share button.playing {
+  background-color: #821A56;
+}
+.article-meta-share button.paused:hover, .article-meta-share button.playing:hover {
+  background-color: #C42882;
+}
+.article-meta-share .fa-play,
+.article-meta-share .fa-pause {
+  font-size: 1rem;
+}
 .article-meta-share .indent-text {
   position: absolute;
   left: -9999px;
