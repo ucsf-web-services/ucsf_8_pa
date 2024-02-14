@@ -5,7 +5,6 @@
       once('social-icon-context', 'html', context).forEach(() => {
         const $socialIcons = $('.article-meta-share', context);
         const $iconPrint = $('li', context).has('a[title*="Print"]');
-        const $iconPlay = $('button', context).has('.text-to-speech');
         let lastScroll = 0;
 
         // Social Navbar behavior
@@ -68,21 +67,6 @@
             $socialIcons.removeClass('is-visible');
           }
         };
-
-        // Custom button for audio player
-        $iconPlay.on('click touchstart', function (e) {
-          // Initial click to play audio
-          if (!$iconPlay.hasClass("playing")) {
-            $iconPlay.removeClass("paused")
-            $iconPlay.addClass('playing');
-          } else if ($iconPlay.hasClass("playing")) {
-            // when pausing audio
-            $iconPlay.removeClass("playing")
-            $iconPlay.addClass("paused")
-          }
-
-        })
-
 
         // Use MatchMedia breakpoint to trigger small screen behavior and reset behavior for Desktop.
         const mql = matchMedia('(max-width: 1049px)');
