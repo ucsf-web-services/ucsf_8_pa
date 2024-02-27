@@ -1,4 +1,7 @@
+
+
 // Ensure EpicPx exists
+
 if (!window.EpicPx) {
     window.EpicPx = {};
 }
@@ -237,8 +240,10 @@ function removeQueryString(url) {
 
 const pageURLWithoutQuery = removeQueryString(pageURL);
 
+console.log("push device info");
 window.adobeDataLayer.push({
     "device": {
+
         "colorDepth": colorDepth,
         "screenOrientation": screenOrientation,
         "screenHeight": screenHeight,
@@ -246,6 +251,7 @@ window.adobeDataLayer.push({
         "type": deviceType,
         "typeIDService": "https://ns.adobe.com/xdm/external/deviceatlas",
         "manufacturer": deviceManufacturer
+
     }
 });
 
@@ -283,7 +289,7 @@ let pathArray = window.location.pathname.split('/').filter(part => part !== '');
 let pageType = pathArray.length ? pathArray[0] : 'home';
 
 //console.log(pageType);  // To verify the result
-
+console.log("push 0-100 ");
     window.adobeDataLayer.push({
         "ucsfsitecontent": {
             "pagepercentageviewed": "0",
@@ -339,7 +345,7 @@ window.addEventListener('scroll', function() {
     //console.log(percentageViewed);
 
     //if (percentageViewed >= 100) {
-    //    console.log("You've viewed the entire page!");
+
     //}
 });
 
@@ -376,6 +382,7 @@ function getPathWithoutDomain() {
 const server = getDomain();
 const pagePath = getPathWithoutDomain();
 const pageName = 'content:' + server + ':us:en:' + pagePath;
+//const primaryCategory = "";
 
 //END page:pageInfo:pageName
 
@@ -395,14 +402,14 @@ window.adobeDataLayer.push({
             "siteName": siteName
         },
         "category": {
-            "primaryCategory": "primary category (hardcoded)",
+            "primaryCategory":"primaryCategory (hardcoded)",
             "subCategory1": "subCategory1 (hardcoded)",
             "subCategory2": "subCategory2 (hardcoded)"
 	    },
         "elementvisible": ""
     }
 });
-
+//console.log ("primaryCat key created");
 // BEGIN pageView
 
 function generateUniqueId() {
@@ -426,4 +433,7 @@ window.adobeDataLayer.push({
     }
 });
 
+
+console.log("loaded ucsf-data-layer");
+*/
 //END pageView
