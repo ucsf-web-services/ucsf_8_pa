@@ -1,88 +1,58 @@
 
-console.log("run mag DL")
-/*
-window.adobeDataLayer = window.adobeDataLayer || [];
+let topicsValues; // var for article tags
+let authorValue;
+let mediavalue;
+let articlevalue;
 
-const topicsValues = Object.values(dataLayer[0].entityTaxonomy.topics);
+if (dataLayer && dataLayer.length > 0 && dataLayer[0].entityTaxonomy && dataLayer[0].entityTaxonomy.topics && Object.keys(dataLayer[0].entityTaxonomy.topics).length > 0)
+    {
+     topicsValues = Object.values(dataLayer[0].entityTaxonomy.topics); // get values of 'tags' of the artcle
+    } else {
+         topicsValues = "not set";
+    }
+if (dataLayer && dataLayer.length > 0 && dataLayer[0].entityTaxonomy && dataLayer[0].entityTaxonomy.custom_authors && Object.keys(dataLayer[0].entityTaxonomy.custom_authors).length > 0)
+    {
+     authorValue = Object.values(dataLayer[0].entityTaxonomy.custom_authors); // get values of 'author' of the artcle
 
-console.log(topicsValues);
+    } else {
+         authorValue = "not set";
+    }
+
+if (dataLayer && dataLayer.length > 0 && dataLayer[0].entityTaxonomy && dataLayer[0].entityTaxonomy.article_type && Object.keys(dataLayer[0].entityTaxonomy.article_type).length > 0)
+    {
+     mediavalue = Object.values(dataLayer[0].entityTaxonomy.article_type); // get values of 'media type' of the artcle
+
+    } else {
+         mediavalue = "not set";
+    }
+
+if (dataLayer && dataLayer.length > 0 && dataLayer[0].entityTaxonomy && dataLayer[0].entityTaxonomy.areas && Object.keys(dataLayer[0].entityTaxonomy.areas).length > 0)
+    {
+     articlevalue = Object.values(dataLayer[0].entityTaxonomy.areas); // get values of 'area' of the artcle
+
+    } else {
+         articlevalue = "not set";
+    }
 
 
 
-window.adobeDataLayer.push({
-		"page": {
-			"pageInfo": {
-			"language":dataLayer[0].entityLangcode,
-        "siteName":dataLayer[0].siteName,
-        "pageType":dataLayer[0].entityBundle,
-      //  "elementvisible":topicsValues,
-      //  "elementvisible":Object.values(dataLayer[0].entityTaxonomy.topics)
-		  },
-	}
+window.adobeDataLayer.push({  //push to adobe's datalayer
+    "eduSite": {
+        "pageInfo": {
+            "language": dataLayer[0].entityLangcode,  //take this out
+            "siteName": dataLayer[0].siteName,  //take this out
+            "pageType": dataLayer[0].entityBundle,
+
+
+        },
+        "category": {
+            "primaryCategory": topicsValues,
+            "author": authorValue,
+            "mediatype": mediavalue,
+            "articelArea": articlevalue,
+          //  "organization":,
+
+        },
+
+    }
 });
-*/
-
-/*
-//test 2 the below will add the topicsValues array but to another page group
-
-
-window.adobeDataLayer.push({
-		"page": {
-			"pageInfo": {
-			"language":dataLayer[0].entityLangcode,
-        "siteName":dataLayer[0].siteName,
-        "pageType":dataLayer[0].entityBundle,
-        //"pageQS":topicsValues,
-      //  "elementvisible":Object.values(dataLayer[0].entityTaxonomy.topics)
-		  },
-      "category": {
-        "primaryCategory":topicsValues,
-      },
-    //  "elementvisible":"test",
-	}
-});
-
-*/
-
-
-
-
-/*
-const dataToPush = {
-  "page":{
-    "pageInfo":{
-      "elementvisible": topicsValues
-    },
-
-  }
-
-};
-window.adobeDataLayer.push(dataToPush);
-*/
-
-//window.digitalData = JSON.parse('<%= JSON.stringify(adobeDataLayer, null, 2) %>');
-/* code to try to print to html the js object
-var dataLayer = {
-  "entityTaxonomy": {
-    "custom_authors": {
-      // Your pageInfo properties here
-    },
-    // Additional properties here
-  },
-  // Other top-level properties here
-};
-
-var scriptContent = `window.digitalData = ${JSON.stringify(dataLayer, null, 2)};`;
-
-// Create a script element
-var scriptEl = document.createElement('script');
-scriptEl.type = 'text/javascript';
-// Set the script content, properly escaping it if necessary
-scriptEl.textContent = scriptContent;
-
-// Append the script element to the head or body of the document
-document.head.appendChild(scriptEl);
-*/
-
-
-//adobe load

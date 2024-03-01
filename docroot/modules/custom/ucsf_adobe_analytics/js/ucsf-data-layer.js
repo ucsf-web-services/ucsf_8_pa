@@ -434,6 +434,6 @@ window.adobeDataLayer.push({
 });
 
 
-console.log("loaded ucsf-data-layer");
-*/
+
+
 //END pageView
