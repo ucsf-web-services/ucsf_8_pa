@@ -240,7 +240,7 @@ function removeQueryString(url) {
 
 const pageURLWithoutQuery = removeQueryString(pageURL);
 
-console.log("push device info");
+//console.log("push device info");
 window.adobeDataLayer.push({
     "device": {
 
@@ -289,7 +289,7 @@ let pathArray = window.location.pathname.split('/').filter(part => part !== '');
 let pageType = pathArray.length ? pathArray[0] : 'home';
 
 //console.log(pageType);  // To verify the result
-console.log("push 0-100 ");
+
     window.adobeDataLayer.push({
         "ucsfsitecontent": {
             "pagepercentageviewed": "0",

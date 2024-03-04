@@ -1,8 +1,8 @@
 
 let topicsValues; // var for article tags
-let authorValue;
-let mediavalue;
-let articlevalue;
+let authorValue; // var for author
+let mediavalue; // var for article type
+let articlevalue; // var for article area
 
 if (dataLayer && dataLayer.length > 0 && dataLayer[0].entityTaxonomy && dataLayer[0].entityTaxonomy.topics && Object.keys(dataLayer[0].entityTaxonomy.topics).length > 0)
     {
@@ -39,8 +39,8 @@ if (dataLayer && dataLayer.length > 0 && dataLayer[0].entityTaxonomy && dataLaye
 window.adobeDataLayer.push({  //push to adobe's datalayer
     "eduSite": {
         "pageInfo": {
-            "language": dataLayer[0].entityLangcode,  //take this out
-            "siteName": dataLayer[0].siteName,  //take this out
+            "language": dataLayer[0].entityLangcode,  
+            "siteName": dataLayer[0].siteName,  
             "pageType": dataLayer[0].entityBundle,
 
 
