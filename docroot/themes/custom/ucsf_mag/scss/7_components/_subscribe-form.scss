@@ -1,16 +1,26 @@
 @use "../0_tools" as *;
-.form--subscribe-mag {
-  input {
-    min-height: 64px;
-    width: 100%;
-    margin-bottom: $space-two;
-    border: 1px solid $c-near-white;
-  }
 
-  button {
+
+  .subscribe__submit {
+    @include button;
+    color: $c-dark-navy;
+    border-color: $c-dark-navy;
+    border-bottom-color: $c-dark-navy;
     width: 100%;
+    margin-bottom: 20px;
+
+    &:is(a:link, a:visited),
+    .field-ankle-cta  & {
+      color: $c-dark-navy;
+      border-bottom-color: $c-dark-navy;
+
+      &:hover {
+        color: $c-white;
+        border-color: $c-cta-element;
+        background-color: $c-cta-element;
+      }
+    }
   }
-}
 
 .subscribe-form {
   clear: both;
@@ -70,22 +80,33 @@
   }
 
   &__submit {
-    border: none;
-    border-radius: 0;
-    background-color: $c-blue-link;
+    appearance: button;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    background-color: $c-blue-link;
     color: $c-white;
     height: 3rem;
     min-height: 3rem;
     font-size: 16px;
+    width: 100%;
+    font-family: $font-helvetica-neue-medium;
+    line-height: 1.4;
+    text-decoration: none;
+
+    @media ($above-xs) {
+      min-height: 3.75rem;
+      width: 50%;
+    }
 
     @media ($above-m) {
       min-height: 3.75rem;
-      padding-right: 1.5em;
+      width: 65%;
     }
 
-    &:hover {
+    .footer &:hover {
       background-color: $c-blue-link-hover;
+      text-decoration: none;
     }
   }
 }
