@@ -1,0 +1,63 @@
+@use "../0_tools" as *;
+
+.promo-spotlight {
+  background-color: $i6-gray;
+  padding: 5%;
+  max-width: 600px;
+  margin: 0 20px;
+  @media ($above-xs) {
+    grid-column: 5/-5;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 30%) minmax(0, 70%);
+  }
+
+  .field-overwrite-promo-spotlight:has(&) {
+    grid-column: 5/-5;
+  }
+
+  &:not(:has(.layout-column-1)) {
+    @media ($above-xs) {
+      display: block;
+    }
+  }
+
+
+
+    > .layout-column {
+      @media ($above-xs) {
+        width: 100%;
+        float: left;
+      }
+
+      &-1 {
+        align-self: center;
+        @media ($below-xs) {
+          margin-bottom: 2rem;
+        }
+      }
+
+      &-2 {
+        align-self: start;
+
+        @media ($above-xs) {
+          padding-left: 2rem;
+        }
+      }
+    }
+
+  img {
+    width: 100%;
+  }
+
+  &__body {
+    margin-top: 2rem;
+    font-family: $font-helvetica-neue-light;
+    font-size: 18px;
+    font-style: normal;
+    line-height: 32px;
+  }
+
+
+}

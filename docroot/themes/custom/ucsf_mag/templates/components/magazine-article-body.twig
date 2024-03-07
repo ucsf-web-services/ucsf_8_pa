@@ -15,6 +15,18 @@
 
 {% endif %}
 
+{% if content.field_overwrite_promo_spotlight %}
+  {{content.field_overwrite_promo_spotlight}}
+{% else %}
+  {% set modifier_node_vars = {
+    parentNode : node,
+    text_here: "I am NODE"
+  } %}
+  {% include '@ucsf_mag/components/promo-spotlight.twig' with modifier_node_vars %}
+
+{% endif %}
+
+
 
 <div class="tags-menu-region">
   {% if content.field_topics|render or content.field_tags|render %}
