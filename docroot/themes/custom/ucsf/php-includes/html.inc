@@ -94,4 +94,16 @@ function ucsf_page_attachments_alter(array &$page) {
     $page['#attached']['html_head_link'][][] = $file;
   }
 
+  // Append datalayer variable to Google Analytics script
+  foreach ($attachments['#attached']['html_head'] as $key => $attachment) {
+
+    $append_to_src = "&l=googleDatalayer";
+    $attachment_name = $attachment[1];
+
+    if ($attachment_name == 'google_analytics_tracking_file') {
+      $original_src = $attachments['#attached']['html_head'][$key][0]['#attributes']['src'];
+      $attachments['#attached']['html_head'][$key][0]['#attributes']['src'] = $original_src . $append_to_src;
+    }
+  }
+
 }
