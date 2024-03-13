@@ -964,11 +964,33 @@ a[name] {
 #onetrust-banner-sdk #onetrust-policy {
   margin: 1.25em 0 1.25em 2em !important;
 }
+@media (max-width: 768px) {
+  #onetrust-banner-sdk #onetrust-policy {
+    margin: 1.25em 0 1.25em 0 !important;
+  }
+}
 #onetrust-consent-sdk #onetrust-banner-sdk:focus {
   outline: 1px solid #9ba6b6 !important;
 }
-#onetrust-banner-sdk #onetrust-consent-sdk #onetrust-banner-sdk:focus {
-  outline-color: #9ba6b6 !important;
+@media (max-width: 768px) {
+  #onetrust-banner-sdk:not(.ot-iab-2) #onetrust-group-container {
+    width: 100% !important;
+  }
+}
+@media (max-width: 768px) {
+  #onetrust-banner-sdk .ot-sdk-container {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+  }
+}
+@media (max-width: 768px) {
+  #onetrust-banner-sdk .has-reject-all-button #onetrust-button-group {
+    float: none !important;
+    width: 100% !important;
+  }
 }
 
 .breadcrumb-region {
