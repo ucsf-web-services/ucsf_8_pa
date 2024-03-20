@@ -508,3 +508,41 @@ a[name] {
     display: block;
   }
 }
+
+// Onetrust cookie banner
+#onetrust-banner-sdk {
+  box-shadow: -3px 0px 3px 0px rgba(0,0,0,0.2) !important;
+  #onetrust-policy {
+    margin: 1.25em 0 1.25em 2em !important;
+
+    @media ($below-s) {
+      margin: 1.25em 0 1.25em 0 !important;
+    }
+  }
+  #onetrust-consent-sdk &:focus {
+    outline: 1px solid #9ba6b6 !important;
+  }
+  &:not(.ot-iab-2) #onetrust-group-container {
+    @media ($below-s) {
+      width: 100% !important;
+    }
+  }
+  .ot-sdk-container {
+    @media ($below-s) {
+      position: relative !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 auto !important;
+      padding: 0 20px !important;
+    }
+  }
+  .has-reject-all-button #onetrust-button-group {
+    @media ($below-s) {
+      float: none !important;
+      width: 100% !important;
+    }
+  }
+  & #onetrust-policy-text a:first-of-type {
+    margin-left: 0 !important;
+  }
+}
