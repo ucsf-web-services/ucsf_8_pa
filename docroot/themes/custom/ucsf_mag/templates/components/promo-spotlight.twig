@@ -1,7 +1,5 @@
-
-{% if parentNode.field_remove_promo_spotlight[0].value == '0' %}
-  {# Block promoting latest issue #}
-<div {{ attributes.addClass('promo-spotlight') }}>
+{# Block promoting latest issue #}
+<div {{ is_paragraph ? attributes.addClass('promo-spotlight') : 'class="promo-spotlight"' }}>
   {% if is_paragraph %}
     {# so that quickedit is awailable #}
     {{ content|without('field_media_image', 'field_promo_cta', 'field_eyebrow_title', 'field_text_body') }}
@@ -16,15 +14,15 @@
     %}
 
     {% set image_style = 'magazine_issue_cover' %}
-    {% set width = width ?: 260 %}
-    {% set height = height ?: 350 %}
+    {% set width = width ?: 160 %}
+    {% set height = height ?: 186 %}
 
     {# Use overwrite link or default link to issue #}
     {% set href = parentNode.field_overwrite_promo_spotlight.0.entity.field_promo_cta.0.url
       ?: path('entity.taxonomy_term.canonical', {'taxonomy_term': parentNode.field_magazine_issue.entity.tid.value})
     %}
 
-    {# Not sure if it's a bug but when you add link text, the link url field becomes required,
+    {# When you add link text, the link url field becomes required,
     in this case, allow editors to use /i as a shorthand for issue link #}
     {% if parentNode.field_overwrite_promo_spotlight.0.entity.field_promo_cta.0.url|render == '/i' %}
       {% set href = path('entity.taxonomy_term.canonical', {'taxonomy_term': parentNode.field_magazine_issue.entity.tid.value}) %}
@@ -55,4 +53,4 @@
   </div>
 
 
-{% endif %}
+{# {% endif %} #}

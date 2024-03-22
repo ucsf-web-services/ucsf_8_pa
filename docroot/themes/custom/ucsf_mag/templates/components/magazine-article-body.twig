@@ -14,15 +14,20 @@
   </div>
 
 {% endif %}
-
-{% if content.field_overwrite_promo_spotlight %}
+{% if content.field_overwrite_promo_spotlight|render %}
   {{content.field_overwrite_promo_spotlight}}
 {% else %}
   {% set modifier_node_vars = {
     parentNode : node,
     text_here: "I am NODE"
   } %}
+
+  {# MM/MD/YYYY- example 02/28/2024 #}
+  {% if (node.created.value|date('U') > '01/03/2024'|date('U')) and (node.field_remove_promo_spotlight[0].value == '0') %}
+  {# {% if node.created.value|date('U') > '01/03/2024'|date('U') %} #}
+
   {% include '@ucsf_mag/components/promo-spotlight.twig' with modifier_node_vars %}
+  {% endif %}
 
 {% endif %}
 
