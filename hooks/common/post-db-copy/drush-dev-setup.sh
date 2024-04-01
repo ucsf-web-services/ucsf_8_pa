@@ -23,7 +23,6 @@ if [ "$target_env" != 'prod' ]; then
 
   # Disable Google Analitics if target environment is not Prod.
   echo "Disabling Google Analitics"
-  drush @$drush_alias pm-uninstall google_analytics -y
 fi
 
 # Clear the cache.
