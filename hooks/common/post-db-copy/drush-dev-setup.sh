@@ -20,9 +20,6 @@ if [ "$target_env" != 'prod' ]; then
   echo "Enabling Stage File Proxy"
   drush @$drush_alias en stage_file_proxy -y
   drush @$drush_alias config-set stage_file_proxy.settings origin "https://www.ucsf.edu" -y
-
-  # Disable Google Analitics if target environment is not Prod.
-  echo "Disabling Google Analitics"
 fi
 
 # Clear the cache.
