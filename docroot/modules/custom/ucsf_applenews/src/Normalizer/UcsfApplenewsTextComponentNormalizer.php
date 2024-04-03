@@ -243,6 +243,9 @@ class UcsfApplenewsTextComponentNormalizer extends ApplenewsTextComponentNormali
         case 'responsive_areas':
           // Do nothing for now.
           break;
+        case 'flexible_column_content':
+          // Do nothing for now.
+          break;
         default:
           throw new \Exception('need to handle paragraph type');
       }
