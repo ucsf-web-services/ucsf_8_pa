@@ -265,6 +265,11 @@ a.button-reverse:visited,
     $transition-time cubic-bezier(0.33,0.66,0.66,1) background-position;
     background-position: 97% center;
 
+    [style*="background-color:#000000"] & {
+      color: $white;
+      filter: brightness(0) invert(1);
+    }
+
     &:hover,
     &:focus {
       // declaring each background property separately on purpose,
@@ -273,6 +278,11 @@ a.button-reverse:visited,
       background-position: 98% center;
       background-color: $c-blue-link-rollover;
       background-image: url('../images/cta-arrow-blue-hover.svg');
+
+      [style*="background-color:#000000"] & {
+        background-color: transparent;
+        filter: brightness(0) invert(1);
+      }
     }
   }
 }
@@ -297,7 +307,60 @@ a.button-reverse:visited,
 
     &:hover,
     &:focus {
-      background-image: url('../images/external-link-hover.svg');;
+      background-image: url('../images/external-link-hover.svg');
+    }
+  }
+}
+
+.ext--list.cta--list {
+  margin: 2% 0;
+
+  & a {
+    border-bottom: 1px solid #CACED2;
+    &:hover,
+    &:focus {
+      border-bottom: 1px solid #e8f4fa;
+    }
+  }
+}
+
+.twocol--list {
+  $gap: 40px;
+  position: relative;
+  @media ($above-m) {
+    columns: 2;
+  }
+
+  &::before {
+    @media ($above-m) {
+      content: "";
+      display: block;
+      position: absolute;
+      width: $gap;
+      height: 2px;
+      top: -1px;
+      right: 50%;
+      transform: translate(50%, -50%);
+      background-color: #fff;
+
+      .bg-gray & {
+        background-color: $i6-gray;
+      }
+
+      [style="background-color:#000000"] & {
+        background-color: $black;
+      }
+    }
+  }
+
+  &:is(.ext--list, .cta--list) {
+    @media ($below-m) {
+      border-bottom: none;
+    }
+    @media ($above-m) {
+      border-top: 1px solid #CACED2;
+      border-bottom: none;
+      gap: $gap;
     }
   }
 }
