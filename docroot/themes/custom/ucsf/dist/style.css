@@ -729,6 +729,13 @@ a.button-reverse:visited:hover,
   transition: 0.3s cubic-bezier(0.33, 0.66, 0.66, 1) background-color, 0.3s cubic-bezier(0.33, 0.66, 0.66, 1) background-position;
   background-position: 97% center;
 }
+[style*="background-color:#000000"] .cta--list a,
+[style*="background-color:#000000"] .cta--list button,
+[style*="background-color:#000000"] .ext--list a,
+[style*="background-color:#000000"] .ext--list button {
+  color: #fff;
+  filter: brightness(0) invert(1);
+}
 .cta--list a:hover, .cta--list a:focus,
 .cta--list button:hover,
 .cta--list button:focus,
@@ -740,6 +747,16 @@ a.button-reverse:visited:hover,
   background-position: 98% center;
   background-color: #e8f4fa;
   background-image: url("../images/cta-arrow-blue-hover.svg");
+}
+[style*="background-color:#000000"] .cta--list a:hover, [style*="background-color:#000000"] .cta--list a:focus,
+[style*="background-color:#000000"] .cta--list button:hover,
+[style*="background-color:#000000"] .cta--list button:focus,
+[style*="background-color:#000000"] .ext--list a:hover,
+[style*="background-color:#000000"] .ext--list a:focus,
+[style*="background-color:#000000"] .ext--list button:hover,
+[style*="background-color:#000000"] .ext--list button:focus {
+  background-color: transparent;
+  filter: brightness(0) invert(1);
 }
 
 .cta--list a {
@@ -760,6 +777,56 @@ a.button-reverse:visited:hover,
 }
 .ext--list a:hover, .ext--list a:focus {
   background-image: url("../images/external-link-hover.svg");
+}
+
+.ext--list.cta--list {
+  margin: 2% 0;
+}
+.ext--list.cta--list a {
+  border-bottom: 1px solid #CACED2;
+}
+.ext--list.cta--list a:hover, .ext--list.cta--list a:focus {
+  border-bottom: 1px solid #e8f4fa;
+}
+
+.twocol--list {
+  position: relative;
+}
+@media (min-width: 850px) {
+  .twocol--list {
+    columns: 2;
+  }
+}
+@media (min-width: 850px) {
+  .twocol--list::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 40px;
+    height: 2px;
+    top: -1px;
+    right: 50%;
+    transform: translate(50%, -50%);
+    background-color: #fff;
+  }
+  .bg-gray .twocol--list::before {
+    background-color: #f2f3f4;
+  }
+  [style="background-color:#000000"] .twocol--list::before {
+    background-color: #000;
+  }
+}
+@media (max-width: 849px) {
+  .twocol--list:is(.ext--list, .cta--list) {
+    border-bottom: none;
+  }
+}
+@media (min-width: 850px) {
+  .twocol--list:is(.ext--list, .cta--list) {
+    border-top: 1px solid #CACED2;
+    border-bottom: none;
+    gap: 40px;
+  }
 }
 
 .no-bullets,
