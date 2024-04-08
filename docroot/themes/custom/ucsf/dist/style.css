@@ -758,20 +758,21 @@ a.button-reverse:visited:hover,
   background-color: transparent;
   filter: brightness(0) invert(1);
 }
-
-.cta--list a {
+.cta--list a,
+.ext--list a {
   border-bottom: 1px solid #CACED2;
 }
-.cta--list a:hover, .cta--list a:focus {
+.cta--list a:hover, .cta--list a:focus,
+.ext--list a:hover,
+.ext--list a:focus {
   border-bottom: 1px solid #e8f4fa;
+}
+
+.cta--list a:hover, .cta--list a:focus {
   background-image: url("../images/cta-arrow-blue-hover.svg");
 }
 
-.ext--list {
-  border-bottom: 1px solid #CACED2;
-}
 .ext--list a {
-  border-bottom: 1px solid #e8f4fa;
   background-image: url("../images/external-link-hover.svg");
   background-size: 20px;
 }
@@ -781,12 +782,6 @@ a.button-reverse:visited:hover,
 
 .ext--list.cta--list {
   margin: 2% 0;
-}
-.ext--list.cta--list a {
-  border-bottom: 1px solid #CACED2;
-}
-.ext--list.cta--list a:hover, .ext--list.cta--list a:focus {
-  border-bottom: 1px solid #e8f4fa;
 }
 
 .twocol--list {
@@ -812,7 +807,7 @@ a.button-reverse:visited:hover,
   .bg-gray .twocol--list::before {
     background-color: #f2f3f4;
   }
-  [style="background-color:#000000"] .twocol--list::before {
+  [style*="background-color:#000000"] .twocol--list::before {
     background-color: #000;
   }
 }
