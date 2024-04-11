@@ -8,14 +8,14 @@ if (dataLayer && dataLayer.length > 0 && dataLayer[0].entityTaxonomy && dataLaye
     {
      topicsValues = Object.values(dataLayer[0].entityTaxonomy.topics); // get values of 'tags' of the artcle
     } else {
-         topicsValues = "not set";
+         topicsValues = "";
     }
 if (dataLayer && dataLayer.length > 0 && dataLayer[0].entityTaxonomy && dataLayer[0].entityTaxonomy.custom_authors && Object.keys(dataLayer[0].entityTaxonomy.custom_authors).length > 0)
     {
      authorValue = Object.values(dataLayer[0].entityTaxonomy.custom_authors); // get values of 'author' of the artcle
 
     } else {
-         authorValue = "not set";
+         authorValue = "";
     }
 
 if (dataLayer && dataLayer.length > 0 && dataLayer[0].entityTaxonomy && dataLayer[0].entityTaxonomy.article_type && Object.keys(dataLayer[0].entityTaxonomy.article_type).length > 0)
@@ -23,7 +23,7 @@ if (dataLayer && dataLayer.length > 0 && dataLayer[0].entityTaxonomy && dataLaye
      mediavalue = Object.values(dataLayer[0].entityTaxonomy.article_type); // get values of 'media type' of the artcle
 
     } else {
-         mediavalue = "not set";
+         mediavalue = "";
     }
 
 if (dataLayer && dataLayer.length > 0 && dataLayer[0].entityTaxonomy && dataLayer[0].entityTaxonomy.areas && Object.keys(dataLayer[0].entityTaxonomy.areas).length > 0)
@@ -31,7 +31,7 @@ if (dataLayer && dataLayer.length > 0 && dataLayer[0].entityTaxonomy && dataLaye
      articlevalue = Object.values(dataLayer[0].entityTaxonomy.areas); // get values of 'area' of the artcle
 
     } else {
-         articlevalue = "not set";
+         articlevalue = "";
     }
 
 
