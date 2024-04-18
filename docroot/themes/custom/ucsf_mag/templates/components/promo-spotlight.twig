@@ -3,7 +3,7 @@ but if they do overwrite then paragraph is used #}
 <div {{ is_paragraph ? attributes.addClass('promo-spotlight') : 'class="promo-spotlight"' }}>
   {% if is_paragraph %}
     {# so that quickedit is awailable #}
-    {{ content|without('field_media_image', 'field_promo_cta', 'field_eyebrow_title', 'field_text_body') }}
+    {{ content|without('field_media_image', 'field_image_media', 'field_promo_cta', 'field_eyebrow_title', 'field_text_body') }}
   {% endif %}
   {# Use overwrite image or default issue cover #}
   {% set fid = parentNode.field_overwrite_promo_spotlight.entity.field_image_media.entity.field_media_image.entity.fid.value
