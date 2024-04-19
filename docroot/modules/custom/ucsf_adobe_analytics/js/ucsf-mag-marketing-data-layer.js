@@ -34,13 +34,11 @@ if (dataLayer && dataLayer.length > 0 && dataLayer[0].entityTaxonomy && dataLaye
          articlevalue = "";
     }
 
-
-
 window.adobeDataLayer.push({  //push to adobe's datalayer
     "eduSite": {
         "pageInfo": {
-            "language": dataLayer[0].entityLangcode,  
-            "siteName": dataLayer[0].siteName,  
+            "language": dataLayer[0].entityLangcode,
+            "siteName": dataLayer[0].siteName,
             "pageType": dataLayer[0].entityBundle,
 
 
