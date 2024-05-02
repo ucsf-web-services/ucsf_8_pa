@@ -1,0 +1,54 @@
+{# Block promoting latest issue. If they don't overwrite it, then it loads from node field,
+but if they do overwrite then paragraph is used #}
+<div {{ is_paragraph ? attributes.addClass('promo-spotlight') : 'class="promo-spotlight"' }}>
+  {% if is_paragraph %}
+    {# so that quickedit is awailable #}
+    {{ content|without('field_media_image', 'field_image_media', 'field_promo_cta', 'field_eyebrow_title', 'field_text_body') }}
+  {% endif %}
+  {# Use overwrite image or default issue cover #}
+  {% set fid = parentNode.field_overwrite_promo_spotlight.entity.field_image_media.entity.field_media_image.entity.fid.value
+    ?: parentNode.field_magazine_issue.0.entity.field_issue_cover.entity.field_media_image.entity.fid.value
+  %}
+
+  {% set alt = parentNode.field_overwrite_promo_spotlight.entity.field_image_media.entity.field_media_image.alt
+    ?: parentNode.field_magazine_issue.0.entity.field_issue_cover.entity.field_media_image.alt
+  %}
+
+  {% set image_style = 'magazine_issue_cover' %}
+  {% set width = width ?: 160 %}
+  {% set height = height ?: 186 %}
+
+  {# Use overwrite link or default link to issue #}
+  {% set href = parentNode.field_overwrite_promo_spotlight.0.entity.field_promo_cta.0.url
+    ?: path('entity.taxonomy_term.canonical', {'taxonomy_term': parentNode.field_magazine_issue.entity.tid.value})
+  %}
+
+  {# When you add link text, the link url field becomes required,
+  in this case, allow editors to use /i as a shorthand for issue link #}
+  {% if parentNode.field_overwrite_promo_spotlight.0.entity.field_promo_cta.0.url|render == '/i' %}
+    {% set href = path('entity.taxonomy_term.canonical', {'taxonomy_term': parentNode.field_magazine_issue.entity.tid.value}) %}
+  {% endif %}
+
+  {# First column #}
+  {% if fid %}
+    <div class="layout-column layout-column-1">
+        <a href="{{ href }}">
+          {# {% set fid = parentNode.field_magazine_issue.0.entity.field_issue_cover.entity.field_media_image.entity.fid.value %} #}
+            {{ drupal_image(fid, image_style, attributes={alt: alt, width: width, height: height}, responsive=true)}}
+        </a>
+    </div>
+  {% endif %}
+
+  {# Second column #}
+  {{ fid ? '<div class="layout-column layout-column-2">' : ''}}
+    {# eyebrow title field on paragraph does not exist or is left empty - use default value #}
+    <h3 class="eyebrow-title">{{parentNode.field_overwrite_promo_spotlight.0.entity.field_eyebrow_title.0.value
+      ?: "UCSF Magazine"}}
+    </h3>
+    {# promo body field on paragraph does not exist or is left empty - use default value #}
+      <div class="promo-spotlight__body">{{parentNode.field_overwrite_promo_spotlight.0.entity.field_text_body.0.value|raw ?: '<p class="promo-spotlight__body">Still curious?</p>'}}</div>
+
+    {# promo body field on paragraph does not exist or is left empty - use default value #}
+    <a class="link--cta" href={{ href }}>{{parentNode.field_overwrite_promo_spotlight.0.entity.field_promo_cta.0.title ?: "Read more stories"}}</a>
+  {{ fid ? '</div>' : ''}}
+</div>
