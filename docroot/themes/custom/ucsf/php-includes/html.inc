@@ -20,7 +20,7 @@ function ucsf_preprocess_html(&$variables) {
   }
 
   $variables['attributes']['class'][] = $class;
-  $variables['ckeditor_y3ti_plugins'] = '/' . \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins') . '/elements/build.html';
+  // $variables['ckeditor_y3ti_plugins'] = '/' . \Drupal::service('extension.list.module')->getPath('ckeditor_y3ti_plugins') . '/elements/build.html';
 }
 
 function ucsf_page_attachments_alter(array &$page) {
