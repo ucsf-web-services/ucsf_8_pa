@@ -42,8 +42,9 @@ export default class UcsfCalloutboxUI extends Plugin {
 		// Execute the command after clicking the "Save" button.
 		this.listenTo( formView, 'submit', () => {
 			// Grab values from the abbreviation and title input fields.
-			const select = formView.element.querySelector('#select-dropdown').value;
-			const radio = formView.element.querySelector('input[name="toggle"]:checked').value;
+			console.log(formView)
+			const select = formView.element.querySelector('#align-dropdown').value;
+			const radio = formView.element.querySelector('input[name="corner"]:checked').value;
 			const formValues = { select, radio}
 			editor.model.change( writer => {
 				editor.execute('insertCalloutBox', formValues)
@@ -75,6 +76,7 @@ export default class UcsfCalloutboxUI extends Plugin {
 			position: this._getBalloonPositionData()
 		} );
 
+		this.formView.focus();
 	}
 
 	_hideUI() {

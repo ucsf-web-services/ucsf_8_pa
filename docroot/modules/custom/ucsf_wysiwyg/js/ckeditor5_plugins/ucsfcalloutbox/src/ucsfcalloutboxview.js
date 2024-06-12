@@ -19,29 +19,29 @@ import {
         attributes: {
             for: 'select-dropdown'
         },
-        children: ['Select Option:']
+        children: ['Align Option:']
     });
 
     this.select = new Template({
         tag: 'select',
         attributes: {
-            id: 'select-dropdown',
+            id: 'align-dropdown',
             class: 'ck-balloon-panel__select'
         },
         children: [
             new Template({
                 tag: 'option',
                 attributes: {
-                    value: 'option1'
+                    value: 'left'
                 },
-                children: ['Option 1']
+                children: ['Align Left']
             }),
             new Template({
                 tag: 'option',
                 attributes: {
-                    value: 'option2'
+                    value: 'right'
                 },
-                children: ['Option 2']
+                children: ['Align Right']
             })
         ]
     });
@@ -49,36 +49,36 @@ import {
     this.radioLabel = new Template({
         tag: 'label',
         attributes: {
-            for: 'radio-on'
+            for: 'corner-on'
         },
-        children: ['Toggle:']
+        children: ['Corner Image: On']
     });
 
     this.radioInputOn = new Template({
         tag: 'input',
         attributes: {
             type: 'radio',
-            name: 'toggle',
+            name: 'corner',
             value: 'on',
-            id: 'radio-on'
+            id: 'corner-on'
         }
     });
 
     this.radioLabelOff = new Template({
         tag: 'label',
         attributes: {
-            for: 'radio-off'
+            for: 'corner-off'
         },
-        children: ['Off']
+        children: ['Corner Image: Off']
     });
 
     this.radioInputOff = new Template({
         tag: 'input',
         attributes: {
             type: 'radio',
-            name: 'toggle',
+            name: 'corner',
             value: 'off',
-            id: 'radio-off'
+            id: 'corner-off'
         }
     });
   
