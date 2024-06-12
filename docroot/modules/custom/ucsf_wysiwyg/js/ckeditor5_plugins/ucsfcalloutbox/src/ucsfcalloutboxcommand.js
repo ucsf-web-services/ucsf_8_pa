@@ -1,9 +1,9 @@
 import {Command} from 'ckeditor5/src/core';
 
 export default class UcsfCalloutboxCommand extends Command {
-  execute() {
+  execute(attributes) {
     const { model } = this.editor;
-    console.log('dddddddddd')
+    console.log(attributes)
     model.change((writer) => {
       // Insert <accordion>*</accordion> at the current selection position
       // in a way that will result in creating a valid model structure.

@@ -119,10 +119,6 @@ import {
         view: this
       } );
     }
-  
-    focus() {
-      this.childViews.first.focus();
-    }
 
     _createInput( label ) {
       const labeledInput = new LabeledFieldView( this.locale, createLabeledInputText );

@@ -102,6 +102,7 @@ export default class UcsfCalloutboxEditing extends Plugin {
         conversion.for( 'editingDowncast' ).elementToElement( {
             model: 'calloutBoxImage',
             view: ( modelElement, { writer: viewWriter } ) => {
+                console.log(modelElement)
                 const div = viewWriter.createEditableElement( 'div', { class: 'callout__image' } );
 
                 return toWidgetEditable( div, viewWriter );

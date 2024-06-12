@@ -23,7 +23,7 @@ export default class UcsfCalloutboxUI extends Plugin {
                 tooltip: true,
             });
 
-			// button.bind('isOn', 'isEnabled').to(command, 'value', 'isEnabled');
+			button.bind('isOn', 'isEnabled').to(command, 'value', 'isEnabled');
 			// Show the UI on button click.
 			this.listenTo( button, 'execute', () => {
 				console.log('plop 1')
@@ -42,13 +42,11 @@ export default class UcsfCalloutboxUI extends Plugin {
 		// Execute the command after clicking the "Save" button.
 		this.listenTo( formView, 'submit', () => {
 			// Grab values from the abbreviation and title input fields.
-			console.log(formView.element)
-			const title = formView.element.querySelector('#select-dropdown').value;
-			const abbr = formView.element.querySelector('input[name="toggle"]:checked').value;
-			console.log(title)
-			console.log(abbr)
+			const select = formView.element.querySelector('#select-dropdown').value;
+			const radio = formView.element.querySelector('input[name="toggle"]:checked').value;
+			const formValues = { select, radio}
 			editor.model.change( writer => {
-				editor.execute('insertCalloutBox')
+				editor.execute('insertCalloutBox', formValues)
 			} );
 
             // Hide the form view after submit.
@@ -77,7 +75,6 @@ export default class UcsfCalloutboxUI extends Plugin {
 			position: this._getBalloonPositionData()
 		} );
 
-		this.formView.focus();
 	}
 
 	_hideUI() {
