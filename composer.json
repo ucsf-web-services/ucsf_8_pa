@@ -332,6 +332,9 @@
       }, 
       "drupal/media_entity_file_replace" : {
         "3254763 - Does not work on media types with multiple (different) file upload fields" : "https://www.drupal.org/files/issues/2023-11-29/3254763-9.patch"
+      },
+      "drupal/geofield_map" : {
+        "3456704 - polyfill.io Library is no longer considered safe to use" : "https://www.drupal.org/files/issues/2024-06-25/geofield_map-change-polyfill-url-3456704.patch"
       }
     },
     "patchLevel": {
@@ -347,7 +350,7 @@
   "scripts": {
     "remove-git-submodules" : "find . -mindepth 2 -type d -name .git | xargs rm -rf",
     "remove-core-gzip": "find ./docroot/core -name '*.gz' | xargs rm -f",
-    "restore-htaccess" : "cp -a patches/htaccess_rewrite_rules.txt docroot/.htaccess",
+    "restore-htaccess" : "cp -a patches/htaccess_mod_expires_restore.txt docroot/.htaccess",
     "post-install-cmd": [
       "@renamelibraries",
       "@remove-git-submodules",
