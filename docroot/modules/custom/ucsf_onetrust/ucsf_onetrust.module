@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for ucsf_onetrust module.
+ */
+
+/**
+ * Implements hook_page_attachments().
+ */
+function ucsf_onetrust_page_attachments(array &$attachments) {
+  if (!\Drupal::service('router.admin_context')->isAdminRoute()) {
+    if (isset($_ENV['AH_PRODUCTION']) && $_ENV['AH_PRODUCTION']) {
+
+    }
+    else {
+      $attachments['#attached']['html_head'][] = [
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'script',
+          '#attributes' => ['src' => 'https://cdn.cookielaw.org/consent/33d34025-5fd6-4d01-9d8a-c465e6c36603-test/OtAutoBlock.js'],
+        ],
+        'OtAutoBlock',
+      ];
+      $attachments['#attached']['html_head'][] = [
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'script',
+          '#attributes' => [
+            'src' => 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
+            'charset' => 'UTF-8',
+            'data-domain-script' => '33d34025-5fd6-4d01-9d8a-c465e6c36603-test'
+          ],
+        ],
+        'otSDKStub',
+      ];
+      $attachments['#attached']['html_head'][] = [
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'script',
+          '#value' => 'function OptanonWrapper() { }',
+        ],
+        'OptanonWrapper',
+      ];
+    }
+  }
+}
