@@ -22,6 +22,7 @@ export default class UcsfCalloutboxEditing extends Plugin {
         schema.register( 'ucsfcalloutbox', {
             isObject: true,
             allowWhere: '$block',
+            allowAttributes: [ 'data-image', 'data-align','class' ]
         } );
 
         schema.register( 'calloutBoxImage', {
@@ -57,53 +58,148 @@ export default class UcsfCalloutboxEditing extends Plugin {
       }
     _defineConverters() {
         const conversion = this.editor.conversion;
-    
+        conversion.attributeToAttribute( {
+            model: {
+                name: 'ucsfcallout',
+                key: 'data-align',
+                values: [ 'right', 'left' ]
+            },
+            view: {
+                left: {
+                    key: 'class',
+                    value: 'callout-left'
+                },
+                right: {
+                    key: 'class',
+                    value: 'callout-right'
+                }
+            }
+        } );
         conversion.for( 'upcast' ).elementToElement( {
-            model: 'ucsfcalloutbox',
             view: {
                 name: 'aside',
-                classes: 'ucsfcallout'
+                classes: 'ucsfcallout',
+            },
+            model: ( viewElement, { writer } ) => {
+                console.log(viewElement)
+                const dataAlign = viewElement.getAttribute('data-align')
+                const dataImage = viewElement.getAttribute('data-image')
+                return writer.createElement( 'ucsfcalloutbox', { 'data-image': dataImage, 'data-align': dataAlign } );
             }
+            
         } );
 
         conversion.for( 'dataDowncast' ).elementToElement( {
             model: 'ucsfcalloutbox',
-            view: {
-                name: 'aside',
-                classes: 'ucsfcallout'
-            }
-        } );
-
-        conversion.for( 'editingDowncast' ).elementToElement( {
-            model: 'ucsfcalloutbox',
-            view: ( modelElement, { writer: viewWriter } ) => {
-                const aside = viewWriter.createContainerElement( 'aside', { class: 'ucsfcallout' } );
-
-                return toWidget( aside, viewWriter, { label: 'callout box widget' } );
-            }
-        } );
-
-        conversion.for( 'upcast' ).elementToElement( {
-            model: 'calloutBoxImage',
-            view: {
-                name: 'div',
-                classes: 'callout__image'
-            }
-        } );
-
-        conversion.for( 'dataDowncast' ).elementToElement( {
-            model: 'calloutBoxImage',
-            view: {
-                name: 'div',
-                classes: 'callout__image'
-            }
-        } );
-
-        conversion.for( 'editingDowncast' ).elementToElement( {
-            model: 'calloutBoxImage',
+            // view: {
+            //     name: 'aside',
+            //     classes: 'ucsfcallout'
+            // }
+            
             view: ( modelElement, { writer: viewWriter } ) => {
                 console.log(modelElement)
-                const div = viewWriter.createEditableElement( 'div', { class: 'callout__image' } );
+                let opt = { 'class': 'ucsfcallout', 'data-image': '0' }
+                const align = modelElement.getAttribute( 'data-align' ) || 'left';
+                const image = modelElement.getAttribute( 'data-image' ) || '0';
+                opt["class"] = opt["class"] + " callout-" + align;
+                opt["data-image"] = image;
+                opt["data-align"] = align;
+
+                const aside = viewWriter.createContainerElement( 'aside', opt );
+
+                // Enable widget handling on a placeholder element inside the editing view.
+                return toWidget( aside, viewWriter);
+            }
+        } ).add( dispatcher => dispatcher.on( 'attribute', ( evt, data, conversionApi ) => {
+            const modelElement = data.item;
+    
+            // Mark element as consumed by conversion.
+            conversionApi.consumable.consume( data.item, evt.name );
+    
+            // Get mapped view element to update.
+            const viewElement = conversionApi.mapper.toViewElement( modelElement );
+            console.log(modelElement)
+    console.log(viewElement)
+            let opt = { 'class': 'ucsfcallout', 'data-image': '0' }
+            const align = modelElement.getAttribute( 'data-align' ) || 'left';
+            const image = modelElement.getAttribute( 'data-image' ) || '0';
+            opt["class"] = opt["class"] + " callout-" + align;
+            opt["data-image"] = image;
+            opt["data-align"] = align;
+
+            const aside = conversionApi.writer.createContainerElement( 'aside', opt );
+            // Enable widget handling on a placeholder element inside the editing view.
+            return toWidget( aside, conversionApi.writer, { label: 'callout box widget' } );
+           
+        } ) );
+
+        conversion.for( 'editingDowncast' ).elementToElement( {
+            model: 'ucsfcalloutbox',
+            view: ( modelElement, { writer: viewWriter } ) => {
+				let opt = { 'class': 'ucsfcallout', 'data-image': '0' }
+                const align = modelElement.getAttribute( 'data-align' ) || 'left';
+                const image = modelElement.getAttribute( 'data-image' ) || '0';
+                opt["class"] = opt["class"] + " callout-" + align;
+                opt["data-image"] = image;
+                opt["data-align"] = align;
+
+                const aside = viewWriter.createContainerElement( 'aside', opt );
+                // Enable widget handling on a placeholder element inside the editing view.
+                return toWidget( aside, viewWriter, { label: 'callout box widget' } );
+            }
+        } ).add( dispatcher => dispatcher.on( 'attribute', ( evt, data, conversionApi ) => {
+            const modelElement = data.item;
+    
+            // Mark element as consumed by conversion.
+            conversionApi.consumable.consume( data.item, evt.name );
+    
+            // Get mapped view element to update.
+            const viewElement = conversionApi.mapper.toViewElement( modelElement );
+            let opt = { 'class': 'ucsfcallout', 'data-image': '0' }
+            const align = modelElement.getAttribute( 'data-align' ) || 'left';
+            const image = modelElement.getAttribute( 'data-image' ) || '0';
+            opt["class"] = opt["class"] + " callout-" + align;
+            opt["data-image"] = image;
+            opt["data-align"] = align;
+console.log(viewElement)
+conversionApi.writer.setAttribute("data-align", align, viewElement)
+            return toWidget( viewElement, conversionApi.writer, { label: 'callout box widget' } );
+           
+        } ) );
+
+        conversion.for( 'upcast' ).elementToElement( {
+            model: 'calloutBoxImage',
+            view: {
+                name: 'div',
+                classes: 'callout__image'
+            },
+            model: ( viewElement, { writer } ) => {
+                console.log(viewElement)
+
+                return writer.createElement( 'calloutBoxImage');
+            }
+        } );
+
+        conversion.for( 'dataDowncast' ).elementToElement( {
+            model: 'calloutBoxImage',
+            view: {
+                name: 'div',
+                view: ( modelElement, { writer: viewWriter } ) => {
+                    const imageClass = (modelElement.parent.getAttribute( 'data-image' ) && modelElement.parent.getAttribute( 'data-image' ) == '0') ? 'hidden' : '';
+                    const classes = 'callout__image ' + imageClass
+                    const div = viewWriter.createEditableElement( 'div', { class: classes } );
+    
+                    return toWidgetEditable( div, viewWriter );
+                }
+            }
+        } );
+
+        conversion.for( 'editingDowncast' ).elementToElement( {
+            model: 'calloutBoxImage',
+            view: ( modelElement, { writer: viewWriter } ) => {
+                const imageClass = (modelElement.parent.getAttribute( 'data-image' ) && modelElement.parent.getAttribute( 'data-image' ) == '0') ? 'hidden' : '';
+                const classes = 'callout__image ' + imageClass
+                const div = viewWriter.createEditableElement( 'div', { class: classes } );
 
                 return toWidgetEditable( div, viewWriter );
             }
@@ -228,5 +324,17 @@ export default class UcsfCalloutboxEditing extends Plugin {
                 return toWidgetEditable(a, viewWriter);
             }
         });
+        function setAttrsData( modelItem, viewWriter ) {
+            //console.log( modelItem, viewWriter );
+            let opt = { 'class': 'ucsfcallout', 'data-image': '0' },
+                preAttrs = null;
+            const align = modelItem.getAttribute( 'align' );
+            const image = modelItem.getAttribute( 'data-image' );
+                opt["class"] = opt["class"] + " ucsfcallout-" + align;
+                opt["data-image"] = image;
+        
+
+            return viewWriter.createContainerElement( 'aside', opt );
+        }
       } 
 }

@@ -11,9 +11,18 @@ import {
   
   // cSpell:ignore UcsfCalloutboxview
   export default class UcsfCalloutboxView extends View {
-    constructor( locale ) {
-      super( locale );
-  
+    constructor( editor ) {
+      super( editor.locale );
+      const model = editor.model;
+      const selection = model.document.selection;
+      const selectedElement = selection.getSelectedElement();
+      let align = 'left'
+      let image = '0'
+      console.log(selectedElement)
+      if (selectedElement && selectedElement.name == "ucsfcalloutbox") {
+        align = selectedElement.getAttribute('data-align')
+        image = selectedElement.getAttribute('data-image')
+      }
       this.selectLabel = new Template({
         tag: 'label',
         attributes: {
@@ -32,14 +41,16 @@ import {
             new Template({
                 tag: 'option',
                 attributes: {
-                    value: 'left'
+                    value: 'left',
+                    selected: (align && align != 'right') ? true : false
                 },
                 children: ['Align Left']
             }),
             new Template({
                 tag: 'option',
                 attributes: {
-                    value: 'right'
+                    value: 'right',
+                    selected: (align && align == 'right') ? true : false
                 },
                 children: ['Align Right']
             })
@@ -59,8 +70,9 @@ import {
         attributes: {
             type: 'radio',
             name: 'corner',
-            value: 'on',
-            id: 'corner-on'
+            value: '1',
+            id: 'corner-on',
+            checked: (image && image == '1') ? true : false
         }
     });
 
@@ -77,8 +89,9 @@ import {
         attributes: {
             type: 'radio',
             name: 'corner',
-            value: 'off',
-            id: 'corner-off'
+            value: '0',
+            id: 'corner-off',
+            checked: (image && image != '1') ? true : false
         }
     });
   

@@ -7,12 +7,12 @@
  * before it's made discoverable via index.js.
  */
 
-import BlankdivEditing from './blankdivediting';
-import BlankdivUI from './blankdivtui';
-import { Plugin } from 'ckeditor5/src/core';
+// import BlankdivEditing from './blankdivediting';
+// import BlankdivUI from './blankdivtui';
+// import { Plugin } from 'ckeditor5/src/core';
 
-export default class Blankdiv extends Plugin {
-  static get requires() {
-    return [BlankdivEditing, BlankdivUI];
-  }
-}
+// export default class Blankdiv extends Plugin {
+//   static get requires() {
+//     return [BlankdivEditing, BlankdivUI];
+//   }
+// }

@@ -9,10 +9,22 @@ export default class UcsfCalloutboxUI extends Plugin {
 
 	init() {
 		const editor = this.editor;
-
+		
         // Create the balloon and the form view.
 		this._balloon = this.editor.plugins.get( ContextualBalloon );
-		this.formView = this._createFormView();
+		const viewDocument = this.editor.editing.view.document;
+
+		// Handle click on view document and show panel when selection is placed inside the link element.
+		// Keep panel open until selection will be inside the same link element.
+		this.listenTo( viewDocument, 'click', () => {
+			
+			const isCallout = this._getSelectedElement();
+
+			if ( isCallout ) {
+				this.formView = this._createFormView();
+				this._showUI();
+			}
+		} );
 
 		editor.ui.componentFactory.add( 'ucsfCalloutbox', (locale) => {
 			const command = editor.commands.get('insertCalloutBox');
@@ -26,28 +38,29 @@ export default class UcsfCalloutboxUI extends Plugin {
 			button.bind('isOn', 'isEnabled').to(command, 'value', 'isEnabled');
 			// Show the UI on button click.
 			this.listenTo( button, 'execute', () => {
-				console.log('plop 1')
 				// editor.execute('insertCalloutBox')
+				editor.execute('insertCalloutBox')
+				this.formView = this._createFormView();
 				this._showUI();
 			} );
 
 			return button;
 		} );
 	}
-
 	_createFormView() {
 		const editor = this.editor;
-		const formView = new UcsfCalloutboxView( editor.locale );
+		const formView = new UcsfCalloutboxView( editor);
 
 		// Execute the command after clicking the "Save" button.
 		this.listenTo( formView, 'submit', () => {
 			// Grab values from the abbreviation and title input fields.
-			console.log(formView)
-			const select = formView.element.querySelector('#align-dropdown').value;
-			const radio = formView.element.querySelector('input[name="corner"]:checked').value;
-			const formValues = { select, radio}
+			const align = formView.element.querySelector('#align-dropdown').value;
+			const image = formView.element.querySelector('input[name="corner"]:checked').value;
+			const formValues = { align, image}
 			editor.model.change( writer => {
-				editor.execute('insertCalloutBox', formValues)
+				const isCallout = this._getSelectedElement()
+				writer.setAttribute('data-align', align, isCallout)
+				writer.setAttribute('data-image', image, isCallout)
 			} );
 
             // Hide the form view after submit.
@@ -76,7 +89,6 @@ export default class UcsfCalloutboxUI extends Plugin {
 			position: this._getBalloonPositionData()
 		} );
 
-		this.formView.focus();
 	}
 
 	_hideUI() {
@@ -91,7 +103,16 @@ export default class UcsfCalloutboxUI extends Plugin {
 		// right away and keep the editor focused.
 		this.editor.editing.view.focus();
 	}
-
+	_getSelectedElement() {
+		const model = this.editor.model;
+      	const selection = model.document.selection;
+      	const selectedElement = selection.getSelectedElement();
+		if (selectedElement && selectedElement.name == "ucsfcalloutbox") {
+			return selectedElement
+		} else {
+			return false
+		}
+	}
 	_getBalloonPositionData() {
 		const view = this.editor.editing.view;
 		const viewDocument = view.document;
@@ -105,100 +126,3 @@ export default class UcsfCalloutboxUI extends Plugin {
 		};
 	}
 }
-// export default class UcsfCalloutboxUI extends Plugin {
-//   init() {
-//     const editor = this.editor;
-//     const t = editor.t;
-
-//     editor.ui.componentFactory.add('UcsfCalloutbox', locale => {
-//         const dropdownView = createDropdown(locale);
-
-//         dropdownView.buttonView.set({
-//             label: t('Edit Callout Settings'),
-//             tooltip: true,
-//             withText: true
-//         });
-
-//         // Create a form view.
-//         const formView = this._createFormView(locale);
-
-//         dropdownView.panelView.children.add(formView);
-
-//         // Add a click event to the button.
-//         dropdownView.buttonView.on('execute', () => {
-//             const selectedElement = this._getSelectedCalloutBox();
-
-//             if (selectedElement) {
-//                 formView.alignInputView.fieldView.element.value = selectedElement.getAttribute('data-align') || 'left';
-//                 formView.calloutInputView.fieldView.element.value = selectedElement.getAttribute('data-callout') || '0';
-
-//                 formView.listenTo(formView.saveButtonView, 'execute', () => {
-//                     editor.model.change(writer => {
-//                         writer.setAttribute('data-align', formView.alignInputView.fieldView.element.value, selectedElement);
-//                         writer.setAttribute('data-callout', formView.calloutInputView.fieldView.element.value, selectedElement);
-//                     });
-
-//                     dropdownView.isOpen = false;
-//                 });
-//             }
-//         });
-
-//         return dropdownView;
-//     });
-//   }
-
-//   _createFormView(locale) {
-//       const t = this.editor.t;
-//       const formView = new View();
-
-//       formView.setTemplate({
-//           tag: 'form',
-//           children: [
-//               this._createLabeledInput(t('Align'), 'left', locale),
-//               this._createLabeledInput(t('Corner Image'), '0', locale, 'radio'),
-//               this._createButton(t('Save'), locale)
-//           ]
-//       });
-
-//       return formView;
-//   }
-
-//   _createLabeledInput(labelText, defaultValue, locale, type = 'text') {
-//       const labeledInput = new LabeledFieldView(locale, InputTextView);
-
-//       labeledInput.set({
-//           label: labelText,
-//           fieldView: {
-//               type: type,
-//               value: defaultValue
-//           }
-//       });
-
-//       return labeledInput;
-//   }
-
-//   _createButton(label, locale) {
-//       const buttonView = new ButtonView(locale);
-
-//       buttonView.set({
-//           label: label,
-//           withText: true,
-//           tooltip: true
-//       });
-
-//       buttonView.extendTemplate({
-//           attributes: {
-//               class: 'ck-button-save'
-//           }
-//       });
-
-//       return buttonView;
-//   }
-
-//   _getSelectedCalloutBox() {
-//       const editor = this.editor;
-//       const selection = editor.model.document.selection;
-
-//       return selection.getSelectedElement();
-//   }
-// }

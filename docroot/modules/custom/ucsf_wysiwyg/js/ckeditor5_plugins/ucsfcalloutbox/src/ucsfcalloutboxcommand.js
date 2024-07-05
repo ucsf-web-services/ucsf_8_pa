@@ -3,11 +3,10 @@ import {Command} from 'ckeditor5/src/core';
 export default class UcsfCalloutboxCommand extends Command {
   execute(attributes) {
     const { model } = this.editor;
-    console.log(attributes)
     model.change((writer) => {
       // Insert <accordion>*</accordion> at the current selection position
       // in a way that will result in creating a valid model structure.
-      model.insertContent(createCalloutBoxElement(writer));
+      model.insertContent(createCalloutBoxElement(writer, attributes));
     });
   }
 
@@ -25,7 +24,8 @@ export default class UcsfCalloutboxCommand extends Command {
 
 }
 function createCalloutBoxElement( writer ) {
-  const calloutBox = writer.createElement( 'ucsfcalloutbox' );
+
+  const calloutBox = writer.createElement( 'ucsfcalloutbox');
 
   const image = writer.createElement( 'calloutBoxImage' );
   const content = writer.createElement( 'calloutBoxContent' );
