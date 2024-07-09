@@ -18,7 +18,6 @@ import {
       const selectedElement = selection.getSelectedElement();
       let align = 'left'
       let image = '0'
-      console.log(selectedElement)
       if (selectedElement && selectedElement.name == "ucsfcalloutbox") {
         align = selectedElement.getAttribute('data-align')
         image = selectedElement.getAttribute('data-image')
@@ -154,83 +153,3 @@ import {
       return button;
     }
   }
-  // export default class UcsfCalloutboxView extends View {
-  //   constructor(locale) {
-  //     super(locale);
-  
-  //     this.alignView = this._createLabeledInput(t('Align'), 'left' )
-  //     this.cornerImageView = this._createLabeledInput(t('Corner Image'), '0', 'radio')
-  
-  //     this.saveButtonView = this._createButton('Save', icons.check, 'ck-button-save');
-  //     this.saveButtonView.type = 'submit';
-  //     this.cancelButtonView = this._createButton( 'Cancel', icons.cancel, 'ck-button-cancel' );
-  //     this.cancelButtonView.delegate( 'execute' ).to( this, 'cancel' );
-  
-  //     this.childViews = this.createCollection( [
-  //       this.alignView,
-  //       this.cornerImageView,
-  //       this.saveButtonView,
-  //       this.cancelButtonView
-  //     ] );
-  
-  //     this.setTemplate( {
-  //       tag: 'form',
-  //       attributes: {
-  //         class: [ 'ck', 'ck-div-form' ],
-  //         tabindex: '-1'
-  //       },
-  //       children: this.childViews
-  //     });
-  //   }
-  
-  //   render() {
-  //     super.render();
-  
-  //     // Submit the form when the user clicked the save button or pressed enter in the input.
-  //     submitHandler( {
-  //       view: this
-  //     } );
-  //   }
-  
-  //   focus() {
-  //     // If the text field is enabled, focus it.
-  //     if ( this.textInputView.isEnabled ) {
-  //       this.textInputView.focus();
-  //     }
-  //     else {
-  //       this.titleInputView.focus();
-  //     }
-  //   }
-  //   _createLabeledInput(labelText, defaultValue, type = 'text') {
-  //     const labeledInput = new LabeledFieldView(locale, InputTextView);
-
-  //     labeledInput.set({
-  //         label: labelText,
-  //         fieldView: {
-  //             type: type,
-  //             value: defaultValue
-  //         }
-  //     });
-
-  //     return labeledInput;
-  // }
-  //   _createInput(label) {
-  //     const labeledInput = new LabeledFieldView( this.locale, createLabeledInputText );
-  //     labeledInput.label = label;
-  //     return labeledInput;
-  //   }
-  
-  //   _createButton( label, icon, className ) {
-  //     const button = new ButtonView();
-  
-  //     button.set( {
-  //       label,
-  //       icon,
-  //       tooltip: true,
-  //       class: className
-  //     } );
-  
-  //     return button;
-  //   }
-  // }
-  

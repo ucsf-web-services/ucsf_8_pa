@@ -39,7 +39,6 @@ export default class UcsfCalloutboxUI extends Plugin {
 			// Show the UI on button click.
 			this.listenTo( button, 'execute', () => {
 				// editor.execute('insertCalloutBox')
-				editor.execute('insertCalloutBox')
 				this.formView = this._createFormView();
 				this._showUI();
 			} );
@@ -57,12 +56,12 @@ export default class UcsfCalloutboxUI extends Plugin {
 			const align = formView.element.querySelector('#align-dropdown').value;
 			const image = formView.element.querySelector('input[name="corner"]:checked').value;
 			const formValues = { align, image}
-			editor.model.change( writer => {
-				const isCallout = this._getSelectedElement()
-				writer.setAttribute('data-align', align, isCallout)
-				writer.setAttribute('data-image', image, isCallout)
-			} );
-
+			// editor.model.change( writer => {
+			// 	const isCallout = this._getSelectedElement()
+			// 	writer.setAttribute('data-align', align, isCallout)
+			// 	writer.setAttribute('data-image', image, isCallout)
+			// } );
+			editor.execute('insertCalloutBox', formValues)
             // Hide the form view after submit.
 			this._hideUI();
 		} );
