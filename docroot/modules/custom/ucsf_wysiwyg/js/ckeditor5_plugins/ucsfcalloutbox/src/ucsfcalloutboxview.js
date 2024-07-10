@@ -107,7 +107,7 @@ import {
       this.setTemplate( {
         tag: 'form',
         attributes: {
-          class: [ 'ck', 'ck-abbr-form' ],
+          class: [ 'ck', 'ck-ucsfcalloutbox-form', 'ck-reset_all-excluded' ],
           tabindex: '-1'
         },
         children:  [
