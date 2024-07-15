@@ -41,11 +41,7 @@ export default class BlankdivEditing extends Plugin {
                 key: 'align',
                 values: [ 'half-image-right', 'half-image-left', 'half-image-right-full', 'half-image-left-full',  'full-bleed-image' ]
             },
-            // view: (modelElement) => {
-            //     console.log(modelElement)
-            // }
             view: {
-                // key: 'class'
                 'half-image-right': {
                     key: 'class',
                     value: 'half-image-right'
@@ -69,22 +65,6 @@ export default class BlankdivEditing extends Plugin {
                 
             }
         } );
-        // conversion.for( 'downcast' ).attributeToElement( {
-        //     model: 'blankdiv',
-        //     view: ( modelAttributeValue, { writer } ) => {
-        //         // Do not convert empty attributes (lack of value means no mention).
-        //         if ( !modelAttributeValue ) {
-        //             return;
-        //         }
-        //         console.log(modelAttributeValue)
-        //         // return writer.insert( 'a', {
-        //         //     class: 'mention',
-        //         //     'data-mention': modelAttributeValue.id,
-        //         //     'data-user-id': modelAttributeValue.userId,
-        //         //     'href': modelAttributeValue.link
-        //         // })
-        //     }
-        // } );
         conversion.for( 'upcast' ).elementToElement( {
             view: {
                 name: 'div',
@@ -94,9 +74,7 @@ export default class BlankdivEditing extends Plugin {
                
                 // const dataAlign = viewElement.getAttribute('align')
                 const classes = viewElement.getClassNames()
-                console.log(classes)
                 const dataAlign =  classes.find(v => v !== 'wysiwyg_blankdiv')
-                console.log(dataAlign)
                 return writer.createElement( 'blankdiv', { align: dataAlign, blankdiv: viewElement.getCustomProperty( '$rawContent' ) } );
             }
             
@@ -130,21 +108,6 @@ export default class BlankdivEditing extends Plugin {
 					domContentWrapper = domElement;
 
 					renderContent( { editor, domElement, modelElement, props } );
-
-					// Since there is a `data-cke-ignore-events` attribute set on the wrapper element in the editable mode,
-					// the explicit `mousedown` handler on the `capture` phase is needed to move the selection onto the whole
-					// HTML embed widget.
-					// domContentWrapper.addEventListener( 'mousedown', () => {
-					// 	if ( state.isEditable ) {
-					// 		const model = editor.model;
-					// 		const selectedElement = model.document.selection.getSelectedElement();
-
-					// 		// Move the selection onto the whole HTML embed widget if it's currently not selected.
-					// 		if ( selectedElement !== modelElement ) {
-					// 			model.change( writer => writer.setSelection( modelElement, 'on' ) );
-					// 		}
-					// 	}
-					// }, true );
 				} );
                 const viewContainer = writer.createContainerElement( 'div', {
 					class: opt["class"],
@@ -160,51 +123,15 @@ export default class BlankdivEditing extends Plugin {
 			editor,
 			domElement,
 			modelElement,
-			props
 		}) {
-            console.log(editor)
-            console.log(domElement)
-            console.log(modelElement)
+
 			// Remove all children;
 			domElement.textContent = '';
 
 			const domDocument = domElement.ownerDocument;
-			let domTextarea;
 
-			// if ( state.isEditable ) {
-			// 	const textareaProps = {
-			// 		isDisabled: false,
-			// 		placeholder: props.textareaPlaceholder
-			// 	};
-
-			// 	domTextarea = createDomTextarea( { domDocument, state, props: textareaProps } );
-
-			// 	domElement.append( domTextarea );textareaPlaceholder
-			// } else if ( state.showPreviews ) {
-			// 	const previewContainerProps = {
-			// 		sanitizeHtml: props.sanitizeHtml
-			// 	};
-
-			// 	domElement.append( createPreviewContainer( { domDocument, state, props: previewContainerProps, editor } ) );
-			// } else {
-			// 	const textareaProps = {
-			// 		isDisabled: true,
-			// 		placeholder: props.textareaPlaceholder
-			// 	};
-
-			// 	domElement.append( createDomTextarea( { domDocument, state, props: textareaProps } ) );
-			// }
 
             domElement.append( createPreviewContainer( { domDocument, modelElement, editor } ) );
-			// const buttonsWrapperProps = {
-			// 	onEditClick: props.onEditClick,
-			// 	onSaveClick: () => {
-			// 		props.onSaveClick( domTextarea.value );
-			// 	},
-			// 	onCancelClick: props.onCancelClick
-			// };
-
-			// domElement.prepend( createDomButtonsWrapper( { editor, domDocument, state, props: buttonsWrapperProps } ) );
 		}
         function createPreviewContainer( {
 			domDocument,
@@ -213,7 +140,7 @@ export default class BlankdivEditing extends Plugin {
 		} ) {
 			const sanitizedOutput = modelElement.getAttribute('blankdiv');
 			const placeholderText = sanitizedOutput.length > 0 ?
-				'No preview available' :
+				'Preview available' :
 				'Empty snippet content' ;
 
 			const domPreviewPlaceholder = createElement( domDocument, 'div', {

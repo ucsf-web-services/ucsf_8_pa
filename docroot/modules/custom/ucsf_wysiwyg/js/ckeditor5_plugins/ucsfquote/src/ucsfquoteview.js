@@ -19,10 +19,10 @@ import {
         const bind = this.bindTemplate;
 
         let align = 'half-left'
-        let color = 'blue'
+        let colorAccent = 'blue'
         if (selectedElement && selectedElement.name == "ucsfquote") {
             align = selectedElement.getAttribute('align')
-            color = selectedElement.getAttribute('color')
+            colorAccent = selectedElement.getAttribute('colorAccent')
         }
         this.selectLabel = new Template({
             tag: 'label',
@@ -40,8 +40,14 @@ import {
             },
             on: {
                 change: bind.to( evt => {
-                    console.log( `${ evt.target } has been change!` );
-                    console.log(this.select)
+                    if (evt.target.value === 'full-right') {
+                        this.element.querySelector('#color-label').className = this.element.querySelector('#color-label').className.replace('hidden','')
+                        this.element.querySelector('#color-dropdown').className = this.element.querySelector('#color-dropdown').className.replace('hidden','')
+                        
+                    } else {
+                        // this.color.attributes.class.push('hidden')
+                        // this.colorLabel.attributes.class.push('hidden')
+                    }
                 } )
             },
             children: [
@@ -74,23 +80,24 @@ import {
         this.colorLabel = new Template({
             tag: 'label',
             attributes: {
-                for: 'color-dropdown'
+                id: 'color-label',
+                for: 'color-dropdown',
+                class: (align == 'full-right')? '' : 'hidden'
             },
             children: ['color Option:']
             });
-
         this.color = new Template({
             tag: 'select',
             attributes: {
                 id: 'color-dropdown',
-                class: 'ck-balloon-panel__select'
+                class: (align == 'full-right') ? 'ck-balloon-panel__select' : 'ck-balloon-panel__select hidden' 
             },
             children: [
                 new Template({
                     tag: 'option',
                     attributes: {
                         value: 'blue',
-                        selected: (color && color == 'blue') ? true : false
+                        selected: (colorAccent && colorAccent == 'blue') ? true : false
                     },
                     children: ['Blue']
                 }),
@@ -98,7 +105,7 @@ import {
                     tag: 'option',
                     attributes: {
                         value: 'light-blue',
-                        selected: (color && color == 'light-blue') ? true : false
+                        selected: (colorAccent && colorAccent == 'light-blue') ? true : false
                     },
                     children: ['Light Blue']
                 }),
@@ -106,7 +113,7 @@ import {
                     tag: 'option',
                     attributes: {
                         value: 'teal',
-                        selected: (color && color == 'teal') ? true : false
+                        selected: (colorAccent && colorAccent == 'teal') ? true : false
                     },
                     children: ['Teal']
                 }),
@@ -114,7 +121,7 @@ import {
                     tag: 'option',
                     attributes: {
                         value: 'cool-green',
-                        selected: (color && color == 'cool-green') ? true : false
+                        selected: (colorAccent && colorAccent == 'cool-green') ? true : false
                     },
                     children: ['Cool Green']
                 }),
@@ -122,7 +129,7 @@ import {
                     tag: 'option',
                     attributes: {
                         value: 'warm-green',
-                        selected: (color && color == 'warm-green') ? true : false
+                        selected: (colorAccent && colorAccent == 'warm-green') ? true : false
                     },
                     children: ['Warm Green']
                 }),
@@ -130,7 +137,7 @@ import {
                     tag: 'option',
                     attributes: {
                         value: 'purple',
-                        selected: (color && color == 'light-blue') ? true : false
+                        selected: (colorAccent && colorAccent == 'purple') ? true : false
                     },
                     children: ['Purple']
                 }),
@@ -138,15 +145,15 @@ import {
                     tag: 'option',
                     attributes: {
                         value: 'violet',
-                        selected: (color && color == 'violet') ? true : false
+                        selected: (colorAccent && colorAccent == 'violet') ? true : false
                     },
                     children: ['Violet']
                 }),
                 new Template({
                     tag: 'option',
                     attributes: {
-                        value: 'light-blue',
-                        selected: (color && color == 'magenta') ? true : false
+                        value: 'magenta',
+                        selected: (colorAccent && colorAccent == 'magenta') ? true : false
                     },
                     children: ['Magenta']
                 }),
@@ -154,7 +161,7 @@ import {
                     tag: 'option',
                     attributes: {
                         value: 'gray',
-                        selected: (color && color == 'gray') ? true : false
+                        selected: (colorAccent && colorAccent == 'gray') ? true : false
                     },
                     children: ['Cool Gray']
                 }),
@@ -162,7 +169,7 @@ import {
                     tag: 'option',
                     attributes: {
                         value: 'navy',
-                        selected: (color && color == 'navy') ? true : false
+                        selected: (colorAccent && colorAccent == 'navy') ? true : false
                     },
                     children: ['Navy']
                 }),
@@ -170,7 +177,7 @@ import {
                     tag: 'option',
                     attributes: {
                         value: 'yellow',
-                        selected: (color && color == 'yellow') ? true : false
+                        selected: (colorAccent && colorAccent == 'yellow') ? true : false
                     },
                     children: ['Yellow']
                 }),
@@ -178,7 +185,7 @@ import {
                     tag: 'option',
                     attributes: {
                         value: 'dark-gray',
-                        selected: (color && color == 'dark-gray') ? true : false
+                        selected: (colorAccent && colorAccent == 'dark-gray') ? true : false
                     },
                     children: ['Dark Gray']
                 })

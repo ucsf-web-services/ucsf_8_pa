@@ -5,7 +5,6 @@ export default class BlankdivCommand extends Command {
       const model = this.editor.model;
       const selection = model.document.selection;
       const selectedBlankdiv = getSelectedBlankdivxWidget( selection );
-      console.log(model)
       model.change( writer => {
       if ( selectedBlankdiv ) {     
           writer.setAttribute('align', attributes.align, selectedBlankdiv );
@@ -15,16 +14,6 @@ export default class BlankdivCommand extends Command {
         model.insertContent(createBlankdivElement(writer, attributes));
       }
     } );
-      // const isCallout = selection.getSelectedElement();
-    // console.log(model)
-    //   if (isCallout && isCallout.name == "ucsfcalloutbox") {
-    //     writer.setAttribute('data-align', attributes.align, model)
-    //     writer.setAttribute('data-image', attributes.image, model)
-    //     return isCallout
-    //   } else {
-    //     model.insertContent(createCalloutBoxElement(writer, attributes));
-
-    //   }
   }
 
     refresh() {
@@ -40,7 +29,6 @@ export default class BlankdivCommand extends Command {
 
 }
 function createBlankdivElement( writer, attributes ) {
-    console.log(attributes)
     const blankdiv = writer.createElement( 'blankdiv');
     writer.setAttribute('align', attributes.align, blankdiv)
 	  writer.setAttribute('blankdiv', attributes.blankdiv, blankdiv)

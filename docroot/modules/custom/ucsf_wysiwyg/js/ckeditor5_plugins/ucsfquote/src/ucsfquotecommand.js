@@ -7,8 +7,10 @@ export default class UcsfQuoteCommand extends Command {
       const selectedUcsfQuote = getSelectedUcsfQuoteWidget( selection );
       model.change( writer => {
       if ( selectedUcsfQuote ) {     
-          writer.setAttribute('data-align', attributes.align, selectedUcsfQuote );
-          writer.setAttribute('data-image', attributes.image, selectedUcsfQuote );
+          writer.removeAttribute( 'colorAccent', selectedUcsfQuote)
+          writer.removeAttribute( 'align', selectedUcsfQuote)
+          writer.setAttribute('align', attributes.align, selectedUcsfQuote );
+          writer.setAttribute('colorAccent', attributes.colorAccent, selectedUcsfQuote );
         
       } else {
         model.insertContent(createUcsfQuoteElement(writer, attributes));
@@ -30,8 +32,8 @@ export default class UcsfQuoteCommand extends Command {
 }
 function createUcsfQuoteElement( writer, attributes ) {
     const ucsfquote = writer.createElement( 'ucsfquote');
-    writer.setAttribute('data-align', attributes.align, ucsfquote)
-	writer.setAttribute('data-image', attributes.image, ucsfquote)
+    writer.setAttribute('align', attributes.align, ucsfquote)
+	  writer.setAttribute('colorAccent', attributes.colorAccent, ucsfquote)
     const content = writer.createElement( 'ucsfQuoteContent' );
     const cite = writer.createElement('ucsfQuoteCite');
 

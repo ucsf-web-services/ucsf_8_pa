@@ -57,6 +57,63 @@ export default class UcsfQuoteEditing extends Plugin {
                 }
             }
         } );
+        conversion.attributeToAttribute( {
+            model: {
+                name: 'ucsfquote',
+                key: 'colorAccent',
+                values: [ 'blue', 'light-blue', 'teal', 'cool-green', 'warm-green', 'purple', 'violet', 'magenta', 'gray', 'navy', 'yellow', 'dark-gray' ]
+            },
+            view: {
+                'blue': {
+                    key: 'class',
+                    value: 'blockquote--color-blue'
+                },
+                'light-blue': {
+                    key: 'class',
+                    value: 'blockquote--color-light-blue'
+                },
+                'teal': {
+                    key: 'class',
+                    value: 'blockquote--color-teal'
+                },
+                'cool-green': {
+                    key: 'class',
+                    value: 'blockquote--color-teal'
+                },
+                'warm-green': {
+                    key: 'class',
+                    value: 'blockquote--color-warm-green'
+                },
+                'purple': {
+                    key: 'class',
+                    value: 'blockquote--color-purple'
+                },
+                'violet': {
+                    key: 'class',
+                    value: 'blockquote--color-violet'
+                },
+                'magenta': {
+                    key: 'class',
+                    value: 'blockquote--color-magenta'
+                },
+                'gray': {
+                    key: 'class',
+                    value: 'blockquote--color-gray'
+                },
+                'navy': {
+                    key: 'class',
+                    value: 'blockquote--color-navy'
+                },
+                'yellow': {
+                    key: 'class',
+                    value: 'blockquote--color-yellow'
+                },
+                'dark-gray': {
+                    key: 'class',
+                    value: 'blockquote--color-dark-gray'
+                },
+            }
+        } );
         conversion.for( 'upcast' ).elementToElement( {
             view: {
                 name: 'blockquote',
@@ -64,9 +121,9 @@ export default class UcsfQuoteEditing extends Plugin {
             },
             model: ( viewElement, { writer } ) => {
                 const classes = viewElement.getClassNames()
-                const dataAlign =  classes.find(v => v !== 'blockquote')
-                const dataImage = viewElement.getAttribute('data-image')
-                return writer.createElement( 'ucsfquote', { 'data-image': dataImage, 'align': dataAlign } );
+                const dataAlign =  classes.find(v => v !== 'blockquote' && !v.startsWith('blockquote--color-'))
+                const datacolorAccent = classes.find(v => v.startsWith('blockquote--color-'))
+                return writer.createElement( 'ucsfquote', { 'colorAccent': datacolorAccent.replace('blockquote--color-',''), 'align': dataAlign.replace('blockquote--','') } );
             }
             
         } );
@@ -78,6 +135,8 @@ export default class UcsfQuoteEditing extends Plugin {
 
                 const align = modelElement.getAttribute( 'align' )
                 opt["class"] = opt["class"] + " blockquote--" + align;
+                const colorAccent = modelElement.getAttribute( 'colorAccent' )
+                opt["class"] = opt["class"] + " blockquote--color-" + colorAccent;
                 const blockquote = viewWriter.createContainerElement( 'blockquote', opt );
 
                 // Enable widget handling on a placeholder element inside the editing view.
@@ -92,6 +151,8 @@ export default class UcsfQuoteEditing extends Plugin {
 
                 const align = modelElement.getAttribute( 'align' )
                 opt["class"] = opt["class"] + " blockquote--" + align;
+                const colorAccent = modelElement.getAttribute( 'colorAccent' )
+                opt["class"] = opt["class"] + " blockquote--color-" + colorAccent;
                 const blockquote = viewWriter.createContainerElement( 'blockquote', opt );
                 // Enable widget handling on a placeholder element inside the editing view.
                 return toWidget( blockquote, viewWriter, { label: 'callout box widget' } );

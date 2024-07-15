@@ -51,7 +51,6 @@ export default class BlankdivUI extends Plugin {
 		// Execute the command after clicking the "Save" button.
 		this.listenTo( formView, 'submit', () => {
 			// Grab values from the abbreviation and title input fields.
-            console.log(formView.element)
 			const align = formView.element.querySelector('#align-dropdown').value;
 			const blankdiv = formView.element.querySelector('#blankdiv').value;
 			const formValues = { align, blankdiv}

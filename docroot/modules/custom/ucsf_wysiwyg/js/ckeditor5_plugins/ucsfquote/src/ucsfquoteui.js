@@ -54,8 +54,8 @@ export default class UcsfQuoteUI extends Plugin {
 		this.listenTo( formView, 'submit', () => {
 			// Grab values from the abbreviation and title input fields.
 			const align = formView.element.querySelector('#align-dropdown').value;
-			const color = formView.element.querySelector('#color-dropdown').value;
-			const formValues = { align, color}
+			const colorAccent = formView.element.querySelector('#color-dropdown').value;
+			const formValues = { align, colorAccent}
 			editor.execute('insertUcsfQuote', formValues)
             // Hide the form view after submit.
 			this._hideUI();
